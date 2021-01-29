@@ -16,8 +16,7 @@ class CommunityMembersView(ListView):
 		return context
 
 	def get_queryset(self):
-		membersheeps = self.c.get_members(self.c.pk)
-		return membersheeps
+		return self.c.get_members(self.c.pk)
 
 
 class CommunityFriendsView(ListView):
@@ -33,8 +32,7 @@ class CommunityFriendsView(ListView):
 		return context
 
 	def get_queryset(self):
-		frends = self.request.user.get_common_friends_of_community(self.c.pk)
-		return frends
+		return self.request.user.get_common_friends_of_community(self.c.pk)
 
 
 class AllCommunities(ListView):
@@ -45,14 +43,12 @@ class AllCommunities(ListView):
 		return super(AllCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		groups = Community.get_trending_communities()
-		return groups
+		return Community.get_trending_communities()
 
 	def get_context_data(self,**kwargs):
-		context = super(AllCommunities,self).get_context_data(**kwargs)
-		context["communities_categories"] = CommunityCategory.objects.only("pk")
-		context["count_communities"] = Community.objects.all().values("pk").count()
-		return context
+		c = super(AllCommunities,self).get_context_data(**kwargs)
+		c["communities_categories"], c["count_communities"] = CommunityCategory.objects.only("pk"), Community.objects.all().values("pk").count()
+		return c
 
 
 class TrendCommunities(ListView):
@@ -63,14 +59,12 @@ class TrendCommunities(ListView):
 		return super(TrendCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		groups = Community.get_trending_communities()
-		return groups
+		return Community.get_trending_communities()
 
 	def get_context_data(self,**kwargs):
-		context = super(TrendCommunities,self).get_context_data(**kwargs)
-		context["communities_categories"] = CommunityCategory.objects.only("pk")
-		context["count_communities"] = Community.objects.all().values("pk").count()
-		return context
+		c = super(TrendCommunities,self).get_context_data(**kwargs)
+		c["communities_categories"], c["count_communities"] = CommunityCategory.objects.only("pk"), Community.objects.all().values("pk").count()
+		return c
 
 
 class CommunityCategoryView(ListView):
@@ -81,10 +75,9 @@ class CommunityCategoryView(ListView):
 		return super(CommunityCategoryView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityCategoryView,self).get_context_data(**kwargs)
-		context["category"]=self.cat
-		context["communities_categories"] = CommunityCategory.objects.only("pk")
-		return context
+		c = super(CommunityCategoryView,self).get_context_data(**kwargs)
+		c["category"], c["communities_categories"] = self.cat, CommunityCategory.objects.only("pk")
+		return c
 
 	def get_queryset(self):
 		return Community.objects.filter(category__sudcategory_id = self.kwargs["pk"])
@@ -111,14 +104,12 @@ class CommunityDocs(ListView):
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityDocs,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['list'] = self.list
-		return context
+		c = super(CommunityDocs,self).get_context_data(**kwargs)
+		c['community'],c['list'] = self.c, self.list
+		return c
 
 	def get_queryset(self):
-		doc_list = self.doc_list
-		return doc_list
+		return self.doc_list
 
 class CommunityDocsList(ListView):
 	template_name, paginate_by = None, 15
@@ -139,14 +130,12 @@ class CommunityDocsList(ListView):
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityDocsList,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['list'] = self.list
-		return context
+		c = super(CommunityDocsList,self).get_context_data(**kwargs)
+		c['community'], c['list'] = self.c, self.list
+		return c
 
 	def get_queryset(self):
-		doc_list = self.doc_list
-		return doc_list
+		return self.doc_list
 
 
 class CommunityGoods(ListView):
@@ -169,14 +158,12 @@ class CommunityGoods(ListView):
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityGoods,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['album'] = self.album
-		return context
+		c = super(CommunityGoods,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.c, self.album
+		return c
 
 	def get_queryset(self):
-		goods_list = self.goods_list
-		return goods_list
+		return self.goods_list
 
 class CommunityGoodsList(ListView):
 	template_name, paginate_by = None, 15
@@ -198,14 +185,12 @@ class CommunityGoodsList(ListView):
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityGoodsList,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['album'] = self.album
-		return context
+		c = super(CommunityGoodsList,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.c, self.album
+		return c
 
 	def get_queryset(self):
-		goods_list = self.goods_list
-		return goods_list
+		return self.goods_list
 
 
 class CommunityMusic(ListView):
@@ -224,8 +209,7 @@ class CommunityMusic(ListView):
 		return c
 
 	def get_queryset(self):
-		music_list = self.c.get_music()
-		return music_list
+		return self.c.get_music()
 
 class CommunityMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -247,8 +231,7 @@ class CommunityMusicList(ListView):
 		return c
 
 	def get_queryset(self):
-		playlist = self.playlist.playlist_too()
-		return playlist
+		return self.playlist.playlist_too()
 
 
 class CommunityVideo(ListView):
@@ -269,14 +252,12 @@ class CommunityVideo(ListView):
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityVideo,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['album'] = self.album
-		return context
+		c = super(CommunityVideo,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.album, self.list
+		return c
 
 	def get_queryset(self):
-		video_list = self.video_list
-		return video_list
+		return self.video_list
 
 
 class CommunityVideoList(ListView):
@@ -298,14 +279,12 @@ class CommunityVideoList(ListView):
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityVideoList,self).get_context_data(**kwargs)
-		context['community'] = self.c
-		context['album'] = self.album
-		return context
+		c = super(CommunityVideoList,self).get_context_data(**kwargs)
+		c['community'], c['album'] = self.c, self.album
+		return c
 
 	def get_queryset(self):
-		video_list = self.video_list
-		return video_list
+		return self.video_list
 
 
 class CommunityPostsListView(ListView):
@@ -333,8 +312,7 @@ class CommunityPostsListView(ListView):
 		return c
 
 	def get_queryset(self):
-		posts_list = self.posts_list
-		return posts_list
+		return self.posts_list
 
 
 class PostsDraftCommunity(ListView):
@@ -353,8 +331,7 @@ class PostsDraftCommunity(ListView):
         return context
 
     def get_queryset(self):
-        item_list = self.c.get_draft_posts().order_by('-created')
-        return item_list
+        return self.c.get_draft_posts().order_by('-created')
 
 class PostsUserDraftCommunity(ListView):
     template_name, paginate_by = None, 15
@@ -372,5 +349,4 @@ class PostsUserDraftCommunity(ListView):
         return context
 
     def get_queryset(self):
-        item_list = self.c.get_draft_posts_for_user(self.request.user.pk).order_by('-created')
-        return item_list
+        return self.c.get_draft_posts_for_user(self.request.user.pk).order_by('-created')

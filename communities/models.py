@@ -1,12 +1,10 @@
 import uuid
 from django.conf import settings
 from django.db import models
-from django.utils import timezone
 from django.db.models import Q
 from pilkit.processors import ResizeToFill, ResizeToFit
 from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
-from rest_framework.exceptions import PermissionDenied
 from common.utils import try_except
 from django.contrib.postgres.indexes import BrinIndex
 
@@ -905,6 +903,7 @@ class Community(models.Model):
     def get_moderated_description(self):
         return self.moderated_community.filter(community=self)[0].description
     def is_suspended(self):
+        from django.utils import timezone
         return self.community_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
     def is_blocked(self):
         return self.community_penalties.filter(type="B").exists()

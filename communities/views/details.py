@@ -11,8 +11,7 @@ class PostCommunity(TemplateView):
         from posts.models import Post, PostList
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.posts = self.list.get_posts()
-        self.template_name = get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.posts, self.template_name = self.list.get_posts(), get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -111,16 +110,8 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDetail,self).get_context_data(**kwargs)
-        c["membersheeps"] = self.c.get_members(self.c.pk)[0:6]
-        c["community"] = self.c
-        c["common_friends"] = self.common_friends
-        c["common_friends_count"] = self.common_friends_count
-        c['photo_album'] = self.c.get_or_create_photo_album()
-        c['video_album'] = self.c.get_or_create_video_album()
-        c['music_list'] = self.c.get_or_create_playlist()
-        c['docs_list'] = self.c.get_or_create_doc_list()
-        c['good_album'] = self.c.get_or_create_good_album()
-        c['fix_list'] = self.c.get_or_create_fix_list()
+        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_album'], c['video_album'], c['music_list'], c['docs_list'], c['good_album'], c['fix_list'] = self.c.get_members(self.c.pk)[0:6], self.c, self.common_friends, self.common_friends_count, self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), \
+        self.c.get_or_create_doc_list(), self.c.get_or_create_good_album(), self.c.get_or_create_fix_list()
         return c
 
 
@@ -140,10 +131,9 @@ class CommunityGallery(TemplateView):
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityGallery,self).get_context_data(**kwargs)
-        context['community'] = self.c
-        context['album'] = self.album
-        return context
+        c = super(CommunityGallery,self).get_context_data(**kwargs)
+        c['community'], c['album'] = self.c, self.album
+        return c
 
 class CommunityAlbum(TemplateView):
     template_name = None
@@ -152,13 +142,11 @@ class CommunityAlbum(TemplateView):
         from gallery.models import Album
         from common.template.photo import get_template_community_photo
 
-        self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_template_community_photo(self.album, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityAlbum,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityAlbum,self).get_context_data(**kwargs)
-        context['community'] = self.c
-        context['album'] = self.album
-        return context
+        c = super(CommunityAlbum,self).get_context_data(**kwargs)
+        c['community'], c['album'] = self.c, self.album
+        return c

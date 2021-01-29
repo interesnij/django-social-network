@@ -2,14 +2,13 @@ from django.views.generic import ListView
 from communities.models import Community
 from communities.model.settings import *
 from django.views.generic.base import TemplateView
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from communities.forms import *
-from common.template.community import get_community_manage_template, get_community_moders_template
+from common.template.community import get_community_manage_template
 
 
 class CommunityGeneralView(TemplateView):
-	template_name = None
-	form=None
+	template_name, form = None, None
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -17,18 +16,18 @@ class CommunityGeneralView(TemplateView):
 		return super(CommunityGeneralView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityGeneralView,self).get_context_data(**kwargs)
-		context["form"] = self.form
-		context["community"] = self.c
-		return context
+		c = super(CommunityGeneralView,self).get_context_data(**kwargs)
+		c["form"], c["community"] = self.form, self.c
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.form = GeneralCommunityForm(request.POST, instance=self.c)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
-			return HttpResponse('!')
+			return HttpResponse()
 		else:
+			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
 		return super(CommunityGeneralView,self).post(request,*args,**kwargs)
 
@@ -46,11 +45,9 @@ class CommunitySectionsOpenView(TemplateView):
 		return super(CommunitySectionsOpenView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunitySectionsOpenView,self).get_context_data(**kwargs)
-		context["form"] = CommunitySectionOpenForm(instance=self.sections)
-		context["sections"] = self.sections
-		context["community"] = self.c
-		return context
+		c = super(CommunitySectionsOpenView,self).get_context_data(**kwargs)
+		c["form"], c["sections"], c["community"] = CommunitySectionOpenForm(instance=self.sections), self.sections, self.c
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -74,11 +71,9 @@ class CommunityNotifyPostView(TemplateView):
 		return super(CommunityNotifyPostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityNotifyPostView,self).get_context_data(**kwargs)
-		context["form"] = CommunityNotifyPostForm(instance=self.notify_post)
-		context["notify_post"] = self.notify_post
-		context["community"] = self.c
-		return context
+		c = super(CommunityNotifyPostView,self).get_context_data(**kwargs)
+		c["form"], c["notify_post"], c["community"] = CommunityNotifyPostForm(instance=self.notify_post), self.notify_post, self.c
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -101,11 +96,9 @@ class CommunityNotifyPhotoView(TemplateView):
 		return super(CommunityNotifyPhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityNotifyPhotoView,self).get_context_data(**kwargs)
-		context["form"] = CommunityNotifyPhotoForm(instance=self.notify_photo)
-		context["notify_photo"] = self.notify_photo
-		context["community"] = self.c
-		return context
+		c = super(CommunityNotifyPhotoView,self).get_context_data(**kwargs)
+		c["form"], c["notify_photo"], c["community"] = CommunityNotifyPhotoForm(instance=self.notify_photo), self.notify_photo, self.notify_photo
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -128,11 +121,9 @@ class CommunityNotifyGoodView(TemplateView):
 		return super(CommunityNotifyGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityNotifyGoodView,self).get_context_data(**kwargs)
-		context["form"] = CommunityNotifyGoodForm(instance=self.notify_good)
-		context["notify_good"] = self.notify_good
-		context["community"] = self.c
-		return context
+		c = super(CommunityNotifyGoodView,self).get_context_data(**kwargs)
+		c["form"], c["notify_good"], c["community"] = CommunityNotifyGoodForm(instance=self.notify_good), self.notify_good, self.c
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -155,11 +146,9 @@ class CommunityNotifyVideoView(TemplateView):
 		return super(CommunityNotifyVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityNotifyVideoView,self).get_context_data(**kwargs)
-		context["form"] = CommunityNotifyVideoForm(instance=self.notify_video)
-		context["notify_video"] = self.notify_video
-		context["community"] = self.c
-		return context
+		c = super(CommunityNotifyVideoView,self).get_context_data(**kwargs)
+		c["form"], c["notify_video"], c["community"] = CommunityNotifyVideoForm(instance=self.notify_video), self.notify_video, self.c
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -182,11 +171,9 @@ class CommunityNotifyMusicView(TemplateView):
 		return super(CommunityNotifyMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityNotifyMusicView,self).get_context_data(**kwargs)
-		context["form"] = CommunityNotifyMusicForm(instance=self.notify_music)
-		context["community"] = self.c
-		context["notify_music"] = self.notify_music
-		return context
+		c = super(CommunityNotifyMusicView,self).get_context_data(**kwargs)
+		c["community"], c["form"], c["notify_music"] = self.c, CommunityNotifyMusicForm(instance=self.notify_music), self.notify_music
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -209,10 +196,9 @@ class CommunityPrivatePostView(TemplateView):
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["form"] = CommunityPrivatePostForm(instance=self.private_post)
-		return context
+		c = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
+		c["community"], c["form"] = self.c, CommunityPrivatePostForm(instance=self.private_post)
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -234,10 +220,9 @@ class CommunityPrivateGoodView(TemplateView):
 		return super(CommunityPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPrivateGoodView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["form"] = CommunityPrivateGoodForm(instance=self.private_good)
-		return context
+		c = super(CommunityPrivateGoodView,self).get_context_data(**kwargs)
+		c["community"], c["form"] = self.c, CommunityPrivateGoodForm(instance=self.private_good)
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -259,10 +244,9 @@ class CommunityPrivateVideoView(TemplateView):
 		return super(CommunityPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPrivateVideoView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["form"] = CommunityPrivateVideoForm(instance=self.private_video)
-		return context
+		c = super(CommunityPrivateVideoView,self).get_context_data(**kwargs)
+		c["community"], c["form"] = self.c, CommunityPrivateVideoForm(instance=self.private_video)
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -284,10 +268,9 @@ class CommunityPrivatePhotoView(TemplateView):
 		return super(CommunityPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPrivatePhotoView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["form"] = CommunityPrivatePhotoForm(instance=self.private_photo)
-		return context
+		c = super(CommunityPrivatePhotoView,self).get_context_data(**kwargs)
+		c["community"], c["form"] = self.c, CommunityPrivatePhotoForm(instance=self.private_photo)
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -309,10 +292,9 @@ class CommunityPrivateMusicView(TemplateView):
 		return super(CommunityPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityPrivateMusicView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["form"] = CommunityPrivateMusicForm(instance=self.private_music)
-		return context
+		c = super(CommunityPrivateMusicView,self).get_context_data(**kwargs)
+		c["community"], c["form"] = self.c, CommunityPrivateMusicForm(instance=self.private_music)
+		return c
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -335,8 +317,7 @@ class CommunityAdminView(ListView):
 		return context
 
 	def get_queryset(self):
-		admins = self.c.get_administrators(self.c.pk)
-		return admins
+		return self.c.get_administrators(self.c.pk)
 
 
 class CommunityEditorsView(ListView):
@@ -353,8 +334,7 @@ class CommunityEditorsView(ListView):
 		return context
 
 	def get_queryset(self):
-		admins = self.c.get_editors(self.c.pk)
-		return admins
+		return self.c.get_editors(self.c.pk)
 
 
 class CommunityAdvertisersView(ListView):
@@ -371,8 +351,7 @@ class CommunityAdvertisersView(ListView):
 		return context
 
 	def get_queryset(self):
-		advertisers = self.c.get_advertisers(self.c.pk)
-		return advertisers
+		return self.c.get_advertisers(self.c.pk)
 
 
 class CommunityModersView(ListView):
@@ -389,14 +368,15 @@ class CommunityModersView(ListView):
 		return context
 
 	def get_queryset(self):
-		moders=self.c.get_moderators(self.c.pk)
-		return moders
+		return self.c.get_moderators(self.c.pk)
 
 
 class CommunityBlackListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.template.community import get_community_moders_template
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_moders_template("communities/manage/moders.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityBlackListView,self).get(request,*args,**kwargs)
@@ -407,8 +387,7 @@ class CommunityBlackListView(ListView):
 		return context
 
 	def get_queryset(self):
-		black_list=self.c.get_community_banned_users(self.c.pk)
-		return black_list
+		return self.c.get_community_banned_users(self.c.pk)
 
 
 class CommunityFollowsView(ListView):
@@ -427,8 +406,7 @@ class CommunityFollowsView(ListView):
 	def get_queryset(self):
 		from follows.models import CommunityFollow
 
-		follows = CommunityFollow.get_community_follows(self.c.pk)
-		return follows
+		return CommunityFollow.get_community_follows(self.c.pk)
 
 
 class CommunityMemberManageView(ListView):
@@ -436,21 +414,16 @@ class CommunityMemberManageView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.a,self.m,self.e,self.ad,self.template_name = Community.get_administrators(self.c.pk),Community.get_moderators(self.c.pk),Community.get_editors(self.c.pk),Community.get_advertisers(self.c.pk),get_community_manage_template("communities/manage/members.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.a, self.m, self.e, self.ad, self.template_name = Community.get_administrators(self.c.pk),Community.get_moderators(self.c.pk),Community.get_editors(self.c.pk),Community.get_advertisers(self.c.pk),get_community_manage_template("communities/manage/members.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityMemberManageView,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["administrators"] = self.a
-		context["moderators"] = self.m
-		context["editors"] = self.e
-		context["advertisers"] = self.ad
-		return context
+		c = super(CommunityMemberManageView,self).get_context_data(**kwargs)
+		c["community"], c["administrators"], c["moderators"], c["editors"], c["advertisers"] = self.c, self.m, self.e, self.ad,
+		return c
 
 	def get_queryset(self):
-		membersheeps = self.c.get_members(self.c.pk)
-		return membersheeps
+		return self.c.get_members(self.c.pk)
 
 
 class CommunityStaffWindow(TemplateView):
@@ -465,11 +438,6 @@ class CommunityStaffWindow(TemplateView):
 		return super(CommunityStaffWindow,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityStaffWindow,self).get_context_data(**kwargs)
-		context["community"] = self.c
-		context["user"] = self.user
-		context["administrator"] = self.administrator
-		context["moderator"] = self.moderator
-		context["editor"] = self.editor
-		context["advertiser"] = self.advertiser
-		return context
+		c = super(CommunityStaffWindow,self).get_context_data(**kwargs)
+		c["community"], c["user"], c["administrator"], c["moderator"], c["editor"], c["advertiser"] = self.c, self.user, self.administrator, self.moderator, self.editor, self.advertiser
+		return c
