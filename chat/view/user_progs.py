@@ -39,11 +39,9 @@ class SendPageMessage(TemplateView):
 			if request.POST.get('text') or request.POST.get('attach_items'):
 				if connections:
 					connections += [self.user.pk,]
-					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text)
-					message_attach(request.POST.getlist('attach_items'), _message)
+					_message = Message.create_chat_append_members_and_send_message(creator=request.user, users_ids=connections, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
 				else:
-					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text)
-					message_attach(request.POST.getlist('attach_items'), _message)
+					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
 				return HttpResponse()
 			else:
 				return HttpResponseBadRequest()
@@ -133,9 +131,9 @@ class SendMessage(View):
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		if request.POST.get('text') or request.POST.get('attach_items'):
 			message = form_post.save(commit=False)
-			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'))
+			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
 			message_attach(request.POST.getlist('attach_items'), message)
-			return render_for_platform(request, 'chat/message/message.html', {'object': message, 'attach_items': request.POST.get('attach_items')})
+			return render_for_platform(request, 'chat/message/message.html', {'object': message})
 		else:
 			return HttpResponseBadRequest()
 
@@ -147,8 +145,7 @@ class MessageParent(View):
         if request.is_ajax() and form_post.is_valid():
             message = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-            	new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text)
-            	message_attach(request.POST.getlist('attach_items'), new_message)
+            	new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

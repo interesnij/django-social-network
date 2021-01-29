@@ -75,7 +75,7 @@ class Chat(models.Model):
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
         if count:
-            return '<span style="font-size: 80%;" class="tab_badge badge-success">{}</span>'.format(str(count))
+            return .join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
             return ""
 
@@ -306,7 +306,7 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)('notification', payload)
 
 
-    def get_or_create_chat_and_send_message(creator, user, repost, text):
+    def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
         from common.processing.message import get_message_processing
@@ -321,12 +321,18 @@ class Message(models.Model):
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
+        if voice:
+            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, voice=voice, status=Message.STATUS_PROCESSING)
+        else:
+            _attach = str(attach)
+            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, attach=_attach, status=Message.STATUS_PROCESSING)
         new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
 
-    def create_chat_append_members_and_send_message(creator, users_ids, text):
+    def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice):
         # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
         from common.processing.message import get_message_processing
 
@@ -334,18 +340,27 @@ class Message(models.Model):
         sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
         for user_id in users_ids:
             ChatUsers.objects.create(user_id=user_id, chat=chat)
-
-        new_message = Message.objects.create(chat=chat, creator=sender, text=text, status=Message.STATUS_PROCESSING)
+        if voice:
+            new_message = Message.objects.create(chat=chat, creator=sender, voice=voice, status=Message.STATUS_PROCESSING)
+        else:
+            _attach = str(attach)
+            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+            new_message = Message.objects.create(chat=chat, creator=sender, attach=_attach, text=text, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
 
-    def send_message(chat, creator, repost, parent, text, voice):
-        # программа для отсылки сообщения, когда чат известен
+    def send_message(chat, creator, repost, parent, text, attach, voice):
+        # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, status=Message.STATUS_PROCESSING)
+        if voice:
+            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, voice=voice, status=Message.STATUS_PROCESSING)
+        else:
+            _attach = str(attach)
+            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, attach=_attach, status=Message.STATUS_PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
@@ -355,8 +370,10 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        if self.message_photo.filter(is_deleted=False).exists():
-            return "Фотография"
+        if self.attach and self.text:
+            return "Текст и вложения"
+        elif self.attach and not self.text:
+            return "Вложения"
         else:
             return self.text[:60]
 
