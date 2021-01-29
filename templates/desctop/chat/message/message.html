@@ -19,9 +19,10 @@
         </div>
       {% endif %}
 
-      <span>
-        {% include object.get_attach_items_desctop %}
-      </span>
+      {% if object.attach %}
+        {% load message %}
+        {{ object|get_user_attach:request.user|safe }}
+      {% endif %}
 
       {% if object.repost %}
         <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">

@@ -7,7 +7,7 @@
           <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
         {% endif %}
       </a>
-    </figure> 
+    </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
         <a href="{{ object.get_creator.get_link }}" class="ajax">{{ object.get_creator.first_name }}</a>
@@ -16,24 +16,27 @@
     {% if object.voice %}
       <audio src="{{ object.voice.url }}"></audio>
     {% else %}
+    
       {% if object.text %}
         <div class="">
           {{ object.text|linebreaks }}
         </div>
-      {% endif %}
 
-      <span>
-        {% include object.get_attach_items_mobile %}
-      </span>
+        {% if object.attach %}
+          {% load message %}
+          {{ object|get_user_attach:request.user|safe }}
+        {% endif %}
 
-      {% if object.repost %}
-        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-          {% if object.repost.community %}
-            {% include object.get_c_repost_items_mobile %}
-          {% else %}
-            {% include object.get_u_repost_items_mobile %}
-          {% endif %}
-        </span>
+        {% if object.repost %}
+          <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+            {% if object.repost.community %}
+              {% include object.get_c_repost_items_mobile %}
+            {% else %}
+              {% include object.get_u_repost_items_mobile %}
+            {% endif %}
+          </span>
+        {% endif %}
+
       {% endif %}
 
     {% endif %}
