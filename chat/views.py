@@ -16,7 +16,8 @@ class MessagesListView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.user.get_all_chats()
+		chats = self.user.get_all_chats()
+		return chats
 
 
 class ChatDetailView(ListView):
