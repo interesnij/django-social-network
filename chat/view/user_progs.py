@@ -153,21 +153,21 @@ class SendMessage(View):
 
 
 class MessageParent(View):
-    def post(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message, Chat
 		from chat.forms import MessageForm
 		from django.http import HttpResponse
 
-        parent, chat, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
-        check_can_send_message(request.user, chat)
-        if request.is_ajax() and form_post.is_valid():
-            message = form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('attach_items'):
-            	new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+		parent, chat, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
+		check_can_send_message(request.user, chat)
+		if request.is_ajax() and form_post.is_valid():
+			message = form_post.save(commit=False)
+			if request.POST.get('text') or request.POST.get('attach_items'):
+				new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
+			return HttpResponse()
+		else:
+			return HttpResponseBadRequest()
 
 
 class MessageFixed(View):
