@@ -5,6 +5,7 @@ from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
 from chat.helpers import upload_to_chat_directory
 from imagekit.models import ProcessedImageField
+from django.contrib.postgres.indexes import BrinIndex
 
 
 class Chat(models.Model):
@@ -28,7 +29,6 @@ class Chat(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     class Meta:
-        from django.contrib.postgres.indexes import BrinIndex
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
         indexes = (BrinIndex(fields=['created']),)
@@ -270,7 +270,6 @@ class Message(models.Model):
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
     class Meta:
-        from django.contrib.postgres.indexes import BrinIndex
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
         ordering = "created",
