@@ -1,14 +1,5 @@
-from django.views.generic.base import TemplateView
-from django.views import View
-from django.http import HttpResponse, HttpResponseBadRequest
-from chat.forms import ChatForm, MessageForm
-from chat.models import Chat, Message, MessageFavorite
-from users.models import User
-from django.http import Http404
-from common.check.user import check_user_can_get_list
-from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
-from common.check.message import check_can_send_message
-
+""" TemplateView """
+from django.views.generic import TemplateView
 
 class SendPageMessage(TemplateView):
 	""" Пишем сообщения со страниц пользователей или разных списков. Если у пользователя есть друзья,
@@ -17,6 +8,9 @@ class SendPageMessage(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from common.template.user import get_settings_template
+
 		if request.user.get_6_friends():
 			self.template_name = get_settings_template("chat/message/add_friend_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -25,12 +19,20 @@ class SendPageMessage(TemplateView):
 		return super(SendPageMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from chat.forms import MessageForm
+
 		context = super(SendPageMessage,self).get_context_data(**kwargs)
 		context["form"] = MessageForm()
 		context["member"] = self.user
 		return context
 
 	def post(self,request,*args,**kwargs):
+		from users.models import User
+		from chat.models import Message
+		from common.check.user import check_user_can_get_list
+		from chat.forms import MessageForm
+		from django.http import HttpResponse
+
 		self.form, self.user, connections = MessageForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items")
 		check_user_can_get_list(request.user, self.user)
 
@@ -44,6 +46,7 @@ class SendPageMessage(TemplateView):
 					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
 				return HttpResponse()
 			else:
+				from django.http import HttpResponseBadRequest
 				return HttpResponseBadRequest()
 
 
@@ -53,6 +56,9 @@ class LoadUserChatMessage(TemplateView):
 	"""
 	template_name = None
 	def get(self,request,*args,**kwargs):
+		from common.template.user import get_detect_platform_template
+		from chat.models import Message
+
 		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
 
@@ -68,6 +74,8 @@ class LoadUserMessage(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		from chat.models import Message
+
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
 		count, first_message, creator_figure, user_id, self.template_name = self.chat.get_members_count(), self.chat.get_first_message(), '', request.user.pk, get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -126,8 +134,15 @@ class LoadUserMessage(TemplateView):
 		return context
 
 
+""" View """
+from django.views import View
+
 class SendMessage(View):
 	def post(self,request,*args,**kwargs):
+		from common.template.user import render_for_platform
+		from chat.models import Message, Chat
+		from chat.forms import MessageForm
+
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		if request.POST.get('text') or request.POST.get('attach_items'):
 			message = form_post.save(commit=False)
@@ -139,6 +154,11 @@ class SendMessage(View):
 
 class MessageParent(View):
     def post(self, request, *args, **kwargs):
+		from common.check.message import check_can_send_message
+		from chat.models import Message, Chat
+		from chat.forms import MessageForm
+		from django.http import HttpResponse
+
         parent, chat, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
         check_can_send_message(request.user, chat)
         if request.is_ajax() and form_post.is_valid():
@@ -152,6 +172,10 @@ class MessageParent(View):
 
 class MessageFixed(View):
 	def get(self,request,*args,**kwargs):
+		from common.check.message import check_can_send_message
+		from chat.models import Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		check_can_send_message(request.user, message.chat)
 		if request.is_ajax():
@@ -162,6 +186,10 @@ class MessageFixed(View):
 
 class MessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
+		from common.check.message import check_can_send_message
+		from chat.models import Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
@@ -174,6 +202,10 @@ class MessageUnFixed(View):
 
 class MessageFavorite(View):
 	def get(self,request,*args,**kwargs):
+		from common.check.message import check_can_send_message
+		from chat.models import MessageFavorite, Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
@@ -184,6 +216,9 @@ class MessageFavorite(View):
 
 class MessageUnFavorite(View):
 	def get(self,request,*args,**kwargs):
+		from chat.models import MessageFavorite, Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
 			message.is_fixed = False
@@ -195,6 +230,9 @@ class MessageUnFavorite(View):
 
 class MessageDelete(View):
 	def get(self,request,*args,**kwargs):
+		from chat.models import Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.creator == request.user:
 			message.is_deleted = True
@@ -205,6 +243,9 @@ class MessageDelete(View):
 
 class MessageAbortDelete(View):
 	def get(self,request,*args,**kwargs):
+		from chat.models import Message
+		from django.http import HttpResponse, Http404
+
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.creator == request.user:
 			message.is_deleted = False

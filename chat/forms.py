@@ -1,5 +1,4 @@
 from chat.models import Chat, Message
-from communities.model.settings import *
 from django import forms
 
 

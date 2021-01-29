@@ -1,11 +1,6 @@
 import uuid
-from users.models import User
 from django.conf import settings
 from django.db import models
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
-from django.contrib.postgres.indexes import BrinIndex
-from posts.models import Post
 from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
 from chat.helpers import upload_to_chat_directory
@@ -33,6 +28,7 @@ class Chat(models.Model):
     is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     class Meta:
+        from django.contrib.postgres.indexes import BrinIndex
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
         indexes = (BrinIndex(fields=['created']),)
@@ -48,6 +44,7 @@ class Chat(models.Model):
         return self.type == Chat.TYPE_MANAGER
 
     def get_members(self):
+        from users.models import User
         members = User.objects.filter(chat_users__chat__pk=self.pk)
         return members
 
@@ -273,6 +270,7 @@ class Message(models.Model):
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
     class Meta:
+        from django.contrib.postgres.indexes import BrinIndex
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
         ordering = "created",
@@ -293,6 +291,9 @@ class Message(models.Model):
         return self.chat.get_members_ids()
 
     def create_socket(self):
+        from asgiref.sync import async_to_sync
+        from channels.layers import get_channel_layer
+
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
@@ -381,18 +382,22 @@ class Message(models.Model):
         return try_except(self.repost)
 
     def is_photo_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.PHOTO_REPOST)
     def get_photo_repost(self):
         photo = self.repost.parent.item_photo.filter(is_deleted=False)[0]
         return photo
     def is_photo_album_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.PHOTO_ALBUM_REPOST)
     def get_photo_album_repost(self):
         return self.repost.parent.post_album.filter(is_deleted=False)[0]
 
     def is_music_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.MUSIC_REPOST)
     def is_music_list_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
         playlist = self.repost.parent.post_soundlist.filter(is_deleted=False)[0]
@@ -402,8 +407,10 @@ class Message(models.Model):
         return music
 
     def is_good_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.GOOD_REPOST)
     def is_good_list_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
         return self.repost.item_good.filter(is_deleted=False)[0]
@@ -411,8 +418,10 @@ class Message(models.Model):
         return self.repost.parent.post_good_album.filter(is_deleted=False)[0]
 
     def is_doc_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.DOC_REPOST)
     def is_doc_list_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
         return self.repost.parent.post_doclist.filter(is_deleted=False)[0]
@@ -420,8 +429,10 @@ class Message(models.Model):
         return self.repost.parent.item_doc.filter(is_deleted=False)[0]
 
     def is_video_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
+        from posts.models import Post
         return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
         return self.repost.parent.post_video_album.filter(is_deleted=False)[0]
@@ -458,7 +469,7 @@ class Message(models.Model):
 
 class MessageFavorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
-    #message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
 
     class Meta:
         verbose_name = 'Избранное сообщение'

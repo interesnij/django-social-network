@@ -1,4 +1,3 @@
-
 """ TemplateView """
 from django.views.generic.base import TemplateView
 class CreateChat(TemplateView):
@@ -28,10 +27,9 @@ class CreateChat(TemplateView):
 	def get_context_data(self,**kwargs):
 		from chat.forms import ChatForm
 
-		context=super(CreateChat,self).get_context_data(**kwargs)
-		context["form"] = ChatForm()
-		context["member"] = self.user
-		return context
+		c = super(CreateChat,self).get_context_data(**kwargs)
+		c["form"], c["member"] = ChatForm(), self.user
+		return c
 
 	def post(self,request,*args,**kwargs):
 		from common.template.user import render_for_platform
