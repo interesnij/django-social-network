@@ -1,6 +1,6 @@
 {% extends "base_mobile.html" %}
 {% block title %}Приватный чат{% endblock %}
-{% load messager %}
+{% load message %}
 {% block content %}
 
 <div class="container mt-3 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
