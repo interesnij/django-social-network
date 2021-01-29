@@ -7,7 +7,7 @@ class MessagesListView(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.template.user import get_settings_template
 
-		self.user, self.template_name = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
+		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
 		return super(MessagesListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
