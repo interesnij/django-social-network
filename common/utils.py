@@ -125,7 +125,7 @@ def get_mf_ages(users):
                 m_35_45 += 1
             elif age >= 45:
                 m_45 += 1
-        else:
+        elif user.is_women():
             if age < 18:
                 f_18 += 1
             elif age >= 18 and age < 21:
