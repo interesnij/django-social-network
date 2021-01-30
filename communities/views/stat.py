@@ -32,8 +32,8 @@ class CommunityCoberturaYear(TemplateView):
 		context["comp"] = self.c.get_comp_post_views_for_year(self.y)
 		context["mob"] = self.c.get_mob_post_views_for_year(self.y)
 		context["mf_ages"] = get_mf_ages(self.users)
+		context["users"] = self.users
 		return context
-
 
 class CommunityCoberturaMonth(TemplateView):
 	template_name = None
