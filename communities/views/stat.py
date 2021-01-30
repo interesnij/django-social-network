@@ -3,6 +3,7 @@ from communities.models import Community
 from stst.models import CommunityNumbers, PostNumbers
 from users.models import User
 from common.template.community import get_community_manage_template
+from common.utils import get_mf_ages
 
 
 class CommunityCoberturaYear(TemplateView):
@@ -17,8 +18,8 @@ class CommunityCoberturaYear(TemplateView):
 		self.y = self.years[0].year
 		current_views = PostNumbers.objects.filter(post__in=self.c.get_posts_ids(), created__year=self.y).values('user')
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
-		for user in users:
+		self.users = User.objects.filter(id__in=user_ids)
+		for user in self.users:
 			self.sities += [user.get_last_location()]
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
@@ -30,6 +31,7 @@ class CommunityCoberturaYear(TemplateView):
 		context["sities"] = set(self.sities)
 		context["comp"] = self.c.get_comp_post_views_for_year(self.y)
 		context["mob"] = self.c.get_mob_post_views_for_year(self.y)
+		context["mf_ages"] = get_mf_ages(self.users)
 		return context
 
 

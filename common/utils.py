@@ -102,3 +102,44 @@ def get_location(request):
 
     else:
         pass
+
+
+def get_mf_ages(users):
+    m_18, f_18, m_18_21, f_18_21, m_21_24, f_21_24, m_24_27, f_24_27, m_27_30, f_27_30, m_30_35, f_30_35, m_35_45, f_35_45, m_45, m_45 = 0
+    for user in users:
+        age = user.calculate_age()
+        if user.is_men():
+            if age < 18:
+                m_18 += 1
+            elif age >= 18 and age < 21:
+                m_18_21 += 1
+            elif age >= 21 and age < 24:
+                m_21_24 += 1
+            elif age >= 24 and age < 27:
+                m_24_27 += 1
+            elif age >= 27 and age < 30:
+                m_27_30 += 1
+            elif age >= 30 and age < 35:
+                m_30_35 += 1
+            elif age >= 35 and age < 45:
+                m_35_45 += 1
+            elif age >= 45:
+                m_45 += 1
+        else:
+            if age < 18:
+                f_18 += 1
+            elif age >= 18 and age < 21:
+                f_18_21 += 1
+            elif age >= 21 and age < 24:
+                f_21_24 += 1
+            elif age >= 24 and age < 27:
+                f_24_27 += 1
+            elif age >= 27 and age < 30:
+                f_27_30 += 1
+            elif age >= 30 and age < 35:
+                f_30_35 += 1
+            elif age >= 35 and age < 45:
+                f_35_45 += 1
+            elif age >= 45:
+                f_45 += 1
+        return ''.join(['<div><h5 class="mt-4 mb-2" style="margin:10px">Пол / Возраст</h5><div class="stat_city"><span class="city">До 18 лет</span><span class="count">Муж. ', str(m_18), '| Жен. ', str(f_18), '</span></div><div class="stat_city"><span class="city">От 18 до 21 лет</span><span class="count">Муж. ', str(m_18_21), '| Жен. ', str(f_18_21), '</span></div><div class="stat_city"><span class="city">От 21 до 24 лет</span><span class="count">Муж. ', str(m_21_24), '| Жен. ', str(f_21_24), '</span></div><div class="stat_city"><span class="city">От 24 до 27 лет</span><span class="count">Муж. ', str(m_24_27), '| Жен. ', str(f_24_27), '</span></div><div class="stat_city"><span class="city">От 27 до 30 лет</span><span class="count">Муж. ', str(m_27_30), '| Жен. ', str(f_27_30), '</span></div><div class="stat_city"><span class="city">От 30 до 35 лет</span><span class="count">Муж. ', str(m_30_35), '| Жен. ', str(f_30_35), '</span></div><div class="stat_city"><span class="city">От 35 до 45 лет</span><span class="count">>Муж. ', str(m_35_45), '| Жен. ', str(f_35_45), '</span></div><div class="stat_city"><span class="city">От 45 лет</span><span class="count">Муж. ', str(m_45), '| Жен. ', str(f_45), '</span></div></div>'
