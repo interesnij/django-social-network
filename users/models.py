@@ -83,11 +83,9 @@ class User(AbstractUser):
         return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
     def is_women(self):
-        return try_except(self.perm == User.FEMALE)
+        return try_except(self.gender == User.FEMALE)
     def is_men(self):
-        return try_except(self.perm == User.MALE)
-    def is_no_gender(self):
-        return try_except(self.perm == User.UNCNOUN)
+        return try_except(self.gender == User.MALE)
 
     def is_deleted(self):
         return try_except(self.perm == User.DELETED)
