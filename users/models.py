@@ -76,11 +76,11 @@ class User(AbstractUser):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.last_activity)
 
-    def calculate_age(birthday):
+    def calculate_age(self):
         from datetime import date
 
         today = date.today()
-        return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+        return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
     def is_women(self):
         return try_except(self.perm == User.FEMALE)

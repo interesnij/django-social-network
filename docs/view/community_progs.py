@@ -12,8 +12,7 @@ from common.check.community import check_can_get_lists
 
 class CommunityDoclistAdd(View):
     def post(self,request,*args,**kwargs):
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
             list.communities.add(community)
@@ -23,8 +22,7 @@ class CommunityDoclistAdd(View):
 
 class CommunityDoclistRemove(View):
     def post(self,request,*args,**kwargs):
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
             list.communities.remove(community)
@@ -158,10 +156,9 @@ class CommunityDoclistEdit(TemplateView):
         return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityDoclistEdit,self).get_context_data(**kwargs)
-        context["community"] = self.c
-        context["list"] = DocList.objects.get(uuid=self.kwargs["uuid"])
-        return context
+        c = super(CommunityDoclistEdit,self).get_context_data(**kwargs)
+        c["community"], c["list"] = self.c, DocList.objects.get(uuid=self.kwargs["uuid"])
+        return c
 
     def post(self,request,*args,**kwargs):
         self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
@@ -204,6 +201,6 @@ class CommunityDoclistPreview(TemplateView):
         return super(CommunityDoclistPreview,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityDoclistPreview,self).get_context_data(**kwargs)
-        context["list"], context["community"] = self.list, self.list.community
-        return context
+        c = super(CommunityDoclistPreview,self).get_context_data(**kwargs)
+        c["list"], c["community"] = self.list, self.list.community
+        return c
