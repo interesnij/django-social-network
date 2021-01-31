@@ -200,7 +200,8 @@ class CommunityMusic(ListView):
 		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-		self.c, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN)
+		self.c = Community.objects.get(pk=self.kwargs["pk"])
+		self.playlist = SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN)
 		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 	def get_context_data(self,**kwargs):
@@ -218,7 +219,7 @@ class CommunityMusicList(ListView):
 		from music.models import SoundList
 		from common.template.music import get_template_community_music
 
-		self.community, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+		self.c, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
 			self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -242,9 +243,8 @@ class CommunityVideo(ListView):
 		from common.template.video import get_template_community_video
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-
 		self.album = VideoAlbum.objects.get(community_id=self.c.pk, type=VideoAlbum.MAIN)
+		self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.video_list = self.album.get_my_queryset()
 		else:
@@ -267,7 +267,7 @@ class CommunityVideoList(ListView):
 		from video.models import VideoAlbum
 		from common.template.video import get_template_community_video
 
-		self.community, self.album = Community.objects.get(pk=self.kwargs["pk"]), VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.community,self.album = Community.objects.get(pk=self.kwargs["pk"]), VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.video_list = self.album.get_my_queryset()
 		else:
