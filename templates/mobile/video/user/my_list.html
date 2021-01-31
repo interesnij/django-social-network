@@ -17,17 +17,18 @@
   </div>
 
   {% if not album.is_deleted %}
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
-                    <p class="">Документы {{ album.creator.get_full_name_genitive }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="card mb-2" style="flex-basis: 95%;">
+      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
+        <div style="display:flex">
+          <figure><svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></figure>
+          <div class="media-body" style="margin-left: 10px;">
+            <h6 class="my-0 mt-1">{{ album.title }}</h6>
+            <p class="">Список видео {{ album.creator.get_full_name_genitive }}</p>
+            <p class="">Видеороликов: {{ album.get_video_count }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
