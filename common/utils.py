@@ -160,7 +160,7 @@ def get_mf_ages(users):
                 f_35_45 += 1
             elif age >= 45:
                 f_45 += 1
-    dict_sities, dict_countries = Counter(sities).most_common(), Counter(countries).most_common()
+    dict_sities, dict_countries = Counter(sities), Counter(countries)
     for key, value in dict_countries.items():
         _countries = ''.join([_countries, '<div class="stat_city"><span class="city">' , key, '</span><span class="count">' , str(value), '</span></div>'])
     for key, value in dict_sities.items():
