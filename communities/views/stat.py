@@ -25,7 +25,7 @@ class CommunityCoberturaYear(TemplateView):
 		for user in self.users:
 			try:
 				loc =  UserLocation.objects.filter(user_id=user.pk).last()
-				country, city = loc.country.name_ru, loc.city.name_ru
+				country, city = loc.country_ru, loc.city_ru
 				self.countries, self.sities = self.countries + [country], self.sities + [city]
 			except:
 				self.countries, self.sities = self.countries + ["Страна не известна"], self.sities + ["Город не известен"]

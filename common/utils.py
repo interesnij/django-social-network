@@ -120,8 +120,8 @@ def get_mf_ages(users):
             comp += 1
         try:
             loc =  UserLocation.objects.filter(user_id=self.pk).last()
-            country = loc.country.name_ru
-            city = loc.city.name_ru
+            country = loc.country_ru
+            city = loc.city_ru
             countries, sities = countries + [country], sities + [city]
         except:
             countries, sities = countries + ["Страна не известна"], sities + ["Город не известен"]
