@@ -3,16 +3,6 @@
 {% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
-{% if community.cover %}
-<div class="container-fluid">
-    <div class="align-items-center has-background-img" style="min-height: 150px">
-        <figure class="background-img">
-            <img src="{{ community.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
-        </figure>
-    </div>
-</div>
-{% endif %}
-
 <div class="container mt-3">
         <div class="card mb-3">
             <div class="card-body">
@@ -23,8 +13,8 @@
                   <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
                 {% endif %}
               </h1>
-                {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Нет статуса</p>{% endif %}
-                <br>
+              <p class="mt-1">{{ community.category }}</p>
+              <br>
 
                 {% if community.b_avatar %}
                   <img src="{{ community.b_avatar.url }}" alt="" style="width:100%" class="rounded box-shadow-large">
@@ -37,19 +27,7 @@
                   <a href="/" class="ajax underline">создать аккаунт</a> для вступления в сообщество
                 </span>
 
-                <ul class="list-group w-100 mt-3">
-                    <li class="list-group-item">
-                        <div class="media experience">
-                            <div class="icon-circle icon-40 bg-light-secondary" style="margin-right:10px">
-                              <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                            </div>
-                            <div class="media-body">
-                              <h6 class="my-0 content-color-primary">Описание</h6>
-                                <p>{% if community.description %}{{ community.description }}{% else %}Нет описания{% endif %}</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                {% include 'mobile/communities/detail_sections/description.html' %}
             </div>
           </div>
           <div class="card">

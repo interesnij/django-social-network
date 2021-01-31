@@ -2,15 +2,7 @@
 {% block title %}{{ community.name }} - Вы админ{% endblock %}
 {% block content %}
 
-{% if community.cover %}
-<div class="container-fluid">
-    <div class="align-items-center has-background-img" style="min-height: 150px">
-        <figure class="background-img">
-            <img src="{{ community.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
-        </figure>
-    </div>
-</div>
-{% endif %}
+{% include 'mobile/communities/detail_sections/cover.html' %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ community.pk }}">
   <div class="card mb-3" style="padding:10px">
@@ -41,7 +33,7 @@
             <svg class="svg_info svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
           {% endif %}
         </h1>
-          {% if community.status %}<p class="">{{ community.status }}</p>{% else %}<p class="">Добавьте статус сообщества</p>{% endif %}
+        <p class="mt-1">{% if community.status %}{{ community.status }}{% else %}{{ community.category }}{% endif %}</p>
       </div>
     </div>
     <span class="row no-gutters mb-3">
@@ -52,18 +44,7 @@
         <a class="btn btn-sm member_delete pointer custom_color border" style="width: -webkit-fill-available;">Отписаться</a>
       </span>
     </span>
-    <div style="padding-left: 10px;">
-      <ul class="list-group w-100">
-          <li>
-              <div class="media experience">
-                  <div class="media-body">
-                    <h6 class="my-0 content-color-primary">Описание</h6>
-                      <p>{% if community.description %}{{ community.description }}{% else %}Добавьте описание сообщества{% endif %}</p>
-                  </div>
-              </div>
-          </li>
-      </ul>
-    </div>
+    {% include 'mobile/communities/detail_sections/description.html' %}
   </div>
 
   {% include 'mobile/communities/detail_sections/membersheeps.html' %}
@@ -89,7 +70,7 @@
 
   {% include 'mobile/communities/lenta/admin_fixed_posts.html' %}
 
-  {% include 'mobile/communities/detail_sections/admin_post_lists.html' %} 
+  {% include 'mobile/communities/detail_sections/admin_post_lists.html' %}
 
   <div class="is_community_post_paginate mt-3"></div>
 

@@ -2,16 +2,6 @@
 {% block title %}{{ community.name }}{% endblock %}
 {% block content %}
 
-{% if community.cover %}
-<div class="container-fluid">
-    <div class="align-items-center has-background-img" style="min-height: 150px">
-        <figure class="background-img">
-            <img src="{{ community.cover.url }}" alt="" class="" style="min-height:inherit;opacity: 1">
-        </figure>
-    </div>
-</div>
-{% endif %}
-
 <div class="container mt-3">
   <div class="card mb-3" style="padding:10px">
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
@@ -20,22 +10,10 @@
       </figure>
       <div class="media-body" style="margin-left:10px">
         <h1 class="mb-0 mt-1" style="font-size: 22px;">{{ community.name }}</h1>
-          <p class="">Статус сообщества скрыт</p>
-          <span class="user_status content-color-primary" style="white-space: nowrap; overflow: hidden;"></span>
+        <p class="mt-1">{{ community.category }</p>
       </div>
     </div>
-    <div style="padding-left: 10px;">
-      <ul class="list-group w-100">
-          <li>
-              <div class="media experience">
-                  <div class="media-body">
-                    <h6 class="my-0 content-color-primary">Описание</h6>
-                      <p>Описание сообщества скрыто</p>
-                  </div>
-              </div>
-          </li>
-      </ul>
-    </div>
+    {% include 'mobile/communities/detail_sections/description.html' %}
   </div>
 
           <div class="card mb-3 centered">
