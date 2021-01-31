@@ -14,7 +14,7 @@ class CommunityCoberturaYear(TemplateView):
 		from collections import Counter
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.sities, self.countries, self.years, self.template_name = [], [], [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.sities, self.countries, self.years, self.template_name = [], [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
 			view = self.c.get_post_views_for_year(i.year)
 			self.views += [view]
