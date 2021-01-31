@@ -25,11 +25,10 @@ class CommunityCoberturaYear(TemplateView):
 		for user in self.users:
 			try:
 				loc =  UserLocation.objects.filter(user_id=user.pk).last()
-				country = loc.country.name_ru
-				city = loc.city.name_ru
-				self.countries, self.sities = countries + [country], sities + [city]
+				country, city = loc.country.name_ru, loc.city.name_ru
+				self.countries, self.sities = self.countries + [country], self.sities + [city]
 			except:
-				self.countries, self.sities = countries + ["Страна не известна"], sities + ["Город не известен"]
+				self.countries, self.sities = self.countries + ["Страна не известна"], self.sities + ["Город не известен"]
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
