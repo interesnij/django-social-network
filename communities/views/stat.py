@@ -33,12 +33,13 @@ class CommunityCoberturaYear(TemplateView):
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from collections import Counter
 		context = super(CommunityCoberturaYear,self).get_context_data(**kwargs)
 		context["community"] = self.c
 		context["years"] = self.years
 		context["views"] = self.views
-		context["sities"] = self.sities
-		context["countries"] = self.countries
+		context["sities"] = Counter(self.sities)
+		context["countries"] = Counter(self.countries)
 		context["mf_ages"] = get_mf_ages(self.users)
 		return context
 
