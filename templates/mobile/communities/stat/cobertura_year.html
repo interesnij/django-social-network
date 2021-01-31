@@ -29,6 +29,7 @@
           </div>
 
           <div class="card-body px-0 py-0">
+            {% if views %}
             <div class="table-responsive">
 						<canvas id="canvas"
 										dates='{% for object in years %} {{ object|date:"Y" }} г.{% if not forloop.last %},{% endif %}{% endfor %}'
@@ -39,6 +40,9 @@
                     style="height: 20rem !important">
             </canvas>
             </div>
+            {% else %}
+            <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
 
             {{ mf_ages|safe }}
           </div>
