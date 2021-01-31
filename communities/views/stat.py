@@ -22,13 +22,6 @@ class CommunityCoberturaYear(TemplateView):
 		current_views = PostNumbers.objects.filter(post__in=self.c.get_posts_ids(), created__year=self.y).values('user')
 		user_ids = [use['user'] for use in current_views]
 		self.users = User.objects.filter(id__in=user_ids)
-		for user in self.users:
-			try:
-				loc =  UserLocation.objects.filter(user_id=user.pk).last()
-				country, city = loc.country_ru, loc.city_ru
-				self.countries, self.sities = self.countries + [country], self.sities + [city]
-			except:
-				self.countries, self.sities = self.countries + ["Страна не известна"], self.sities + ["Город не известен"]
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -37,8 +30,6 @@ class CommunityCoberturaYear(TemplateView):
 		context["community"] = self.c
 		context["years"] = self.years
 		context["views"] = self.views
-		context["sities"] = Counter(self.sities)
-		context["countries"] = Counter(self.countries)
 		context["mf_ages"] = get_mf_ages(self.users)
 		return context
 
