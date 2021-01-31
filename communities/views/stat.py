@@ -30,6 +30,7 @@ class CommunityCoberturaYear(TemplateView):
 		context["views"] = self.views
 		context["sities"] = set(self.sities)
 		context["mf_ages"] = get_mf_ages(self.users)
+		context["users"] = self.users
 		return context
 
 class CommunityCoberturaMonth(TemplateView):
