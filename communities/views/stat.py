@@ -10,8 +10,11 @@ class CommunityCoberturaYear(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		from users.model.profile import UserLocation
+	    from collections import Counter
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.views, self.sities, self.years, self.template_name = [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.views, self.sities, self.countries, self.years, self.template_name = [], [], [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
 			view = self.c.get_post_views_for_year(i.year)
 			self.views += [view]
@@ -20,7 +23,13 @@ class CommunityCoberturaYear(TemplateView):
 		user_ids = [use['user'] for use in current_views]
 		self.users = User.objects.filter(id__in=user_ids)
 		for user in self.users:
-			self.sities += [user.get_last_location()]
+			try:
+	            loc =  UserLocation.objects.filter(user_id=user.pk).last()
+	            country = loc.country.name_ru
+	            city = loc.city.name_ru
+	            self.countries, self.sities = countries + [country], sities + [city]
+			except:
+				self.countries, self.sities = countries + ["Страна не известна"], sities + ["Город не известен"]
 		return super(CommunityCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -28,9 +37,9 @@ class CommunityCoberturaYear(TemplateView):
 		context["community"] = self.c
 		context["years"] = self.years
 		context["views"] = self.views
-		context["sities"] = set(self.sities)
+		context["sities"] = self.sities
+		context["countries"] = self.countries
 		context["mf_ages"] = get_mf_ages(self.users)
-		context["users"] = self.users
 		return context
 
 class CommunityCoberturaMonth(TemplateView):

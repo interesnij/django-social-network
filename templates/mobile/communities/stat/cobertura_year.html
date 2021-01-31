@@ -39,18 +39,11 @@
                     style="height: 20rem !important">
             </canvas>
             </div>
-						<h5 class="mt-4 mb-2" style="margin:10px">География за этот год</h5>
-        		   {% for object in sities %}
-        		    <div class="stat_city">
-        			    <span class="city">{{ object|safe }}</span>
-        			    <span class="count">{{ community|c_sity_count:object }}</span>
-        		     </div>
-        		   {% endfor %}
+						{{ countries }} / {{ sities }}
 
-               {{ mf_ages|safe }}
+            {{ mf_ages|safe }}
           </div>
-        </div>
-        {{ users }}
+      </div>
     </div>
 
 {% endblock %}

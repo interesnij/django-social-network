@@ -1422,6 +1422,14 @@ class User(AbstractUser):
         except:
             return "Местоположение не указано"
 
+    def get_loc_city(self):
+        from users.model.profile import UserLocation
+        try:
+            city =  UserLocation.objects.filter(user_id=self.pk).last()
+            return "<a class='ajax pointer'>" + city.city_ru + "</a>"
+        except:
+            return "Местоположение не указано"
+
     def get_sity_count(self, sity):
         from stst.models import UserNumbers
         from users.model.profile import UserLocation
