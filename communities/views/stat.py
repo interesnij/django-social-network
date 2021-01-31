@@ -11,7 +11,7 @@ class CommunityCoberturaYear(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from users.model.profile import UserLocation
-	    from collections import Counter
+		from collections import Counter
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.views, self.sities, self.countries, self.years, self.template_name = [], [], [], [], CommunityNumbers.objects.dates('created', 'year')[0:10], get_community_manage_template("communities/stat/cobertura_year.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
