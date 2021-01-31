@@ -69,7 +69,7 @@ class CommunityCoberturaWeek(TemplateView):
 		dss = [self.weeks[0].day, self.weeks[0].day + 1, self.weeks[0].day + 2, self.weeks[0].day + 3, self.weeks[0].day + 4, self.weeks[0].day + 5, self.weeks[0].day + 6]
 		current_views = CommunityNumbers.objects.filter(created__day__in=dss, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityCoberturaWeek,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -92,7 +92,7 @@ class CommunityCoberturaDay(TemplateView):
 			self.views += [view]
 		current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityCoberturaDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -118,7 +118,7 @@ class CommunityTrafficYear(TemplateView):
 			self.un_views += [view]
 		current_views = CommunityNumbers.objects.filter(created__year=self.years[0].year, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityTrafficYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -145,7 +145,7 @@ class CommunityTrafficMonth(TemplateView):
 			self.un_views += [view, ]
 		current_views = CommunityNumbers.objects.filter(created__month=self.months[0].month, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityTrafficMonth,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -180,7 +180,7 @@ class CommunityTrafficWeek(TemplateView):
 		dss = [self.weeks[0].day, self.weeks[0].day + 1, self.weeks[0].day + 2, self.weeks[0].day + 3, self.weeks[0].day + 4, self.weeks[0].day + 5, self.weeks[0].day + 6]
 		current_views = CommunityNumbers.objects.filter(created__day__in=dss, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityTrafficWeek,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -207,7 +207,7 @@ class CommunityTrafficDay(TemplateView):
 			self.un_views += [view]
 		current_views = CommunityNumbers.objects.filter(created__day=self.days[0].day, community=self.c.pk).values('user').distinct()
 		user_ids = [use['user'] for use in current_views]
-		users = User.objects.filter(id__in=user_ids)
+		self.users = User.objects.filter(id__in=user_ids)
 		return super(CommunityTrafficDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
