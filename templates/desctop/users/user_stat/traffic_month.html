@@ -27,28 +27,19 @@
             </div>
           </div>
           <div class="card-body px-0 py-0">
+            {% if views %}
             <canvas id="canvas"
                     data-dates='{% for month in months %}{{ month|date:"F, Y" }}{% if not forloop.last %},{% endif %}{% endfor %}'
                     data-label_1="Уникальные просмотры"
                     data-label_2="Все просмотры"
                     data-data_1="{% for view in un_views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"
-                    data-data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}"></canvas>
-                <br><br>
-                <h5 class="mt-1" style="margin:10px">География за этот месяц</h5>
+                    data-data_2="{% for view in views %}{{ view }}{% if not forloop.last %},{% endif %}{% endfor %}">
+            </canvas>
+            {% else %}
+                <div><h5 class="mt-4 mb-2" style="margin:10px">Статистических данных пока нет.</h5></div>
+            {% endif %}
 
-                <div class="row">
-                    <div class="col-md-6 order-1">
-            		        {% for object in sities %}
-            		          <div class="stat_city">
-            			          <span class="city">{{ object }}</span>
-            			          <span class="count"><svg fill="currentColor" class="svg_default" style="width:20px" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-            				         {{ user|u_sity_count:object }}
-            			          </span>
-            		           </div>
-            		         {% endfor %}
-                    </div>
-                    <div class="col-md-6 order-2"></div>
-                </div>
+            {{ mf_ages|safe }}
           </div>
           </div>
     </div>
