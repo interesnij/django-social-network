@@ -203,6 +203,7 @@ class CommunityMusic(ListView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN)
 		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusic,self).get_context_data(**kwargs)
