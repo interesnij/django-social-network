@@ -22,8 +22,8 @@
         <div style="display:flex">
           <figure><svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></figure>
           <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1">{{ album.title }}</h6>
-            <p class="">Список видео {{ album.creator.get_full_name_genitive }}</p>
+            <h6 class="my-0 mt-1"><a class="ajax" href="{% url 'user_video_album' pk=album.creator.pk uuid=album.uuid %}">{{ album.title }}</a></h6>
+            <p class="">Список видео <a class="underline ajax" href="{{ album.creator.get_link }}">{{ album.creator.get_full_name_genitive }}</a></p>
             <p class="">Видеороликов: {{ album.get_video_count }}</p>
           </div>
         </div>
