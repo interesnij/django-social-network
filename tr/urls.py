@@ -49,5 +49,4 @@ urlpatterns = [
     url(r'^id(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
 
     url(r'^(?P<slug>[\w\-]+)/$', SwitchView.as_view(), name='switch'),
-
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
