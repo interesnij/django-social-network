@@ -76,6 +76,12 @@ class User(AbstractUser):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.last_activity)
 
+    def get_email_status(self):
+        if self.email:
+            return self.email
+        else:
+            return 'Почта не указана'
+
     def calculate_age(self):
         from datetime import date
 
