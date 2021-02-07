@@ -1,5 +1,5 @@
 from django import forms
-from users.model.profile import UserProfile
+from users.model.profile import UserProfile, UserDeleted
 from users.model.settings import *
 from users.models import User
 
@@ -58,3 +58,25 @@ class UserPrivateMusicForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateMusic
 		fields = ('see', 'music',)
+
+class UserNameForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('first_name', 'last_name',)
+class UserPasswordForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('password', 'password2',)
+class UserEmailForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('email',)
+class UserPhoneForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('phone',)
+
+class UserDeletedForm(forms.ModelForm):
+	class Meta:
+		model = UserDeleted
+		fields = ('answer', 'other')

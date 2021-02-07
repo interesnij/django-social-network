@@ -20,4 +20,13 @@ urlpatterns = [
     url(r'^private_good/$', UserPrivateGoodView.as_view(), name='user_good_private'),
     url(r'^private_video/$', UserPrivateVideoView.as_view(), name='user_video_private'),
     url(r'^private_music/$', UserPrivateMusicView.as_view(), name='user_music_private'),
+
+    url(r'^edit_name/$', UserEditName.as_view()),
+    url(r'^edit_password/$', UserEditPassword.as_view()),
+    url(r'^edit_email/$', UserEditEmail.as_view()),
+    url(r'^edit_phone/$', UserEditPhone.as_view()),
+    url(r'^edit_link/$', UserEditLink.as_view()),
+    url(r'^verify_send/$', UserVerifySend.as_view()),
+    url(r'^identify_send/$', UserIdentifySend.as_view()),
+    url(r'^remove_profile/$', UserRemoveProfile.as_view()),
 ]

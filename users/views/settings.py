@@ -24,7 +24,6 @@ class UserInfoChange(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(UserInfoChange,self).get_context_data(**kwargs)
-		context["profile"] = self.profile
 		context["form"] = self.form
 		return context
 
@@ -362,4 +361,144 @@ class UserPrivateMusicView(TemplateView):
 		self.form = UserPrivateMusicForm(request.POST, instance=self.private_music)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
+			return HttpResponse()
+
+
+class UserEditName(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/edit_name.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserEditName,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		from users.forms import UserNameForm
+		context = super(UserEditName,self).get_context_data(**kwargs)
+		context["form"] = UserNameForm()
+		return context
+
+	def post(self,request,*args,**kwargs):
+		from users.forms import UserNameForm
+
+		self.form = UserNameForm(request.POST,instance=request.user)
+		if request.is_ajax() and self.form.is_valid():
+			self.form.save()
+			return HttpResponse()
+		return super(UserEditName,self).post(request,*args,**kwargs)
+
+class UserEditPassword(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/edit_password.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserEditPassword,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		from users.forms import UserPasswordForm
+		context = super(UserEditPassword,self).get_context_data(**kwargs)
+		context["form"] = UserPasswordForm()
+		return context
+
+	def post(self,request,*args,**kwargs):
+		from users.forms import UserPasswordForm
+
+		self.form = UserPasswordForm(request.POST,instance=request.user)
+		if request.is_ajax() and self.form.is_valid():
+			self.form.save()
+			return HttpResponse()
+		return super(UserEditPassword,self).post(request,*args,**kwargs)
+
+class UserEditEmail(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/edit_email.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserEditEmail,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		from users.forms import UserEmailForm
+		context = super(UserEditEmail,self).get_context_data(**kwargs)
+		context["form"] = UserEmailForm()
+		return context
+
+	def post(self,request,*args,**kwargs):
+		from users.forms import UserEmailForm
+
+		self.form = UserEmailForm(request.POST,instance=request.user)
+		if request.is_ajax() and self.form.is_valid():
+			self.form.save()
+			return HttpResponse()
+		return super(UserEditEmail,self).post(request,*args,**kwargs)
+
+class UserEditPhone(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/edit_phone.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserEditPhone,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		from users.forms import UserPhoneForm
+		context = super(UserEditPhone,self).get_context_data(**kwargs)
+		context["form"] = UserPhoneForm()
+		return context
+
+	def post(self,request,*args,**kwargs):
+		from users.forms import UserPhoneForm
+
+		self.form = UserPhoneForm(request.POST,instance=request.user)
+		if request.is_ajax() and self.form.is_valid():
+			self.form.save()
+			return HttpResponse()
+		return super(UserEditPhone,self).post(request,*args,**kwargs)
+
+class UserEditLink(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/edit_link.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserEditLink,self).get(request,*args,**kwargs)
+
+	def post(self,request,*args,**kwargs):
+		from common.model.other import CustomLink
+		if request.is_ajax():
+			link = request.POST.get('link')
+			if CustomLink.objects.filter(link=link).exists():
+				return HttpResponse()
+			else:
+				CustomLink.objects.create(link=link, user=request.user)
+				request.user.have_link = link
+				request.user.save(update_fields=['have_link'])
+				return HttpResponse()
+
+class UserVerifySend(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/verify_send.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserVerifySend,self).get(request,*args,**kwargs)
+
+class UserIdentifySend(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/identify_send.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserIdentifySend,self).get(request,*args,**kwargs)
+
+class UserRemoveProfile(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/settings/remove_profile.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserRemoveProfile,self).get(request,*args,**kwargs)
+
+	def post(self,request,*args,**kwargs):
+		from users.forms import UserDeletedForm
+
+		self.form = UserDeletedForm(request.POST)
+		if request.is_ajax() or self.form.is_valid():
+			request.user.perm = User.DELETED
+			request.user.save(update_fields=['perm'])
+			post = self.form.save(commit=False)
+			UserDeleted.objects.create(user=request.user.pk, answer=post.answer, other=post.other)
 			return HttpResponse()

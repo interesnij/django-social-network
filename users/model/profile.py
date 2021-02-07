@@ -212,3 +212,28 @@ class UserProfileAnketa(models.Model):
     class Meta:
         verbose_name = "Анкета"
         verbose_name_plural = "Анкеты"
+
+
+class UserDeleted(models.Model):
+    PAGE = 'Pa'
+    TIME = 'Ti'
+    FREE = 'Fr'
+    SAFE = 'Sa'
+    CHILD = 'Ch'
+    OTHER = 'Ot'
+    ANSWER = (
+        (PAGE, 'У меня есть другая страница'),
+        (TIME, 'Соцсеть отнимает много времени'),
+        (FREE, 'Мало свободы самовыражения'),
+        (SAFE, 'Соцсеть плохо защищает данные'),
+        (CHILD, 'Соцсеть плохо защищает детей'),
+        (OTHER, 'Другая причина'),
+    )
+
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    answer = models.CharField(max_length=5, choices=ANSWER, default=OTHER, verbose_name="Причины удаления страницы")
+    other = models.CharField(max_length=200, verbose_name="Свой вариант ответа")
+
+    class Meta:
+        verbose_name = 'Причина удаления страницы'
+        verbose_name_plural = 'Причины удаления страницы'
