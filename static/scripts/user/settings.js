@@ -59,3 +59,36 @@ on('#ajax', 'click', '#user_notify_video_btn', function() {
 on('#ajax', 'click', '#user_notify_music_btn', function() {
   send_form_with_pk_and_toast('/users/settings/notify_music/', document.body.querySelector("#user_notify_music_form"), "Изменения приняты!")
 });
+
+on('#ajax', 'click', '.edit_user_name', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/edit_name/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.edit_user_password', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/edit_password/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.edit_user_email', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/edit_email/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.edit_user_phone', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/edit_phone/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.edit_user_custom_link', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/edit_link/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.user_identified_send', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/identify_send/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.user_verified_send', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/verify_send/", document.getElementById("create_loader"))
+});
+on('#ajax', 'click', '.remove_user_profile', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/users/settings/remove_profile/", document.getElementById("create_loader"))
+});
