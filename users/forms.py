@@ -66,7 +66,7 @@ class UserNameForm(forms.ModelForm):
 class UserPasswordForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ('password', 'password2',)
+		fields = ('password',)
 class UserEmailForm(forms.ModelForm):
 	class Meta:
 		model = User
