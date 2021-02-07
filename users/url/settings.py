@@ -3,7 +3,7 @@ from users.views.settings import *
 
 
 urlpatterns = [
-    url(r'^general/$', UserGeneralChange.as_view(), name='user_general_form'),
+    url(r'', UserGeneralChange.as_view(), name='user_general_form'),
     url(r'^info/$', UserInfoChange.as_view(), name='user_info_form'),
     url(r'^design/$', UserDesign.as_view(), name='user_design_form'),
 
