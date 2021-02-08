@@ -68,7 +68,7 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  value1, value2 = form.querySelector("#password1"), form.querySelector("#password2");
+  value1 = form.querySelector("#password1"); value2 = form.querySelector("#password2");
   if (!value1.value){
     value1.style.border = "1px #FF0000 solid";
     toast_error("Введите новый пароль!"); return
