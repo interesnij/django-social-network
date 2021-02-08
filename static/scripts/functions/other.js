@@ -211,7 +211,7 @@ function edit_and_load_object_page(form, url_post, url_1, url_2) {
     ajax_link.send(form_data)
 }
 
-function send_form_with_pk_and_toast(url, form, toast) {
+function send_form_and_toast(url, form, toast) {
     form_data = new FormData(form);
     ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('POST', url, true);
