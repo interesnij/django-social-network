@@ -61,25 +61,32 @@ on('#ajax', 'click', '#user_notify_music_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_name_btn', function() {
   form = document.body.querySelector("#u_edit_name_form");
-  name = form.querySelector("#first_name").value; name2 = form.querySelector("#last_name").value;
+  field1 = form.querySelector("#first_name"); field2 = form.querySelector("#last_name");
+  if (!field1.value){
+    field1.style.border = "1px #FF0000 solid";
+    toast_error("Введите имя!"); return
+  } else if (!field2.value){
+    field2.style.border = "1px #FF0000 solid";
+    toast_error("Повторите фамилию!"); return
+  };
   send_form_and_toast('/users/settings/edit_name/', form, "Имя / фамилия изменены!");
-  document.body.querySelector(".user_full_name").innerHTML = name + " " + name2;
+  document.body.querySelector(".user_full_name").innerHTML = field1.value + " " + field2.value;
   close_create_window();
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  value1 = form.querySelector("#password1"); value2 = form.querySelector("#password2");
-  if (!value1.value){
-    value1.style.border = "1px #FF0000 solid";
+  field1 = form.querySelector("#password1"); field2 = form.querySelector("#password2");
+  if (!field1.value){
+    field1.style.border = "1px #FF0000 solid";
     toast_error("Введите новый пароль!"); return
-  } else if (!value2.value){
-    value2.style.border = "1px #FF0000 solid";
+  } else if (!field2.value){
+    field2.style.border = "1px #FF0000 solid";
     toast_error("Повторите новый пароль!"); return
-  } else if (value1.value != value2.value){
-    value2.value = '';
+  } else if (field1.value != field2.value){
+    field2.value = '';
     toast_error("Пароли не совпадают!"); return
   };
-  send_form_and_toast('/rest-auth/password/change/', form, "Изменения приняты!")
+  send_form_and_toast('/rest-auth/password/change/', form, "Пароль изменён!")
   close_create_window();
 });
 
