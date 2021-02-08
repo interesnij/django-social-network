@@ -68,18 +68,18 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  form_data = new FormData(form);
-  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  ajax_link.open('POST', '/rest-auth/password/change/', true);
-  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  ajax_link.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          toast_info("Ваш пароль изменён!");
-      }
-   else {
-    toast_info(ajax_link.status + ': ' + ajax_link.responseText )
-  }};
-  ajax_link.send(form_data);
+  value1, value2 = form.querySelector("#password1").value, form.querySelector("#password2").value
+  if (!value1){
+    form.querySelector("#password1").style.border = "1px #FF0000 solid";
+    toast_error("Введите новый пароль!"); return
+  } else if (!value2){
+    form.querySelector("#password2").style.border = "1px #FF0000 solid";
+    toast_error("Повторите новый пароль!"); return
+  } else if (value1 != value2){
+    value2 = '';
+    toast_error("Пароли не совпадают!"); return
+  }ж
+  send_form_and_toast('/rest-auth/password/change/', form, "Изменения приняты!")
   close_create_window();
 });
 
