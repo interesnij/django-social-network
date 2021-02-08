@@ -74,12 +74,13 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          //toast_info("Ваш пароль изменён!");
-          elem = ajax_link.responseText;
-          new_post = document.createElement("span");
-          new_post.innerHTML = elem;
-          toast_info(new_post);
+          toast_info("Ваш пароль изменён!");
       }
+   else {
+    elem = ajax_link.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    toast_info(new_post)
   }
   ajax_link.send(form_data);
   close_create_window();
