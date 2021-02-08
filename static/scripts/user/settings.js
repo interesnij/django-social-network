@@ -68,7 +68,20 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  send_form_and_toast('/rest-auth/password/change/', form, "Ваш пароль изменён!");
+  form_data = new FormData(form);
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('POST', /rest-auth/password/change/, true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          //toast_info("Ваш пароль изменён!");
+          elem = ajax_link.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          toast_info(new_post);
+      }
+  }
+  ajax_link.send(form_data);
   close_create_window();
 });
 
