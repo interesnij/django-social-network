@@ -81,7 +81,7 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     toast_info(new_post)
-  }
+  }};
   ajax_link.send(form_data);
   close_create_window();
 });
