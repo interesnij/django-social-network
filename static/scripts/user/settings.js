@@ -77,7 +77,7 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
           toast_info("Ваш пароль изменён!");
       }
    else {
-    toast_info(ajax_link.status + ': ' + ajax_link.statusText)
+    toast_info(ajax_link.status + ': ' + ajax_link.responseText )
   }};
   ajax_link.send(form_data);
   close_create_window();
