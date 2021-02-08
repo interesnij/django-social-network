@@ -60,7 +60,10 @@ on('#ajax', 'click', '#user_notify_music_btn', function() {
   send_form_and_toast('/users/settings/notify_music/', document.body.querySelector("#user_notify_music_form"), "Изменения приняты!")
 });
 on('#ajax', 'click', '#u_edit_name_btn', function() {
+  form = document.body.querySelector("#u_edit_name_form");
+  name = form.querySelector("#first_name").value; name2 = form.querySelector("#last_name").value;
   send_form_and_toast('/users/settings/edit_name/', document.body.querySelector("#u_edit_name_form"), "Имя / фамилия изменены!");
+  document.body.querySelector(".user_full_name").innerHTML(name + " " + name2);
   close_create_window();
 });
 
