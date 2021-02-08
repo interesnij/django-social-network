@@ -68,15 +68,15 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  value1, value2 = form.querySelector("#password1").value, form.querySelector("#password2").value
-  if (!value1){
-    form.querySelector("#password1").style.border = "1px #FF0000 solid";
+  value1, value2 = form.querySelector("#password1"), form.querySelector("#password2");
+  if (!value1.value){
+    value1.style.border = "1px #FF0000 solid";
     toast_error("Введите новый пароль!"); return
-  } else if (!value2){
-    form.querySelector("#password2").style.border = "1px #FF0000 solid";
+  } else if (!value2.value){
+    value2.style.border = "1px #FF0000 solid";
     toast_error("Повторите новый пароль!"); return
-  } else if (value1 != value2){
-    value2 = '';
+  } else if (value1.value != value2.value){
+    value2.value = '';
     toast_error("Пароли не совпадают!"); return
   }ж
   send_form_and_toast('/rest-auth/password/change/', form, "Изменения приняты!")
