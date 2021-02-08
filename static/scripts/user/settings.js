@@ -66,6 +66,11 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
   document.body.querySelector(".user_full_name").innerHTML = name + " " + name2;
   close_create_window();
 });
+on('#ajax', 'click', '#u_edit_password_btn', function() {
+  form = document.body.querySelector("#u_edit_password_form");
+  send_form_and_toast('/password-change/', form, "Ваш пароль изменён!");
+  close_create_window();
+});
 
 on('#ajax', 'click', '.edit_user_name', function() {
   loader = document.getElementById("create_loader");
