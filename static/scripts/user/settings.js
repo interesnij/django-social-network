@@ -78,7 +78,7 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
   } else if (value1.value != value2.value){
     value2.value = '';
     toast_error("Пароли не совпадают!"); return
-  }ж
+  };
   send_form_and_toast('/rest-auth/password/change/', form, "Изменения приняты!")
   close_create_window();
 });
