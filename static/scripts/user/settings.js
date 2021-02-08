@@ -68,7 +68,7 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
-  send_form_and_toast('/password-change/', form, "Ваш пароль изменён!");
+  send_form_and_toast('/rest-auth/password/change/', form, "Ваш пароль изменён!");
   close_create_window();
 });
 
