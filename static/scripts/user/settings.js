@@ -67,7 +67,7 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
     toast_error("Введите имя!"); return
   } else if (!field2.value){
     field2.style.border = "1px #FF0000 solid";
-    toast_error("Повторите фамилию!"); return
+    toast_error("Введите фамилию!"); return
   };
   send_form_and_toast('/users/settings/edit_name/', form, "Имя / фамилия изменены!");
   document.body.querySelector(".user_full_name").innerHTML = field1.value + " " + field2.value;
