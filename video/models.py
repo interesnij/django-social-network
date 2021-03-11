@@ -41,18 +41,17 @@ class VideoAlbum(models.Model):
         (MAIN, 'Основной видеоальбом'),
         (ALBUM, 'Пользовательский видеоальбом'),
     )
-    community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    id = models.BigAutoField(primary_key=True)
     type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -145,7 +144,6 @@ class Video(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         verbose_name = "Видео-ролики"
@@ -234,7 +232,6 @@ class VideoComment(models.Model):
     is_edited = models.BooleanField(default=False, verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
-    id = models.BigAutoField(primary_key=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:

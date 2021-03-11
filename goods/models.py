@@ -48,7 +48,7 @@ class GoodAlbum(models.Model):
         (ALBUM, 'Пользовательский альбом'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
@@ -58,8 +58,8 @@ class GoodAlbum(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален",default=False)
     image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
 
     class Meta:
         indexes = (

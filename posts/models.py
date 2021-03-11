@@ -21,7 +21,7 @@ class PostList(models.Model):
         (FIX, 'Закрепленный список'),
     )
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=1)
@@ -111,7 +111,7 @@ class Post(models.Model):
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
-    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
@@ -124,7 +124,6 @@ class Post(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    id = models.BigAutoField(primary_key=True)
     is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
@@ -484,7 +483,6 @@ class PostComment(models.Model):
     is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
     is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    id = models.BigAutoField(primary_key=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:

@@ -71,7 +71,6 @@ class Community(models.Model):
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=COMMUNITY_TYPES, default='P', max_length=2)
-    invites_enabled = models.BooleanField(default=True, verbose_name="Разрешить приглашения")
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
@@ -945,7 +944,7 @@ class CommunityMembership(models.Model):
 class CommunityLog(models.Model):
     source_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', null=False, blank=False, verbose_name="Кто модерирует")
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Кого модерируют")
-    item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
+    #item = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='+', null=True, blank=True, verbose_name="Пост")
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='logs', null=False, blank=False, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
     id = models.BigAutoField(primary_key=True)

@@ -17,8 +17,7 @@ class ModeratedVideo(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    video = models.ForeignKey('video.Video', on_delete=models.CASCADE, related_name='moderated_video', blank=True, verbose_name="Ролик")
-    id = models.BigAutoField(primary_key=True)
+    #video = models.ForeignKey('video.Video', on_delete=models.CASCADE, related_name='moderated_video', blank=True, verbose_name="Ролик")
 
     @classmethod
     def create_moderated_object(cls, video):
@@ -97,8 +96,7 @@ class ModeratedVideoComment(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    comment = models.ForeignKey('video.VideoComment', on_delete=models.CASCADE, related_name='moderated_video_comment', blank=True, verbose_name="Комментарий к ролику")
-    id = models.BigAutoField(primary_key=True)
+    #comment = models.ForeignKey('video.VideoComment', on_delete=models.CASCADE, related_name='moderated_video_comment', blank=True, verbose_name="Комментарий к ролику")
 
     @classmethod
     def create_moderated_object(cls, comment):
@@ -163,7 +161,6 @@ class ModeratedVideoComment(models.Model):
         verbose_name_plural = 'Проверяемые комментарии к роликам'
 
 
-
 class VideoModerationReport(models.Model):
     PORNO = 'P'
     NO_CHILD = 'NC'
@@ -200,7 +197,6 @@ class VideoModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedVideo, on_delete=models.CASCADE, related_name='video_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_photo_moderation_report(cls, reporter_id, video, description, type):
@@ -251,7 +247,6 @@ class VideoCommentModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedVideoComment, on_delete=models.CASCADE, related_name='video_comment_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_video_comment_moderation_report(cls, reporter_id, comment, description, type):
@@ -268,7 +263,7 @@ class VideoCommentModerationReport(models.Model):
 
 
 class ModerationPenaltyVideo(models.Model):
-    video = models.ForeignKey("video.Video", on_delete=models.CASCADE, related_name='video_penalties', verbose_name="Оштрафованный ролик")
+    #video = models.ForeignKey("video.Video", on_delete=models.CASCADE, related_name='video_penalties', verbose_name="Оштрафованный ролик")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_video_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedVideo, on_delete=models.CASCADE, related_name='video_moderated_object', verbose_name="Объект")
 
@@ -294,7 +289,7 @@ class ModerationPenaltyVideo(models.Model):
         verbose_name_plural = 'Оштрафованные ролики'
 
 class ModerationPenaltyVideoComment(models.Model):
-    comment = models.ForeignKey("video.VideoComment", on_delete=models.CASCADE, related_name='video_comment_penalties', verbose_name="Оштрафованный комментарий к ролику")
+    #comment = models.ForeignKey("video.VideoComment", on_delete=models.CASCADE, related_name='video_comment_penalties', verbose_name="Оштрафованный комментарий к ролику")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_video_comment_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedVideoComment, on_delete=models.CASCADE, related_name='video_comment_moderated_object', verbose_name="Объект")
 

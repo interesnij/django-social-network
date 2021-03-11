@@ -21,15 +21,15 @@ class Article(models.Model):
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
     #content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
     is_deleted = models.BooleanField(verbose_name="Удален",default=False )
     id = models.BigAutoField(primary_key=True)
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')
 
     @classmethod
     def create_article(cls, creator, title, community, g_image, content, created, status ):

@@ -17,8 +17,7 @@ class ModeratedGood(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    good = models.ForeignKey('goods.Good', on_delete=models.CASCADE, related_name='moderated_good', blank=True, verbose_name="Товар")
-    id = models.BigAutoField(primary_key=True)
+    #good = models.ForeignKey('goods.Good', on_delete=models.CASCADE, related_name='moderated_good', blank=True, verbose_name="Товар")
 
     @classmethod
     def create_moderated_object(cls, good):
@@ -97,8 +96,7 @@ class ModeratedGoodComment(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, related_name='moderated_good_comment', blank=True, verbose_name="Комментарий к товару")
-    id = models.BigAutoField(primary_key=True)
+    #comment = models.ForeignKey('goods.GoodComment', on_delete=models.CASCADE, related_name='moderated_good_comment', blank=True, verbose_name="Комментарий к товару")
 
     @classmethod
     def create_moderated_object(cls, comment):
@@ -200,7 +198,6 @@ class GoodModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedGood, on_delete=models.CASCADE, related_name='good_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_good_moderation_report(cls, reporter_id, good, description, type):
@@ -251,7 +248,6 @@ class GoodCommentModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedGoodComment, on_delete=models.CASCADE, related_name='good_comment_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_good_comment_moderation_report(cls, reporter_id, comment, description, type):
@@ -268,7 +264,7 @@ class GoodCommentModerationReport(models.Model):
 
 
 class ModerationPenaltyGood(models.Model):
-    good = models.ForeignKey("goods.Good", on_delete=models.CASCADE, related_name='good_penalties', verbose_name="Оштрафованный товар")
+    #good = models.ForeignKey("goods.Good", on_delete=models.CASCADE, related_name='good_penalties', verbose_name="Оштрафованный товар")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_good_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedGood, on_delete=models.CASCADE, related_name='good_moderated_object', verbose_name="Объект")
 
@@ -294,7 +290,7 @@ class ModerationPenaltyGood(models.Model):
         verbose_name_plural = 'Оштрафованные товары'
 
 class ModerationPenaltyGoodComment(models.Model):
-    comment = models.ForeignKey("goods.GoodComment", on_delete=models.CASCADE, related_name='good_comment_penalties', verbose_name="Оштрафованный комментарий к товару")
+    #comment = models.ForeignKey("goods.GoodComment", on_delete=models.CASCADE, related_name='good_comment_penalties', verbose_name="Оштрафованный комментарий к товару")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_good_comment_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedGoodComment, on_delete=models.CASCADE, related_name='good_comment_moderated_object', verbose_name="Объект")
 

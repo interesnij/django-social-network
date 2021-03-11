@@ -17,8 +17,7 @@ class ModeratedPost(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
-    id = models.BigAutoField(primary_key=True)
+    #post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
 
     @classmethod
     def create_moderated_object(cls, post):
@@ -101,8 +100,7 @@ class ModeratedPostComment(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, blank=True, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, related_name='moderated_post_comment', blank=True, verbose_name="Комментарий к записи")
-    id = models.BigAutoField(primary_key=True)
+    #comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, related_name='moderated_post_comment', blank=True, verbose_name="Комментарий к записи")
 
     @classmethod
     def create_moderated_object(cls, comment):
@@ -205,7 +203,6 @@ class PostModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_post_moderation_report(cls, reporter_id, post, description, type):
@@ -256,7 +253,6 @@ class PostCommentModerationReport(models.Model):
     moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_post_comment_moderation_report(cls, reporter_id, comment, description, type):
@@ -274,7 +270,7 @@ class PostCommentModerationReport(models.Model):
 
 class ModerationPenaltyPost(models.Model):
     # сами санкции против пользователя. Пока только заморозка на разное время.
-    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованная запись")
+    #post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованная запись")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_post_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_moderated_object', verbose_name="Объект")
 
@@ -283,7 +279,6 @@ class ModerationPenaltyPost(models.Model):
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_delete_penalty(cls, post_id, manager_id, moderated_object):
@@ -301,7 +296,7 @@ class ModerationPenaltyPost(models.Model):
         verbose_name_plural = 'Оштрафованные записи'
 
 class ModerationPenaltyPostComment(models.Model):
-    comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, related_name='post_comment_penalties', verbose_name="Оштрафованный комментарий к записи")
+    #comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, related_name='post_comment_penalties', verbose_name="Оштрафованный комментарий к записи")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_post_comment_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_moderated_object', verbose_name="Объект")
 
@@ -310,7 +305,6 @@ class ModerationPenaltyPostComment(models.Model):
         (DELETE, 'Удалено'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_delete_penalty(cls, comment_id, manager_id, moderated_object):
