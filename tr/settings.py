@@ -60,16 +60,6 @@ MY_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS
 
-CKEDITOR_CONFIGS = {
-       'default': {
-           'toolbar': 'full',
-           'height': 500,
-           'width': '100%',
-           'removePlugins': 'stylesheetparser',
-           'extraPlugins': ','.join(['youtube']),
-       },
-    }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -214,11 +204,6 @@ PROFILE_AVATAR_MAX_SIZE = 10485760
 PROFILE_COVER_MAX_SIZE = 10485760
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_IMAGE_BACKEND = 'pillow'
-CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
-CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_BROWSE_SHOW_DIRS = True
 DOC_UPLOAD_FILE_MAX_SIZE = "214958080"
 
 THUMBNAIL_DEFAULT_OPTIONS = {"crop":"smart","detail":True}
