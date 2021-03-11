@@ -208,7 +208,28 @@ class PostCommunityNotify(models.Model):
 
 
 def post_notification_handler(creator, recipient, post, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
+    """ Сохранение уведомления о событиях записей пользователя.
+        Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
+        1. По сегодняшнему дню фильтруем записи уведомлений постов. Если есть запись, которую создал
+        creator, а получатель её recipient, и verb совпадает с verb этой записи, значит создаём новую запись с прикреплением её
+        к найденной записи. Это пример уведомлений "Тот-то оценил 2 Ваши записи".
+        2. Если записи нет, тогда снова ищем, но только по совпадению "получатель её recipient, и verb совпадает с verb" за
+        сегодняший день. Если запись есть, то создаем новую и прицепляем к ней. Это пример уведомлений
+        "Тот-то и тот-то оценили пост" или "Тот-то и ещё 7 человек оценили пост".
+        3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
+        "Тот-то оценил Ваш пост".
+    """
+    from datetime import datetime
+    today = datetime.date.today()
+
+    if PostNotify.objects.filter(creator_id=creator.pk, recipient_id=recipient.pk, created__gt = today, verb=verb).exclude(creator_id=recipient.pk).exists():
+        notify = PostNotify.objects.get(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=datetime.date.today(), verb=verb)
+        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, object_set=notify)
+    elif PostNotify.objects.filter(recipient_id=recipient.pk, created__gt=today, verb=verb).exclude(creator_id=recipient.pk).exists():
+        notify = PostNotify.objects.get(recipient_id=recipient.pk, created__gt = datetime.date.today(), verb=verb)
+        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, user_set=notify)
+    else:
+        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
