@@ -49,6 +49,9 @@ class PostNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
+    user_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
         verbose_name_plural = "Уведомления - записи пользователя"
@@ -60,6 +63,26 @@ class PostNotify(models.Model):
             return '{} {}'.format(self.community, self.get_verb_display())
         else:
             return '{} {}'.format(self.creator, self.get_verb_display())
+
+    def get_user_set(self):
+		return PostNotify.objects.filter(user_set_id=self.pk).all()
+
+	def count_user_set(self):
+		return PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+
+    def get_post_set(self):
+		return PostNotify.objects.filter(post_set_id=self.pk).all()
+
+	def count_post_set(self):
+		return PostNotify.objects.filter(post_set_id=self.pk).values("pk").count()
+
+    def show_current_notify(self):
+        if self.user_set:
+            return self.get_user_set().first()
+        elif self.post_set:
+            return self.get_post_set().first()
+        else:
+            return self
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -130,6 +153,9 @@ class PostCommunityNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
+    user_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
         verbose_name_plural = "Уведомления - записи сообщества"
@@ -149,6 +175,26 @@ class PostCommunityNotify(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
+
+    def get_user_set(self):
+		return PostNotify.objects.filter(user_set_id=self.pk).all()
+
+	def count_user_set(self):
+		return PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+
+    def get_post_set(self):
+		return PostNotify.objects.filter(post_set_id=self.pk).all()
+
+	def count_post_set(self):
+		return PostNotify.objects.filter(post_set_id=self.pk).values("pk").count()
+
+    def show_current_notify(self):
+        if self.user_set:
+            return self.get_user_set().first()
+        elif self.post_set:
+            return self.get_post_set().first()
+        else:
+            return self
 
     def get_svg(self):
         if self.verb == "L" or self.verb == "LC" or self.verb == "LRC":
