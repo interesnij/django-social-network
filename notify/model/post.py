@@ -222,11 +222,11 @@ def post_notification_handler(creator, recipient, post, verb):
     from datetime import date
     today = date.today()
 
-    if PostNotify.objects.filter(creator_id=creator.pk, recipient_id=recipient.pk, created__gt = today, verb=verb).exclude(creator_id=recipient.pk).exists():
-        notify = PostNotify.objects.get(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=datetime.date.today(), verb=verb)
+    if PostNotify.objects.filter(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=today, verb=verb).exclude(creator_id=recipient.pk).exists():
+        notify = PostNotify.objects.get(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=today, verb=verb)
         PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, object_set=notify)
     elif PostNotify.objects.filter(recipient_id=recipient.pk, created__gt=today, verb=verb).exclude(creator_id=recipient.pk).exists():
-        notify = PostNotify.objects.get(recipient_id=recipient.pk, created__gt = datetime.date.today(), verb=verb)
+        notify = PostNotify.objects.get(recipient_id=recipient.pk, created__gt=today, verb=verb)
         PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, user_set=notify)
     else:
         PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
