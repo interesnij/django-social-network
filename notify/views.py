@@ -12,8 +12,6 @@ class AllNotifyView(ListView):
     def get(self,request,*args,**kwargs):
         self.template_name = get_settings_template("notify/all_notify.html", request.user, request.META['HTTP_USER_AGENT'])
         self.user, self.all_notify = request.user, request.user.get_user_notify()
-        if not self.user.is_staffed_user():
-            self.user.read_user_notify()
         return super(AllNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
