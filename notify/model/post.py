@@ -65,16 +65,16 @@ class PostNotify(models.Model):
             return '{} {}'.format(self.creator, self.get_verb_display())
 
     def get_user_set(self):
-		return PostNotify.objects.filter(user_set_id=self.pk).all()
+        return PostNotify.objects.filter(user_set_id=self.pk).all()
 
-	def count_user_set(self):
-		return PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+    def count_user_set(self):
+        return PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
 
     def get_post_set(self):
-		return PostNotify.objects.filter(post_set_id=self.pk).all()
+        return PostNotify.objects.filter(post_set_id=self.pk).all()
 
-	def count_post_set(self):
-		return PostNotify.objects.filter(post_set_id=self.pk).values("pk").count()
+    def count_post_set(self):
+        return PostNotify.objects.filter(post_set_id=self.pk).values("pk").count()
 
     def show_current_notify(self):
         if self.user_set:
