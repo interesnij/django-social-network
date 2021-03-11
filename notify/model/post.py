@@ -49,8 +49,8 @@ class PostNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
-    user_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
-    object_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+    user_set = models.ForeignKey('self', related_name='user_post_user_set', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='user_post_user_set', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление - записи пользователя"
@@ -153,8 +153,8 @@ class PostCommunityNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
-    user_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
-    object_set = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+    user_set = models.ForeignKey('self', related_name='community_post_user_set', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='community_post_object_set', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление - записи сообщества"
