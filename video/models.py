@@ -41,7 +41,7 @@ class VideoAlbum(models.Model):
         (MAIN, 'Основной видеоальбом'),
         (ALBUM, 'Пользовательский видеоальбом'),
     )
-    #community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     title = models.CharField(max_length=250, verbose_name="Название")
     is_public = models.BooleanField(default=True, verbose_name="Виден другим")
@@ -50,8 +50,8 @@ class VideoAlbum(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
+    users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
 
     class Meta:
         verbose_name = 'Видеоальбом'

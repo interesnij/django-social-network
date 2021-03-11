@@ -17,7 +17,7 @@ class ModeratedPost(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    #post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
+    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='moderated_post', blank=True, verbose_name="Запись")
 
     @classmethod
     def create_moderated_object(cls, post):
@@ -100,7 +100,7 @@ class ModeratedPostComment(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, blank=True, verbose_name="Проверено")
     status = models.CharField(max_length=5, choices=STATUSES, default=STATUS_PENDING, verbose_name="Статус")
-    #comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, related_name='moderated_post_comment', blank=True, verbose_name="Комментарий к записи")
+    comment = models.ForeignKey('posts.PostComment', on_delete=models.CASCADE, related_name='moderated_post_comment', blank=True, verbose_name="Комментарий к записи")
 
     @classmethod
     def create_moderated_object(cls, comment):
@@ -270,7 +270,7 @@ class PostCommentModerationReport(models.Model):
 
 class ModerationPenaltyPost(models.Model):
     # сами санкции против пользователя. Пока только заморозка на разное время.
-    #post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованная запись")
+    post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name='post_penalties', verbose_name="Оштрафованная запись")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_post_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedPost, on_delete=models.CASCADE, related_name='post_moderated_object', verbose_name="Объект")
 
@@ -296,7 +296,7 @@ class ModerationPenaltyPost(models.Model):
         verbose_name_plural = 'Оштрафованные записи'
 
 class ModerationPenaltyPostComment(models.Model):
-    #comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, related_name='post_comment_penalties', verbose_name="Оштрафованный комментарий к записи")
+    comment = models.ForeignKey("posts.PostComment", on_delete=models.CASCADE, related_name='post_comment_penalties', verbose_name="Оштрафованный комментарий к записи")
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_post_comment_penalties', verbose_name="Менеджер")
     moderated_object = models.ForeignKey(ModeratedPostComment, on_delete=models.CASCADE, related_name='post_comment_moderated_object', verbose_name="Объект")
 

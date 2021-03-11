@@ -197,7 +197,6 @@ class ModerationPenaltyUser(models.Model):
         (BANNER, 'Вывешен баннер'),
     )
     type = models.CharField(max_length=5, choices=TYPES, verbose_name="Тип")
-    id = models.BigAutoField(primary_key=True)
 
     @classmethod
     def create_suspension_penalty(cls, user_id, manager_id, moderated_object, expiration):

@@ -66,7 +66,7 @@ class SoundList(models.Model):
         (LIST, 'Пользовательский плейлист'),
     )
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=0)
@@ -74,8 +74,8 @@ class SoundList(models.Model):
     is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
+    users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -153,7 +153,6 @@ class SoundList(models.Model):
 
 
 class SoundTags(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     order = models.IntegerField(default=0)
     symbol = models.ForeignKey(SoundSymbol, related_name="symbol_papa", on_delete=models.CASCADE, verbose_name="Буква")
@@ -190,7 +189,6 @@ class SoundTags(models.Model):
         verbose_name_plural = "теги"
 
 class UserTempSoundList(models.Model):
-    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
     list = models.ForeignKey(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
     tag = models.ForeignKey(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
@@ -198,7 +196,6 @@ class UserTempSoundList(models.Model):
 
 
 class SoundcloudParsing(models.Model):
-    id = models.BigAutoField(primary_key=True)
     artwork_url = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
     created_at = models.DateTimeField(default=timezone.now)
     duration = models.CharField(max_length=255, blank=True, null=True)
