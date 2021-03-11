@@ -219,8 +219,8 @@ def post_notification_handler(creator, recipient, post, verb):
         3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
         "Тот-то оценил Ваш пост".
     """
-    from datetime import datetime
-    today = datetime.date.today()
+    from datetime import date
+    today = date.today()
 
     if PostNotify.objects.filter(creator_id=creator.pk, recipient_id=recipient.pk, created__gt = today, verb=verb).exclude(creator_id=recipient.pk).exists():
         notify = PostNotify.objects.get(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=datetime.date.today(), verb=verb)
