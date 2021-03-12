@@ -107,45 +107,6 @@ class PostNotify(models.Model):
     def notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
-    def save_notify(creator, recipient_id, post_id, comment_id, verb):
-        """ Сохранение уведомления о событиях записей пользователя.
-            Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
-            1. По сегодняшнему дню фильтруем записи уведомлений постов. Если есть запись, которую создал
-            creator, а получатель её recipient, и verb совпадает с verb этой записи, значит создаём новую запись с прикреплением её
-            к найденной записи. Это пример уведомлений "Тот-то оценил 2 Ваши записи".
-            2. Если записи нет, тогда снова ищем, но только по совпадению "получатель её recipient, и verb совпадает с verb" за
-            сегодняший день. Если запись есть, то создаем новую и прицепляем к ней. Это пример уведомлений
-            "Тот-то и тот-то оценили пост" или "Тот-то и ещё 7 человек оценили пост".
-            3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
-            "Тот-то оценил Ваш пост".
-        """
-        from datetime import date
-        today = date.today()
-        current_verb = creator.get_verb_gender(verb)
-        if comment_id:
-            if PostNotify.objects.filter(creator=creator, comment_id=comment_id, verb=current_verb).exists():
-                pass
-            elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
-                notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb)
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb, object_set=notify)
-            elif PostNotify.objects.filter(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb).exclude(creator_id=recipient_id).exists():
-                notify = PostNotify.objects.get(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb)
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb="G"+verb, user_set=notify)
-            else:
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
-        else:
-            if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
-                pass
-            elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, post_id=post_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
-                notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, post_id=post_id, created__gt=today, verb=current_verb)
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=verb, object_set=notify)
-            elif PostNotify.objects.filter(recipient_id=recipient_id, created__gt=today, post_id=post_id, verb=verb).exclude(creator_id=recipient_id).exists():
-                notify = PostNotify.objects.get(recipient_id=recipient_id, post_id=post_id, created__gt=today, verb=verb)
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb="G"+verb, user_set=notify)
-            else:
-                PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
-
-
 class PostCommunityNotify(models.Model):
     COMMENT = 'C'
     REPLY = 'R'
