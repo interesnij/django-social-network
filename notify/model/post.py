@@ -59,7 +59,7 @@ class PostNotify(models.Model):
         if self.community:
             return '{} {}'.format(self.community, self.get_verb_display())
         else:
-            return '{} {}'.format(self.creator, self.creator.get_verb_gender(verb))
+            return '{} {}'.format(self.creator, self.creator.get_verb_gender(self.verb))
 
     def get_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk).all()
