@@ -9,7 +9,7 @@ from common.model.votes import PostVotes, PostCommentVotes
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from django.http import Http404
-from common.utils import item_notification_handler
+from common.notify import item_notification_handler
 
 
 class PostUserLikeCreate(View):
