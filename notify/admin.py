@@ -7,7 +7,13 @@ from notify.model.video import VideoNotify, VideoCommunityNotify
 from notify.model.survey import SurveyNotify, SurveyCommunityNotify
 
 
-admin.site.register(UserNotify)
+class UserNotifyAdmin(admin.ModelAdmin):
+    list_display = ['creator','recipient','created']
+    list_filter = ['created']
+    class Meta:
+        model = UserNotify
+
+admin.site.register(UserNotify, UserNotifyAdmin)
 admin.site.register(UserCommunityNotify)
 admin.site.register(PostNotify)
 admin.site.register(PostCommunityNotify)
