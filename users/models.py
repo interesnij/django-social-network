@@ -50,11 +50,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
-    def get_verb_gender(self):
+    def get_verb_gender(self, verb):
         if self.is_women():
-            return "W"
+            return "W" + verb
         else:
-            return ""
+            return verb
 
     def get_device(self):
         if self.device == User.DESCTOP:
