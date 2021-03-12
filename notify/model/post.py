@@ -121,8 +121,10 @@ class PostNotify(models.Model):
         """
         from datetime import date
         today = date.today()
-        current_verb = creator.get_verb_gender(verb) 
-        if PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
+        current_verb = creator.get_verb_gender(verb)
+        if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
+            pass
+        elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
             notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb)
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=verb, object_set=notify)
         elif PostNotify.objects.filter(recipient_id=recipient_id, created__gt=today, verb=verb).exclude(creator_id=recipient_id).exists():
