@@ -1163,7 +1163,7 @@ def check_can_delete_comment_with_id_for_post(user, post_comment_id, post):
         else:
             # is admin or mod
             post_comment = PostComment.objects.select_related('commenter').get(pk=post_comment_id)
-            if post_comment.parent_comment is not None:
+            if post_comment.parent is not None:
                 post.community.create_remove_post_comment_reply_log(source_user=user,
                                                                     target_user=post_comment.commenter)
             else:
@@ -1200,7 +1200,7 @@ def check_can_reply_to_post_comment_for_post(user, post_comment, post):
         )
 
     check_can_comment_in_post(user=user, post=post)
-    if post_comment.parent_comment is not None:
+    if post_comment.parent is not None:
         raise ValidationError(
             _('You can post a reply to a comment, not to an existing reply')
         )

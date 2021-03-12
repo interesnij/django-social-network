@@ -88,7 +88,7 @@ class GoodCommentCommunityDelete(View):
         try:
             community = comment.good.community
         except:
-            community = comment.parent_comment.good.community
+            community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
@@ -102,7 +102,7 @@ class GoodCommentCommunityAbortDelete(View):
         try:
             community = comment.good.community
         except:
-            community = comment.parent_comment.good.community
+            community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])

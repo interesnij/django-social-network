@@ -296,7 +296,7 @@ def can_see_post_comment(self, post_comment):
     if not self.can_see_post(item=item):
         return False
     post_comment_query = self._make_get_post_comment_with_id_query(post_comment_id=post_comment.pk,
-                                                                   post_comment_parent_id=post_comment.parent_comment_id,
+                                                                   post_comment_parent_id=post_comment.parent_id,
                                                                    item=item)
 
     return PostComment.objects.filter(post_comment_query).exists()

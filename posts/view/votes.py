@@ -81,10 +81,10 @@ class PostCommentUserLikeCreate(View):
                 likedislike.delete()
                 result = False
         except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE) 
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     item_notification_handler(request.user, comment.post.pk, comment.commenter.pk, None, None, "u_post_comment_notify", "LC")
                 else:
                     item_notification_handler(request.user, comment.post.pk, comment.commenter.pk, None, None, "u_post_comment_notify", "LR")
@@ -112,7 +112,7 @@ class PostCommentUserDislikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     post_comment_notification_handler(request.user, comment, PostNotify.DISLIKE_REPLY, "u_post_reply_notify")
                 else:
                     post_comment_notification_handler(request.user, comment, PostNotify.DISLIKE_COMMENT, "u_post_comment_notify")
@@ -189,7 +189,7 @@ class PostCommentCommunityLikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.LIKE_REPLY, "c_post_reply_notify")
             else:
                 post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.LIKE_COMMENT, "c_post_comment_notify")
@@ -216,7 +216,7 @@ class PostCommentCommunityDislikeCreate(View):
         except PostCommentVotes.DoesNotExist:
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.DISLIKE_REPLY, "c_post_reply_notify")
             else:
                 post_community_comment_notification_handler(request.user, community, comment, PostCommunityNotify.DISLIKE_COMMENT, "c_post_comment_notify")

@@ -158,8 +158,8 @@ def photo_notification_handler(creator, recipient, photo, verb):
 
 def photo_comment_notification_handler(creator, comment, verb, name):
     PhotoNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
-    if comment.parent_comment:
-        photo_pk = comment.parent_comment.photo.pk
+    if comment.parent:
+        photo_pk = comment.parent.photo.pk
     else:
         photo_pk = comment.photo.pk
     channel_layer = get_channel_layer()
@@ -205,8 +205,8 @@ def photo_community_notification_handler(creator, community, photo, verb):
 
 def photo_community_comment_notification_handler(creator, community, comment, verb, name):
     persons = community.get_staff_members()
-    if comment.parent_comment:
-        photo_pk = comment.parent_comment.photo.pk
+    if comment.parent:
+        photo_pk = comment.parent.photo.pk
     else:
         photo_pk = comment.photo.pk
     for user in persons:

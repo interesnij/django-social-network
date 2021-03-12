@@ -289,7 +289,7 @@ class GoodCommentClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment, self.template_name = GoodComment.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         try:
-            self.photo = self.comment.parent_comment.photo
+            self.photo = self.comment.parent.photo
         except:
             self.photo = self.comment.photo
         return super(GoodCommentClaimWindow,self).get(request,*args,**kwargs)

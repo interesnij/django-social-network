@@ -84,7 +84,7 @@ class GoodCommentUserLikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_REPLY, "u_good_reply_notify")
                 else:
                     good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_COMMENT, "u_good_comment_notify")
@@ -112,7 +112,7 @@ class GoodCommentUserDislikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_REPLY, "u_good_reply_notify")
                 else:
                     good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_COMMENT, "u_good_comment_notify")
@@ -186,7 +186,7 @@ class GoodCommentCommunityLikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_REPLY, "c_good_reply_notify")
             else:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_COMMENT, "c_good_comment_notify")
@@ -212,7 +212,7 @@ class GoodCommentCommunityDislikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_REPLY, "c_good_reply_notify")
             else:
                 good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_COMMENT, "c_good_comment_notify")

@@ -165,7 +165,7 @@ class PhotoCommentCommunityDelete(View):
         try:
             community = comment.post.community
         except:
-            community = comment.parent_comment.post.community
+            community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = True
             comment.save(update_fields=['is_deleted'])
@@ -179,7 +179,7 @@ class PhotoCommentCommunityAbortDelete(View):
         try:
             community = comment.post.community
         except:
-            community = comment.parent_comment.post.community
+            community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.is_deleted = False
             comment.save(update_fields=['is_deleted'])

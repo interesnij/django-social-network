@@ -681,7 +681,7 @@ class User(AbstractUser):
         if not self.can_see_post(post=post):
             return False
         post_comment_query = self._make_get_post_comment_with_id_query(post_comment_id=post_comment.pk,
-                                                                       post_comment_parent_id=post_comment.parent_comment_id,
+                                                                       post_comment_parent_id=post_comment.parent_id,
                                                                        post=post)
         PostComment = get_post_comment_model()
         return PostComment.objects.filter(post_comment_query).exists()
@@ -2842,7 +2842,7 @@ class User(AbstractUser):
                                                                  target_user=notification_target_user)
 
     def _delete_post_comment_notification(self, post_comment):
-        if post_comment.parent_comment is not None:
+        if post_comment.parent is not None:
             PostCommentNotification = get_post_comment_notification_model()
             PostCommentNotification.delete_post_comment_notification(post_comment_id=post_comment.pk,
                                                                      owner_id=post_comment.post.creator_id)

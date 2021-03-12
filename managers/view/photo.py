@@ -284,7 +284,7 @@ class PhotoCommentClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         try:
-            self.photo = self.comment.parent_comment.photo
+            self.photo = self.comment.parent.photo
         except:
             self.photo = self.comment.photo
         self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_claim", request.user, request.META['HTTP_USER_AGENT'])

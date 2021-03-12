@@ -86,7 +86,7 @@ class VideoCommentUserLikeCreate(View):
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.LIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     video_comment_notification_handler(request.user, comment, VideoNotify.LIKE_REPLY, "u_video_reply_notify")
                 else:
                     video_comment_notification_handler(request.user, comment, VideoNotify.LIKE_COMMENT, "u_video_comment_notify")
@@ -116,7 +116,7 @@ class VideoCommentUserDislikeCreate(View):
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.DISLIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     video_comment_notification_handler(request.user, comment, VideoNotify.DISLIKE_REPLY, "u_video_reply_notify")
                 else:
                     video_comment_notification_handler(request.user, comment, VideoNotify.DISLIKE_COMMENT, "u_video_comment_notify")
@@ -196,7 +196,7 @@ class VideoCommentCommunityLikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.LIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 video_community_comment_notification_handler(request.user, community, comment, VideoCommunityNotify.LIKE_REPLY, "c_video_reply_notify")
             else:
                 video_community_comment_notification_handler(request.user, community, comment, VideoCommunityNotify.LIKE_COMMENT, "c_video_comment_notify")
@@ -224,7 +224,7 @@ class VideoCommentCommunityDislikeCreate(View):
         except VideoCommentVotes.DoesNotExist:
             VideoCommentVotes.objects.create(item=comment, user=request.user, vote=VideoCommentVotes.DISLIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 video_community_comment_notification_handler(request.user, community, comment, VideoCommunityNotify.DISLIKE_REPLY, "c_video_reply_notify")
             else:
                 video_community_comment_notification_handler(request.user, community, comment, VideoCommunityNotify.DISLIKE_COMMENT, "c_video_comment_notify")

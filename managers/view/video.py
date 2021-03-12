@@ -289,7 +289,7 @@ class VideoCommentClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         try:
-            self.photo = self.comment.parent_comment.photo
+            self.photo = self.comment.parent.photo
         except:
             self.photo = self.comment.photo
         self.template_name = "manage_create/video/video_comment_claim.html"

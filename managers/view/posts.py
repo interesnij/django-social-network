@@ -293,7 +293,7 @@ class PostCommentClaimWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         try:
-            self.post = self.comment.parent_comment.post
+            self.post = self.comment.parent.post
         except:
             self.post = self.comment.post
         self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])

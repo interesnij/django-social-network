@@ -244,8 +244,8 @@ class PostCommunityNotify(models.Model):
 
 def post_comment_notification_handler(creator, comment, verb, name):
     PostNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
-    if comment.parent_comment:
-        post_uuid = comment.parent_comment.post.uuid
+    if comment.parent:
+        post_uuid = comment.parent.post.uuid
     else:
         post_uuid = comment.post.uuid
     channel_layer = get_channel_layer()
@@ -291,8 +291,8 @@ def post_community_notification_handler(creator, community, post, verb):
 
 def post_community_comment_notification_handler(creator, community, comment, verb, name):
     persons = community.get_staff_members()
-    if comment.parent_comment:
-        post_uuid = comment.parent_comment.post.uuid
+    if comment.parent:
+        post_uuid = comment.parent.post.uuid
     else:
         post_uuid = comment.post.uuid
     for user in persons:

@@ -78,7 +78,7 @@ class PhotoCommentUserLikeCreate(View):
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     photo_comment_notification_handler(request.user, comment, PhotoNotify.LIKE_REPLY, "u_photo_reply_notify")
                 else:
                     photo_comment_notification_handler(request.user, comment, PhotoNotify.LIKE_COMMENT, "u_photo_comment_notify")
@@ -106,7 +106,7 @@ class PhotoCommentUserDislikeCreate(View):
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
             result = True
             if user != request.user:
-                if comment.parent_comment:
+                if comment.parent:
                     photo_comment_notification_handler(request.user, comment, PhotoNotify.DISLIKE_REPLY, "u_photo_reply_notify")
                 else:
                     photo_comment_notification_handler(request.user, comment, PhotoNotify.DISLIKE_COMMENT, "u_photo_comment_notify")
@@ -180,7 +180,7 @@ class PhotoCommentCommunityLikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.LIKE_REPLY, "c_photo_reply_notify")
             else:
                 photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.LIKE_COMMENT, "c_photo_comment_notify")
@@ -206,7 +206,7 @@ class PhotoCommentCommunityDislikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
             result = True
-            if comment.parent_comment:
+            if comment.parent:
                 photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.DISLIKE_REPLY, "c_photo_reply_notify")
             else:
                 photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.DISLIKE_COMMENT, "c_photo_comment_notify")
