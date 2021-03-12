@@ -7,7 +7,6 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils.formats import localize
 
-
 class PostNotify(models.Model):
     COMMENT, WOMEN_COMMENT, GROUP_COMMENT = 'C', 'WC', 'GC'
     REPLY, WOMEN_REPLY, GROUP_REPLY = 'R', 'WR', 'GR'
@@ -22,18 +21,17 @@ class PostNotify(models.Model):
 
     REPOST, WOMEN_REPOST, GROUP_REPOST = 'RE', 'WRE', 'GRE'
     COMMUNITY_REPOST, WOMEN_COMMUNITY_REPOST, GROUP_COMMUNITY_REPOST = 'CR', 'WCR', 'GCR'
-
     NOTIFICATION_TYPES = (
-        (COMMENT, 'оставил комментарий к записи'),
-        (REPLY, 'ответил на Ваш комментарий к записи'),
-        (USER_MENTION, 'упомянул Вас в записи'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'),
-        (LIKE, 'оценил Вашу запись'),
-        (DISLIKE, 'не оценил Вашу запись'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к записи'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'),
+        (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
+        (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
+        (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
+        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
+        (LIKE, 'оценил Вашу запись'), (WOMEN_LIKE, 'оценила Вашу запись'), (GROUP_LIKE, 'оценили Вашу запись'),
+        (DISLIKE, 'не оценил Вашу запись'), (WOMEN_DISLIKE, 'не оценила Вашу запись'), (GROUP_DISLIKE, 'не оценили Вашу запись'),
+        (LIKE_COMMENT, 'оценил Ваш комментарий к записи'), (WOMEN_LIKE_COMMENT, 'оценила Ваш комментарий к записи'), (GROUP_LIKE_COMMENT, 'оценили Ваш комментарий к записи'),
+        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'), (WOMEN_DISLIKE_COMMENT, 'не оценила Ваш комментарий к записи'), (GROUP_DISLIKE_COMMENT, 'не оценили Ваш комментарий к записи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'), (WOMEN_LIKE_REPLY, 'оценила Ваш ответ на комментарий к записи'), (GROUP_LIKE_REPLY, 'оценили Ваш ответ на комментарий к записи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'), (WOMEN_DISLIKE_REPLY, 'не оценила Ваш ответ к комментарий к записи'), (GROUP_DISLIKE_REPLY, 'не оценили Ваш ответ к комментарий к записи'),
 
         (REPOST, 'поделился Вашей записью'),
         (COMMUNITY_REPOST, 'поделилось Вашей записью'),
@@ -108,6 +106,30 @@ class PostNotify(models.Model):
     @classmethod
     def notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
+
+    def save_notify(self, creator, recipient_id, post_id, verb):
+        """ Сохранение уведомления о событиях записей пользователя.
+            Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
+            1. По сегодняшнему дню фильтруем записи уведомлений постов. Если есть запись, которую создал
+            creator, а получатель её recipient, и verb совпадает с verb этой записи, значит создаём новую запись с прикреплением её
+            к найденной записи. Это пример уведомлений "Тот-то оценил 2 Ваши записи".
+            2. Если записи нет, тогда снова ищем, но только по совпадению "получатель её recipient, и verb совпадает с verb" за
+            сегодняший день. Если запись есть, то создаем новую и прицепляем к ней. Это пример уведомлений
+            "Тот-то и тот-то оценили пост" или "Тот-то и ещё 7 человек оценили пост".
+            3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
+            "Тот-то оценил Ваш пост".
+        """
+        from datetime import date
+        today = date.today()
+        current_verb = creator.get_verb_gender()
+        if PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
+            notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb)
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=verb, object_set=notify)
+        elif PostNotify.objects.filter(recipient_id=recipient_id, created__gt=today, verb=verb).exclude(creator_id=recipient_id).exists():
+            notify = PostNotify.objects.get(recipient_id=recipient_id, created__gt=today, verb=verb)
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb="G"+verb, user_set=notify)
+        else:
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
 
 
 class PostCommunityNotify(models.Model):
@@ -205,40 +227,6 @@ class PostCommunityNotify(models.Model):
             return '<svg fill="currentColor" class="svg_default" style="position:absolute;width:25px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>'
         else:
             return ''
-
-
-def post_notification_handler(creator, recipient, post, verb):
-    """ Сохранение уведомления о событиях записей пользователя.
-        Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
-        1. По сегодняшнему дню фильтруем записи уведомлений постов. Если есть запись, которую создал
-        creator, а получатель её recipient, и verb совпадает с verb этой записи, значит создаём новую запись с прикреплением её
-        к найденной записи. Это пример уведомлений "Тот-то оценил 2 Ваши записи".
-        2. Если записи нет, тогда снова ищем, но только по совпадению "получатель её recipient, и verb совпадает с verb" за
-        сегодняший день. Если запись есть, то создаем новую и прицепляем к ней. Это пример уведомлений
-        "Тот-то и тот-то оценили пост" или "Тот-то и ещё 7 человек оценили пост".
-        3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
-        "Тот-то оценил Ваш пост".
-    """
-    from datetime import date
-    today = date.today()
-
-    if PostNotify.objects.filter(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=today, verb=verb).exclude(creator_id=recipient.pk).exists():
-        notify = PostNotify.objects.get(creator_id=creator.pk, recipient_id=recipient.pk, created__gt=today, verb=verb)
-        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, object_set=notify)
-    elif PostNotify.objects.filter(recipient_id=recipient.pk, created__gt=today, verb=verb).exclude(creator_id=recipient.pk).exists():
-        notify = PostNotify.objects.get(recipient_id=recipient.pk, created__gt=today, verb=verb)
-        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb, user_set=notify)
-    else:
-        PostNotify.objects.create(creator=creator, recipient=recipient, post=post, verb=verb)
-    channel_layer = get_channel_layer()
-    payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'post_id': str(post.uuid),
-            'name': "u_post_notify",
-        }
-    async_to_sync(channel_layer.group_send)('notification', payload)
 
 def post_comment_notification_handler(creator, comment, verb, name):
     PostNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
