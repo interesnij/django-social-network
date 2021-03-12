@@ -171,13 +171,13 @@ def get_mf_ages(users):
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
-def user_send(id, socket_name):
+def user_send(id, recipient_id, socket_name):
     # посылаем сокет с переменными: id-id объекта, socket_name-имя, по которому следует назначать событие в скрипте js
     channel_layer = get_channel_layer()
     payload = {
             'type': 'receive',
             'key': 'notification',
-            'recipient_id': recipient.pk,
+            'recipient_id': recipient_id,
             'id': str(id),
             'name': socket_name,
         }
@@ -236,4 +236,4 @@ def item_notification_handler(creator,
             if socket_name == "u_post_notify":
                 from notify.model.post import PostNotify
                 PostNotify.save_notify(creator, recipient_id, item_id, verb)
-                user_send(item_id, socket_name)
+                user_send(item_id, recipient_id, socket_name) 
