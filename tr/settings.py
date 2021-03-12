@@ -124,7 +124,7 @@ LANGUAGES = (
     ('en', 'English'),
 )
 LOCALE_PATHS = (
-    os.path.join(PROJECT_PATH, 'locale')
+    os.path.join(PROJECT_PATH, 'locale'), 
 )
 
 STATIC_URL = '/static/'
