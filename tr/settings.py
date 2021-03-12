@@ -117,9 +117,15 @@ LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 
-USE_L10N = True
-
-USE_TZ = False
+USE_I18N = True
+LANGUAGE_CODE = 'ru'
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, 'locale')
+)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
