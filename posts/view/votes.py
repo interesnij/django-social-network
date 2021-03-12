@@ -85,9 +85,9 @@ class PostCommentUserLikeCreate(View):
             result = True
             if user != request.user:
                 if comment.parent:
-                    item_notification_handler(request.user, comment.commenter.pk, commentюparent.post.pk, comment.pk, None, None, "u_post_comment_notify", "LC")
+                    item_notification_handler(request.user, comment.commenter.pk, comment.parent.post.pk, comment.pk, None, None, "u_post_comment_notify", "LR")
                 else:
-                    item_notification_handler(request.user, comment.commenter.pk, comment.post.pk, comment.post.pk, None, None, "u_post_comment_notify", "LR")
+                    item_notification_handler(request.user, comment.commenter.pk, comment.post.pk, comment.pk, None, None, "u_post_comment_notify", "LC")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
