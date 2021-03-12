@@ -51,7 +51,7 @@ class GoodNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
     album = models.ForeignKey('goods.GoodAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    good_comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
@@ -115,7 +115,7 @@ class GoodCommunityNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     good = models.ForeignKey('goods.Good', null=True, blank=True, on_delete=models.CASCADE)
     album = models.ForeignKey('goods.GoodAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    good_comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:

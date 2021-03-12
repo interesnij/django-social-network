@@ -50,7 +50,7 @@ class VideoNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
     album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    video_comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('video.VideoComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
@@ -117,7 +117,7 @@ class VideoCommunityNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     video = models.ForeignKey('video.Video', null=True, blank=True, on_delete=models.CASCADE)
     album = models.ForeignKey('video.VideoAlbum', null=True, blank=True, on_delete=models.CASCADE)
-    video_comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.ForeignKey('video.VideoComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     class Meta:
