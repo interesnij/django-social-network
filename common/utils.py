@@ -225,12 +225,12 @@ def item_notification_handler(creator,
     if action_community:
         return "Обрабатываем репосты"
     elif community:
-        if comment:
+        if comment_id:
             return "Обрабатываем комменты сообществ"
         else:
             return "Обрабатываем объекты сообществ"
     else:
-        if comment:
+        if comment_id:
             return "Обрабатываем комменты пользователя"
         else:
             if socket_name == "u_post_notify":
