@@ -93,7 +93,8 @@ def save_post_notify(creator, recipient_id, post_id, comment_id, verb):
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb, object_set=notify)
         elif PostNotify.objects.filter(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb).exclude(creator_id=recipient_id).exists():
             notify = PostNotify.objects.get(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb)
-            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb="G"+verb, user_set=notify)
+            group_verb = "G" + verb
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=group_verb, user_set=notify)
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
     else:
