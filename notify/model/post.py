@@ -125,8 +125,8 @@ class PostNotify(models.Model):
         if comment_id:
             if PostNotify.objects.filter(creator=creator, comment_id=comment_id, verb=current_verb).exists():
                 pass
-            elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
-                notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=current_verb)
+            elif PostNotify.objects.filter(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=current_verb).exclude(creator_id=recipient_id).exists():
+                notify = PostNotify.objects.get(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=current_verb)
                 PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=verb, object_set=notify)
             elif PostNotify.objects.filter(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb).exclude(creator_id=recipient_id).exists():
                 notify = PostNotify.objects.get(recipient_id=recipient_id, comment_id=comment_id, created__gt=today, verb=verb)
