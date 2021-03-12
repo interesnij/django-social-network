@@ -81,7 +81,7 @@ class PostCommentUserLikeCreate(View):
                 likedislike.delete()
                 result = False
         except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote="like")
+            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE) 
             result = True
             if user != request.user:
                 if comment.parent_comment:
