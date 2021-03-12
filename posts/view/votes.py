@@ -32,7 +32,7 @@ class PostUserLikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             if user != request.user:
-                item_notification_handler(request.user, item.creator.pk, item.pk, None, None, None, "u_post_notify", "L") 
+                item_notification_handler(request.user, item.creator.pk, item.pk, None, None, None, "u_post_notify", "L")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -58,7 +58,7 @@ class PostUserDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             if user != request.user:
-                post_notification_handler(request.user, item.creator, item, PostNotify.DISLIKE)
+                item_notification_handler(request.user, item.creator.pk, item.pk, None, None, None, "u_post_notify", "D")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -85,9 +85,9 @@ class PostCommentUserLikeCreate(View):
             result = True
             if user != request.user:
                 if comment.parent_comment:
-                    post_comment_notification_handler(request.user, comment, PostNotify.LIKE_REPLY, "u_post_reply_notify")
+                    item_notification_handler(request.user, comment.post.pk, comment.commenter.pk, None, None, "u_post_comment_notify", "LC")
                 else:
-                    post_comment_notification_handler(request.user, comment, PostNotify.LIKE_COMMENT, "u_post_comment_notify")
+                    item_notification_handler(request.user, comment.post.pk, comment.commenter.pk, None, None, "u_post_comment_notify", "LR")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

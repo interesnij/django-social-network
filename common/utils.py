@@ -230,10 +230,12 @@ def item_notification_handler(creator,
         else:
             return "Обрабатываем объекты сообществ"
     else:
-        if comment_id:
-            return "Обрабатываем комменты пользователя"
+        if socket_name == "u_post_comment_notify":
+            from notify.model.post import PostNotify
+            PostNotify.save_notify(creator, recipient_id, item_id, comment_id, verb)
+            user_send(comment_id, recipient_id, socket_name)
         else:
             if socket_name == "u_post_notify":
                 from notify.model.post import PostNotify
-                PostNotify.save_notify(creator, recipient_id, item_id, verb)
-                user_send(item_id, recipient_id, socket_name) 
+                PostNotify.save_notify(creator, recipient_id, item_id, None, verb)
+                user_send(item_id, recipient_id, socket_name)
