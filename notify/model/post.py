@@ -107,7 +107,7 @@ class PostNotify(models.Model):
     def notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
-    def save_notify(self, creator, recipient_id, post_id, verb):
+    def save_notify(creator, recipient_id, post_id, verb):
         """ Сохранение уведомления о событиях записей пользователя.
             Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
             1. По сегодняшнему дню фильтруем записи уведомлений постов. Если есть запись, которую создал
