@@ -51,7 +51,7 @@ class User(AbstractUser):
         return self.get_full_name()
 
     def get_verb_gender(self):
-        if self.is_woman():
+        if self.is_women():
             return "W"
         else:
             return ""
