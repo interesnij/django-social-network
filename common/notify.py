@@ -107,7 +107,7 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             group_verb = "G" + verb
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id, verb=group_verb, object_set=notify)
         else:
-            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id verb=verb)
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id, verb=verb)
     elif comment_id:
         if PostNotify.objects.filter(creator=creator, comment_id=comment_id, verb=current_verb).exists():
             pass
