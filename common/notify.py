@@ -98,9 +98,9 @@ def save_post_notify(creator, recipient_id, post_id, comment_id, verb):
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
     else:
-        if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
+        if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists(): 
             pass
-            
+
         elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exists():
             notify = PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).last()
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb, user_set=notify)

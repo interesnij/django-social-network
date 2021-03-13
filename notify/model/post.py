@@ -6,21 +6,10 @@ from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 from django.utils.formats import localize
+from notify.helpers import *
+
 
 class PostNotify(models.Model):
-    COMMENT, WOMEN_COMMENT, GROUP_COMMENT = 'C', 'WC', 'GC'
-    REPLY, WOMEN_REPLY, GROUP_REPLY = 'R', 'WR', 'GR'
-    USER_MENTION, WOMEN_USER_MENTION, GROUP_USER_MENTION = 'PUM', 'WPUM', 'GPUM'
-    COMMENT_USER_MENTION, WOMEN_COMMENT_USER_MENTION, GROUP_COMMENT_USER_MENTION = 'PCUM', 'WPCUM', 'GPCUM'
-    LIKE, WOMEN_LIKE, GROUP_LIKE = 'L', 'WL', 'GL'
-    DISLIKE, WOMEN_DISLIKE, GROUP_DISLIKE = 'D', 'WD', 'GD'
-    LIKE_REPLY, WOMEN_LIKE_REPLY, GROUP_LIKE_REPLY = 'LR', 'WLR', 'GLR'
-    DISLIKE_REPLY, WOMEN_DISLIKE_REPLY, GROUP_DISLIKE_REPLY = 'DR', 'WDR', 'GDR'
-    LIKE_COMMENT, WOMEN_LIKE_COMMENT, GROUP_LIKE_COMMENT =  'LC', 'WLC', 'GLC'
-    DISLIKE_COMMENT, WOMEN_DISLIKE_COMMENT, GROUP_DISLIKE_COMMENT =  'DC', 'WDC', 'GDC'
-
-    REPOST, WOMEN_REPOST, GROUP_REPOST = 'RE', 'WRE', 'GRE'
-    COMMUNITY_REPOST, WOMEN_COMMUNITY_REPOST, GROUP_COMMUNITY_REPOST = 'CR', 'WCR', 'GCR'
     NOTIFICATION_TYPES = (
         (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
         (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
@@ -33,8 +22,8 @@ class PostNotify(models.Model):
         (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'), (WOMEN_LIKE_REPLY, 'оценила Ваш ответ на комментарий к записи'), (GROUP_LIKE_REPLY, 'оценили Ваш ответ на комментарий к записи'),
         (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'), (WOMEN_DISLIKE_REPLY, 'не оценила Ваш ответ к комментарий к записи'), (GROUP_DISLIKE_REPLY, 'не оценили Ваш ответ к комментарий к записи'),
 
-        (REPOST, 'поделился Вашей записью'),
-        (COMMUNITY_REPOST, 'поделилось Вашей записью'),
+        (REPOST, 'поделился Вашей записью'), (WOMEN_REPOST, 'поделилась Вашей записью'), (GROUP_REPOST, 'поделился Вашей записью'),
+        (COMMUNITY_REPOST, 'поделилось Вашей записью'), (GROUP_COMMUNITY_REPOST, 'поделились Вашей записью'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
@@ -54,12 +43,6 @@ class PostNotify(models.Model):
         verbose_name_plural = "Уведомления - записи пользователя"
         ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
-
-    def __str__(self):
-        if self.community:
-            return '{} {}'.format(self.community, self.get_verb_display())
-        else:
-            return '{} {}'.format(self.creator, self.get_verb_display())
 
     def get_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk).all()
