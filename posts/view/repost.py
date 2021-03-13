@@ -9,7 +9,6 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing
 from common.template.user import get_detect_platform_template
-from notify.model.post import *
 
 
 class UUCMPostWindow(TemplateView):
@@ -66,7 +65,7 @@ class UUPostRepost(View):
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
             if parent.creator.pk != request.user.pk:
-                post_repost_notification_handler(request.user, parent.creator, None, parent, PostNotify.REPOST)
+                item_notification_handler(request.user, parent.creator.pk, item.pk, None, None, None, "u_post_repost_notify", 'RE')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -86,7 +85,7 @@ class CUPostRepost(View):
                 parent = parent
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            post_repost_community_notification_handler(request.user, community, None, parent, PostCommunityNotify.REPOST)
+            item_notification_handler(request.user, None, parent.pk, None, None, community, "u_post_repost_notify", 'RE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -114,7 +113,7 @@ class UCPostRepost(View):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
                     if parent.creator.pk != request.user.pk:
-                        post_repost_notification_handler(request.user, parent.creator, community, parent, PostNotify.COMMUNITY_REPOST)
+                        item_notification_handler(request.user, parent.creator.pk, parent.pk, None, community, None, "c_post_repost_notify", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -139,7 +138,7 @@ class CCPostRepost(View):
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    post_repost_community_notification_handler(request.user, community, _community, parent, PostCommunityNotify.COMMUNITY_REPOST)
+                    item_notification_handler(request.user, None, parent.pk, None, _community, community, "c_post_repost_notify", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

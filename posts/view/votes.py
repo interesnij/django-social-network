@@ -139,7 +139,7 @@ class PostCommunityLikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                item_notification_handler(request.user, None, item.pk, None, None, community.pk, "c_post_notify", "L")
+                item_notification_handler(request.user, None, item.pk, None, None, community, "c_post_notify", "L")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -164,7 +164,7 @@ class PostCommunityDislikeCreate(View):
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
             result = True
             if not request.user.is_staff_of_community(community.pk):
-                item_notification_handler(request.user, None, item.pk, None, None, community.pk, "c_post_notify", "D")
+                item_notification_handler(request.user, None, item.pk, None, None, community, "c_post_notify", "D")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -189,9 +189,9 @@ class PostCommentCommunityLikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
             result = True
             if comment.parent:
-                item_notification_handler(request.user, None, comment.parent.post.pk, comment.pk, None, community.pk, "c_post_comment_notify", "LR")
+                item_notification_handler(request.user, None, comment.parent.post.pk, comment.pk, None, community, "c_post_comment_notify", "LR")
             else:
-                item_notification_handler(request.user, None, comment.post.pk, comment.pk, None, community.pk, "c_post_comment_notify", "LC")
+                item_notification_handler(request.user, None, comment.post.pk, comment.pk, None, community, "c_post_comment_notify", "LC")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -216,9 +216,9 @@ class PostCommentCommunityDislikeCreate(View):
             PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
             result = True
             if comment.parent:
-                item_notification_handler(request.user, None, comment.parent.post.pk, comment.pk, None, community.pk, "c_post_comment_notify", "DR")
+                item_notification_handler(request.user, None, comment.parent.post.pk, comment.pk, None, community, "c_post_comment_notify", "DR")
             else:
-                item_notification_handler(request.user, None, comment.post.pk, comment.pk, None, community.pk, "c_post_comment_notify", "DC")
+                item_notification_handler(request.user, None, comment.post.pk, comment.pk, None, community, "c_post_comment_notify", "DC")
         likes = comment.likes_count()
         dislikes = comment.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

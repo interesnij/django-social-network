@@ -5,12 +5,12 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from django.utils.formats import localize
 from notify.helpers import *
 
 
 class PostNotify(models.Model):
     NOTIFICATION_TYPES = (
+        (ITEM, 'разместил запись'),
         (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
         (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
         (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
@@ -72,6 +72,7 @@ class PostNotify(models.Model):
         if self.post.text:
             return self.post.text[:50]
         else:
+            from django.utils.formats import localize
             return "от " + str(localize(self.post.created))
 
     def get_svg(self):
@@ -92,19 +93,20 @@ class PostNotify(models.Model):
 
 class PostCommunityNotify(models.Model):
     NOTIFICATION_TYPES = (
-        (COMMENT, 'написал комментарий к записи'),
-        (REPLY, 'ответил на комментарий к записи'),
-        (USER_MENTION, 'упомянул сообщество в записи'),
-        (COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к записи'),
-        (LIKE, 'оценил запись'),
-        (DISLIKE, 'не оценил запись'),
-        (LIKE_COMMENT, 'оценил комментарий к записи'),
-        (DISLIKE_COMMENT, 'не оценил комментарий к записи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'),
+        (ITEM, 'разместило запись'),
+        (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
+        (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
+        (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
+        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
+        (LIKE, 'оценил Вашу запись'), (WOMEN_LIKE, 'оценила Вашу запись'), (GROUP_LIKE, 'оценили Вашу запись'),
+        (DISLIKE, 'не оценил Вашу запись'), (WOMEN_DISLIKE, 'не оценила Вашу запись'), (GROUP_DISLIKE, 'не оценили Вашу запись'),
+        (LIKE_COMMENT, 'оценил Ваш комментарий к записи'), (WOMEN_LIKE_COMMENT, 'оценила Ваш комментарий к записи'), (GROUP_LIKE_COMMENT, 'оценили Ваш комментарий к записи'),
+        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'), (WOMEN_DISLIKE_COMMENT, 'не оценила Ваш комментарий к записи'), (GROUP_DISLIKE_COMMENT, 'не оценили Ваш комментарий к записи'),
+        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'), (WOMEN_LIKE_REPLY, 'оценила Ваш ответ на комментарий к записи'), (GROUP_LIKE_REPLY, 'оценили Ваш ответ на комментарий к записи'),
+        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'), (WOMEN_DISLIKE_REPLY, 'не оценила Ваш ответ к комментарий к записи'), (GROUP_DISLIKE_REPLY, 'не оценили Ваш ответ к комментарий к записи'),
 
-        (REPOST, 'поделился записью'),
-        (COMMUNITY_REPOST, 'поделилось записью'),
+        (REPOST, 'поделился Вашей записью'), (WOMEN_REPOST, 'поделилась Вашей записью'), (GROUP_REPOST, 'поделился Вашей записью'),
+        (COMMUNITY_REPOST, 'поделилось Вашей записью'), (GROUP_COMMUNITY_REPOST, 'поделились Вашей записью'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
@@ -171,86 +173,3 @@ class PostCommunityNotify(models.Model):
             return '<svg fill="currentColor" class="svg_default" style="position:absolute;width:25px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>'
         else:
             return ''
-
-def post_comment_notification_handler(creator, comment, verb, name):
-    PostNotify.objects.create(creator=creator, recipient=comment.commenter, verb=verb)
-    if comment.parent:
-        post_uuid = comment.parent.post.uuid
-    else:
-        post_uuid = comment.post.uuid
-    channel_layer = get_channel_layer()
-    payload = {
-            'type': 'receive',
-            'key': key,
-            'recipient_id': recipient.pk,
-            'comment_id': comment.pk,
-            'post_id': str(post_uuid),
-            'name': name,
-        }
-    async_to_sync(channel_layer.group_send)('notification', payload)
-
-def post_repost_notification_handler(creator, recipient, community, post, verb):
-    PostNotify.objects.create(creator=creator, recipient=recipient, community=community, post=post, verb=verb)
-    channel_layer = get_channel_layer()
-    payload = {
-            'type': 'receive',
-            'key': 'notification',
-            'recipient_id': recipient.pk,
-            'post_id': str(post.uuid),
-            'name': "u_post_repost_notify",
-        }
-    async_to_sync(channel_layer.group_send)('notification', payload)
-
-
-
-def post_community_notification_handler(creator, community, post, verb):
-    persons = community.get_staff_members()
-    for user in persons:
-        if creator.pk != user.pk:
-            PostCommunityNotify.objects.create(creator=creator, community=community, post=post, recipient=user, verb=verb)
-            channel_layer = get_channel_layer()
-            payload = {
-                'type': 'receive',
-                'key': 'notification',
-                'recipient_id': user.pk,
-                'community_id': community.pk,
-                'post_id':  str(post.uuid),
-                'name': "c_post_notify",
-            }
-            async_to_sync(channel_layer.group_send)('notification', payload)
-
-def post_community_comment_notification_handler(creator, community, comment, verb, name):
-    persons = community.get_staff_members()
-    if comment.parent:
-        post_uuid = comment.parent.post.uuid
-    else:
-        post_uuid = comment.post.uuid
-    for user in persons:
-        if creator.pk != user.pk:
-            PostCommunityNotify.objects.create(creator=creator, community=community, comment=comment, recipient=user, verb=verb)
-            channel_layer = get_channel_layer()
-            payload = {
-                'type': 'receive',
-                'key': 'notification',
-                'recipient_id': user.pk,
-                'community_id': community.pk,
-                'post_id': str(post_uuid),
-                'name': name,
-            }
-            async_to_sync(channel_layer.group_send)('notification', payload)
-
-def post_repost_community_notification_handler(creator, community, community_creator, post, verb):
-    persons = community.get_staff_members()
-    for user in persons:
-        if creator.pk != user.pk:
-            PostCommunityNotify.objects.create(creator=creator, community=community, community_creator=community_creator, post=post, recipient=user, verb=verb)
-            channel_layer = get_channel_layer()
-            payload = {
-                'type': 'receive',
-                'key': 'notification',
-                'recipient_id': user.pk,
-                'community_id': community.pk,
-                'post_id':  str(post.uuid),
-                'name': "c_post_repost_notify",
-            }
-            async_to_sync(channel_layer.group_send)('notification', payload)
