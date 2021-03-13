@@ -41,9 +41,9 @@ def community_send(id, community_id, socket_name):
     1.8 verb - Тип уведомления, который мы проверим на пол инициатора и на множественное число.
 
     2. Схема перебора моделей...
-    2.1 Сначала обработаем репосты (action_community)
-    2.2 Затем разделим на пользователя и сообщество, а там на комменты и объекты
-    2.3 Оставшиеся варианты переберем по socket_name.
+    2.1 Сначала обработаем репосты (action_community) - repost_post_notify
+    2.2 Затем разделим на пользователя и сообщество, а там на комменты и объекты - (user_post_notify, community_post_notify)
+    2.3 Оставшиеся варианты переберем по socket_name -
 
 """
 def item_notification_handler(creator,
@@ -60,18 +60,32 @@ def item_notification_handler(creator,
         if comment_id:
             return "Обрабатываем комменты сообществ"
         else:
-            return "Обрабатываем объекты сообществ"
+            community_post_notify(creator, community_id, item_id, comment_id, verb)
+            community_send(item_id, community_id, socket_name)
     else:
         if socket_name == "u_post_comment_notify":
-            save_post_notify(creator, recipient_id, item_id, comment_id, verb)
+            user_post_notify(creator, recipient_id, item_id, comment_id, verb)
             user_send(comment_id, recipient_id, socket_name)
         else:
             if socket_name == "u_post_notify":
-                save_post_notify(creator, recipient_id, item_id, None, verb)
+                user_post_notify(creator, recipient_id, item_id, None, verb)
                 user_send(item_id, recipient_id, socket_name)
 
 
-def save_post_notify(creator, recipient_id, post_id, comment_id, verb):
+
+""" Сохранение уведомления о событиях записей. - ШАБЛОН
+    Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
+    1. Фильтруем записи уведомлений постов. Если есть запись, которую создал
+    creator, а получатель её recipient, и verb совпадает с verb этой записи, значит создаём новую запись с прикреплением её
+    к найденной записи. Это пример уведомлений "Тот-то оценил 2 Ваши записи".
+    2. Если записи нет, тогда снова ищем, но только по совпадению "получатель её recipient, id объекта post_id
+    и verb совпадает с verb" за сегодняший день. Если запись есть, то создаем новую и прицепляем к ней.
+    Это пример уведомлений "Тот-то и тот-то оценили пост" или "Тот-то и ещё 7 человек оценили пост".
+    3. Если ни той, ни той записи нет, тогда просто создаем новую запись. Пример уведомлений
+    "Тот-то оценил Ваш пост".
+"""
+
+def user_post_notify(creator, recipient_id, post_id, comment_id, verb):
     from notify.model.post import PostNotify
     """ Сохранение уведомления о событиях записей пользователя.
         Мы создаём группы уведомлений по сегодняшнему дню, исключая случаи, когда creator != recipient:
@@ -98,7 +112,7 @@ def save_post_notify(creator, recipient_id, post_id, comment_id, verb):
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
     else:
-        if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists(): 
+        if PostNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
             pass
 
         elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exists():
@@ -110,3 +124,34 @@ def save_post_notify(creator, recipient_id, post_id, comment_id, verb):
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb="G"+verb, object_set=notify)
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
+
+
+def community_post_notify(creator, community_id, post_id, comment_id, verb):
+    from notify.model.post import PostCommunityNotify
+
+    current_verb = creator.get_verb_gender(verb)
+    if comment_id:
+        if PostCommunityNotify.objects.filter(creator=creator, comment_id=comment_id, verb=current_verb).exists():
+            pass
+        elif PostCommunityNotify.objects.filter(creator=creator, community_id=community_id, created__gt=today, verb=current_verb).exists():
+            notify = PostCommunityNotify.objects.get(creator=creator, community_id=community_id, created__gt=today, verb=current_verb)
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, verb=current_verb, user_set=notify)
+        elif PostCommunityNotify.objects.filter(community_id=community_id, comment_id=comment_id, created__gt=today, verb=verb).exists():
+            notify = PostCommunityNotify.objects.get(community_id=community_id, comment_id=comment_id, created__gt=today, verb=verb)
+            group_verb = "G" + verb
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, comment_id=comment_id, verb=group_verb, object_set=notify)
+        else:
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
+    else:
+        if PostCommunityNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
+            pass
+
+        elif PostCommunityNotify.objects.filter(creator=creator, community_id=community_id, created__gt=today, verb=current_verb).exists():
+            notify = PostCommunityNotify.objects.filter(creator=creator, community_id=community_id, created__gt=today, verb=current_verb).last()
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, verb=current_verb, user_set=notify)
+
+        elif PostCommunityNotify.objects.filter(community_id=community_id, created__gt=today, post_id=post_id, verb=verb).exists():
+            notify = PostCommunityNotify.objects.get(community_id=community_id, post_id=post_id, created__gt=today, verb=verb)
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, verb="G"+verb, object_set=notify)
+        else:
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, post_id=post_id, verb=current_verb)
