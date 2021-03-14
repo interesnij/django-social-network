@@ -24,7 +24,8 @@
 </div>
 {% for child in object.get_user_set %}
   {{ child.pk }}<br>
-{% endfor %}
+{% endfor %} |
+{{ object.pk }}
 </div>
 {% endwith %}
 
@@ -54,7 +55,8 @@
 </div>
 {% for child in object.get_object_set %}
   {{ child.pk }}<br>
-{% endfor %}
+{% endfor %}|
+{{ object.pk }}
 </div>
   {% endwith %}
 
