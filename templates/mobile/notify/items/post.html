@@ -23,8 +23,8 @@
     </div>
 </div>
 {% for child in object.get_user_set %}
-  {{ child.get_created }}<br>
-{% endif %}
+  {{ child.pk }}<br>
+{% endfor %}
 </div>
 {% endwith %}
 
@@ -53,8 +53,8 @@
     </div>
 </div>
 {% for child in object.get_object_set %}
-  {{ child.get_created }}<br>
-{% endif %}
+  {{ child.pk }}<br>
+{% endfor %}
 </div>
   {% endwith %}
 
