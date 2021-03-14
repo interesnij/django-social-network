@@ -70,7 +70,8 @@ class PostNotify(models.Model):
         return PostNotify.objects.filter(object_set_id=self.pk) + [self]
     def get_object_set_6(self):
         from django.db.models import Q
-        return PostNotify.objects.filter(Q(creator_id=self.creator.pk) | Q(user_set_id=self.pk))[:6]
+        from users.models import User
+        return User.objects.filter(Q(creator_id=self.creator.pk) | Q(user_set_id=self.pk))[:6]
     def count_object_set(self):
         count = PostNotify.objects.filter(object_set_id=self.pk).values("pk").count()
         a, b = count % 10, count % 100
