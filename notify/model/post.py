@@ -44,17 +44,37 @@ class PostNotify(models.Model):
         ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
+    def is_have_user_set(self):
+        return PostNotify.objects.filter(user_set_id=self.pk).exists()
     def get_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk).all()
-
     def count_user_set(self):
-        return PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+        count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " человек"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " человека"
+        else:
+            return str(count) + " людей"
+    def get_first_user_set(self):
+        return PostNotify.objects.filter(user_set_id=self.pk).first()
 
-    def get_post_set(self):
-        return PostNotify.objects.filter(post_set_id=self.pk).all()
-
-    def count_post_set(self):
-        return PostNotify.objects.filter(post_set_id=self.pk).values("pk").count()
+    def is_have_object_set(self):
+        return PostNotify.objects.filter(object_set_id=self.pk).exists()
+    def get_object_set(self):
+        return PostNotify.objects.filter(object_set_id=self.pk).all()
+    def count_object_set(self):
+        count = PostNotify.objects.filter(object_set_id=self.pk).values("pk").count()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " человек"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " человека"
+        else:
+            return str(count) + " людей"
+    def get_first_object_set(self):
+        return PostNotify.objects.filter(object_set_id=self.pk).first()
 
     def show_current_notify(self):
         if self.user_set:
