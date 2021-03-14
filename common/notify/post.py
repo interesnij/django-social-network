@@ -25,8 +25,8 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
         elif PostNotify.objects.filter(community_id=action_community_id, recipient_id=recipient_id, created__gt=today, verb=verb).exists():
             notify = PostNotify.objects.get(community_id=action_community_id, recipient_id=recipient_id, created__gt=today, verb=verb)
             PostNotify.objects.create(creator=creator, community_id=action_community_id, recipient_id=recipient_id, post_id=post_id, verb=verb, user_set=notify)
-        elif PostNotify.objects.filter(recipient_id=recipient_id, community__is_null=False, post_id=post_id, created__gt=today, verb=verb).exists():
-            notify = PostNotify.objects.get(recipient_id=recipient_id, community__is_null=False, post_id=post_id, created__gt=today, verb=verb)
+        elif PostNotify.objects.filter(recipient_id=recipient_id, community__isnull=False, post_id=post_id, created__gt=today, verb=verb).exists():
+            notify = PostNotify.objects.get(recipient_id=recipient_id, community__isnull=False, post_id=post_id, created__gt=today, verb=verb)
             group_verb = "G" + verb
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id, verb=group_verb, object_set=notify)
         else:
@@ -46,13 +46,13 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
         user_send(comment_id, recipient_id, None, socket_name)
     else:
-        if PostNotify.objects.filter(creator=creator, post_id=post_id, community__is_null=True, verb=current_verb).exists():
+        if PostNotify.objects.filter(creator=creator, post_id=post_id, community__isnull=True, verb=current_verb).exists():
             pass
-        elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, community__is_null=True, created__gt=today, verb=current_verb).exists():
-            notify = PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, community__is_null=True, created__gt=today, verb=current_verb).last()
+        elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, community__isnull=True, created__gt=today, verb=current_verb).exists():
+            notify = PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, community__isnull=True, created__gt=today, verb=current_verb).last()
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb, user_set=notify)
-        elif PostNotify.objects.filter(recipient_id=recipient_id, community__is_null=True, created__gt=today, post_id=post_id, verb=verb).exists():
-            notify = PostNotify.objects.get(recipient_id=recipient_id, community__is_null=True, post_id=post_id, created__gt=today, verb=verb)
+        elif PostNotify.objects.filter(recipient_id=recipient_id, community__isnull=True, created__gt=today, post_id=post_id, verb=verb).exists():
+            notify = PostNotify.objects.get(recipient_id=recipient_id, community_isnull=True, post_id=post_id, created__gt=today, verb=verb)
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb="G"+verb, object_set=notify)
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
