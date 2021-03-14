@@ -1603,11 +1603,11 @@ class User(AbstractUser):
 
         query = Q(Q(verb="W") | ~Q(verb="W"))
 
-        return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk, query), \
-                            PostNotify.objects.only('created').filter(recipient_id=self.pk, query), \
-                            PhotoNotify.objects.only('created').filter(recipient_id=self.pk, query), \
-                            GoodNotify.objects.only('created').filter(recipient_id=self.pk, query), \
-                            VideoNotify.objects.only('created').filter(recipient_id=self.pk), query), \
+        return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk, Q(verb="W") | ~Q(verb="W")), \
+                            PostNotify.objects.only('created').filter(recipient_id=self.pk, Q(verb="W") | ~Q(verb="W")), \
+                            PhotoNotify.objects.only('created').filter(recipient_id=self.pk, Q(verb="W") | ~Q(verb="W")), \
+                            GoodNotify.objects.only('created').filter(recipient_id=self.pk, Q(verb="W") | ~Q(verb="W")), \
+                            VideoNotify.objects.only('created').filter(recipient_id=self.pk), Q(verb="W") | ~Q(verb="W")), \
                             key=lambda instance: instance.created, reverse=True)
 
     def read_user_notify(self):
