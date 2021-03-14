@@ -49,7 +49,7 @@ class PostNotify(models.Model):
     def get_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk) + [self]
     def get_user_set_6(self):
-        return PostNotify.objects.filter(user_set_id=self.pk)[:5] + [self]
+        return PostNotify.objects.filter(user_set_id=self.pk)[:5] + [self,]
 
     def count_user_set(self):
         count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
@@ -68,7 +68,7 @@ class PostNotify(models.Model):
     def get_object_set(self):
         return PostNotify.objects.filter(object_set_id=self.pk) + [self]
     def get_object_set_6(self):
-        return PostNotify.objects.filter(object_set_id=self.pk)[:5] + [self]
+        return PostNotify.objects.filter(object_set_id=self.pk)[:5] + [self,]
     def count_object_set(self):
         count = PostNotify.objects.filter(object_set_id=self.pk).values("pk").count()
         a, b = count % 10, count % 100
