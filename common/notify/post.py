@@ -15,7 +15,7 @@ from common.notify.progs import *
         "Тот-то оценил Ваш пост".
 """
 
-def user_post_notify(creator, recipient_id, action_community_id, post_id, socket_name, comment_id, verb):
+def user_post_notify(creator, recipient_id, action_community_id, post_id, comment_id, socket_name, verb):
     from notify.model.post import PostNotify
 
     current_verb = creator.get_verb_gender(verb)
