@@ -1603,7 +1603,7 @@ class User(AbstractUser):
 
         query = Q(Q(verb="W") | ~Q(verb="W"))
 
-        return sorted(chain(UserNotify.objects.only('created').filter(Q(verb="W") | ~Q(verb="W"), recipient_id=self.pk, ), \
+        return sorted(chain(UserNotify.objects.only('created').filter(Q(verb[0]="W") | ~Q(verb="W"), recipient_id=self.pk, ), \
                             PostNotify.objects.only('created').filter(Q(verb="W") | ~Q(verb="W"), recipient_id=self.pk, ), \
                             PhotoNotify.objects.only('created').filter(Q(verb="W") | ~Q(verb="W"), recipient_id=self.pk, ), \
                             GoodNotify.objects.only('created').filter(Q(verb="W") | ~Q(verb="W"), recipient_id=self.pk, ), \
