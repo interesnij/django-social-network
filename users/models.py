@@ -1604,7 +1604,7 @@ class User(AbstractUser):
         query = Q(Q(verb="G") | ~Q(verb="G"))
 
         return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk, ), \
-                            PostNotify.objects.only('created').filter(Q(verb="G") | ~Q(verb="G"), recipient_id=self.pk, ), \
+                            PostNotify.objects.only('created').filter(~Q(verb__in="G"), recipient_id=self.pk, ), \
                             PhotoNotify.objects.only('created').filter(recipient_id=self.pk, ), \
                             GoodNotify.objects.only('created').filter(recipient_id=self.pk, ), \
                             VideoNotify.objects.only('created').filter(recipient_id=self.pk), ), \
