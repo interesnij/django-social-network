@@ -46,6 +46,7 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
         user_send(comment_id, recipient_id, None, socket_name)
     else:
+        from django.db.models import Q
         if PostNotify.objects.filter(creator=creator, post_id=post_id, community__isnull=True, verb=current_verb).exists():
             pass
         elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, community__isnull=True, created__gt=today, verb=current_verb).exists():
