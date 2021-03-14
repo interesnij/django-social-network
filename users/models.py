@@ -1601,11 +1601,13 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk, ), \
-                            PostNotify.objects.only('created').filter(recipient_id=self.pk), \
-                            PhotoNotify.objects.only('created').filter(recipient_id=self.pk), \
-                            GoodNotify.objects.only('created').filter(recipient_id=self.pk), \
-                            VideoNotify.objects.only('created').filter(recipient_id=self.pk)), \
+        query = Q(Q(verb[0]="W") | ~Q(verb[0]="W"))
+
+        return sorted(chain(UserNotify.objects.only('created').filter(recipient_id=self.pk, query), \
+                            PostNotify.objects.only('created').filter(recipient_id=self.pk, query), \
+                            PhotoNotify.objects.only('created').filter(recipient_id=self.pk, query), \
+                            GoodNotify.objects.only('created').filter(recipient_id=self.pk, query), \
+                            VideoNotify.objects.only('created').filter(recipient_id=self.pk), query), \
                             key=lambda instance: instance.created, reverse=True)
 
     def read_user_notify(self):
