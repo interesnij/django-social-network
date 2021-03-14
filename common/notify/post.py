@@ -31,7 +31,7 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id, verb=group_verb, object_set=notify)
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, community_id=action_community_id, post_id=post_id, verb=verb)
-        user_send(item_id, recipient_id, action_community_id, socket_name)
+        user_send(post_id, recipient_id, action_community_id, socket_name)
     elif comment_id:
         if PostNotify.objects.filter(creator=creator, comment_id=comment_id, verb=current_verb).exists():
             pass
@@ -56,7 +56,7 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb="G"+verb, object_set=notify)
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
-        user_send(item_id, recipient_id, None, socket_name)
+        user_send(post_id, recipient_id, None, socket_name)
 
 def community_post_notify(creator, community, action_community_id, post_id, comment_id, socket_name, verb):
     from notify.model.post import PostCommunityNotify
