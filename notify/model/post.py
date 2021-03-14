@@ -49,7 +49,8 @@ class PostNotify(models.Model):
     def get_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk) + [self]
     def get_user_set_6(self):
-        return PostNotify.objects.filter(user_set_id=self.pk)[:5] + [self,]
+        from django.db.models import Q
+        return PostNotify.objects.filter(Q(id=self) | Q(user_set_id=self.pk))[:6]
 
     def count_user_set(self):
         count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
