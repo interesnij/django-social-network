@@ -47,7 +47,7 @@ class PostNotify(models.Model):
     def is_have_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk).exists()
     def get_user_set(self):
-        return PostNotify.objects.filter(user_set_id=self.pk).all()
+        return PostNotify.objects.filter(user_set_id=self.pk) + [self]
     def count_user_set(self):
         count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
         a, b = count % 10, count % 100
@@ -63,7 +63,7 @@ class PostNotify(models.Model):
     def is_have_object_set(self):
         return PostNotify.objects.filter(object_set_id=self.pk).exists()
     def get_object_set(self):
-        return PostNotify.objects.filter(object_set_id=self.pk).all()
+        return PostNotify.objects.filter(object_set_id=self.pk) + [self]
     def count_object_set(self):
         count = PostNotify.objects.filter(object_set_id=self.pk).values("pk").count()
         a, b = count % 10, count % 100
