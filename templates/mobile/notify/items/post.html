@@ -18,17 +18,6 @@
               {{ u_s.get_verb_display }} и ещё {{ object.count_user_set }}
               <a class="fullscreen pointer" style="text-decoration: underline">{{ u_s.get_info }}</a>
             </p>
-            {% for user in object.get_user_set_6 %}
-            <a href="{{ user.get_link }}" class="ajax">
-            <figure style="width:50px;border-radius:50px;" class="avatar-30 staked">
-              {% if user.s_avatar %}
-              <img src="{{ user.s_avatar.url }}" style="border-radius:50px;" alt="image">
-              {% else %}
-              <img src="/static/images/no_img/user.jpg" style="border-radius:50px;" alt="image">
-              {% endif %}
-            </figure>
-            </a>
-            {% endfor %}
             <p class="mb-0 small">{{ u_s.get_created }}</p>
         </div>
     </div>
@@ -56,6 +45,7 @@
                 ещё {{ object.count_object_set }}
               {{ o_s.get_verb_display }} <a class="fullscreen pointer" style="text-decoration: underline">{{ o_s.get_info }}</a>
             </p>
+            <div>
             {% for user in object.get_object_set_6 %}
             <a href="{{ user.get_link }}" class="ajax">
             <figure style="width:50px;border-radius:50px;" class="avatar-30 staked">
@@ -67,6 +57,7 @@
             </figure>
             </a>
             {% endfor %}
+            </div>
             <p class="mb-0 small">{{ o_s.get_created }}</p>
         </div>
     </div>
