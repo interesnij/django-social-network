@@ -12,3 +12,20 @@ DISLIKE_COMMENT, WOMEN_DISLIKE_COMMENT, GROUP_DISLIKE_COMMENT =  'DC', 'WDC', 'G
 
 REPOST, WOMEN_REPOST, GROUP_REPOST = 'RE', 'WRE', 'GRE'
 COMMUNITY_REPOST, GROUP_COMMUNITY_REPOST = 'CR', 'GCR'
+
+NOTIFICATION_TYPES = (
+    (ITEM, 'разместил'),
+    (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
+    (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
+    (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
+    (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
+    (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
+    (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
+    (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила '), (GROUP_LIKE_COMMENT, 'оценили'),
+    (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
+    (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
+    (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
+
+    (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
+    (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
+)

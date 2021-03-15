@@ -5,27 +5,10 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from notify.helpers import *
+from notify.helpers import NOTIFICATION_TYPES
 
 
 class PostNotify(models.Model):
-    NOTIFICATION_TYPES = (
-        (ITEM, 'разместил запись'),
-        (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
-        (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
-        (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
-        (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
-        (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
-        (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила '), (GROUP_LIKE_COMMENT, 'оценили'),
-        (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
-        (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
-        (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
-
-        (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
-        (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
-    )
-
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
@@ -121,23 +104,6 @@ class PostNotify(models.Model):
         cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
 class PostCommunityNotify(models.Model):
-    NOTIFICATION_TYPES = (
-        (ITEM, 'разместило'),
-        (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
-        (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
-        (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
-        (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
-        (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
-        (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила'), (GROUP_LIKE_COMMENT, 'оценили'),
-        (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
-        (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
-        (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
-
-        (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
-        (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
-    )
-
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_post_recipient', verbose_name="Получатель")
