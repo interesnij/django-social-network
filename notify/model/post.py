@@ -89,7 +89,7 @@ class PostNotify(models.Model):
 
     @classmethod
     def notify_unread(cls, user_pk):
-        return cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
+        cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
 
 
 class PostCommunityNotify(models.Model):
