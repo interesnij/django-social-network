@@ -1601,7 +1601,7 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        query = Q(Q(recipient_id=self.pk, unread=True)|Q(recipient_id=self.pk, user_set__isnull=True, object_set__isnull=True, unread=False))
+        query = Q(Q(recipient_id=self.pk, unread=False)|Q(recipient_id=self.pk, user_set__isnull=True, object_set__isnull=True, unread=True))
 
         return sorted(chain(UserNotify.objects.only('created').filter(query), \
                             PostNotify.objects.only('created').filter(query), \
