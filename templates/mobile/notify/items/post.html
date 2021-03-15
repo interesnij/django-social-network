@@ -15,7 +15,7 @@
         <div class="media-body">
             <p class="mb-0" data-uuid="{{ u_s.post.uuid }}" list-pk="{{ u_s.post.get_list_pk }}">
               <a href="{{ u_s.creator.get_link }}" class="ajax" style="font-weight: bold;">{{ u_s.creator.get_full_name }}</a>
-              {{ u_s.get_verb_display }} {{ object.count_user_set }} Ваши записи
+              {{ u_s.get_verb_display }} {{ object.count_user_set }}
             </p>
             <p class="mb-0 small">{{ u_s.get_created }}</p>
         </div>

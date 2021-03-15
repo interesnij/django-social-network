@@ -56,11 +56,11 @@ class PostNotify(models.Model):
         count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count() + 1
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
-            return str(count) + " запись"
+            return str(count) + " Вашу запись"
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return str(count) + " записи"
+            return str(count) + " Ваши записи"
         else:
-            return str(count) + " записей"
+            return str(count) + " Ваших записей"
     def get_first_user_set(self):
         return PostNotify.objects.filter(user_set_id=self.pk).first()
 
