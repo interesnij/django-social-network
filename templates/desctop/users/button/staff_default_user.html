@@ -1,7 +1,7 @@
 {% load user %}
 
 
-<span style="margin-bottom: 10px;position:relative" class="centered">
+<span style="margin-bottom: 10px;position:relative;margin-left: 5px;" class="centered"> 
   {% if request.user|is_you_block:user.pk %}
     <button class="btn btn-sm custom_color border" disabled style="width: -webkit-fill-available">Вы заблокированы</button>
   {% else %}

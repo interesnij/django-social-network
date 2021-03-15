@@ -16,8 +16,10 @@
   {% elif object_list %}
 
             <span class="is_paginate user_all_notify_container">
-
               {% for object in object_list %}
+
+                {% if object.unread %}
+
                   {% if object.post %}
                     {% include 'mobile/notify/items/post.html' %}
                   {% elif object.photo %}
@@ -29,8 +31,24 @@
                   {% else %}
                     {% include 'mobile/notify/items/user.html' %}
                   {% endif %}
+
+                {% else %}
+
+                  {% if object.post %}
+                    {% include 'mobile/notify/items/read_post.html' %}
+                  {% elif object.photo %}
+                    {% include 'mobile/notify/items/read_photo.html' %}
+                  {% elif object.good %}
+                    {% include 'mobile/notify/items/read_good.html' %}
+                  {% elif object.video %}
+                    {% include 'mobile/notify/items/read_video.html' %}
+                  {% else %}
+                    {% include 'mobile/notify/items/read_user.html' %}
+                  {% endif %}
+                  
+                {% endif %}
+
               {% endfor %}
-              
             </span>
 
     {% else %}
