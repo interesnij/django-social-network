@@ -1,61 +1,3 @@
-{% if object.is_have_user_set %}
-  {% with u_s=object.get_first_user_set %}
-  <div class="card mb-2 pag border {% if forloop.last %}last{% endif %}">
-<div class="card-header" style="">
-    <div class="media">
-      <figure>
-        <a href="{{ u_s.creator.get_link }}" class="ajax">
-        {% if u_s.creator.s_avatar %}
-          <img src="{{ u_s.creator.s_avatar.url }}" alt="image" style="border-radius:50px;width:50px;">
-        {% else %}
-          <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        {% endif %}
-        </a>
-      </figure>
-        <div class="media-body">
-            <p class="mb-0" data-uuid="{{ u_s.post.uuid }}" list-pk="{{ u_s.post.get_list_pk }}">
-              <a href="{{ u_s.creator.get_link }}" class="ajax" style="font-weight: bold;">{{ u_s.creator.get_full_name }}</a>
-              {{ u_s.get_verb_display }} {{ object.count_user_set }}
-            </p>
-            <p class="mb-0 small">{{ u_s.get_created }}</p>
-        </div>
-    </div>
-</div>
-</div>
-{% endwith %}
-
-{% elif object.is_have_object_set %}
-  {% with o_s=object.get_first_object_set %}
-  <div class="card mb-2 pag border {% if forloop.last %}last{% endif %}">
-<div class="card-header" style="">
-    <div class="media">
-        <div class="media-body">
-            <p class="mb-0" data-uuid="{{ o_s.post.uuid }}" list-pk="{{ o_s.post.get_list_pk }}">
-              <a href="{{ o_s.creator.get_link }}" class="ajax" style="font-weight: bold;">{{ o_s.creator.get_full_name }}</a> и
-                ещё {{ object.count_object_set }}
-              {{ o_s.get_verb_display }} Вашу запись <a class="fullscreen pointer" style="text-decoration: underline">{{ o_s.get_info }}</a>
-            </p>
-            <div style="display: flex;">
-            {% for user in object.get_object_set_6 %}
-            <figure style="width:50px;border-radius:30px;" class="avatar-30 staked">
-              <a href="{{ user.get_link }}" class="ajax">
-              {% if user.s_avatar %}
-              <img src="{{ user.s_avatar.url }}" style="border-radius:30px;width: 30px;" alt="image">
-              {% else %}
-              <img src="/static/images/no_img/user.jpg" style="border-radius:30px;width: 30px;" alt="image">
-              {% endif %}
-              </a>
-            </figure>
-            {% endfor %}
-            </div>
-            <p class="mb-0 small">{{ o_s.get_created }}</p>
-        </div>
-    </div>
-</div>
-</div>
-  {% endwith %}
-
-{% else %}
 <div class="card mb-2 pag border {% if forloop.last %}last{% endif %}">
 <div class="card-header" style="">
   <div class="media">
@@ -78,4 +20,3 @@
   </div>
 </div>
 </div>
-{% endif %}

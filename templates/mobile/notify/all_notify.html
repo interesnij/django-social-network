@@ -16,6 +16,7 @@
   {% elif object_list %}
 
             <span class="is_paginate user_all_notify_container">
+
               {% for object in object_list %}
                   {% if object.post %}
                     {% include 'mobile/notify/items/post.html' %}
@@ -29,8 +30,9 @@
                     {% include 'mobile/notify/items/user.html' %}
                   {% endif %}
               {% endfor %}
+              
             </span>
-            
+
     {% else %}
           <div class="card mb-3 post_empty centered">
             <div class="card-body">
