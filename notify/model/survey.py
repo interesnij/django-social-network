@@ -18,8 +18,8 @@ class SurveyNotify(models.Model):
         (ANON_VOTE, 'Аноним принял участие в опросе'),
         (VOTE, ' принял участие в опросе'),
 
-        (REPOST, 'поделился Вашим опросом'),
-        (COMMUNITY_REPOST, 'поделилось Вашим опросом'),
+        (REPOST, 'поделился'),
+        (COMMUNITY_REPOST, 'поделилось'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='survey_notifications', verbose_name="Получатель")
@@ -75,8 +75,8 @@ class SurveyCommunityNotify(models.Model):
         (ANON_VOTE, 'Аноним принял участие в опросе'),
         (VOTE, ' принял участие в опросе'),
 
-        (REPOST, 'поделился Вашим опросом'),
-        (COMMUNITY_REPOST, 'поделилось Вашим опросом'),
+        (REPOST, 'поделился'),
+        (COMMUNITY_REPOST, 'поделилось'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='survey_community_notifications', verbose_name="Сообщество")

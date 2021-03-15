@@ -5,43 +5,10 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from notify.helpers import NOTIFICATION_TYPES
 
 
 class PhotoNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'UM'
-    COMMENT_USER_MENTION = 'CUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LR'
-    DISLIKE_REPLY = 'DR'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'оставил комментарий к фото'),
-        (REPLY, 'ответил на Ваш комментарий к фото'),
-        (USER_MENTION, 'упомянул Вас в фото'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к фото'),
-        (LIKE, 'оценил Ваше фото'),
-        (DISLIKE, 'не оценил Ваше фото'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к фото'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к фото'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к фото'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к фото'),
-
-        (REPOST, 'поделился Вашей фотографией'),
-        (COMMUNITY_REPOST, 'поделилось Вашей фотографией'),
-        (ALBUM_REPOST, 'поделился Вашим фотоальбомом'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось Вашим фотоальбомом'),
-    )
-
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
@@ -83,38 +50,6 @@ class PhotoNotify(models.Model):
 
 
 class PhotoCommunityNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'UM'
-    COMMENT_USER_MENTION = 'CUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LRC'
-    DISLIKE_REPLY = 'DRC'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'оставил комментарий к изображению сообщества'),
-        (REPLY, 'ответил на комментарий к изображению сообщества'),
-        (LIKE, 'понравилось изображение сообщества'),
-        (DISLIKE, 'не понравилось изображение сообщества'),
-        (LIKE_COMMENT, 'понравился комментарий к изображению сообщества'),
-        (DISLIKE_COMMENT, 'не понравился комментарий к изображению сообщества'),
-        (LIKE_REPLY, 'понравился ответ на комментарий к изображению сообщества'),
-        (DISLIKE_REPLY, 'не понравился ответ к комментарий к изображению сообщества'),
-
-        (REPOST, 'поделился фотографией'),
-        (COMMUNITY_REPOST, 'поделилось фотографией'),
-        (ALBUM_REPOST, 'поделился фотоальбомом'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось фотоальбомом'),
-    )
-
     community = models.ForeignKey('communities.Community', related_name='community_photo_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_photo_recipient', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)

@@ -7,43 +7,10 @@ from channels.layers import get_channel_layer
 from django.utils.text import slugify
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from notify.helpers import NOTIFICATION_TYPES
 
 
 class GoodNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'PUM'
-    COMMENT_USER_MENTION = 'PCUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LR'
-    DISLIKE_REPLY = 'DR'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'оставил комментарий к товару'),
-        (REPLY, 'ответил на Ваш комментарий к товару'),
-        (USER_MENTION, 'упомянул Вас в товаре'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к товару'),
-        (LIKE, 'оценил Вашу товар'),
-        (DISLIKE, 'не оценил Вашу товар'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к товару'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к товару'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к товару'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к товару'),
-
-        (REPOST, 'поделился товаром'),
-        (COMMUNITY_REPOST, 'поделилось товаром'),
-        (ALBUM_REPOST, 'поделился подборкой товаров'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось подборкой товаров'),
-    )
-
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
@@ -73,40 +40,6 @@ class GoodNotify(models.Model):
 
 
 class GoodCommunityNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'UM'
-    COMMENT_USER_MENTION = 'CUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LR'
-    DISLIKE_REPLY = 'DR'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'написал комментарий к товару'),
-        (REPLY, 'ответил на комментарий к товару'),
-        (USER_MENTION, 'упомянул сообщество в товаре'),
-        (COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к товару'),
-        (LIKE, 'оценил товар'),
-        (DISLIKE, 'не оценил товар'),
-        (LIKE_COMMENT, 'оценил комментарий к товару'),
-        (DISLIKE_COMMENT, 'не оценил комментарий к товару'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к товару'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к товару'),
-
-        (REPOST, 'поделился товаром'),
-        (COMMUNITY_REPOST, 'поделилось товаром'),
-        (ALBUM_REPOST, 'поделился подборкой товаров'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось подборкой товаров'),
-    )
-
     community = models.ForeignKey('communities.Community', related_name='community_good_notify', on_delete=models.CASCADE, verbose_name="Сообщество")
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_good_recipient', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)

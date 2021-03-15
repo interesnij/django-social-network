@@ -6,43 +6,10 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
+from notify.helpers import NOTIFICATION_TYPES
 
 
 class VideoNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'PUM'
-    COMMENT_USER_MENTION = 'PCUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LR'
-    DISLIKE_REPLY = 'DR'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'оставил комментарий к видеозаписи'),
-        (REPLY, 'ответил на Ваш комментарий к видеозаписи'),
-        (USER_MENTION, 'упомянул Вас в видеозаписи'),
-        (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к видеозаписи'),
-        (LIKE, 'оценил Вашу видеозапись'),
-        (DISLIKE, 'не оценил Вашу видеозапись'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к видеозаписи'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к видеозаписи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к видеозаписи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к видеозаписи'),
-
-        (REPOST, 'поделился Вашей видеозаписью'),
-        (COMMUNITY_REPOST, 'поделилось Вашей видеозаписью'),
-        (ALBUM_REPOST, 'поделился Вашим видеоальбомом'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось Вашим видеоальбомом'),
-    )
-
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
@@ -75,41 +42,7 @@ class VideoNotify(models.Model):
 
 
 class VideoCommunityNotify(models.Model):
-    COMMENT = 'C'
-    REPLY = 'R'
-    USER_MENTION = 'UM'
-    COMMENT_USER_MENTION = 'CUM'
-    LIKE = 'L'
-    DISLIKE = 'D'
-    LIKE_REPLY = 'LR'
-    DISLIKE_REPLY = 'DR'
-    LIKE_COMMENT =  'LC'
-    DISLIKE_COMMENT =  'DC'
-
-    REPOST = 'RE'
-    ALBUM_REPOST = 'ARE'
-    COMMUNITY_REPOST = 'CR'
-    ALBUM_COMMUNITY_REPOST = 'ACR'
-
-    NOTIFICATION_TYPES = (
-        (COMMENT, 'написал комментарий к видеозаписи'),
-        (REPLY, 'ответил на комментарий к видеозаписи'),
-        (USER_MENTION, 'упомянул сообщество в видеозаписи'),
-        (COMMENT_USER_MENTION, 'упомянул сообщество в комментарии к видеозаписи'),
-        (LIKE, 'оценил видеозапись'),
-        (DISLIKE, 'не оценил видеозапись'),
-        (LIKE_COMMENT, 'оценил комментарий к видеозаписи'),
-        (DISLIKE_COMMENT, 'не оценил комментарий к видеозаписи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к видеозаписи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к видеозаписи'),
-
-        (REPOST, 'поделился видеозаписью'),
-        (COMMUNITY_REPOST, 'поделилось видеозаписью'),
-        (ALBUM_REPOST, 'поделился фотоальбомом'),
-        (ALBUM_COMMUNITY_REPOST, 'поделилось фотоальбомом'),
-    )
-
-    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='video_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_recipient', verbose_name="Получатель")
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
