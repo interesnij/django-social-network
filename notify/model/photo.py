@@ -19,6 +19,9 @@ class PhotoNotify(models.Model):
     comment = models.ForeignKey('gallery.PhotoComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление - фотографии пользователя"
         verbose_name_plural = "Уведомления - фотографии пользователя"
@@ -47,6 +50,9 @@ class PhotoCommunityNotify(models.Model):
     album = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление - фотографии сообщества"

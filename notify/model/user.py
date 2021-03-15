@@ -24,6 +24,9 @@ class UserNotify(models.Model):
     unread  = models.BooleanField(default=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
 
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление пользователя"
         verbose_name_plural = "Уведомления пользователя"
@@ -59,6 +62,9 @@ class UserCommunityNotify(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
     unread  = models.BooleanField(default=True, db_index=True)
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
+
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление сообщества"

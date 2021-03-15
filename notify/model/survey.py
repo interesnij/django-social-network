@@ -30,6 +30,9 @@ class SurveyNotify(models.Model):
     survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление - опросы пользователя"
         verbose_name_plural = "Уведомления - опросы пользователя"
@@ -87,6 +90,9 @@ class SurveyCommunityNotify(models.Model):
     verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
     survey = models.ForeignKey('survey.Survey', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление - опросы сообщества"

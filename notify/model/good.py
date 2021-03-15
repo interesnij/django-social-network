@@ -21,6 +21,9 @@ class GoodNotify(models.Model):
     comment = models.ForeignKey('goods.GoodComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
+
     class Meta:
         verbose_name = "Уведомление - товары пользователя"
         verbose_name_plural = "Уведомления - товары пользователя"
@@ -50,6 +53,9 @@ class GoodCommunityNotify(models.Model):
     album = models.ForeignKey('goods.GoodAlbum', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('goods.GoodComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+
+    user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
+    object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
         verbose_name = "Уведомление - товары сообщества"
