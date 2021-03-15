@@ -15,7 +15,7 @@ class PostNotify(models.Model):
         (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
         (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
         (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
-        (LIKE, 'оценил Вашу запись'), (WOMEN_LIKE, 'оценила Вашу запись'), (GROUP_LIKE, 'оценили Вашу запись'),
+        (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
         (DISLIKE, 'не оценил Вашу запись'), (WOMEN_DISLIKE, 'не оценила Вашу запись'), (GROUP_DISLIKE, 'не оценили Вашу запись'),
         (LIKE_COMMENT, 'оценил Ваш комментарий к записи'), (WOMEN_LIKE_COMMENT, 'оценила Ваш комментарий к записи'), (GROUP_LIKE_COMMENT, 'оценили Ваш комментарий к записи'),
         (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'), (WOMEN_DISLIKE_COMMENT, 'не оценила Ваш комментарий к записи'), (GROUP_DISLIKE_COMMENT, 'не оценили Ваш комментарий к записи'),
@@ -53,7 +53,7 @@ class PostNotify(models.Model):
         return PostNotify.objects.filter(Q(id=self) | Q(user_set_id=self.pk))[:6]
 
     def count_user_set(self):
-        count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count()
+        count = PostNotify.objects.filter(user_set_id=self.pk).values("pk").count() + 1
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             return str(count) + " запись"
