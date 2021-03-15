@@ -33,7 +33,7 @@
             <p class="mb-0" data-uuid="{{ o_s.post.uuid }}" list-pk="{{ o_s.post.get_list_pk }}">
               <a href="{{ o_s.creator.get_link }}" class="ajax" style="font-weight: bold;">{{ o_s.creator.get_full_name }}</a> и
                 ещё {{ object.count_object_set }}
-              {{ o_s.get_verb_display }} <a class="fullscreen pointer" style="text-decoration: underline">{{ o_s.get_info }}</a>
+              {{ o_s.get_verb_display }} Вашу запись <a class="fullscreen pointer" style="text-decoration: underline">{{ o_s.get_info }}</a>
             </p>
             <div style="display: flex;">
             {% for user in object.get_object_set_6 %}
@@ -71,7 +71,7 @@
       <div class="media-body">
           <p class="mb-0" data-uuid="{{ object.post.uuid }}" list-pk="{{ object.post.get_list_pk }}">
             <a href="{{ object.creator.get_link }}" class="ajax" style="font-weight: bold;">{{ object.creator.get_full_name }}</a>
-            {{ object.get_verb_display }} <a class="fullscreen pointer" style="text-decoration: underline">{{ object.get_info }}</a>
+            {{ object.get_verb_display }} Вашу запись <a class="fullscreen pointer" style="text-decoration: underline">{{ object.get_info }}</a>
           </p>
           <p class="mb-0 small">{{ object.get_created }}</p>
       </div>

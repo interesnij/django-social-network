@@ -11,19 +11,19 @@ from notify.helpers import *
 class PostNotify(models.Model):
     NOTIFICATION_TYPES = (
         (ITEM, 'разместил запись'),
-        (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
-        (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
+        (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
+        (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
         (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
         (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
         (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
-        (DISLIKE, 'не оценил Вашу запись'), (WOMEN_DISLIKE, 'не оценила Вашу запись'), (GROUP_DISLIKE, 'не оценили Вашу запись'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к записи'), (WOMEN_LIKE_COMMENT, 'оценила Ваш комментарий к записи'), (GROUP_LIKE_COMMENT, 'оценили Ваш комментарий к записи'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'), (WOMEN_DISLIKE_COMMENT, 'не оценила Ваш комментарий к записи'), (GROUP_DISLIKE_COMMENT, 'не оценили Ваш комментарий к записи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'), (WOMEN_LIKE_REPLY, 'оценила Ваш ответ на комментарий к записи'), (GROUP_LIKE_REPLY, 'оценили Ваш ответ на комментарий к записи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'), (WOMEN_DISLIKE_REPLY, 'не оценила Ваш ответ к комментарий к записи'), (GROUP_DISLIKE_REPLY, 'не оценили Ваш ответ к комментарий к записи'),
+        (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
+        (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила '), (GROUP_LIKE_COMMENT, 'оценили'),
+        (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
+        (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
+        (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
 
-        (REPOST, 'поделился Вашей записью'), (WOMEN_REPOST, 'поделилась Вашей записью'), (GROUP_REPOST, 'поделился Вашей записью'),
-        (COMMUNITY_REPOST, 'поделилось Вашей записью'), (GROUP_COMMUNITY_REPOST, 'поделились Вашей записью'),
+        (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
+        (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
     )
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
@@ -122,20 +122,20 @@ class PostNotify(models.Model):
 
 class PostCommunityNotify(models.Model):
     NOTIFICATION_TYPES = (
-        (ITEM, 'разместило запись'),
-        (COMMENT, 'оставил комментарий к записи'), (WOMEN_COMMENT, 'оставила комментарий к записи'), (GROUP_COMMENT, 'оставили комментарий к записи'),
-        (REPLY, 'ответил на Ваш комментарий к записи'), (WOMEN_REPLY, 'ответила на Ваш комментарий к записи'), (GROUP_REPLY, 'ответили на Ваш комментарий к записи'),
+        (ITEM, 'разместило'),
+        (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
+        (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
         (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
         (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
-        (LIKE, 'оценил Вашу запись'), (WOMEN_LIKE, 'оценила Вашу запись'), (GROUP_LIKE, 'оценили Вашу запись'),
-        (DISLIKE, 'не оценил Вашу запись'), (WOMEN_DISLIKE, 'не оценила Вашу запись'), (GROUP_DISLIKE, 'не оценили Вашу запись'),
-        (LIKE_COMMENT, 'оценил Ваш комментарий к записи'), (WOMEN_LIKE_COMMENT, 'оценила Ваш комментарий к записи'), (GROUP_LIKE_COMMENT, 'оценили Ваш комментарий к записи'),
-        (DISLIKE_COMMENT, 'не оценил Ваш комментарий к записи'), (WOMEN_DISLIKE_COMMENT, 'не оценила Ваш комментарий к записи'), (GROUP_DISLIKE_COMMENT, 'не оценили Ваш комментарий к записи'),
-        (LIKE_REPLY, 'оценил Ваш ответ на комментарий к записи'), (WOMEN_LIKE_REPLY, 'оценила Ваш ответ на комментарий к записи'), (GROUP_LIKE_REPLY, 'оценили Ваш ответ на комментарий к записи'),
-        (DISLIKE_REPLY, 'не оценил Ваш ответ к комментарий к записи'), (WOMEN_DISLIKE_REPLY, 'не оценила Ваш ответ к комментарий к записи'), (GROUP_DISLIKE_REPLY, 'не оценили Ваш ответ к комментарий к записи'),
+        (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
+        (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
+        (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила'), (GROUP_LIKE_COMMENT, 'оценили'),
+        (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
+        (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
+        (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
 
-        (REPOST, 'поделился Вашей записью'), (WOMEN_REPOST, 'поделилась Вашей записью'), (GROUP_REPOST, 'поделился Вашей записью'),
-        (COMMUNITY_REPOST, 'поделилось Вашей записью'), (GROUP_COMMUNITY_REPOST, 'поделились Вашей записью'),
+        (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
+        (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
     )
 
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
