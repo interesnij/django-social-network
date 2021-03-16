@@ -21,7 +21,7 @@ class UserNotify(models.Model):
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_notifications', on_delete=models.CASCADE, verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
-    status = models.CharField(max_length=1, choices=STATUS, default=UNREAD, verbose_name="Статус")
+    status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
@@ -63,7 +63,7 @@ class UserCommunityNotify(models.Model):
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='community_user_recipient', on_delete=models.CASCADE, verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
-    status = models.CharField(max_length=1, choices=STATUS, default=UNREAD, verbose_name="Статус")
+    status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
