@@ -872,7 +872,7 @@ class Community(models.Model):
         from notify.model.user import UserCommunityNotify
         from notify.model.video import VideoCommunityNotify
 
-        query = Q(community_id=self.pk, recipient_id=user_pk, unread=True)
+        query = Q(community_id=self.pk, recipient_id=user_pk, status="U")
         return GoodCommunityNotify.objects.filter(query).values("pk").count() + PhotoCommunityNotify.objects.filter(query).values("pk").count() + PostCommunityNotify.objects.filter(query).values("pk").count() + UserCommunityNotify.objects.filter(query).values("pk").count() + VideoCommunityNotify.objects.filter(query).values("pk").count()
 
     def count_unread_notify(self, user_pk):

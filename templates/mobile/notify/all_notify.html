@@ -18,7 +18,7 @@
             <span class="is_paginate user_all_notify_container">
               {% for object in object_list %}
 
-                {% if object.unread %}
+                {% if object.is_unread %}
 
                   {% if object.post %}
                     {% include 'mobile/notify/items/post.html' %}
@@ -45,7 +45,7 @@
                   {% else %}
                     {% include 'mobile/notify/items/read_user.html' %}
                   {% endif %}
-                  
+
                 {% endif %}
 
               {% endfor %}

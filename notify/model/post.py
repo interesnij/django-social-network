@@ -1,20 +1,20 @@
 from django.db import models
-from django.utils import timezone
 from django.conf import settings
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from notify.helpers import NOTIFICATION_TYPES
+from notify.helpers import VERB, STATUS
 
 
 class PostNotify(models.Model):
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    unread  = models.BooleanField(default=True)
-    verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
+    verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
+    status = models.CharField(max_length=1, choices=STATUS, default=UNREAD, verbose_name="Статус")
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    list = models.ForeignKey('posts.PostList', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
@@ -89,16 +89,20 @@ class PostNotify(models.Model):
 
     @classmethod
     def notify_unread(cls, user_pk):
-        cls.objects.filter(recipient_id=user_pk, unread=True).update(unread=False)
+        cls.objects.filter(recipient_id=user_pk, status=UNREAD).update(status=READ)
+
+    def is_unread(self):
+        return self.status is UNREAD
 
 class PostCommunityNotify(models.Model):
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='post_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_post_recipient', verbose_name="Получатель")
-    created = models.DateTimeField(default=timezone.now, editable=False, verbose_name="Создано")
-    unread  = models.BooleanField(default=True)
-    verb = models.CharField(max_length=5, choices=NOTIFICATION_TYPES, verbose_name="Тип уведомления")
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
+    status = models.CharField(max_length=1, choices=STATUS, default=UNREAD, verbose_name="Статус")
+    verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     post = models.ForeignKey('posts.Post', null=True, blank=True, on_delete=models.CASCADE)
+    list = models.ForeignKey('posts.PostList', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('posts.PostComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество-репостер")
 
@@ -119,7 +123,7 @@ class PostCommunityNotify(models.Model):
 
     @classmethod
     def notify_unread(cls, community_pk, user_pk):
-        cls.objects.filter(community_id=community_pk, recipient_id=user_pk, unread=True).update(unread=False)
+        cls.objects.filter(community_id=community_pk, recipient_id=user_pk, status=UNREAD).update(status=READ)
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -144,3 +148,6 @@ class PostCommunityNotify(models.Model):
             return self.get_post_set().first()
         else:
             return self
+
+    def is_unread(self):
+        return self.status is UNREAD

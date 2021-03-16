@@ -1601,14 +1601,14 @@ class User(AbstractUser):
         from notify.model.video import VideoNotify
         from itertools import chain
 
-        query = Q(recipient_id=self.pk, unread=True)|Q(recipient_id=self.pk, user_set__isnull=True, object_set__isnull=True, unread=False)
+        query = Q(recipient_id=self.pk, type="U")|Q(recipient_id=self.pk, user_set__isnull=True, object_set__isnull=True, type="R")
 
         return sorted(chain(UserNotify.objects.only('created').filter(query), \
                             PostNotify.objects.only('created').filter(query), \
                             PhotoNotify.objects.only('created').filter(query), \
                             GoodNotify.objects.only('created').filter(query), \
                             VideoNotify.objects.only('created').filter(query), ), \
-                            key=lambda instance: instance.created, reverse=True)
+                            key=lambda x: x.created, reverse=True)
 
     def read_user_notify(self):
         from notify.model.good import GoodNotify
@@ -1630,7 +1630,7 @@ class User(AbstractUser):
         from notify.model.user import UserNotify
         from notify.model.video import VideoNotify
 
-        query = Q(recipient_id=self.pk, unread=True)
+        query = Q(recipient_id=self.pk, status="U")
         return GoodNotify.objects.filter(query).values("pk").count() + PhotoNotify.objects.filter(query).values("pk").count() + PostNotify.objects.filter(query).values("pk").count() + UserNotify.objects.filter(query).values("pk").count() + VideoNotify.objects.filter(query).values("pk").count()
 
     def unread_notify_count(self):

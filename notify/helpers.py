@@ -12,8 +12,12 @@ DISLIKE_COMMENT, WOMEN_DISLIKE_COMMENT, GROUP_DISLIKE_COMMENT =  'DC', 'WDC', 'G
 
 REPOST, WOMEN_REPOST, GROUP_REPOST = 'RE', 'WRE', 'GRE'
 COMMUNITY_REPOST, GROUP_COMMUNITY_REPOST = 'CR', 'GCR'
+LIST_REPOST, WOMEN_LIST_REPOST, GROUP_LIST_REPOST = 'LRE', 'WLRE', 'GLRE'
+COMMUNITY_LIST_REPOST, GROUP_COMMUNITY_REPOST = 'CLR', 'GCLR'
 
-NOTIFICATION_TYPES = (
+UNREAD, READ, DELETED = 'U', 'R', 'P'
+
+VERB = (
     (ITEM, 'разместил'),
     (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
     (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
@@ -26,6 +30,10 @@ NOTIFICATION_TYPES = (
     (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
     (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
 
-    (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделился'),
+    (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделились'),
     (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
+    (LIST_REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделились'),
+    (COMMUNITY_LIST_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
 )
+
+STATUS = ((UNREAD, 'Не прочитано'),(READ, 'Прочитано'),(DELETED, 'Удалено'),)
