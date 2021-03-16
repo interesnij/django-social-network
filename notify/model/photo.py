@@ -14,7 +14,7 @@ class PhotoNotify(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
-    album = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
+    list = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', blank=True, null=True, on_delete=models.CASCADE)
     community = models.ForeignKey('communities.Community', null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
@@ -49,7 +49,7 @@ class PhotoCommunityNotify(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     photo = models.ForeignKey('gallery.Photo', null=True, blank=True, on_delete=models.CASCADE)
-    album = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
+    list = models.ForeignKey('gallery.Album', null=True, blank=True, on_delete=models.CASCADE)
     comment = models.ForeignKey('gallery.PhotoComment', null=True, blank=True, on_delete=models.CASCADE)
     community_creator = models.ForeignKey('communities.Community', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 

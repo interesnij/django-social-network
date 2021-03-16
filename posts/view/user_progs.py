@@ -16,10 +16,12 @@ class PostUserCreate(View):
 
             if request.POST.get('text') or attach:
                 from common.template.user import render_for_platform
-                from common.processing.post import get_post_processing
+                from common.processing.post import get_u_post_processing
+                from common.notify.post import user_post_notify
 
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
+                user_post_notify(request.user, new_post.creator.pk, None, new_post.pk, None, None, "u_post_create", "I")
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -72,10 +74,10 @@ class PostCommentUserCreate(View):
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
+                from common.notify.post import user_post_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
-                if request.user.pk != post.creator.pk:
-                    new_comment.notification_user_comment(request.user)
+                user_post_notify(request.user, post.creator.pk, None, post.pk, new_comment.pk, None, "u_post_comment_notify", "C")
                 return render_for_platform(request, 'posts/u_post_comment/my_parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -85,7 +87,7 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, post = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
+        form_post, user, parent = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
             from common.check.user import check_user_can_get_list
@@ -95,10 +97,10 @@ class PostReplyUserCreate(View):
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
+                from common.notify.post import user_post_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_user_reply_comment(request.user)
+                user_post_notify(request.user, parent.commenter.pk, None, parent.post.pk, new_comment.pk, None, "u_post_comment_notify", "R")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'posts/u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})

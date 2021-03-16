@@ -15,7 +15,7 @@ from common.notify.progs import *
         "Тот-то оценил Ваш пост".
 """
 
-def user_post_notify(creator, recipient_id, action_community_id, post_id, comment_id, socket_name, verb):
+def user_post_notify(creator, recipient_id, action_community_id, post_id, comment_id, list_id, socket_name, verb):
     from notify.model.post import PostNotify
 
     current_verb = creator.get_verb_gender(verb)
@@ -45,6 +45,19 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
         else:
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, comment_id=comment_id, verb=current_verb)
         user_send(comment_id, recipient_id, None, socket_name)
+    elif list_id:
+        if PostNotify.objects.filter(creator=creator, list_id=list_id, verb=current_verb).exists():
+            pass
+        elif PostNotify.objects.filter(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb).exists():
+            notify = PostNotify.objects.get(creator=creator, recipient_id=recipient_id, created__gt=today, verb=current_verb)
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, list_id=list_id, verb=current_verb, user_set=notify)
+        elif PostNotify.objects.filter(recipient_id=recipient_id, list_id=list_id, created__gt=today, verb=verb).exists():
+            notify = PostNotify.objects.get(recipient_id=recipient_id, list_id=list_id, created__gt=today, verb=verb)
+            group_verb = "G" + verb
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, list_id=list_id, verb=group_verb, object_set=notify)
+        else:
+            PostNotify.objects.create(creator=creator, recipient_id=recipient_id, list_id=list_id, verb=current_verb)
+        user_send(list_id, recipient_id, None, socket_name)
     else:
         from django.db.models import Q
         if PostNotify.objects.filter(creator=creator, post_id=post_id, community__isnull=True, verb=current_verb).exists():
@@ -59,7 +72,7 @@ def user_post_notify(creator, recipient_id, action_community_id, post_id, commen
             PostNotify.objects.create(creator=creator, recipient_id=recipient_id, post_id=post_id, verb=current_verb)
         user_send(post_id, recipient_id, None, socket_name)
 
-def community_post_notify(creator, community, action_community_id, post_id, comment_id, socket_name, verb):
+def community_post_notify(creator, community, action_community_id, post_id, comment_id, list_id, socket_name, verb):
     from notify.model.post import PostCommunityNotify
 
     current_verb = creator.get_verb_gender(verb)
@@ -87,6 +100,19 @@ def community_post_notify(creator, community, action_community_id, post_id, comm
         else:
             PostCommunityNotify.objects.create(creator=creator, community_id=community.id, post_id=post_id, comment_id=comment_id, verb=current_verb)
         community_send(post_id, community, None, socket_name)
+    elif list_id:
+        if PostCommunityNotify.objects.filter(creator=creator, list_id=list_id, verb=current_verb).exists():
+            pass
+        elif PostCommunityNotify.objects.filter(creator=creator, community_id=community_id, created__gt=today, verb=current_verb).exists():
+            notify = PostCommunityNotify.objects.get(creator=creator, community_id=community_id, created__gt=today, verb=current_verb)
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=current_verb, user_set=notify)
+        elif PostCommunityNotify.objects.filter(community_id=community_id, list_id=list_id, created__gt=today, verb=verb).exists():
+            notify = PostCommunityNotify.objects.get(community_id=community_id, list_id=list_id, created__gt=today, verb=verb)
+            group_verb = "G" + verb
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=group_verb, object_set=notify)
+        else:
+            PostNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=current_verb)
+        community_send(list_id, community, None, socket_name)
     else:
         if PostCommunityNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():
             pass

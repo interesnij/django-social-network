@@ -5,14 +5,14 @@ from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from communities.models import Community
 from posts.forms import *
-from common.processing.post import get_post_processing, get_post_offer_processing
-from common.check.community import check_can_get_lists, check_private_post_exists
-from common.template.user import render_for_platform
+from common.check.community import check_can_get_lists
 from django.views.generic.base import TemplateView
 
 
 class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
+        from common.check.community import check_private_post_exists
+
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
 
@@ -25,9 +25,14 @@ class PostCommunityCreate(View):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.post import community_post_notify
+                from common.processing.post import get_post_processing
+                from common.template.user import render_for_platform
+
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
+                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "I")
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -37,6 +42,8 @@ class PostCommunityCreate(View):
 
 class PostOfferCommunityCreate(View):
     def post(self,request,*args,**kwargs):
+        from common.check.community import check_private_post_exists
+        
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_private_post_exists(community)
@@ -45,13 +52,18 @@ class PostOfferCommunityCreate(View):
             raise Http404
         elif community.is_staff_post_member_can() and not request.user.is_member_of_community(community.pk):
             raise Http404
-        elif request.is_ajax() and form_post.is_valid() and check_can_get_lists(request.user, community):
+        elif request.is_ajax() and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.getlist('attach_items'):
+                from common.notify.post import community_post_notify
+                from common.processing.post import get_post_offer_processing
+                from common.template.user import render_for_platform
+
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_offer_processing(new_post)
+                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "I")
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -72,9 +84,11 @@ class PostCommunityCommentCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.post import community_post_notify
+                from common.template.user import render_for_platform
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
-                if request.user.pk != post.creator.pk:
-                    new_comment.notification_community_comment(request.user, community)
+                community_post_notify(request.user, community, None, new_comment.pk, post.pk, None, "c_post_comment_notify", "C")
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -94,9 +108,11 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.post import community_post_notify
+                from common.template.user import render_for_platform
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_community_reply_comment(request.user, community)
+                community_post_notify(request.user, community, None, new_comment.pk, parent.post.pk, None, "c_post_comment_notify", "R")
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()
