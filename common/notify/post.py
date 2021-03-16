@@ -99,7 +99,7 @@ def community_post_notify(creator, community, action_community_id, post_id, comm
             PostCommunityNotify.objects.create(creator=creator, community_id=community.id, post_id=post_id, comment_id=comment_id, verb="G" + verb, object_set=notify)
         else:
             PostCommunityNotify.objects.create(creator=creator, community_id=community.id, post_id=post_id, comment_id=comment_id, verb=current_verb)
-        community_send(post_id, community, None, socket_name)
+        community_send(comment_id, community, None, socket_name)
     elif list_id:
         if PostCommunityNotify.objects.filter(creator=creator, list_id=list_id, verb=current_verb).exists():
             pass
@@ -111,7 +111,7 @@ def community_post_notify(creator, community, action_community_id, post_id, comm
             group_verb = "G" + verb
             PostCommunityNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=group_verb, object_set=notify)
         else:
-            PostNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=current_verb)
+            PostCommunityNotify.objects.create(creator=creator, community_id=community_id, list_id=list_id, verb=current_verb)
         community_send(list_id, community, None, socket_name)
     else:
         if PostCommunityNotify.objects.filter(creator=creator, post_id=post_id, verb=current_verb).exists():

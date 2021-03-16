@@ -23,7 +23,7 @@ class FollowsView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list = self.user.get_followers() 
+		friends_list = self.user.get_followers()
 		return friends_list
 
 class FollowingsView(ListView):
@@ -40,10 +40,12 @@ class FollowingsView(ListView):
 
 class FollowCreate(View):
 	def get(self,request,*args,**kwargs):
+		from common.notify.user import user_notify
+
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
-			request.user.notification_follow(followed_user)
+			user_notify(request.user, followed_user.pk, None, "user_follow", "CR")
 			return HttpResponse("!")
 		else:
 			raise Http404
@@ -73,10 +75,11 @@ class FollowDelete(View):
 
 class CommunityFollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		from common.notify.user import community_notify 
+
+		community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
-			new_follow = request.user.community_follow_user(self.community)
-			self.community.notification_community_follow(request.user)
+			community_notify(request.user, community, "community_follow", "CR")
 			return HttpResponse("!")
 		else:
 			raise Http404

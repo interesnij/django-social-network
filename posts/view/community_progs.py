@@ -43,7 +43,7 @@ class PostCommunityCreate(View):
 class PostOfferCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         from common.check.community import check_private_post_exists
-        
+
         form_post = PostForm(request.POST)
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_private_post_exists(community)
@@ -63,7 +63,7 @@ class PostOfferCommunityCreate(View):
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_offer_processing(new_post)
-                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "I")
+                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "SI")
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()

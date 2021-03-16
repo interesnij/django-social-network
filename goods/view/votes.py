@@ -2,7 +2,6 @@ import json
 from users.models import User
 from goods.models import Good, GoodComment
 from communities.models import Community
-from notify.model.good import *
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import GoodVotes, GoodCommentVotes
@@ -10,6 +9,7 @@ from common.check.user import check_user_can_get_list
 from rest_framework.exceptions import PermissionDenied
 from common.check.community import check_can_get_lists
 from django.http import Http404
+from common.notify.photo import *
 
 
 class GoodUserLikeCreate(View):
@@ -33,8 +33,7 @@ class GoodUserLikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
             result = True
-            if user != request.user:
-                good_notification_handler(request.user, item.creator, item, GoodNotify.LIKE)
+            user_good_notify(request.user, good.creator.pk, None, good.pk, None, None, "u_good_notify", "L")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -58,8 +57,7 @@ class GoodUserDislikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
             result = True
-            if user != request.user:
-                good_notification_handler(request.user, item.creator, item, PhotoNotify.DISLIKE)
+            user_good_notify(request.user, good.creator.pk, None, good.pk, None, None, "u_good_notify", "D")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -83,11 +81,10 @@ class GoodCommentUserLikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
-            if user != request.user:
-                if comment.parent:
-                    good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_REPLY, "u_good_reply_notify")
-                else:
-                    good_comment_notification_handler(request.user, comment, GoodNotify.LIKE_COMMENT, "u_good_comment_notify")
+            if comment.parent:
+                user_good_notify(request.user, comment.commenter.pk, None, comment.parent.good.pk, comment.pk, None, "u_good_comment_notify", "LR")
+            else:
+                user_good_notify(request.user, comment.commenter.pk, None, comment.good.pk, comment.pk, None, "u_good_comment_notify", "LC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -111,11 +108,10 @@ class GoodCommentUserDislikeCreate(View):
         except GoodCommentVotes.DoesNotExist:
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
-            if user != request.user:
-                if comment.parent:
-                    good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_REPLY, "u_good_reply_notify")
-                else:
-                    good_comment_notification_handler(request.user, comment, GoodNotify.DISLIKE_COMMENT, "u_good_comment_notify")
+            if comment.parent:
+                user_good_notify(request.user, comment.commenter.pk, None, comment.parent.good.pk, comment.pk, None, "u_good_comment_notify", "DR")
+            else:
+                user_good_notify(request.user, comment.commenter.pk, None, comment.good.pk, comment.pk, None, "u_good_comment_notify", "DC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -138,8 +134,7 @@ class GoodCommunityLikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                good_community_notification_handler(request.user, community, item, GoodCommunityNotify.LIKE)
+            community_good_notify(request.user, community, None, good.pk, None, None, "c_good_notify", "L")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -162,8 +157,7 @@ class GoodCommunityDislikeCreate(View):
         except GoodVotes.DoesNotExist:
             GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                good_community_notification_handler(request.user, community, item, GoodCommunityNotify.DISLIKE)
+            community_good_notify(request.user, community, None, good.pk, None, None, "c_good_notify", "D")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -187,9 +181,9 @@ class GoodCommentCommunityLikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
             result = True
             if comment.parent:
-                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_REPLY, "c_good_reply_notify")
+                community_good_notify(request.user, community, None, comment.pk, comment.parent.good.pk, None, "c_good_comment_notify", "LR")
             else:
-                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.LIKE_COMMENT, "c_good_comment_notify")
+                community_good_notify(request.user, community, None, comment.pk, comment.good.pk, None, "c_good_comment_notify", "LC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -213,7 +207,7 @@ class GoodCommentCommunityDislikeCreate(View):
             GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
             result = True
             if comment.parent:
-                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_REPLY, "c_good_reply_notify")
+                community_good_notify(request.user, community, None, comment.pk, comment.parent.good.pk, None, "c_good_comment_notify", "DR")
             else:
-                good_community_comment_notification_handler(request.user, community, comment, GoodCommunityNotify.DISLIKE_COMMENT, "c_good_comment_notify")
+                community_good_notify(request.user, community, None, comment.pk, comment.good.pk, None, "c_good_comment_notify", "DC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")

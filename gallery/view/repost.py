@@ -6,11 +6,11 @@ from posts.forms import PostForm
 from posts.models import Post
 from gallery.models import Photo, Album
 from users.models import User
-from notify.model.photo import *
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing, repost_message_send, repost_community_send
 from common.template.user import get_detect_platform_template
+from common.notify.photo import *
 
 
 class UUCMPhotoWindow(TemplateView):

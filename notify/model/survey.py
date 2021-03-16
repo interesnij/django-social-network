@@ -8,20 +8,16 @@ from django.utils.formats import localize
 from notify.helpers import STATUS
 
 
+VOTE, WOMAN_VOTE, GROUP_VOTE = 'V', 'WV', 'GV'
+REPOST, WOMAN_REPOST, GROUP_REPOST = 'RE', 'WRE', 'GRE'
+COMMUNITY_REPOST, GROUP_COMMUNITY_REPOST = 'CR', 'GCR'
+VERB = (
+    (VOTE, ' принял участие в опросе'), (VOTE, ' приняла участие в опросе'), (VOTE, ' приняли участие в опросе'),
+    (REPOST, 'поделился'), (REPOST, 'поделилась'), (REPOST, 'поделились'),
+    (COMMUNITY_REPOST, 'поделилось'), (COMMUNITY_REPOST, 'поделились'),
+)
+
 class SurveyNotify(models.Model):
-    ANON_VOTE = 'AV'
-    VOTE = 'V'
-    REPOST = 'RE'
-    COMMUNITY_REPOST = 'CR'
-
-    VERB = (
-        (ANON_VOTE, 'Аноним принял участие в опросе'),
-        (VOTE, ' принял участие в опросе'),
-
-        (REPOST, 'поделился'),
-        (COMMUNITY_REPOST, 'поделилось'),
-    )
-
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='survey_notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
@@ -60,19 +56,6 @@ class SurveyNotify(models.Model):
 
 
 class SurveyCommunityNotify(models.Model):
-    ANON_VOTE = 'AV'
-    VOTE = 'V'
-    REPOST = 'RE'
-    COMMUNITY_REPOST = 'CR'
-
-    VERB = (
-        (ANON_VOTE, 'Аноним принял участие в опросе'),
-        (VOTE, ' принял участие в опросе'),
-
-        (REPOST, 'поделился'),
-        (COMMUNITY_REPOST, 'поделилось'),
-    )
-
     community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, related_name='survey_community_notifications', verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='community_survey_recipient', verbose_name="Получатель")

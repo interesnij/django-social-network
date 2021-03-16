@@ -53,8 +53,12 @@ class CommunitiesCatsView(TemplateView):
 class CommunityMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		if request.is_ajax():
-			new_member = request.user.join_community(self.kwargs["pk"])
-			request.user.create_or_plus_populate_community(self.kwargs["pk"])
+			from common.notify.user import community_notify
+
+			c = Community.objects.get(pk=self.kwargs["pk"])
+			new_member = request.user.join_community(self.c.pk)
+			request.user.create_or_plus_populate_community(self.c.pk)
+			community_notify(request.user, c, "member_create", 'J')
 			return HttpResponse()
 		else:
 			raise Http404
@@ -71,8 +75,11 @@ class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		user, c_pk = User.objects.get(uuid=self.kwargs["uuid"]), self.kwargs["pk"]
 		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
+			from common.notify.user import user_notify
+
 			new_member = user.join_community(c_pk)
 			user.create_or_plus_populate_community(c_pk)
+			user_notify(request.user, None, c_pk, "user_joined_community", "CRC")
 			return HttpResponse()
 		else:
 			raise Http404

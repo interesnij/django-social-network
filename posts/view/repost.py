@@ -65,8 +65,7 @@ class UUPostRepost(View):
                 parent = parent
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            if parent.creator.pk != request.user.pk:
-                user_post_notify(request.user, item.creator.pk, None, parent.pk, None, None, "u_post_repost", "RE")
+            user_post_notify(request.user, parent.creator.pk, None, parent.pk, None, None, "u_post_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -86,7 +85,7 @@ class CUPostRepost(View):
                 parent = parent
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_post_notify(request.user, parent.creator.pk, community.pk, parent.pk, None, None, "u_post_repost", 'CR')
+            community_post_notify(request.user, community, None, parent.pk, None, None, "c_post_repost", 'RE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -113,8 +112,7 @@ class UCPostRepost(View):
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    if parent.creator.pk != request.user.pk:
-                        community_post_notify(request.user, community, None, item.pk, None, None, "c_post_repost", 'RE')
+                    user_post_notify(request.user, parent.creator.pk, None, parent.pk, None, None, "u_post_repost", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

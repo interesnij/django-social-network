@@ -64,11 +64,13 @@ class CommonFrendsListView(ListView):
 
 class ConnectCreate(View):
 	def get(self,request,*args,**kwargs):
+		from common.notify.user import user_notify
+
 		target_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_frend = request.user.frend_user(target_user)
-			request.user.notification_connect(target_user)
-			return HttpResponse("")
+			user_notify(request.user, target_user.pk, None, "user_connect", 'CC')
+			return HttpResponse()
 		else:
 			raise Http404
 

@@ -2,13 +2,13 @@ import json
 from users.models import User
 from gallery.models import Photo, PhotoComment
 from communities.models import Community
-from notify.model.photo import *
 from django.http import HttpResponse
 from django.views import View
 from common.model.votes import PhotoVotes, PhotoCommentVotes
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from django.http import Http404
+from common.notify.photo import *
 
 
 class PhotoUserLikeCreate(View):
@@ -29,8 +29,7 @@ class PhotoUserLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-            if user.pk != request.user.pk:
-                photo_notification_handler(request.user, item.creator, item, PhotoNotify.LIKE)
+            user_photo_notify(request.user, item.creator.pk, None, item.pk, None, None, "u_photo_notify", "L")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -52,8 +51,7 @@ class PhotoUserDislikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
-            if user != request.user:
-                photo_notification_handler(request.user, item.creator, item, PhotoNotify.DISLIKE)
+            user_photo_notify(request.user, item.creator.pk, None, item.pk, None, None, "u_photo_notify", "D")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -77,11 +75,10 @@ class PhotoCommentUserLikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
             result = True
-            if user != request.user:
-                if comment.parent:
-                    photo_comment_notification_handler(request.user, comment, PhotoNotify.LIKE_REPLY, "u_photo_reply_notify")
-                else:
-                    photo_comment_notification_handler(request.user, comment, PhotoNotify.LIKE_COMMENT, "u_photo_comment_notify")
+            if comment.parent:
+                user_photo_notify(request.user, comment.commenter.pk, None, comment.parent.photo.pk, comment.pk, None, "u_photo_comment_notify", "LR")
+            else:
+                user_photo_notify(request.user, comment.commenter.pk, None, comment.photo.pk, comment.pk, None, "u_photo_comment_notify", "LC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -105,11 +102,10 @@ class PhotoCommentUserDislikeCreate(View):
         except PhotoCommentVotes.DoesNotExist:
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
             result = True
-            if user != request.user:
-                if comment.parent:
-                    photo_comment_notification_handler(request.user, comment, PhotoNotify.DISLIKE_REPLY, "u_photo_reply_notify")
-                else:
-                    photo_comment_notification_handler(request.user, comment, PhotoNotify.DISLIKE_COMMENT, "u_photo_comment_notify")
+            if comment.parent:
+                user_photo_notify(request.user, comment.commenter.pk, None, comment.parent.photo.pk, comment.pk, None, "u_photo_comment_notify", "DR")
+            else:
+                user_photo_notify(request.user, comment.commenter.pk, None, comment.photo.pk, comment.pk, None, "u_photo_comment_notify", "DC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -132,8 +128,7 @@ class PhotoCommunityLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                photo_community_notification_handler(request.user, community, item, PhotoCommunityNotify.LIKE)
+            community_photo_notify(request.user, community, None, item.pk, None, None, "c_photo_notify", "L")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -156,8 +151,7 @@ class PhotoCommunityDislikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
-            if not request.user.is_staff_of_community(community.pk):
-                photo_community_notification_handler(request.user, community, item, PhotoCommunityNotify.DISLIKE)
+            community_photo_notify(request.user, community, None, item.pk, None, None, "c_photo_notify", "D")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -181,9 +175,9 @@ class PhotoCommentCommunityLikeCreate(View):
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
             result = True
             if comment.parent:
-                photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.LIKE_REPLY, "c_photo_reply_notify")
+                community_photo_notify(request.user, community, None, comment.pk, comment.parent.photo.pk, None, "c_photo_comment_notify", "LR")
             else:
-                photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.LIKE_COMMENT, "c_photo_comment_notify")
+                community_photo_notify(request.user, community, None, comment.pk, comment.photo.pk, None, "c_photo_comment_notify", "LC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -207,7 +201,7 @@ class PhotoCommentCommunityDislikeCreate(View):
             PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
             result = True
             if comment.parent:
-                photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.DISLIKE_REPLY, "c_photo_reply_notify")
+                community_photo_notify(request.user, community, None, comment.pk, comment.parent.photo.pk, None, "c_photo_comment_notify", "LR")
             else:
-                photo_community_comment_notification_handler(request.user, community, comment, PhotoCommunityNotify.DISLIKE_COMMENT, "c_photo_comment_notify")
+                community_photo_notify(request.user, community, None, comment.pk, comment.photo.pk, None, "c_photo_comment_notify", "LC")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(disliks)}),content_type="application/json")
