@@ -15,7 +15,7 @@ class UserNotify(models.Model):
     COMMUNITY_REQUEST_CONFIRMED, GROUP_COMMUNITY_REQUEST_CONFIRMED = 'CRC', 'GCRC'
 
     VERB = (
-        (CONNECTION_REQUEST, 'подал заявку в друзья'), (WOMAN_CONNECTION_REQUEST, 'подала заявку в друзья'), (GROUP_CONNECTION_REQUEST, 'подали заявку в друзья')
+        (CONNECTION_REQUEST, 'подал заявку в друзья'), (WOMAN_CONNECTION_REQUEST, 'подала заявку в друзья'), (GROUP_CONNECTION_REQUEST, 'подали заявку в друзья'),
         (CONNECTION_CONFIRMED, 'подтвердил, что он Ваш друг'), (WOMAN_CONNECTION_CONFIRMED, 'подтвердила, что он Ваш друг'), (GROUP_CONNECTION_CONFIRMED, 'подтвердили, что он Ваш друг'),
         (COMMUNITY_INVITE, 'пригласил Вас в сообщество'), (WOMAN_COMMUNITY_INVITE, 'пригласила Вас в сообщество'), (GROUP_COMMUNITY_INVITE, 'пригласили Вас в сообщество'),
         (REGISTER, 'зарегистрировался'), (WOMAN_REGISTER, 'зарегистрировалась'), (GROUP_REGISTER, 'зарегистрировались'),
