@@ -55,7 +55,7 @@ class UserNotify(models.Model):
 
 class UserCommunityNotify(models.Model):
     CONNECTION_REQUEST, WOMAN_CONNECTION_REQUEST, GROUP_CONNECTION_REQUEST = 'CR', 'WCR', 'GCR'
-    CONNECTION_CONFIRMED, = 'CC'
+    CONNECTION_CONFIRMED = 'CC'
     JOIN, WOMAN_JOIN, GROUP_JOIN = 'J', 'WJ', 'GJ'
 
     VERB = (
