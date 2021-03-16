@@ -16,7 +16,7 @@ class PostUserCreate(View):
 
             if request.POST.get('text') or attach:
                 from common.template.user import render_for_platform
-                from common.processing.post import get_u_post_processing
+                from common.processing.post import get_post_processing
                 from common.notify.post import user_post_notify
 
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
