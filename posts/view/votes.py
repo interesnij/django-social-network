@@ -8,7 +8,7 @@ from common.model.votes import PostVotes, PostCommentVotes
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from django.http import Http404
-from common.notify.post import *
+from common.notify.notify import *
 
 
 class PostUserLikeCreate(View):
@@ -30,7 +30,7 @@ class PostUserLikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
-            user_post_notify(request.user, item.creator.pk, None, item.pk, None, None, "u_post_notify", "L")
+            user_notify(request.user, item.creator.pk, None, "pos"+pk, "u_post_notify", "L")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
