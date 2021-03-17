@@ -25,8 +25,8 @@ def user_notify(creator, recipient_id, action_community_id, attach, socket_name,
     elif Notify.objects.filter(recipient_id=recipient_id, action_community_id=action_community_id, created__gt=today, attach__in=attach[:3], verb=verb).exists():
         notify = Notify.objects.get(recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, created__gt=today, verb=verb)
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=recipient_id, attach=attach, verb=verb, user_set=notify)
-    elif Notify.objects.filter(recipient_id=recipient_id, action_community_id=action_community_id, post_id=post_id, created__gt=today, verb=verb).exists():
-        notify = Notify.objects.get(recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, created__gt=today, verb=verb)
+    elif Notify.objects.filter(recipient_id=recipient_id, attach=attach, created__gt=today, verb=verb).exists():
+        notify = Notify.objects.get(recipient_id=recipient_id, attach=attach, created__gt=today, verb=verb)
         Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb="G"+verb, object_set=notify)
     else:
         Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb=verb)
