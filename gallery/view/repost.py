@@ -9,7 +9,7 @@ from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing
-from common.notify.photo import *
+from common.notify.notify import *
 
 
 class UUCMPhotoWindow(TemplateView):
@@ -106,7 +106,7 @@ class UUPhotoRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho")
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_photo_notify(request.user, photo.creator.pk, None, photo.pk, None, None, "u_photo_repost", "RE")
+            user_notify(request.user, photo.creator.pk, None, "pho"+photo.pk, "u_photo_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

@@ -20,31 +20,11 @@
 
                 {% if object.is_unread %}
 
-                  {% if object.post %}
-                    {% include 'mobile/notify/items/post.html' %}
-                  {% elif object.photo %}
-                    {% include 'mobile/notify/items/photo.html' %}
-                  {% elif object.good %}
-                    {% include 'mobile/notify/items/good.html' %}
-                  {% elif object.video %}
-                    {% include 'mobile/notify/items/video.html' %}
-                  {% else %}
-                    {% include 'mobile/notify/items/user.html' %}
-                  {% endif %}
+                  is_unread
 
                 {% else %}
 
-                  {% if object.post %}
-                    {% include 'mobile/notify/items/read_post.html' %}
-                  {% elif object.photo %}
-                    {% include 'mobile/notify/items/read_photo.html' %}
-                  {% elif object.good %}
-                    {% include 'mobile/notify/items/read_good.html' %}
-                  {% elif object.video %}
-                    {% include 'mobile/notify/items/read_video.html' %}
-                  {% else %}
-                    {% include 'mobile/notify/items/read_user.html' %}
-                  {% endif %}
+                  {{ object }}
 
                 {% endif %}
 
