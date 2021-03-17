@@ -9,7 +9,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import get_post_processing, repost_message_send, repost_community_send
+from common.processing.post import get_post_processing, repost_message_send
 from common.template.user import get_detect_platform_template
 from common.notify.good import *
 
@@ -21,7 +21,7 @@ class UUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_repost_window/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMGoodWindow,self).get(request,*args,**kwargs)
@@ -40,7 +40,7 @@ class CUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.c, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_repost_window/c_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.good, self.c, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMGoodWindow,self).get(request,*args,**kwargs)
 
@@ -59,7 +59,7 @@ class UUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album, self.user, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_repost_window/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.album, self.user, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
@@ -78,7 +78,7 @@ class CUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album, self.c, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_repost_window/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.album, self.c, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
@@ -100,10 +100,10 @@ class UUGoodRepost(View):
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=good.creator, community=None, status=Post.GOOD_REPOST)
-            good.item.add(parent)
+            parent = Post.create_parent_post(creator=good.creator, community=None, attach="goo")
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
+            user_good_notify(request.user, good.creator.pk, None, good.pk, None, None, "u_good_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -117,10 +117,10 @@ class CUGoodRepost(View):
         check_can_get_lists(request.user, c)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=good.creator, community=c, status=Post.GOOD_REPOST)
-            good.item.add(parent)
+            parent = Post.create_parent_post(creator=good.creator, community=c, attach="goo")
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
+            community_good_notify(request.user, community, None, good.pk, None, None, "c_good_repost", 'RE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -134,7 +134,20 @@ class UCGoodRepost(View):
         good, user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(good, Post.GOOD_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=good.creator, community=community, attach="goo")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    user_good_notify(request.user, good.creator.pk, community_id, good.pk, None, None, "u_good_repost", 'CR')
         return HttpResponse()
 
 class CCGoodRepost(View):
@@ -144,7 +157,20 @@ class CCGoodRepost(View):
     def post(self, request, *args, **kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_community_send(good, Post.GOOD_REPOST, c, request)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=good.creator, community=community, attach="goo")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    community_good_notify(request.user, community, community_id, good.pk, None, None, "c_good_repost", 'CR')
         return HttpResponse()
 
 
@@ -156,7 +182,7 @@ class UMGoodRepost(View):
         good, user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(photo, Post.GOOD_REPOST, None, request, "Репост товара пользователя")
+        repost_message_send(photo, "goo", None, request, "Репост товара пользователя")
         return HttpResponse()
 
 
@@ -167,7 +193,7 @@ class CMGoodRepost(View):
     def post(self, request, *args, **kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_message_send(photo, Post.GOOD_REPOST, c, request, "Репост товара сообщества")
+        repost_message_send(photo, "goo", c, request, "Репост товара сообщества")
         return HttpResponse()
 
 
@@ -181,10 +207,10 @@ class UUGoodListRepost(View):
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=None, status=Post.GOOD_LIST_REPOST)
-            album.post.add(parent)
+            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lgo")
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
+            user_good_notify(request.user, album.creator.pk, None, album.pk, None, None, "u_good_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -198,10 +224,10 @@ class CUGoodListRepost(View):
         check_can_get_lists(request.user, c)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=c, status=Post.GOOD_LIST_REPOST)
-            album.post.add(parent)
+            parent = Post.create_parent_post(creator=album.creator, community=c, attach="lgo")
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
+            community_good_notify(request.user, community, None, album.pk, None, None, "c_good_repost", 'LRE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -215,7 +241,20 @@ class UCGoodListRepost(View):
         album, user = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(album, Post.GOOD_LIST_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lgo")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    user_good_notify(request.user, album.creator.pk, community_id, album.pk, None, None, "u_good_repost", 'CLR')
         return HttpResponse()
 
 class CCGoodListRepost(View):
@@ -225,7 +264,20 @@ class CCGoodListRepost(View):
     def post(self, request, *args, **kwargs):
         album, c = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_community_send(album, Post.GOOD_LIST_REPOST, c, request)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lgo")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    community_good_notify(request.user, community, community_id, album.pk, None, None, "c_album_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -237,7 +289,7 @@ class UMGoodListRepost(View):
         album, user = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(album, Post.GOOD_LIST_REPOST, None, request, "Репост списка товаров пользователя")
+        repost_message_send(album, "lgo", None, request, "Репост списка товаров пользователя")
         return HttpResponse()
 
 
@@ -248,5 +300,5 @@ class CMGoodListRepost(View):
     def post(self, request, *args, **kwargs):
         album, c = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_message_send(album, Post.GOOD_LIST_REPOST, c, request, "Репост списка товаров сообщества")
+        repost_message_send(album, "lgo", c, request, "Репост списка товаров сообщества")
         return HttpResponse()

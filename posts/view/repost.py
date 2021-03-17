@@ -3,7 +3,7 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post
+from posts.models import Post, Postlist
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -19,7 +19,7 @@ class UUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/post_repost_window/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
@@ -38,7 +38,7 @@ class CUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/post_repost_window/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
@@ -48,6 +48,48 @@ class CUCMPostWindow(TemplateView):
         context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
         context["community"] = self.community
         return context
+
+class UUCMPostListWindow(TemplateView):
+    """
+    форма репоста списка записей пользователя к себе на стену, в свои сообщества, в несколько сообщений
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        if self.user != request.user:
+            check_user_can_get_list(request.user, self.user)
+        self.template_name = get_detect_platform_template("posts/repost/u_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UUCMPostListWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UUCMPostListWindow,self).get_context_data(**kwargs)
+        context["form"] = PostForm()
+        context["object"] = self.list
+        context["user"] = self.user
+        return context
+
+class CUCMPostListWindow(TemplateView):
+    """
+    форма репоста списка записей сообщества к себе на стену, в свои сообщества, в несколько сообщений
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, self.community)
+        self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CUCMPostListWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CUCMPostListWindow,self).get_context_data(**kwargs)
+        context["form"] = PostForm()
+        context["object"] = self.list
+        context["community"] = self.community
+        return context
+
 
 class UUPostRepost(View):
     """
@@ -108,11 +150,10 @@ class UCPostRepost(View):
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
-                community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_post_notify(request.user, parent.creator.pk, None, parent.pk, None, None, "u_post_repost", 'CR')
+                    user_post_notify(request.user, parent.creator.pk, community_id, parent.pk, None, None, "u_post_repost", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -133,11 +174,10 @@ class CCPostRepost(View):
             if not communities:
                 return HttpResponseBadRequest()
             for community_id in communities:
-                _community = Community.objects.get(pk=community_id)
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_post_notify(request.user, community, _community.pk, item.pk, None, None, "c_post_repost", 'CR')
+                    community_post_notify(request.user, community, community_id, item.pk, None, None, "c_post_repost", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -212,4 +252,122 @@ class CMPostRepost(View):
                     return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
+        return HttpResponse()
+
+
+class UUPostListRepost(View):
+    """
+    создание репоста видеоальбома пользователя на свою стену
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+        form_post = PostForm(request.POST)
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="pli")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+            get_post_processing(new_post)
+            user_video_notify(request.user, list.creator.pk, None, list.pk, None, None, "u_video_list_repost", "LRE")
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CUPostListRepost(View):
+    """
+    создание репоста видеоальбома сообщества на свою стену
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        form_post = PostForm(request.POST)
+        check_can_get_lists(request.user, community)
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+            get_post_processing(new_post)
+            community_video_notify(request.user, community, None, list.pk, None, None, "c_post_list_repost", 'LRE')
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class UCPostListRepost(View):
+    """
+    создание репоста списка записей пользователя на стены списка сообществ, в которых пользователь - управленец
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    user_video_notify(request.user, list.creator.pk, community_id, list.pk, None, None, "u_post_list_repost", 'CLR')
+        return HttpResponse()
+
+
+class CCPostListRepost(View):
+    """
+    создание репоста списка записей сообщества на стены списка сообществ, в которых пользователь - управленец
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        communities = request.POST.getlist("communities")
+        lists = request.POST.getlist("lists")
+        attach = request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    community_video_notify(request.user, community, community_id, list.pk, None, None, "c_list_list_repost", 'CLR')
+        return HttpResponse()
+
+
+class UMPostListRepost(View):
+    """
+    создание репоста списка записей пользователя в беседы, в которых состоит пользователь
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if user != request.user:
+            check_user_can_get_list(request.user, user)
+        repost_message_send(list, "pli", None, request, "Репост списка записей пользователя")
+        return HttpResponse()
+
+
+class CMPostListRepost(View):
+    """
+    создание репоста списка записей сообщества в беседы, в которых состоит пользователь
+    """
+    def post(self, request, *args, **kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        repost_message_send(list, "pli", community, request, "Репост списка записей сообщества")
         return HttpResponse()

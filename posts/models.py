@@ -97,17 +97,8 @@ class PostCategory(models.Model):
 
 class Post(models.Model):
     STATUS_DRAFT, STATUS_PROCESSING, STATUS_MESSAGE_PUBLISHED, STATUS_PUBLISHED = 'D', 'PG', 'MP', 'P'
-    PHOTO_REPOST, PHOTO_ALBUM_REPOST, GOOD_REPOST, GOOD_LIST_REPOST, MUSIC_REPOST, MUSIC_LIST_REPOST, DOC_REPOST, \
-    DOC_LIST_REPOST, VIDEO_REPOST, VIDEO_LIST_REPOST, USER_REPOST, COMMUNITY_REPOST = 'PR', 'PAR', 'GR', 'GLR', 'MR', 'MLR', 'DR', \
-    'DLR', 'VR', 'VLR', 'UR', 'CR'
     STATUSES = (
         (STATUS_DRAFT,'Черновик'),(STATUS_PROCESSING,'Обработка'),(STATUS_PUBLISHED,'Опубликована'),(STATUS_MESSAGE_PUBLISHED,'Репост в сообщения'),
-        (PHOTO_REPOST, 'Репост фотографии'), (PHOTO_ALBUM_REPOST, 'Репост фотоальбома'),
-        (GOOD_REPOST, 'Репост товара'), (GOOD_LIST_REPOST, 'Репост списка товаров'),
-        (MUSIC_REPOST, 'Репост аудиозаписи'), (MUSIC_LIST_REPOST, 'Репост плейлиста аудиозаписей'),
-        (DOC_REPOST, 'Репост документа'), (DOC_LIST_REPOST, 'Репост списка документов'),
-        (VIDEO_REPOST, 'Репост видеозаписи'), (VIDEO_LIST_REPOST, 'Репост списка видеозаписей'),
-        (USER_REPOST, 'Репост пользователя'), (COMMUNITY_REPOST, 'Репост сообщества'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
@@ -166,66 +157,9 @@ class Post(models.Model):
         return post
 
     @classmethod
-    def create_parent_post(cls, creator, community, status):
-        post = cls.objects.create(creator=creator, community=community, status=status, )
+    def create_parent_post(cls, creator, community, attach):
+        post = cls.objects.create(creator=creator, community=community, attach=attach, )
         return post
-
-    def is_photo_repost(self):
-        return try_except(self.status == Post.PHOTO_REPOST)
-    def get_photo_repost(self):
-        photo = self.parent.item_photo.filter(is_deleted=False)[0]
-        return photo
-    def is_photo_album_repost(self):
-        return try_except(self.status == Post.PHOTO_ALBUM_REPOST)
-    def get_photo_album_repost(self):
-        photo_album = self.parent.post_album.filter(is_deleted=False)[0]
-        return photo_album
-
-    def is_music_repost(self):
-        return try_except(self.status == Post.MUSIC_REPOST)
-    def is_music_list_repost(self):
-        return try_except(self.status == Post.MUSIC_LIST_REPOST)
-    def get_playlist_repost(self):
-        playlist = self.parent.post_soundlist.filter(is_deleted=False)[0]
-        return playlist
-    def get_music_repost(self):
-        music = self.parent.item_music.filter(is_deleted=False)[0]
-        return music
-
-    def is_good_repost(self):
-        return try_except(self.status == Post.GOOD_REPOST)
-    def is_good_list_repost(self):
-        return try_except(self.status == Post.GOOD_LIST_REPOST)
-    def get_good_repost(self):
-        good = self.parent.item_good.filter(is_deleted=False)[0]
-        return good
-    def get_good_list_repost(self):
-        good_list = self.parent.post_good_album.filter(is_deleted=False)[0]
-        return good_list
-
-    def is_doc_repost(self):
-        return try_except(self.status == Post.DOC_REPOST)
-    def is_doc_list_repost(self):
-        return try_except(self.status == Post.DOC_LIST_REPOST)
-    def get_doc_list_repost(self):
-        list = self.parent.post_doclist.filter(is_deleted=False)[0]
-        return list
-    def get_doc_repost(self):
-        doc = self.parent.item_doc.filter(is_deleted=False)[0]
-        return doc
-
-    def is_video_repost(self):
-        return try_except(self.status == Post.VIDEO_REPOST)
-    def is_video_list_repost(self):
-        return try_except(self.status == Post.VIDEO_LIST_REPOST)
-    def get_video_list_repost(self):
-        video_list = self.parent.post_video_album.filter(is_deleted=False)[0]
-        return video_list
-
-    def is_user_repost(self):
-        return try_except(self.status == Post.USER_REPOST)
-    def is_community_repost(self):
-        return try_except(self.status == Post.COMMUNITY_REPOST)
 
     def get_u_new_parent(self, user):
         from common.attach.post_attach import get_u_news_parent
