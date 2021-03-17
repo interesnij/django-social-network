@@ -11,7 +11,7 @@ class Notify(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
-    attach = models.CharField(max_length=15, verbose_name="Объект")
+    attach = models.CharField(max_length=30, verbose_name="Объект")
     community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
     action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
