@@ -30,7 +30,7 @@ class PostUserLikeCreate(View):
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
             result = True
-            user_notify(request.user, item.creator.pk, None, "pos"+item.pk, "u_post_notify", "L")
+            user_notify(request.user, item.creator.pk, None, "pos"+str(item.pk), "u_post_notify", "L")
         likes = item.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
