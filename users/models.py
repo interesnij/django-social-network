@@ -1600,12 +1600,12 @@ class User(AbstractUser):
         return Notify.objects.only('created').filter(query)
 
     def read_user_notify(self):
-        from notify.model.good import Notify
+        from notify.models import Notify
 
         Notify.u_notify_unread(self.pk)
 
     def count_user_unread_notify(self):
-        from notify.model.good import Notify
+        from notify.models import Notify
         query = Q(recipient_id=self.pk, community__isnull=True, status="U")
         return Notify.objects.filter(query).values("pk").count()
 

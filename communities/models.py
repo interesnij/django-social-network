@@ -856,12 +856,12 @@ class Community(models.Model):
         return UserLocation.objects.filter(user_id__in=[use['user'] for use in v_s], city_ru=sity).count()
 
     def get_community_notify(self):
-        from notify.model.good import Notify
+        from notify.models import Notify
         query = Q(community_id=self.pk, status="U")|Q(community_id=self.pk, community__isnull=True, user_set__isnull=True, status="R")
         return Notify.objects.only('created').filter(query)
 
     def count_community_unread_notify(self, user_pk):
-        from notify.model.good import Notify
+        from notify.models import Notify
 
         query = Q(community_id=self.pk, recipient_id=user_pk, status="U")
         return Notify.objects.filter(query).values("pk").count()
@@ -874,7 +874,7 @@ class Community(models.Model):
             return ''
 
     def read_community_notify(self, user_pk):
-        from notify.model.good import Notify
+        from notify.models import Notify
 
         Notify.c_notify_unread(self.pk, user_pk)
 
