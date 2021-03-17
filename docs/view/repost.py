@@ -9,7 +9,7 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import repost_message_send, repost_community_send, get_post_processing
+from common.processing.post import repost_message_send, get_post_processing, repost_community_send
 from common.template.user import get_detect_platform_template
 
 
