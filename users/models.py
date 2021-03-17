@@ -1594,44 +1594,20 @@ class User(AbstractUser):
             return ''
 
     def get_user_notify(self):
-        from notify.model.good import GoodNotify
-        from notify.model.photo import PhotoNotify
-        from notify.model.post import PostNotify
-        from notify.model.user import UserNotify
-        from notify.model.video import VideoNotify
-        from itertools import chain
+        from notify.models import Notify
 
-        query = Q(recipient_id=self.pk, status="U")|Q(recipient_id=self.pk, user_set__isnull=True, object_set__isnull=True, status="R")
-
-        return sorted(chain(UserNotify.objects.only('created').filter(query), \
-                            PostNotify.objects.only('created').filter(query), \
-                            PhotoNotify.objects.only('created').filter(query), \
-                            GoodNotify.objects.only('created').filter(query), \
-                            VideoNotify.objects.only('created').filter(query), ), \
-                            key=lambda x: x.created, reverse=True)
+        query = Q(recipient_id=self.pk, status="U", community__isnull=True)|Q(recipient_id=self.pk, community__isnull=True, user_set__isnull=True, object_set__isnull=True, status="R")
+        return Notify.objects.only('created').filter(query)
 
     def read_user_notify(self):
-        from notify.model.good import GoodNotify
-        from notify.model.photo import PhotoNotify
-        from notify.model.post import PostNotify
-        from notify.model.user import UserNotify
-        from notify.model.video import VideoNotify
+        from notify.model.good import Notify
 
-        GoodNotify.notify_unread(self.pk)
-        PhotoNotify.notify_unread(self.pk)
-        PostNotify.notify_unread(self.pk)
-        UserNotify.notify_unread(self.pk)
-        VideoNotify.notify_unread(self.pk)
+        Notify.u_notify_unread(self.pk)
 
     def count_user_unread_notify(self):
-        from notify.model.good import GoodNotify
-        from notify.model.photo import PhotoNotify
-        from notify.model.post import PostNotify
-        from notify.model.user import UserNotify
-        from notify.model.video import VideoNotify
-
-        query = Q(recipient_id=self.pk, status="U")
-        return GoodNotify.objects.filter(query).values("pk").count() + PhotoNotify.objects.filter(query).values("pk").count() + PostNotify.objects.filter(query).values("pk").count() + UserNotify.objects.filter(query).values("pk").count() + VideoNotify.objects.filter(query).values("pk").count()
+        from notify.model.good import Notify
+        query = Q(recipient_id=self.pk, community__isnull=True, status="U")
+        return Notify.objects.filter(query).values("pk").count()
 
     def unread_notify_count(self):
         count = self.count_user_unread_notify()

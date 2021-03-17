@@ -856,24 +856,15 @@ class Community(models.Model):
         return UserLocation.objects.filter(user_id__in=[use['user'] for use in v_s], city_ru=sity).count()
 
     def get_community_notify(self):
-        from notify.model.good import GoodCommunityNotify
-        from notify.model.photo import PhotoCommunityNotify
-        from notify.model.post import PostCommunityNotify
-        from notify.model.user import UserCommunityNotify
-        from notify.model.video import VideoCommunityNotify
-        from itertools import chain
-
-        return sorted(chain(PostCommunityNotify.objects.only('created').filter(recipient_id=self.pk), UserCommunityNotify.objects.only('created').filter(recipient_id=self.pk), VideoCommunityNotify.objects.only('created').filter(recipient_id=self.pk), PhotoCommunityNotify.objects.only('created').filter(recipient_id=self.pk), GoodCommunityNotify.objects.only('created').filter(recipient_id=self.pk)), key=lambda instance: instance.created, reverse=True)
+        from notify.model.good import Notify
+        query = Q(community_id=self.pk, status="U")|Q(community_id=self.pk, community__isnull=True, user_set__isnull=True, status="R")
+        return Notify.objects.only('created').filter(query)
 
     def count_community_unread_notify(self, user_pk):
-        from notify.model.good import GoodCommunityNotify
-        from notify.model.photo import PhotoCommunityNotify
-        from notify.model.post import PostCommunityNotify
-        from notify.model.user import UserCommunityNotify
-        from notify.model.video import VideoCommunityNotify
+        from notify.model.good import Notify
 
         query = Q(community_id=self.pk, recipient_id=user_pk, status="U")
-        return GoodCommunityNotify.objects.filter(query).values("pk").count() + PhotoCommunityNotify.objects.filter(query).values("pk").count() + PostCommunityNotify.objects.filter(query).values("pk").count() + UserCommunityNotify.objects.filter(query).values("pk").count() + VideoCommunityNotify.objects.filter(query).values("pk").count()
+        return Notify.objects.filter(query).values("pk").count()
 
     def count_unread_notify(self, user_pk):
         count = self.count_community_unread_notify(user_pk)
@@ -883,17 +874,9 @@ class Community(models.Model):
             return ''
 
     def read_community_notify(self, user_pk):
-        from notify.model.good import GoodCommunityNotify
-        from notify.model.photo import PhotoCommunityNotify
-        from notify.model.post import PostCommunityNotify
-        from notify.model.user import UserCommunityNotify
-        from notify.model.video import VideoCommunityNotify
+        from notify.model.good import Notify
 
-        GoodCommunityNotify.notify_unread(self.pk, user_pk)
-        PhotoCommunityNotify.notify_unread(self.pk, user_pk)
-        PostCommunityNotify.notify_unread(self.pk, user_pk)
-        UserCommunityNotify.notify_unread(self.pk, user_pk)
-        VideoCommunityNotify.notify_unread(self.pk, user_pk)
+        Notify.c_notify_unread(self.pk, user_pk)
 
 
     ''''' модерация '''''
