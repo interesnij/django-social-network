@@ -5,8 +5,8 @@ from django.contrib.postgres.indexes import BrinIndex
 from notify.helpers import VERB, STATUS
 
 
-class Notify(models.Model): 
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_notifications', verbose_name="Получатель")
+class Notify(models.Model):
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
