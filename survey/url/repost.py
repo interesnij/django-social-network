@@ -1,4 +1,4 @@
-from posts.view.repost import *
+from survey.view.repost import *
 from django.conf.urls import url
 
 urlpatterns = [
