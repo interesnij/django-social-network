@@ -8,5 +8,5 @@ def get_timeline_posts(user):
     query = Q(creator_id=user.pk)| \
             Q(creator_id__in=user.get_user_notify_ids())| \
             Q(community_id__in=user.get_community_notify_ids())
-    query.add(Q(user_set__isnull=True, object_set__isnull=True, status="R"), Q.AND)
+    query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
     return Notify.objects.filter(query)
