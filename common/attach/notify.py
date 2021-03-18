@@ -43,7 +43,7 @@ def get_notify(user, verb, attach):
                 str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
                 style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
         else:
-            window_likes = ''
+            window_dislikes = ''
         if post.community:
             pass
         else:
