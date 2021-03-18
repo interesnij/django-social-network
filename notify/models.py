@@ -113,6 +113,10 @@ class Notify(models.Model):
         else:
             pass
 
+    def get__notify(self, user):
+        from common.attach.notify import get_notify
+        return get_notify(user, self.verb, self.attach)
+
 
 class UserNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")

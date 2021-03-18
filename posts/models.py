@@ -371,7 +371,7 @@ class Post(models.Model):
         return count
 
     def all_visits_count(self):
-        return self.post_visits_count() + self.post_ad_visits_count()
+        return self.post_visits_count()
 
     def get_list_pk(self):
         return self.list.all()[0].pk
@@ -384,6 +384,10 @@ class Post(models.Model):
             if list.is_private_list():
                 return True
         return False
+
+    def post_visits_count(self):
+        from stst.models import PostNumbers
+        return PostNumbers.objects.filter(post=self.pk).values('pk').count()
 
 
 class PostComment(models.Model):
