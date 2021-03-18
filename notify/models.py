@@ -94,3 +94,26 @@ class Notify(models.Model):
 
     def is_unread(self):
         return self.status is "U"
+
+
+class UserNotify(models.Model):
+    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
+    target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    id = models.BigAutoField(primary_key=True)
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Подписка пользователя"
+        verbose_name_plural = "Подписки пользователя"
+
+class CommunityNotify(models.Model):
+    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
+    community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    id = models.BigAutoField(primary_key=True)
+
+    class Meta:
+        indexes = (BrinIndex(fields=['created']),)
+        verbose_name = "Подписка на сообщество"
+        verbose_name_plural = "Подписки на сообщества"

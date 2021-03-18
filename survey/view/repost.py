@@ -10,7 +10,7 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing, repost_message_send
 from common.template.user import get_detect_platform_template
-from common.notify.photo import *
+from common.notify.notify import *
 
 
 class UUCMSurveyWindow(TemplateView):
@@ -68,10 +68,10 @@ class UUSurveyRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=survey.creator, community=None, attach="sur")
+            parent = Post.create_parent_post(creator=survey.creator, community=None, attach="sur"+str(survey.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_survey_notify(request.user, survey.creator.pk, None, survey.pk, None, None, "u_survey_repost", "RE")
+            user_notify(request.user, survey.creator.pk, None, "sur"+survey.pk, "u_survey_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -88,10 +88,10 @@ class CUSurveyRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=survey.creator, community=community, attach="sur")
+            parent = Post.create_parent_post(creator=survey.creator, community=community, attach="sur"+str(survey.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_survey_notify(request.user, community, None, survey.pk, None, None, "c_survey_repost", 'RE')
+            community_notify(request.user, community, None, "sur"+survey.pk, "c_survey_repost", 'RE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -113,12 +113,12 @@ class UCSurveyRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=survey.creator, attach="pho")
+            parent = Post.create_parent_post(creator=survey.creator, attach="sur"+str(survey.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_survey_notify(request.user, survey.creator.pk, community_id, survey.pk, None, None, "u_survey_repost", 'CR')
+                    user_notify(request.user, survey.creator.pk, community_id, "sur"+survey.pk, "u_survey_repost", 'CR')
         return HttpResponse()
 
 
@@ -137,12 +137,12 @@ class CCSurveyRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=survey.creator, community=community, attach="pho")
+            parent = Post.create_parent_post(creator=survey.creator, community=community, attach="sur"+str(survey.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_survey_notify(request.user, community, community_id, survey.pk, None, None, "c_survey_repost", 'CR')
+                    community_notify(request.user, community, community_id, "sur"+survey.pk, "c_survey_repost", 'CR')
         return HttpResponse()
 
 
@@ -155,7 +155,7 @@ class UMSurveyRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(survey, "sur", None, request, "Репост опроса пользователя")
+        repost_message_send(survey, "sur"+str(survey.pk), None, request, "Репост опроса пользователя")
         return HttpResponse()
 
 
@@ -167,5 +167,5 @@ class CMSurveyRepost(View):
         survey = Survey.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(survey, "sur", community, request, "Репост опроса сообщества")
+        repost_message_send(survey, "sur"+str(survey.pk), community, request, "Репост опроса сообщества")
         return HttpResponse()

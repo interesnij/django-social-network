@@ -131,6 +131,8 @@ class CommunityDocCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, community = DocForm(request.POST, request.FILES), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
+            from common.notify.notify import community_notify
+
             list = DocList.objects.get(community_id=community.pk, type=DocList.MAIN)
             new_doc = form_post.save(commit=False)
             new_doc.creator, new_doc.is_community, lists = community.creator, True, form_post.cleaned_data.get("list")
@@ -140,6 +142,7 @@ class CommunityDocCreate(View):
             else:
                 for _list in lists:
                     _list.doc_list.add(new_doc)
+            community_notify(request.user, community, None, "doc"+str(new_doc.pk), "c_doc_notify", "ITE")
             return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()

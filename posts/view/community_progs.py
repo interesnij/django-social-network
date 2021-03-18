@@ -25,14 +25,14 @@ class PostCommunityCreate(View):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.post import community_post_notify
+                from common.notify.notify import community_notify
                 from common.processing.post import get_post_processing
                 from common.template.user import render_for_platform
 
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
-                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "I")
+                community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "ITE")
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -56,14 +56,14 @@ class PostOfferCommunityCreate(View):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.getlist('attach_items'):
-                from common.notify.post import community_post_notify
+                from common.notify.notify import community_notify
                 from common.processing.post import get_post_offer_processing
                 from common.template.user import render_for_platform
 
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_offer_processing(new_post)
-                community_post_notify(request.user, community, None, new_post.pk, None, None, "c_post_notify", "SI")
+                community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "SIT")
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -84,11 +84,11 @@ class PostCommunityCommentCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.post import community_post_notify
+                from common.notify.notify import community_notify
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
-                community_post_notify(request.user, community, None, new_comment.pk, post.pk, None, "c_post_comment_notify", "C")
+                community_notify(request.user, community, None, "com"+str(new_comment.pk)+", pos"+str(post.pk), "c_post_comment_notify", "COM")
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -108,11 +108,11 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.post import community_post_notify
+                from common.notify.notify import community_notify
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None)
-                community_post_notify(request.user, community, None, new_comment.pk, parent.post.pk, None, "c_post_comment_notify", "R")
+                community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pos"+str(parent.post.pk), "c_post_comment_notify", "REP")
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()

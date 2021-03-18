@@ -49,53 +49,53 @@ class CommunityVideoAlbumRemove(View):
 
 
 class VideoCommentCommunityCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        video = Video.objects.get(uuid=request.POST.get('uuid'))
+	def post(self,request,*args,**kwargs):
+		form_post = CommentForm(request.POST)
+		community = Community.objects.get(pk=request.POST.get('pk'))
+		video = Video.objects.get(uuid=request.POST.get('uuid'))
+		if not community.is_comment_video_send_all() and not request.user.is_member_of_community(community.pk):
+			raise PermissionDenied("Ошибка доступа.")
+		elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community(community.pk):
+			raise PermissionDenied("Ошибка доступа.")
+		elif request.is_ajax() and form_post.is_valid() and video.comments_enabled:
+			comment = form_post.save(commit=False)
+			check_can_get_lists(request.user, community)
+			if request.POST.get('text') or request.POST.get('attach_items'):
+				from common.notify.notify import community_notify
 
-        if not community.is_comment_video_send_all() and not request.user.is_member_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
-        elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
-        elif request.is_ajax() and form_post.is_valid() and video.comments_enabled:
-            comment = form_post.save(commit=False)
-
-            check_can_get_lists(request.user, community)
-            if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text)
-                if request.user.pk != video.creator.pk:
-                    new_comment.notification_community_comment(request.user, community)
-                return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
+				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text)
+				community_notify(request.user, community, None, "com"+str(new_comment.pk)+", vid"+str(video.pk), "c_video_comment_notify", "COM")
+				return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+			else:
+				return HttpResponseBadRequest()
+		else:
+			return HttpResponseBadRequest()
 
 
 class VideoReplyCommunityCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
+	def post(self,request,*args,**kwargs):
+		form_post = CommentForm(request.POST)
+		community = Community.objects.get(pk=request.POST.get('pk'))
+		parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
 
-        if not community.is_comment_video_send_all() and not request.user.is_member_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
-        elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise PermissionDenied("Ошибка доступа.")
-        elif request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
-            comment = form_post.save(commit=False)
+		if not community.is_comment_video_send_all() and not request.user.is_member_of_community(community.pk):
+			raise PermissionDenied("Ошибка доступа.")
+		elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community(community.pk):
+			raise PermissionDenied("Ошибка доступа.")
+		elif request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
+			comment = form_post.save(commit=False)
 
-            check_can_get_lists(request.user, community)
-            if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_community_reply_comment(request.user, community)
-            else:
-                return HttpResponseBadRequest()
-            return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
-        else:
-            return HttpResponseBadRequest()
+			check_can_get_lists(request.user, community)
+			if request.POST.get('text') or request.POST.get('attach_items'):
+				from common.notify.notify import community_notify
+
+				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text)
+				community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pho"+str(parent.video.pk), "c_video_comment_notify", "REP")
+			else:
+				return HttpResponseBadRequest()
+			return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+		else:
+			return HttpResponseBadRequest()
 
 class VideoCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
@@ -278,6 +278,8 @@ class CommunityVideoCreate(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
+			from common.notify.notify import community_notify
+
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             albums = request.POST.getlist("album")
@@ -285,6 +287,8 @@ class CommunityVideoCreate(TemplateView):
             for _album_pk in albums:
                 _album = VideoAlbum.objects.get(pk=_album_pk)
                 _album.video_album.add(new_video)
+			if new_video.is_public:
+				community_notify(request.user, community, None, "vid"+str(new_video.pk), "c_video_notify", "ITE")
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()

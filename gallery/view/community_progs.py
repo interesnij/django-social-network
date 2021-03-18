@@ -96,6 +96,8 @@ class CommunityAddAvatar(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
+            from common.notify.notify import community_notify
+
             photo_input = request.FILES.get('file')
             try:
                 _album = Album.objects.get(community=community, type=Album.AVATAR)
@@ -105,6 +107,7 @@ class CommunityAddAvatar(View):
             photo.album.add(_album)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
+            community_notify(request.user, community, None, "pho"+str(photo.pk), "c_photo_notify", "ITE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -125,9 +128,10 @@ class PhotoCommentCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import community_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
-                if request.user.pk != photo.creator.pk:
-                    new_comment.notification_community_comment(request.user, community)
+                community_notify(request.user, community, None, "com"+str(new_comment.pk)+", pho"+str(photo.pk), "c_photo_comment_notify", "COM")
                 return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -150,9 +154,10 @@ class PhotoReplyCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import community_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_community_reply_comment(request.user, community)
+                community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pho"+str(parent.photo.pk), "c_photo_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'gallery/c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})

@@ -45,9 +45,10 @@ class VideoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import user_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text)
-                if request.user.pk != video.creator.pk:
-                    new_comment.notification_user_comment(request.user)
+                user_notify(request.user, video.creator.pk, None, "com"+str(new_comment.pk)+", vid"+str(video.pk), "u_video_comment_notify", "COM")
                 return render_for_platform(request, 'video/u_video_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -67,9 +68,10 @@ class VideoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import user_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_user_reply_comment(request.user)
+                user_notify(request.user, parent.post.creator.pk, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pos"+str(parent.post.pk), "u_post_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'video/u_video_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
@@ -262,6 +264,8 @@ class UserVideoCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
+            from common.notify.notify import user_notify
+
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             albums = request.POST.getlist("album")
@@ -269,6 +273,8 @@ class UserVideoCreate(TemplateView):
             for _album_pk in albums:
                 _album = VideoAlbum.objects.get(pk=_album_pk)
                 _album.video_album.add(new_video)
+            if new_video.is_public:
+                user_notify(request.user, new_video.creator.pk, None, "vid"+str(new_video.pk), "u_video_create", "ITE")
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponse()

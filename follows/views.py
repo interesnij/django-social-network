@@ -45,7 +45,7 @@ class FollowCreate(View):
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
-			user_notify(request.user, followed_user.pk, None, "user_follow", "CR")
+			user_notify(request.user, followed_user.pk, None, None, "u_follow", "CRE")
 			return HttpResponse("!")
 		else:
 			raise Http404
@@ -75,12 +75,13 @@ class FollowDelete(View):
 
 class CommunityFollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		from common.notify.user import community_notify 
+		from common.notify.user import community_notify
 
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
-			community_notify(request.user, community, "community_follow", "CR")
-			return HttpResponse("!")
+			new_follow = request.user.community_follow_user(community)
+			community_notify(request.user, community, None, None, "c_follow", "CRE")
+			return HttpResponse()
 		else:
 			raise Http404
 

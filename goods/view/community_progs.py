@@ -48,9 +48,10 @@ class GoodCommentCommunityCreate(View):
 
             check_can_get_lists(request.user, c)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import community_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                if request.user.pk != good.creator.pk:
-                    new_comment.notification_community_comment(request.user, c)
+                community_notify(request.user, community, None, "com"+str(new_comment.pk)+", goo"+str(good.pk), "c_good_comment_notify", "COM")
                 return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': c})
             else:
                 return HttpResponseBadRequest()
@@ -73,9 +74,10 @@ class GoodReplyCommunityCreate(View):
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
             elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import community_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_community_reply_comment(request.user, c)
+                community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",goo"+str(parent.good.pk), "c_good_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': c})
@@ -211,6 +213,8 @@ class GoodCommunityCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
+            from common.notify.notify import community_notify
+
             good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
             images = request.POST.getlist('images')
@@ -229,6 +233,7 @@ class GoodCommunityCreate(TemplateView):
                                         votes_on=good.votes_on,
                                         status="PG")
             get_good_processing(new_good)
+            community_notify(request.user, community, None, "goo"+str(new_good.pk), "c_good_notify", "ITE")
             return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()

@@ -9,7 +9,7 @@ from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing
 from common.template.user import get_detect_platform_template
-from common.notify.post import *
+from common.notify.notify import *
 
 
 class UUCMPostWindow(TemplateView):
@@ -107,7 +107,7 @@ class UUPostRepost(View):
                 parent = parent
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_post_notify(request.user, parent.creator.pk, None, parent.pk, None, None, "u_post_repost", "RE")
+            user_notify(request.user, parent.creator.pk, None, "pos"+parent.pk, "u_post_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -127,7 +127,7 @@ class CUPostRepost(View):
                 parent = parent
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_post_notify(request.user, community, None, parent.pk, None, None, "c_post_repost", 'RE')
+            community_notify(request.user, community, None, "pos"+parent.pk, "c_post_repost", 'RE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -153,7 +153,7 @@ class UCPostRepost(View):
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_post_notify(request.user, parent.creator.pk, community_id, parent.pk, None, None, "u_post_repost", 'CR')
+                    user_notify(request.user, parent.creator.pk, community_id, "pos"+parent.pk, "u_post_repost", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -177,7 +177,7 @@ class CCPostRepost(View):
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_post_notify(request.user, community, community_id, item.pk, None, None, "c_post_repost", 'CR')
+                    community_notify(request.user, community, community_id, "pos"+parent.pk, "c_post_repost", 'CR')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -268,10 +268,10 @@ class UUPostListRepost(View):
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=None, attach="pli")
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lpo"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_video_notify(request.user, list.creator.pk, None, list.pk, None, None, "u_video_list_repost", "LRE")
+            user_notify(request.user, list.creator.pk, None, "lpo"+list.pk, "u_post_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -288,10 +288,10 @@ class CUPostListRepost(View):
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_video_notify(request.user, community, None, list.pk, None, None, "c_post_list_repost", 'LRE')
+            community_notify(request.user, community, None, "lpo"+list.pk, "c_post_list_repost", 'LRE')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -314,12 +314,12 @@ class UCPostListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_video_notify(request.user, list.creator.pk, community_id, list.pk, None, None, "u_post_list_repost", 'CLR')
+                    user_notify(request.user, list.creator.pk, community_id, "lpo"+list.pk, "u_post_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -339,12 +339,12 @@ class CCPostListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=community, attach="pli")
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_video_notify(request.user, community, community_id, list.pk, None, None, "c_list_list_repost", 'CLR')
+                    community_notify(request.user, community, community_id, "lpo"+list.pk, "c_post_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -357,7 +357,7 @@ class UMPostListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, "pli", None, request, "Репост списка записей пользователя")
+        repost_message_send(list, "lpo"+str(list.pk), None, request, "Репост списка записей пользователя")
         return HttpResponse()
 
 
@@ -369,5 +369,5 @@ class CMPostListRepost(View):
         list = PostList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(list, "pli", community, request, "Репост списка записей сообщества")
+        repost_message_send(list, "lpo"+str(list.pk), community, request, "Репост списка записей сообщества")
         return HttpResponse()

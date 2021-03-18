@@ -38,6 +38,8 @@ class UserAddAvatar(View):
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and user == request.user:
+            from common.notify.notify import user_notify
+
             photo_input = request.FILES.get('file')
             try:
                 _album = Album.objects.get(creator=user, type=Album.AVATAR, community__isnull=True)
@@ -48,6 +50,7 @@ class UserAddAvatar(View):
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
+            user_notify(request.user, new_post.creator.pk, None, "pho"+str(photo.pk), "u_photo_create", "ITE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -120,9 +123,10 @@ class PhotoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import user_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
-                if request.user.pk != photo.creator.pk:
-                    new_comment.notification_user_comment(request.user)
+                user_notify(request.user, photo.creator.pk, None, "com"+str(new_comment.pk)+", pho"+str(photo.pk), "u_photo_comment_notify", "COM")
                 return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -142,9 +146,10 @@ class PhotoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, photot=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_user_reply_comment(request.user)
+                from common.notify.notify import user_notify
+
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, photo=None, text=comment.text)
+                user_notify(request.user, parent.photo.creator.pk, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pho"+str(parent.photo.pk), "u_photo_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'gallery/u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})

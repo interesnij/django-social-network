@@ -1,5 +1,5 @@
 from django.contrib import admin
-from notify.models import Notify
+from notify.models import *
 
 
 class NotifyAdmin(admin.ModelAdmin):
@@ -10,3 +10,5 @@ class NotifyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Notify, NotifyAdmin)
+admin.site.register(UserNotify)
+admin.site.register(CommunityNotify)

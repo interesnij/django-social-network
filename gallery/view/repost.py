@@ -103,7 +103,7 @@ class UUPhotoRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho")
+            parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
             user_notify(request.user, photo.creator.pk, None, "pho"+photo.pk, "u_photo_repost", "RE")
@@ -123,10 +123,10 @@ class CUPhotoRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho")
+            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_photo_notify(request.user, community, None, photo.pk, None, None, "c_photo_repost", 'RE')
+            community_notify(request.user, community, None, "pho"+photo.pk, "c_photo_repost", "RE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -148,12 +148,12 @@ class UCPhotoRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, attach="pho")
+            parent = Post.create_parent_post(creator=photo.creator, attach="pho"+str(photo.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_photo_notify(request.user, photo.creator.pk, community_id, photo.pk, None, None, "u_photo_repost", 'CR')
+                    user_notify(request.user, photo.creator.pk, community_id, "pho"+photo.pk, "u_photo_repost", 'CR')
         return HttpResponse()
 
 
@@ -172,12 +172,12 @@ class CCPhotoRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho")
+            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_photo_notify(request.user, community, community_id, photo.pk, None, None, "c_photo_repost", 'CR')
+                    community_notify(request.user, community, community_id, "pho"+photo.pk, "c_photo_repost", 'CR')
         return HttpResponse()
 
 
@@ -192,7 +192,7 @@ class UMPhotoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(photo, "pho", None, request, "Репост фотографии пользователя")
+        repost_message_send(photo, "pho"+str(photo.pk), None, request, "Репост фотографии пользователя")
         return HttpResponse()
 
 
@@ -206,7 +206,7 @@ class CMPhotoRepost(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(photo, "pho", community, request, "Репост фотографии сообщества")
+        repost_message_send(photo, "pho"+str(photo.pk), community, request, "Репост фотографии сообщества")
         return HttpResponse()
 
 
@@ -225,10 +225,10 @@ class UUPhotoAlbumRepost(View):
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lph")
+            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lph"+str(album.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_photo_notify(request.user, album.creator.pk, None, album.pk, None, None, "u_photo_list_repost", "LRE")
+            user_notify(request.user, album.creator.pk, None, "lph"+album.pk, "u_photo_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -247,10 +247,10 @@ class CUPhotoAlbumRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lph")
+            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lph"+str(album.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_photo_notify(request.user, community, None, album.pk, None, None, "c_photo_repost", 'LRE')
+            community_notify(request.user, community, None, "lph"+album.pk, "c_photo_repost", 'LRE')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -274,12 +274,12 @@ class UCPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="lph")
+            parent = Post.create_parent_post(creator=album.creator, attach="lph"+str(album.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_photo_notify(request.user, album.creator.pk, community_id, album.pk, None, None, "u_photo_repost", 'CLR')
+                    user_notify(request.user, album.creator.pk, community_id, "lph"+album.pk, "u_photo_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -300,12 +300,12 @@ class CCPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="lph")
+            parent = Post.create_parent_post(creator=album.creator, attach="lph"+str(album.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_photo_notify(request.user, community, community_id, album.pk, None, None, "c_photo_list_repost", 'CLR')
+                    community_notify(request.user, community, community_id, "lph"+album.pk, "c_photo_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -321,7 +321,7 @@ class UMPhotoAlbumRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(album, "lph", None, request, "Репост фотоальбома пользователя")
+        repost_message_send(album, "lph"+str(album.pk), None, request, "Репост фотоальбома пользователя")
         return HttpResponse()
 
 
@@ -336,5 +336,5 @@ class CMPhotoAlbumRepost(View):
         album = Album.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(album, "lph", community, request, "Репост фотоальбома сообщества")
+        repost_message_send(album, "lph"+str(album.pk), community, request, "Репост фотоальбома сообщества")
         return HttpResponse()

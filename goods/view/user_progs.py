@@ -42,9 +42,10 @@ class GoodCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import user_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                if request.user.pk != user.pk:
-                    new_comment.notification_user_comment(request.user)
+                user_notify(request.user, good.creator.pk, None, "com"+str(new_comment.pk)+", goo"+str(good.pk), "u_good_comment_notify", "COM")
                 return render_for_platform(request, 'goods/u_good_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -62,9 +63,10 @@ class GoodReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
+                from common.notify.notify import user_notify
+
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                if request.user.pk != parent.commenter.pk:
-                    new_comment.notification_user_reply_comment(request.user)
+                user_notify(request.user, parent.photo.creator.pk, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",goo"+str(parent.good.pk), "u_good_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/u_good_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
@@ -191,6 +193,8 @@ class GoodUserCreate(TemplateView):
 
         self.form, self.user = GoodForm(request.POST,request.FILES), User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
+            from common.notify.notify import user_notify
+
             good = self.form.save(commit=False)
             albums = self.form.cleaned_data.get("album")
             images = request.POST.getlist('images')
@@ -209,6 +213,7 @@ class GoodUserCreate(TemplateView):
                                         votes_on=good.votes_on,
                                         status="PG")
             get_good_processing(new_good)
+            user_notify(request.user, new_post.creator.pk, None, "goo"+str(new_good.pk), "u_good_create", "ITE")
             return render_for_platform(request, 'goods/good_base/u_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest("")

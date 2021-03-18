@@ -9,8 +9,9 @@ from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import repost_message_send, get_post_processing, repost_community_send
+from common.processing.post import repost_message_send, get_post_processing
 from common.template.user import get_detect_platform_template
+from common.notify.notify import *
 
 
 class UUCMDocWindow(TemplateView):
@@ -98,8 +99,7 @@ class UUDocRepost(View):
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=user, community=None, status=Post.DOC_REPOST)
-            doc.item.add(parent)
+            parent = Post.create_parent_post(creator=user, community=None, attach="doc"+str(doc.pk))
             new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status=Post.STATUS_PROCESSING)
             get_post_processing(new_post)
             return HttpResponse()
@@ -115,8 +115,7 @@ class CUDocRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=request.user, community=community, status=Post.DOC_REPOST)
-            doc.item.add(parent)
+            parent = Post.create_parent_post(creator=request.user, community=community, attach="doc"+str(doc.pk))
             new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse("")
@@ -132,7 +131,19 @@ class UCDocRepost(View):
         doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(doc, Post.DOC_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=photo.creator, attach="doc"+str(doc.pk))
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    user_notify(request.user, doc.creator.pk, community_id, "doc"+doc.pk, "u_doc_repost", 'CR')
         return HttpResponse()
 
 
@@ -143,7 +154,19 @@ class CCDocRepost(View):
     def post(self, request, *args, **kwargs):
         doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_community_send(doc, Post.DOC_REPOST, community, request)
+        communities = request.POST.getlist("communities")
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="doc"+str(doc.pk))
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    community_notify(request.user, community, community_id, "doc"+doc.pk, "c_doc_repost", 'CR')
         return HttpResponse()
 
 
@@ -155,7 +178,7 @@ class UMDocRepost(View):
         doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(doc, Post.DOC_REPOST, None, request, "Репост документа пользователя")
+        repost_message_send(doc, "doc"+str(doc.pk), None, request, "Репост документа пользователя")
         return HttpResponse()
 
 
@@ -166,7 +189,7 @@ class CMDocRepost(View):
     def post(self, request, *args, **kwargs):
         doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(doc, Post.DOC_REPOST, None, community, "Репост документа сообщества")
+        repost_message_send(doc, "doc"+str(doc.pk), None, community, "Репост документа сообщества")
         return HttpResponse()
 
 
@@ -180,8 +203,7 @@ class UUDocListRepost(View):
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=None, status=Post.DOC_LIST_REPOST)
-            list.post.add(parent)
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="ldo"+str(list.pk))
             new_post = post.create_post(creator=request.user, is_signature=False, attach=attach, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse()
@@ -197,8 +219,7 @@ class CUDocListRepost(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=community, status=Post.DOC_LIST_REPOST)
-            list.post.add(parent)
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="ldo"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
             get_post_processing(new_post)
             return HttpResponse("")
@@ -214,7 +235,19 @@ class UCDocListRepost(View):
         list, user = DocList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_community_send(list, Post.DOC_LIST_REPOST, None, request)
+        communities = request.POST.getlist("communities")
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, attach="ldo"+str(list.pk))
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    user_notify(request.user, list.creator.pk, community_id, "ldo"+list.pk, "u_doc_list_repost", 'CLR')
         return HttpResponse()
 
 class CCDocListRepost(View):
@@ -224,7 +257,19 @@ class CCDocListRepost(View):
     def post(self, request, *args, **kwargs):
         list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_community_send(list, Post.DOC_LIST_REPOST, community, request)
+        communities = request.POST.getlist("communities")
+        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        if not communities:
+            return HttpResponseBadRequest()
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            parent = Post.create_parent_post(creator=album.creator, attach="ldo"+str(list.pk))
+            for community_id in communities:
+                if request.user.is_staff_of_community(community_id):
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                    get_post_processing(new_post)
+                    community_notify(request.user, community, community_id, "ldo"+list.pk, "c_doc_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -236,7 +281,7 @@ class UMDocListRepost(View):
         list, user = DocList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, Post.DOC_LIST_REPOST, None, request, "Репост плейлиста пользователя")
+        repost_message_send(list, "ldo"+str(list.pk), None, request, "Репост плейлиста пользователя")
         return HttpResponse()
 
 
@@ -247,5 +292,5 @@ class CMDocListRepost(View):
     def post(self, request, *args, **kwargs):
         list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(list, Post.DOC_LIST_REPOST, community, request, "Репост плейлиста сообщества")
+        repost_message_send(list, "ldo"+str(list.pk), community, request, "Репост плейлиста сообщества")
         return HttpResponse()

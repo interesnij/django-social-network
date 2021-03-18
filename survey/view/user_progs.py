@@ -25,6 +25,8 @@ class SurveyUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = SurveyForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
+            from common.notify.notify import user_notify
+
             survey = self.form.save(commit=False)
             answers = request.POST.getlist("answers")
             if not answers:
@@ -40,6 +42,7 @@ class SurveyUserCreate(TemplateView):
                                             is_no_edited=survey.is_no_edited,
                                             time_end=survey.time_end,
                                             answers=answers)
+            user_notify(request.user, new_survey.creator.pk, None, "sur"+str(new_survey.pk), "u_survey_create", "ITE")
             return render_for_platform(request, 'survey/user/preview.html',{'object': new_survey})
         else:
             return HttpResponseBadRequest("")
@@ -108,11 +111,7 @@ class UserSurveyVote(View):
                 request.user.get_vote_of_survey(survey.pk).delete()
             SurveyVote.objects.create(answer=answer, user=request.user)
             result = True
-            if user.pk != request.user.pk:
-                if survey.is_anonymous:
-                    answer_notification_handler(request.user, survey.creator, survey, SurveyNotify.ANON_VOTE)
-                else:
-                    answer_notification_handler(request.user, survey.creator, survey, SurveyNotify.VOTE)
+            user_notify(request.user, new_post.creator.pk, None, "sur"+str(survey.pk), "u_survey_vote", "SVO")
         return HttpResponse(json.dumps({"result": result,"votes": survey.get_votes_count()}), content_type="application/json")
 
 

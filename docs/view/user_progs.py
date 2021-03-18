@@ -133,12 +133,15 @@ class UserDocCreate(View):
         form_post, user = DocForm(request.POST, request.FILES), User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == user:
+            from common.notify.notify import user_notify
+
             list, new_doc = DocList.objects.get(creator_id=user.pk, community__isnull=True, type=DocList.MAIN), form_post.save(commit=False)
             new_doc.creator_id = request.user.pk
             lists = form_post.cleaned_data.get("list")
             new_doc.save()
             for _list in lists:
                 _list.doc_list.add(new_doc)
+            user_notify(request.user, new_post.creator.pk, None, "doc"+str(new_doc.pk), "u_doc_create", "ITE")
             return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
