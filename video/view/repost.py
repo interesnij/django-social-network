@@ -252,7 +252,7 @@ class CUVideoAlbumRepost(View):
             parent = Post.create_parent_post(creator=album.creator, community=community, attach="lvi"+str(album.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_notify(request.user, community, None, "vid"+album.pk "c_video_list_repost", 'LRE')
+            community_notify(request.user, community, None, "vid"+album.pk, "c_video_list_repost", 'LRE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
