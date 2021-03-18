@@ -95,6 +95,10 @@ class Notify(models.Model):
     def is_unread(self):
         return self.status is "U"
 
+    def get_notify(self, user):
+        from common.attach.notify import get_notify
+        return get_notify(user, self.verb, self.attach)
+
 
 class UserNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")

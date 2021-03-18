@@ -302,7 +302,6 @@ class Post(models.Model):
             return likes
         else:
             return ''
-
     def dislikes_count(self):
         from common.model.votes import PostVotes
         dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values('pk').count()
@@ -310,6 +309,27 @@ class Post(models.Model):
             return dislikes
         else:
             return ''
+
+    def likes_count_ru(self):
+        count = self.likes_count()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            i = " просмотр"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            i = " просмотра"
+        else:
+            i = " просмотров"
+        return '<span data-count="like">' + str(count) + '</span>' + i
+    def dislikes_count_ru(self):
+        count = self.dislikes_count()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            i = " просмотр"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            i = " просмотра"
+        else:
+            i = " просмотров"
+        return '<span data-count="like">' + str(count) + '</span>' + i
 
     def window_likes(self):
         from common.model.votes import PostVotes
@@ -349,53 +369,6 @@ class Post(models.Model):
         ids = [use['user'] for use in user_ids]
         count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).values('pk').count()
         return count
-
-    def post_visits_count(self):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk).values('pk').count()
-    def post_visits_year(self, year):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__year=year).values('pk').count()
-    def post_visits_month(self, month):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__month=month).values('pk').count()
-    def post_visits_week(self, week):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day__in=week).values('pk').count()
-    def post_visits_day(self, day):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day=day).values('pk').count()
-    def post_ad_visits_count(self):
-        from stst.models import PostAdNumbers
-        return PostAdNumbers.objects.filter(post=self.pk).values('pk').count()
-
-    def comp_post_visits_year(self, year):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__year=year, device=PostNumbers.DESCTOP).values('pk').count()
-    def mob_post_visits_year(self, year):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__year=year, device=PostNumbers.PHONE).values('pk').count()
-
-    def comp_post_visits_month(self, month):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__month=month, device=PostNumbers.DESCTOP).values('pk').count()
-    def mob_post_visits_month(self, month):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__month=month, device=PostNumbers.PHONE).values('pk').count()
-
-    def comp_post_visits_week(self, week):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day__in=week, device=PostNumbers.DESCTOP).values('pk').count()
-    def mob_post_visits_week(self, week):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day__in=week, device=PostNumbers.PHONE).values('pk').count()
-
-    def comp_post_visits_day(self, day):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day=day, device=PostNumbers.DESCTOP).values('pk').count()
-    def mob_post_visits_day(self, day):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk, created__day=day, device=PostNumbers.PHONE).values('pk').count()
 
     def all_visits_count(self):
         return self.post_visits_count() + self.post_ad_visits_count()

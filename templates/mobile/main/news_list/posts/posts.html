@@ -6,11 +6,13 @@
   {% include 'mobile/main/news_list/menu.html' %}
 
           {% if object_list %}
+
+          {% load notify %}
             <span class="post_stream stream is_post_paginate">
               {% for object in object_list %}
-
-                {{ object }}
-
+                <div class="card mb-3 pag {% if forloop.last %}last{% endif %}">
+                  {{ object|get_notify:request.user }}
+                </div>
               {% endfor %}
             </span>
           {% else %}
