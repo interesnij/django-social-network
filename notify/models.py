@@ -107,9 +107,9 @@ class Notify(models.Model):
                     return 'mobile/posts/post_community/post.html'
             else:
                 if post.creator.pk == user.pk:
-                    return 'mobile/posts/post_community/my_post.html'
+                    return 'mobile/posts/post_user/my_post.html'
                 else:
-                    return 'mobile/posts/post_community/post.html'
+                    return 'mobile/posts/post_user/post.html'
         else:
             pass
 
