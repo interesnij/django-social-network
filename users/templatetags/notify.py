@@ -1,5 +1,5 @@
 from django import template
-register = Library()
+register=template.Library()
 
 @register.filter
 def get_notify(notify, user):
