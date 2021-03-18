@@ -157,7 +157,7 @@ class AllPossibleUsersList(ListView):
 		return context
 
 	def get_queryset(self):
-		possible_list = self.user.get_possible_friends()
+		possible_list = self.request.user.get_possible_friends()
 		return possible_list
 
 class UserPostsListView(ListView):
