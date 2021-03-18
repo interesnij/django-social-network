@@ -260,24 +260,24 @@ class CommunityVideoAttachCreate(TemplateView):
 
 
 class CommunityVideoCreate(TemplateView):
-    form_post = None
+	form_post = None
 
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityVideoCreate,self).get_context_data(**kwargs)
-        context["form_post"] = VideoForm()
-        context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityVideoCreate,self).get_context_data(**kwargs)
+		context["form_post"] = VideoForm()
+		context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		return context
 
-    def post(self,request,*args,**kwargs):
-        self.form_post = VideoForm(request.POST, request.FILES)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+	def post(self,request,*args,**kwargs):
+		self.form_post = VideoForm(request.POST, request.FILES)
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
+		if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
 			from common.notify.notify import community_notify
 
 			new_video = self.form_post.save(commit=False)
@@ -289,7 +289,7 @@ class CommunityVideoCreate(TemplateView):
 				_album.video_album.add(new_video)
 			if new_video.is_public:
 				community_notify(request.user, community, None, "vid"+str(new_video.pk), "c_video_notify", "ITE")
-				return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
+			return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
 		else:
 			return HttpResponseBadRequest()
 
