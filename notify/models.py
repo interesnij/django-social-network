@@ -96,9 +96,23 @@ class Notify(models.Model):
         return self.status is "U"
 
     def get_notify(self, user):
-        from common.attach.notify import get_notify
-        return get_notify(user, self.verb, self.attach)
-
+        #from common.attach.notify import get_notify
+        if self.attach[:3] == "pos":
+            from posts.models import Post
+            post = Post.objects.get(pk=attach[3:], is_deleted=False)
+            if post.community:
+                if user.is_administrator_of_community(post.community.pk):
+                    return 'mobile/posts/post_community/admin_post.html'
+                else:
+                    return 'mobile/posts/post_community/post.html'
+            else:
+                if post.creator.pk == user.pk:
+                    return 'mobile/posts/post_community/my_post.html'
+                else:
+                    return 'mobile/posts/post_community/post.html'
+        else:
+            pass
+            
 
 class UserNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
