@@ -264,6 +264,7 @@ class User(AbstractUser):
         check_can_follow_user(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
+        create_user_notify(self, user_pk)
         return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
 
     def community_follow_user(self, community_pk):
@@ -273,6 +274,7 @@ class User(AbstractUser):
         from follows.models import CommunityFollow
 
         check_can_join_community(user=self, community_pk=community_pk)
+        create_community_notify(self, community_pk)
         return CommunityFollow.create_follow(user_id=self.pk, community_pk=community_pk)
 
     def community_unfollow_user(self, community_pk):
@@ -284,6 +286,7 @@ class User(AbstractUser):
         check_can_join_community(user=self, community_pk=community_pk)
         follow = CommunityFollow.objects.get(user=self,community__pk=community_pk)
         follow.delete()
+        delete_community_notify(self, community_pk)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -385,10 +388,12 @@ class User(AbstractUser):
 
     def unfollow_user_with_id(self, user_id):
         from follows.models import Follow
+        from notify.models import UserNotify
 
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
+        delete_user_notify(self, user_pk)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -1409,7 +1414,38 @@ class User(AbstractUser):
             CommunityInvite.objects.filter(community_pk=community_pk, invited_user__id=self.id).delete()
         elif community_to_join.is_closed():
             CommunityFollow.objects.filter(community__pk=community_pk, user__id=self.id).delete()
+        create_community_notify(self, community_pk)
         return community_to_join
+
+    def create_community_notify(self, community_pk):
+        from notify.models import CommunityNotify
+        if not CommunityNotify.objects.filter(user=self.pk, community=community_pk).exists():
+            CommunityNotify.objects.create(user=self.pk, community=community_pk)
+
+    def delete_community_notify(self, community_pk):
+        from notify.models import CommunityNotify
+        if CommunityNotify.objects.filter(user=self.pk, community=community_pk).exists():
+            notify = CommunityNotify.objects.get(user=self.pk, community=community_pk)
+            notify.delete()
+
+    def create_user_notify(self, user_pk):
+        from notify.models import UserNotify
+        if not UserNotify.objects.filter(user=self.pk, target=user_pk).exists():
+            UserNotify.objects.create(user=self.pk, target=user_pk)
+
+    def delete_user_notify(self, user_pk):
+        from notify.models import UserNotify
+        if UserNotify.objects.filter(user=self.pk, target=user_pk).exists():
+            notify = UserNotify.objects.get(user=self.pk, target=user_pk)
+            notify.delete()
+
+    def get_user_notify_ids(self):
+        from notify.models import UserNotify
+        return [i['target'] for i in UserNotify.objects.filter(user=self.pk).values('target')]
+
+    def get_community_notify_ids(self):
+        from notify.models import CommunityNotify
+        return [i['community'] for i in CommunityNotify.objects.filter(user=self.pk).values('community')]
 
     def leave_community(self, community_pk):
         from communities.models import Community
@@ -1417,6 +1453,7 @@ class User(AbstractUser):
         check_can_leave_community(user=self, community_id=community_pk)
         community_to_leave = Community.objects.get(pk=community_pk)
         community_to_leave.remove_member(self)
+        delete_community_notify(self, community_pk)
         return community_to_leave
 
     def get_sity_count(self, sity):

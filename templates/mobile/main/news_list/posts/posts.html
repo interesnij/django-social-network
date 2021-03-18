@@ -9,35 +9,7 @@
             <span class="post_stream stream is_post_paginate">
               {% for object in object_list %}
 
-                {% if object.parent %}
-                  {% if object.parent.community %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.community.pk }}">
-                      {% include object.get_c_news_parent_mobile %}
-
-                      {% include 'mobile/posts/post_community/info.html' %}
-                    </div>
-                  {% else %}
-                    <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.parent.uuid }}" data-pk="{{ object.parent.creator.pk }}">
-                      {% include object.get_u_news_parent_mobile %}
-
-                      {% include 'mobile/posts/post_user/info.html' %}
-                    </div>
-                  {% endif %}
-                {% else %}
-                  {% if object.community %}
-                    {% if object.community in request.user.get_staffed_communities %}
-                      {% include 'mobile/main/c_posts/admin_post.html' %}
-                    {% else %}
-                      {% include 'mobile/main/c_posts/post.html' %}
-                    {% endif %}
-                  {% else %}
-                    {% if object.creator == request.user %}
-                      {% include 'mobile/main/u_posts/my_post.html' %}
-                    {% else %}
-                      {% include 'mobile/main/u_posts/post.html' %}
-                    {% endif %}
-                  {% endif %}
-                {% endif %}
+                {{ object }}
 
               {% endfor %}
             </span>

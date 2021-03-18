@@ -3,7 +3,6 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from common.template.user import get_detect_main_template
-from common.user_progs.timelines_post import get_timeline_posts
 from communities.models import Community
 from users.models import User
 from django.http import Http404
@@ -59,11 +58,8 @@ class PostsListView(ListView):
 		return super(PostsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_posts(self.request.user).order_by('-created')
-		else:
-			items = []
-		return items
+		from common.user_progs.news import get_timeline_posts
+		return get_timeline_posts(self.request.user.pk)
 
 class SwitchView(TemplateView):
 	template_name, get_buttons_block, common_frends, common_friends_count, user, c = None, None, None, None, None, None
