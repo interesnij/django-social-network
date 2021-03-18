@@ -406,6 +406,12 @@ class Post(models.Model):
     def get_lists(self):
         return self.list.all()
 
+    def is_have_private_lists(self):
+        for list in self.list.all():
+            if list.is_private_list():
+                return True
+        return False
+
 
 class PostComment(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")

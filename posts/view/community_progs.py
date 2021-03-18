@@ -32,7 +32,8 @@ class PostCommunityCreate(View):
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
-                community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "ITE")
+                if not new_post.is_have_private_lists():
+                    community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "ITE")
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()

@@ -21,7 +21,8 @@ class PostUserCreate(View):
 
                 new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                 get_post_processing(new_post)
-                user_notify(request.user, new_post.creator.pk, None, "pos"+str(new_post.pk), "u_post_create", "ITE")
+                if not new_post.is_have_private_lists():
+                    user_notify(request.user, new_post.creator.pk, None, "pos"+str(new_post.pk), "u_post_create", "ITE")
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
