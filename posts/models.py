@@ -312,6 +312,8 @@ class Post(models.Model):
 
     def likes_count_ru(self):
         count = self.likes_count()
+        if not count:
+            return '<span data-count="like">' + str(0) + '</span>' + i
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             i = " просмотр"
@@ -322,6 +324,8 @@ class Post(models.Model):
         return '<span data-count="like">' + str(count) + '</span>' + i
     def dislikes_count_ru(self):
         count = self.dislikes_count()
+        if not count:
+            return '<span data-count="dislike">' + str(0) + '</span>' + i
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             i = " просмотр"
@@ -329,7 +333,7 @@ class Post(models.Model):
             i = " просмотра"
         else:
             i = " просмотров"
-        return '<span data-count="like">' + str(count) + '</span>' + i
+        return '<span data-count="dislike">' + str(count) + '</span>' + i
 
     def window_likes(self):
         from common.model.votes import PostVotes
