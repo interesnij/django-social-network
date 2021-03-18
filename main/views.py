@@ -59,7 +59,7 @@ class PostsListView(ListView):
 
 	def get_queryset(self):
 		from common.user_progs.news import get_timeline_posts
-		return get_timeline_posts(self.request.user.pk)
+		return get_timeline_posts(self.request.user)
 
 class SwitchView(TemplateView):
 	template_name, get_buttons_block, common_frends, common_friends_count, user, c = None, None, None, None, None, None
