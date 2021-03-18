@@ -280,18 +280,18 @@ class CommunityVideoCreate(TemplateView):
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
 			from common.notify.notify import community_notify
 
-            new_video = self.form_post.save(commit=False)
-            new_video.creator = request.user
-            albums = request.POST.getlist("album")
-            new_video.save()
-            for _album_pk in albums:
-                _album = VideoAlbum.objects.get(pk=_album_pk)
-                _album.video_album.add(new_video)
+			new_video = self.form_post.save(commit=False)
+			new_video.creator = request.user
+			albums = request.POST.getlist("album")
+			new_video.save()
+			for _album_pk in albums:
+				_album = VideoAlbum.objects.get(pk=_album_pk)
+				_album.video_album.add(new_video)
 			if new_video.is_public:
 				community_notify(request.user, community, None, "vid"+str(new_video.pk), "c_video_notify", "ITE")
-            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
-        else:
-            return HttpResponseBadRequest()
+				return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
+		else:
+			return HttpResponseBadRequest()
 
 
 class CommunityVideolistEdit(TemplateView):
