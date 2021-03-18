@@ -179,15 +179,6 @@ class User(AbstractUser):
             last_name = v2.word.title()
         return first_name + " " + last_name
 
-    def notification_follow(self, user):
-        from notify.model.user import UserNotify, notification_handler
-
-        notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_REQUEST)
-    def notification_connect(self, user):
-        from notify.model.user import UserNotify, notification_handler
-
-        notification_handler(creator=self, recipient=user, verb=UserNotify.CONNECTION_CONFIRMED)
-
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
 

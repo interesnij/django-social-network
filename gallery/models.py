@@ -5,7 +5,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models import Q
 from django.conf import settings
-from notify.model.photo import *
 from gallery.helpers import upload_to_photo_directory
 from common.model.votes import PhotoVotes, PhotoCommentVotes
 from django.utils import timezone

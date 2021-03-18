@@ -33,7 +33,7 @@ def user_notify(creator, recipient_id, action_community_id, attach, socket_name,
     user_send(attach[3:], recipient_id, action_community_id, socket_name)
 
 def community_notify(creator, community, action_community_id, attach, socket_name, verb):
-    from notify.model.post import Notify
+    from notify.models import Notify
 
     current_verb = creator.get_verb_gender(verb)
 
