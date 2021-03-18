@@ -212,7 +212,7 @@ class CMVideoRepost(View):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(video, a"vid"+str(video.pk), community, request, "Репост видеозаписи сообщества")
+        repost_message_send(video, "vid"+str(video.pk), community, request, "Репост видеозаписи сообщества")
         return HttpResponse()
 
 
