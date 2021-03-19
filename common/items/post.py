@@ -38,9 +38,9 @@ def get_post(user, value):
                 window_dislikes = ''.join([window_dislikes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
                 str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
                 style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
-            window_dislikes += '</span></div>'
+            window_dislikes += '</div></span>'
         else:
-            window_dislikes = '<div><span>'
+            window_dislikes = '</div></span>'
 
         if post.community:
             if post.attach:
