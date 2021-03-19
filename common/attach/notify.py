@@ -20,11 +20,10 @@ def get_notify(user, verb, attach):
             comments_enabled = ''
         else:
             comments_enabled = 'style="display:none"'
+        user_like, user_dislikes = "btn_default", "btn_default"
         if post.is_have_likes():
             if post.likes().filter(user_id=user.pk).exists():
                 user_like = "btn_success"
-            else:
-                user_like = "btn_default"
             window_likes = '<div class="like_pop"><span class="u_all_posts_likes pointer">Оценили: ' + post.likes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
             for i in post.window_likes():
                 window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
@@ -36,8 +35,6 @@ def get_notify(user, verb, attach):
         if post.is_have_dislikes():
             if post.dislikes().filter(user_id=user.pk).exists():
                 user_dislikes = "btn_danger"
-            else:
-                user_dislikes = "btn_default"
             window_dislikes = '<div class="dislike_pop"><span class="u_all_posts_dislikes pointer">Оценили: ' + post.dislikes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
             for i in post.window_dislikes():
                 window_dislikes = ''.join([window_dislikes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \

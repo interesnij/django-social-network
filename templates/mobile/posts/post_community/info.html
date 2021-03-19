@@ -16,7 +16,7 @@
           </span>
 
           <span class="like_window">
-            {% if object.window_likes %}
+            {% if object.is_have_likes %}
           <div class="like_pop">
             <span class="c_all_posts_likes pointer">Оценили: <span data-count="like">{{ object.likes.count }}</span> {{ object.likes.count|rupluralize:"человек,человека,людей" }}</span>
             <span style="display: flex;margin-top: 10px;">
@@ -33,7 +33,7 @@
           </span>
 
           <span class="dislike_window">
-            {% if object.window_dislikes %}
+            {% if object.is_have_dislikes %}
           <div class="dislike_pop">
             <span class="c_all_posts_dislikes pointer">Не оценили:  <span data-count="dislikes">{{ object.dislikes.count }}</span> {{ object.dislikes.count|rupluralize:"человек,человека,людей" }}</span>
             <span style="display: flex;margin-top: 10px;" title="{{ sheet.user.get_full_name }}">
