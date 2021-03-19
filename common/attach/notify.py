@@ -12,14 +12,14 @@ def get_notify(user, verb, attach):
         #try:
         from posts.models import Post
         post = Post.objects.get(pk=attach[3:], is_deleted=False)
-        #if post.likes().filter(user_id=user.pk).exists():
-        #    user_like = "btn_success"
-        #else:
-        user_like = "btn_default"
-        #if post.dislikes().filter(user_id=user.pk).exists():
-        #    user_dislikes = "btn_danger"
-        #else:
-        user_dislikes = "btn_default"
+        if post.likes().filter(user_id=user.pk).exists():
+            user_like = "btn_success"
+        else:
+            user_like = "btn_default"
+        if post.dislikes().filter(user_id=user.pk).exists():
+            user_dislikes = "btn_danger"
+        else:
+            user_dislikes = "btn_default"
         if post.votes_on:
             votes_on = 'style="display:none"'
         else:
@@ -28,22 +28,22 @@ def get_notify(user, verb, attach):
             comments_enabled = 'style="display:none"'
         else:
             comments_enabled = ''
-        if post.window_likes():
-            window_likes = ''
-            for i in post.window_likes():
-                window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
-                style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
-        else:
-            window_likes = ''
-        if post.window_dislikes():
-            window_dislikes = ''
-            for i in post.window_dislikes():
-                window_dislikes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
-                style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
-        else:
-            window_dislikes = ''
+        #if post.window_likes():
+        #    window_likes = ''
+        #    for i in post.window_likes():
+        #        window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+        #        str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
+        #        style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
+        #else:
+        window_likes = ''
+        #if post.window_dislikes():
+        #    window_dislikes = ''
+        #    for i in post.window_dislikes():
+        #        window_dislikes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+        #        str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
+        #        style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
+        #else:
+        window_dislikes = ''
         if post.community:
             pass
         else:
