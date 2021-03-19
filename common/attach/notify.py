@@ -60,7 +60,12 @@ def get_notify(user, verb, attach):
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             block = ''.join([block, '<span data-pk="', str(creator.pk), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
             <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure><img src="', creator.get_my_avatar(), '"style=\
-            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="fullscreen pointer">', linebreaks(post.text),'\
+            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_link(), '" class="ajax">\
+            </a></h6><p class="mb-0">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
+            <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
+            </a><div class="dropdown-menu dropdown-menu-right"><span><span class="dropdown-item u_all_posts_likes pointer">Оценили</span>\
+            <span class="dropdown-item u_all_posts_dislikes pointer">Не оценили</span></span>', card_drop, '</div></div></div></div>\
+             <div class="fullscreen pointer">', linebreaks(post.text),'\
             </div>', attach, '<div class="card-footer border-top py-2"><div class="row"><div class="col interaction" id="interaction">\
             <span ', votes_on, ' class="like u_like ', 'user_like" title="Нравится"><svg class="svg_info" fill="currentColor"viewBox="0 0 24 24">\
             <path fill="none" d="M0 0h24v24H0V0z"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>\
