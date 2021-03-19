@@ -60,7 +60,7 @@ def get_notify(user, verb, attach):
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             block = ''.join([block, '<span data-pk="', str(creator.pk), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
             <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure><img src="', creator.get_my_avatar(), '"style=\
-            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_full_name(), '" class="ajax">\
+            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', str(creator), '" class="ajax">\
             </a></h6><p class="mb-0">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
             <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
             </a><div class="dropdown-menu dropdown-menu-right"><span><span class="dropdown-item u_all_posts_likes pointer">Оценили</span>\
