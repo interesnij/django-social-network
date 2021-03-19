@@ -5,11 +5,11 @@ def linebreaks(value, autoescape=None):
     return mark_safe(linebreaks(value, autoescape))
 
 
-def get_u_post(user):
+def get_u_post(user, value):
     block = ''
     try:
         from posts.models import Post
-        post = Post.objects.get(pk=attach[3:], is_deleted=False)
+        post = Post.objects.get(pk=value, is_deleted=False)
         if post.votes_on:
             votes_on = ''
         else:
