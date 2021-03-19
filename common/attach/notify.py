@@ -53,7 +53,7 @@ def get_notify(user, verb, attach):
                 attach = ''
             creator = post.creator
             if post.creator.pk == user.pk:
-                card_drop = '<span class="dropdown-item u_post_wall_remove">Удалить</span>'
+                card_drop = '<span class="dropdown-item u_post_remove">Удалить</span>'
             elif user.is_post_manager():
                 card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
             else:
