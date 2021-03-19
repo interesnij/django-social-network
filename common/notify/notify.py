@@ -22,8 +22,8 @@ def user_notify(creator, recipient_id, action_community_id, attach, socket_name,
 
     if Notify.objects.filter(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=recipient_id, attach=attach, verb=verb).exists():
         pass
-    elif Notify.objects.filter(recipient_id=recipient_id, action_community_id=action_community_id, created__gt=today, attach__in=attach[:3], verb=current_verb).exists():
-        notify = Notify.objects.get(recipient_id=recipient_id, action_community_id=action_community_id, attach__in=attach[:3], created__gt=today, verb=current_verb)
+    elif Notify.objects.filter(recipient_id=recipient_id, action_community_id=action_community_id, created__gt=today, attach="pos5", verb=current_verb).exists():
+        notify = Notify.objects.get(recipient_id=recipient_id, action_community_id=action_community_id, attach="pos5", created__gt=today, verb=current_verb)
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=recipient_id, attach=attach, verb=verb, user_set=notify)
     elif Notify.objects.filter(recipient_id=recipient_id, attach=attach, created__gt=today, verb=verb).exists():
         notify = Notify.objects.get(recipient_id=recipient_id, attach=attach, created__gt=today, verb=verb)
