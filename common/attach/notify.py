@@ -58,7 +58,7 @@ def get_notify(user, verb, attach):
                 card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
-            block = ''.join([block, '<span data-pk="', str(creator.pk), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
+            block = ''.join([block, '<span list-pk="', str(post.get_list_pk()), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
             <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure><img src="', creator.get_my_avatar(), '"style=\
             "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_link(), '" class="ajax">\
             ', creator.get_full_name(), '</a></h6><p class="mb-0">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
