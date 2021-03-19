@@ -115,7 +115,7 @@ class Notify(models.Model):
 
     def get__notify(self, user):
         from common.attach.notify import get_notify
-        return get_notify(user, self.verb, self.attach)
+        return get_notify(user, self)
 
 
 class UserNewsNotify(models.Model):
