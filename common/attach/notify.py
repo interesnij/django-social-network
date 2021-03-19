@@ -48,7 +48,7 @@ def get_notify(user, verb, attach):
             pass
         else:
             if post.attach:
-                attach = post.get_user_attach(user)
+                attach = post.get_u_attach(user)
             else:
                 attach = ''
             creator = post.creator
