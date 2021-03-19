@@ -13,8 +13,8 @@ def get_timeline_posts(user):
         - прикрепленные элементы просто записаны в текстовое поле, например pho_19 - это фотка под номером 19. Так
             пользователь увидит все действия, как и в контакте.
     """
-    query = Q(creator_id__in=user.get_user_news_notify_ids())| \ 
-            Q(community_id__in=user.get_community_news_notify_ids())| \
+    query = Q(creator_id__in=user.get_user_news_notify_ids())|\
+            Q(community_id__in=user.get_community_news_notify_ids())|\
             Q(Q(creator_id=user.pk) & Q(verb="ITE"))
     query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
     return Notify.objects.filter(query)
