@@ -1637,8 +1637,8 @@ class User(AbstractUser):
     def get_user_notify(self):
         from notify.models import Notify
 
-        query = Q(creator_id__in=user.get_user_profile_notify_ids())| \
-                Q(community_id__in=user.get_community_profile_notify_ids())
+        query = Q(creator_id__in=self.get_user_profile_notify_ids())| \
+                Q(community_id__in=self.get_community_profile_notify_ids())
         query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
         return Notify.objects.only('created').filter(query)
 
