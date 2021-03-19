@@ -48,7 +48,7 @@ def get_post(user, value):
             else:
                 attach = ''
             community = post.community
-            if user.is_administrator_of_community(community.pk):
+            if user.is_administrator_of_community(community.pk): 
                 card_drop = '<span class="dropdown-item c_post_remove">Удалить</span>'
             elif user.is_post_manager():
                 card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
