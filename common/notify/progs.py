@@ -30,4 +30,4 @@ def community_send(id, creator_id, community, action_community_id, socket_name):
                 'id':  id,
                 'name': socket_name,
             }
-    async_to_sync(channel_layer.group_send)('notification', payload)
+            async_to_sync(channel_layer.group_send)('notification', payload)

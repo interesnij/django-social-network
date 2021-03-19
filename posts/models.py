@@ -1,8 +1,6 @@
 import uuid
 from django.db import models
 from django.conf import settings
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from rest_framework.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
@@ -144,15 +142,6 @@ class Post(models.Model):
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "create_item",
-			'creator_id': post.creator.pk,
-			'post_id': str(post.uuid),
-			'name': "u_post_create",
-            }
-        async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
     @classmethod
