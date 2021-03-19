@@ -125,6 +125,8 @@ class Post(models.Model):
 
     @classmethod
     def create_post(cls, creator, text, category, lists, attach, community, parent, comments_enabled, is_signature, votes_on, status):
+        from common.processing.post import get_post_processing
+
         if not lists:
             raise ValidationError("Не выбран список для новой записи")
         _attach = str(attach)
@@ -142,6 +144,23 @@ class Post(models.Model):
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
+
+        get_post_processing(post)
+
+        if not post.is_have_private_lists():
+            from notify.models import Notify
+            from asgiref.sync import async_to_sync
+            from channels.layers import get_channel_layer
+
+            Notify.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'notification',
+                'id': str(post.pk),
+                'name': "u_post_create",
+            }
+            async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
     @classmethod
