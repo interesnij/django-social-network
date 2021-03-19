@@ -28,29 +28,29 @@ def get_notify(user, verb, attach):
             comments_enabled = 'style="display:none"'
         else:
             comments_enabled = ''
-        #if post.window_likes():
-        #    window_likes = ''
-        #    for i in post.window_likes():
-        #        window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-        #        str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
-        #        style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
-        #else:
-        window_likes = ''
-        #if post.window_dislikes():
-        #    window_dislikes = ''
-        #    for i in post.window_dislikes():
-        #        window_dislikes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-        #        str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
-        #        style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
-        #else:
-        window_dislikes = ''
+        if post.window_likes():
+            window_likes = ''
+            for i in post.window_likes():
+                window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
+                style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
+        else:
+            window_likes = ''
+        if post.window_dislikes():
+            window_dislikes = ''
+            for i in post.window_dislikes():
+                window_dislikes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
+                style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
+        else:
+            window_dislikes = ''
         if post.community:
             pass
         else:
-            if post.attach:
-                attach = post.get_user_attach(user)
-            else:
-                attach = ''
+            #if post.attach:
+            #    attach = post.get_user_attach(user)
+            #else:
+            attach = ''
             creator = post.creator
             if post.creator.pk == user.pk:
                 card_drop = '<span class="dropdown-item u_post_wall_remove">Удалить</span>'
