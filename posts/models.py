@@ -341,9 +341,15 @@ class Post(models.Model):
     def window_likes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent=self, vote__gt=0)[0:6]
+    def is_have_likes(self):
+        from common.model.votes import PostVotes
+        return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0).exists()
     def window_dislikes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent=self, vote__lt=0)[0:6]
+    def is_have_dislikes(self):
+        from common.model.votes import PostVotes
+        return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0).exists()
 
     def get_reposts(self):
         parents = Post.objects.filter(parent=self)

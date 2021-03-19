@@ -13,6 +13,7 @@
           </span>
 
           <span class="like_window">
+            {% if object.is_have_likes %}
           <div class="like_pop">
             <span class="u_all_posts_likes pointer">Оценили: {{ object.likes_count }}</span>
             <span style="display: flex;margin-top: 10px;">
@@ -21,6 +22,7 @@
               {% endfor %}
             </span>
           </div>
+          {% endif %}
         </span>
         <span {% if not object.votes_on %} style="display:none"{% endif %} class="dislike u_dislike {% if object.dislikes|user_in:request.user %}btn_danger{% else %}btn_default{% endif %}" title="Не нравится">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
@@ -28,6 +30,7 @@
         </span>
 
         <span class="dislike_window">
+          {% if object.is_have_dislikes %}
         <div class="dislike_pop">
           <span class="u_all_posts_dislikes pointer">Не оценили: {{ object.dislikes.count }}</span>
           <span style="display: flex;margin-top: 10px;">
@@ -36,6 +39,7 @@
             {% endfor %}
             </span>
         </div>
+        {% endif %}
         </span>
             <span title="Комментарий" class="u_item_comments btn_default" style="cursor:pointer;margin-right: 5px;{% if not object.comments_enabled %}display:none{% endif %}">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
