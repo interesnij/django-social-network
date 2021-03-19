@@ -14,6 +14,6 @@ def get_notify(user, notify):
                 first_notify = notify.get_first_object_set()
                 return '<p><a href="' + first_notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
                 first_notify.creator.get_full_name() + '</a> и ещё ' + str(notify.count_object_set()) + first_notify.get_verb_display()\
-                 + 'запись</p>' + get_post(user, attach[3:])
+                 + ' запись </p>' + get_post(user, attach[3:])
             else:
                 return get_post(user, attach[3:])
