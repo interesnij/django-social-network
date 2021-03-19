@@ -131,16 +131,7 @@ class Post(models.Model):
             raise ValidationError("Не выбран список для новой записи")
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = Post.objects.create(creator=creator,
-                                    text=text,
-                                    category=category,
-                                    community=community,
-                                    parent=parent,
-                                    comments_enabled=comments_enabled,
-                                    is_signature=is_signature,
-                                    votes_on=votes_on,
-                                    status=status,
-                                    attach=_attach,)
+        post = Post.objects.create(creator=creator,text=text,category=category,community=community,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
@@ -152,14 +143,24 @@ class Post(models.Model):
             from asgiref.sync import async_to_sync
             from channels.layers import get_channel_layer
 
-            Notify.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
             channel_layer = get_channel_layer()
-            payload = {
-                'type': 'receive',
-                'key': 'notification',
-                'id': str(post.pk),
-                'name': "u_post_create",
-            }
+            if community:
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
+                payload = {
+                    'type': 'receive',
+                    'key': 'notification',
+                    'id': str(post.pk),
+                    'community_id': str(community.pk),
+                    'name': "u_post_create",
+                }
+            else:
+                Notify.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
+                payload = {
+                    'type': 'receive',
+                    'key': 'notification',
+                    'id': str(post.pk),
+                    'name': "u_post_create",
+                }
             async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
