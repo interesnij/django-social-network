@@ -5,4 +5,4 @@ def get_notify(user, verb, attach):
         if verb == "ITE":
             return get_post(user, attach[3:])
         else:
-            return '<p><a href="' + user.get_link() + '" class="ajax">' + user.get_full_name() + '</a>' + verb + 'запись</P>' + get_post(user, attach[3:])
+            return '<p><a href="' + user.get_link() + '" class="ajax">' + user.get_full_name() + '</a>' + verb + 'запись</p>'
