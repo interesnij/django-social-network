@@ -12,14 +12,14 @@ def get_notify(user, verb, attach):
         #try:
         from posts.models import Post
         post = Post.objects.get(pk=attach[3:], is_deleted=False)
-        if post.likes().filter(user_id=user.pk).exists():
-            user_like = "btn_success"
-        else:
-            user_like = "btn_default"
-        if post.dislikes().filter(user_id=user.pk).exists():
-            user_dislikes = "btn_danger"
-        else:
-            user_dislikes = "btn_default"
+        #if post.likes().filter(user_id=user.pk).exists():
+        #    user_like = "btn_success"
+        #else:
+        user_like = "btn_default"
+        #if post.dislikes().filter(user_id=user.pk).exists():
+        #    user_dislikes = "btn_danger"
+        #else:
+        user_dislikes = "btn_default"
         if post.votes_on:
             votes_on = 'style="display:none"'
         else:
