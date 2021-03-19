@@ -33,14 +33,14 @@ def get_post(user, value):
         if post.is_have_dislikes():
             if post.dislikes().filter(user_id=user.pk).exists():
                 user_dislikes = "btn_danger"
-            window_dislikes = '<div class="dislike_pop"><span class="u_all_posts_dislikes pointer">Не оценили: ' + post.dislikes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
+            window_dislikes = 'Не оценили: ' + post.dislikes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
             for i in post.window_dislikes():
                 window_dislikes = ''.join([window_dislikes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
                 str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '"><img src="', i.user.get_my_avatar(), '" \
                 style="border-radius: 50px;width:50px;" alt="image"></figure></a>'])
             window_dislikes += '</span></div>'
         else:
-            window_dislikes = ''
+            window_dislikes = '<div><span>'
 
         if post.community:
             if post.attach:
@@ -105,7 +105,7 @@ def get_post(user, value):
             </svg><span class="likes_count" data-count="like">', str(post.likes_count()), '</span></span><span class="like_window">', window_likes, '</span><span ', votes_on, ' class="dislike \
             u_dislike ', user_dislikes, '" title="Не нравится"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">\
             <path fill="none" d="M0 0h24v24H0z"/><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>\
-            </svg><span class="dislikes_count">', str(post.dislikes_count()), '</span></span><span class="dislike_window">', window_dislikes, '</span><span title="Комментарий" \
+            </svg><span class="dislikes_count">', str(post.dislikes_count()), '</span></span><span class="dislike_window"><div class="dislike_pop"><span class="u_all_posts_dislikes pointer">', window_dislikes, '</span><span title="Комментарий" \
             class="u_item_comments btn_default" style="cursor:pointer;margin-right: 5px;', comments_enabled, '"><svg class="svg_info" \
             fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>\
             <path d="M0 0h24v24H0z" fill="none"/></svg><span class="comment-count">', str(post.count_comments()), '</span></span>\
