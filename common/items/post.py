@@ -48,15 +48,14 @@ def get_post(user, value):
             else:
                 attach = ''
             community = post.community
-            if user.is_administrator_of_community(community.pk): 
+            if user.is_administrator_of_community(community.pk):
                 card_drop = '<span class="dropdown-item c_post_remove">Удалить</span>'
             elif user.is_post_manager():
                 card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             return ''.join([block, '<span data-pk="', str(community.pk), '"list-pk="', str(post.get_list_pk()), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
-            <div class="media"><a href="', community.get_link(), '" class="ajax"><figure><img src="', community.get_community_avatar(), '"style=\
-            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', community.get_link(), '" class="ajax">\
+            <div class="media"><a href="', community.get_link(), '" class="ajax"><figure>', community.get_community_avatar(), '</figure></a><div class="media-body"><h6 class="mb-0"><a href="', community.get_link(), '" class="ajax">\
             ', community.name, '</a></h6><p class="mb-0">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
             <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
             </a><div class="dropdown-menu dropdown-menu-right"><span><span class="dropdown-item u_all_posts_likes pointer">Оценили</span>\
@@ -114,8 +113,7 @@ def get_post(user, value):
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             return ''.join([block, '<span data-pk="', str(creator.pk), '"list-pk="', str(post.get_list_pk()), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
-            <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure><img src="', creator.get_my_avatar(), '"style=\
-            "border-radius:50px;width:50px;" alt="image"></figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_link(), '" class="ajax">\
+            <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure>', creator.get_my_avatar(), '</figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_link(), '" class="ajax">\
             ', creator.get_full_name(), '</a></h6><p class="mb-0">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
             <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
             </a><div class="dropdown-menu dropdown-menu-right"><span><span class="dropdown-item u_all_posts_likes pointer">Оценили</span>\
