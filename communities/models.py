@@ -75,6 +75,7 @@ class Community(models.Model):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
+    invites_enabled = models.BooleanField(default=True, verbose_name="Приглашения открыты")
 
     class Meta:
         verbose_name = 'сообщество'
