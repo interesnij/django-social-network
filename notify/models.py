@@ -135,8 +135,8 @@ class CommunityNewsNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Новости по по факту дружбы или подписки в друзья"
-        verbose_name_plural = "Новости по по факту дружбы или подписки в друзья"
+        verbose_name = "Новости по по факту подписки на сообщество"
+        verbose_name_plural = "Новости по по факту подписки на сообщество"
 
 
 class UserProfileNotify(models.Model):
@@ -146,8 +146,8 @@ class UserProfileNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "уведомления при подписке на уведосления"
-        verbose_name_plural = "уведомления при подписке на уведосления"
+        verbose_name = "уведомления при подписке на уведосления пользователя"
+        verbose_name_plural = "уведомления при подписке на уведосления пользователя"
 
 class CommunityProfileNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
@@ -156,5 +156,5 @@ class CommunityProfileNotify(models.Model):
     id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "уведомления при подписке на уведосления"
-        verbose_name_plural = "уведомления при подписке на уведосленияя"
+        verbose_name = "уведомления при подписке на уведосления сообщества"
+        verbose_name_plural = "уведомления при подписке на уведосленияя сообщества"

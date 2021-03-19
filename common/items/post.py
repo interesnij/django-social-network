@@ -5,11 +5,23 @@ def linebreaks(value, autoescape=None):
     return mark_safe(linebreaks(value, autoescape))
 
 
-def get_post(user, value):
-    block = ''
-    #try:
+def get_post(user, notify):
     from posts.models import Post
-    post = Post.objects.get(pk=value, is_deleted=False)
+
+    verb, attach = notify.verb, notify.attach
+    #try:
+    post = Post.objects.get(pk=attach[3:], is_deleted=False)
+    if notify.is_have_user_set():
+        first_notify = notify.get_first_user_set()
+        block = '<p><a href="' + first_notify.creator.get_link() + '" class="ajax">' + first_notify.creator.get_full_name() + '</a> '\
+        + first_notify.get_verb_display() + str(notify.count_user_set()) + '</p>'
+    elif notify.is_have_object_set():
+        first_notify = notify.get_first_object_set()
+        block = '<p><a href="' + first_notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
+        first_notify.creator.get_full_name() + '</a> и ещё ' + str(notify.count_object_set()) + first_notify.get_verb_display() + 'запись</p>'
+    else:
+        block = ''
+
     if post.votes_on:
         votes_on = ''
     else:
