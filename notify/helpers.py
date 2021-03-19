@@ -31,32 +31,32 @@ REGISTER, WOMEN_REGISTER, GROUP_REGISTER = 'REG', 'WREG', 'GREG'
 UNREAD, READ, DELETED = 'U', 'R', 'D'
 
 VERB = (
-    (ITEM, 'разместил'),
-    (COMMENT, 'оставил'), (WOMEN_COMMENT, 'оставила'), (GROUP_COMMENT, 'оставили'),
-    (REPLY, 'ответил на'), (WOMEN_REPLY, 'ответила на'), (GROUP_REPLY, 'ответили на'),
+    (ITEM, ' разместил'),
+    (COMMENT, ' оставил'), (WOMEN_COMMENT, ' оставила'), (GROUP_COMMENT, ' оставили'),
+    (REPLY, ' ответил на'), (WOMEN_REPLY, ' ответила на'), (GROUP_REPLY, ' ответили на'),
 
-    (USER_MENTION, 'упомянул Вас в записи'), (WOMEN_USER_MENTION, 'упомянула Вас в записи'), (GROUP_USER_MENTION, 'упомянули Вас в записи'),
-    (COMMENT_USER_MENTION, 'упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, 'упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, 'упомянули Вас в комментарии к записи'),
+    (USER_MENTION, ' упомянул Вас в записи'), (WOMEN_USER_MENTION, ' упомянула Вас в записи'), (GROUP_USER_MENTION, ' упомянули Вас в записи'),
+    (COMMENT_USER_MENTION, ' упомянул Вас в комментарии к записи'), (WOMEN_COMMENT_USER_MENTION, ' упомянула Вас в комментарии к записи'), (GROUP_COMMENT_USER_MENTION, ' упомянули Вас в комментарии к записи'),
 
-    (LIKE, 'оценил'), (WOMEN_LIKE, 'оценила'), (GROUP_LIKE, 'оценили'),
-    (DISLIKE, 'не оценил'), (WOMEN_DISLIKE, 'не оценила'), (GROUP_DISLIKE, 'не оценили'),
-    (LIKE_COMMENT, 'оценил'), (WOMEN_LIKE_COMMENT, 'оценила '), (GROUP_LIKE_COMMENT, 'оценили'),
-    (DISLIKE_COMMENT, 'не оценил'), (WOMEN_DISLIKE_COMMENT, 'не оценила'), (GROUP_DISLIKE_COMMENT, 'не оценили'),
-    (LIKE_REPLY, 'оценил'), (WOMEN_LIKE_REPLY, 'оценила'), (GROUP_LIKE_REPLY, 'оценили'),
-    (DISLIKE_REPLY, 'не оценил'), (WOMEN_DISLIKE_REPLY, 'не оценила'), (GROUP_DISLIKE_REPLY, 'не оценили'),
-    (SURVEY_VOTE, 'участвовал в опросе'), (WOMEN_SURVEY_VOTE, 'участвовала в опросе'), (GROUP_SURVEY_VOTE, 'участвовали в опросе'),
+    (LIKE, ' оценил'), (WOMEN_LIKE, ' оценила'), (GROUP_LIKE, ' оценили'),
+    (DISLIKE, ' не оценил'), (WOMEN_DISLIKE, ' не оценила'), (GROUP_DISLIKE, ' не оценили'),
+    (LIKE_COMMENT, ' оценил'), (WOMEN_LIKE_COMMENT, ' оценила '), (GROUP_LIKE_COMMENT, ' оценили'),
+    (DISLIKE_COMMENT, ' не оценил'), (WOMEN_DISLIKE_COMMENT, ' не оценила'), (GROUP_DISLIKE_COMMENT, ' не оценили'),
+    (LIKE_REPLY, ' оценил'), (WOMEN_LIKE_REPLY, ' оценила'), (GROUP_LIKE_REPLY, ' оценили'),
+    (DISLIKE_REPLY, ' не оценил'), (WOMEN_DISLIKE_REPLY, ' не оценила'), (GROUP_DISLIKE_REPLY, ' не оценили'),
+    (SURVEY_VOTE, ' участвовал в опросе'), (WOMEN_SURVEY_VOTE, ' участвовала в опросе'), (GROUP_SURVEY_VOTE, ' участвовали в опросе'),
 
-    (REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделились'),
-    (COMMUNITY_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
-    (LIST_REPOST, 'поделился'), (WOMEN_REPOST, 'поделилась'), (GROUP_REPOST, 'поделились'),
-    (COMMUNITY_LIST_REPOST, 'поделилось'), (GROUP_COMMUNITY_REPOST, 'поделились'),
+    (REPOST, ' поделился'), (WOMEN_REPOST, ' поделилась'), (GROUP_REPOST, ' поделились'),
+    (COMMUNITY_REPOST, ' поделилось'), (GROUP_COMMUNITY_REPOST, ' поделились'),
+    (LIST_REPOST, ' поделился'), (WOMEN_REPOST, ' поделилась'), (GROUP_REPOST, ' поделились'),
+    (COMMUNITY_LIST_REPOST, ' поделилось'), (GROUP_COMMUNITY_REPOST, ' поделились'),
 
-    (CONNECTION_REQUEST, 'подал заявку в'), (WOMEN_CONNECTION_REQUEST, 'подала заявку в'), (GROUP_CONNECTION_REQUEST, 'подали заявку в'),
-    (CONNECTION_CONFIRMED, 'принят в'), (WOMEN_CONNECTION_CONFIRMED, 'принята'), (GROUP_CONNECTION_CONFIRMED, 'приняты'),
-    (INVITE, 'рекомендует'), (WOMEN_INVITE, 'рекомендует'), (GROUP_INVITE, 'рекомендуют'),
-    (COMMUNITY_JOIN, 'принят'), (WOMEN_COMMUNITY_JOIN, 'принята'), (GROUP_COMMUNITY_JOIN, 'приняты'),
+    (CONNECTION_REQUEST, ' подал заявку в'), (WOMEN_CONNECTION_REQUEST, ' подала заявку в'), (GROUP_CONNECTION_REQUEST, ' подали заявку в'),
+    (CONNECTION_CONFIRMED, ' принят в'), (WOMEN_CONNECTION_CONFIRMED, ' принята'), (GROUP_CONNECTION_CONFIRMED, ' приняты'),
+    (INVITE, ' рекомендует'), (WOMEN_INVITE, ' рекомендует'), (GROUP_INVITE, ' рекомендуют'),
+    (COMMUNITY_JOIN, ' принят'), (WOMEN_COMMUNITY_JOIN, ' принята'), (GROUP_COMMUNITY_JOIN, ' приняты'),
 
-    (REGISTER, 'зарегистрировался'), (WOMEN_REGISTER, 'зарегистрировалась'), (GROUP_REGISTER, 'зарегистрировались'),
+    (REGISTER, ' зарегистрировался'), (WOMEN_REGISTER, ' зарегистрировалась'), (GROUP_REGISTER, ' зарегистрировались'),
 )
 
 STATUS = ((UNREAD, 'Не прочитано'),(READ, 'Прочитано'),(DELETED, 'Удалено'),)
