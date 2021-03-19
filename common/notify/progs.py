@@ -15,7 +15,7 @@ def user_send(id, recipient_id, action_community_id, socket_name):
     }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def community_send(id, community, action_community_id, socket_name):
+def community_send(id, creator_id, community, action_community_id, socket_name):
     # посылаем сокет с переменными: id-id объекта, community_id-id сообщества, в которое шлется сокет,socket_name-имя, по которому следует назначать событие в скрипте js
     persons = community.get_staff_members()
     channel_layer = get_channel_layer()

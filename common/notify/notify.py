@@ -47,4 +47,4 @@ def community_notify(creator, community, action_community_id, attach, socket_nam
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb="G"+verb, object_set=notify)
     else:
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb=verb)
-    community_send(attach[3:], community, action_community_id, socket_name)
+    community_send(attach[3:], creator.pk, community, action_community_id, socket_name)
