@@ -14,7 +14,7 @@ def get_timeline_posts(user):
             пользователь увидит все действия, как и в контакте.
     """
     query = Q(creator_id__in=user.get_user_notify_ids())| \
-            Q(community_id__in=user.get_community_notify_ids())
+            Q(creator_id__in=user.get_user_notify_ids())| \
+            Q(Q(creator_id=user.pk) & Q(verb="ITE"))
     query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
-    query.add(Q(Q(creator_id=user.pk) & Q(verb="ITE")), Q.AND)
     return Notify.objects.filter(query)
