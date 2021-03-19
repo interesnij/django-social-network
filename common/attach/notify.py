@@ -4,7 +4,7 @@ def get_notify(user, notify):
     if attach[:3] == "pos":
         from common.items.post import get_post
         if notify.verb == "ITE":
-            get_post(user, attach[3:])
+            "ght"
         else:
             if notify.is_have_user_set():
                 first_notify = notify.get_first_user_set()
