@@ -10,5 +10,8 @@ class NotifyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Notify, NotifyAdmin)
-admin.site.register(UserNotify)
-admin.site.register(CommunityNotify)
+
+admin.site.register(UserNewsNotify)
+admin.site.register(CommunityNewsNotify)
+admin.site.register(UserProfileNotify)
+admin.site.register(CommunityProfileNotify)

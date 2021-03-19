@@ -1445,13 +1445,20 @@ class User(AbstractUser):
             notify = UserNotify.objects.get(user=self.pk, target=user_pk)
             notify.delete()
 
-    def get_user_notify_ids(self):
-        from notify.models import UserNotify
-        return [i['target'] for i in UserNotify.objects.filter(user=self.pk).values('target')]
+    def get_user_news_notify_ids(self):
+        from notify.models import UserNewsNotify
+        return [i['target'] for i in UserNewsNotify.objects.filter(user=self.pk).values('target')]
+    def get_community_news_notify_ids(self):
+        from notify.models import CommunityNewsNotify
+        return [i['community'] for i in CommunityNewsNotify.objects.filter(user=self.pk).values('community')]
 
-    def get_community_notify_ids(self):
-        from notify.models import CommunityNotify
-        return [i['community'] for i in CommunityNotify.objects.filter(user=self.pk).values('community')]
+    def get_user_profile_notify_ids(self):
+        from notify.models import UserProfileNotify
+        return [i['target'] for i in UserProfileNotify.objects.filter(user=self.pk).values('target')]
+    def get_community_profile_notify_ids(self):
+        from notify.models import CommunityProfileNotify
+        return [i['community'] for i in CommunityProfileNotify.objects.filter(user=self.pk).values('community')]
+
 
     def leave_community(self, community_pk):
         from communities.models import Community
@@ -1630,8 +1637,9 @@ class User(AbstractUser):
     def get_user_notify(self):
         from notify.models import Notify
 
-        query = Q(recipient_id=self.pk, community__isnull=True)
-        query.add(~Q(status="D"), Q.AND)
+        query = Q(creator_id__in=user.get_user_profile_notify_ids())| \
+                Q(community_id__in=user.get_community_profile_notify_ids())
+        query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
         return Notify.objects.only('created').filter(query)
 
     def read_user_notify(self):
