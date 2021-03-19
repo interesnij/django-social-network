@@ -8,7 +8,7 @@ def linebreaks(value, autoescape=None):
 def get_post(user, value):
     from posts.models import Post
 
-    block, verb, attach = '', notify.verb, notify.attach
+    block = ''
     #try:
     post = Post.objects.get(pk=value, is_deleted=False)
     if post.votes_on:
