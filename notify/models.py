@@ -89,7 +89,7 @@ class Notify(models.Model):
         cls.objects.filter(recipient_id=user_pk, status="U").update(status="R")
 
     @classmethod
-    def c_notify_unread(cls, user_pk):
+    def c_notify_unread(cls, user_pk, community_id):
         cls.objects.filter(community_id=community_id, status="U").update(status="R")
 
     def is_unread(self):
