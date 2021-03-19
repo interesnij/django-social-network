@@ -128,7 +128,7 @@ class PhotoCommunityLikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
             result = True
-            community_notify(request.user, item.creator.pk, None, "pho"+str(item.pk), "c_photo_notify", "LIK")
+            community_notify(request.user, community, None, "pho"+str(item.pk), "c_photo_notify", "LIK")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 
@@ -151,7 +151,7 @@ class PhotoCommunityDislikeCreate(View):
         except PhotoVotes.DoesNotExist:
             PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
             result = True
-            community_notify(request.user, item.creator.pk, None, "pho"+str(item.pk), "c_photo_notify", "DIS")
+            community_notify(request.user, community, None, "pho"+str(item.pk), "c_photo_notify", "DIS")
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
 
 

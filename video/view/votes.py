@@ -140,7 +140,7 @@ class VideoCommunityLikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.LIKE)
             result = True
-            community_notify(request.user, video.creator.pk, None, "vid"+str(item.pk), "c_video_notify", "LIK")
+            community_notify(request.user, community, None, "vid"+str(item.pk), "c_video_notify", "LIK")
         likes = video.likes_count()
         dislikes = video.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
@@ -165,7 +165,7 @@ class VideoCommunityDislikeCreate(View):
         except VideoVotes.DoesNotExist:
             VideoVotes.objects.create(parent=video, user=request.user, vote=VideoVotes.DISLIKE)
             result = True
-            community_notify(request.user, video.creator.pk, None, "vid"+str(item.pk), "c_video_notify", "DIS")
+            community_notify(request.user, community, None, "vid"+str(item.pk), "c_video_notify", "DIS")
         likes = video.likes_count()
         dislikes = item.dislikes_count()
         return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
