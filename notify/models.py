@@ -6,8 +6,8 @@ from notify.helpers import VERB, STATUS
 
 
 class Notify(models.Model):
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Инициатор", on_delete=models.CASCADE)
+    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
@@ -143,7 +143,7 @@ class UserProfileNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    id = models.BigAutoField(primary_key=True) 
+    id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "уведомления при подписке на уведосления"
