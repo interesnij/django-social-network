@@ -29,7 +29,7 @@ def user_notify(creator, recipient_id, action_community_id, attach, socket_name,
         notify = Notify.objects.get(recipient_id=recipient_id, attach=attach, created__gt=today, verb=verb)
         Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb="G"+verb, object_set=notify)
     else:
-        Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb=verb)
+        Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb=current_verb)
     user_send(attach[3:], recipient_id, action_community_id, socket_name)
 
 def community_notify(creator, community, action_community_id, attach, socket_name, verb):
@@ -46,5 +46,5 @@ def community_notify(creator, community, action_community_id, attach, socket_nam
         notify = Notify.objects.get(community_id=community.pk, attach=attach, created__gt=today, verb=verb)
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb="G"+verb, object_set=notify)
     else:
-        Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb=verb)
+        Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb=current_verb)
     community_send(attach[3:], creator.pk, community, action_community_id, socket_name)
