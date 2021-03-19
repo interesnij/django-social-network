@@ -1630,7 +1630,8 @@ class User(AbstractUser):
     def get_user_notify(self):
         from notify.models import Notify
 
-        query = Q(recipient_id=self.pk, status="U", community__isnull=True)|Q(recipient_id=self.pk, community__isnull=True, user_set__isnull=True, object_set__isnull=True, status="R")
+        query = Q(recipient_id=self.pk, community__isnull=True)
+        query.add(~Q(status="D"), Q.AND)
         return Notify.objects.only('created').filter(query)
 
     def read_user_notify(self):
