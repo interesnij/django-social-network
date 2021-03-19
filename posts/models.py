@@ -195,7 +195,10 @@ class Post(models.Model):
         for comment in parents:
             i = i + comment.count_replies()
         i = i + parents_count
-        return i
+        if i == 0:
+            return ''
+        else:
+            return i
 
     def __str__(self):
         return self.creator.get_full_name()
@@ -353,7 +356,10 @@ class Post(models.Model):
     def count_reposts(self):
         parents = self.get_reposts()
         count_reposts = parents.values('pk').count()
-        return count_reposts
+        if count_reposts == 0:
+            return ''
+        else:
+            return count_reposts
 
     def get_visiter_sity(self):
         from stst.models import PostNumbers, PostAdNumbers
