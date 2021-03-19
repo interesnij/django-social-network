@@ -17,5 +17,5 @@ def get_notify(user, notify):
                  + ' запись </p>' + get_post(user, attach[3:])
             else:
                 return '<p style="padding-left: 7px;"><a href="' + notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
-                notify.creator.get_full_name() + '</a>' + first_notify.get_verb_display()\
+                notify.creator.get_full_name() + '</a>' + notify.get_verb_display()\
                  + ' запись </p>' + get_post(user, attach[3:])
