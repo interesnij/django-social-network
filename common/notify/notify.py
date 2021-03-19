@@ -37,13 +37,13 @@ def community_notify(creator, community, action_community_id, attach, socket_nam
 
     current_verb = creator.get_verb_gender(verb)
 
-    if Notify.objects.filter(creator_id=creator.pk, community_id=community_id, action_community_id=action_community_id, attach=attach, verb=verb).exists():
+    if Notify.objects.filter(creator_id=creator.pk, community_id=community.pk, action_community_id=action_community_id, attach=attach, verb=verb).exists():
         pass
     elif Notify.objects.filter(creator_id=creator.pk, community_id=community.pk, action_community_id=action_community_id, created__gt=today, attach__in=attach[:3], verb=verb).exists():
         notify = Notify.objects.get(creator_id=creator.pk, community_id=community.pk, created__gt=today, action_community_id=action_community_id, attach=attach, verb=verb)
         Notify.objects.create(creator_id=creator.pk, community_id=community.pk, action_community_id=action_community_id, attach=attach, verb=verb, user_set=notify)
-    elif Notify.objects.filter(community_id=community_id, attach=attach, created__gt=today, verb=verb).exists():
-        notify = Notify.objects.get(community_id=community_id, attach=attach, created__gt=today, verb=verb)
+    elif Notify.objects.filter(community_id=community.pk, attach=attach, created__gt=today, verb=verb).exists():
+        notify = Notify.objects.get(community_id=community.pk, attach=attach, created__gt=today, verb=verb)
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb="G"+verb, object_set=notify)
     else:
         Notify.objects.create(creator_id=creator.pk, action_community_id=action_community_id, community_id=community.pk, attach=attach, verb=verb)
