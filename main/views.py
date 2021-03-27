@@ -50,20 +50,6 @@ class MainPhoneSend(TemplateView):
 		return super(MainPhoneSend,self).get(request,*args,**kwargs)
 
 
-class PostsListView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/posts/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PostsListView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		from common.user_progs.news import get_timeline_posts
-		if self.request.user.is_authenticated:
-			return get_timeline_posts(self.request.user)
-		else:
-			return []
-
 class SwitchView(TemplateView):
 	template_name, get_buttons_block, common_frends, common_friends_count, user, c = None, None, None, None, None, None
 
@@ -200,3 +186,33 @@ class SwitchView(TemplateView):
 		self.custom_link, self.c, self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, \
 		self.good_album, self.get_buttons_block, self.common_frends, self.common_friends_count
 		return c
+
+
+class NewsListView(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(NewsListView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		from common.user_progs.news import get_news
+		if self.request.user.is_authenticated:
+			return get_news(self.request.user)
+		else:
+			return []
+
+class FeaturedListView(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_main_template("main/lists/featured_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(FeaturedListView,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		from common.user_progs.news import get_featured_news
+		if self.request.user.is_authenticated:
+			items = get_featured_news(self.request.user)
+		else:
+			items = []
+		return items

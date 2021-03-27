@@ -427,6 +427,16 @@ class Post(models.Model):
                     query.append(item[3:])
         return Photo.objects.filter(id__in=query)
 
+    def get_attach_videos(self):
+        if "pho" in self.attach:
+            query = []
+            from video.models import Video
+
+            for item in self.attach.split(","):
+                if item[:3] == "vid":
+                    query.append(item[3:])
+        return Video.objects.filter(id__in=query)
+
 
 class PostComment(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
@@ -521,3 +531,23 @@ class PostComment(models.Model):
     def get_c_attach(self, user):
         from common.attach.comment_attach import get_c_comment_attach
         return get_c_comment_attach(self, user)
+
+    def get_attach_photos(self):
+        if "pho" in self.attach:
+            query = []
+            from gallery.models import Photo
+
+            for item in self.attach.split(","):
+                if item[:3] == "pho":
+                    query.append(item[3:])
+        return Photo.objects.filter(id__in=query)
+
+    def get_attach_videos(self):
+        if "pho" in self.attach:
+            query = []
+            from video.models import Video
+
+            for item in self.attach.split(","):
+                if item[:3] == "vid":
+                    query.append(item[3:])
+        return Video.objects.filter(id__in=query)
