@@ -228,33 +228,33 @@ class UserDetailAvatar(TemplateView):
         return context
 
 class UserPostPhoto(TemplateView):
-    """
-    страница отдельного фото записи пользователя с разрещениями и без
-    """
-    template_name = None
+	"""
+	страница отдельного фото записи пользователя с разрещениями и без
+	"""
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from posts.models import Post
+	def get(self,request,*args,**kwargs):
+		from posts.models import Post
 		from common.template.photo import get_permission_user_photo_2
 
-        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.post.get_attach_photos()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(UserPostPhoto,self).get(request,*args,**kwargs)
+		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = self.post.get_attach_photos()
+		if request.is_ajax():
+			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(UserPostPhoto,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserPostPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["post"] = self.post
-        context["user"] = self.request.user
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserPostPhoto,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["post"] = self.post
+		context["user"] = self.request.user
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		return context
 
 class UserCommentPhoto(TemplateView):
     """
