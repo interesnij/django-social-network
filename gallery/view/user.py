@@ -235,12 +235,13 @@ class UserPostPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from posts.models import Post
+		from common.template.photo import get_permission_user_photo_2
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.post.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.album, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserPostPhoto,self).get(request,*args,**kwargs)
@@ -263,12 +264,13 @@ class UserCommentPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from posts.models import PostComment
+		from common.template.photo import get_permission_user_photo_2
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.photos = self.comment.get_attach_photos()
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.comment.commenter, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(UserCommentPhoto,self).get(request,*args,**kwargs)
