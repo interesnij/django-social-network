@@ -419,7 +419,7 @@ class Post(models.Model):
 
     def get_attach_photos(self):
         query = []
-        if "pho" in self.attach.find("pho"):
+        if "pho" in self.attach:
             from gallery.models import Photo
 
             for item in self.attach.split(","):
