@@ -251,10 +251,9 @@ class UserPostPhoto(TemplateView):
 		context["object"] = self.photo
 		context["post"] = self.post
 		context["user"] = self.request.user
-		#context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-		#context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		context["photos"] = self.photos
 		return context
 
 class UserCommentPhoto(TemplateView):
@@ -282,7 +281,6 @@ class UserCommentPhoto(TemplateView):
 		context["user"] = self.request.user
 		context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
 		context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-		#context["photos"] = self.photos
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
 		return context
 
