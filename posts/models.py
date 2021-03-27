@@ -418,15 +418,14 @@ class Post(models.Model):
         return PostNumbers.objects.filter(post=self.pk).values('pk').count()
 
     def get_attach_photos(self):
-        query = []
         if "pho" in self.attach:
+            query = []
             from gallery.models import Photo
 
             for item in self.attach.split(","):
                 if item[:3] == "pho":
-                    photo = Photo.objects.get(pk=item[3:], is_public=True)
-                    query.append(photo)
-        return query
+                    query.append(item[3:])
+        return Photo.objects.filter(id__in=query)
 
 
 class PostComment(models.Model):
