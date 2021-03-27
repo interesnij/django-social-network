@@ -299,24 +299,24 @@ class Post(models.Model):
 
     def likes(self):
         from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0)
+        likes = PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)
         return likes
 
     def dislikes(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0)
+        dislikes = PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)
         return dislikes
 
     def likes_count(self):
         from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent=self, vote__gt=0).values('pk').count()
+        likes = PostVotes.objects.filter(parent_id=self.pk, vote__gt=0).values('pk').count()
         if likes > 0:
             return likes
         else:
             return ''
     def dislikes_count(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent=self, vote__lt=0).values('pk').count()
+        dislikes = PostVotes.objects.filter(parent_id=self.pk, vote__lt=0).values('pk').count()
         if dislikes > 0:
             return dislikes
         else:
@@ -349,13 +349,13 @@ class Post(models.Model):
 
     def window_likes(self):
         from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent=self, vote__gt=0)[0:6]
+        return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
     def is_have_likes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0).exists()
     def window_dislikes(self):
         from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent=self, vote__lt=0)[0:6]
+        return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
     def is_have_dislikes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0).exists()
@@ -416,6 +416,16 @@ class Post(models.Model):
     def post_visits_count(self):
         from stst.models import PostNumbers
         return PostNumbers.objects.filter(post=self.pk).values('pk').count()
+
+    def get_attach_photos(self):
+        if self.attach.find("pho"):
+            from gallery.models import Photo
+            query = []
+            for item in self.attach.split(","):
+                if item[:3] == "pho":
+                    photo = Photo.objects.get(pk=item[3:], is_public=True)
+                    query.append(photo)
+                return query
 
 
 class PostComment(models.Model):
