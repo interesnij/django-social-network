@@ -40,7 +40,6 @@ class User(AbstractUser):
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="ru")
-
     #USERNAME_FIELD = 'phone'
 
     class Meta:
@@ -92,7 +91,6 @@ class User(AbstractUser):
 
     def calculate_age(self):
         from datetime import date
-
         today = date.today()
         return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
@@ -356,6 +354,10 @@ class User(AbstractUser):
     def get_6_possible_friends(self):
         query = Q(id__in=self.get_6_possible_friends_ids())
         return User.objects.filter(query)
+
+    def get_6_possible_friends_communities_ids(self):
+        from communities.models import Commynity
+        return [i['pk'] for i in Commynity.objects.filter(memberships__user__id__in=self.get_6_possible_friends()).values("pk")]
 
     def get_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend

@@ -30,6 +30,7 @@ def get_featured_news(user):
         - прикрепленные элементы просто записаны в текстовое поле, например pho_19 - это фотка под номером 19. Так
             пользователь увидит все действия, как и в контакте.
     """
-    query = Q(creator_id__in=user.get_possible_friends_ids())
+    query = Q(creator_id__in=user.get_possible_friends_ids())|\
+            Q(community_id__in=user.get_6_possible_friends_communities_ids()) 
     query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
     return Notify.objects.filter(query)
