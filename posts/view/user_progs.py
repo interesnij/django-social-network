@@ -164,20 +164,20 @@ class PostUserUnFixed(View):
 
 class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == item.creator and request.is_ajax():
-            item.comments_enabled = False
-            item.save(update_fields=['comments_enabled'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user == post.creator and request.is_ajax():
+            post.comments_enabled = False
+            post.save(update_fields=['comments_enabled'])
             return HttpResponse()
         else:
             raise Http404
 
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user == item.creator and request.is_ajax():
-            item.comments_enabled = True
-            item.save(update_fields=['comments_enabled'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user == post.creator and request.is_ajax():
+            post.comments_enabled = True
+            post.save(update_fields=['comments_enabled'])
             return HttpResponse()
         else:
             raise Http404
@@ -185,7 +185,7 @@ class PostUserOnComment(View):
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == item.creator.pk:
+        if request.is_ajax() and request.user.pk == post.creator.pk:
             post.delete_post()
             return HttpResponse()
         else:
@@ -203,7 +203,7 @@ class PostWallUserDelete(View):
 class PostUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == item.creator.pk:
+        if request.is_ajax() and request.user.pk == post.creator.pk:
             post.abort_delete_post()
             return HttpResponse()
         else:

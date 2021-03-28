@@ -197,40 +197,40 @@ class PostCommunityOnComment(View):
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
-            item.is_deleted = True
-            item.save(update_fields=['is_deleted'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+            post.is_deleted = True
+            post.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            item.is_deleted = True
-            item.save(update_fields=['is_deleted'])
+            post.is_deleted = True
+            post.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            item.is_deleted = False
-            item.save(update_fields=['is_deleted'])
+            post.is_deleted = False
+            post.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
 class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
-            item.is_deleted = False
-            item.save(update_fields=['is_deleted'])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+            post.is_deleted = False
+            post.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
