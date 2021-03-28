@@ -174,7 +174,7 @@ class Post(models.Model):
         from notify.models import Notify
         n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
         n.status = "C"
-        n.save(update_fields=['vote'])
+        n.save(update_fields=['status'])
         #except:
             #pass
         self.is_deleted = True
@@ -185,7 +185,7 @@ class Post(models.Model):
         from notify.models import Notify
         n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
         n.status = "R"
-        n.save(update_fields=['vote'])
+        n.save(update_fields=['status'])
         #except:
         #    pass
         self.is_deleted = False
