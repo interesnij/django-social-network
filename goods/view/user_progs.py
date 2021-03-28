@@ -97,8 +97,7 @@ class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.is_deleted = True
-            good.save(update_fields=['is_deleted'])
+            good.delete_good()
             return HttpResponse()
         else:
             raise Http404
@@ -107,8 +106,7 @@ class UserGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.is_deleted = False
-            good.save(update_fields=['is_deleted'])
+            good.abort_delete_good()
             return HttpResponse()
         else:
             raise Http404

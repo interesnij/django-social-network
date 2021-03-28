@@ -176,8 +176,7 @@ class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.is_delete = True
-            good.save(update_fields=['is_delete'])
+            good.delete_good()
             return HttpResponse()
         else:
             raise Http404
@@ -186,8 +185,7 @@ class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.is_delete = False
-            good.save(update_fields=['is_delete'])
+            good.abort_delete_good()
             return HttpResponse()
         else:
             raise Http404

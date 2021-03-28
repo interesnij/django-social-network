@@ -221,6 +221,28 @@ class Video(models.Model):
     def get_album_uuid(self):
         return self.album.all()[0].uuid
 
+    def delete_video(self):
+		try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="vid" + str(self.pk))
+            n.status = "C"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_video(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="vid" + str(self.pk))
+            n.status = "R"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])
+
 
 class VideoComment(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")

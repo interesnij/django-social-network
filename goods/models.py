@@ -289,6 +289,28 @@ class Good(models.Model):
 	def get_images(self):
 		return GoodImage.objects.filter(good_id=self.pk)
 
+	def delete_good(self):
+		try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="goo" + str(self.pk))
+            n.status = "C"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_good(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="goo" + str(self.pk))
+            n.status = "R"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])
+
 
 class GoodImage(models.Model):
 	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)

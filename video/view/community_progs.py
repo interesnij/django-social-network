@@ -127,8 +127,7 @@ class CommunityVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
-            video.is_deleted = True
-            video.save(update_fields=['is_deleted'])
+            video.delete_video()
             return HttpResponse()
         else:
             raise Http404
@@ -137,8 +136,7 @@ class CommunityVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
-            video.is_deleted = False
-            video.save(update_fields=['is_deleted'])
+            video.abort_delete_video()
             return HttpResponse()
         else:
             raise Http404
