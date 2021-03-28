@@ -75,7 +75,7 @@ class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		user, c_pk = User.objects.get(uuid=self.kwargs["uuid"]), self.kwargs["pk"]
 		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
-			from common.notify.user import user_notify
+			from common.notify.notify import user_notify
 
 			new_member = user.join_community(c_pk)
 			user.create_or_plus_populate_community(c_pk)

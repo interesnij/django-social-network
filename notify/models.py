@@ -128,6 +128,8 @@ class Notify(models.Model):
 
 
 class UserNewsNotify(models.Model):
+    # создаём при заявке в друзья у открытого аккаунта или при подтвержденной заявки при закрытом.
+    # это для вывода новостей в лентах новостей
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
@@ -138,6 +140,8 @@ class UserNewsNotify(models.Model):
         verbose_name_plural = "Новости по по факту дружбы или подписки в друзья"
 
 class CommunityNewsNotify(models.Model):
+    # создаём при подписке на сообщество или при подтвержденной заявке, если тип не открытый у сообщества
+    # это для вывода новостей в лентах новостей
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
@@ -149,6 +153,9 @@ class CommunityNewsNotify(models.Model):
 
 
 class UserProfileNotify(models.Model):
+    # создаём при нажатии на колокольчик у пользователя. При изменении приватности,
+    # блокировке получателя, глобалдьных санкциях надо удалять/создавать запись новую
+    # это для вывода уведомлений в профиле
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
@@ -159,6 +166,9 @@ class UserProfileNotify(models.Model):
         verbose_name_plural = "уведомления при подписке на уведосления пользователя"
 
 class CommunityProfileNotify(models.Model):
+    # создаём при нажатии на колокольчик в сообществе. При изменении приватности,
+    # блокировке получателя, глобалдьных санкциях надо удалять/создавать запись новую
+    # это для вывода уведомлений в профиле
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")

@@ -40,7 +40,7 @@ class FollowingsView(ListView):
 
 class FollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		from common.notify.user import user_notify
+		from common.notify.notify import user_notify
 
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
@@ -75,7 +75,7 @@ class FollowDelete(View):
 
 class CommunityFollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		from common.notify.user import community_notify
+		from common.notify.notify import community_notify
 
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():

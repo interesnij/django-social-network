@@ -127,23 +127,32 @@ class Post(models.Model):
     def create_post(cls, creator, text, category, lists, attach, community, parent, comments_enabled, is_signature, votes_on, status):
         from common.processing.post import get_post_processing
 
+        # если списки для новой записи не выбраны, то мы вернём ошибку
         if not lists:
             raise ValidationError("Не выбран список для новой записи")
+
+        # записываем правильно в поле прикрепленнх объектов сведения о них, если они есть
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         post = cls.objects.create(creator=creator,text=text,category=category,community=community,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
+
+        # привязываем новую запись к выбранным спискам записей
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
 
+        # программа для проверки содержимого записи. Если все хорошо, то она меняет статус новой записи на STATUS_PUBLISHED
         get_post_processing(post)
 
+        # если запись не в приватном списке, то создаём уведомления
         if not post.is_have_private_lists():
             from notify.models import Notify
             from asgiref.sync import async_to_sync
             from channels.layers import get_channel_layer
 
             channel_layer = get_channel_layer()
+
+            # если запись имеет сообщество, то посылаем сокеты всем управленцам сообщества, кроме инициатора (это проверяем в js)
             if community:
                 Notify.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
                 payload = {
