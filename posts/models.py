@@ -131,7 +131,7 @@ class Post(models.Model):
             raise ValidationError("Не выбран список для новой записи")
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = Post.objects.create(creator=creator,text=text,category=category,community=community,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
+        post = cls.objects.create(creator=creator,text=text,category=category,community=community,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
             post_list.post_list.add(post)
@@ -168,6 +168,28 @@ class Post(models.Model):
     def create_parent_post(cls, creator, community, attach):
         post = cls.objects.create(creator=creator, community=community, attach=attach, )
         return post
+
+    def delete_post(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
+            n.status = "C"
+            n.save(update_fields=['vote'])
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_post(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
+            n.status = "R"
+            n.save(update_fields=['vote'])
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])
 
     def get_u_new_parent(self, user):
         from common.attach.post_attach import get_u_news_parent

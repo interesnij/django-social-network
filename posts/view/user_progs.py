@@ -184,40 +184,36 @@ class PostUserOnComment(View):
 
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == item.creator.pk:
-            item.is_deleted = True
-            item.save(update_fields=['is_deleted'])
+            post.delete_post()
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallUserDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            item.is_deleted = True
-            item.save(update_fields=['is_deleted'])
+            post.delete_post()
             return HttpResponse()
         else:
             raise Http404
 
 class PostUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == item.creator.pk:
-            item.is_deleted = False
-            item.save(update_fields=['is_deleted'])
+            post.abort_delete_post()
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            item.is_deleted = False
-            item.save(update_fields=['is_deleted'])
+            post.abort_delete_post()
             return HttpResponse()
         else:
             raise Http404
