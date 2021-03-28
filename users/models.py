@@ -357,7 +357,7 @@ class User(AbstractUser):
 
     def get_6_possible_friends_communities_ids(self):
         from communities.models import Community
-        return [i['pk'] for i in Community.objects.filter(communities_memberships__id__in=self.get_6_possible_friends()).values("pk")]
+        return [i['pk'] for i in Community.objects.filter(memberships__user__id__in=self.get_6_possible_friends()).values("pk")]
 
     def get_possible_friends_ids(self):
         from users.model.list import UserFeaturedFriend
