@@ -222,7 +222,7 @@ class Video(models.Model):
         return self.album.all()[0].uuid
 
     def delete_video(self):
-		try:
+        try:
             from notify.models import Notify
             n = Notify.objects.get(creator=self.creator, verb="ITE", attach="vid" + str(self.pk))
             n.status = "C"

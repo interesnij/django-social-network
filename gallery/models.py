@@ -130,28 +130,6 @@ class Album(models.Model):
     def is_photo_in_album(self, photo_id):
         return self.photo_album.filter(pk=photo_id).values("pk").exists()
 
-    def delete_photo(self):
-        try:
-            from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
-            n.status = "C"
-            n.save(update_fields=['status'])
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
-
-    def abort_delete_photo(self):
-        try:
-            from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
-            n.status = "R"
-            n.save(update_fields=['status'])
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
-
 
 class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -242,6 +220,28 @@ class Photo(models.Model):
     def window_dislikes(self):
         dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
         return dislikes[0:6]
+
+    def delete_photo(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
+            n.status = "C"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_photo(self):
+        try:
+            from notify.models import Notify
+            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
+            n.status = "R"
+            n.save(update_fields=['status'])
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])
 
 
 class PhotoComment(models.Model):
