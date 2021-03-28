@@ -64,7 +64,7 @@ class VideoCommentCommunityCreate(View):
 				from common.notify.notify import community_notify
 
 				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text)
-				community_notify(request.user, community, None, "com"+str(new_comment.pk)+", vid"+str(video.pk), "c_video_comment_notify", "COM")
+				community_notify(request.user, community, None, "vic"+str(new_comment.pk)+", vid"+str(video.pk), "c_video_comment_notify", "COM")
 				return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
 			else:
 				return HttpResponseBadRequest()
@@ -90,7 +90,7 @@ class VideoReplyCommunityCreate(View):
 				from common.notify.notify import community_notify
 
 				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text)
-				community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pho"+str(parent.video.pk), "c_video_comment_notify", "REP")
+				community_notify(request.user, community, None, "vir"+str(new_comment.pk)+",vic"+str(parent.pk)+",pho"+str(parent.video.pk), "c_video_comment_notify", "REP")
 			else:
 				return HttpResponseBadRequest()
 			return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})

@@ -16,7 +16,8 @@ def get_news(user):
     query = Q(creator_id__in=user.get_user_news_notify_ids())|\
             Q(community_id__in=user.get_community_news_notify_ids())|\
             Q(Q(creator_id=user.pk) & Q(verb="ITE"))
-    query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
+    query.add(Q(object_set__isnull=True), Q.AND)
+    query.add(~Q(status="C"), Q.AND)
     return Notify.objects.filter(query)
 
 def get_featured_news(user):
@@ -31,6 +32,7 @@ def get_featured_news(user):
             пользователь увидит все действия, как и в контакте.
     """
     query = Q(creator_id__in=user.get_possible_friends_ids())|\
-            Q(community_id__in=user.get_6_possible_friends_communities_ids()) 
-    query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
+            Q(community_id__in=user.get_6_possible_friends_communities_ids())
+    query.add(Q(object_set__isnull=True), Q.AND)
+    query.add(~Q(status="C"), Q.AND)
     return Notify.objects.filter(query)

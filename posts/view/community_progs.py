@@ -84,7 +84,7 @@ class PostCommunityCommentCreate(View):
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
-                community_notify(request.user, community, None, "com"+str(new_comment.pk)+", pos"+str(post.pk), "c_post_comment_notify", "COM")
+                community_notify(request.user, community, None, "poc"+str(new_comment.pk)+", pos"+str(post.pk), "c_post_comment_notify", "COM")
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -108,7 +108,7 @@ class PostCommunityReplyCreate(View):
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None)
-                community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pos"+str(parent.post.pk), "c_post_comment_notify", "REP")
+                community_notify(request.user, community, None, "por"+str(new_comment.pk)+",poc"+str(parent.pk)+",pos"+str(parent.post.pk), "c_post_comment_notify", "REP")
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()

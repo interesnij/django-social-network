@@ -51,7 +51,7 @@ class GoodCommentCommunityCreate(View):
                 from common.notify.notify import community_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                community_notify(request.user, community, None, "com"+str(new_comment.pk)+", goo"+str(good.pk), "c_good_comment_notify", "COM")
+                community_notify(request.user, community, None, "goc"+str(new_comment.pk)+", goo"+str(good.pk), "c_good_comment_notify", "COM")
                 return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': c})
             else:
                 return HttpResponseBadRequest()
@@ -77,7 +77,7 @@ class GoodReplyCommunityCreate(View):
                 from common.notify.notify import community_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                community_notify(request.user, community, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",goo"+str(parent.good.pk), "c_good_comment_notify", "REP")
+                community_notify(request.user, community, None, "gor"+str(new_comment.pk)+",goc"+str(parent.pk)+",goo"+str(parent.good.pk), "c_good_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': c})

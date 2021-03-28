@@ -4,7 +4,16 @@ from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
 from notify.helpers import VERB, STATUS
 
-
+"""
+Поле attach - содержит сведения о прикрепленных элементах.
+- Если начинается с "pos" - прикреплена запись
+- Если с "phc" - комментарий к фото (ph - позывные фотографий, c - комментарий)
+- Если с "phr" - ответ на комментарий к фото (ph - позывные фотографий, r - ответ на коммент).
+--------
+Это всё нужно для быстрого выявления объекта уведомления. Нарпимер, человек удаляет свой пост, мы ищем его уведомление с
+началом поля attach "pos" и окончанием с id записи. Мы меняем статус найденного на CLOSED и такие уведы не показываем.
+Если человек нажимает отмену сразу или потом достаёт пост из архива, то снова находим запись и меняем статус на READ
+"""
 class Notify(models.Model):
     recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
     creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)

@@ -126,7 +126,7 @@ class PhotoCommentUserCreate(View):
                 from common.notify.notify import user_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
-                user_notify(request.user, photo.creator.pk, None, "com"+str(new_comment.pk)+", pho"+str(photo.pk), "u_photo_comment_notify", "COM")
+                user_notify(request.user, photo.creator.pk, None, "phc"+str(new_comment.pk)+", pho"+str(photo.pk), "u_photo_comment_notify", "COM")
                 return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -149,7 +149,7 @@ class PhotoReplyUserCreate(View):
                 from common.notify.notify import user_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, photo=None, text=comment.text)
-                user_notify(request.user, parent.photo.creator.pk, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",pho"+str(parent.photo.pk), "u_photo_comment_notify", "REP")
+                user_notify(request.user, parent.photo.creator.pk, None, "phr"+str(new_comment.pk)+",phc"+str(parent.pk)+",pho"+str(parent.photo.pk), "u_photo_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'gallery/u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})

@@ -45,7 +45,7 @@ class GoodCommentUserCreate(View):
                 from common.notify.notify import user_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                user_notify(request.user, good.creator.pk, None, "com"+str(new_comment.pk)+", goo"+str(good.pk), "u_good_comment_notify", "COM")
+                user_notify(request.user, good.creator.pk, None, "goc"+str(new_comment.pk)+", goo"+str(good.pk), "u_good_comment_notify", "COM")
                 return render_for_platform(request, 'goods/u_good_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -66,7 +66,7 @@ class GoodReplyUserCreate(View):
                 from common.notify.notify import user_notify
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                user_notify(request.user, parent.photo.creator.pk, None, "rep"+str(new_comment.pk)+",com"+str(parent.pk)+",goo"+str(parent.good.pk), "u_good_comment_notify", "REP")
+                user_notify(request.user, parent.photo.creator.pk, None, "gor"+str(new_comment.pk)+",goc"+str(parent.pk)+",goo"+str(parent.good.pk), "u_good_comment_notify", "REP")
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/u_good_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
