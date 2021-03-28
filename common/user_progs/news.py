@@ -1,5 +1,5 @@
 from django.db.models import Q
-from notify.models import Notify
+from notify.models import Wall
 
 
 def get_news(user):
@@ -18,7 +18,7 @@ def get_news(user):
             Q(Q(creator_id=user.pk) & Q(verb="ITE"))
     query.add(Q(object_set__isnull=True), Q.AND)
     query.add(~Q(status="C"), Q.AND)
-    return Notify.objects.filter(query)
+    return Wall.objects.filter(query)
 
 def get_featured_news(user):
     """ лента новостей, куда попадают все записи уведомлений с вхождениями:
@@ -35,4 +35,4 @@ def get_featured_news(user):
             Q(community_id__in=user.get_6_possible_friends_communities_ids())
     query.add(Q(object_set__isnull=True), Q.AND)
     query.add(~Q(status="C"), Q.AND)
-    return Notify.objects.filter(query)
+    return Wall.objects.filter(query)
