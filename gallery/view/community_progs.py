@@ -172,8 +172,7 @@ class PhotoCommentCommunityDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            comment.delete_comment(self)
             return HttpResponse()
         else:
             raise Http404
@@ -186,8 +185,7 @@ class PhotoCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            comment.abort_delete_comment(self)
             return HttpResponse()
         else:
             raise Http404

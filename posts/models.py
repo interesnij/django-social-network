@@ -172,9 +172,7 @@ class Post(models.Model):
     def delete_post(self):
         try:
             from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
-            n.status = "C"
-            n.save(update_fields=['status'])
+            Notify.objects.filter(attach="goo" + str(self.pk)).update(status="C")
         except:
             pass
         self.is_deleted = True
@@ -183,9 +181,7 @@ class Post(models.Model):
     def abort_delete_post(self):
         try:
             from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
-            n.status = "R"
-            n.save(update_fields=['status'])
+            Notify.objects.filter(attach="pos" + str(self.pk)).update(status="R")
         except:
             pass
         self.is_deleted = False
@@ -573,3 +569,27 @@ class PostComment(models.Model):
                 if item[:3] == "vid":
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
+
+    def delete_comment(self):
+        try:
+            from notify.models import Notify
+            if self.parent:
+                Notify.objects.filter(attach="por" + str(self.pk)).update(status="C")
+            else:
+                Notify.objects.filter(attach="poc" + str(self.pk)).update(status="C")
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_comment(self):
+        try:
+            from notify.models import Notify
+            if self.parent:
+                Notify.objects.filter(attach="por" + str(self.pk)).update(status="R")
+            else:
+                Notify.objects.filter(attach="poc" + str(self.pk)).update(status="R")
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])

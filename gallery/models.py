@@ -224,9 +224,7 @@ class Photo(models.Model):
     def delete_photo(self):
         try:
             from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
-            n.status = "C"
-            n.save(update_fields=['status'])
+            Notify.objects.filter(attach="pho" + str(self.pk)).update(status="C")
         except:
             pass
         self.is_deleted = True
@@ -235,9 +233,7 @@ class Photo(models.Model):
     def abort_delete_photo(self):
         try:
             from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pho" + str(self.pk))
-            n.status = "R"
-            n.save(update_fields=['status'])
+            Notify.objects.filter(attach="pho" + str(self.pk)).update(status="R")
         except:
             pass
         self.is_deleted = False
@@ -340,3 +336,27 @@ class PhotoComment(models.Model):
     def get_c_attach(self, user):
         from common.attach.comment_attach import get_c_comment_attach
         return get_c_comment_attach(self, user)
+
+    def delete_comment(self):
+        try:
+            from notify.models import Notify
+            if self.parent:
+                Notify.objects.filter(attach="phr" + str(self.pk)).update(status="C")
+            else:
+                Notify.objects.filter(attach="phc" + str(self.pk)).update(status="C")
+        except:
+            pass
+        self.is_deleted = True
+        return self.save(update_fields=['is_deleted'])
+
+    def abort_delete_comment(self):
+        try:
+            from notify.models import Notify
+            if self.parent:
+                Notify.objects.filter(attach="phr" + str(self.pk)).update(status="R")
+            else:
+                Notify.objects.filter(attach="phc" + str(self.pk)).update(status="R")
+        except:
+            pass
+        self.is_deleted = False
+        return self.save(update_fields=['is_deleted'])
