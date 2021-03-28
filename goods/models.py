@@ -300,7 +300,7 @@ class Good(models.Model):
 		self.is_deleted = True
 		return self.save(update_fields=['is_deleted'])
 
-    def abort_delete_good(self):
+	def abort_delete_good(self):
 		try:
 			from notify.models import Notify
 			n = Notify.objects.get(creator=self.creator, verb="ITE", attach="goo" + str(self.pk))
