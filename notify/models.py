@@ -141,7 +141,7 @@ class Notify(models.Model):
 ты свободен от новостей этого пользователя.
 """
 class Wall(models.Model):
-    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='wall', verbose_name="Получатель")
     creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
