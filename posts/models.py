@@ -180,7 +180,7 @@ class Post(models.Model):
         self.is_deleted = True
         return self.save(update_fields=['is_deleted'])
 
-    def abort_delete_post(self):
+    def abort_delete_post(self): 
         try:
             from notify.models import Notify
             n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
