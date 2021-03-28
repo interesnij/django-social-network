@@ -170,24 +170,24 @@ class Post(models.Model):
         return post
 
     def delete_post(self):
-        try:
-            from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
-            n.status = "C"
-            n.save(update_fields=['vote'])
-        except:
-            pass
+        #try:
+        from notify.models import Notify
+        n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
+        n.status = "C"
+        n.save(update_fields=['vote'])
+        #except:
+            #pass
         self.is_deleted = True
         return self.save(update_fields=['is_deleted'])
 
-    def abort_delete_post(self): 
-        try:
-            from notify.models import Notify
-            n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
-            n.status = "R"
-            n.save(update_fields=['vote'])
-        except:
-            pass
+    def abort_delete_post(self):
+        #try:
+        from notify.models import Notify
+        n = Notify.objects.get(creator=self.creator, verb="ITE", attach="pos" + str(self.pk))
+        n.status = "R"
+        n.save(update_fields=['vote'])
+        #except:
+        #    pass
         self.is_deleted = False
         return self.save(update_fields=['is_deleted'])
 
