@@ -422,7 +422,7 @@ class GoodComment(models.Model):
 		self.is_deleted = True
 		return self.save(update_fields=['is_deleted'])
 
-    def abort_delete_comment(self):
+	def abort_delete_comment(self):
 		try:
 			from notify.models import Notify
 			if self.parent:
