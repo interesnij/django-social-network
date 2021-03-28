@@ -411,25 +411,25 @@ class GoodComment(models.Model):
 		return get_c_comment_attach(self, user)
 
 	def delete_comment(self):
-        try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="gor" + str(self.pk)).update(status="C")
-            else:
-                Notify.objects.filter(attach="goc" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
+		try:
+			from notify.models import Notify
+			if self.parent:
+				Notify.objects.filter(attach="gor" + str(self.pk)).update(status="C")
+			else:
+				Notify.objects.filter(attach="goc" + str(self.pk)).update(status="C")
+		except:
+			pass
+		self.is_deleted = True
+		return self.save(update_fields=['is_deleted'])
 
     def abort_delete_comment(self):
-        try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="gor" + str(self.pk)).update(status="R")
-            else:
-                Notify.objects.filter(attach="goc" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
+		try:
+			from notify.models import Notify
+			if self.parent:
+				Notify.objects.filter(attach="gor" + str(self.pk)).update(status="R")
+			else:
+				Notify.objects.filter(attach="goc" + str(self.pk)).update(status="R")
+		except:
+			pass
+		self.is_deleted = False
+		return self.save(update_fields=['is_deleted'])
