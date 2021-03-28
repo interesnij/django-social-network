@@ -10,7 +10,7 @@ def get_post(user, value):
         from posts.models import Post
         block, post = '', Post.objects.get(pk=value)
         if post.is_deleted or post.is_have_private_lists():
-            return
+            return ''
         if post.votes_on:
             votes_on = ''
         else:
