@@ -1,4 +1,4 @@
-ITEM, SUGGEST_ITEM = "ITE", "SIT"
+ITEM, SUGGEST_ITEM, ITEMS = "ITE", "SIT", "ITS"
 COMMENT, WOMEN_COMMENT, GROUP_COMMENT = 'COM', 'WCOM', 'GCOM'
 REPLY, WOMEN_REPLY, GROUP_REPLY = 'REP', 'WREP', 'GREP'
 
@@ -31,7 +31,7 @@ REGISTER, WOMEN_REGISTER, GROUP_REGISTER = 'REG', 'WREG', 'GREG'
 UNREAD, READ, DELETED, CLOSED = 'U', 'R', 'D', "C"
 
 VERB = (
-    (ITEM, ' разместил'),
+    (ITEM, ' разместил'), (ITS, ' разместил'),
     (COMMENT, ' оставил'), (WOMEN_COMMENT, ' оставила'), (GROUP_COMMENT, ' оставили'),
     (REPLY, ' ответил на'), (WOMEN_REPLY, ' ответила на'), (GROUP_REPLY, ' ответили на'),
 

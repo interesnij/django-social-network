@@ -239,6 +239,9 @@ class Photo(models.Model):
         self.is_deleted = False
         return self.save(update_fields=['is_deleted'])
 
+    def get_type(self):
+		return self.album.all()[0].type
+
 
 class PhotoComment(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
