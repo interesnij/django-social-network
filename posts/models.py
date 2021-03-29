@@ -168,6 +168,7 @@ class Post(models.Model):
                         'recipient_id': str(user_id),
                         'name': "c_post_create",
                     }
+                    async_to_sync(channel_layer.group_send)('notification', payload)
             else:
                 Wall.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
                 for user_id in creator.get_memeber_for_notify_ids():
@@ -179,7 +180,7 @@ class Post(models.Model):
                         'recipient_id': str(user_id),
                         'name': "u_post_create",
                     }
-            async_to_sync(channel_layer.group_send)('notification', payload)
+                    async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
     @classmethod
