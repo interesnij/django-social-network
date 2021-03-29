@@ -2,9 +2,9 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
 
-def user_send_notify(id, recipient_id, action_community_id, socket_name):
+def user_send_notify(id, creator, action_community_id, socket_name):
     # посылаем сокет с переменными: id-id объекта, recipient_id - id получателя, socket_name-имя, по которому следует назначать событие в скрипте js
-    user_ids, channel_layer = community.get_member_for_notify_ids(), get_channel_layer()
+    user_ids, channel_layer = creator.get_member_for_notify_ids(), get_channel_layer()
     for user_id in user_ids:
         Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, attach="pos"+str(post.pk), verb="ITE")
         payload = {

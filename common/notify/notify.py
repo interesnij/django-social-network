@@ -30,7 +30,7 @@ def user_notify(creator, recipient_id, action_community_id, attach, socket_name,
         Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb="G"+verb, object_set=notify)
     else:
         Notify.objects.create(creator_id=creator.pk, recipient_id=recipient_id, action_community_id=action_community_id, attach=attach, verb=current_verb)
-    user_send_notify(attach[3:], recipient_id, action_community_id, socket_name)
+    user_send_notify(attach[3:], creator, action_community_id, socket_name)
 
 def community_notify(creator, community, action_community_id, attach, socket_name, verb):
     from notify.models import Notify
