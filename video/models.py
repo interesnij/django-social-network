@@ -315,16 +315,28 @@ class VideoComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, video, parent, text):
+        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text, created=timezone.now())
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "comment_item",
-            "actor_name": comment.commenter.get_full_name()
-        }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+        if comment.parent:
+            video = comment.parent.video
+            type = "vir"+str(comment.pk)+",vic"+str(comment.parent.pk)+",vid"+str(video.pk)
+            if video.community:
+                community_wall(commenter, community, None, type, "c_video_comment_notify", "REP")
+                community_notify(commenter, community, None, type, "c_video_comment_notify", "REP")
+            else:
+                user_wall(commenter, None, type, "u_video_comment_notify", "REP")
+                user_notify(commenter, parent.video.creator.pk, None, type, "u_post_comment_notify", "REP")
+        else:
+            type = "vic"+str(comment.pk)+", vid"+str(video.pk)
+            if comment.video.community:
+                community_wall(commenter, community, None, type, "c_video_comment_notify", "COM")
+                community_notify(commenter, community, None, type, "c_video_comment_notify", "COM")
+            else:
+                user_wall(commenter, None, type, "u_video_comment_notify", "COM")
+                user_notify(commenter, video.creator.pk, None, type, "u_video_comment_notify", "COM")
         return comment
 
     def count_replies_ru(self):

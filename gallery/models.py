@@ -317,16 +317,28 @@ class PhotoComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, photo, parent, text):
+        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text, created=timezone.now())
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "comment_item",
-            "actor_name": comment.commenter.get_full_name()
-        }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+        if comment.parent:
+            photo = comment.parent.photo
+            type = "phr"+str(comment.pk)+",phc"+str(comment.parent.pk)+",pho"+str(photo.pk)
+            if photo.community:
+                community_wall(commenter, community, None, type, "c_photo_comment_notify", "REP")
+                community_notify(commenter, community, None, type, "c_photo_comment_notify", "REP")
+            else:
+                user_wall(commenter, None, type, "u_photo_comment_notify", "REP")
+                user_notify(commenter, parent.photo.creator.pk, None, type, "u_photo_comment_notify", "REP")
+        else:
+            type = "phc"+str(comment.pk)+", pho"+str(photo.pk)
+            if comment.photo.community:
+                community_wall(commenter, community, None, type, "c_photo_comment_notify", "COM")
+                community_notify(commenter, community, None, type, "c_photo_comment_notify", "COM")
+            else:
+                user_wall(commenter, None, type, "u_photo_comment_notify", "COM")
+                user_notify(commenter, photo.creator.pk, None, type, "u_photo_comment_notify", "COM")
         return comment
 
     def get_u_attach(self, user):

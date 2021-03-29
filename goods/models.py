@@ -375,17 +375,29 @@ class GoodComment(models.Model):
 
 	@classmethod
 	def create_comment(cls, commenter, attach, good, parent, text):
+		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 		comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
-		channel_layer = get_channel_layer()
-		payload = {
-			"type": "receive",
-			"key": "comment_item",
-			"actor_name": comment.commenter.get_full_name()
-		}
-		async_to_sync(channel_layer.group_send)('notifications', payload)
-		return comment
+		if comment.parent:
+            good = comment.parent.good
+            type = "gor"+str(comment.pk)+",goc"+str(comment.parent.pk)+",goo"+str(post.pk)
+            if good.community:
+                community_wall(commenter, community, None, type, "c_good_comment_notify", "REP")
+                community_notify(commenter, community, None, type, "c_good_comment_notify", "REP")
+            else:
+                user_wall(commenter, None, type, "u_good_comment_notify", "REP")
+                user_notify(commenter, parent.good.creator.pk, None, type, "u_good_comment_notify", "REP")
+        else:
+            type = "goc"+str(comment.pk)+", goo"+str(good.pk)
+            if comment.good.community:
+                community_wall(commenter, community, None, type, "c_good_comment_notify", "COM")
+                community_notify(commenter, community, None, type, "c_good_comment_notify", "COM")
+            else:
+                user_wall(commenter, None, type, "u_good_comment_notify", "COM")
+                user_notify(commenter, good.creator.pk, None, type, "u_good_comment_notify", "COM")
+        return comment
 
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
