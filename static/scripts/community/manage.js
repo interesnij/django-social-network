@@ -22,10 +22,10 @@ on('#ajax', 'click', '.community_follow_view', function() {
 });
 on('#ajax', 'click', '.community_member_create', function() {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-    uuid = li.getAttribute("data-uuid");
+    community_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    user_pk = li.getAttribute("data-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', "/communities/progs/manager_add_member/" + pk + "/" + uuid + "/", true );
+    link.open( 'GET', "/communities/progs/manager_add_member/" + community_pk + "/" + user_pk + "/", true );
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -35,10 +35,10 @@ on('#ajax', 'click', '.community_member_create', function() {
 });
 on('#ajax', 'click', '.community_member_delete', function() {
     li = this.parentElement.parentElement.parentElement.parentElement;
-    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-    uuid = li.getAttribute("data-uuid");
+    community_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    user_pk = li.getAttribute("data-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', "/communities/progs/manager_delete_member/" + pk + "/" + uuid + "/", true );
+    link.open( 'GET', "/communities/progs/manager_delete_member/" + community_pk + "/" + user_pk + "/", true );
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -87,12 +87,12 @@ on('#ajax', 'click', '#community_general_info_btn', function() {
 });
 
 on('#ajax', 'click', '.add_staff_options', function() {
-    uuid = this.getAttribute("data-uuid");
+    user_pk = this.getAttribute("data-pk");
     status = this.getAttribute("data-status");
-    pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+    community_pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     if (document.getElementById('user_moderator').checked) {
     status == "moderator" ?
-      fetch("/communities/progs/add_moderator/" + pk + "/" + uuid + "/").then(data => {
+      fetch("/communities/progs/add_moderator/" + community_pk + "/" + user_pk + "/").then(data => {
       document.querySelector(".manage_window_fullscreen").style.display = "none";
       document.getElementById('load_staff_window').innerHTML = "";
       li = document.querySelector(".li_{{user.pk }}");

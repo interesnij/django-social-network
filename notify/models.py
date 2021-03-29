@@ -135,21 +135,21 @@ class Wall(models.Model):
     object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
 
     class Meta:
-        verbose_name = "Уведомление"
-        verbose_name_plural = "Уведомления"
+        verbose_name = "Новость"
+        verbose_name_plural = "Новости"
         ordering = ["-created"]
         indexes = (BrinIndex(fields=['created']),)
 
     def is_have_user_set(self):
-        return Notify.objects.filter(user_set_id=self.pk).exists()
+        return Wall.objects.filter(user_set_id=self.pk).exists()
     def get_user_set(self):
-        return Notify.objects.filter(user_set_id=self.pk) + [self]
+        return Wall.objects.filter(user_set_id=self.pk) + [self]
     def get_user_set_6(self):
         from django.db.models import Q
-        return Notify.objects.filter(Q(id=self) | Q(user_set_id=self.pk))[:6]
+        return Wall.objects.filter(Q(id=self) | Q(user_set_id=self.pk))[:6]
 
     def count_user_set(self):
-        count = Notify.objects.filter(user_set_id=self.pk).values("pk").count() + 1
+        count = Wall.objects.filter(user_set_id=self.pk).values("pk").count() + 1
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             return str(count) + " запись"
@@ -158,19 +158,19 @@ class Wall(models.Model):
         else:
             return str(count) + " записей"
     def get_first_user_set(self):
-        return Notify.objects.filter(user_set_id=self.pk).first()
+        return Wall.objects.filter(user_set_id=self.pk).first()
 
     def is_have_object_set(self):
-        return Notify.objects.filter(object_set_id=self.pk).exists()
+        return Wall.objects.filter(object_set_id=self.pk).exists()
     def get_object_set(self):
-        return Notify.objects.filter(object_set_id=self.pk) + [self]
+        return Wall.objects.filter(object_set_id=self.pk) + [self]
     def get_object_set_6(self):
         from django.db.models import Q
         from users.models import User
-        users = Notify.objects.filter(object_set_id=self.pk).values("creator_id")[:5]
+        users = Wall.objects.filter(object_set_id=self.pk).values("creator_id")[:5]
         return User.objects.filter(Q(id=self.creator.pk) | Q(id__in=[i['creator_id'] for i in users]))
     def count_object_set(self):
-        count = Notify.objects.filter(object_set_id=self.pk).values("pk").count()
+        count = Wall.objects.filter(object_set_id=self.pk).values("pk").count()
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
             return str(count) + " человек "
@@ -179,7 +179,7 @@ class Wall(models.Model):
         else:
             return str(count) + " людей "
     def get_first_object_set(self):
-        return Notify.objects.filter(object_set_id=self.pk).first()
+        return Wall.objects.filter(object_set_id=self.pk).first()
 
     def show_current_notify(self):
         if self.user_set:

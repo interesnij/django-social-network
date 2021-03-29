@@ -158,7 +158,7 @@ class Post(models.Model):
             # если сообщество создается в ленту пользователя.
             if community:
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
-                for user_id in community.get_memeber_for_notify_ids():
+                for user_id in community.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
                     payload = {
                         'type': 'receive',
@@ -171,7 +171,7 @@ class Post(models.Model):
                     async_to_sync(channel_layer.group_send)('notification', payload)
             else:
                 Wall.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
-                for user_id in creator.get_memeber_for_notify_ids():
+                for user_id in creator.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, attach="pos"+str(post.pk), verb="ITE")
                     payload = {
                         'type': 'receive',

@@ -85,6 +85,15 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def create_banned_user(self, user):
+        self.banned_users.add(user)
+        self.remove_member(user)
+        self.delete_notify_subscriber(user.pk)
+        return True
+    def delete_banned_user(self, user):
+        self.banned_users.remove(user)
+        return True
+
     def get_posts_ids(self):
         from posts.models import Post
         posts = Post.objects.filter(list__in=self.get_admin_all_post_lists()).values('id')
@@ -95,81 +104,6 @@ class Community(models.Model):
             return '<img style="border-radius:50px;width:50px;" alt="image" src="' + self.s_avatar.url + ' />'
         else:
             return '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg>'
-
-    def get_post_views_for_year(self, year):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.post_visits_year(year)
-        return count
-    def get_post_views_for_month(self, month):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.post_visits_month(month)
-        return count
-    def get_post_views_for_week(self, week):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.post_visits_week(week)
-        return count
-    def get_post_views_for_day(self, day):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.post_visits_day(day)
-        return count
-
-    def get_comp_post_views_for_year(self, year):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.comp_post_visits_year(year)
-        return count
-    def get_comp_post_views_for_month(self, month):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.comp_post_visits_month(month)
-        return count
-    def get_comp_post_views_for_week(self, week):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.comp_post_visits_week(week)
-        return count
-    def get_comp_post_views_for_day(self, day):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.comp_post_visits_day(day)
-        return count
-
-    def get_mob_post_views_for_year(self, year):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.mob_post_visits_year(year)
-        return count
-    def get_mob_post_views_for_month(self, month):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.mob_post_visits_month(month)
-        return count
-    def get_mob_post_views_for_week(self, week):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.mob_post_visits_week(week)
-        return count
-    def get_mob_post_views_for_day(self, day):
-        from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_admin_all_post_lists(), is_deleted=False)
-        for i in posts:
-            count += i.mob_post_visits_day(day)
-        return count
 
     def get_slug(self):
         if self.have_link:
@@ -223,6 +157,8 @@ class Community(models.Model):
         CommunityMembership.create_membership(user=creator, is_administrator=True, is_advertiser=False, is_editor=False, is_moderator=False, community=community)
         community.save()
         creator.create_or_plus_populate_community(community.pk)
+        community.add_news_subscriber(creator.pk)
+        community.add_notify_subscriber(creator.pk)
         create_community_models(community)
         return community
 
@@ -699,11 +635,30 @@ class Community(models.Model):
         staff_members = self.get_staff_members().values("pk")
         return [i['pk'] for i in staff_members]
 
-    def get_memeber_for_notify_ids(self):
+    def get_member_for_notify_ids(self):
         from notify.models import CommunityProfileNotify
         recipients = CommunityProfileNotify.objects.filter(community=self.pk).values("user")
         return [i['user'] for i in recipients] + self.get_staff_members_ids()
 
+    def add_news_subscriber(self, user_id):
+        from notify.models import CommunityNewsNotify
+        if not CommunityNewsNotify.objects.filter(community=self.pk, user=user_id).exists():
+            CommunityNewsNotify.objects.create(community=self.pk, user=user_id)
+    def delete_news_subscriber(self, user_id):
+        from notify.models import CommunityNewsNotify
+        if CommunityNewsNotify.objects.filter(community=self.pk, user=user_id).exists():
+            notify = CommunityNewsNotify.objects.get(community=self.pk, user=user_id)
+            notify.delete()
+
+    def add_notify_subscriber(self, user_id):
+        from notify.models import CommunityProfileNotify
+        if not CommunityProfileNotify.objects.filter(community=self.pk, user=user_id).exists():
+            CommunityProfileNotify.objects.create(community=self.pk, user=user_id)
+    def delete_notify_subscriber(self, user_id):
+        from notify.models import CommunityProfileNotify
+        if CommunityProfileNotify.objects.filter(community=self.pk, user=user_id).exists():
+            notify = CommunityProfileNotify.objects.get(community=self.pk, user=user_id)
+            notify.delete()
 
     def is_private(self):
         return self.type is self.COMMUNITY_TYPE_PRIVATE
@@ -785,6 +740,7 @@ class Community(models.Model):
         user_membership.is_administrator = True
         user_membership.is_editor = False
         user_membership.is_advertiser = False
+        self.add_notify_subscriber(user.pk)
         user_membership.save()
         return user_membership
     def add_moderator(self, user):
@@ -793,6 +749,7 @@ class Community(models.Model):
         user_membership.is_administrator = False
         user_membership.is_editor = False
         user_membership.is_advertiser = False
+        self.add_notify_subscriber(user.pk)
         user_membership.save()
         return user_membership
     def add_editor(self, user):
@@ -801,6 +758,7 @@ class Community(models.Model):
         user_membership.is_administrator = False
         user_membership.is_editor = True
         user_membership.is_advertiser = False
+        self.add_notify_subscriber(user.pk)
         user_membership.save()
         return user_membership
     def add_advertiser(self, user):
@@ -816,16 +774,19 @@ class Community(models.Model):
         user_membership = self.memberships.get(user=user)
         user_membership.is_administrator = False
         user_membership.save(update_fields=['is_administrator'])
+        self.delete_notify_subscriber(user.pk)
         return user_membership
     def remove_moderator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = False
         user_membership.save(update_fields=['is_moderator'])
+        self.delete_notify_subscriber(user.pk)
         return user_membership
     def remove_editor(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_editor = False
         user_membership.save(update_fields=['is_editor'])
+        self.delete_notify_subscriber(user.pk)
         return user_membership
     def remove_advertiser(self, user):
         user_membership = self.memberships.get(user=user)
@@ -836,9 +797,9 @@ class Community(models.Model):
     def add_member(self, user):
         user_membership = CommunityMembership.create_membership(user=user, community=self)
         return user_membership
-
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user)
+        self.delete_news_subscriber(user.pk)
         user_membership.delete()
 
     def create_invite(self, creator, invited_user):
@@ -859,13 +820,6 @@ class Community(models.Model):
             return str(count) + " подписчика"
         else:
             return str(count) + " подписчиков"
-
-    def get_sity_count(self, sity):
-        from stst.models import CommunityNumbers
-        from users.model.profile import UserLocation
-
-        v_s = CommunityNumbers.objects.filter(community=self.pk).values('user')
-        return UserLocation.objects.filter(user_id__in=[use['user'] for use in v_s], city_ru=sity).count()
 
     def get_community_notify(self):
         from notify.models import Notify
@@ -921,6 +875,7 @@ class CommunityMembership(models.Model):
 
     @classmethod
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
+        community.add_news_subscriber(user.pk)
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:

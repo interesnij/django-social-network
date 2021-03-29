@@ -73,7 +73,7 @@ class CommunityMemberDelete(View):
 
 class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
-		user, c_pk = User.objects.get(uuid=self.kwargs["uuid"]), self.kwargs["pk"]
+		user, c_pk = User.objects.get(pk=self.kwargs["user_pk"]), self.kwargs["community_pk"]
 		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
 			from common.notify.notify import user_notify
 
@@ -85,7 +85,7 @@ class CommunityManageMemberCreate(View):
 			raise Http404
 class CommunityManageMemberDelete(View):
 	def get(self,request,*args,**kwargs):
-		user, c_pk = User.objects.get(uuid=self.kwargs["uuid"]), self.kwargs["pk"]
+		user, c_pk = User.objects.get(pk=self.kwargs["user_pk"]), self.kwargs["community_pk"]
 		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
 			user.leave_community(c_pk)
 			user.delete_populate_community(c_pk)
@@ -95,7 +95,7 @@ class CommunityManageMemberDelete(View):
 
 class CommunityAdminCreate(View):
 	def get(self,request,*args,**kwargs):
-		user, community = User.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+		user, community = User.objects.get(pk=self.kwargs["user_pk"]), Community.objects.get(pk=self.kwargs["community_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
 			new_admin = self.community.add_administrator(self.user)
 			return HttpResponse()
@@ -103,7 +103,7 @@ class CommunityAdminCreate(View):
 			raise Http404
 class CommunityAdminDelete(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_admin = self.community.remove_administrator(self.user)
 			return HttpResponse()
@@ -112,7 +112,7 @@ class CommunityAdminDelete(View):
 
 class CommunityModerCreate(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_moderator = self.community.add_moderator(self.user)
 			return HttpResponse()
@@ -120,7 +120,7 @@ class CommunityModerCreate(View):
 			raise Http404
 class CommunityModerDelete(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_moderator = self.community.remove_moderator(self.user)
 			return HttpResponse()
@@ -129,7 +129,7 @@ class CommunityModerDelete(View):
 
 class CommunityEditorCreate(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_editor = self.community.add_editor(self.user)
 			return HttpResponse()
@@ -137,7 +137,7 @@ class CommunityEditorCreate(View):
 			raise Http404
 class CommunityEditorDelete(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_editor = self.community.remove_editor(self.user)
 			return HttpResponse()
@@ -146,7 +146,7 @@ class CommunityEditorDelete(View):
 
 class CommunityAdvertiserCreate(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_advertiser = self.community.add_advertiser(self.user)
 			return HttpResponse()
@@ -154,9 +154,27 @@ class CommunityAdvertiserCreate(View):
 			raise Http404
 class CommunityAdvertiserDelete(View):
 	def get(self,request,*args,**kwargs):
-		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
 			new_advertiser = self.community.remove_advertiser(self.user)
+			return HttpResponse()
+		else:
+			raise Http404
+
+
+class CommunityBannedCreate(View):
+	def get(self,request,*args,**kwargs):
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
+			new_advertiser = self.community.create_banned_user(self.user)
+			return HttpResponse()
+		else:
+			raise Http404
+class CommunityBannedDelete(View):
+	def get(self,request,*args,**kwargs):
+		community, user = Community.objects.get(pk=self.kwargs["community_pk"]), User.objects.get(pk=self.kwargs["user+pk"])
+		if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
+			new_advertiser = self.community.delete_banned_user(self.user)
 			return HttpResponse()
 		else:
 			raise Http404

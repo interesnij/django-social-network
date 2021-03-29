@@ -268,7 +268,8 @@ class User(AbstractUser):
         check_can_follow_user(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
-        create_user_notify(self, user_pk)
+        elif not self.is_private():
+            self.add_news_subscriber(user_id)
         return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
 
     def community_follow_user(self, community_pk):
@@ -347,6 +348,22 @@ class User(AbstractUser):
         except:
             pass
 
+    def frend_user_with_id(self, user_id):
+        from follows.models import Follow
+        from frends.models import Connect
+        from users.model.list import UserFeaturedFriend
+
+        check_can_connect_with_user(user=self, user_id=user_id)
+        if self.pk == user_id:
+            raise ValidationError('Вы не можете добавить сами на себя',)
+        frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
+        follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
+        follow.delete()
+        self.remove_possible_friend(user_id)
+        self.create_or_plus_populate_friend(user_id)
+        self.add_news_subscriber(user_id)
+        return frend
+
     def get_possible_friends(self):
         query = Q(id__in=self.get_possible_friends_ids())
         return User.objects.filter(query)
@@ -375,21 +392,6 @@ class User(AbstractUser):
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
         return [user['featured_user'] for user in featured][:6]
-
-    def frend_user_with_id(self, user_id):
-        from follows.models import Follow
-        from frends.models import Connect
-        from users.model.list import UserFeaturedFriend
-
-        check_can_connect_with_user(user=self, user_id=user_id)
-        if self.pk == user_id:
-            raise ValidationError('Вы не можете добавить сами на себя',)
-        frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
-        follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
-        follow.delete()
-        self.remove_possible_friend(user_id)
-        self.create_or_plus_populate_friend(user_id)
-        return frend
 
     def unfollow_user(self, user):
         return self.unfollow_user_with_id(user.pk)
@@ -423,6 +425,8 @@ class User(AbstractUser):
         follow.view = True
         follow.save(update_fields=["view"])
         self.delete_populate_friend(user_id)
+        if self.is_private():
+            self.delete_news_subscriber(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         return connection.delete()
 
@@ -462,6 +466,7 @@ class User(AbstractUser):
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
         self.remove_possible_friend(user_id)
+        self.delete_news_subscriber(user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
@@ -1425,26 +1430,24 @@ class User(AbstractUser):
         create_community_notify(self, community_pk)
         return community_to_join
 
-    def create_community_notify(self, community_pk):
-        from notify.models import CommunityNotify
-        if not CommunityNotify.objects.filter(user=self.pk, community=community_pk).exists():
-            CommunityNotify.objects.create(user=self.pk, community=community_pk)
-
-    def delete_community_notify(self, community_pk):
-        from notify.models import CommunityNotify
-        if CommunityNotify.objects.filter(user=self.pk, community=community_pk).exists():
-            notify = CommunityNotify.objects.get(user=self.pk, community=community_pk)
+    def add_news_subscriber(self, user_id):
+        from notify.models import UserNewsNotify
+        if not UserNewsNotify.objects.filter(user=self.pk, target=user_id).exists():
+            UserNewsNotify.objects.create(user=self.pk, target=user_id)
+    def delete_news_subscriber(self, user_id):
+        from notify.models import UserNewsNotify
+        if UserNewsNotify.objects.filter(user=self.pk, target=user_id).exists():
+            notify = UserNewsNotify.objects.get(user=self.pk, target=user_id)
             notify.delete()
 
-    def create_user_notify(self, user_pk):
-        from notify.models import UserNotify
-        if not UserNotify.objects.filter(user=self.pk, target=user_pk).exists():
-            UserNotify.objects.create(user=self.pk, target=user_pk)
-
-    def delete_user_notify(self, user_pk):
-        from notify.models import UserNotify
-        if UserNotify.objects.filter(user=self.pk, target=user_pk).exists():
-            notify = UserNotify.objects.get(user=self.pk, target=user_pk)
+    def add_notify_subscriber(self, user_id):
+        from notify.models import UserProfileNotify
+        if not UserProfileNotify.objects.filter(user=self.pk, target=user_id).exists():
+            UserProfileNotify.objects.create(user=self.pk, target=user_id)
+    def delete_notify_subscriber(self, user_id):
+        from notify.models import UserProfileNotify
+        if UserProfileNotify.objects.filter(user=self.pk, target=user_id).exists():
+            notify = UserProfileNotify.objects.get(user=self.pk, target=user_id)
             notify.delete()
 
     def get_user_news_notify_ids(self):
@@ -1671,7 +1674,7 @@ class User(AbstractUser):
         else:
             return ''
 
-    def get_memeber_for_notify_ids(self):
+    def get_member_for_notify_ids(self):
         from notify.models import UserProfileNotify
         recipients = UserProfileNotify.objects.filter(user=self.pk).values("target")
         return [i['target'] for i in recipients]
