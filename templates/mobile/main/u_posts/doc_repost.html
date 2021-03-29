@@ -1,9 +1,0 @@
-{% with doc=object.get_doc_repost %}
-<span style="padding: 5px;">
-  {% include 'mobile/generic/user/creator.html' %}
-  &nbsp;{% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} документом
-</span>
-<br>
-  {% include 'mobile/generic/items/u_doc.html' %}
-
-{% endwith %}
