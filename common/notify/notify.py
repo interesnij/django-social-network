@@ -65,7 +65,7 @@ def user_wall(creator, action_community_id, attach, socket_name, verb):
         Wall.objects.create(creator_id=creator.pk, action_community_id=action_community_id, attach=attach, verb="G"+verb, object_set=notify)
     else:
         Wall.objects.create(creator_id=creator.pk, action_community_id=action_community_id, attach=attach, verb=current_verb)
-    user_send_wall(attach[3:], None, action_community_id, socket_name)
+    user_send_wall(attach[3:], action_community_id, socket_name)
 
 def community_wall(creator, community, action_community_id, attach, socket_name, verb):
     from notify.models import Wall
