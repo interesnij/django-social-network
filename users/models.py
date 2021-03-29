@@ -402,7 +402,7 @@ class User(AbstractUser):
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
-        delete_user_notify(self, user_pk)
+        self.delete_user_notify(user_pk)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -466,6 +466,7 @@ class User(AbstractUser):
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
         self.remove_possible_friend(user_id)
         self.delete_news_subscriber(user_id)
+        self.delete_profile_subscriber(user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
