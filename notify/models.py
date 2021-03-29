@@ -138,10 +138,9 @@ class Notify(models.Model):
 """
 итак, ниже у нас уведомления, создающие ленты новостей. Это получают участники таблиц CommunityNewsNotify, UommunityNewsNotify.
 Придется делать еще таблицу игнора кого-то, чтобы не показывать не нужное. Отписался от обновлений человека, создалась запись и
-ты свободен от новостей этого пользователя.
+ты свободен от новостей этого пользователя. И тут не нужен получатель(хотя что делать с упоминанием человека?)
 """
 class Wall(models.Model):
-    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='wall', verbose_name="Получатель")
     creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")

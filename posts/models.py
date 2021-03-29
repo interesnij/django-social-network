@@ -152,7 +152,8 @@ class Post(models.Model):
 
             channel_layer = get_channel_layer()
 
-            # если запись имеет сообщество, то посылаем сокеты всем управленцам сообщества, кроме инициатора (это проверяем в js)
+            # если запись имеет сообщество, то создаем по записи для всех подписантов
+            # посылаем сокеты всем управленцам сообщества, кроме инициатора (это проверяем в js)
             if community:
                 Notify.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
                 payload = {
