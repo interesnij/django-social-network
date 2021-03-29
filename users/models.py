@@ -398,7 +398,6 @@ class User(AbstractUser):
 
     def unfollow_user_with_id(self, user_id):
         from follows.models import Follow
-        from notify.models import UserNotify
 
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
