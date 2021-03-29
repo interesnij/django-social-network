@@ -275,23 +275,23 @@ class User(AbstractUser):
     def community_follow_user(self, community_pk):
         return self.follow_community(community_pk)
 
-    def follow_community(self, community_pk):
+    def follow_community(self, community):
         from follows.models import CommunityFollow
 
-        check_can_join_community(user=self, community_pk=community_pk)
-        create_community_notify(self, community_pk)
+        check_can_join_community(user=self, community_pk=community.pk)
+        community.create_community_notify(self.pk)
         return CommunityFollow.create_follow(user_id=self.pk, community_pk=community_pk)
 
-    def community_unfollow_user(self, community_pk):
-        return self.unfollow_community(community_pk)
+    def community_unfollow_user(self, community):
+        return self.unfollow_community(community)
 
-    def unfollow_community(self, community_pk):
+    def unfollow_community(self, community):
         from follows.models import CommunityFollow
 
-        check_can_join_community(user=self, community_pk=community_pk)
-        follow = CommunityFollow.objects.get(user=self,community__pk=community_pk)
+        check_can_join_community(user=self, community_pk=community.pk)
+        follow = CommunityFollow.objects.get(user=self,community__pk=community.pk)
         follow.delete()
-        delete_community_notify(self, community_pk)
+        community.delete_community_notify(self.pk)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -402,7 +402,7 @@ class User(AbstractUser):
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id)
         follow.delete()
-        self.delete_user_notify(user_pk)
+        self.delete_news_subscriber(user_pk)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -1415,19 +1415,19 @@ class User(AbstractUser):
         return CommunityNumbers.objects.filter(user=self.pk).distinct("community").values("community").count()
 
 
-    def join_community(self, community_pk):
+    def join_community(self, community):
         from communities.models import Community
         from follows.models import CommunityFollow
         from invitations.models import CommunityInvite
 
-        check_can_join_community(user=self, community_id=community_pk)
-        community_to_join = Community.objects.get(pk=community_pk)
+        check_can_join_community(user=self, community_id=community.pk)
+        community_to_join = Community.objects.get(pk=community.pk)
         community_to_join.add_member(self)
         if community_to_join.is_private():
-            CommunityInvite.objects.filter(community_pk=community_pk, invited_user__id=self.id).delete()
+            CommunityInvite.objects.filter(community_pk=community.pk, invited_user__id=self.id).delete()
         elif community_to_join.is_closed():
-            CommunityFollow.objects.filter(community__pk=community_pk, user__id=self.id).delete()
-        create_community_notify(self, community_pk)
+            CommunityFollow.objects.filter(community__pk=community.pk, user__id=self.id).delete()
+        community.create_community_notify(self.pk)
         return community_to_join
 
     def add_news_subscriber(self, user_id):

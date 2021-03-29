@@ -45,7 +45,7 @@ class FollowCreate(View):
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
-			user_notify(request.user, followed_user.pk, None, None, "u_follow", "CRE")
+			user_notify(request.user, followed_user.pk, None, "no", "u_follow", "CRE")
 			return HttpResponse("!")
 		else:
 			raise Http404
@@ -80,7 +80,7 @@ class CommunityFollowCreate(View):
 		community = Community.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_follow = request.user.community_follow_user(community)
-			community_notify(request.user, community, None, None, "c_follow", "CRE")
+			community_notify(request.user, community, None, "no", "c_follow", "CRE")
 			return HttpResponse()
 		else:
 			raise Http404

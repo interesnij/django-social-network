@@ -69,7 +69,7 @@ class ConnectCreate(View):
 		target_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_frend = request.user.frend_user(target_user)
-			user_notify(request.user, target_user.pk, None, None, "u_connect_create", "CCO")
+			user_notify(request.user, target_user.pk, None, "no", "u_connect_create", "CCO")
 			return HttpResponse()
 		else:
 			raise Http404
