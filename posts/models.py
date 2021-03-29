@@ -548,19 +548,19 @@ class PostComment(models.Model):
             post = comment.parent.post
             type = "por"+str(comment.pk)+",poc"+str(comment.parent.pk)+",pos"+str(post.pk)
             if post.community:
-                community_wall(request.user, community, None, type, "c_post_comment_notify", "REP")
-                community_notify(request.user, community, None, type, "c_post_comment_notify", "REP")
+                community_wall(commenter, community, None, type, "c_post_comment_notify", "REP")
+                community_notify(commenter, community, None, type, "c_post_comment_notify", "REP")
             else:
-                user_wall(request.user, None, type, "u_post_comment_notify", "REP")
-                user_notify(request.user, parent.post.creator.pk, None, type, "u_post_comment_notify", "REP")
+                user_wall(commenter, None, type, "u_post_comment_notify", "REP")
+                user_notify(commenter, parent.post.creator.pk, None, type, "u_post_comment_notify", "REP")
         else:
             type = "poc"+str(comment.pk)+", pos"+str(post.pk)
             if comment.post.community:
-                community_wall(request.user, community, None, type, "c_post_comment_notify", "COM")
-                community_notify(request.user, community, None, type, "c_post_comment_notify", "COM")
+                community_wall(commenter, community, None, type, "c_post_comment_notify", "COM")
+                community_notify(commenter, community, None, type, "c_post_comment_notify", "COM")
             else:
-                user_wall(request.user, post.creator.pk, None, type, "u_post_comment_notify", "COM")
-                user_notify(request.user, post.creator.pk, None, type, "u_post_comment_notify", "COM")
+                user_wall(commenter, post.creator.pk, None, type, "u_post_comment_notify", "COM")
+                user_notify(commenter, post.creator.pk, None, type, "u_post_comment_notify", "COM")
         return comment
 
     def count_replies_ru(self):
