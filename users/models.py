@@ -268,7 +268,7 @@ class User(AbstractUser):
         check_can_follow_user(user_id=user_id, user=self)
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
-        elif not self.is_private():
+        elif not self.is_closed_profile():
             self.add_news_subscriber(user_id)
         return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
 
@@ -424,7 +424,7 @@ class User(AbstractUser):
         follow.view = True
         follow.save(update_fields=["view"])
         self.delete_populate_friend(user_id)
-        if self.is_private():
+        if self.is_closed_profile():
             self.delete_news_subscriber(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         return connection.delete()
