@@ -298,8 +298,6 @@ class CommunityProfileNotify(models.Model):
         verbose_name = "уведомления при подписке на уведосления сообщества"
         verbose_name_plural = "уведомления при подписке на уведосленияя сообщества"
 
-    def get_ids_for_community(self, user):
-
 
 class IgnoreNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто игнорит")
