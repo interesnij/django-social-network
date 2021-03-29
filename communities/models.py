@@ -692,8 +692,18 @@ class Community(models.Model):
         from users.models import User
 
         staff_members_query = Q(communities_memberships__community_id=self.pk)
-        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True) | Q(communities_memberships__is_advertiser=True) | Q(communities_memberships__is_editor=True), Q.AND)
+        staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True) | Q(communities_memberships__is_editor=True), Q.AND)
         return User.objects.filter(staff_members_query)
+
+    def get_staff_members_ids(self):
+        staff_members = self.get_staff_members().values("pk")
+        return [i['pk'] for i in staff_members]
+
+    def get_memeber_for_notify_ids(self):
+        from notify.models import CommunityProfileNotify
+        recipients = CommunityProfileNotify.objects.filter(community=self.pk).values("user")
+        return [i['user'] for i in recipients] + self.get_staff_members_ids()
+
 
     def is_private(self):
         return self.type is self.COMMUNITY_TYPE_PRIVATE

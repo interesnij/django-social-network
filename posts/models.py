@@ -146,29 +146,37 @@ class Post(models.Model):
 
         # если запись не в приватном списке, то создаём уведомления
         if not post.is_have_private_lists():
-            from notify.models import Notify
+            from notify.models import Notify, Wall
             from asgiref.sync import async_to_sync
             from channels.layers import get_channel_layer
 
             channel_layer = get_channel_layer()
 
-            # если запись имеет сообщество, то создаем по записи для всех подписантов
-            # посылаем сокеты всем управленцам сообщества, кроме инициатора (это проверяем в js)
+            # здесь мы создадим одну запись в модель Wall для новостей. А также по одной записи на каждого подписанта.
+            # То есть персоналу сообщеста и всем подписанным на уведомления сообщества (CommunityProfileNotify) -
+            # если запись имеет сообщество, и всем подписантам на уведомления пользователя (UserProfileNotify) -
+            # если сообщество создается в ленту пользователя.
             if community:
-                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
-                payload = {
-                    'type': 'receive',
-                    'key': 'notification',
-                    'id': str(post.pk),
-                    'community_id': str(community.pk),
-                    'name': "u_post_create",
-                }
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
+                for user_id in community.get_memeber_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
+                    payload = {
+                        'type': 'receive',
+                        'key': 'notification',
+                        'id': str(post.pk),
+                        'community_id': str(community.pk),
+                        'recipient_id': str(user_id),
+                        'name': "c_post_create",
+                    }
             else:
-                Notify.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
+                Wall.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
+                for user_id in creator.get_memeber_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, attach="pos"+str(post.pk), verb="ITE")
                 payload = {
                     'type': 'receive',
                     'key': 'notification',
                     'id': str(post.pk),
+                    'recipient_id': str(user_id),
                     'name': "u_post_create",
                 }
             async_to_sync(channel_layer.group_send)('notification', payload)

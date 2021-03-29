@@ -112,24 +112,6 @@ class Notify(models.Model):
     def is_unread(self):
         return self.status is "U"
 
-    def get_notify(self, user):
-        #from common.attach.notify import get_notify
-        if self.attach[:3] == "pos":
-            from posts.models import Post
-            post = Post.objects.get(pk=self.attach[3:], is_deleted=False)
-            if post.community:
-                if user.is_administrator_of_community(post.community.pk):
-                    return 'mobile/posts/post_community/admin_post.html'
-                else:
-                    return 'mobile/posts/post_community/post.html'
-            else:
-                if post.creator.pk == user.pk:
-                    return 'mobile/posts/post_user/my_post.html'
-                else:
-                    return 'mobile/posts/post_user/post.html'
-        else:
-            pass
-
     def get__notify(self, user):
         from common.attach.notify import get_notify
         return get_notify(user, self)
@@ -138,7 +120,7 @@ class Notify(models.Model):
 """
 итак, ниже у нас уведомления, создающие ленты новостей. Это получают участники таблиц CommunityNewsNotify, UommunityNewsNotify.
 Придется делать еще таблицу игнора кого-то, чтобы не показывать не нужное. Отписался от обновлений человека, создалась запись и
-ты свободен от новостей этого пользователя. И тут не нужен получатель(хотя что делать с упоминанием человека?)
+ты свободен от новостей этого пользователя. И тут не нужен получатель(упоминанием человека - он становится creator)
 """
 class Wall(models.Model):
     creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
@@ -310,10 +292,14 @@ class CommunityProfileNotify(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     id = models.BigAutoField(primary_key=True)
+
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "уведомления при подписке на уведосления сообщества"
         verbose_name_plural = "уведомления при подписке на уведосленияя сообщества"
+
+    def get_ids_for_community(self, user):
+
 
 class IgnoreNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто игнорит")

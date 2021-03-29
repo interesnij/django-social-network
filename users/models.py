@@ -1670,3 +1670,8 @@ class User(AbstractUser):
             return '<span class="tab_badge badge-success" style="font-size: 60%;">' + str(count) + '</span>'
         else:
             return ''
+
+    def get_memeber_for_notify_ids(self):
+        from notify.models import UserProfileNotify
+        recipients = UserProfileNotify.objects.filter(user=self.pk).values("target")
+        return [i['target'] for i in recipients]
