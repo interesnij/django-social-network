@@ -539,16 +539,27 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent, text):
+        from common.notify.notify import *
+
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
-        channel_layer = get_channel_layer()
-        payload = {
-            "type": "receive",
-            "key": "comment_item",
-            "actor_name": comment.commenter.get_full_name()
-        }
-        async_to_sync(channel_layer.group_send)('notifications', payload)
+        if comment.parent:
+            type = "por"+str(new_comment.pk)+",poc"+str(parent.pk)+",pos"+str(parent.post.pk)
+            if comment.parent.post.community:
+                community_wall(request.user, community, None, type, "c_post_comment_notify", "REP")
+                community_notify(request.user, community, None, type, "c_post_comment_notify", "REP")
+            else:
+                user_wall(request.user, None, type, "u_post_comment_notify", "REP")
+                user_notify(request.user, parent.post.creator.pk, None, type, "u_post_comment_notify", "REP")
+        else:
+            type = "poc"+str(new_comment.pk)+", pos"+str(post.pk)
+            if comment.post.community:
+                community_wall(request.user, community, None, type, "c_post_comment_notify", "COM")
+                community_notify(request.user, community, None, type, "c_post_comment_notify", "COM")
+            else:
+                user_wall(request.user, post.creator.pk, None, type, "u_post_comment_notify", "COM")
+                user_notify(request.user, post.creator.pk, None, type, "u_post_comment_notify", "COM")
         return comment
 
     def count_replies_ru(self):

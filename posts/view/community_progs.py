@@ -80,11 +80,9 @@ class PostCommunityCommentCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
-                community_notify(request.user, community, None, "poc"+str(new_comment.pk)+", pos"+str(post.pk), "c_post_comment_notify", "COM")
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -104,11 +102,9 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None)
-                community_notify(request.user, community, None, "por"+str(new_comment.pk)+",poc"+str(parent.pk)+",pos"+str(parent.post.pk), "c_post_comment_notify", "REP")
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()
