@@ -240,7 +240,7 @@ class Photo(models.Model):
         return self.save(update_fields=['is_deleted'])
 
     def get_type(self):
-		return self.album.all()[0].type
+        return self.album.all()[0].type
 
 
 class PhotoComment(models.Model):
