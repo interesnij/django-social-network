@@ -545,15 +545,16 @@ class PostComment(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
         if comment.parent:
-            type = "por"+str(new_comment.pk)+",poc"+str(parent.pk)+",pos"+str(parent.post.pk)
-            if comment.parent.post.community:
+            post = comment.parent.post
+            type = "por"+str(comment.pk)+",poc"+str(comment.parent.pk)+",pos"+str(post.pk)
+            if post.community:
                 community_wall(request.user, community, None, type, "c_post_comment_notify", "REP")
                 community_notify(request.user, community, None, type, "c_post_comment_notify", "REP")
             else:
                 user_wall(request.user, None, type, "u_post_comment_notify", "REP")
                 user_notify(request.user, parent.post.creator.pk, None, type, "u_post_comment_notify", "REP")
         else:
-            type = "poc"+str(new_comment.pk)+", pos"+str(post.pk)
+            type = "poc"+str(comment.pk)+", pos"+str(post.pk)
             if comment.post.community:
                 community_wall(request.user, community, None, type, "c_post_comment_notify", "COM")
                 community_notify(request.user, community, None, type, "c_post_comment_notify", "COM")
