@@ -56,9 +56,9 @@ class CommunityMemberCreate(View):
 			from common.notify.notify import community_notify
 
 			c = Community.objects.get(pk=self.kwargs["pk"])
-			new_member = request.user.join_community(self.c.pk)
+			request.user.join_community(self.c.pk)
 			request.user.create_or_plus_populate_community(self.c.pk)
-			community_notify(request.user, community, None, None, "c_join_notify", "CJO")
+			community_notify(request.user, community, None, "no", "member_create", "CJO")
 			return HttpResponse()
 		else:
 			raise Http404
@@ -79,7 +79,8 @@ class CommunityManageMemberCreate(View):
 
 			new_member = user.join_community(c_pk)
 			user.create_or_plus_populate_community(c_pk)
-			user_notify(request.user, user.pk, None, None, "u_join_create", "CCO")
+			user_notify(request.user, user.pk, None, "no", "member_create", "CCO")
+			community_notify(request.user, c_pk, None, "no", "member_create", "CCO")
 			return HttpResponse()
 		else:
 			raise Http404
