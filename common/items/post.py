@@ -5,7 +5,7 @@ def linebreaks(value, autoescape=None):
     return mark_safe(linebreaks(value, autoescape))
 
 
-def get_post(user, value):
+def post(user, value):
     try:
         from posts.models import Post
         block, post = '', Post.objects.get(pk=value)
@@ -132,3 +132,17 @@ def get_post(user, value):
             </svg>', str(post.all_visits_count()), '</span></div><div class="u_load_comments"></div></div></span>'])
     except:
         pass
+
+def get_post(user, notify):
+    if notify.verb == "ITE":
+        return post(user, notify.attach[3:])
+    else:
+        if notify.is_have_object_set():
+            first_notify = notify.get_first_object_set()
+            return '<p style="padding-left: 7px;"><a href="' + first_notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
+            first_notify.creator.get_full_name() + '</a> и ещё ' + str(notify.count_object_set()) + first_notify.get_verb_display()\
+             + ' запись </p>' + post(user, notify.attach[3:])
+        else:
+            return '<p style="padding-left: 7px;"><a href="' + notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
+            notify.creator.get_full_name() + '</a>' + notify.get_verb_display()\
+             + ' запись </p>' + get_post(user, notify.attach[3:])
