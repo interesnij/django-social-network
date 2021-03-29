@@ -559,7 +559,7 @@ class PostComment(models.Model):
                 community_wall(commenter, community, None, type, "c_post_comment_notify", "COM")
                 community_notify(commenter, community, None, type, "c_post_comment_notify", "COM")
             else:
-                user_wall(commenter, post.creator.pk, None, type, "u_post_comment_notify", "COM")
+                user_wall(commenter, None, type, "u_post_comment_notify", "COM")
                 user_notify(commenter, post.creator.pk, None, type, "u_post_comment_notify", "COM")
         return comment
 
