@@ -172,13 +172,13 @@ class Post(models.Model):
                 Wall.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
                 for user_id in creator.get_memeber_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, attach="pos"+str(post.pk), verb="ITE")
-                payload = {
-                    'type': 'receive',
-                    'key': 'notification',
-                    'id': str(post.pk),
-                    'recipient_id': str(user_id),
-                    'name': "u_post_create",
-                }
+                    payload = {
+                        'type': 'receive',
+                        'key': 'notification',
+                        'id': str(post.pk),
+                        'recipient_id': str(user_id),
+                        'name': "u_post_create",
+                    }
             async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
