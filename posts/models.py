@@ -539,7 +539,7 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent, text):
-        from common.notify.notify import community_wall, community_notify, user_wall, community_notify
+        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
