@@ -15,8 +15,6 @@ def user_send_notify(id, recipient_id, action_community_id, socket_name):
             'name': "u_post_create",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
-    }
-    async_to_sync(channel_layer.group_send)('notification', payload)
 
 def community_send_notify(id, creator_id, community, action_community_id, socket_name):
     # посылаем сокет с переменными: id-id объекта, community_id-id сообщества, в которое шлется сокет,socket_name-имя, по которому следует назначать событие в скрипте js
