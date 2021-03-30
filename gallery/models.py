@@ -333,7 +333,7 @@ class PhotoComment(models.Model):
                 community_notify(commenter, community, None, type, "c_photo_comment_notify", "REP")
             else:
                 user_wall(commenter, None, type, "u_photo_comment_notify", "REP")
-                user_notify(commenter, parent.photo.creator.pk, None, type, "u_photo_comment_notify", "REP")
+                user_notify(commenter, photo.creator.pk, None, type, "u_photo_comment_notify", "REP")
         else:
             type = "phc"+str(comment.pk)+", pho"+str(photo.pk)
             if comment.photo.community:

@@ -552,7 +552,7 @@ class PostComment(models.Model):
                 community_notify(commenter, community, None, type, "c_post_comment_notify", "REP")
             else:
                 user_wall(commenter, None, type, "u_post_comment_notify", "REP")
-                user_notify(commenter, parent.post.creator.pk, None, type, "u_post_comment_notify", "REP")
+                user_notify(commenter, post.creator.pk, None, type, "u_post_comment_notify", "REP")
         else:
             type = "poc"+str(comment.pk)+", pos"+str(post.pk)
             if comment.post.community:

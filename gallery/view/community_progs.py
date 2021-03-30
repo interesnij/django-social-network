@@ -99,7 +99,7 @@ class CommunityAddAvatar(View):
             from common.notify.notify import community_notify
 
             photo_input = request.FILES.get('file')
-            try:
+            try: 
                 _album = Album.objects.get(community=community, type=Album.AVATAR)
             except:
                 _album = Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")

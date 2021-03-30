@@ -388,7 +388,7 @@ class GoodComment(models.Model):
 				community_notify(commenter, community, None, type, "c_good_comment_notify", "REP")
 			else:
 				user_wall(commenter, None, type, "u_good_comment_notify", "REP")
-				user_notify(commenter, parent.good.creator.pk, None, type, "u_good_comment_notify", "REP")
+				user_notify(commenter, good.creator.pk, None, type, "u_good_comment_notify", "REP")
 		else:
 			type = "goc"+str(comment.pk)+", goo"+str(good.pk)
 			if comment.good.community:

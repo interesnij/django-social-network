@@ -328,7 +328,7 @@ class VideoComment(models.Model):
                 community_notify(commenter, community, None, type, "c_video_comment_notify", "REP")
             else:
                 user_wall(commenter, None, type, "u_video_comment_notify", "REP")
-                user_notify(commenter, parent.video.creator.pk, None, type, "u_post_comment_notify", "REP")
+                user_notify(commenter, video.creator.pk, None, type, "u_post_comment_notify", "REP")
         else:
             type = "vic"+str(comment.pk)+", vid"+str(video.pk)
             if comment.video.community:
