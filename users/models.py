@@ -9,19 +9,19 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    DELETED, BLOCKED, PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = 'DE', 'BL', 'PV', 'CH', 'ST', 'VS', 'VE', 'IS', 'ID', 'MA', 'SM'
-    PERM = (
-        (DELETED, 'Удален'),
-        (BLOCKED, 'Заблокирован'),
-        (CHILD, 'Ребенок'),
-        (PHONE_NO_VERIFIED, 'Телефон не подтвержден'),
-        (STANDART, 'Обычные права'),
-        (VERIFIED_SEND, 'Запрос на проверку'),
-        (VERIFIED, 'Проверенный'),
-        (IDENTIFIED_SEND, 'Запрос на идентификацию'),
-        (IDENTIFIED, 'Идентифицированный'),
-        (MANAGER, 'Менеджер'),
-        (SUPERMANAGER, 'Суперменеджер'),
+    THIS_PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = 'TPV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
+    THIS_CLOSED_CHILD, THIS_CLOSED_STANDART, THIS_CLOSED_VERIFIED_SEND, THIS_CLOSED_VERIFIED, THIS_CLOSED_IDENTIFIED_SEND, THIS_CLOSED_IDENTIFIED, THIS_CLOSED_MANAGER = 'TCLOC', 'TCLOS', 'TCLOVS', 'TCLOV', 'TCLOIS', 'TCLOI', 'TCLOM'
+    THIS_DELETED_CHILD, THIS_DELETED_STANDART, THIS_DELETED_VERIFIED_SEND, THIS_DELETED_VERIFIED, THIS_DELETED_IDENTIFIED_SEND, THIS_DELETED_IDENTIFIED, THIS_DELETED_MANAGER = 'TDELC', 'TDELS', 'TDELVS', 'TDELV', 'TDELIS', 'TDELI', 'TDELM'
+    THIS_SUSPENDED_CHILD, THIS_SUSPENDED_STANDART, THIS_SUSPENDED_VERIFIED_SEND, THIS_SUSPENDED_VERIFIED, THIS_SUSPENDED_IDENTIFIED_SEND, THIS_SUSPENDED_IDENTIFIED, THIS_SUSPENDED_MANAGER = 'TSUSC', 'TSUSS', 'TSUSVS', 'TSUSV', 'TSUSIS', 'TSUSI', 'TSUSM'
+    THIS_BANNER_CHILD, THIS_BANNER_STANDART, THIS_BANNER_VERIFIED_SEND, THIS_BANNER_VERIFIED, THIS_BANNER_IDENTIFIED_SEND, THIS_BANNER_IDENTIFIED, THIS_BANNER_MANAGER = 'TBANC', 'TBANS', 'TBANVS', 'TBANV', 'TBANIS', 'TBANI', 'TBANM'
+    THIS_BLOCKED_CHILD, THIS_BLOCKED_STANDART, THIS_BLOCKED_VERIFIED_SEND, THIS_BLOCKED_VERIFIED, THIS_BLOCKED_IDENTIFIED_SEND, THIS_BLOCKED_IDENTIFIED, THIS_BLOCKED_MANAGER = 'TBLOC', 'TBLOS', 'TBLOVS', 'TBLOV', 'TBLOIS', 'TBLOI', 'TBLOM'
+    TYPE = (
+        (CHILD, 'Ребенок'),(THIS_PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
+        (THIS_DELETED_CHILD, 'Удален ребенок'),(THIS_DELETED_STANDART, 'Удален'),(THIS_DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_DELETED_VERIFIED, 'Удален верифицированный'),(THIS_DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(THIS_DELETED_IDENTIFIED, 'Удален идентифиированный'),(THIS_DELETED_MANAGER, 'Удален менеджер'),
+        (THIS_CLOSED_CHILD, 'Закрыт ребенок'),(THIS_CLOSED_STANDART, 'Закрыт'),(THIS_CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_CLOSED_VERIFIED, 'Закрыт верифицированный'),(THIS_CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(THIS_CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(THIS_CLOSED_MANAGER, 'Закрыт менеджер'),
+        (THIS_SUSPENDED_CHILD, 'Заморожен ребенок'),(THIS_SUSPENDED_STANDART, 'Заморожен'),(THIS_SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(THIS_SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(THIS_SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(THIS_SUSPENDEDIDENTIFIED, 'Заморожен идентифиированный'),(THIS_SUSPENDED_MANAGER, 'Заморожен менеджер'),
+        (THIS_BANNER_CHILD, 'Баннер ребенок'),(THIS_BANNER_STANDART, 'Баннер'),(THIS_BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(THIS_BANNER_VERIFIED, 'Баннер верифицированный'),(THIS_BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(THIS_BANNER_IDENTIFIED, 'Баннер идентифиированный'),(THIS_BANNER_MANAGER, 'Баннер менеджер'),
+        (THIS_BLOCKED_CHILD, 'Блокнут ребенок'),(THIS_BLOCKED_STANDART, 'Блокнут'),(THIS_BLOCKED_VERIFIED_SEND, 'Блокнут подавший на верификацию'),(THIS_BLOCKED_VERIFIED, 'Блокнут верифицированный'),(THIS_BLOCKED_IDENTIFIED_SEND, 'Блокнут подавший на идентификацию'),(THIS_BLOCKED_IDENTIFIED, 'Блокнут идентифиированный'),(THIS_BLOCKED_MANAGER, 'Блокнут менеджер'),
     )
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
@@ -29,7 +29,7 @@ class User(AbstractUser):
 
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    perm = models.CharField(max_length=5, choices=PERM, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
@@ -95,30 +95,36 @@ class User(AbstractUser):
         return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
     def is_women(self):
-        return try_except(self.gender == User.FEMALE)
+        return self.gender == User.FEMALE
     def is_men(self):
-        return try_except(self.gender == User.MALE)
+        return self.gender == User.MALE
 
+    def is_suspended(self):
+        return self.type[:4] = "TSUS"
+    def is_have_warning_banner(self):
+        return self.type[:4] = "TBAN"
     def is_deleted(self):
-        return try_except(self.perm == User.DELETED)
+        return self.type[:4] == "TDEL"
+    def is_clocked(self):
+        return self.type[:4] == "TBLO"
     def is_manager(self):
-        return try_except(self.perm == User.MANAGER)
+        return self.type == User.MANAGER
     def is_supermanager(self):
-        return try_except(self.perm == User.SUPERMANAGER)
+        return self.type == User.SUPERMANAGER
     def is_verified_send(self):
-        return try_except(self.perm == User.VERIFIED_SEND)
+        return self.type == User.VERIFIED_SEND
     def is_verified(self):
-        return try_except(self.perm == User.VERIFIED)
+        return self.type == User.VERIFIED
     def is_identified_send(self):
-        return try_except(self.perm == User.IDENTIFIED_SEND)
+        return self.type == User.IDENTIFIED_SEND
     def is_identified(self):
-        return try_except(self.perm == User.IDENTIFIED)
+        return self.type == User.IDENTIFIED
     def is_child(self):
-        return try_except(self.perm == User.CHILD)
+        return self.type == User.CHILD
     def is_no_phone_verified(self):
-        return try_except(self.perm == User.PHONE_NO_VERIFIED)
+        return self.type == User.THIS_PHONE_NO_VERIFIED
     def is_child_safety(self):
-        if self.perm == User.MANAGER or self.perm == User.SUPERMANAGER or self.perm == User.VERIFIED:
+        if self.type == User.MANAGER or self.type == User.SUPERMANAGER or self.type == User.VERIFIED:
             return True
         else:
             return False
@@ -179,16 +185,13 @@ class User(AbstractUser):
 
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
-
         self.s_avatar = photo_input
         self.save(update_fields=['s_avatar'])
         new_img = get_thumbnailer(self.s_avatar)['small_avatar'].url.replace('media/', '')
         self.s_avatar = new_img
         return self.save(update_fields=['s_avatar'])
-
     def create_b_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
-
         self.b_avatar = photo_input
         self.save(update_fields=['b_avatar'])
         new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
@@ -216,23 +219,16 @@ class User(AbstractUser):
 
     def get_online(self):
         from datetime import datetime, timedelta
+        return datetime.now() < self.last_activity + timedelta(minutes=3):
 
-        now = datetime.now()
-        onl = self.last_activity + timedelta(minutes=3)
-        if now < onl:
-            return True
-        else:
-            return False
     def get_online_display(self):
         from datetime import datetime, timedelta
 
-        now = datetime.now()
-        onl = self.last_activity + timedelta(minutes=3)
         if self.device == User.DESCTOP:
             device = '&nbsp;<svg style="width: 17px;" class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>'
         else:
             device = '&nbsp;<svg style="width: 17px;" class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>'
-        if now < onl:
+        if datetime.now() < self.last_activity + timedelta(minutes=3):
             return '<i>Онлайн</i>' + device
         else:
             if self.is_women():
@@ -240,16 +236,8 @@ class User(AbstractUser):
             else:
                 return '<i>Был ' + self.get_last_activity() + '</i>' + device
 
-    def get_request_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            return x_forwarded_for.split(',')[-1].strip()
-        else:
-            return request.META.get('REMOTE_ADDR')
-
     def get_blocked_users(self):
-        blocked_users_query = Q(blocked_by_users__blocker_id=self.pk)
-        return User.objects.filter(blocked_users_query).distinct()
+        return User.objects.filter(blocked_by_users__blocker_id=self.pk).distinct()
 
     def get_staffed_communities(self):
         from communities.models import Community
@@ -597,15 +585,8 @@ class User(AbstractUser):
     def is_photo_exists(self):
         return self.photo_creator.filter(creator_id=self.pk, community__isnull=True).exists()
 
-    def is_suspended(self):
-        return self.user_penalties.filter(type="S", expiration__gt=timezone.now()).exists()
-    def is_blocked(self):
-        return self.user_penalties.filter(type="B").exists()
-    def is_have_warning_banner(self):
-        return self.user_penalties.filter(type="BA").exists()
-
     def is_track_exists(self, track_id):
-        from music.models import SoundList, SoundcloudParsing
+        from music.models import SoundList, Music
 
         return SoundList.objects.values("creator", "players").filter(creator=self, players__id=track_id).exists()
 
@@ -870,15 +851,6 @@ class User(AbstractUser):
     def count_blacklist(self):
         return self.user_blocks.values('pk').count()
 
-    def count_connections(self):
-        return self.connections.values('pk').count()
-
-    def count_community(self):
-        return self.communities_memberships.values('pk').count()
-
-    def count_albums(self):
-        return self.photo_album_creator.filter(community__isnull=True, is_deleted=False).exclude(type="MA").values('pk').count()
-
     def count_goods(self):
         return self.good_creator.values('pk').count()
 
@@ -905,9 +877,7 @@ class User(AbstractUser):
         return [user['friend'] for user in frends_query][:6]
 
     def is_have_friends(self):
-        from frends.models import Connect
-
-        return Connect.objects.filter(user_id=self.pk).exists()
+        return self.connections.only("pk").exists()
 
     def get_6_populate_friends(self):
         query = []
@@ -916,7 +886,7 @@ class User(AbstractUser):
             query = query + [user]
         return query
 
-    def get_6_populate_object(self):
+    def get_6_populate_friends(self):
         from users.model.list import UserPopulateFriend
 
         frends_query = UserPopulateFriend.objects.filter(user=self.pk)
@@ -929,9 +899,7 @@ class User(AbstractUser):
             return self.get_6_default_connection()
 
     def is_have_communities(self):
-        from communities.models import Community
-
-        return Community.objects.filter(memberships__user_id=self.pk).exists()
+        return self.communities_memberships.only("pk").exists()
 
     def get_6_default_communities(self):
         from communities.models import Community
@@ -943,16 +911,11 @@ class User(AbstractUser):
         from users.model.list import UserPopulateCommunity
         from communities.models import Community
 
-        communities_query, query = UserPopulateCommunity.objects.filter(user=self.pk).values("community"), []
-        for community_id in [community['community'] for community in communities_query][:6]:
-            community = Community.objects.get(pk=community_id)
-            query = query + [community]
-        return query
+        communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
+        return Community.objects.filter(id__in=[community['community'] for community in communities_query][:6])
 
     def get_default_communities(self):
         from communities.models import Community
-
-        query = Q(memberships__user=self)
         return Community.objects.filter(memberships__user_id=self.pk)
 
     def get_populate_communities(self):
@@ -960,11 +923,7 @@ class User(AbstractUser):
         from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        query = []
-        for community_id in [community['community'] for community in communities_query]:
-            community = Community.objects.get(pk=community_id)
-            query = query + [community]
-        return query
+        return Community.objects.filter(id__in=[community['community'] for community in communities_query])
 
     def get_6_communities(self):
         try:
@@ -1000,7 +959,6 @@ class User(AbstractUser):
 
     def get_all_connection(self):
         connection_query = Q(id__in=self.get_all_connection_ids())
-        connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         return User.objects.filter(connection_query)
 
     def get_online_connection(self):
@@ -1025,15 +983,7 @@ class User(AbstractUser):
         return query
 
     def is_have_fixed_posts(self):
-        from posts.models import PostList
-        try:
-            list = PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIX)
-            if list.is_not_empty():
-                return True
-            else:
-                return False
-        except:
-            pass
+        return self.get_or_create_fix_list().is_not_empty()
     def get_or_create_fix_list(self):
         from posts.models import PostList
         try:
@@ -1043,15 +993,15 @@ class User(AbstractUser):
 
     def get_draft_posts(self):
         from posts.models import Post
-
-        posts_query = Q(creator_id=self.id, is_deleted=False, status=Post.STATUS_DRAFT, community__isnull=True)
-        return Post.objects.filter(posts_query)
+        query = Q(creator_id=self.id, status=Post.STATUS_DRAFT, community__isnull=True)
+        query.add(~Q(type__contains="THIS"), Q.AND)
+        return Post.objects.filter(query)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-
-        posts_query = Q(creator_id=self.id, community_id=community_pk, is_deleted=False, status=Post.STATUS_DRAFT)
-        return Post.objects.filter(posts_query)
+        query = Q(creator_id=self.id, community_id=community_pk, status=Post.STATUS_DRAFT)
+        query.add(~Q(type__contains="THIS"), Q.AND)
+        return Post.objects.filter(query)
 
     def get_post_lists(self):
         from posts.models import PostList
@@ -1082,129 +1032,46 @@ class User(AbstractUser):
         query = Q(creator_id=self.id, is_deleted=False)
         return Survey.objects.filter(query)
 
-    def get_all_albums(self):
-        from gallery.models import Album
+    def get_photo_lists(self):
+        from gallery.models import PhotoList
+        return PhotoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
 
-        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
-        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        return Album.objects.filter(albums_query).order_by("order")
-
-    def get_albums(self):
-        from gallery.models import Album
-
-        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
-        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        return Album.objects.filter(albums_query).order_by("order")
-
-    def get_my_albums(self):
-        from gallery.models import Album
-
-        albums_query = Q(is_deleted=False, community__isnull=True)
-        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        return Album.objects.filter(albums_query)
-
-    def get_my_all_albums(self):
-        from gallery.models import Album
-
-        albums_query = Q(is_deleted=False, community__isnull=True, type=Album.ALBUM)
-        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        return Album.objects.filter(albums_query)
-
-    def get_video_albums(self):
-        from video.models import VideoAlbum
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, is_public=True, community__isnull=True)
-        return VideoAlbum.objects.filter(albums_query)
-
-    def user_photo_album_exists(self):
-        from gallery.models import Album
-
-        albums_query = Q(is_deleted=False, is_public=True, community__isnull=True)
-        albums_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        albums_query.add(~Q(type=Album.MAIN), Q.AND)
-        return Album.objects.filter(albums_query).exists()
-    def user_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_deleted=False, type="AL").exists()
-    def is_video_album_exists(self):
-        return self.video_user_creator.filter(creator_id=self.id, community__isnull=True, is_public=True, is_deleted=False).exists()
-    def is_music_playlist_exists(self):
-        from music.models import SoundList
-        playlists_query = Q(community__isnull=True, type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return SoundList.objects.filter(playlists_query).exists()
-
-    def is_good_album_exists(self):
-        return self.good_album_creator.filter(creator_id=self.id, community__isnull=True, type="AL", is_deleted=False).exists()
-    def post_list_exists(self):
-        return self.user_postlist.filter(creator_id=self.id, community__isnull=True, type="AL").exists()
-    def my_post_list_exists(self):
-        return self.user_postlist.filter(creator_id=self.id, community__isnull=True).exclude(type="MA").exists()
-
-    def get_my_video_albums(self):
-        from video.models import VideoAlbum
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type="AL")
-        return VideoAlbum.objects.filter(albums_query).order_by("order")
-
-    def get_all_video_albums(self):
-        from video.models import VideoAlbum
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
-        return VideoAlbum.objects.filter(albums_query).order_by("order")
+    def get_video_lists(self):
+        from video.models import VideoList
+        return VideoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS"))
 
     def get_audio_playlists(self):
         from music.models import SoundList
-        playlists_query = Q(community__isnull=True, type=SoundList.LIST, is_deleted=False)
-        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return SoundList.objects.filter(playlists_query).order_by("order")
+        return SoundList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
 
-    def get_all_audio_playlists(self):
-        from music.models import SoundList
+    def get_good_lists(self):
+        from goods.models import GoodList
+        return GoodList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
 
-        playlists_query = Q(community__isnull=True, is_deleted=False)
-        playlists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return SoundList.objects.filter(playlists_query).order_by("order")
-
-    def get_good_albums(self):
-        from goods.models import GoodAlbum
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True, type=GoodAlbum.ALBUM)
-        return GoodAlbum.objects.filter(albums_query).order_by("order")
-
-    def get_all_good_albums(self):
-        from goods.models import GoodAlbum
-
-        albums_query = Q(creator_id=self.id, is_deleted=False, community__isnull=True)
-        return GoodAlbum.objects.filter(albums_query).order_by("order")
-
-    def get_or_create_good_album(self):
-        from goods.models import GoodAlbum
+    def get_or_create_good_list(self):
+        from goods.models import GoodList
         try:
-            return GoodAlbum.objects.get(creator_id=self.pk, community=None, type=GoodAlbum.MAIN)
+            return GoodList.objects.get(creator_id=self.pk, community=None, type=GoodList.MAIN)
         except:
-            return GoodAlbum.objects.create(creator_id=self.pk, community=None, type=GoodAlbum.MAIN, title="Основной альбом")
+            return GoodList.objects.create(creator_id=self.pk, community=None, type=GoodList.MAIN, title="Основной альбом")
     def get_or_create_playlist(self):
         from music.models import SoundList
         try:
             return SoundList.objects.get(creator_id=self.pk, community=None, type=SoundList.MAIN)
         except:
             return SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
-    def get_or_create_video_album(self):
-        from video.models import VideoAlbum
+    def get_or_create_video_list(self):
+        from video.models import VideoList
         try:
-            return VideoAlbum.objects.get(creator_id=self.pk, community=None, type=VideoAlbum.MAIN)
+            return VideoList.objects.get(creator_id=self.pk, community=None, type=VideoList.MAIN)
         except:
-            return VideoAlbum.objects.create(creator_id=self.pk, community=None, type=VideoAlbum.MAIN, title="Основной альбом")
-    def get_or_create_photo_album(self):
-        from gallery.models import Album
+            return VideoList.objects.create(creator_id=self.pk, community=None, type=VideoList.MAIN, title="Основной альбом")
+    def get_or_create_photo_list(self):
+        from gallery.models import PhotoList
         try:
-            return Album.objects.get(creator_id=self.pk, community=None, type=Album.MAIN)
+            return PhotoList.objects.get(creator_id=self.pk, community=None, type=PhotoList.MAIN)
         except:
-            return Album.objects.create(creator_id=self.pk, community=None, type=Album.MAIN, title="Основной альбом")
+            return PhotoList.objects.create(creator_id=self.pk, community=None, type=PhotoList.MAIN, title="Основной альбом")
     def get_or_create_doc_list(self):
         from docs.models import DocList
         try:
@@ -1213,7 +1080,7 @@ class User(AbstractUser):
             return DocList.objects.create(creator_id=self.pk, community=None, type=DocList.MAIN, name="Основной список")
 
     def get_music(self):
-        from music.models import SoundList, SoundcloudParsing
+        from music.models import SoundList, Music
 
         list = SoundList.objects.get(creator_id=self.id, community__isnull=True, type=SoundList.MAIN)
         return list.players.filter(is_deleted=False)
@@ -1243,17 +1110,17 @@ class User(AbstractUser):
         return lists
 
     def get_video_count(self):
-        from video.models import Video, VideoAlbum
+        from video.models import Video, VideoList
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community__isnull=True, type=VideoAlbum.MAIN)
-        video_query = Q(album=list, is_deleted=False)
+        list = VideoList.objects.get(creator_id=self.id, community__isnull=True, type=VideoList.MAIN)
+        video_query = Q(list=list, is_deleted=False)
         return Video.objects.filter(video_query).values("pk").count()
 
     def get_last_video(self):
-        from video.models import Video, VideoAlbum
+        from video.models import Video, VideoList
 
-        list = VideoAlbum.objects.get(creator_id=self.id, community__isnull=True, type=VideoAlbum.MAIN)
-        video_query = Q(album=list, is_deleted=False, is_public=True)
+        list = VideoList.objects.get(creator_id=self.id, community__isnull=True, type=VideoList.MAIN)
+        video_query = Q(list=list, is_deleted=False, is_public=True)
         return Video.objects.filter(video_query).order_by("-created")[0:2]
 
     def my_playlist_too(self):
@@ -1322,24 +1189,24 @@ class User(AbstractUser):
 
     def get_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
-        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        followers_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)
 
     def get_all_users(self):
         all_query = Q()
-        all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        all_query.add(~Q(Q(type=User.DELETED)|Q(type=User.BLOCKED)|Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
         if self.is_child():
-            all_query.add(~Q(Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
+            all_query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
         return User.objects.filter(all_query)
 
     def get_pop_followers(self):
         followers_query = Q(follows__followed_user_id=self.pk)
-        followers_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        followers_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followers_query)[0:6]
 
     def get_followings(self):
         followings_query = Q(followers__user_id=self.pk)
-        followings_query.add(~Q(Q(perm=User.DELETED) | Q(perm=User.BLOCKED) | Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+        followings_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
         return User.objects.filter(followings_query)
 
     def get_friends_and_followings_ids(self):

@@ -1,33 +1,18 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
-from video.models import VideoAlbum, Video, VideoComment
+from video.models import VideoList, Video, VideoComment
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
-from video.forms import AlbumForm, VideoForm, CommentForm
+from video.forms import VideoListForm, VideoForm, CommentForm
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from common.template.video import get_permission_community_video
 from common.template.user import render_for_platform
-from common.template.community import get_community_manage_template
 
 
-class CommunityVideoAlbumPreview(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_community_manage_template("communities/video/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityVideoAlbumPreview,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(CommunityVideoAlbumPreview,self).get_context_data(**kwargs)
-		context["album"] = self.album
-		return context
-
-
-class CommunityVideoAlbumAdd(View):
+class CommunityVideoListAdd(View):
     def post(self,request,*args,**kwargs):
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -36,9 +21,9 @@ class CommunityVideoAlbumAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityVideoAlbumRemove(View):
+class CommunityVideoListRemove(View):
     def post(self,request,*args,**kwargs):
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -209,19 +194,19 @@ class CommunityVideoListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(CommunityVideoListCreate,self).get_context_data(**kwargs)
-        context["form_post"] = AlbumForm()
+        context["form_post"] = VideoListForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form_post = AlbumForm(request.POST)
+        self.form_post = VideoListForm(request.POST)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
-            new_album = form_post.save(commit=False)
-            new_album.creator = request.user
-            new_album.community = community
-            new_album.save()
-            return render_for_platform(request, 'communities/video_list/admin_list.html',{'album': new_album, 'community': community})
+            new_list = form_post.save(commit=False)
+            new_list.creator = request.user
+            new_list.community = community
+            new_list.save()
+            return render_for_platform(request, 'communities/video_list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -245,11 +230,11 @@ class CommunityVideoAttachCreate(TemplateView):
 
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
 
-            my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community=community, type=VideoAlbum.MAIN)
+            my_list = VideoList.objects.get(creator_id=self.user.pk, community=community, type=VideoList.MAIN)
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
-            my_list.video_album.add(new_video)
+            my_list.video_list.add(new_video)
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
@@ -266,7 +251,7 @@ class CommunityVideoCreate(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(CommunityVideoCreate,self).get_context_data(**kwargs)
 		context["form_post"] = VideoForm()
-		context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
 		return context
 
 	def post(self,request,*args,**kwargs):
@@ -278,11 +263,11 @@ class CommunityVideoCreate(TemplateView):
 
 			new_video = self.form_post.save(commit=False)
 			new_video.creator = request.user
-			albums = request.POST.getlist("album")
+			lists = request.POST.getlist("list")
 			new_video.save()
-			for _album_pk in albums:
-				_album = VideoAlbum.objects.get(pk=_album_pk)
-				_album.video_album.add(new_video)
+			for _list_pk in lists:
+				_list = VideoList.objects.get(pk=_list_pk)
+				_list.video_list.add(new_video)
 			if new_video.is_public:
 				community_notify(request.user, community, None, "vid"+str(new_video.pk), "c_video_notify", "ITE")
 			return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
@@ -305,12 +290,12 @@ class CommunityVideolistEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityVideolistEdit,self).get_context_data(**kwargs)
         context["community"] = self.community
-        context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.form = AlbumForm(request.POST,instance=self.list)
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = VideoListForm(request.POST,instance=self.list)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
             list = self.form.save(commit=False)
@@ -323,8 +308,8 @@ class CommunityVideolistEdit(TemplateView):
 class CommunityVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type == VideoAlbum.ALBUM:
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type == VideoList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -334,7 +319,7 @@ class CommunityVideolistDelete(View):
 class CommunityVideolistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])

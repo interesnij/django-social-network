@@ -50,43 +50,43 @@ class CUCMPhotoWindow(TemplateView):
         return context
 
 
-class UUCMPhotoAlbumWindow(TemplateView):
+class UUCMPhotoPhotoListWindow(TemplateView):
     """
     форма репоста фотоальбома пользователя к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
         from common.template.user import get_detect_platform_template
 
-        self.album, self.user, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo_album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        return super(UUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
+        return super(UUCMPhotoPhotoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMPhotoAlbumWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["user"] = PostForm(), self.album, self.user
+        context = super(UUCMPhotoPhotoListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["user"] = PostForm(), self.list, self.user
         return context
 
-class CUCMPhotoAlbumWindow(TemplateView):
+class CUCMPhotoPhotoListWindow(TemplateView):
     """
     форма репоста фотоальбома сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
         from common.template.user import get_detect_platform_template
 
-        self.album, self.c, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo_album.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
-        return super(CUCMPhotoAlbumWindow,self).get(request,*args,**kwargs)
+        return super(CUCMPhotoPhotoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        c = super(CUCMPhotoAlbumWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["community"] = PostForm(), self.album, self.c
+        c = super(CUCMPhotoPhotoListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["community"] = PostForm(), self.list, self.c
         return c
 
 
@@ -210,14 +210,14 @@ class CMPhotoRepost(View):
         return HttpResponse()
 
 
-class UUPhotoAlbumRepost(View):
+class UUPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -225,45 +225,45 @@ class UUPhotoAlbumRepost(View):
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lph"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lph"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_notify(request.user, album.creator.pk, None, "lph"+album.pk, "u_photo_list_repost", "LRE")
+            user_notify(request.user, list.creator.pk, None, "lph"+list.pk, "u_photo_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CUPhotoAlbumRepost(View):
+class CUPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lph"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lph"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_notify(request.user, community, None, "lph"+album.pk, "c_photo_repost", 'LRE')
+            community_notify(request.user, community, None, "lph"+list.pk, "c_photo_repost", 'LRE')
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 
-class UCPhotoAlbumRepost(View):
+class UCPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -274,23 +274,23 @@ class UCPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="lph"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, attach="lph"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_notify(request.user, album.creator.pk, community_id, "lph"+album.pk, "u_photo_list_repost", 'CLR')
+                    user_notify(request.user, list.creator.pk, community_id, "lph"+list.pk, "u_photo_list_repost", 'CLR')
         return HttpResponse()
 
 
-class CCPhotoAlbumRepost(View):
+class CCPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -300,41 +300,41 @@ class CCPhotoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="lph"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, attach="lph"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "lph"+album.pk, "c_photo_list_repost", 'CLR')
+                    community_notify(request.user, community, community_id, "lph"+list.pk, "c_photo_list_repost", 'CLR')
         return HttpResponse()
 
 
-class UMPhotoAlbumRepost(View):
+class UMPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
         from common.processing.post import repost_message_send
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(album, "lph"+str(album.pk), None, request, "Репост фотоальбома пользователя")
+        repost_message_send(list, "lph"+str(list.pk), None, request, "Репост фотоальбома пользователя")
         return HttpResponse()
 
 
-class CMPhotoAlbumRepost(View):
+class CMPhotoPhotoListRepost(View):
     """
     создание репоста фотоальбома сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
         from common.processing.post import repost_message_send
 
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(album, "lph"+str(album.pk), community, request, "Репост фотоальбома сообщества")
+        repost_message_send(list, "lph"+str(list.pk), community, request, "Репост фотоальбома сообщества")
         return HttpResponse()

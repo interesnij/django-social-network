@@ -110,8 +110,8 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDetail,self).get_context_data(**kwargs)
-        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_album'], c['video_album'], c['music_list'], c['docs_list'], c['good_album'], c['fix_list'] = self.c.get_members(self.c.pk)[0:6], self.c, self.common_friends, self.common_friends_count, self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), \
-        self.c.get_or_create_doc_list(), self.c.get_or_create_good_album(), self.c.get_or_create_fix_list()
+        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_list'], c['video_list'], c['music_list'], c['docs_list'], c['good_list'], c['fix_list'] = self.c.get_members(self.c.pk)[0:6], self.c, self.common_friends, self.common_friends_count, self.c.get_or_create_photo_list(), self.c.get_or_create_video_list(), self.c.get_or_create_playlist(), \
+        self.c.get_or_create_doc_list(), self.c.get_or_create_good_list(), self.c.get_or_create_fix_list()
         return c
 
 
@@ -122,31 +122,30 @@ class CommunityGallery(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
         from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community_id=self.c.pk, type=Album.MAIN)
-        self.template_name = get_template_community_photo(self.album, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list = self.c.get_or_create_photo_list()
+        self.template_name = get_template_community_photo(self.list, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CommunityGallery,self).get_context_data(**kwargs)
-        c['community'], c['album'] = self.c, self.album
+        c['community'], c['list'] = self.c, self.list
         return c
 
-class CommunityAlbum(TemplateView):
+class CommunityPhotoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from gallery.models import Album
+        from gallery.models import PhotoList
         from common.template.photo import get_template_community_photo
 
-        self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.album, "communities/album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityAlbum,self).get(request,*args,**kwargs)
+        self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_template_community_photo(self.list, "communities/photo_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommunityPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        c = super(CommunityAlbum,self).get_context_data(**kwargs)
-        c['community'], c['album'] = self.c, self.album
+        c = super(CommunityPhotoList,self).get_context_data(**kwargs)
+        c['community'], c['list'] = self.c, self.list
         return c

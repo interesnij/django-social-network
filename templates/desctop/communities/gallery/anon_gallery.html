@@ -2,8 +2,8 @@
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
-{% if albums_list %}
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+{% if photo_lists %}
   <div class="container-fluid mt-3">
       <div class="row">
           <div class="col-12 col-md-8">
@@ -15,7 +15,7 @@
       </div>
   </div>
   <div class="container mt-4">
-    {% include 'desctop/communities/gallery/albums.html' %}
+    {% include 'desctop/communities/gallery/lists.html' %}
   </div>
 {% else %}
   <div class="container-fluid mt-3">
@@ -36,7 +36,7 @@
             <h5 class="mt-1">
               {% include 'desctop/generic/community/community.html' %} - фотографии
             </h5>
-            Фото: {{ album.count_photo }}
+            Фото: {{ list.count_photo }}
         </div>
     </div>
 </div>

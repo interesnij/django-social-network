@@ -33,25 +33,25 @@ class UserVideoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from video.models import VideoAlbum
+		from video.models import VideoList
 		from common.template.video import get_template_user_video
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user == request.user:
-			self.video_list = self.album.get_my_queryset()
+			self.video_list = self.list.get_my_queryset()
 		else:
-			self.video_list = self.album.get_queryset()
-		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_user_video(self.album, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.video_list = self.list.get_queryset()
+		if self.list.type == VideoList.MAIN:
+			self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_video(self.album, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_video(self.list, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserVideoList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['album'] = self.album
+		context['list'] = self.list
 		return context
 
 	def get_queryset(self):
@@ -63,25 +63,25 @@ class UserGoodsList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
+		from goods.models import GoodList
 		from common.template.good import get_template_user_good
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user == request.user:
-			self.goods_list = self.album.get_staff_goods()
+			self.goods_list = self.list.get_staff_goods()
 		else:
-			self.goods_list = self.album.get_goods()
-		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_user_good(self.album, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.goods_list = self.list.get_goods()
+		if self.list.type == GoodList.MAIN:
+			self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_good(self.album, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_good(self.list, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserGoodsList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['album'] = self.album
+		context['list'] = self.list
 		return context
 
 	def get_queryset(self):
@@ -191,9 +191,9 @@ class AllUsers(ListView):
 
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		all_query = Q()
-		all_query.add(~Q(Q(perm=User.DELETED)|Q(perm=User.BLOCKED)|Q(perm=User.PHONE_NO_VERIFIED)), Q.AND)
+		all_query.add(~Q(Q(type=User.DELETED)|Q(type=User.BLOCKED)|Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
 		if request.user.is_anonymous or request.user.is_child():
-			all_query.add(~Q(Q(perm=User.VERIFIED_SEND)|Q(perm=User.STANDART)), Q.AND)
+			all_query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
 		self.all_users = User.objects.filter(all_query)
 		return super(AllUsers,self).get(request,*args,**kwargs)
 

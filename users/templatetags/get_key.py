@@ -16,14 +16,6 @@ def is_user_list(user, list):
     else:
         return False
 
-
-@register.filter
-def track_in_list(list, track_id):
-    if list.is_track_in_list(track_id):
-        return True
-    else:
-        return False
-
 @register.filter
 def is_user_can_add_playlist(list, user_id):
     if list.is_user_can_add_list(user_id):
@@ -40,15 +32,8 @@ def is_user_can_add_list(list, user_id):
 
 
 @register.filter
-def doc_in_list(list, doc_id):
-    if list.is_doc_in_list(doc_id):
-        return True
-    else:
-        return False
-
-@register.filter
-def photo_in_album(album, photo_id):
-    if album.is_photo_in_album(photo_id):
+def item_in_list(list, item_id):
+    if list.is_item_in_list(item_id):
         return True
     else:
         return False

@@ -92,7 +92,7 @@ for tag in list_2_1:
             else:
                 description=None
             try:
-                SoundcloudParsing.objects.get(id=track.id)
+                Music.objects.get(id=track.id)
             except:
                 if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                     try:
@@ -100,7 +100,7 @@ for tag in list_2_1:
                     except:
                         self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                     genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
-                    new_track = SoundcloudParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, description=description, duration=track.duration, genre=genre, title=track.title, uri=track.uri, release_year=track.release_year)
+                    new_track = Music.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, description=description, duration=track.duration, genre=genre, title=track.title, uri=track.uri, release_year=track.release_year)
                 count = count + 1
         while tracks.next_href != None and count < 2000:
             tracks = client.get(tracks.next_href, limit=page_size, linked_partitioning=1)
@@ -112,7 +112,7 @@ for tag in list_2_1:
                 else:
                     description=None
                 try:
-                    SoundcloudParsing.objects.get(id=track.id)
+                    Music.objects.get(id=track.id)
                 except:
                     if track.genre and track.release_year and track.duration > 90000 and track.genre in genres_list_names:
                         try:
@@ -120,5 +120,5 @@ for tag in list_2_1:
                         except:
                             self_tag = SoundTags.objects.create(name=tag, symbol=litera)
                         genre =SoundGenres.objects.get(name=track.genre.replace("'", '') )
-                        new_track = SoundcloudParsing.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, description=description, duration=track.duration, genre=genre, title=track.title, uri=track.uri, release_year=track.release_year)
+                        new_track = Music.objects.create(id=track.id, tag=self_tag, artwork_url=track.artwork_url, created_at=created_at, description=description, duration=track.duration, genre=genre, title=track.title, uri=track.uri, release_year=track.release_year)
                     count = count + 1

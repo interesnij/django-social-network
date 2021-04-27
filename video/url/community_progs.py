@@ -19,12 +19,11 @@ urlpatterns = [
     url(r'^reply-comment/$', VideoReplyCommunityCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityAbortDelete.as_view()),
-    url(r'^get_album_preview/(?P<pk>\d+)/$', CommunityVideoAlbumPreview.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
     url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistAbortDelete.as_view()),
-    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAlbumAdd.as_view()),
-    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAlbumRemove.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoListAdd.as_view()),
+    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoListRemove.as_view()),
 ]

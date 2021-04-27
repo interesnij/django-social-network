@@ -6,67 +6,67 @@ class UserLoadPhoto(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from gallery.models import Album
+		from gallery.models import PhotoList
 
-		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = PhotoList.objects.get(creator_id=request.user.pk, type=PhotoList.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadPhoto,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos()
+		photo_list = self.list.get_photos()
 		return photo_list
 
 
-class UserLoadPhotoAlbum(ListView):
+class UserLoadPhotoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from gallery.models import Album
+		from gallery.models import PhotoList
 
-		self.album, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadPhotoAlbum,self).get(request,*args,**kwargs)
+		self.list, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserLoadPhotoAlbum,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context = super(UserLoadPhotoList,self).get_context_data(**kwargs)
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos()
+		photo_list = self.list.get_photos()
 		return photo_list
 
 class UserLoadPhotoComment(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from gallery.models import Album
-		self.album, self.template_name = Album.objects.get(creator_id=request.user.pk, type=Album.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		from gallery.models import PhotoList
+		self.list, self.template_name = PhotoList.objects.get(creator_id=request.user.pk, type=PhotoList.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		photos_list = self.album.get_photos()
+		photos_list = self.list.get_photos()
 		return photos_list
 
-class UserLoadPhotoAlbumComment(ListView):
+class UserLoadPhotoListComment(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from gallery.models import Album
+		from gallery.models import PhotoList
 
-		self.album, self.template_name = Album.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadPhotoAlbumComment,self).get(request,*args,**kwargs)
+		self.list, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadPhotoListComment,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserLoadPhotoAlbumComment,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context = super(UserLoadPhotoListComment,self).get_context_data(**kwargs)
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		photo_list = self.album.get_photos()
+		photo_list = self.list.get_photos()
 		return photo_list
 
 
@@ -74,36 +74,36 @@ class UserLoadVideo(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from video.models import VideoAlbum
+		from video.models import VideoList
 
-		self.album, self.template_name = VideoAlbum.objects.get(creator_id=request.user.pk, type=VideoAlbum.MAIN, community__isnull=True), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = VideoList.objects.get(creator_id=request.user.pk, type=VideoList.MAIN, community__isnull=True), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadVideo,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		videos_list = self.album.get_queryset()
+		videos_list = self.list.get_queryset()
 		return videos_list
 
-class UserLoadVideoAlbum(ListView):
+class UserLoadVideoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from video.models import VideoAlbum
+		from video.models import VideoList
 
-		self.album, self.template_name = VideoAlbum.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
+		self.list, self.template_name = VideoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserLoadVideoAlbum,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context = super(UserLoadVideoList,self).get_context_data(**kwargs)
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		video_list = self.album.get_queryset().order_by('-created')
+		video_list = self.list.get_queryset().order_by('-created')
 		return video_list
 
 
@@ -205,36 +205,36 @@ class UserLoadGood(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, creator=request.user, community__isnull=True)
+		from goods.models import GoodList
+		self.list = GoodList.objects.get(type=GoodList.MAIN, creator=request.user, community__isnull=True)
 		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadGood,self).get_context_data(**kwargs)
-		context["album"] = self.album
-		return context 
+		context["list"] = self.list
+		return context
 
 	def get_queryset(self):
-		goods_list = self.album.get_goods()
+		goods_list = self.list.get_goods()
 		return goods_list
 
 class UserLoadGoodList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
-		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		from goods.models import GoodList
+		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_settings_template("users/load/u_good_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadGoodList,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		good_list = self.album.get_goods().order_by('-created')
+		good_list = self.list.get_goods().order_by('-created')
 		return good_list
 
 
@@ -283,19 +283,19 @@ class CommunityLoadGood(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import GoodAlbum
+		from music.models import GoodList
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.album = GoodAlbum.objects.get(type=GoodAlbum.MAIN, community=self.community)
+		self.list = GoodList.objects.get(type=GoodList.MAIN, community=self.community)
 		self.template_name = get_settings_template("users/load/c_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityLoadGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(CommunityLoadGood,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context["list"] = self.list
 		return context
 
 	def get_queryset(self):
-		goods_list = self.album.get_goods()
+		goods_list = self.list.get_goods()
 		return goods_list
 
 

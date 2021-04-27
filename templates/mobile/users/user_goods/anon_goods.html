@@ -1,10 +1,9 @@
 {% extends "base_anon_mobile.html" %}
 {% load liked_user %}
-{% block title %}Товары {{ user.get_full_name_genitive }} - {{ album.title }}{% endblock %}
+{% block title %}Товары {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-  {% if user.is_good_album_exists %}
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
   <div class="row no-gutters">
     <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
       {% include 'mobile/generic/user/back.html' %}
@@ -14,13 +13,13 @@
                 Подборки
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in user.get_good_albums %}
-                <a class="dropdown-item ajax" href="{% url 'user_good_album' pk=user.pk uuid=object.uuid %}">{{ object.title }}</a>
+              {% for object in get_lists %}
+                <a class="dropdown-item ajax" href="{% url 'user_good_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
               {% endfor %}
             </div>
     </div>
   </div>
-  {% else %}
+
   <span style="margin-bottom: 10px;position:relative" class="centered">
     {% include 'mobile/generic/user/back.html' %}
   </span>
@@ -42,7 +41,7 @@
                   <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                 {% endif %}
                 <div class="media-body" style="margin-left: 10px;">
-                  <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
+                  <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_goods }})</h6>
                   <p class="">Товары
                   {% include 'mobile/generic/user/user_gen.html' %}
                   </p>

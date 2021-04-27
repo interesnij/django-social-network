@@ -7,13 +7,13 @@ on('#ajax', 'click', '#c_ucm_video_repost_btn', function() {
                      "/video/repost/c_m_video_repost/",
                      "Репост видеозаписи в сообщения сделан")
 });
-on('#ajax', 'click', '#c_ucm_video_album_repost_btn', function() {
+on('#ajax', 'click', '#c_ucm_video_list_repost_btn', function() {
   repost_constructor(this,
-                     "/video/repost/c_u_video_album_repost/",
+                     "/video/repost/c_u_video_list_repost/",
                      "Репост видеоальбома на стену сделан",
-                     "/video/repost/c_c_video_album_repost/",
+                     "/video/repost/c_c_video_list_repost/",
                      "Репост видеоальбома в сообщества сделан",
-                     "/video/repost/c_m_video_album_repost/",
+                     "/video/repost/c_m_video_list_repost/",
                      "Репост видеоальбома в сообщения сделан")
 });
 

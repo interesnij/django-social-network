@@ -23,18 +23,18 @@ on('#ajax', 'click', '.u_ucm_good_list_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.u_good_album_edit_window', function() {
+on('#ajax', 'click', '.u_good_list_edit_window', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/goods/user_progs/edit_album/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/goods/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_goods_list_create_window', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/goods/user_progs/add_album/" + pk + "/", loader)
+  open_fullscreen("/goods/user_progs/add_list/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_all_good_likes', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('good-pk');
@@ -76,7 +76,7 @@ on('#ajax', 'click', '.u_good_comments', function() {
   this.classList.toggle("comments_open");
 });
 
-on('#ajax', 'click', '.u_load_good_album', function() {
+on('#ajax', 'click', '.u_load_good_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");

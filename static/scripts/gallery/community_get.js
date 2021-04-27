@@ -18,7 +18,7 @@ on('#ajax', 'click', '.c_photo_priview', function() {
   open_fullscreen("/gallery/community/preview_photo/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.c_load_photo_album', function() {
+on('#ajax', 'click', '.c_load_photo_list', function() {
   parent = this.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
   loader = document.getElementById("item_loader");
@@ -33,7 +33,7 @@ on('#ajax', 'click', '.c_ucm_photo_repost', function() {
   open_fullscreen("/gallery/repost/c_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '.c_ucm_photo_album_repost', function() {
+on('#ajax', 'click', '.c_ucm_photo_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
@@ -59,7 +59,7 @@ on('#ajax', 'click', '.c_AL_photo', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/album_photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/community/list_photo/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_WA_photo', function() {
@@ -73,29 +73,29 @@ on('#ajax', 'click', '.c_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
 })
 
-on('#ajax', 'click', '.c_album_add', function() {
+on('#ajax', 'click', '.c_photo_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/community_progs/add_album/" + pk + "/", loader)
+  open_fullscreen("/gallery/community_progs/add_list/" + pk + "/", loader)
 });
-on('#ajax', 'click', '.c_album_edit', function() {
+on('#ajax', 'click', '.c_photo_list_edit', function() {
   list = document.body.querySelectorAll('.cover_block');
   for (var i = 0; i < list.length; i++) {
-    list[i].classList.remove("album_active")
+    list[i].classList.remove("list_active")
   }
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  block.classList.add("album_active");
+  block.classList.add("list_active");
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/community_progs/edit_album/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.c_album_remove', function() {
+on('#ajax', 'click', '.c_photo_list_remove', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/community_progs/delete_album/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/community_progs/delete_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -103,17 +103,17 @@ on('#ajax', 'click', '.c_album_remove', function() {
     block.querySelector(".card").style.display = "none";
     $block = document.createElement("div");
     $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
-    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 c_album_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/album.jpg" /></a></div>'
+    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 c_photo_list_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/list.jpg" /></a></div>'
     block.append($block);
   }}
   link_.send();
 });
-on('#ajax', 'click', '.c_album_abort_remove', function() {
+on('#ajax', 'click', '.c_photo_list_abort_remove', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/community_progs/abort_delete_album/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/community_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

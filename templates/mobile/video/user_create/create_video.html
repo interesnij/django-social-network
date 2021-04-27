@@ -22,8 +22,8 @@
                   </div>
                   <div class="form-group">
                     <label>Альбом</label>
-                    <select name="album" multiple="" id="id_album">
-                      {% for object in user.get_all_video_albums %}
+                    <select name="list" multiple="" id="id_list">
+                      {% for object in user.get_video_lists %}
                         <option value="{{ object.pk }}">{{ object.title }}</option>
                       {% endfor %}
                     </select>
@@ -33,7 +33,7 @@
                     <div class="hide_image">
                       <input type="file" name="image" accept="image/*" id="id_image">
                     </div>
-                    <div id="video_holder" class="border">  
+                    <div id="video_holder" class="border">
                       <h4>Обложка</h4>
                       <i>(обязательно)</i>
                     </div>

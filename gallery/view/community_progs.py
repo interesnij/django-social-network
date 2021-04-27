@@ -1,5 +1,5 @@
-from gallery.models import Album, Photo, PhotoComment
-from gallery.forms import PhotoDescriptionForm, CommentForm, AlbumForm
+from gallery.models import PhotoList, Photo, PhotoComment
+from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.community import check_can_get_lists
@@ -10,9 +10,9 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
-class CommunityAlbumAdd(View):
+class CommunityPhotoListAdd(View):
     def post(self,request,*args,**kwargs):
-        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -21,9 +21,9 @@ class CommunityAlbumAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityAlbumRemove(View):
+class CommunityPhotoListRemove(View):
     def post(self,request,*args,**kwargs):
-        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -42,31 +42,31 @@ class PhotoCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            _album = Album.objects.get(community=community, type=Album.MAIN)
+            _list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
-class PhotoAlbumCommunityCreate(View):
+class PhotoListCommunityCreate(View):
     """
     асинхронная мульти загрузка фотографий пользователя в альбом
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        _album = Album.objects.get(uuid=self.kwargs["uuid"])
+        _list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             photos = []
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'community': community})
+            return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})
         else:
             raise Http404
 
@@ -79,10 +79,10 @@ class PhotoAttachCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            _album = Album.objects.filter(type=Album.WALL, community=community)[0]
+            _list = PhotoList.objects.filter(type=PhotoList.WALL, community=community)[0]
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
             return render_for_platform(request, 'communities/gallery/list.html',{'object_list': photos, 'community': community})
         else:
@@ -99,12 +99,12 @@ class CommunityAddAvatar(View):
             from common.notify.notify import community_notify
 
             photo_input = request.FILES.get('file')
-            try: 
-                _album = Album.objects.get(community=community, type=Album.AVATAR)
+            try:
+                _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
             except:
-                _album = Album.objects.create(creator=community.creator, community=community, type=Album.AVATAR, description="Фото со страницы сообщества")
+                _list = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.AVATAR, description="Фото со страницы сообщества")
             photo = Photo.objects.create(file=photo_input, preview=photo_input, creator=request.user)
-            photo.album.add(_album)
+            photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
             community_notify(request.user, community, None, "pho"+str(photo.pk), "c_photo_notify", "ITE")
@@ -315,7 +315,7 @@ class CommunityOffPrivatePhoto(View):
             raise Http404
 
 
-class AlbumCommunityCreate(TemplateView):
+class PhotoListCommunityCreate(TemplateView):
     """
     создание альбома сообщества
     """
@@ -324,29 +324,29 @@ class AlbumCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/album/add_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
-        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+        self.template_name = get_community_manage_template("communities/list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(AlbumCommunityCreate,self).get_context_data(**kwargs)
-        context["form"] = AlbumForm()
+        context = super(PhotoListCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = PhotoListForm()
         context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = AlbumForm(request.POST)
+        self.form = PhotoListForm(request.POST)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
-            album = self.form.save(commit=False)
-            if not album.description:
-                album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, community=self.community, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.community.creator)
-            return render_for_platform(request, 'communities/album/new_album.html',{'album': new_album, 'community': self.community})
+            list = self.form.save(commit=False)
+            if not list.description:
+                list.description = "Без описания"
+            new_list = PhotoList.objects.create(name=list.name, community=self.community, description=list.description, type=PhotoList.PhotoList, is_public=list.is_public, order=list.order,creator=self.community.creator)
+            return render_for_platform(request, 'communities/list/new_list.html',{'list': new_list, 'community': self.community})
         else:
             return HttpResponseBadRequest()
-        return super(AlbumCommunityCreate,self).get(request,*args,**kwargs)
+        return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
 
-class AlbumCommunityEdit(TemplateView):
+class PhotoListCommunityEdit(TemplateView):
     """
     изменение альбома сообщества
     """
@@ -355,48 +355,48 @@ class AlbumCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/album/edit_album.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
-        return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
+        self.template_name = get_community_manage_template("communities/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(AlbumCommunityEdit,self).get_context_data(**kwargs)
+        context = super(PhotoListCommunityEdit,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["community"] = self.community
-        context["album"] = Album.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.form = AlbumForm(request.POST,instance=self.album)
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = PhotoListForm(request.POST,instance=self.list)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
-            album = self.form.save(commit=False)
-            if not album.description:
-                album.description = "Без описания"
+            list = self.form.save(commit=False)
+            if not list.description:
+                list.description = "Без описания"
             self.form.save()
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(AlbumCommunityEdit,self).get(request,*args,**kwargs)
+        return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
-class AlbumCommunityDelete(View):
+class PhotoListCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_administrator_of_community(community.pk) and album.type == Album.ALBUM:
-            album.is_deleted = True
-            album.save(update_fields=['is_deleted'])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_administrator_of_community(community.pk) and list.type == PhotoList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
-class AlbumCommunityAbortDelete(View):
+class PhotoListCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
-            album.is_deleted = False
-            album.save(update_fields=['is_deleted'])
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404

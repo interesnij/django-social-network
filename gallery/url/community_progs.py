@@ -23,13 +23,13 @@ urlpatterns=[
 
     url(r'^add_photo/(?P<pk>\d+)/$', PhotoCommunityCreate.as_view()),
 	url(r'^add_attach_photo/(?P<pk>\d+)/$', PhotoAttachCommunityCreate.as_view()),
-	url(r'^add_album_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoAlbumCommunityCreate.as_view()),
+	url(r'^add_list_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
 
-    url(r'^add_album/(?P<pk>\d+)/$', AlbumCommunityCreate.as_view()),
-    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityEdit.as_view(), name="photo_album_edit_community"),
-    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityDelete.as_view()),
-    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AlbumCommunityAbortDelete.as_view()),
-    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumAdd.as_view()),
-    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumRemove.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', PhotoListCommunityCreate.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityEdit.as_view(), name="photo_list_edit_community"),
+    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityDelete.as_view()),
+    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityAbortDelete.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPhotoListAdd.as_view()),
+    url(r'^remove_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPhotoListRemove.as_view()),
 ]

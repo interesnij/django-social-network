@@ -97,7 +97,7 @@ class PhoneVerify(View):
             obj = None
         if obj:
             user = User.objects.get(pk=request.user.pk)
-            user.perm = User.STANDART
+            user.type = User.STANDART
             user.phone = obj.phone
             user.save()
             obj.delete()

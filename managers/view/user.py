@@ -2,9 +2,9 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.user import *
-from managers.forms import UserModeratedForm, UserReportForm
+from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.user import ModeratedUser
+from managers.models import Moderated
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
@@ -163,11 +163,11 @@ class UserSuspensionCreate(View):
         if request.is_ajax() and form.is_valid() and (request.user.is_user_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             number = request.POST.get('number')
-            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
-            moderate_obj.status = ModeratedUser.STATUS_SUSPEND
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type="USE")
+            moderate_obj.status = Moderated.SUSPEND
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_suspend(manager_id=request.user.pk, user_id=user.pk, severity_int=number)
+            moderate_obj.create_suspend(manager_id=request.user.pk, severity_int=number)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -176,22 +176,22 @@ class UserSuspensionDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_user_manager() or request.user.is_superuser:
-            moderate_obj = ModeratedUser.objects.get(user=user)
-            moderate_obj.delete_suspend(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj = Moderated.objects.get(object_id=user.pk, type="USE")
+            moderate_obj.delete_suspend(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class UserBlockCreate(View):
     def post(self,request,*args,**kwargs):
-        user, form = User.objects.get(pk=self.kwargs["pk"]), UserModeratedForm(request.POST)
+        user, form = User.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_user_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
-            moderate_obj.status = ModeratedUser.STATUS_BLOCKED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type="USE")
+            moderate_obj.status = Moderated.BLOCKED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_block(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj.create_block(manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -200,35 +200,35 @@ class UserBlockDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_user_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedUser.objects.get(user=user)
-            moderate_obj.delete_block(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj = Moderated.objects.get(object_id=user.pk, type="USE")
+            moderate_obj.delete_block(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class UserWarningBannerCreate(View):
     def post(self,request,*args,**kwargs):
-        user, form = User.objects.get(pk=self.kwargs["pk"]), UserModeratedForm(request.POST)
+        user, form = User.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_user_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedUser.get_or_create_moderated_object_for_user(user)
-            moderate_obj.status = ModeratedUser.STATUS_BANNER_GET
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type="USE")
+            moderate_obj.status = Moderated.BANNER_GET
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_warning_banner(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj.create_warning_banner(manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class UserClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.user import UserModerationReport
+        from managers.models import ModerationReport
 
         user = User.objects.get(pk=self.kwargs["pk"])
-        form = UserReportForm(request.POST)
+        form = ReportForm(request.POST)
         if request.is_ajax() and form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
-            UserModerationReport.create_user_moderation_report(reporter_id=request.user.pk, user=user, description=mod.description, type=request.POST.get('type'))
+            ModerationReport.create_user_moderation_report(reporter_id=request.user.pk, object_id=user.pk, _type="USE", description=mod.description, type=request.POST.get('type'))
             return HttpResponse()
         else:
             raise Http404
@@ -237,8 +237,8 @@ class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_user_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedUser.objects.get(user=user)
-            moderate_obj.delete_warning_banner(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj = Moderated.objects.get(object_id=user.pk, type="USE")
+            moderate_obj.delete_warning_banner(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -247,8 +247,8 @@ class UserRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_user_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedUser.objects.get(user=user)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, user_id=user.pk)
+            moderate_obj = Moderated.objects.get(object_id=user.pk, type="USE")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -313,9 +313,9 @@ class UserClaimWindow(TemplateView):
 
 class UserUnverify(View):
     def get(self,request,*args,**kwargs):
-        user, obj = User.objects.get(pk=self.kwargs["user_pk"]), ModeratedUser.objects.get(pk=self.kwargs["obj_pk"])
+        user, obj = User.objects.get(pk=self.kwargs["user_pk"]), Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_user_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, user_id=user.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404

@@ -3,9 +3,9 @@ from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.goods import *
 from goods.models import Good, GoodComment
-from managers.forms import GoodModeratedForm, GoodCommentModeratedForm
+from managers.forms import ModeratedForm, ModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.good import ModeratedGood, ModeratedGoodComment
+from managers.models import Moderated
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
@@ -120,85 +120,83 @@ class GoodWorkerEditorDelete(View):
 
 class GoodDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        good, form = Good.objects.get(uuid=self.kwargs["uuid"]), GoodModeratedForm(request.POST)
+        good, form = Good.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedGood.get_or_create_moderated_object_for_good(good)
-            moderate_obj.status = ModeratedGood.STATUS_DELETED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=good.pk, type="GOO")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, good_id=good.pk)
-            good.is_deleted = True
-            good.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            good.status = "CLO"
+            good.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class GoodDeleteDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
+        good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedGood.objects.get(good=good)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, good_id=good.pk)
-            good.is_deleted = False
-            good.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=self.kwargs["pk"], type="GOO")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            good.status = "PUB"
+            good.save(update_fields=['status'])
             return HttpResponse()
         else:
             raise Http404
 
 class GoodClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.good import GoodModerationReport
+        from managers.models import ModerationReport
 
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             description = request.POST.get('description')
             type = request.POST.get('type')
-            GoodModerationReport.create_good_moderation_report(reporter_id=request.user.pk, good=good, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="GOO", object_id=self.kwargs["pk"], description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class GoodRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedGood.objects.get(good=good)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, good_id=good.pk)
+            moderate_obj = Moderated.objects.get(object_id=self.kwargs["pk"], type="GOO")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class GoodUnverify(View):
     def get(self,request,*args,**kwargs):
-        good, obj = Good.objects.get(uuid=self.kwargs["good_uuid"]), ModeratedGood.objects.get(pk=self.kwargs["obj_pk"])
+        obj = Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, good_id=good.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommentGoodUnverify(View):
     def get(self,request,*args,**kwargs):
-        comment, obj = GoodComment.objects.get(pk=self.kwargs["pk"]), ModeratedGoodComment.objects.get(pk=self.kwargs["obj_pk"])
+        obj = Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommentGoodDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        comment, form = GoodComment.objects.get(pk=self.kwargs["pk"]), GoodCommentModeratedForm(request.POST)
+        comment, form = GoodComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedGoodComment.get_or_create_moderated_object_for_comment(comment)
-            moderate_obj.status = ModeratedGoodComment.STATUS_DELETED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=self.kwargs["pk"], type="GOOC")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            comment.status = "CLO"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -207,33 +205,31 @@ class CommentGoodDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedGoodComment.objects.get(comment=comment)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=self.kwargs["pk"], type="GOOC")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            comment.status = "PUB"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CommentGoodClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.good import GoodCommentModerationReport
+        from managers.models import ModerationReport
 
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.is_ajax():
             description = request.POST.get('description')
             type = request.POST.get('type')
-            GoodCommentModerationReport.create_good_comment_moderation_report(reporter_id=request.user.pk, comment=comment, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="GOOC", object_id=self.kwargs["pk"], description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CommentGoodRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedGoodComment.objects.get(comment=comment)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            moderate_obj = Moderated.objects.get(type="GOOC", object_id=self.kwargs["pk"])
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -288,9 +284,9 @@ class GoodCommentClaimWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment, self.template_name = GoodComment.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("managers/manage_create/good/good_comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        try:
+        if self.comment.parent:
             self.photo = self.comment.parent.photo
-        except:
+        else:
             self.photo = self.comment.photo
         return super(GoodCommentClaimWindow,self).get(request,*args,**kwargs)
 

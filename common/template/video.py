@@ -1,13 +1,15 @@
-import re
-MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+from common.utils import update_activity, get_folder
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_video(album, folder, template, request_user, user_agent):
-    community = album.community
+def get_template_community_video(list, folder, template, request_user, user_agent):
+    community = list.community
     if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
         if community.is_suspended():
             template_name = "generic/c_template/community_suspended.html"
+        elif community.is_deleted():
+            template_name = "generic/c_template/community_deleted.html"
         elif community.is_blocked():
             template_name = "generic/c_template/community_blocked.html"
         elif request_user.is_member_of_community(community.pk):
@@ -41,6 +43,8 @@ def get_template_community_video(album, folder, template, request_user, user_age
     elif request_user.is_anonymous:
         if community.is_suspended():
             template_name = "generic/c_template/anon_community_suspended.html"
+        elif community.is_deleted():
+            template_name = "generic/c_template/anon_community_deleted.html"
         elif community.is_blocked():
             template_name = "generic/c_template/anon_community_blocked.html"
         elif community.is_public():
@@ -52,19 +56,13 @@ def get_template_community_video(album, folder, template, request_user, user_age
             template_name = "generic/c_template/anon_close_community.html"
         elif community.is_private():
             template_name = "generic/c_template/anon_private_community.html"
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name
 
-def get_permission_community_video(album, folder, template, request_user, user_agent):
+def get_permission_community_video(list, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
-    community = album.community
+    community = list.community
 
-    if community.is_suspended():
-        raise PermissionDenied('Ошибка доступа')
-    elif community.is_blocked():
+    if community.type[0] == "T":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_staff_of_community(community.pk):
@@ -82,18 +80,12 @@ def get_permission_community_video(album, folder, template, request_user, user_a
             template_name = folder + "anon_" + template
         else:
             raise PermissionDenied('Ошибка доступа')
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name
 
 def get_permission_community_video_2(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
 
-    if community.is_suspended():
-        raise PermissionDenied('Ошибка доступа')
-    elif community.is_blocked():
+    if community.type[0] == "T":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_staff_of_community(community.pk):
@@ -111,21 +103,20 @@ def get_permission_community_video_2(community, folder, template, request_user, 
             template_name = folder + "anon_" + template
         else:
             raise PermissionDenied('Ошибка доступа')
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name
 
 
-def get_template_user_video(album, folder, template, request_user, user_agent):
-    user = album.creator
+def get_template_user_video(list, folder, template, request_user, user_agent):
+    user = list.creator
     if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
         elif user.pk == request_user.pk:
             if user.is_suspended():
                 template_name = "generic/u_template/you_suspended.html"
+            elif user.is_deleted():
+                template_name = "generic/u_template/you_deleted.html"
             elif user.is_blocked():
                 template_name = "generic/u_template/you_global_block.html"
             else:
@@ -133,6 +124,8 @@ def get_template_user_video(album, folder, template, request_user, user_agent):
         elif request_user.pk != user.pk:
             if user.is_suspended():
                 template_name = "generic/u_template/user_suspended.html"
+            elif user.is_deleted():
+                template_name = "generic/u_template/user_deleted.html"
             elif user.is_blocked():
                 template_name = "generic/u_template/user_global_block.html"
             elif request_user.is_video_manager() or request_user.is_superuser:
@@ -151,6 +144,8 @@ def get_template_user_video(album, folder, template, request_user, user_agent):
     elif request_user.is_anonymous:
         if user.is_suspended():
             template_name = "generic/u_template/anon_user_suspended.html"
+        elif user.is_deleted():
+            template_name = "generic/u_template/anon_user_deleted.html"
         elif user.is_blocked():
             template_name = "generic/u_template/anon_user_global_block.html"
         elif user.is_closed_profile():
@@ -159,19 +154,13 @@ def get_template_user_video(album, folder, template, request_user, user_agent):
             template_name = "generic/u_template/anon_no_child_safety.html"
         else:
             template_name = folder + "anon_" + template
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name
 
-def get_permission_user_video(album, folder, template, request_user, user_agent):
+def get_permission_user_video(list, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
-    user = album.creator
+    user = list.creator
 
-    if user.is_suspended():
-        raise PermissionDenied('Ошибка доступа')
-    elif user.is_blocked():
+    if user.type[0] == "T":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -186,18 +175,12 @@ def get_permission_user_video(album, folder, template, request_user, user_agent)
     elif request_user.is_anonymous:
         if check_anon_user_can_get_list(user):
             template_name = folder + "anon_" + template
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name
 
 def get_permission_user_video_2(user, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
-    if user.is_suspended():
-        raise PermissionDenied('Ошибка доступа')
-    elif user.is_blocked():
+    if user.type[0] == "T":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -212,8 +195,4 @@ def get_permission_user_video_2(user, folder, template, request_user, user_agent
     elif request_user.is_anonymous:
         if check_anon_user_can_get_list(user):
             template_name = folder + "anon_" + template
-    if MOBILE_AGENT_RE.match(user_agent):
-        template_name = "mobile/" + template_name
-    else:
-        template_name = "mobile/" + template_name
-    return template_name
+    return get_folder(user_agent) + template_name

@@ -1,53 +1,62 @@
 import uuid
 from django.db import models
+from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models import Q
-from django.conf import settings
 from gallery.helpers import upload_to_photo_directory
-from common.model.votes import PhotoVotes, PhotoCommentVotes
-from django.utils import timezone
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
-class Album(models.Model):
-    AVATAR = 'AV'
-    WALL = 'WA'
-    MAIN = 'MA'
-    ALBUM = 'AL'
+class PhotoList(models.Model):
+    MAIN, LIST, WALL, AVATAR, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', 'TPRO', 'PRI'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_WALL, THIS_CLOSED_AVATAR = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOW', 'TCLOA'
     TYPE = (
-        (AVATAR, 'Фото со страницы'),
-        (WALL, 'Фото со стены'),
-        (MAIN, 'Основной альбом'),
-        (ALBUM, 'Пользовательский альбом'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='post_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    title = models.CharField(max_length=250, verbose_name="Название")
-    description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
-    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
+    name = models.CharField(max_length=250, verbose_name="Название")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+    #cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_album_creator', null=False, blank=False, verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Фотоальбом'
         verbose_name_plural = 'Фотоальбомы'
 
+    def __str__(self):
+        return self.name
+
+    @receiver(post_save, sender=Сommunity)
+    def create_c_model(sender, instance, created, **kwargs):
+        if created:
+            community=instance
+            PhotoList.objects.create(community=community, type=PhotoList.MAIN, name="Основной альбом", creator=community.creator)
+            PhotoList.objects.create(community=community, type=PhotoList.AVATAR, name="Фото со страницы", creator=community.creator)
+            PhotoList.objects.create(community=community, type=PhotoList.WALL, name="Фото со стены", creator=community.creator)
+    @receiver(post_save, sender=User)
+    def create_u_model(sender, instance, created, **kwargs):
+        if created:
+            PhotoList.objects.create(creator=instance, type=PhotoList.MAIN, name="Основной альбом")
+            PhotoList.objects.create(creator=instance, type=PhotoList.AVATAR, name="Фото со страницы")
+            PhotoList.objects.create(creator=instance, type=PhotoList.WALL, name="Фото со стены")
+
     def get_users_ids(self):
-        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
@@ -55,60 +64,46 @@ class Album(models.Model):
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
-        if self.creator.pk != user_id and user_id not in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id not in self.get_users_ids():
     def is_user_can_delete_list(self, user_id):
-        if self.creator.pk != user_id and user_id in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id in self.get_users_ids():
+
     def is_community_can_add_list(self, community_id):
-        if self.community.pk != community_id and community_id not in self.get_communities_ids():
-            return True
-        else:
-            return False
+        return self.community.pk != community_id and community_id not in self.get_communities_ids():
     def is_community_can_delete_list(self, community_id):
-        if self.community.pk != community_id and community_id in self.get_communities_ids():
-            return True
-        else:
-            return False
+        return self.community.pk != community_id and community_id in self.get_communities_ids():
 
-    def is_avatar_album(self):
+    def is_avatar(self):
         return self.type == self.AVATAR
-    def is_wall_album(self):
+    def is_wall(self):
         return self.type == self.WALL
-    def is_main_album(self):
+    def is_main(self):
         return self.type == self.MAIN
-    def is_user_album(self):
-        return self.type == self.ALBUM
-
-    def __str__(self):
-        return self.title
+    def is_user(self):
+        return self.type == self.LIST
+    def is_open(self):
+        return self.type[0] != "T"
 
     def get_cover_photo(self):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return self.photo_album.filter(is_deleted=False,is_public=True).first()
+            return self.photo_list.filter(status="PUB").first()
 
     def get_first_photo(self):
-        return self.photo_album.filter(is_deleted=False).first()
+        return self.photo_list.exclude(status__contains="THIS").first()
 
-    def get_6_photos(self):
-        return self.photo_album.filter(is_deleted=False,is_public=True)[:5]
-
-    def get_staff_6_photos(self):
-        return self.photo_album.filter(is_deleted=False)[:5]
-
-    def count_photo(self):
+    def get_items(self):
+        return self.photo_list.exclude(status__contains="THIS")
+    def get_staff_items(self):
+        return self.photo_list.exclude(status__contains="THIS")
+    def count_items(self):
         try:
-            return self.photo_album.filter(is_deleted=False).values("pk").count()
+            return self.photo_list.exclude(status__contains="THIS").values("pk").count()
         except:
             return 0
-    def count_photo_ru(self):
-        count = self.count_photo()
+    def count_items_ru(self):
+        count = self.count_items()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):
@@ -118,31 +113,83 @@ class Album(models.Model):
         else:
             return str(count) + " фотографий"
 
-    def get_photos(self):
-        return self.photo_album.filter(is_deleted=False, is_public=True)
-
-    def get_staff_photos(self):
-        return self.photo_album.filter(is_deleted=False)
-
     def is_not_empty(self):
-        return self.photo_album.filter(album=self).values("pk").exists()
+        return self.photo_list.filter(status="PUB").values("pk").exists()
 
-    def is_photo_in_album(self, photo_id):
-        return self.photo_album.filter(pk=photo_id).values("pk").exists()
+    def is_item_in_list(self, item_id):
+        return self.photo_list.filter(pk=item_id).values("pk").exists()
+
+    @classmethod
+    def get_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists_count(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def get_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists_count(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
 
 
 class Photo(models.Model):
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
+    )
+
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    album = models.ManyToManyField(Album, related_name="photo_album", blank=True)
+    list = models.ManyToManyField(PhotoList, related_name="photo_list", blank=True)
     file = ProcessedImageField(format='JPEG', options={'quality': 100}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=1024, upscale=False)])
     preview = ProcessedImageField(format='JPEG', options={'quality': 60}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=102, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")
-    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -155,17 +202,12 @@ class Photo(models.Model):
         return naturaltime(self.created)
 
     @classmethod
-    def create_photo(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None, item=None ):
-        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description, item=item, )
+    def create_photo(cls, creator, list=None, file=None, community=None, created=None, is_public=None, description=None, item=None):
+        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, list=list, description=description, item=item, )
         return photo
 
-    @classmethod
-    def create_avatar(cls, creator, album=None, file=None, community=None, created=None, is_public=None, description=None):
-        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, album=album, description=description,)
-        return photo
-
-    def is_album_exists(self):
-        return self.photo_album.filter(creator=self.creator).exists()
+    def is_list_exists(self):
+        return self.photo_list.filter(creator=self.creator).exists()
 
     def get_comments(self):
         comments_query = Q(photo_id=self.pk)
@@ -184,41 +226,37 @@ class Photo(models.Model):
     def is_avatar(self, user):
         try:
             avatar = user.get_avatar_photos().order_by('-id')[0]
-            if avatar == self:
-                return True
-            else:
-                return None
+            return avatar == self
         except:
             return None
 
     def likes(self):
-        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
+        return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
 
     def likes_count(self):
-        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
+        likes = PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0).values("pk").count()
         if likes > 0:
             return likes
         else:
             return ''
 
     def window_likes(self):
-        likes = PhotoVotes.objects.filter(parent=self, vote__gt=0)
+        likes = PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
         return likes[0:6]
 
     def dislikes(self):
-        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
+        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
         return dislikes
 
     def dislikes_count(self):
-        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
+        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0).values("pk").count()
         if dislikes > 0:
             return dislikes
         else:
             return ''
 
     def window_dislikes(self):
-        dislikes = PhotoVotes.objects.filter(parent=self, vote__lt=0)
+        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
         return dislikes[0:6]
 
     def delete_photo(self):
@@ -240,20 +278,29 @@ class Photo(models.Model):
         return self.save(update_fields=['is_deleted'])
 
     def get_type(self):
-        return self.album.all()[0].type
+        return self.list.all()[0].type
 
 
 class PhotoComment(models.Model):
+    EDITED = 'EDI'
+    DELETED = 'DEL'
+    CLOSED = 'CLO'
+    PROCESSING = 'PRO'
+    PUBLISHED = 'PUB'
+    STATUS = (
+        (DELETED, 'Удалённый'),
+        (EDITED, 'Изменённый'),
+        (CLOSED, 'Закрытый менеджером'),
+        (PROCESSING, 'Обработка'),
+        (PUBLISHED, 'Опубликовано'),
+    )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
-    id = models.BigAutoField(primary_key=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    status = models.CharField(max_length=5, choices=STATUS, default=PROCESSING, verbose_name="Тип альбома")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
@@ -268,14 +315,13 @@ class PhotoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = PhotoComment.objects.filter(parent=self).all()
-        return get_comments
+        return PhotoComment.objects.filter(parent=self).all()
 
     def count_replies(self):
-        return self.photo_comment_replies.filter(is_deleted=False).values("pk").count()
+        return self.photo_comment_replies.filter(Q(type=EDITED)|Q(type=PUBLISHED)).values("pk").count()
 
     def count_replies_ru(self):
-        count = self.photo_comment_replies.filter(is_deleted=False).values("pk").count()
+        count = self.count_replies()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):
@@ -286,33 +332,26 @@ class PhotoComment(models.Model):
             return str(count) + " ответов"
 
     def likes(self):
-        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-        return likes
+        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
 
     def window_likes(self):
-        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-        return likes[0:6]
+        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)[0:6]
 
     def dislikes(self):
-        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
-        return dislikes
+        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 
     def window_dislikes(self):
-        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
-        return dislikes[0:6]
-
-    def __str__(self):
-        return self.text
+        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)[0:6]
 
     def likes_count(self):
-        likes = PhotoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
+        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk").count()
         if likes > 0:
             return likes
         else:
             return ''
 
     def dislikes_count(self):
-        dislikes = PhotoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
+        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk").count()
         if dislikes > 0:
             return dislikes
         else:
@@ -324,7 +363,7 @@ class PhotoComment(models.Model):
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text, created=timezone.now())
+        comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text)
         if comment.parent:
             photo = comment.parent.photo
             type = "phr"+str(comment.pk)+",phc"+str(comment.parent.pk)+",pho"+str(photo.pk)
@@ -354,24 +393,28 @@ class PhotoComment(models.Model):
 
     def delete_comment(self):
         try:
-            from notify.models import Notify
+            from notify.models import Notify, Wall
+
+            Wall.objects.filter(attach="phc" + str(self.pk)).update(status="C")
             if self.parent:
                 Notify.objects.filter(attach="phr" + str(self.pk)).update(status="C")
             else:
                 Notify.objects.filter(attach="phc" + str(self.pk)).update(status="C")
         except:
             pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
+        self.status = DELETED
+        return self.save(update_fields=['status'])
 
     def abort_delete_comment(self):
         try:
-            from notify.models import Notify
+            from notify.models import Notify, Wall
+
+            Wall.objects.filter(attach="phc" + str(self.pk)).update(status="R")
             if self.parent:
                 Notify.objects.filter(attach="phr" + str(self.pk)).update(status="R")
             else:
                 Notify.objects.filter(attach="phc" + str(self.pk)).update(status="R")
         except:
             pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
+        self.status = PUBLISHED
+        return self.save(update_fields=['status'])

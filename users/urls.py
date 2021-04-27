@@ -24,11 +24,11 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/music_list/(?P<uuid>[0-9a-f-]+)/$', UserMusicList.as_view(), name='user_music_list'),
 
     url(r'^(?P<pk>\d+)/video/$', UserVideo.as_view(), name='user_video'),
-    url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', UserVideoList.as_view(), name='user_video_album'),
+    url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', UserVideoList.as_view(), name='user_video_list'),
 
     url(r'^(?P<pk>\d+)/goods/$', UserGoods.as_view(), name='user_goods'),
-    url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodsList.as_view(), name='user_good_album'),
+    url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodsList.as_view(), name='user_good_list'),
 
     url(r'^(?P<pk>\d+)/gallery/$', UserGallery.as_view(), name='user_gallery'),
-    url(r'^(?P<pk>\d+)/album/(?P<uuid>[0-9a-f-]+)/$', UserAlbum.as_view(), name='user_album'),
+    url(r'^(?P<pk>\d+)/photo_list/(?P<uuid>[0-9a-f-]+)/$', UserPhotoList.as_view(), name='user_photo_list'),
 ]

@@ -1,13 +1,13 @@
 <div style="flex: 0 0 50%; max-width:50%; padding:5px">
-        <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ album.uuid }}">
+        <div class="border c_good_detail pointer pag {% if forloop.last %}last{% endif %}" good-pk="{{ object.pk }}" data-uuid="{{ list.uuid }}">
             <div class="text-center">
               {% if object.image %}
                 <img class="image_fit_160" src="{{ object.image.url }}" alt="">
               {% else %}
-                <img class="image_fit_160" src="/static/images/no_img/album.jpg" />
+                <img class="image_fit_160" src="/static/images/no_img/list.jpg" />
               {% endif %}
             </div>
-            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.title }}</h5>
+            <h5 class="card-title mb-1 header-color-primary text-center">{{ object.name }}</h5>
             <p class="content-color-primary mb-0 p-1">
               {% if object.price %}
                 {{ object.price }} ₽

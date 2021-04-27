@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
-from gallery.models import Album, Photo
+from gallery.models import PhotoList, Photo
 from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
@@ -11,25 +11,25 @@ from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
 
 
-class CommunityLoadAlbum(ListView):
+class CommunityLoadPhotoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
-		if self.album.community:
-			self.template_name = get_permission_community_photo(self.album, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.community:
+			self.template_name = get_permission_community_photo(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from common.template.photo import get_permission_user_photo
-			self.template_name = get_permission_user_photo(self.album, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_permission_user_photo(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.photo_list = self.album.get_staff_photos()
+			self.photo_list = self.list.get_staff_photos()
 		else:
-			self.photo_list = self.album.get_photos()
-		return super(CommunityLoadAlbum,self).get(request,*args,**kwargs)
+			self.photo_list = self.list.get_photos()
+		return super(CommunityLoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		c = super(CommunityLoadAlbum,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.c, self.album
+		c = super(CommunityLoadPhotoList,self).get_context_data(**kwargs)
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
@@ -43,15 +43,15 @@ class CommunityPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(community_id=self.community.pk, type=Album.MAIN)
+        self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "communities/gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "communities/gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-            self.photo_list = self.album.get_staff_photos()
+            self.photo_list = self.list.get_staff_photos()
         else:
-            self.photo_list = self.album.get_photos()
+            self.photo_list = self.list.get_photos()
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -63,27 +63,27 @@ class CommunityPhotosList(ListView):
         photo_list = self.photo_list
         return photo_list
 
-class CommunityAlbumPhotosList(ListView):
+class CommunityAlbumPhotoList(ListView):
     template_name = None
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "communities/album/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "communities/photo_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-            self.photo_list = self.album.get_staff_photos()
+            self.photo_list = self.list.get_staff_photos()
         else:
-            self.photo_list = self.album.get_photos()
-        return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
+            self.photo_list = self.list.get_photos()
+        return super(CommunityAlbumPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityAlbumPhotosList,self).get_context_data(**kwargs)
+        context = super(CommunityAlbumPhotoList,self).get_context_data(**kwargs)
         context['community'] = self.community
-        context['album'] = self.album
+        context['list'] = self.list
         return context
 
     def get_queryset(self):
@@ -125,13 +125,13 @@ class CommunityDetailAvatar(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+            self.list = PhotoList.objects.get(community=self.community, type=PhotoList.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
+            self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.photos = self.album.get_photos()
+        self.photos = self.list.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
@@ -142,7 +142,7 @@ class CommunityDetailAvatar(TemplateView):
         context["community"] = self.community
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-        context["album"] = self.album
+        context["list"] = self.list
         return context
 
 class CommunityFirstAvatar(TemplateView):
@@ -154,14 +154,14 @@ class CommunityFirstAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = Album.objects.get(community=self.community, type=Album.AVATAR)
+            self.list = PhotoList.objects.get(community=self.community, type=PhotoList.AVATAR)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
-        self.photo = self.album.get_first_photo()
+            self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
+        self.photo = self.list.get_first_photo()
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.photos = self.album.get_photos()
+        self.photos = self.list.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
@@ -171,7 +171,7 @@ class CommunityFirstAvatar(TemplateView):
         context["object"] = self.photo
         context["community"] = self.community
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-        context["album"] = self.album
+        context["list"] = self.list
         return context
 
 
@@ -183,10 +183,10 @@ class CommunityPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.album.get_photos()
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.photos = self.list.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityPhoto,self).get(request,*args,**kwargs)
@@ -194,15 +194,15 @@ class CommunityPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["community"] = self.album.community
+        context["community"] = self.list.community
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["album"] = self.album
+        context["list"] = self.list
         return context
 
 
-class CommunityAlbumPhoto(TemplateView):
+class CommunityPhotoListPhoto(TemplateView):
     """
     страница отдельного фото в альбоме для пользователя с разрещениями и без
     """
@@ -210,22 +210,22 @@ class CommunityAlbumPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.album, "gallery/c_photo/album_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if request.user.is_authenticated and request.user.is_administrator_of_community(self.album.community.pk):
-            self.photos = self.album.get_staff_photos()
+        if request.user.is_authenticated and request.user.is_administrator_of_community(self.list.community.pk):
+            self.photos = self.list.get_staff_photos()
         else:
-            self.photos = self.album.get_photos()
-        return super(CommunityAlbumPhoto,self).get(request,*args,**kwargs)
+            self.photos = self.list.get_photos()
+        return super(CommunityPhotoListPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityAlbumPhoto,self).get_context_data(**kwargs)
+        context = super(CommunityPhotoListPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["community"] = self.album.community
-        context["album"] = self.album
+        context["community"] = self.list.community
+        context["list"] = self.list
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
@@ -245,12 +245,12 @@ class CommunityWallPhoto(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         try:
-            self.album = Album.objects.get(community=self.community, type=Album.WALL)
+            self.list = PhotoList.objects.get(community=self.community, type=PhotoList.WALL)
         except:
-            self.album = Album.objects.create(creator=self.community.creator, community=self.community, type=Album.WALL, title="Фото со стены", description="Фото со стены")
-        self.photos = self.album.get_photos()
+            self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.WALL, title="Фото со стены", description="Фото со стены")
+        self.photos = self.list.get_photos()
         if request.is_ajax():
-            self.template_name = get_permission_community_photo_detail(self.album, self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo_detail(self.list, self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
@@ -263,7 +263,7 @@ class CommunityWallPhoto(TemplateView):
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
-        context["album"] = self.album
+        context["list"] = self.list
         return context
 
 class CommunityPostPhoto(TemplateView):

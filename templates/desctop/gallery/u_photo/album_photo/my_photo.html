@@ -1,11 +1,11 @@
 <span class="text-hide-xs">
   {% if prev %}
-    <a class="prev_photo btn_default" href="{% url 'user_album_photo' pk=prev.pk uuid=album.uuid %}">
+    <a class="prev_photo btn_default" href="{% url 'user_list_photo' pk=prev.pk uuid=list.uuid %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
   {% if next %}
-    <a class="next_photo btn_default" href="{% url 'user_album_photo' pk=next.pk uuid=album.uuid %}">
+    <a class="next_photo btn_default" href="{% url 'user_list_photo' pk=next.pk uuid=list.uuid %}">
       <svg class="svg_default" style="width:50px;height:50px;" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
     </a>
   {% endif %}
@@ -21,7 +21,7 @@
           <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
     </div>
-    <a href="{% url 'user_album' pk=user.pk uuid=album.uuid %}" class="ajax">{{ album.title }}</a><br>
+    <a href="{% url 'user_list' pk=user.pk uuid=list.uuid %}" class="ajax">{{ list.name }}</a><br>
 <span class="btn_settings_photo">
     <span>
       <span>

@@ -37,7 +37,6 @@ class UserManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -79,7 +78,6 @@ class CommunityManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -112,7 +110,6 @@ class UserWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -144,7 +141,6 @@ class UserCreateWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -177,7 +173,6 @@ class CommunityWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -209,7 +204,6 @@ class CommunityCreateWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

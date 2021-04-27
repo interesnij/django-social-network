@@ -1,18 +1,18 @@
 from django.views.generic.base import TemplateView
 from users.models import User
-from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory, GoodAlbum
+from goods.models import Good, GoodComment, GoodSubCategory, GoodCategory, GoodList
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
 from users.models import User
-from goods.forms import CommentForm, GoodForm, GoodAlbumForm
+from goods.forms import CommentForm, GoodForm, GoodListForm
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
 
 
-class UserGoodAlbumAdd(View):
+class UserGoodListAdd(View):
     def get(self,request,*args,**kwargs):
-        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.users.add(request.user)
@@ -20,9 +20,9 @@ class UserGoodAlbumAdd(View):
         else:
             return HttpResponse()
 
-class UserGoodAlbumRemove(View):
+class UserGoodListRemove(View):
     def get(self,request,*args,**kwargs):
-        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.users.remove(request.user)
@@ -192,7 +192,7 @@ class GoodUserCreate(TemplateView):
             from common.notify.notify import user_notify
 
             good = self.form.save(commit=False)
-            albums = self.form.cleaned_data.get("album")
+            lists = self.form.cleaned_data.get("list")
             images = request.POST.getlist('images')
             if not good.price:
                 good.price = 0
@@ -204,7 +204,7 @@ class GoodUserCreate(TemplateView):
                                         creator=self.user,
                                         description=good.description,
                                         price=good.price,
-                                        albums=albums,
+                                        lists=lists,
                                         comments_enabled=good.comments_enabled,
                                         votes_on=good.votes_on,
                                         status="PG")
@@ -215,89 +215,75 @@ class GoodUserCreate(TemplateView):
             return HttpResponseBadRequest("")
 
 
-class GoodAlbumUserCreate(TemplateView):
+class GoodListUserCreate(TemplateView):
     """
     создание списка товаров пользователя
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_base/u_add_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_base/u_add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(GoodListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodAlbumUserCreate,self).get_context_data(**kwargs)
-        context["form"] = GoodAlbumForm()
+        context=super(GoodListUserCreate,self).get_context_data(**kwargs)
+        context["form"] = GoodListForm()
         context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = GoodAlbumForm(request.POST)
+        self.form = GoodListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
-            album = self.form.save(commit=False)
-            new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=None)
-            return render_for_platform(request, 'users/user_goods_list/my_list.html',{'album': new_album})
+            list = self.form.save(commit=False)
+            new_list = GoodList.objects.create(title=list.title, type=GoodList.LIST, order=list.order, creator=request.user, community=None)
+            return render_for_platform(request, 'users/user_goods_list/my_list.html',{'list': new_list})
         else:
             return HttpResponseBadRequest()
-        return super(GoodAlbumUserCreate,self).get(request,*args,**kwargs)
+        return super(GoodListUserCreate,self).get(request,*args,**kwargs)
 
-
-class UserGoodAlbumPreview(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.album, self.template_name = GoodAlbum.objects.get(pk=self.kwargs["pk"]), get_settings_template("users/user_goods/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserGoodAlbumPreview,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserGoodAlbumPreview,self).get_context_data(**kwargs)
-		context["album"] = self.album
-		return context
-
-
-class UserGoodAlbumEdit(TemplateView):
+class UserGoodListEdit(TemplateView):
     """
     изменение списка товаров пользователя
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("goods/good_base/u_edit_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserGoodAlbumEdit,self).get(request,*args,**kwargs)
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("goods/good_base/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserGoodAlbumEdit,self).get_context_data(**kwargs)
+        context = super(UserGoodListEdit,self).get_context_data(**kwargs)
         context["user"] = self.user
-        context["album"] = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.form = GoodAlbumForm(request.POST,instance=self.album)
+        self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
-            new_album = self.form.save(commit=False)
+            new_list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(UserGoodAlbumEdit,self).get(request,*args,**kwargs)
+        return super(UserGoodListEdit,self).get(request,*args,**kwargs)
 
-class UserGoodAlbumDelete(View):
+class UserGoodListDelete(View):
     def get(self,request,*args,**kwargs):
-        user, album = User.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and album.type == GoodAlbum.ALBUM:
-            album.is_deleted = True
-            album.save(update_fields=['is_deleted'])
+        user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == GoodList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
-class UserGoodAlbumAbortDelete(View):
+class UserGoodListAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user, album = User.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            album.is_deleted = False
-            album.save(update_fields=['is_deleted'])
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404

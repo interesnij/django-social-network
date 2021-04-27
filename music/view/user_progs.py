@@ -90,7 +90,7 @@ class UserTrackAdd(View):
     Добавляем трек в свой плейлист, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_track_in_list(track.pk):
@@ -104,7 +104,7 @@ class UserTrackRemove(View):
     Удаляем трек из своего плейлиста, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk):
             list.players.remove(track)
@@ -117,7 +117,7 @@ class UserTrackListAdd(View):
     Добавляем трек в любой плейлист, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_track_in_list(track.pk):
@@ -131,7 +131,7 @@ class UserTrackListRemove(View):
     Удаляем трек из любого плейлиста, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        track = SoundcloudParsing.objects.get(pk=self.kwargs["pk"])
+        track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk):
             list.players.remove(track)

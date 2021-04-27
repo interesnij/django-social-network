@@ -5,26 +5,24 @@
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
-    {% if album.is_not_empty %}
+    {% if list.is_not_empty %}
     <div class="col">
-      <a class="btn btn-sm attach_video_album custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
+      <a class="btn btn-sm attach_video_list custom_color border" data-pk="{{ list.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
     </div>
     {% endif %}
-    {% if request.user.user_video_album_exists %}
     <div class="col">
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
             Альбомы
         </button>
         <div class="dropdown-menu" style="top: 34px;">
           <a class="dropdown-item  create_ajax" data-href="{% url 'u_video_load' %}">Основной видеоальбом</a>
-          {% for object in request.user.get_my_video_albums %}
+          {% for object in request.user.get_video_lists %}
             <a class="dropdown-item create_ajax" data-href="{% url 'u_video_list_load' uuid=object.uuid %}">
-              {{ object.title }}
+              {{ object.name }}
             </a>
           {% endfor %}
         </div>
     </div>
-    {% endif %}
     <div class="col">
       <a class="btn btn-sm custom_color border create_fullscreen_hide_2" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>

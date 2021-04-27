@@ -1,15 +1,15 @@
-{% with album=object.get_photo_album_repost %}
+{% with list=object.get_photo_list_repost %}
 
   <span style="padding: 5px;">
     Сообщество&nbsp;{% include 'desctop/generic/community/parent.html' %}&nbsp;поделилось фотоальбомом
   </span>
   {% if object.parent.community %}
 
-    {% include 'desctop/generic/items/c_album.html' %}
+    {% include 'desctop/generic/items/c_photo_list.html' %}
 
   {% else %}
 
-    {% include 'desctop/generic/items/u_album.html' %}
+    {% include 'desctop/generic/items/u_photo_list.html' %}
 
   {% endif %}
 

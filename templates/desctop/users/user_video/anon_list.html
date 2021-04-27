@@ -1,8 +1,8 @@
 {% extends "base_anon.html" %}
-{% block title %}{{ album.title }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
+{% block title %}{{ list.name }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
+<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row">
         <div class="col-md-8 mt-3">
           <div class="input-group mb-3">
@@ -20,7 +20,7 @@
                     <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_video }})</h6>
+                    <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_video }})</h6>
                     <p class="">Видеоролики
                     {% include 'desctop/generic/user/user_gen.html' %}
                     </p>
@@ -81,9 +81,9 @@
             </div>
             <div class="card-body">
               <div class="nav flex-column nav-pills faqnav">
-                {% for object in user.get_my_video_albums %}
-                  <a class="ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">
-                    {{ object.title }}
+                {% for object in get_lists %}
+                  <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+                    {{ object.name }}
                   </a>
                 {% endfor %}
               </div>

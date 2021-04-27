@@ -1,7 +1,7 @@
 
 // скрипты галереи для сообщества
 
-on('#ajax', 'click', '.c_add_photo_album', function(e) {
+on('#ajax', 'click', '.c_add_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -11,13 +11,13 @@ on('#ajax', 'click', '.c_add_photo_album', function(e) {
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
       _this.innerHTML = "";
-      _this.classList.add("c_remove_photo_album");
-      _this.classList.remove("c_add_photo_album")
+      _this.classList.add("c_remove_photo_list");
+      _this.classList.remove("c_add_photo_list")
       _this.innerHTML = 'Удалить'
   }};
   link.send( null );
 });
-on('#ajax', 'click', '.c_remove_photo_album', function(e) {
+on('#ajax', 'click', '.c_remove_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -27,25 +27,25 @@ on('#ajax', 'click', '.c_remove_photo_album', function(e) {
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
       _this.innerHTML = "";
-      _this.classList.add("c_add_photo_album");
-      _this.classList.remove("c_remove_photo_album")
+      _this.classList.add("c_add_photo_list");
+      _this.classList.remove("c_remove_photo_list")
       _this.innerHTML = 'В коллекцию'
   }};
   link.send( null );
 });
 
-on('#ajax', 'click', '#c_create_album_btn', function() {
-  form = document.body.querySelector("#c_create_album_form");
+on('#ajax', 'click', '#c_create_photo_list_btn', function() {
+  form = document.body.querySelector("#c_create_photo_list_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/community_progs/add_album/", "/communities/", "/album/");
+  post_and_load_object_page(form, "/gallery/community_progs/add_photo_list/", "/communities/", "/list/");
 });
 
-on('#ajax', 'click', '#c_edit_album_btn', function() {
-  form = document.body.querySelector("#c_edit_album_form");
+on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
+  form = document.body.querySelector("#c_edit_photo_list_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
@@ -55,7 +55,7 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
   uuid = form.getAttribute("data-uuid")
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/edit_album/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/edit_photo_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -63,10 +63,10 @@ on('#ajax', 'click', '#c_edit_album_btn', function() {
     title = form.querySelector('#id_title').value;
     description = form.querySelector('#id_description').value;
 
-    album = document.body.querySelector(".album_active");
-    album.querySelector("h6").innerHTML = title;
-    album.querySelector(".albom_description").innerHTML = description;
-    album.classList.remove("album_active");
+    list = document.body.querySelector(".list_active");
+    list.querySelector("h6").innerHTML = title;
+    list.querySelector(".albom_description").innerHTML = description;
+    list.classList.remove("list_active");
     close_create_window();
     toast_success("Альбом изменен")
   }}
@@ -83,13 +83,13 @@ on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
                      "Репост фотографии в сообщения сделан")
 });
 
-on('#ajax', 'click', '#c_ucm_photo_album_repost_btn', function() {
+on('#ajax', 'click', '#c_ucm_photo_list_repost_btn', function() {
   repost_constructor(this,
-                     "/gallery/repost/c_u_photo_album_repost/",
+                     "/gallery/repost/c_u_photo_list_repost/",
                      "Репост фотоальбома на стену сделан",
-                     "/gallery/repost/c_c_photo_album_repost/",
+                     "/gallery/repost/c_c_photo_list_repost/",
                      "Репост фотоальбома в сообщества сделан",
-                     "/gallery/repost/c_m_photo_album_repost/",
+                     "/gallery/repost/c_m_photo_list_repost/",
                      "Репост фотоальбома в сообщения сделан")
 });
 
@@ -250,12 +250,12 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
+on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_album_photo/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_list_photo/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -264,7 +264,7 @@ on('#ajax', 'change', '#c_gallery_album_photo_add', function() {
     response = document.createElement("span");
     photo_list = document.createElement("div");
     response.innerHTML = elem;
-    document.body.querySelector("#c_album_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector("#c_list_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
   link_.send(form_data);

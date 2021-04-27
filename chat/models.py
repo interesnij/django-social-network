@@ -3,30 +3,28 @@ from django.conf import settings
 from django.db import models
 from common.utils import try_except
 from pilkit.processors import ResizeToFill, ResizeToFit
-from chat.helpers import upload_to_chat_directory
+from chat.helpers import upload_to_chat_directory, validate_file_extension
 from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
 
 
 class Chat(models.Model):
-    TYPE_PRIVATE = 'PR'
-    TYPE_PUBLIC = 'PU'
-    TYPE_MANAGER = 'M'
-    TYPES = (
-        (TYPE_PRIVATE, 'Приватный чат'),
-        (TYPE_PUBLIC, 'Открытый чат'),
-        (TYPE_MANAGER, 'Административный чат'),
+    LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
+    TYPE = (
+        (LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
-    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
-    type = models.CharField(blank=False, null=False, choices=TYPES, default=TYPE_PRIVATE, max_length=4, verbose_name="Тип чата")
-    image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
-    voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
+    type = models.CharField(blank=False, null=False, choices=TYPE, default=THIS_PROCESSING, max_length=6, verbose_name="Тип чата")
+    image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 
     class Meta:
         verbose_name = "Беседа"
@@ -37,11 +35,13 @@ class Chat(models.Model):
         return self.creator.get_full_name()
 
     def is_private(self):
-        return self.type == Chat.TYPE_PRIVATE
+        return self.type == Chat.PRIVATE
     def is_public(self):
-        return self.type == Chat.TYPE_PUBLIC
+        return self.type == Chat.LIST
     def is_manager(self):
-        return self.type == Chat.TYPE_MANAGER
+        return self.type == Chat.MANAGER
+    def is_open(self):
+        return self.type[0] != "T"
 
     def get_members(self):
         from users.models import User
@@ -56,13 +56,13 @@ class Chat(models.Model):
         return self.get_members().values('id').count()
 
     def get_first_message(self):
-        return self.chat_message.filter(is_deleted=False).last()
+        return self.chat_message.exclude(status__contains="THIS").last()
 
     def get_messages(self):
-        return self.chat_message.filter(is_deleted=False)
+        return self.chat_message.exclude(status__contains="THIS")
 
     def get_messages_uuids(self):
-        messages = self.chat_message.filter(is_deleted=False).values('uuid')
+        messages = self.chat_message.exclude(status__contains="THIS").values('uuid')
         return [i['uuid'] for i in messages]
 
     def get_attach_photos(self):
@@ -70,14 +70,14 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        count = self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id).values("pk").count()
+        count = self.chat_message.filter(unread=True).exclude(status__contains="THIS", creator__user_id=user_id).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=user_id)
+        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, status__contains="THIS")
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -197,7 +197,7 @@ class Chat(models.Model):
             return ''.join([figure, media_body])
 
     def is_not_empty(self):
-        return self.chat_message.filter(chat=self,is_deleted=False).values("pk").exists()
+        return self.chat_message.exclude(status__contains="THIS").values("pk").exists()
 
     def add_administrator(self, user):
         member = self.chat_relation.get(user=user)
@@ -242,17 +242,11 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    STATUS_DRAFT = 'D'
-    STATUS_ERROR = 'ER'
-    STATUS_PROCESSING = 'PG'
-    STATUS_PUBLISHED = 'P'
-    STATUS_EDIT = 'E'
-    STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_ERROR, 'Ошибка отправления'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликовано'),
-        (STATUS_EDIT, 'Изменено'),
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -261,13 +255,12 @@ class Message(models.Model):
     text = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-    is_fixed = models.BooleanField(default=False, verbose_name="Закреплено")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
-    status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=5, verbose_name="Статус сообщения")
+    status = models.CharField(choices=STATUSES, default=THIS_PROCESSING, max_length=5, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
-    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
+    #repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
@@ -386,11 +379,11 @@ class Message(models.Model):
     def get_photo_repost(self):
         photo = self.repost.parent.item_photo.filter(is_deleted=False)[0]
         return photo
-    def is_photo_album_repost(self):
+    def is_photo_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.PHOTO_ALBUM_REPOST)
-    def get_photo_album_repost(self):
-        return self.repost.parent.post_album.filter(is_deleted=False)[0]
+        return try_except(self.repost.status == Post.PHOTO_LIST_REPOST)
+    def get_photo_list_repost(self):
+        return self.repost.parent.post_list.filter(is_deleted=False)[0]
 
     def is_music_repost(self):
         from posts.models import Post
@@ -399,10 +392,10 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.repost.parent.post_soundlist.filter(is_deleted=False)[0]
+        playlist = self.repost.parent.post_soundlist.exclude(type__contains="THIS")[0]
         return playlist
     def get_music_repost(self):
-        music = self.repost.parent.item_music.filter(is_deleted=False)[0]
+        music = self.repost.parent.item_music.exclude(type__contains="THIS")[0]
         return music
 
     def is_good_repost(self):
@@ -412,9 +405,9 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        return self.repost.item_good.filter(is_deleted=False)[0]
+        return self.repost.item_good.exclude(type__contains="THIS")[0]
     def get_good_list_repost(self):
-        return self.repost.parent.post_good_album.filter(is_deleted=False)[0]
+        return self.repost.parent.post_good_list.exclude(type__contains="THIS")[0]
 
     def is_doc_repost(self):
         from posts.models import Post
@@ -423,9 +416,9 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        return self.repost.parent.post_doclist.filter(is_deleted=False)[0]
+        return self.repost.parent.post_doclist.exclude(type__contains="THIS")[0]
     def get_doc_repost(self):
-        return self.repost.parent.item_doc.filter(is_deleted=False)[0]
+        return self.repost.parent.item_doc.exclude(type__contains="THIS")[0]
 
     def is_video_repost(self):
         from posts.models import Post
@@ -434,7 +427,7 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        return self.repost.parent.post_video_album.filter(is_deleted=False)[0]
+        return self.repost.parent.post_video_list.exclude(type__contains="THIS")[0]
 
     def get_fixed_message_for_chat(self, chat_id):
         try:
@@ -464,20 +457,3 @@ class Message(models.Model):
     def get_c_attach(self, user):
         from common.attach.message_attach import get_c_message_attach
         return get_c_message_attach(self, user)
-
-
-class MessageFavorite(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_message_favorite', verbose_name="Члены сообщества")
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='message_favorite', verbose_name="Сообщение")
-
-    class Meta:
-        verbose_name = 'Избранное сообщение'
-        verbose_name_plural = 'Избранные сообщения'
-
-    @classmethod
-    def create_favorite(cls, user_id, message):
-        if not cls.objects.filter(user_id=user_id, message=message).exists():
-            favorite = cls.objects.create(user_id=user_id, message=message,)
-            return favorite
-        else:
-            pass

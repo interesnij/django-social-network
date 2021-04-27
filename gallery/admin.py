@@ -1,12 +1,12 @@
 from django.contrib import admin
-from gallery.models import Album, Photo
+from gallery.models import PhotoList, Photo
 
 
-class AlbumAdmin(admin.ModelAdmin):
-    list_display = ['title', 'creator', 'created', 'is_deleted']
+class PhotoListAdmin(admin.ModelAdmin):
+    list_display = ['name', 'creator', 'created', 'is_deleted']
     list_filter = ['creator', ]
     class Meta:
-        model = Album
+        model = PhotoList
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ['creator', 'created', 'is_deleted']
@@ -15,5 +15,5 @@ class PhotoAdmin(admin.ModelAdmin):
     class Meta:
             model = Photo
 
-admin.site.register(Album, AlbumAdmin)
+admin.site.register(PhotoList, PhotoListAdmin)
 admin.site.register(Photo, PhotoAdmin)

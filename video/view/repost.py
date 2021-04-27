@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from video.models import Video, VideoAlbum
+from video.models import Video, VideoList
 from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
@@ -56,44 +56,44 @@ class CUCMVideoWindow(TemplateView):
         return context
 
 
-class UUCMVideoAlbumWindow(TemplateView):
+class UUCMVideoListWindow(TemplateView):
     """
     форма репоста видеоальбома пользователя к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("video/repost/u_ucm_video_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UUCMVideoAlbumWindow,self).get(request,*args,**kwargs)
+        self.template_name = get_detect_platform_template("video/repost/u_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UUCMVideoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMVideoAlbumWindow,self).get_context_data(**kwargs)
+        context = super(UUCMVideoListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.album
+        context["object"] = self.list
         context["user"] = self.user
         return context
 
-class CUCMVideoAlbumWindow(TemplateView):
+class CUCMVideoAListWindow(TemplateView):
     """
     форма репоста видеоальбома сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("video/repost/c_ucm_video_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CUCMVideoAlbumWindow,self).get(request,*args,**kwargs)
+        self.template_name = get_detect_platform_template("video/repost/c_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CUCMVideoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMVideoAlbumWindow,self).get_context_data(**kwargs)
+        context = super(CUCMVideoListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.album
+        context["object"] = self.list
         context["community"] = self.community
         return context
 
@@ -216,12 +216,12 @@ class CMVideoRepost(View):
         return HttpResponse()
 
 
-class UUVideoAlbumRepost(View):
+class UUVideoListRepost(View):
     """
     создание репоста видеоальбома пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -229,41 +229,41 @@ class UUVideoAlbumRepost(View):
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lvi"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lvi"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_notify(request.user, album.creator.pk, None, "vid"+album.pk, "u_video_list_repost", "LRE")
+            user_notify(request.user, list.creator.pk, None, "vid"+list.pk, "u_video_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CUVideoAlbumRepost(View):
+class CUVideoListRepost(View):
     """
     создание репоста видеоальбома сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
         lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lvi"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_notify(request.user, community, None, "vid"+album.pk, "c_video_list_repost", 'LRE')
+            community_notify(request.user, community, None, "vid"+list.pk, "c_video_list_repost", 'LRE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
 
 
-class UCVideoAlbumRepost(View):
+class UCVideoListRepost(View):
     """
     создание репоста видеоальбома пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -275,21 +275,21 @@ class UCVideoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lvi"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_notify(request.user, album.creator.pk, community_id, "vid"+album.pk, "u_video_list_repost", 'CLR')
+                    user_notify(request.user, list.creator.pk, community_id, "vid"+list.pk, "u_video_list_repost", 'CLR')
         return HttpResponse()
 
 
-class CCVideoAlbumRepost(View):
+class CCVideoListRepost(View):
     """
     создание репоста видеоальбома сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -300,35 +300,35 @@ class CCVideoAlbumRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lvi"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "vid"+album.pk, "c_video_list_repost", 'CLR')
+                    community_notify(request.user, community, community_id, "vid"+list.pk, "c_video_list_repost", 'CLR')
         return HttpResponse()
 
 
-class UMVideoAlbumRepost(View):
+class UMVideoListRepost(View):
     """
     создание репоста видеоальбома пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(album, "lvi"+str(album.pk), None, request, "Репост видеоальбома пользователя")
+        repost_message_send(list, "lvi"+str(list.pk), None, request, "Репост видеоальбома пользователя")
         return HttpResponse()
 
 
-class CMVideoAlbumRepost(View):
+class CMVideoListRepost(View):
     """
     создание репоста видеоальбома сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(album, "lvi"+str(album.pk), community, request, "Репост видеоальбома сообщества")
+        repost_message_send(list, "lvi"+str(list.pk), community, request, "Репост видеоальбома сообщества")
         return HttpResponse()

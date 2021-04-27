@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/music_list/(?P<uuid>[0-9a-f-]+)/$', CommunityMusicList.as_view(), name='community_music_list'),
 
     url(r'^(?P<pk>\d+)/video/$', CommunityVideo.as_view(), name='community_video'),
-    url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoList.as_view(), name='community_video_album'),
+    url(r'^(?P<pk>\d+)/video_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoList.as_view(), name='community_video_list'),
 
     url(r'^(?P<pk>\d+)/docs/$', CommunityDocs.as_view(), name='community_docs'),
     url(r'^(?P<pk>\d+)/doc_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocsList.as_view(), name='community_docs_list'),
@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/goods_list/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodsList.as_view(), name='community_goods_list'),
 
     url(r'^(?P<pk>\d+)/gallery/$', CommunityGallery.as_view(), name='community_gallery'),
-    url(r'^(?P<pk>\d+)/album/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbum.as_view(), name='community_album'),
+    url(r'^(?P<pk>\d+)/photo_list/(?P<uuid>[0-9a-f-]+)/$', CommunityPhotoList.as_view(), name='community_list'),
 
     url(r'^manage/', include('communities.url.manage')),
     url(r'^progs/', include('communities.url.progs')),

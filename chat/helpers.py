@@ -15,3 +15,15 @@ def _upload_to_user_directory(creator, filename):
 
     return '%(path)s%(new_filename)s' % {'path': path,
                                          'new_filename': new_filename, }
+
+def validate_file_extension(value):
+    import os
+    from rest_framework.exceptions import ValidationError
+    from django.conf import settings
+
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.ogg','.mp3','.wave']
+    if not ext in valid_extensions:
+        raise ValidationError('Допустимы форматы: ogg, mp3, wave!')
+    if value.size > settings.MUSIC_FILE_MAX_SIZE:
+        raise ValidationError('Размер не более 5 МБ!')

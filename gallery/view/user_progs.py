@@ -1,6 +1,6 @@
 from users.models import User
-from gallery.models import Album, Photo, PhotoComment
-from gallery.forms import PhotoDescriptionForm, CommentForm, AlbumForm
+from gallery.models import PhotoList, Photo, PhotoComment
+from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
@@ -10,9 +10,9 @@ from common.template.user import get_settings_template, render_for_platform
 from django.views.generic.base import TemplateView
 
 
-class UserAlbumAdd(View):
+class UserPhotoListAdd(View):
     def get(self,request,*args,**kwargs):
-        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.users.add(request.user)
@@ -20,9 +20,9 @@ class UserAlbumAdd(View):
         else:
             return HttpResponse()
 
-class UserAlbumRemove(View):
+class UserPhotoListRemove(View):
     def get(self,request,*args,**kwargs):
-        list = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.users.remove(request.user)
@@ -42,11 +42,11 @@ class UserAddAvatar(View):
 
             photo_input = request.FILES.get('file')
             try:
-                _album = Album.objects.get(creator=user, type=Album.AVATAR, community__isnull=True)
+                _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
             except:
-                _album = Album.objects.create(creator=user, type=Album.AVATAR, title="Фото со страницы", description="Фото со страницы")
+                _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
             photo = Photo.objects.create(file=photo_input, preview=photo_input,creator=user)
-            photo.album.add(_album)
+            photo.дшые.add(_list)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
@@ -63,31 +63,31 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            _album = Album.objects.get(creator_id=self.user.id, community__isnull=True, type=Album.MAIN)
+            _list = PhotoList.objects.get(creator_id=self.user.id, community__isnull=True, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
 
             return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
         else:
             raise Http404
 
-class PhotoAlbumUserCreate(View):
+class PhotoPhotoListUserCreate(View):
     """
     асинхронная мульти загрузка фотографий пользователя в альбом
     """
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        _album = Album.objects.get(uuid=self.kwargs["uuid"])
+        _list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'album': _album, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
         else:
             raise Http404
 
@@ -100,12 +100,12 @@ class PhotoAttachUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _album = Album.objects.get(creator=request.user, community__isnull=True, type=Album.WALL)
+                _list = PhotoList.objects.get(creator=request.user, community__isnull=True, type=PhotoList.WALL)
             except:
-                _album = Album.objects.create(creator=request.user, type=Album.WALL, title="Фото со стены", description="Фото со стены")
+                _list = PhotoList.objects.create(creator=request.user, type=PhotoList.WALL, name="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
                 photo = Photo.objects.create(file=p, preview=p, creator=self.user)
-                _album.photo_album.add(photo)
+                _list.photo_list.add(photo)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
@@ -293,31 +293,15 @@ class UserRemoveAvatarPhoto(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            photo.album = None
-            album = Album.objects.get(creator=user, community__isnull=True, type=Album.AVATAR)
-            photo.album = album
+            photo.list = None
+            list = PhotoList.objects.get(creator=user, community__isnull=True, type=PhotoList.AVATAR)
+            photo.list = list
             photo.save()
             return HttpResponse()
         else:
             raise Http404
 
-
-class UserAlbumPreview(TemplateView):
-	template_name = None
-	paginate_by = 15
-
-	def get(self,request,*args,**kwargs):
-		self.album = Album.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("users/user_album/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserAlbumPreview,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserAlbumPreview,self).get_context_data(**kwargs)
-		context["album"], context["user"] = self.album, self.album.creator
-		return context
-
-
-class AlbumUserCreate(TemplateView):
+class PhotoListUserCreate(TemplateView):
     """
     создание альбома пользователя
     """
@@ -325,31 +309,31 @@ class AlbumUserCreate(TemplateView):
     form = None
 
     def get(self,request,*args,**kwargs):
-        self.form = AlbumForm()
+        self.form = PhotoListForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_album/add_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+        self.template_name = get_settings_template("users/user_list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(AlbumUserCreate,self).get_context_data(**kwargs)
+        context = super(PhotoListUserCreate,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["user"] = self.user
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = AlbumForm(request.POST)
+        self.form = PhotoListForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
-            album = self.form.save(commit=False)
-            if not album.description:
-                album.description = "Без описания"
-            new_album = Album.objects.create(title=album.title, description=album.description, type=Album.ALBUM, is_public=album.is_public, order=album.order,creator=self.user)
-            return render_for_platform(request, 'users/user_album/new_album.html',{'album': new_album, 'user': self.user})
+            list = self.form.save(commit=False)
+            if not list.description:
+                list.description = "Без описания"
+            new_list = PhotoList.objects.create(name=list.name, description=list.description, type=PhotoList.LIST, is_public=list.is_public, order=list.order,creator=self.user)
+            return render_for_platform(request, 'users/user_list/new_list.html',{'list': new_list, 'user': self.user})
         else:
             return HttpResponseBadRequest()
-        return super(AlbumUserCreate,self).get(request,*args,**kwargs)
+        return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
-class AlbumUserEdit(TemplateView):
+class PhotoListUserEdit(TemplateView):
     """
     изменение альбома пользователя
     """
@@ -358,76 +342,76 @@ class AlbumUserEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_album/edit_album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(AlbumUserEdit,self).get(request,*args,**kwargs)
+        self.template_name = get_settings_template("users/user_list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(AlbumUserEdit,self).get_context_data(**kwargs)
+        context = super(PhotoListUserEdit,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["user"] = self.user
-        context["album"] = Album.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.album = Album.objects.get(uuid=self.kwargs["uuid"])
-        self.form = AlbumForm(request.POST,instance=self.album)
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = PhotoListForm(request.POST,instance=self.list)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
-            album = self.form.save(commit=False)
-            if not album.description:
-                album.description = "Без описания"
+            list = self.form.save(commit=False)
+            if not list.description:
+                list.description = "Без описания"
             self.form.save()
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(AlbumUserEdit,self).get(request,*args,**kwargs)
+        return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
-class AlbumUserDelete(View):
+class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and album.type == Album.ALBUM:
-            album.is_deleted = True
-            album.save(update_fields=['is_deleted'])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == PhotoList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
-class AlbumUserAbortDelete(View):
+class PhotoListUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            album.is_deleted = False
-            album.save(update_fields=['is_deleted'])
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
 
-class UserPhotoAlbumAdd(View):
+class UserPhotoPhotoListAdd(View):
     """
     Добавляем фото в любой альбом, если его там нет
     """
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not album.is_photo_in_album(photo.pk):
-            album.photo_album.add(photo)
+        if request.is_ajax() and not list.is_photo_in_list(photo.pk):
+            list.photo_list.add(photo)
             return HttpResponse()
         else:
             raise Http404
 
-class UserPhotoAlbumRemove(View):
+class UserPhotoPhotoListRemove(View):
     """
     Удаляем фото из любого альбома, если он там есть
     """
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        album = Album.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and album.is_photo_in_album(photo.pk):
-            album.photo_album.remove(photo)
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(photo.pk):
+            list.photo_list.remove(photo)
             return HttpResponse()
         else:
             raise Http404

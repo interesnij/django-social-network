@@ -4,11 +4,11 @@
           {% if object.image %}
           <li><img src="{{ object.image.url }}" class="image_fit_50" alt="img"></li>
           {% else %}
-          <img src="/static/images/no_album_photo.png" class="big_img image_fit_50" alt="">
+          <img src="/static/images/no_img/list.jpg" class="big_img image_fit_50" alt="">
           {% endif %}
           {% for img in object.get_images %}
             <li>
-              <img src="{% if img.image %}{{ img.image.url }}{% else %}/static/images/no_album_photo.png{% endif %}" class="image_fit_50" alt="img">
+              <img src="{% if img.image %}{{ img.image.url }}{% else %}/static/images/no_img/list.jpg{% endif %}" class="image_fit_50" alt="img">
             </li>
           {% endfor %}
         </ol>
@@ -18,7 +18,7 @@
         {% if object.image %}
         <img src="{{ object.image.url }}" class="big_img" alt="">
         {% else %}
-        <img src="/static/images/no_album_photo.png" class="big_img" alt="">
+        <img src="/static/images/no_img/list.jpg" class="big_img" alt="">
         {% endif %}
       </div>
 </div>

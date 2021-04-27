@@ -2,22 +2,22 @@
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ album.uuid }}">
-{% if albums_list %}
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+{% if photo_lists %}
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои альбомы</h5>
         </div>
         <div class="col-12 col-md-4">
-          <button class="u_album_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+          <button class="u_photo_list_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить альбом
           </button>
         </div>
     </div>
 </div>
 <div class="container mt-4">
-  {% include 'desctop/users/user_gallery/my_albums.html' %}
+  {% include 'desctop/users/user_gallery/my_photo_lists.html' %}
 </div>
 {% else %}
 <div class="container-fluid mt-3">
@@ -26,7 +26,7 @@
             <h5 class="mt-1">У Вас нет альбомов</h5>
         </div>
         <div class="col-12 col-md-4">
-          <button class="u_album_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+          <button class="u_photo_list_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить альбом
           </button>
         </div>
@@ -38,13 +38,13 @@
     <div class="row">
         <div class="col-12 col-md-8">
             <h5 class="mt-1">Мои фотографии</h5>
-            Фото: {{ album.count_photo }}
+            Фото: {{ list.count_photo }}
         </div>
         <div class="col-12 col-md-4">
           <form id="add_photos">
               {% csrf_token %}
                 <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-                <button id="u_add_multi_photos" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+                <button class="btn btn-outline-success previous_click" style="margin-bottom:15px;width:100%" type="button">
                   Добавить фотографии
                 </button>
           </form>

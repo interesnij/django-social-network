@@ -21,14 +21,14 @@
 <br>
 
 <div class="row" style="margin-left: 0;margin-right: 0;">
-    {% for object in request.user.get_albums %}
+    {% for object in request.user.get_photo_list %}
     <div class="col-md-6 mb-3 col-lg-4 cover_block">
         <div class="card rounded-0 border mb-3">
             <div class="card-header">
                 <div class="media">
                     <div class="media-body" style="white-space:nowrap;overflow:hidden;">
-                        <h6 class="mb-0">{{ object.title }}</h6>
-                        {% if object.is_not_empty %}<p class="pointer photo_attach_album" data-pk="{{ object.pk }}">Прикрепить альбом</p>{% else %}<p></p>{% endif %}
+                        <h6 class="mb-0">{{ object.name }}</h6>
+                        {% if object.is_not_empty %}<p class="pointer photo_attach_list" data-pk="{{ object.pk }}">Прикрепить альбом</p>{% else %}<p></p>{% endif %}
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                   {% if object.get_cover_photo %}
                     <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
                   {% else %}
-                    <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
+                    <img class="image_fit_200" src="/static/images/no_img/list.jpg" />
                   {% endif %}
                 <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
               </a>

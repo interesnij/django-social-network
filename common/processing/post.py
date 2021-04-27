@@ -3,20 +3,14 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 
 
-def get_post_processing(post):
-    post.status = "P"
-    post.save(update_fields=['status'])
-    return post
-
-def get_post_message_processing(post):
-    post.status = "MP"
-    post.save(update_fields=['status'])
-    return post
-
-def get_post_offer_processing(post):
-    post.status = "D"
-    post.save(update_fields=['status'])
-    return post
+def get_post_processing(doc, status):
+    doc.status = status
+    doc.save(update_fields=['status'])
+    return doc
+def get_post_list_processing(list, status):
+    list.type = status
+    list.save(update_fields=['type'])
+    return list
 
 def repost_message_send(list, attach, community, request, text):
     from chat.models import Message, Chat

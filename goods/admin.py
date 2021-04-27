@@ -17,11 +17,11 @@ class GoodSubCategoryAdmin(admin.ModelAdmin):
     class Meta:
             model = GoodSubCategory
 
-class GoodAlbumAdmin(admin.ModelAdmin):
-    list_display = ['title', 'order',]
+class GoodListAdmin(admin.ModelAdmin):
+    list_display = ['name', 'order',]
     search_fields = ['name']
     class Meta:
-            model = GoodAlbum
+            model = GoodList
 
 class GoodAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'sub_category']
@@ -35,5 +35,5 @@ class GoodAdmin(admin.ModelAdmin):
 
 admin.site.register(GoodCategory, GoodCategoryAdmin)
 admin.site.register(GoodSubCategory, GoodSubCategoryAdmin)
-admin.site.register(GoodAlbum, GoodAlbumAdmin)
+admin.site.register(GoodList, GoodListAdmin)
 admin.site.register(Good, GoodAdmin)

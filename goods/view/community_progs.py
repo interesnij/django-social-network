@@ -3,15 +3,15 @@ from goods.models import *
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists
-from goods.forms import CommentForm, GoodForm, GoodAlbumForm
+from goods.forms import CommentForm, GoodForm, GoodListForm
 from communities.models import Community
 from common.processing.good import get_good_processing, get_good_offer_processing
 from common.template.user import render_for_platform
 
 
-class CommunityGoodAlbumAdd(View):
+class CommunityGoodListAdd(View):
     def post(self,request,*args,**kwargs):
-        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -20,9 +20,9 @@ class CommunityGoodAlbumAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityGoodAlbumRemove(View):
+class CommunityGoodListRemove(View):
     def post(self,request,*args,**kwargs):
-        list = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -195,7 +195,7 @@ class GoodCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -212,7 +212,7 @@ class GoodCommunityCreate(TemplateView):
             from common.notify.notify import community_notify
 
             good = self.form.save(commit=False)
-            albums = self.form.cleaned_data.get("album")
+            lists = self.form.cleaned_data.get("list")
             images = request.POST.getlist('images')
             if not good.price:
                 new_good.price = 0
@@ -220,7 +220,7 @@ class GoodCommunityCreate(TemplateView):
                                         title=good.title,
                                         image=good.image,
                                         images=images,
-                                        albums=albums,
+                                        lists=lists,
                                         sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
                                         creator=request.user,
                                         description=good.description,
@@ -235,7 +235,7 @@ class GoodCommunityCreate(TemplateView):
             return HttpResponseBadRequest()
 
 
-class GoodAlbumCommunityCreate(TemplateView):
+class GoodListCommunityCreate(TemplateView):
     """
     создание списка товаров сообщества
     """
@@ -245,27 +245,27 @@ class GoodAlbumCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
 
-        self.template_name = get_community_manage_template("goods/good_base/c_add_album.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
-        return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
+        self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(GoodAlbumCommunityCreate,self).get_context_data(**kwargs)
-        context["form"] = GoodAlbumForm()
+        context=super(GoodListCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = GoodListForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = GoodAlbumForm(request.POST)
+        self.form = GoodListForm(request.POST)
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
-            album = self.form.save(commit=False)
-            new_album = GoodAlbum.objects.create(title=album.title, type=GoodAlbum.ALBUM, order=album.order, creator=request.user, community=self.community)
-            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'album': new_album, 'community': self.community})
+            list = self.form.save(commit=False)
+            new_list = GoodList.objects.create(name=list.name, type=GoodList.LIST, order=list.order, creator=request.user, community=self.community)
+            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'list': new_list, 'community': self.community})
         else:
             return HttpResponseBadRequest()
-        return super(GoodAlbumCommunityCreate,self).get(request,*args,**kwargs)
+        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
 
 
-class CommunityGoodAlbumEdit(TemplateView):
+class CommunityGoodListEdit(TemplateView):
     """
     изменение списка товаров пользователя
     """
@@ -275,41 +275,41 @@ class CommunityGoodAlbumEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
 
-        self.template_name = get_community_manage_template("goods/good_base/c_edit_album.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
-        return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
+        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityGoodAlbumEdit,self).get_context_data(**kwargs)
-        context["album"] = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        context = super(CommunityGoodListEdit,self).get_context_data(**kwargs)
+        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.form = GoodAlbumForm(request.POST,instance=self.album)
+        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
-            album = self.form.save(commit=False)
+            list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(CommunityGoodAlbumEdit,self).get(request,*args,**kwargs)
+        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
 
-class CommunityGoodAlbumDelete(View):
+class CommunityGoodListDelete(View):
     def get(self,request,*args,**kwargs):
-        album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and album.type == GoodAlbum.ALBUM:
-            album.is_deleted = True
-            album.save(update_fields=['is_deleted'])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == GoodList.LIST:
+            list.is_deleted = True
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityGoodAlbumAbortDelete(View):
+class CommunityGoodListAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            album.is_deleted = False
-            album.save(update_fields=['is_deleted'])
+            list.is_deleted = False
+            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404

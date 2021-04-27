@@ -1,29 +1,26 @@
 
 <div class="card mb-4">
   <div class="row mb-3">
-    {% if album.is_not_empty %}
+    {% if list.is_not_empty %}
     <div class="col">
-      <a class="btn btn-sm attach_good_album custom_color border" data-pk="{{ album.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
+      <a class="btn btn-sm attach_good_list custom_color border" data-pk="{{ list.pk }}" style="width: -webkit-fill-available;">+ альбом</a>
     </div>
     {% endif %}
     <div class="col">
       <a class="btn btn-sm custom_color border" id="u_good_add_attach" style="width: -webkit-fill-available;">Создать</a>
     </div>
-    {% if request.user.is_good_album_exists %}
     <div class="col">
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
             Альбомы
         </button>
         <div class="dropdown-menu" style="top: 34px;">
-          <a class="dropdown-item  create_ajax" data-href="{% url 'u_good_load' %}">Основной альбом</a>
-          {% for object in request.user.get_good_albums %}
-            <a class="dropdown-item create_ajax pointer" data-href="/users/load/u_good_album_load/{{ object.uuid }}/">
-              {{ object.title }}
+          {% for object in request.user.get_good_lists %}
+            <a class="dropdown-item create_ajax pointer" data-href="/users/load/u_good_list_load/{{ object.uuid }}/">
+              {{ object.name }}
             </a>
           {% endfor %}
         </div>
     </div>
-    {% endif %}
     <div class="col">
       <a class="btn btn-sm custom_color border create_fullscreen_hide_2" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -36,7 +33,7 @@
 <div class="is_load_paginate" data-link="/users/load/u_good_load/" style="padding-bottom:10px;display: flex; flex-wrap: wrap;">
 {% for object in object_list %}
 <div class="mb-3 load_pag {% if forloop.last %}load_last{% endif %}" style="flex: 0 0 50%;max-width:50%;padding:5px;position: relative;">
-  <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ object.get_album_uuid }}">
+  <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ object.get_list_uuid }}">
     <div class="row align-items-center no-gutters">
       <div class="col">
         {% if object.image %}

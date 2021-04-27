@@ -24,8 +24,8 @@
 
   <div class="card-body">
 
-{% if community.is_public_album_exists %}
-  {% include 'mobile/users/load/c_albums.html' %}
+{% if is_have_lists %}
+  {% include 'mobile/users/load/c_photo_list.html' %}
 {% endif %}
 
 {% if object_list %}

@@ -1,12 +1,12 @@
-from gallery.models import Album, Photo, PhotoComment
+from gallery.models import PhotoList, Photo, PhotoComment
 from django import forms
 
 
-class AlbumForm(forms.ModelForm):
+class PhotoListForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))
 	class Meta:
-		model = Album
-		fields = ['title', 'description', 'is_public', 'order', ]
+		model = PhotoList
+		fields = ['name', 'description', 'is_public', 'order', ]
 
 class PhotoDescriptionForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'height: auto;', 'rows': '4'}))

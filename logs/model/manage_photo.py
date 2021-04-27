@@ -19,7 +19,6 @@ class PhotoManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -43,7 +42,6 @@ class PhotoCommentManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -72,7 +70,6 @@ class PhotoWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -100,7 +97,6 @@ class PhotoCreateWorkerManageLog(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

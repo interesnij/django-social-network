@@ -1,6 +1,6 @@
 // скрипты галереи для пользователя
 
-on('#ajax', 'click', '.u_add_photo_album', function(e) {
+on('#ajax', 'click', '.u_add_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -10,13 +10,13 @@ on('#ajax', 'click', '.u_add_photo_album', function(e) {
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
       _this.innerHTML = "";
-      _this.classList.add("u_remove_photo_album");
-      _this.classList.remove("u_add_photo_album")
+      _this.classList.add("u_remove_photo_list");
+      _this.classList.remove("u_add_photo_list")
       _this.innerHTML = 'Удалить'
   }};
   link.send( null );
 });
-on('#ajax', 'click', '.u_remove_photo_album', function(e) {
+on('#ajax', 'click', '.u_remove_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -26,25 +26,25 @@ on('#ajax', 'click', '.u_remove_photo_album', function(e) {
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
       _this.innerHTML = "";
-      _this.classList.add("u_add_photo_album");
-      _this.classList.remove("u_remove_photo_album")
+      _this.classList.add("u_add_photo_list");
+      _this.classList.remove("u_remove_photo_list")
       _this.innerHTML = 'В коллекцию'
   }};
   link.send( null );
 });
 
-on('#ajax', 'click', '#u_create_album_btn', function() {
-  form = document.body.querySelector("#u_create_album_form");
+on('#ajax', 'click', '#u_create_photo_list_btn', function() {
+  form = document.body.querySelector("#u_create_photo_list_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/user_progs/add_album/", "/users/", "/album/");
+  post_and_load_object_page(form, "/gallery/user_progs/add_photo_list/", "/users/", "/list/");
 });
 
-on('#ajax', 'click', '#u_edit_album_btn', function() {
-  form = document.body.querySelector("#u_edit_album_form");
+on('#ajax', 'click', '#u_edit_photo_list_btn', function() {
+  form = document.body.querySelector("#u_edit_photo_list_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
@@ -54,7 +54,7 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
   uuid = form.getAttribute("data-uuid")
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/edit_album/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/edit_photo_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -62,10 +62,10 @@ on('#ajax', 'click', '#u_edit_album_btn', function() {
     title = form.querySelector('#id_title').value;
     description = form.querySelector('#id_description').value;
 
-    album = document.body.querySelector(".album_active");
-    album.querySelector("h6").innerHTML = title;
-    album.querySelector(".albom_description").innerHTML = description;
-    album.classList.remove("album_active");
+    list = document.body.querySelector(".list_active");
+    list.querySelector("h6").innerHTML = title;
+    list.querySelector(".albom_description").innerHTML = description;
+    list.classList.remove("list_active");
     close_create_window();
     toast_success("Альбом изменен")
   }}
@@ -82,13 +82,13 @@ on('#ajax', 'click', '#u_ucm_photo_repost_btn', function() {
                      "Репост фотографии в сообщения сделан")
 });
 
-on('#ajax', 'click', '#u_ucm_photo_album_repost_btn', function() {
+on('#ajax', 'click', '#u_ucm_photo_list_repost_btn', function() {
   repost_constructor(this,
-                     "/gallery/repost/u_u_photo_album_repost/",
+                     "/gallery/repost/u_u_photo_list_repost/",
                      "Репост фотоальбома на стену сделан",
-                     "/gallery/repost/u_c_photo_album_repost/",
+                     "/gallery/repost/u_c_photo_list_repost/",
                      "Репост фотоальбома в сообщества сделан",
-                     "/gallery/repost/u_m_photo_album_repost/",
+                     "/gallery/repost/u_m_photo_list_repost/",
                      "Репост фотоальбома в сообщения сделан")
 });
 
@@ -246,12 +246,12 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
+on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_album_photo/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_list_photo/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -260,7 +260,7 @@ on('#ajax', 'change', '#u_gallery_album_photo_add', function() {
     response = document.createElement("span");
     photo_list = document.createElement("div");
     response.innerHTML = elem;
-    document.body.querySelector("#u_album_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector("#u_list_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
   link_.send(form_data);
@@ -297,40 +297,40 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_add_photo_in_album', function() {
+on('#ajax', 'click', '.u_add_photo_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = parent.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/gallery/user_progs/add_photo_in_album/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/gallery/user_progs/add_photo_in_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".u_add_photo_in_album");
+    list = parent.querySelector(".u_add_photo_in_list");
     list.style.paddingLeft = "14px";
-    list.classList.add("u_remove_photo_in_album");
-    list.classList.remove("u_add_photo_in_album");
+    list.classList.add("u_remove_photo_in_list");
+    list.classList.remove("u_add_photo_in_list");
     span = document.createElement("span");
     span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
     list.prepend(span)
   }};
   link.send( null );
 })
-on('#ajax', 'click', '.u_remove_photo_in_album', function() {
+on('#ajax', 'click', '.u_remove_photo_in_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = parent.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/gallery/user_progs/remove_photo_in_album/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/gallery/user_progs/remove_photo_in_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".u_remove_photo_in_album");
+    list = parent.querySelector(".u_remove_photo_in_list");
     list.style.paddingLeft = "30px";
-    list.classList.add("u_add_photo_in_album");
-    list.classList.remove("u_remove_photo_in_album");
+    list.classList.add("u_add_photo_in_list");
+    list.classList.remove("u_remove_photo_in_list");
     list.querySelector("svg").remove();
   }};
   link.send( null );

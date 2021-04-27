@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
+{% block content %}
+
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+  <h5 class="mt-1">
+    {% include 'desctop/generic/community/community.html' %} -
+    <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax underline">
+      Галерея
+    </a> - {{ list.name }}
+  </h5>
+  Фото: {{ list.count_photo }}
+
+  {% if list.is_user_list %}
+  <form id="c_add_photos">
+      {% csrf_token %}
+        <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
+        <button class="btn btn-outline-success previous_click" type="button">
+          Добавить фотографии
+        </button>
+  </form>
+  {% endif %}
+</div>
+
+<div class="container mt-4">
+
+    <div class="row is_block_paginate no-gutters" data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/"></div>
+
+</div>
+{% endblock %}

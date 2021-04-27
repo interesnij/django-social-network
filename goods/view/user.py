@@ -2,28 +2,28 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic import TemplateView
 from django.views.generic import ListView
-from goods.models import Good, GoodAlbum
+from goods.models import Good, GoodList
 from users.models import User
 from stst.models import GoodNumbers
 from common.template.good import get_template_user_good, get_permission_user_good
 from django.http import Http404
 
 
-class UserLoadGoodAlbum(ListView):
+class UserLoadGoodList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.album = GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_good(self.album, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadGoodAlbum,self).get(request,*args,**kwargs)
+		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_template_user_good(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		c = super(UserLoadGoodAlbum,self).get_context_data(**kwargs)
-		c['user'], c['album'] = self.album.creator, self.album
+		c = super(UserLoadGoodList,self).get_context_data(**kwargs)
+		c['user'], c['list'] = self.list.creator, self.list
 		return c
 
 	def get_queryset(self):
-		list = self.album.get_goods()
+		list = self.list.get_goods()
 		return list
 
 
@@ -31,8 +31,8 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.album = Good.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.goods, self.user, user_agent = self.album.get_goods(), self.album.creator, request.META['HTTP_USER_AGENT']
+        self.good, self.list = Good.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.goods, self.user, user_agent = self.list.get_goods(), self.list.creator, request.META['HTTP_USER_AGENT']
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -88,7 +88,7 @@ class UserGood(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserGood,self).get_context_data(**kwargs)
         context["object"] = self.good
-        context["album"] = self.album
+        context["list"] = self.list
         context["user"] = self.user
         context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()

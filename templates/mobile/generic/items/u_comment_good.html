@@ -1,12 +1,12 @@
 <div style="flex: 0 0 50%;max-width:50%;padding:5px;">
-        <div class="border u_good_detail pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_album_uuid }}">
+        <div class="border u_good_detail pointer" good-pk="{{ good.pk }}" data-uuid="{{ good.get_list_uuid }}">
             <div class="row align-items-center no-gutters">
                 <div class="col">
                         <div class="text-center">
                           {% if good.image %}
                             <img class="image_fit_200" src="{{ good.image.url }}" alt="">
                           {% else %}
-                            <img class="image_fit_200" src="/static/images/no_img/album.jpg" />
+                            <img class="image_fit_200" src="/static/images/no_img/list.jpg" />
                           {% endif %}
                         </div>
                 </div>

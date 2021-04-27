@@ -1,14 +1,12 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from PIL import Image
-import io, sys
-from users.helpers import upload_to_user_directory
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, related_name="profile", verbose_name="Пользователь", on_delete=models.CASCADE)
     activity = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Деятельность")
     interests = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Интересы")
     favorite_music = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Любимая музыка")
@@ -21,46 +19,19 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.last_name
 
-    def get_client_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
-
-    def b_avatarr(self, field):
-        if field:
-            image = Image.open(field)
-            image = image.convert('RGB')
-            image = image.resize((250, 200), Image.ANTIALIAS)
-            output = io.BytesIO()
-            image.save(output, format='JPEG', quality=85)
-            output.seek(0)
-            return InMemoryUploadedFile(output, 'ImageField',field.name, 'image/jpeg', sys.getsizeof(output), None)
-        else:
-            return None
-
-    def s_avatarr(self, field):
-        if field:
-            image = Image.open(field)
-            image = image.convert('RGB')
-            image = image.resize((50, 50), Image.ANTIALIAS)
-            output = io.BytesIO()
-            image.save(output, format='JPEG', quality=85)
-            output.seek(0)
-            return InMemoryUploadedFile(output, 'ImageField',field.name, 'image/jpeg', sys.getsizeof(output), None)
-        else:
-            return None
-
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
         index_together = [('id', 'user'),]
 
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+
 
 class UserLocation(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, primary_key=True, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
     city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     city_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     city_lat = models.FloatField(blank=True, null=True, verbose_name="Ширина города")
@@ -78,12 +49,15 @@ class UserLocation(models.Model):
 
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
-    def get_sity(self):
-        return self.city_ru
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserLocation.objects.create(user=instance)
 
 
 class IPUser(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, primary_key=True, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip")
 
     class Meta:
@@ -128,7 +102,7 @@ class UserProfileFamily(models.Model):
         (ACTIVE_SEARCH, 'В активном поиске'),
     )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_family', verbose_name="Пользователь")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_family', verbose_name="Пользователь")
     male_status = models.CharField(max_length=5, choices=STATUS_MALE, default=NO_VALUE, verbose_name="Статус мужчины")
     female_status = models.CharField(max_length=5, choices=STATUS_FEMALE, default=NO_VALUE, verbose_name="Статус женщины")
     partner = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='user_profile_partner', verbose_name="Муж/Жена")
@@ -141,6 +115,11 @@ class UserProfileFamily(models.Model):
     class Meta:
         verbose_name = 'Семья пользователя'
         verbose_name_plural = 'Семьи пользователей'
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfileFamily.objects.create(user=instance)
 
 class UserProfileAnketa(models.Model):
     POLITIC=(
@@ -200,7 +179,7 @@ class UserProfileAnketa(models.Model):
         ('Компромиссное','Компромиссное'),
         ('Помогу бросить пить','Помогу бросить пить'),
     )
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_profile_anketa', verbose_name="Пользователь")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_profile_anketa', verbose_name="Пользователь")
     political_preferences = models.CharField(max_length=50, blank=True, choices = POLITIC, verbose_name="Полит. предпочтения")
     worldview = models.CharField(max_length=50, blank=True, choices = WORLDVIEW, verbose_name="Мировоззрение")
     mainthing_in_life = models.CharField(max_length=50, blank=True, choices = MAINTHING_IN_LIFE, verbose_name="Главное в жизни")
@@ -212,6 +191,11 @@ class UserProfileAnketa(models.Model):
     class Meta:
         verbose_name = "Анкета"
         verbose_name_plural = "Анкеты"
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfileAnketa.objects.create(user=instance)
 
 
 class UserDeleted(models.Model):

@@ -1,8 +1,8 @@
-
-
-def get_message_processing(message):
-    from chat.models import Message
-
-    message.status = Message.STATUS_DRAFT
-    message.save(update_fields=['status'])
-    return message
+def get_message_processing(doc, status):
+    doc.status = status
+    doc.save(update_fields=['status'])
+    return doc
+def get_chat_processing(list, status):
+    list.type = status
+    list.save(update_fields=['type'])
+    return list

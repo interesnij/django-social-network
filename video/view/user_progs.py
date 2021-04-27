@@ -1,21 +1,21 @@
 
 from django.views.generic.base import TemplateView
 from users.models import User
-from video.models import Video, VideoComment, VideoAlbum
+from video.models import Video, VideoComment, VideoList
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from users.models import User
 from django.views.generic import ListView
-from video.forms import AlbumForm, VideoForm, CommentForm
+from video.forms import VideoListForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
 from common.template.video import get_permission_user_video
 from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
 
 
-class UserVideoAlbumAdd(View):
+class UserVideoListAdd(View):
     def get(self,request,*args,**kwargs):
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.users.add(request.user)
@@ -23,9 +23,9 @@ class UserVideoAlbumAdd(View):
         else:
             return HttpResponse()
 
-class UserVideoAlbumRemove(View):
+class UserVideoListRemove(View):
     def get(self,request,*args,**kwargs):
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.users.remove(request.user)
@@ -196,18 +196,18 @@ class UserVideoListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoListCreate,self).get_context_data(**kwargs)
-        context["form_post"] = AlbumForm()
+        context["form_post"] = VideoListForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form_post = AlbumForm(request.POST)
+        self.form_post = VideoListForm(request.POST)
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
-            new_album = self.form_post.save(commit=False)
-            new_album.creator = request.user
-            new_album.save()
-            return render_for_platform(request, 'users/user_video_list/my_list.html',{'album': new_album, 'user': request.user})
+            new_list = self.form_post.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            return render_for_platform(request, 'users/user_video_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -231,11 +231,11 @@ class UserVideoAttachCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user == self.user:
-            self.my_list = VideoAlbum.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoAlbum.MAIN)
+            self.my_list = VideoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoList.MAIN)
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
             new_video.save()
-            my_list.video_album.add(new_video)
+            my_list.video_list.add(new_video)
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
@@ -264,11 +264,11 @@ class UserVideoCreate(TemplateView):
 
             new_video = self.form_post.save(commit=False)
             new_video.creator = request.user
-            albums = request.POST.getlist("album")
+            lists = request.POST.getlist("list")
             new_video.save()
-            for _album_pk in albums:
-                _album = VideoAlbum.objects.get(pk=_album_pk)
-                _album.video_album.add(new_video)
+            for _list_pk in lists:
+                _list = VideoList.objects.get(pk=_list_pk)
+                _list.video_list.add(new_video)
             if new_video.is_public:
                 user_notify(request.user, new_video.creator.pk, None, "vid"+str(new_video.pk), "u_video_create", "ITE")
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
@@ -276,17 +276,17 @@ class UserVideoCreate(TemplateView):
             return HttpResponse()
 
 
-class UserVideoAlbumPreview(TemplateView):
+class UserVideoListPreview(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.album = VideoAlbum.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("users/user_video/album_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserVideoAlbumPreview,self).get(request,*args,**kwargs)
+		self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("users/user_video/list_preview.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserVideoListPreview,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserVideoAlbumPreview,self).get_context_data(**kwargs)
-		context["album"] = self.album
+		context = super(UserVideoListPreview,self).get_context_data(**kwargs)
+		context["list"] = self.list
 		return context
 
 
@@ -305,12 +305,12 @@ class UserVideolistEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserVideolistEdit,self).get_context_data(**kwargs)
         context["user"] = self.user
-        context["album"] = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        self.form = AlbumForm(request.POST,instance=self.list)
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = VideoListForm(request.POST,instance=self.list)
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
@@ -323,8 +323,8 @@ class UserVideolistEdit(TemplateView):
 class UserVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == VideoAlbum.ALBUM:
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and user == request.user and list.type == VideoList.LIST:
             list.is_deleted = True
             list.save(update_fields=['is_deleted'])
             return HttpResponse()
@@ -334,7 +334,7 @@ class UserVideolistDelete(View):
 class UserVideolistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        list = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             list.is_deleted = False
             list.save(update_fields=['is_deleted'])

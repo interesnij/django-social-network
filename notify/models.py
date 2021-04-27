@@ -23,14 +23,14 @@ from notify.helpers import VERB, STATUS
 Он их может их скрывать для себя и отписываться от таблиц выше
 """
 class Notify(models.Model):
-    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
-    creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
+    #recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    #creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     attach = models.CharField(max_length=30, verbose_name="Объект")
-    community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
-    action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
     object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
@@ -94,13 +94,6 @@ class Notify(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
-    def get_info(self):
-        if self.post.text:
-            return self.post.text[:50]
-        else:
-            from django.utils.formats import localize
-            return "от " + str(localize(self.post.created))
-
     @classmethod
     def u_notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, status="U").update(status="R")
@@ -123,13 +116,13 @@ class Notify(models.Model):
 ты свободен от новостей этого пользователя. И тут не нужен получатель(упоминанием человека - он становится creator)
 """
 class Wall(models.Model):
-    creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
+    #creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     attach = models.CharField(max_length=30, verbose_name="Объект")
-    community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
-    action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
     object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
@@ -242,7 +235,6 @@ class UserNewsNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Новости по по факту дружбы или подписки в друзья"
@@ -257,7 +249,6 @@ class CommunityNewsNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Новости по по факту подписки на сообщество"
@@ -274,7 +265,6 @@ class UserProfileNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    id = models.BigAutoField(primary_key=True)
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "уведомления при подписке на уведосления пользователя"
@@ -291,19 +281,8 @@ class CommunityProfileNotify(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    id = models.BigAutoField(primary_key=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "уведомления при подписке на уведосления сообщества"
         verbose_name_plural = "уведомления при подписке на уведосленияя сообщества"
-
-
-class IgnoreNotify(models.Model):
-    user = models.PositiveIntegerField(default=0, verbose_name="Кто игнорит")
-    target = models.PositiveIntegerField(default=0, verbose_name="Кого игнорит")
-    community = models.PositiveIntegerField(default=0, verbose_name="Какое сообщество игнорит")
-
-    class Meta:
-        verbose_name = "игнор уведомлений"
-        verbose_name_plural = "игнор уведомлений"

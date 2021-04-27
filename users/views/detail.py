@@ -51,34 +51,32 @@ class UserGallery(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = Album.objects.get(creator_id=self.user.pk, community__isnull=True, type=Album.MAIN)
-        self.template_name = get_template_user_photo(self.album, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list = PhotoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=PhotoList.MAIN)
+        self.template_name = get_template_user_photo(self.list, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, self.album
+        c['user'], c['list'] = self.user, self.list
         return c
 
-class UserAlbum(TemplateView):
+class UserPhotoList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
-        from gallery.models import Album
+        from gallery.models import PhotoList
 
-        self.user, self.album = User.objects.get(pk=self.kwargs["pk"]), Album.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_user_photo(self.album, "users/user_album/", "album.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserAlbum,self).get(request,*args,**kwargs)
+        self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_template_user_photo(self.list, "users/user_photo_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from gallery.models import Album
-
-        c = super(UserAlbum,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, self.album
+        c = super(UserPhotoList,self).get_context_data(**kwargs)
+        c['user'], c['list'] = self.user, self.list
         return c
 
 
@@ -190,25 +188,25 @@ class UserGoods(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from goods.models import GoodAlbum
+        from goods.models import GoodList
         from common.template.good import get_template_user_good
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = GoodAlbum.objects.get(creator_id=self.user.id, community__isnull=True, type=GoodAlbum.MAIN)
+            self.list = GoodList.objects.get(creator_id=self.user.id, community__isnull=True, type=GoodList.MAIN)
         except:
-            self.album = GoodAlbum.objects.create(creator_id=self.user.id, type=GoodAlbum.MAIN, name="Основной список")
+            self.list = GoodList.objects.create(creator_id=self.user.id, type=GoodList.MAIN, name="Основной список")
         if self.user.pk == request.user.pk:
-            self.goods_list = self.album.get_staff_goods()
+            self.goods_list = self.list.get_staff_goods()
         else:
-            self.goods_list = self.album.get_goods()
+            self.goods_list = self.list.get_goods()
 
-        self.template_name = get_template_user_good(self.album, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGoods,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, self.album
+        c['user'], c['list'] = self.user, self.list
         return c
 
     def get_queryset(self):
@@ -220,24 +218,24 @@ class UserVideo(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from video.models import VideoAlbum
+        from video.models import VideoList
         from common.template.video import get_template_user_video
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         try:
-            self.album = VideoAlbum.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoAlbum.MAIN)
+            self.list = VideoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoList.MAIN)
         except:
-            self.album = VideoAlbum.objects.create(creator_id=self.user.id, type=VideoAlbum.MAIN, name="Основной список")
+            self.list = VideoList.objects.create(creator_id=self.user.id, type=VideoList.MAIN, name="Основной список")
         if self.user == request.user:
-            self.video_list = self.album.get_my_queryset()
+            self.video_list = self.list.get_my_queryset()
         else:
-            self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.album, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.video_list = self.list.get_queryset()
+        self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserVideo,self).get_context_data(**kwargs)
-        c['user'], c['album'] = self.user, self.album
+        c['user'], c['list'] = self.user, self.list
         return c
 
     def get_queryset(self):
@@ -314,9 +312,9 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
-        c['user'], c['fix_list'], c['photo_album'], c['video_album'], c['playlist'], \
-        c['docs_list'], c['good_album'],c['get_buttons_block'], c['common_frends'] = \
-        self.user, self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), \
-        self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album(), \
+        c['user'], c['fix_list'], c['photo_list'], c['video_list'], c['playlist'], \
+        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'] = \
+        self.user, self.user.get_or_create_fix_list(), self.user.get_or_create_photo_list(), self.user.get_or_create_video_list(), \
+        self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_list(), \
         self.get_buttons_block, self.common_frends
         return c

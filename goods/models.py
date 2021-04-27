@@ -2,13 +2,12 @@ from django.db import models
 import uuid
 from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
-from common.model.votes import GoodVotes, GoodCommentVotes
 from django.db.models import Q
-from goods.helpers import upload_to_good_directory, upload_to_sub_good_directory
+from goods.helpers import upload_to_good_directory
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class GoodCategory(models.Model):
@@ -29,7 +28,7 @@ class GoodSubCategory(models.Model):
 	name = models.CharField(max_length=100, verbose_name="Название подкатегории")
 	order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер подкатегории")
 	category = models.ForeignKey(GoodCategory, on_delete=models.CASCADE, verbose_name="Категория-родитель")
-	image = models.ImageField(blank=True, verbose_name="Изображение", upload_to="sub_category/list")
+	image = models.ImageField(blank=True, verbose_name="Изображение", upload_to="goods/list")
 
 	def __str__(self):
 		return self.name
@@ -40,55 +39,66 @@ class GoodSubCategory(models.Model):
 		verbose_name_plural = "Подкатегории товаров"
 
 
-class GoodAlbum(models.Model):
-    MAIN = 'MA'
-    ALBUM = 'AL'
+class GoodList(models.Model):
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
     TYPE = (
-        (MAIN, 'Основной альбом'),
-        (ALBUM, 'Пользовательский альбом'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='good_album_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    title = models.CharField(max_length=250, verbose_name="Название")
-    type = models.CharField(max_length=5, choices=TYPE, default=MAIN, verbose_name="Тип альбома")
+    name = models.CharField(max_length=250, verbose_name="Название")
+    type = models.CharField(max_length=5, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_album_creator', verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False)
-    image = ProcessedImageField(verbose_name='Обложка', blank=True, format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
+	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_good_album')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_album')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_good_lists')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_lists')
 
     class Meta:
-        indexes = (
-            BrinIndex(fields=['created']),
-        )
+        indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Подборка товаров'
         verbose_name_plural = 'Подборки товаров'
 
-    def is_main_album(self):
-        return self.type == self.MAIN
-    def is_user_album(self):
-        return self.type == self.ALBUM
-
-    def __str__(self):
+	def __str__(self):
         return self.title
 
-    def get_2_goods(self):
-        return self.good_album.filter(is_deleted=False)[:2]
-    def get_3_goods(self):
-        return self.good_album.filter(is_deleted=False)[:3]
+	@receiver(post_save, sender=Сommunity)
+    def create_c_model(sender, instance, created, **kwargs):
+        if created:
+            community=instance
+            GoodList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+    @receiver(post_save, sender=User)
+    def create_u_model(sender, instance, created, **kwargs):
+        if created:
+            GoodList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
 
-    def count_goods(self):
-        try:
-            return self.good_album.filter(is_deleted=False).values("pk").count()
-        except:
-            return 0
+    def is_main_list(self):
+        return self.type == self.MAIN
+    def is_user_list(self):
+        return self.type == self.LIST
+    def is_private(self):
+        return self.type == self.PRIVATE
+    def is_open(self):
+        return self.type[0] != "T"
 
-    def count_goods_ru(self):
-	    count = self.count_goods()
+    def get_items(self):
+        return self.good_list.filter(status="PUB")
+    def get_staff_items(self):
+        return self.good_list.filter(Q(status="PUB")|Q(status="PRI"))
+	def count_items(self):
+		try:
+			return self.good_list.filter(status="PUB").values("pk").count()
+		except:
+			return 0
+    def count_items_ru(self):
+	    count = self.count_items()
 	    a, b = count % 10, count % 100
 	    if (a == 1) and (b != 11):
 		    return str(count) + " товар"
@@ -97,17 +107,11 @@ class GoodAlbum(models.Model):
 	    else:
 		    return str(count) + " товаров"
 
-    def get_goods(self):
-        return self.good_album.filter(is_deleted=False, status=Good.STATUS_PUBLISHED)
-
-    def get_staff_goods(self):
-        return self.good_album.filter(is_deleted=False)
-
     def is_not_empty(self):
-	    return self.good_album.filter(album=self).values("pk").exists()
+	    return self.good_list.filter(status="PUB").values("pk").exists()
 
     def get_users_ids(self):
-        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
@@ -115,45 +119,190 @@ class GoodAlbum(models.Model):
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
-        if self.creator.pk != user_id and user_id not in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id not in self.get_users_ids():
     def is_user_can_delete_list(self, user_id):
-        if self.creator.pk != user_id and user_id in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id in self.get_users_ids():
+
     def is_community_can_add_list(self, community_id):
-        if self.community.pk != community_id and community_id not in self.get_communities_ids():
-            return True
-        else:
-            return False
+        return self.community.pk != community_id and community_id not in self.get_communities_ids():
     def is_community_can_delete_list(self, community_id):
-        if self.community.pk != community_id and community_id in self.get_communities_ids():
-            return True
-        else:
-            return False
+        return self.community.pk != community_id and community_id in self.get_communities_ids():
+
     def get_cover(self):
 	    if self.image:
 		    return self.image.url
 	    else:
-		    return '/static/images/no_img/album.jpg'
+		    return '/static/images/no_img/list.jpg'
 
+	@classmethod
+    def get_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists_count(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def get_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists_count(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+	@classmethod
+    def create_list(cls, creator, name, description, order, is_public):
+        #from notify.models import Notify, Wall, get_user_managers_ids
+        #from common.notify import send_notify_socket
+        from common.processing.good import get_good_list_processing
+        if not order:
+            order = 1
+        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+        if is_public:
+            get_good_list_processing(list, GoodList.LIST)
+            #for user_id in creator.get_user_news_notify_ids():
+            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
+                #send_notify_socket(object_id, user_id, "create_good_list_notify")
+            #Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
+            #send_notify_socket(object_id, user_id, "create_good_list_wall")
+        else:
+            get_good_list_processing(list, GoodList.PRIVATE)
+        return list
+    def edit_list(self, name, description, order, is_public):
+        from common.processing.good import get_good_list_processing
+        if not order:
+            order = 1
+        self.name = name
+        self.description = description
+        self.order = order
+        self.save()
+        if is_public:
+            get_good_list_processing(self, GoodList.LIST)
+            self.make_publish()
+        else:
+            get_good_list_processing(self, GoodList.PRIVATE)
+            self.make_private()
+        return self
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.type = GoodList.PRIVATE
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.type = GoodList.LIST
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = GoodList.THIS_DELETED
+        elif self.type == "PRI":
+            self.type = GoodList.THIS_DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = GoodList.THIS_DELETED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TDEL":
+            self.type = GoodList.LIST
+        elif self.type == "TDELP":
+            self.type = GoodList.PRIVATE
+        elif self.type == "TDELM":
+            self.type = GoodList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = GoodList.THIS_CLOSED
+        elif self.type == "MAI":
+            self.type = GoodList.THIS_CLOSED_MAIN
+        elif self.type == "PRI":
+            self.type = GoodList.THIS_CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = GoodList.THIS_CLOSED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TCLO":
+            self.type = GoodList.LIST
+        elif self.type == "TCLOM":
+            self.type = GoodList.MAIN
+        elif self.type == "TCLOP":
+            self.type = GoodList.PRIVATE
+        elif self.type == "TCLOM":
+            self.type = GoodList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class Good(models.Model):
-	STATUS_DRAFT = 'D'
-	STATUS_SOLD = 'S'
-	STATUS_PUBLISHED = 'P'
-	STATUS_PROCESSING = 'PG'
-	STATUSES = (
-		(STATUS_DRAFT, 'Отложен'),
-		(STATUS_PUBLISHED, 'Опубликован'),
-		(STATUS_SOLD, 'Продан'),
-		(STATUS_PROCESSING, 'Обработка'),
-		)
-	id = models.BigAutoField(primary_key=True)
+	THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO', 'DRA','PUB','PRI','MAN','DEL','CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
+    )
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
 	price = models.PositiveIntegerField(default=0, blank=True, verbose_name="Цена товара")
@@ -161,12 +310,12 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
-	status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=2, verbose_name="Статус")
+	status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=2, verbose_name="Статус")
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
-	album = models.ManyToManyField(GoodAlbum, related_name="good_album", blank=True)
+	list = models.ManyToManyField(GoodList, related_name="good_list", blank=True)
 
 	def __str__(self):
 		return self.title
@@ -174,26 +323,6 @@ class Good(models.Model):
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
 		return naturaltime(self.created)
-
-	@classmethod
-	def create_good(cls, title, image, albums, images, sub_category, creator, description, \
-					price, comments_enabled, votes_on, status):
-		good = Good.objects.create(title=title, image=image, sub_category=sub_category, creator=creator, description=description, \
-								status=status, price=price, comments_enabled=comments_enabled, votes_on=votes_on,)
-		channel_layer = get_channel_layer()
-		payload = {
-			"type": "receive",
-			"key": "additional_post",
-			"actor_name": good.creator.get_full_name()
-			}
-		async_to_sync(channel_layer.group_send)('notifications', payload)
-		if images:
-			for image in images:
-				GoodImage.objects.create(good=good, image=image)
-		if albums:
-			for album in albums:
-				album.good_album.add(good)
-		return good
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
@@ -206,7 +335,7 @@ class Good(models.Model):
 		return likes
 
 	def is_draft(self):
-		if self.status == Good.STATUS_DRAFT:
+		if self.status == Good.DRAFT:
 			return True
 		else:
 			return False
@@ -280,32 +409,136 @@ class Good(models.Model):
 		from stst.models import GoodNumbers
 		return GoodNumbers.objects.filter(good=self.pk).values('pk').count()
 
-	def get_albums_for_good(self):
-		return self.album.all()
+	def get_lists_for_good(self):
+		return self.list.all()
 
-	def get_album_uuid(self):
-		return self.album.all()[0].uuid
+	def get_list_uuid(self):
+		return self.list.all()[0].uuid
 
 	def get_images(self):
 		return GoodImage.objects.filter(good_id=self.pk)
 
-	def delete_good(self):
-		try:
-			from notify.models import Notify
-			Notify.objects.filter(attach="goo" + str(self.pk)).update(status="C")
-		except:
-			pass
-		self.is_deleted = True
-		return self.save(update_fields=['is_deleted'])
+	@classmethod
+    def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
+        #from notify.models import Notify, Wall, get_user_managers_ids
+        #from common.notify import send_notify_socket
+        from common.processing.good import get_good_processing
+		from rest_framework.exceptions import ValidationError
 
-	def abort_delete_good(self):
-		try:
-			from notify.models import Notify
-			Notify.objects.filter(attach="goo" + str(self.pk)).update(status="R")
-		except:
-			pass
-		self.is_deleted = False
-		return self.save(update_fields=['is_deleted'])
+		if not lists:
+			raise ValidationError("Не выбран ни один список")
+
+        good = cls.objects.create(creator=creator,title=title,description=description, image=image,comments_enabled=comments_enabled, votes_on=votes_on,price=price,sub_category=sub_category)
+        if is_public:
+            get_good_processing(good, Good.PUBLISHED)
+            #for user_id in creator.get_user_news_notify_ids():
+            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+                #send_notify_socket(object_id, user_id, "create_good_notify")
+            #Wall.objects.create(creator_id=creator.pk, type="GOO", object_id=good.pk, verb="ITE")
+            #send_notify_socket(object_id, user_id, "create_good_wall")
+        else:
+            get_good_processing(good, Good.PRIVATE)
+        for list_id in lists:
+            good_list = GoodList.objects.get(pk=list_id)
+            good_list.good_list.add(good)
+		if images:
+			for image in images:
+				GoodImage.objects.create(good=good, image=image)
+        return good
+
+    def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
+        from common.processing.good import get_good_processing
+
+        self.title = title
+        self.description = description
+        self.lists = lists
+		self.votes_on = votes_on
+        self.comments_enabled = comments_enabled
+        self.image = image
+		self.price = price
+		self.sub_category = sub_category
+        if is_public:
+            get_good_processing(self, Good.PUBLISHED)
+            self.make_publish()
+        else:
+            get_good_processing(self, Good.PRIVATE)
+            self.make_private()
+		if images:
+			for image in images:
+				GoodImage.objects.create(good=good, image=image)
+			GoodImage.objects.filter(good=good).delete()
+        return self.save()
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.status = Good.PRIVATE
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.status = Good.PUBLISHED
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_good(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Good.THIS_DELETED
+        elif self.status == "PRI":
+            self.status = Good.THIS_DELETED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Good.THIS_DELETED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_good(self):
+        from notify.models import Notify, Wall
+        if self.status == "TDEL":
+            self.status = Good.PUBLISHED
+        elif self.status == "TDELP":
+            self.status = Good.PRIVATE
+        elif self.status == "TDELM":
+            self.status = Good.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_good(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Good.THIS_CLOSED
+        elif self.status == "PRI":
+            self.status = Good.THIS_CLOSED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Good.THIS_CLOSED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_good(self):
+        from notify.models import Notify, Wall
+        if self.status == "TCLO":
+            self.status = Good.PUBLISHED
+        elif self.status == "TCLOP":
+            self.status = Good.PRIVATE
+        elif self.status == "TCLOM":
+            self.status = Good.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class GoodImage(models.Model):
@@ -317,7 +550,6 @@ class GoodImage(models.Model):
 
 
 class GoodComment(models.Model):
-	id = models.BigAutoField(primary_key=True)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
@@ -376,6 +608,7 @@ class GoodComment(models.Model):
 	@classmethod
 	def create_comment(cls, commenter, attach, good, parent, text):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+		from django.utils import timezone
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")

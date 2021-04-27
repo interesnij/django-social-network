@@ -32,7 +32,7 @@ def add_playlist(url, request_user, list):
                     genre = SoundGenres.objects.get(name=track_genre)
                 except:
                     genre = SoundGenres.objects.create(name=track_genre)
-                new_track = SoundcloudParsing.objects.create(created_at=created_at,
+                new_track = Music.objects.create(created_at=created_at,
                                                         description=description,
                                                         duration=track['duration'],
                                                         genre=genre,

@@ -551,11 +551,11 @@ on('#ajax', 'click', '.doc_load_several', function() {
 on('#ajax', 'click', '.music_attach_playlist', function() {
   attach_item_for_post(this, "/music/get/playlist_preview/")
 });
-on('#ajax', 'click', '.photo_attach_album', function() {
-  attach_item_for_post(this, "/gallery/user_progs/get_album_preview/")
+on('#ajax', 'click', '.photo_attach_list', function() {
+  attach_item_for_post(this, "/gallery/user_progs/get_list_preview/")
 });
-on('#ajax', 'click', '.attach_video_album', function() {
-  attach_item_for_post(this, "/video/user_progs/get_album_preview/")
+on('#ajax', 'click', '.attach_video_list', function() {
+  attach_item_for_post(this, "/video/user_progs/get_list_preview/")
 });
 on('#ajax', 'click', '.attach_doc_list', function() {
   attach_item_for_post(this, "/docs/user_progs/list_preview/")
@@ -563,8 +563,8 @@ on('#ajax', 'click', '.attach_doc_list', function() {
 on('#ajax', 'click', '.attach_survey', function() {
   attach_item_for_post(this, "/survey/user_progs/preview/")
 });
-on('#ajax', 'click', '.attach_good_album', function() {
-  attach_item_for_post(this, "/goods/user_progs/get_album_preview/")
+on('#ajax', 'click', '.attach_good_list', function() {
+  attach_item_for_post(this, "/goods/user_progs/get_list_preview/")
 });
 
 on('#ajax', 'click', '.music_attach_playlist_remove', function() {
@@ -585,19 +585,19 @@ on('#ajax', 'click', '.doc_attach_list_remove', function() {
   block.remove();
   remove_file_attach();
 })
-on('#ajax', 'click', '.video_attach_album_remove', function() {
+on('#ajax', 'click', '.video_attach_list_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
   remove_file_attach();
 })
-on('#ajax', 'click', '.good_attach_album_remove', function() {
+on('#ajax', 'click', '.good_attach_list_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
   remove_file_attach();
 })
-on('#ajax', 'click', '.photo_attach_album_remove', function() {
+on('#ajax', 'click', '.photo_attach_list_remove', function() {
   block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();

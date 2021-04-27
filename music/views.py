@@ -9,7 +9,7 @@ class AllMusicView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.rus_simbols, self.angl_simbols, self.number_simbols, self.all_music_count, self.rus_tegs_count, self.angl_tegs_count, self.genres, self.template_name = SoundSymbol.objects.filter(type='RS'), SoundSymbol.objects.filter(type='AS'), SoundSymbol.objects.filter(type='NS'), \
-        SoundcloudParsing.objects.only('pk').count(), SoundTags.objects.filter(symbol__type='RS').values('pk').count(), SoundTags.objects.filter(symbol__type='AS').values('pk').count(), SoundTags.objects.filter(symbol__type='NS').values('pk').count(), \
+        Music.objects.only('pk').count(), SoundTags.objects.filter(symbol__type='RS').values('pk').count(), SoundTags.objects.filter(symbol__type='AS').values('pk').count(), SoundTags.objects.filter(symbol__type='NS').values('pk').count(), \
         SoundGenres.objects.only('id'), get_detect_platform_template("music/all_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllMusicView,self).get(request,*args,**kwargs)
 
@@ -60,7 +60,7 @@ class AllTagMusicView(ListView):
         return context
 
     def get_queryset(self):
-        tag_list = SoundcloudParsing.objects.filter(tag__id=self.tag.pk)
+        tag_list = Music.objects.filter(tag__id=self.tag.pk)
         return tag_list
 
 
@@ -80,5 +80,5 @@ class GenreMusicView(ListView):
         return context
 
     def get_queryset(self):
-        genre_list = SoundcloudParsing.objects.filter(genre__id=self.genre.pk)
+        genre_list = Music.objects.filter(genre__id=self.genre.pk)
         return genre_list

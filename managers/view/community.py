@@ -4,8 +4,8 @@ from users.models import User
 from communities.models import Community
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.community import *
-from managers.model.community import ModeratedCommunity
-from managers.forms import CommunityModeratedForm, CommunityReportForm
+from managers.models import Moderated
+from managers.forms import ModeratedForm, ReportForm
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
@@ -160,40 +160,39 @@ class CommunityWorkerAdvertiserDelete(View):
 
 class CommunitySuspensionCreate(View):
     def post(self,request,*args,**kwargs):
-        form, community = CommunityModeratedForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
+        form = ModeratedForm(request.POST)
 
         if request.is_ajax() and form.is_valid() and (request.user.is_community_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             number = request.POST.get('number')
-            moderate_obj = ModeratedCommunity.get_or_create_moderated_object_for_community(community)
-            moderate_obj.status = ModeratedCommunity.STATUS_SUSPEND
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=self.kwargs["pk"], type="COM")
+            moderate_obj.status = Moderated.SUSPEND
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_suspend(manager_id=request.user.pk, community_id=community.pk, severity_int=number)
+            moderate_obj.create_suspend(manager_id=request.user.pk, severity_int=number)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CommunitySuspensionDelete(View):
     def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_community_manager() or request.user.is_superuser:
-            moderate_obj = ModeratedCommunity.objects.get(community=community)
-            moderate_obj.delete_suspend(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj = Moderated.objects.get(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.delete_suspend(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommunityBlockCreate(View):
     def post(self,request,*args,**kwargs):
-        community, form = Community.objects.get(pk=self.kwargs["pk"]), CommunityModeratedForm(request.POST)
+        form = ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_community_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedCommunity.get_or_create_moderated_object_for_community(community)
-            moderate_obj.status = ModeratedCommunity.STATUS_BLOCKED
+            moderate_obj = Moderated.get_or_create_moderated_object(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.status = Moderated.BLOCKED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_block(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj.create_block(manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -202,54 +201,52 @@ class CommunityBlockDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_community_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedCommunity.objects.get(community_id=self.kwargs["pk"])
-            moderate_obj.delete_block(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj = Moderated.objects.get(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.delete_block(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommunityWarningBannerCreate(View):
     def post(self,request,*args,**kwargs):
-        community, form = Community.objects.get(pk=self.kwargs["pk"]), CommunityModeratedForm(request.POST)
+        form = ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_community_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedCommunity.get_or_create_moderated_object_for_community(community)
-            moderate_obj.status = ModeratedCommunity.STATUS_BANNER_GET
+            moderate_obj = Moderated.get_or_create_moderated_object(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.status = Moderated.BANNER_GET
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_warning_banner(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj.create_warning_banner(manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CommunityClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.community import CommunityModerationReport
+        from managers.models import ModerationReport
 
-        community, form = Community.objects.get(pk=self.kwargs["pk"]), CommunityReportForm(request.POST)
+        form = ReportForm(request.POST)
         if request.is_ajax() and form.is_valid() and request.user.is_authenticated:
             mod = form.save(commit=False)
-            CommunityModerationReport.create_community_moderation_report(reporter_id=request.user.pk, community=community, description=mod.description, type=request.POST.get('type'))
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="COM", object_id=self.kwargs["pk"], description=mod.description, type=request.POST.get('type'))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CommunityWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_community_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedCommunity.objects.get(community=community)
-            moderate_obj.delete_warning_banner(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj = Moderated.objects.get(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.delete_warning_banner(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommunityRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_community_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedCommunity.objects.get(community=community)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, community_id=community.pk)
+            moderate_obj = Moderated.objects.get(type="COM", object_id=self.kwargs["pk"])
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -317,9 +314,9 @@ class CommunityClaimWindow(TemplateView):
 
 class CommunityUnverify(View):
     def get(self,request,*args,**kwargs):
-        obj = ModeratedCommunity.objects.get(pk=self.kwargs["obj_pk"])
+        obj = Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_community_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, community_id=self.kwargs["community_pk"])
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404

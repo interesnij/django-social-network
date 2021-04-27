@@ -1,9 +1,9 @@
 {% extends "base_anon.html" %}
 {% load liked_user %}
-{% block title %}{{ community.name }} | Товары - {{ album.title }}{% endblock %}
+{% block title %}{{ community.name }} | Товары - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row">
       <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
@@ -22,7 +22,7 @@
                   <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
                 {% endif %}
                 <div class="media-body" style="margin-left: 10px;">
-                  <h6 class="my-0 mt-1">{{ album.title }} ({{ album.count_goods }})</h6>
+                  <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_goods }})</h6>
                   <p class="">Товары -
                     {% include 'desctop/generic/community/community.html' %}
                   </p>

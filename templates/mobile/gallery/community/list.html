@@ -1,23 +1,23 @@
 {% load get_key %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
   <div class="row no-gutters">
-    {% if album.is_not_empty %}
+    {% if list.is_not_empty %}
     <div class="col">
-      <a class="btn btn-sm custom_color border c_ucm_photo_album_repost" style="width: -webkit-fill-available;">
+      <a class="btn btn-sm custom_color border c_ucm_photo_list_repost" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
       </a>
     </div>
     {% endif %}
-    {% if album|is_user_can_add_list:request.user.pk %}
+    {% if list|is_user_can_add_list:request.user.pk %}
     <div class="col">
-      <a class="btn btn-sm custom_color border c_add_photo_album" style="width: -webkit-fill-available;">
+      <a class="btn btn-sm custom_color border c_add_photo_list" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
       </a>
     </div>
-    {% elif request.user.pk in album.get_users_ids %}
+    {% elif request.user.pk in list.get_users_ids %}
     <div class="col">
-      <a class="btn btn-sm custom_color border c_remove_photo_album" style="width: -webkit-fill-available;">
+      <a class="btn btn-sm custom_color border c_remove_photo_list" style="width: -webkit-fill-available;">
         <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
       </a>
     </div>
@@ -30,13 +30,13 @@
   </div>
 
   <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">{{ album.title }} - альбом | {{ album.community.name }}</h5>
-    <span>{{ album.count_photo_ru }}</span>
+    <h5 class="mt-1" style="flex: 1;">{{ list.name }} - альбом | {{ list.community.name }}</h5>
+    <span>{{ list.count_photo_ru }}</span>
   </div>
 
-<div class="row is_load_paginate no-gutters" data-link="/gallery/community/load/{{ album.community.pk }}/{{ album.uuid }}/">
+<div class="row is_load_paginate no-gutters" data-link="/gallery/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
 {% for object in object_list %}
-  <div class="pointer c_{{ album.type }}_photo load_pag {% if forloop.last %}load_last{% endif %}" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
+  <div class="pointer c_{{ list.type }}_photo load_pag {% if forloop.last %}load_last{% endif %}" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
     <div class="progressive replace" data-href="{{ object.file.url }}">
       {% if object.preview %}
         <img class="preview image_fit_160" src="{{ object.preview.url }}" alt="img">

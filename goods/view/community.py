@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView
-from goods.models import Good, GoodAlbum
+from goods.models import Good, GoodList
 from communities.models import Community
 from common.check.community import check_can_get_lists
 from stst.models import GoodNumbers
@@ -8,25 +8,25 @@ from common.template.good import get_template_community_good
 from django.http import Http404
 
 
-class CommunityLoadGoodAlbum(ListView):
+class CommunityLoadGoodList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
-		if self.album.community:
-			self.template_name = get_template_community_good(self.album, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.community:
+			self.template_name = get_template_community_good(self.list, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from common.template.good import get_template_user_good
-			self.template_name = get_template_user_good(self.album, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityLoadGoodAlbum,self).get(request,*args,**kwargs)
+			self.template_name = get_template_user_good(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunityLoadGoodList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		c = super(CommunityLoadGoodAlbum,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.c, self.album
+		c = super(CommunityLoadGoodList,self).get_context_data(**kwargs)
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
-		list = self.album.get_goods()
+		list = self.list.get_goods()
 		return list
 
 
@@ -34,18 +34,18 @@ class CommunityGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album, self.good = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Good.objects.get(pk=self.kwargs["pk"])
-        self.goods = self.album.get_goods()
-        check_can_get_lists(self.request.user, self.album.community)
+        self.list, self.good = GoodList.objects.get(uuid=self.kwargs["uuid"]), Good.objects.get(pk=self.kwargs["pk"])
+        self.goods = self.list.get_goods()
+        check_can_get_lists(self.request.user, self.list.community)
 
-        self.template_name = get_template_community_good(self.album.community, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_community_good(self.list.community, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityGood,self).get_context_data(**kwargs)
         context["object"] = self.good
-        context["album"] = self.album
-        context["community"] = self.album.community
+        context["list"] = self.list
+        context["community"] = self.list.community
         context["next"] = self.goods.filter(pk__gt=self.good.pk).order_by('pk').first()
         context["prev"] = self.goods.filter(pk__lt=self.good.pk).order_by('-pk').first()
         return context

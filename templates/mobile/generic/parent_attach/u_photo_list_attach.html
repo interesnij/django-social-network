@@ -6,6 +6,6 @@
   </div>
 {% endif %}
 
-{% for album in object.parent.get_attach_photo_list %}
-  {% include 'mobile/generic/items/u_album.html' %}
+{% for list in object.parent.get_attach_photo_list %}
+  {% include 'mobile/generic/items/u_photo_list.html' %}
 {% endfor %}

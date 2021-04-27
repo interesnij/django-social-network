@@ -497,8 +497,8 @@ class UserRemoveProfile(TemplateView):
 
 		self.form = UserDeletedForm(request.POST)
 		if request.is_ajax() or self.form.is_valid():
-			request.user.perm = User.DELETED
-			request.user.save(update_fields=['perm'])
+			request.user.type = User.DELETED
+			request.user.save(update_fields=['type'])
 			post = self.form.save(commit=False)
 			UserDeleted.objects.create(user=request.user.pk, answer=post.answer, other=post.other)
 			return HttpResponse()

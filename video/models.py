@@ -2,13 +2,12 @@ import uuid
 from django.conf import settings
 from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
-from django.utils import timezone
-from communities.models import Community
 from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
-from video.helpers import upload_to_video_directory
-from common.model.votes import VideoVotes, VideoCommentVotes
+from video.helpers import upload_to_video_directory, validate_file_extension
 from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class VideoCategory(models.Model):
@@ -33,24 +32,26 @@ class VideoCategory(models.Model):
         verbose_name_plural = "Категории ролика"
 
 
-class VideoAlbum(models.Model):
-    MAIN = 'MA'
-    ALBUM = 'AL'
+class VideoList(models.Model):
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
     TYPE = (
-        (MAIN, 'Основной видеоальбом'),
-        (ALBUM, 'Пользовательский видеоальбом'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
-    community = models.ForeignKey('communities.Community', related_name='video_album_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    title = models.CharField(max_length=250, verbose_name="Название")
-    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
+    name = models.CharField(max_length=250, verbose_name="Название")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False )
-    type = models.CharField(max_length=5, choices=TYPE, default=ALBUM, verbose_name="Тип альбома")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='users_video_album')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_album')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='users_video_lists')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_lists')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -60,42 +61,39 @@ class VideoAlbum(models.Model):
     def __str__(self):
         return self.title
 
-    def count_video(self):
-        return self.video_album.filter(is_deleted=False).values("pk").count()
-
-    def get_queryset(self):
-        queryset = self.video_album.filter(is_public=True).order_by("-created")
-        return queryset
-
-    def get_my_queryset(self):
-        queryset = self.video_album.all().order_by("-created")
-        return queryset
-
-    def get_video_count(self):
-        count = self.video_album.filter(is_public=True).values("pk").count()
-        return count
-
-    def get_my_video_count(self):
-        count = self.video_album.filter(is_public=True).values("pk").count()
-        return count
-
-    def is_main_album(self):
-        return self.type == self.MAIN
-
-    def is_user_album(self):
-        return self.type == self.ALBUM
-
-    def get_2_videos(self):
-        return self.video_album.filter(is_deleted=False, is_public=True)[:2]
-
-    def get_9_videos(self):
-        return self.video_album.filter(is_deleted=False, is_public=True)[:9]
+    @receiver(post_save, sender=Сommunity)
+    def create_c_model(sender, instance, created, **kwargs):
+        if created:
+            community=instance
+            VideoList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+    @receiver(post_save, sender=User)
+    def create_u_model(sender, instance, created, **kwargs):
+        if created:
+            VideoList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
 
     def is_not_empty(self):
-        return self.video_album.filter(album=self).values("pk").exists()
+        return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
+
+    def get_staff_items(self):
+        return self.video_listfilter(Q(status="PUB")|Q(status="PRI"))
+    def get_items(self):
+        return self.video_list.filter(status="PUB")
+    def get_manager_items(self):
+        return self.video_list.filter(status="MAN")
+    def count_items(self):
+        return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
+
+    def is_main_list(self):
+        return self.type == self.MAIN
+    def is_user_list(self):
+        return self.type == self.LIST
+    def is_private(self):
+        return self.type == self.PRIVATE
+    def is_open(self):
+        return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
 
     def get_users_ids(self):
-        users = self.users.exclude(perm="DE").exclude(perm="BL").exclude(perm="PV").values("pk")
+        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
@@ -103,28 +101,187 @@ class VideoAlbum(models.Model):
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
-        if self.creator.pk != user_id and user_id not in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id not in self.get_users_ids()
     def is_user_can_delete_list(self, user_id):
-        if self.creator.pk != user_id and user_id in self.get_users_ids():
-            return True
-        else:
-            return False
+        return self.creator.pk != user_id and user_id in self.get_users_ids()
+
     def is_community_can_add_list(self, community_id):
-        if self.community.pk != community_id and community_id not in self.get_communities_ids():
-            return True
-        else:
-            return False
+        return self.community.pk != community_id and community_id not in self.get_communities_ids()
     def is_community_can_delete_list(self, community_id):
-        if self.community.pk != community_id and community_id in self.get_communities_ids():
-            return True
+        return self.community.pk != community_id and community_id in self.get_communities_ids()
+
+    @classmethod
+    def get_user_staff_lists(cls, user_pk):
+        query = Q(type="LIS") | Q(type="PRI")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_user_staff_lists(cls, user_pk):
+        query = Q(type="LIS") | Q(type="PRI")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists_count(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def get_community_staff_lists(cls, community_pk):
+        query = Q(type="LIS") | Q(type="PRI")
+        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_community_staff_lists(cls, community_pk):
+        query = Q(type="LIS") | Q(type="PRI")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists_count(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def create_list(cls, creator, name, description, order, is_public):
+        #from notify.models import Notify, Wall, get_user_managers_ids
+        #from common.notify import send_notify_socket
+        from common.processing.video import get_video_list_processing
+
+        if not order:
+            order = 1
+        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+        if is_public:
+            get_video_list_processing(list, VideoList.LIST)
+            #for user_id in creator.get_user_news_notify_ids():
+            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VIL", object_id=list.pk, verb="ITE")
+                #send_notify_socket(object_id, user_id, "create_video_list_notify")
+            #Wall.objects.create(creator_id=creator.pk, type="VIL", object_id=list.pk, verb="ITE")
+            #send_notify_socket(object_id, user_id, "create_video_list_wall")
         else:
-            return False
+            get_video_list_processing(list, VideoList.PRIVATE)
+        return list
+
+    def edit_list(self, name, description, order, is_public):
+        from common.processing.video import get_video_list_processing
+
+        if not order:
+            order = 1
+        self.name = name
+        self.description = description
+        self.order = order
+        self.save()
+        if is_public:
+            get_video_list_processing(self, VideoList.LIST)
+            self.make_publish()
+        else:
+            get_video_list_processing(self, VideoList.PRIVATE)
+            self.make_private()
+        return self
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.type = VideoList.PRIVATE
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.type = VideoList.LIST
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = VideoList.THIS_DELETED
+        elif self.type == "PRI":
+            self.type = VideoList.THIS_DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = VideoList.THIS_DELETED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TDEL":
+            self.type = VideoList.LIST
+        elif self.type == "TDELP":
+            self.type = VideoList.PRIVATE
+        elif self.type == "TDELM":
+            self.type = VideoList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = VideoList.THIS_CLOSED
+        elif self.type == "MAI":
+            self.type = VideoList.THIS_CLOSED_MAIN
+        elif self.type == "PRI":
+            self.type = VideoList.THIS_CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = VideoList.THIS_CLOSED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TCLO":
+            self.type = VideoList.LIST
+        elif self.type == "TCLOM":
+            self.type = VideoList.MAIN
+        elif self.type == "TCLOP":
+            self.type = VideoList.PRIVATE
+        elif self.type == "TCLOM":
+            self.type = VideoList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class Video(models.Model):
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
+    )
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
                                 upload_to=upload_to_video_directory,
@@ -132,17 +289,15 @@ class Video(models.Model):
                                 verbose_name="Обложка")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=500, blank=True, verbose_name="Описание")
-    category = models.ForeignKey(VideoCategory, blank=True, null=True, related_name='video_category', on_delete=models.CASCADE, verbose_name="Категория")
     title = models.CharField(max_length=255, verbose_name="Название")
     uri = models.CharField(max_length=255, verbose_name="Ссылка на видео")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удален")
-    is_public = models.BooleanField(default=True, verbose_name="Виден другим")
-    is_child = models.BooleanField(default=True, verbose_name="Доступен детям")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    album = models.ManyToManyField(VideoAlbum, related_name="video_album", blank=True, verbose_name="Альбом")
+    list = models.ManyToManyField(VideoList, related_name="video_list", blank=True, verbose_name="Альбом")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
+    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    file = models.FileField(upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
 
     class Meta:
         verbose_name = "Видео-ролики"
@@ -216,40 +371,154 @@ class Video(models.Model):
         comments_query.add(Q(parent__isnull=True), Q.AND)
         return VideoComment.objects.filter(comments_query)
 
-    def get_albums_for_video(self):
-        return self.album.all()
-    def get_album_uuid(self):
-        return self.album.all()[0].uuid
+    def get_lists_for_video(self):
+        return self.list.all()
+    def get_list_uuid(self):
+        return self.list.all()[0].uuid
+
+    @classmethod
+    def create_video(cls, creator, title, file, uri, lists, is_public):
+        #from notify.models import Notify, Wall, get_user_managers_ids
+        #from common.notify import send_notify_socket
+        from common.processing.video import get_video_processing
+        from rest_framework.exceptions import ValidationError
+
+        if not lists:
+            raise ValidationError("Не выбран список для нового ролика")
+
+        video = cls.objects.create(creator=creator,title=title,file=file,uri=uri)
+        if is_public:
+            get_video_processing(video, Video.PUBLISHED)
+            #for user_id in creator.get_user_news_notify_ids():
+            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                #send_notify_socket(object_id, user_id, "create_video_notify")
+            #Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
+            #send_notify_socket(object_id, user_id, "create_video_wall")
+        else:
+            get_video_processing(video, VIDEO.PRIVATE)
+        for list_id in lists:
+            video_list = VIDEO.objects.get(pk=list_id)
+            video_list.video_list.add(video)
+        return video
+
+    def edit_video(self, title, file, uri, lists, is_public):
+        from common.processing.video import get_video_processing
+
+        self.title = title
+        self.file = file
+        self.uri = uri
+        self.lists = lists
+        if is_public:
+            get_video_processing(self, VIDEO.PUBLISHED)
+            self.make_publish()
+        else:
+            get_video_processing(self, VIDEO.PRIVATE)
+            self.make_private()
+        return self.save()
+
+    def get_uri(self):
+        if self.file:
+            return self.file.url
+        else:
+            return self.uri
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.status = Video.PRIVATE
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.status = Video.PUBLISHED
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
     def delete_video(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="vid" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
-
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Video.THIS_DELETED
+        elif self.status == "PRI":
+            self.status = Video.THIS_DELETED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Video.THIS_DELETED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_video(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="vid" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
+        from notify.models import Notify, Wall
+        if self.status == "TDEL":
+            self.status = Video.PUBLISHED
+        elif self.status == "TDELP":
+            self.status = Video.PRIVATE
+        elif self.status == "TDELM":
+            self.status = Video.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_video(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Video.THIS_CLOSED
+        elif self.status == "PRI":
+            self.status = Video.THIS_CLOSED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Video.THIS_CLOSED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_video(self):
+        from notify.models import Notify, Wall
+        if self.status == "TCLO":
+            self.status = Video.PUBLISHED
+        elif self.status == "TCLOP":
+            self.status = Video.PRIVATE
+        elif self.status == "TCLOM":
+            self.status = Video.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
+
+    def is_private(self):
+        return self.type == self.PRIVATE
+    def is_open(self):
+        return self.type == self.MANAGER or self.type == self.PUBLISHED
 
 
 class VideoComment(models.Model):
+    EDITED = 'EDI'
+    DELETED = 'DEL'
+    CLOSED = 'CLO'
+    PROCESSING = 'PRO'
+    PUBLISHED = 'PUB'
+    STATUS = (
+        (DELETED, 'Удалённый'),
+        (EDITED, 'Изменённый'),
+        (CLOSED, 'Закрытый менеджером'),
+        (PROCESSING, 'Обработка'),
+        (PUBLISHED, 'Опубликовано'),
+    )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True)
-    is_edited = models.BooleanField(default=False, verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False, verbose_name="Удаено")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    status = models.CharField(max_length=5, choices=STATUS, default=PROCESSING, verbose_name="Тип альбома")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
@@ -258,7 +527,6 @@ class VideoComment(models.Model):
 
     def all_visits_count(self):
         from stst.models import VideoNumbers
-
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
     def __str__(self):
@@ -269,11 +537,10 @@ class VideoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = VideoComment.objects.filter(parent=self).all()
-        return get_comments
+        return self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).all()
 
     def count_replies(self):
-        return self.video_comment_replies.filter(is_deleted=False).values("pk").count()
+        return self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).values("pk").count()
 
     def likes(self):
         likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
@@ -316,6 +583,7 @@ class VideoComment(models.Model):
     @classmethod
     def create_comment(cls, commenter, attach, video, parent, text):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+        from django.utils import timezone
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
@@ -340,7 +608,7 @@ class VideoComment(models.Model):
         return comment
 
     def count_replies_ru(self):
-        count = self.video_comment_replies.filter(is_deleted=False).values("pk").count()
+        count = self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).values("pk").count()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):

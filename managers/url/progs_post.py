@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteCreate.as_view())),
     url(r'^delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteDelete.as_view())),
     url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(PostRejectedCreate.as_view())),
-    url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimCreate.as_view())),
+    url(r'^create_claim/(?P<pk>\d+)/$', login_required(PostClaimCreate.as_view())),
     url(r'^unverify/(?P<post_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(PostUnverify.as_view())),
 
     url(r'^comment_create_delete/(?P<pk>\d+)/$', login_required(CommentPostDeleteCreate.as_view())),

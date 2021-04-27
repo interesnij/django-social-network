@@ -9,24 +9,20 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class Article(models.Model):
-    STATUS_DRAFT = 'D'
-    STATUS_PROCESSING = 'PG'
-    STATUS_PUBLISHED = 'P'
-    STATUSES = (
-        (STATUS_DRAFT, 'Черновик'),
-        (STATUS_PROCESSING, 'Обработка'),
-        (STATUS_PUBLISHED, 'Опубликована'),
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
     #content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
-    status = models.CharField(blank=False, null=False, choices=STATUSES, default=STATUS_PUBLISHED, max_length=2, verbose_name="Статус статьи")
-    is_deleted = models.BooleanField(verbose_name="Удален",default=False )
-    id = models.BigAutoField(primary_key=True)
+    status = models.CharField(choices=STATUSES, default=THIS_PROCESSING, max_length=5, verbose_name="Статус статьи")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')

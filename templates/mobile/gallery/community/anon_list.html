@@ -1,6 +1,6 @@
 {% load get_key %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ album.uuid }}">
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
   <div class="row no-gutters">
     <div class="col">
       <a class="btn btn-sm custom_color border item_fullscreen_hide_2" style="width: -webkit-fill-available;">
@@ -10,13 +10,13 @@
   </div>
 
   <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">{{ album.title }} - альбом | {{ album.community.name }}</h5>
-    <span>{{ album.count_photo_ru }}</span>
+    <h5 class="mt-1" style="flex: 1;">{{ list.name }} - альбом | {{ list.community.name }}</h5>
+    <span>{{ list.count_photo_ru }}</span>
   </div>
 
-<div class="row is_load_paginate no-gutters" data-link="/gallery/community/load/{{ album.community.pk }}/{{ album.uuid }}/">
+<div class="row is_load_paginate no-gutters" data-link="/gallery/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
 {% for object in object_list %}
-  <div class="pointer c_{{ album.type }}_photo load_pag {% if forloop.last %}load_last{% endif %}" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
+  <div class="pointer c_{{ list.type }}_photo load_pag {% if forloop.last %}load_last{% endif %}" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
     <div class="progressive replace" data-href="{{ object.file.url }}">
       {% if object.preview %}
         <img class="preview image_fit_160" src="{{ object.preview.url }}" alt="img">

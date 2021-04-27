@@ -2,21 +2,21 @@
   <div class="card-body border-left" style="padding: 8px;padding-bottom: 0;">
     <div style="display:flex">
       <figure>
-        <a class="ajax" href="{% url 'community_video_list' pk=album.community.pk uuid=album.uuid %}">
+        <a class="ajax" href="{% url 'community_video_list' pk=list.community.pk uuid=list.uuid %}">
         <svg fill="currentColor" class="svg_default border" style="width:60x;height:70px;" viewBox="0 0 24 24">
           <path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/>
         </svg>
         </a>
       </figure>
       <div class="media-body" style="margin-left:10px">
-        <h6 class="my-0 mt-1">{{ album.title }}</h6>
+        <h6 class="my-0 mt-1">{{ list.name }}</h6>
         <p class="">
           Видеоальбом
-          <a class="ajax underline" href="{{ album.community.get_link }}">
-            {{ album.community.name }}
+          <a class="ajax underline" href="{{ list.community.get_link }}">
+            {{ list.community.name }}
           </a>
           <br>
-          Видеороликов: {{ album.count_video }}
+          Видеороликов: {{ list.count_video }}
         </p>
       </div>
 
@@ -28,8 +28,8 @@
       </span>
     </div>
   </div>
-<div class="row border-left" style="margin-left: 0;margin-right: 0;" data-uuid="{{ album.uuid }}">
-  {% for video in album.get_9_videos %}
+<div class="row border-left" style="margin-left: 0;margin-right: 0;" data-uuid="{{ list.uuid }}">
+  {% for video in list.get_9_videos %}
   <div style="flex: 0 0 33.3333%;max-width:33.3333%;padding:5px;">
       <img class="image_fit" src="{{ video.image.url }}" alt="img">
       <div class="video_icon_play_v2 c_video_list_detail" data-pk="{{ video.creator.pk }}" video-pk="{{ video.pk }}" video-counter="{{ forloop.counter }}"></div>

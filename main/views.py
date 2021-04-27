@@ -118,7 +118,7 @@ class SwitchView(TemplateView):
 					self.template_name = "users/account/anon_no_child_safety.html"
 				else:
 					self.template_name = "users/account/anon_user.html"
-			self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, self.good_album = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_album(), self.user.get_or_create_video_album(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_album()
+			self.fix_list, self.photo_list, self.video_list, self.playlist, self.doc_list, self.good_list = self.user.get_or_create_fix_list(), self.user.get_or_create_photo_list(), self.user.get_or_create_video_list(), self.user.get_or_create_playlist(), self.user.get_or_create_doc_list(), self.user.get_or_create_good_list()
 		elif self.custom_link.community:
 			self.c, user_agent, c_pk, u_pk = self.custom_link.community, request.META['HTTP_USER_AGENT'], int(self.kwargs["slug"]), request.user.pk
 			c_pk = self.c.pk
@@ -171,7 +171,7 @@ class SwitchView(TemplateView):
 					self.template_name = "communities/detail/anon_close_community.html"
 				elif self.c.is_private():
 					self.template_name = "communities/detail/anon_private_community.html"
-			self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, self.good_album = self.c.get_or_create_fix_list(), self.c.get_or_create_photo_album(), self.c.get_or_create_video_album(), self.c.get_or_create_playlist(), self.c.get_or_create_doc_list(), self.c.get_or_create_good_album()
+			self.fix_list, self.photo_list, self.video_list, self.playlist, self.doc_list, self.good_list = self.c.get_or_create_fix_list(), self.c.get_or_create_photo_list(), self.c.get_or_create_video_list(), self.c.get_or_create_playlist(), self.c.get_or_create_doc_list(), self.c.get_or_create_good_list()
 
 		if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
 			self.template_name = "mobile/" + self.template_name
@@ -181,10 +181,10 @@ class SwitchView(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		c = super(SwitchView, self).get_context_data(**kwargs)
-		c['user'], c['custom_link'], c['community'], c['fix_list'], c['photo_album'], c['video_album'],c['playlist'], \
-		c['docs_list'], c['good_album'], c['get_buttons_block'], c['common_frends'], c['common_friends_count'] = self.user, \
-		self.custom_link, self.c, self.fix_list, self.photo_album, self.video_album, self.playlist, self.doc_list, \
-		self.good_album, self.get_buttons_block, self.common_frends, self.common_friends_count
+		c['user'], c['custom_link'], c['community'], c['fix_list'], c['photo_list'], c['video_list'],c['playlist'], \
+		c['docs_list'], c['good_list'], c['get_buttons_block'], c['common_frends'], c['common_friends_count'] = self.user, \
+		self.custom_link, self.c, self.fix_list, self.photo_list, self.video_list, self.playlist, self.doc_list, \
+		self.good_list, self.get_buttons_block, self.common_frends, self.common_friends_count
 		return c
 
 

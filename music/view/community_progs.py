@@ -16,7 +16,7 @@ class CommunitySoundcloudSetPlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("music/music_create/c_soundcloud_add_playlist.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("music/music_create/c_soundcloud_add_playlist.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(CommunitySoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class CommunitySoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("music/music_create/c_soundcloud_set_playlist.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("music/music_create/c_soundcloud_set_playlist.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(CommunitySoundcloudSetWindow,self).get(request,*args,**kwargs)
 
 
@@ -88,7 +88,7 @@ class CommunityTrackAdd(View):
     Добавляем трек в плейлист сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        track, list = SoundcloudParsing.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.add(track)
@@ -101,7 +101,7 @@ class CommunityTrackRemove(View):
     Удаляем трек из плейлиста сообщества, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        track, list = SoundcloudParsing.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.remove(track)
             return HttpResponse()
@@ -113,7 +113,7 @@ class CommunityTrackListAdd(View):
     Добавляем трек в любой плейлист сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        track, list = SoundcloudParsing.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.add(track)
             return HttpResponse()
@@ -125,7 +125,7 @@ class CommunityTrackListRemove(View):
     Удаляем трек из любого плейлиста сообщества, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        track, list = SoundcloudParsing.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.remove(track)
             return HttpResponse()
@@ -144,7 +144,7 @@ class CommunityEditPlaylistWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_community_manage_template("music/music_create/u_edit_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("music/music_create/u_edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityEditPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -183,7 +183,7 @@ class CommunityPlaylistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("music/music_create/c_edit_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("music/music_create/c_edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

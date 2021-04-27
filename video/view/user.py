@@ -2,27 +2,27 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from users.models import User
-from video.models import VideoAlbum, Video
+from video.models import VideoList, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
 from common.template.video import get_template_user_video
 
 
-class UserLoadVideoAlbum(ListView):
+class UserLoadVideoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_video(self.album, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadVideoAlbum,self).get(request,*args,**kwargs)
+		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_template_user_video(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		c = super(UserLoadVideoAlbum,self).get_context_data(**kwargs)
-		c['user'], c['album'] = self.album.creator, self.album
+		c = super(UserLoadVideoList,self).get_context_data(**kwargs)
+		c['user'], c['list'] = self.list.creator, self.list
 		return c
 
 	def get_queryset(self):
-		list = self.album.get_queryset()
+		list = self.list.get_queryset()
 		return list
 
 
@@ -31,18 +31,18 @@ class UserVideoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if self.user == request.user:
-            self.video_list = self.album.get_my_queryset()
+            self.video_list = self.list.get_my_queryset()
         else:
-            self.video_list = self.album.get_queryset()
-        self.template_name = get_template_user_video(self.album, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.video_list = self.list.get_queryset()
+        self.template_name = get_template_user_video(self.list, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoList,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['album'] = self.album
+        context['list'] = self.list
         return context
 
     def get_queryset(self):
@@ -82,7 +82,7 @@ class UserPostVideoList(TemplateView):
 		from common.template.post import get_template_user_post
 
 		self.post, self.user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
-		self.video_list = self.post.get_attach_videos(), self.template_name, get_template_user_post(self.post, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list = self.post.get_attach_videos(), self.template_name, get_template_user_post(self.post, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -99,7 +99,7 @@ class UserPostCommentVideoList(TemplateView):
 		from common.template.post import get_template_user_post
 
 		self.comment, self.user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
-		self.video_list, self.template_name = self.comment.get_attach_videos(), get_template_user_post(self.comment.post, "video/u_album_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list, self.template_name = self.comment.get_attach_videos(), get_template_user_post(self.comment.post, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostCommentVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -137,7 +137,7 @@ class UserVideoDetail(TemplateView):
         from stst.models import VideoNumbers
 
         self.video = Video.objects.get(pk=self.kwargs["pk"])
-        self.album = VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
@@ -146,11 +146,11 @@ class UserVideoDetail(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-        self.template_name = get_template_user_video(self.album, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_video(self.list, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoDetail,self).get_context_data(**kwargs)
-        context['user'] = self.album.creator
+        context['user'] = self.list.creator
         context['object'] = self.video
         return context

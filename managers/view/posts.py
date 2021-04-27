@@ -3,9 +3,9 @@ from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.posts import *
 from posts.models import Post, PostComment
-from managers.forms import PostModeratedForm, PostCommentModeratedForm
+from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.post import ModeratedPost, ModeratedPostComment
+from managers.model.post import Moderated
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
@@ -120,16 +120,16 @@ class PostWorkerEditorDelete(View):
 
 class PostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        post, form = Post.objects.get(uuid=self.kwargs["uuid"]), PostModeratedForm(request.POST)
+        post, form = Post.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedPost.get_or_create_moderated_object_for_post(post)
-            moderate_obj.status = ModeratedPost.STATUS_DELETED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type="POS")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, post_id=post.pk)
-            post.is_deleted = True
-            post.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            post.status = "CLO"
+            post.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -138,23 +138,22 @@ class PostDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedPost.objects.get(post=post)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, post_id=post.pk)
-            post.is_deleted = False
-            post.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=post.pk, type="POS")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            post.status = "PRI"
+            post.save(update_fields=['status'])
             return HttpResponse()
         else:
             raise Http404
 
 class PostClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.post import PostModerationReport
+        from managers.models import ModerationReport
 
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             description = request.POST.get('description')
             type = request.POST.get('type')
-            PostModerationReport.create_post_moderation_report(reporter_id=request.user.pk, post=post, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="POS", object_id=self.kwargs["pk"], description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -163,8 +162,8 @@ class PostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedPost.objects.get(post=post)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, post_id=post.pk)
+            moderate_obj = Moderated.objects.get(object_id=post.pk, type="POS")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -173,9 +172,9 @@ class PostRejectedCreate(View):
 class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["post_uuid"])
-        obj = ModeratedPost.objects.get(pk=self.kwargs["obj_pk"])
+        obj = Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, post_id=post.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -183,9 +182,9 @@ class PostUnverify(View):
 class CommentPostUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        obj = ModeratedPostComment.objects.get(pk=self.kwargs["obj_pk"])
+        obj = Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -193,16 +192,16 @@ class CommentPostUnverify(View):
 class CommentPostDeleteCreate(View):
     def post(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        form = PostCommentModeratedForm(request.POST)
+        form = ModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedPostComment.get_or_create_moderated_object_for_comment(comment)
-            moderate_obj.status = ModeratedPostComment.STATUS_DELETED
+            moderate_obj = ModeratedPostComment.get_or_create_moderated_object(object_id=comment.pk, type="POSC")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            comment.status = "CLO"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -211,23 +210,23 @@ class CommentPostDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedPostComment.objects.get(comment=comment)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=comment.pk, type="POSC")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            comment.status = "PUB"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             raise Http404
 
 class CommentPostClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.post import PostCommentModerationReport
+        from managers.models import ModerationReport
 
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax():
             description = request.POST.get('description')
             type = request.POST.get('type')
-            PostCommentModerationReport.create_post_comment_moderation_report(reporter_id=request.user.pk, comment=comment, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="POSС", object_id=comment.pk, description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -236,8 +235,8 @@ class CommentPostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedPostComment.objects.get(comment=comment)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            moderate_obj = Moderated.objects.get(object_id=comment.pk, type="POSC")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404

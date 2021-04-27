@@ -7,13 +7,13 @@ on('#ajax', 'click', '#u_ucm_video_repost_btn', function() {
                      "/video/repost/u_m_video_repost/",
                      "Репост видеозаписи в сообщения сделан")
 });
-on('#ajax', 'click', '#u_ucm_video_album_repost_btn', function() {
+on('#ajax', 'click', '#u_ucm_video_list_repost_btn', function() {
   repost_constructor(this,
-                     "/video/repost/u_u_video_album_repost/",
+                     "/video/repost/u_u_video_list_repost/",
                      "Репост видеоальбома на стену сделан",
-                     "/video/repost/u_c_video_album_repost/",
+                     "/video/repost/u_c_video_list_repost/",
                      "Репост видеоальбома в сообщества сделан",
-                     "/video/repost/u_m_video_album_repost/",
+                     "/video/repost/u_m_video_list_repost/",
                      "Репост видеоальбома в сообщения сделан")
 });
 
@@ -149,7 +149,7 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = document.querySelector("#u_create_video_form");
   form_data = new FormData(form);
-  lists = form.querySelector("#id_album");
+  lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
   val = false;
   for (var i = 0; i < selectedOptions.length; i++) {
@@ -166,7 +166,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
   } else if (!val){
-    form.querySelector("#id_album").style.border = "1px #FF0000 solid";
+    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
     toast_error("Выберите альбом!");
     return
   } else {this.disabled = true}

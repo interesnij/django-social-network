@@ -142,24 +142,20 @@ class CommunityGoods(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
 		from common.template.good import get_template_community_good
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.album = GoodAlbum.objects.get(community=self.c, type=GoodAlbum.MAIN)
-		except:
-			self.album = GoodAlbum.objects.create(creator=self.c.creator, community=self.c, type=GoodAlbum.MAIN, title="Основной список")
+		self.list = self.c.get_or_create_good_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.goods_list = self.album.get_staff_goods()
+			self.goods_list = self.list.get_staff_goods()
 		else:
-			self.goods_list = self.album.get_goods()
-		self.template_name = get_template_community_good(self.album, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.goods_list = self.list.get_goods()
+		self.template_name = get_template_community_good(self.list, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityGoods,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.c, self.album
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
@@ -169,24 +165,24 @@ class CommunityGoodsList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from goods.models import GoodAlbum
+		from goods.models import GoodList
 		from common.template.good import get_template_community_good
 
-		self.c, self.album = Community.objects.get(pk=self.kwargs["pk"]), GoodAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.goods_list = self.album.get_staff_goods()
+			self.goods_list = self.list.get_staff_goods()
 		else:
-			self.goods_list = self.album.get_goods()
+			self.goods_list = self.list.get_goods()
 
-		if self.album.type == GoodAlbum.MAIN:
-			self.template_name = get_template_community_good(self.album, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.list.type == GoodList.MAIN:
+			self.template_name = get_template_community_good(self.list, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_good(self.album, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_good(self.list, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityGoodsList,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.c, self.album
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
@@ -201,7 +197,7 @@ class CommunityMusic(ListView):
 		from common.template.music import get_template_community_music
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.playlist = SoundList.objects.get(community_id=self.c.pk, type=SoundList.MAIN)
+		self.playlist = self.c.get_or_create_playlist()
 		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
@@ -240,21 +236,20 @@ class CommunityVideo(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from video.models import VideoAlbum
 		from common.template.video import get_template_community_video
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.album = VideoAlbum.objects.get(community_id=self.c.pk, type=VideoAlbum.MAIN)
-		self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = self.c.get_or_create_video_list()
+		self.template_name = get_template_community_video(self.list, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.video_list = self.album.get_my_queryset()
+			self.video_list = self.list.get_my_queryset()
 		else:
-			self.video_list = self.album.get_queryset()
+			self.video_list = self.list.get_queryset()
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideo,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.album, self.list
+		c['community'], c['list'] = self.list, self.list
 		return c
 
 	def get_queryset(self):
@@ -265,23 +260,23 @@ class CommunityVideoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from video.models import VideoAlbum
+		from video.models import VideoList
 		from common.template.video import get_template_community_video
 
-		self.community,self.album = Community.objects.get(pk=self.kwargs["pk"]), VideoAlbum.objects.get(uuid=self.kwargs["uuid"])
+		self.community,self.list = Community.objects.get(pk=self.kwargs["pk"]), VideoList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.video_list = self.album.get_my_queryset()
+			self.video_list = self.list.get_my_queryset()
 		else:
-			self.video_list = self.album.get_queryset()
-		if self.album.type == VideoAlbum.MAIN:
-			self.template_name = get_template_community_video(self.album, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.video_list = self.list.get_queryset()
+		if self.list.type == VideoList.MAIN:
+			self.template_name = get_template_community_video(self.list, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_video(self.album, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_video(self.list, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideoList,self).get_context_data(**kwargs)
-		c['community'], c['album'] = self.c, self.album
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):

@@ -83,14 +83,14 @@ class CommunityCreateDoclistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDoclistWindow,self).get(request,*args,**kwargs)
 
 class CommunityCreateDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(CommunityCreateDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -155,7 +155,8 @@ class CommunityDoclistEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.c, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -193,17 +194,3 @@ class CommunityDoclistAbortDelete(View):
             return HttpResponse()
         else:
             raise Http404
-
-class CommunityDoclistPreview(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
-        self.list = DocList.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("docs/doc_create/u_list_preview.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
-        return super(CommunityDoclistPreview,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        c = super(CommunityDoclistPreview,self).get_context_data(**kwargs)
-        c["list"], c["community"] = self.list, self.list.community
-        return c

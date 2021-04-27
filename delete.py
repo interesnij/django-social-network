@@ -15,7 +15,7 @@ django.setup()
 from django.conf import settings
 from users.models import User
 from music.models import SoundList
-from video.models import VideoAlbum
+from video.models import VideoList
 from docs.models import Doc
 from chat.models import Message,
 

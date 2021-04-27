@@ -18,7 +18,7 @@ on('#ajax', 'click', '.u_ucm_video_list_repost', function() {
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/repost/u_ucm_video_album_window/" + pk + "/" + uuid + "/", loader);
+  open_fullscreen("/video/repost/u_ucm_video_list_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
 
@@ -124,7 +124,7 @@ on('#ajax', 'click', '.u_video_list_create_window', function() {
 on('#ajax', 'click', '.user_video_list_create', function() {
   pk_saver = document.body.querySelector(".pk_saver");
   pk = pk_saver.getAttribute("data-pk");
-  uuid = pk_saver.getAttribute("album-uuid");
+  uuid = pk_saver.getAttribute("list-uuid");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", loader)
 });

@@ -17,9 +17,7 @@
 
   <div class="card-body">
 
-{% if request.user.is_public_album_exists %}
-  {% include 'mobile/users/load/u_albums.html' %}
-{% endif %}
+  {% include 'mobile/users/load/u_photo_lists.html' %}
 
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_img_load/">

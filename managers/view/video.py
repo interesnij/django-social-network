@@ -3,9 +3,9 @@ from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.video import *
 from video.models import Video, VideoComment
-from managers.forms import VideoModeratedForm, VideoCommentModeratedForm
+from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.video import ModeratedVideo, ModeratedVideoComment
+from managers.models import Moderated
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
@@ -120,16 +120,16 @@ class VideoWorkerEditorDelete(View):
 
 class VideoDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        video, form = Video.objects.get(uuid=self.kwargs["uuid"]), GoodModeratedForm(request.POST)
+        video, form = Video.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_video_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedVideo.get_or_create_moderated_object_for_video(video)
-            moderate_obj.status = ModeratedVideo.STATUS_DELETED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=video.pk, type="VID")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, video_id=video.pk)
-            video.is_deleted = True
-            video.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            video.status = "CLO"
+            video.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -138,23 +138,22 @@ class VideoDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedVideo.objects.get(video=video)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, video_id=video.pk)
-            video.is_deleted = False
-            video.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=video.pk, type="VID")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            video.status = "PRI"
+            video.save(update_fields=['status'])
             return HttpResponse()
         else:
             raise Http404
 
 class VideoClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.video import VideoModerationReport
+        from managers.models import ModerationReport
 
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_authenticated:
             description = request.POST.get('description')
             type = request.POST.get('type')
-            VideoModerationReport.create_video_moderation_report(reporter_id=request.user.pk, video=video, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="VID", object_id=self.kwargs["pk"], description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -163,42 +162,42 @@ class VideoRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_video_manager() or request.user.is_superuser:
-            moderate_obj = ModeratedVideo.objects.get(video=video)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, video_id=video.pk)
+            moderate_obj = Moderated.objects.get(object_id=video.pk, type="VID")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class VideoUnverify(View):
     def get(self,request,*args,**kwargs):
-        video, obj = Video.objects.get(uuid=self.kwargs["video_uuid"]), ModeratedVideo.objects.get(pk=self.kwargs["obj_pk"])
+        video, obj = Video.objects.get(uuid=self.kwargs["video_uuid"]), Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, video_id=video.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommentVideoUnverify(View):
     def get(self,request,*args,**kwargs):
-        comment, obj = VideoComment.objects.get(pk=self.kwargs["pk"]), ModeratedVideoComment.objects.get(pk=self.kwargs["obj_pk"])
+        comment, obj = VideoComment.objects.get(pk=self.kwargs["pk"]), Moderated.objects.get(pk=self.kwargs["obj_pk"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
-            obj.unverify_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            obj.unverify_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
 
 class CommentVideoDeleteCreate(View):
     def post(self,request,*args,**kwargs):
-        comment, form = VideoComment.objects.get(pk=self.kwargs["pk"]), VideoCommentModeratedForm(request.POST)
+        comment, form = VideoComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_video_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = ModeratedVideoComment.get_or_create_moderated_object_for_comment(comment)
-            moderate_obj.status = ModeratedVideoComment.STATUS_DELETED
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type="VIDC")
+            moderate_obj.status = Moderated.DELETED
             moderate_obj.description = mod.description
             moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj.create_deleted(manager_id=request.user.pk)
+            comment.status = "CLO"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -207,23 +206,23 @@ class CommentVideoDeleteDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedVideoComment.objects.get(comment=comment)
-            moderate_obj.delete_deleted(manager_id=request.user.pk, comment_id=comment.pk)
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            moderate_obj = Moderated.objects.get(object_id=comment.pk, type="VIDC")
+            moderate_obj.delete_deleted(manager_id=request.user.pk)
+            comment.status = "PUB"
+            comment.save(update_fields=['status'])
             return HttpResponse()
         else:
             raise Http404
 
 class CommentVideoClaimCreate(View):
     def post(self,request,*args,**kwargs):
-        from managers.model.video import VideoCommentModerationReport
+        from managers.models import ModerationReport
 
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax():
             description = request.POST.get('description')
             type = request.POST.get('type')
-            VideoCommentModerationReport.create_video_comment_moderation_report(reporter_id=request.user.pk, comment=comment, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="VIDС", object_id=comment.pk, description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -232,8 +231,8 @@ class CommentVideoRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
-            moderate_obj = ModeratedVideoComment.objects.get(comment=comment)
-            moderate_obj.reject_moderation(manager_id=request.user.pk, comment_id=comment.pk)
+            moderate_obj = Moderated.objects.get(object_id=comment.pk, type="VIDC")
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404

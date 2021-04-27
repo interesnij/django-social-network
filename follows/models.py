@@ -15,13 +15,12 @@ class Follow(models.Model):
 
     @classmethod
     def create_follow(cls, user_id, followed_user_id):
-        follow = cls.objects.create(user_id=user_id, followed_user_id=followed_user_id,)
-        return follow
+        return cls.objects.create(user_id=user_id, followed_user_id=followed_user_id,)
 
 
 class CommunityFollow(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='community_follows', verbose_name="Подписчик")
-    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
+    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
     view = models.BooleanField(default=False, verbose_name="Просмотрено")
 
     class Meta:
@@ -32,10 +31,8 @@ class CommunityFollow(models.Model):
 
     @classmethod
     def create_follow(cls, user_id, community_pk):
-        follow = CommunityFollow.objects.create(user_id=user_id, community_pk=community_pk)
-        return follow
+        return cls.objects.create(user_id=user_id, community_pk=community_pk)
 
     @classmethod
     def get_community_with(cls, community_pk):
-        follows_query = CommunityFollow.objects.filter(community__pk=community_pk, view=False)
-        return follows_query
+        return cls.objects.filter(community__pk=community_pk, view=False)

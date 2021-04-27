@@ -13,7 +13,7 @@ import django
 django.setup()
 
 from django.conf import settings
-from music.models import SoundcloudParsing
+from music.models import Music
 
-tag_list = SoundcloudParsing.objects.filter(tag="")
+tag_list = Music.objects.filter(tag="")
 tag_list.objects.all().delete()

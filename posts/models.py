@@ -1,62 +1,76 @@
 import uuid
 from django.db import models
 from django.conf import settings
-from rest_framework.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
-from django.utils import timezone
 from common.utils import try_except
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class PostList(models.Model):
-    MAIN, LIST, PRIVATE, DELETED, FIX = 'MA', 'LI', 'PR', 'DE', 'FI'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
     TYPE = (
-        (MAIN, 'Основной список'),
-        (LIST, 'Пользовательский список'),
-		(PRIVATE, 'Приватный список'),
-		(DELETED, 'Архивный список'),
-        (FIX, 'Закрепленный список'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=5, choices=TYPE, default=LIST, verbose_name="Тип листа")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип листа")
     order = models.PositiveIntegerField(default=1)
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
 
-    def is_post_in_list(self, post_id):
-        return self.post_list.filter(pk=post_id).values("pk").exists()
+    class Meta:
+        verbose_name = "список записей"
+        verbose_name_plural = "списки записей"
+        ordering = ['order']
+
+    @receiver(post_save, sender=Сommunity)
+    def create_c_model(sender, instance, created, **kwargs):
+        if created:
+            community=instance
+            PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", creator=community.creator)
+            PostList.objects.create(community=community, type=PostList.THIS_FIXED, name="Закреплённый список", creator=community.creator)
+    @receiver(post_save, sender=User)
+    def create_u_model(sender, instance, created, **kwargs):
+        if created:
+            PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
+            PostList.objects.create(creator=instance, type=PostList.THIS_FIXED, name="Закреплённый список")
+
+    def is_item_in_list(self, item_id):
+        return self.post_list.filter(pk=item_id).values("pk").exists()
+
+    def get_staff_items(self):
+        return self.post_list.filter(Q(status="PUB")|Q(status="PRI"))
+    def get_items(self):
+        return self.post_list.filter(status="PUB")
+    def get_manager_items(self):
+        return self.post_list.filter(status="MAN")
+    def count_items(self):
+        return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
 
     def is_not_empty(self):
-        return self.post_list.filter(list=self).values("pk").exists()
+        return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
 
     def get_posts(self):
         select_related = ('creator', 'community')
         only = ('creator__id', 'community__id', 'created')
         posts = self.post_list.select_related(*select_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
         return posts
-
-    def list_30(self):
-        queryset = self.post_list.only("pk")[:30].order_by('-created')
-        return queryset
-    def list_6(self):
-        queryset = self.post_list.only("pk")[:6].order_by('-created')
-        return queryset
-
-    def count_posts(self):
-        return self.post_list.filter(is_deleted=False).values("pk").count()
     def get_posts_ids(self):
         ids =  self.post_list.filter(is_deleted=False).values("pk")
         return [id['pk'] for id in ids]
 
     def is_full_list(self):
-        if self.is_fix_list() and self.count_posts() == 10:
-            return True
-        else:
-            return False
+        return self.is_fix_list() and self.count_posts() > 10:
 
     def is_main_list(self):
         return self.type == self.MAIN
@@ -68,16 +82,173 @@ class PostList(models.Model):
         return self.type == self.DELETED
     def is_private_list(self):
         return self.type == self.PRIVATE
-    def is_user_list(self):
-        if self.type == self.LIST or self.type == self.PRIVATE:
-            return True
-        else:
-            return False
+    def is_open(self):
+        return self.type[0] == "T"
 
-    class Meta:
-        verbose_name = "список записей"
-        verbose_name_plural = "списки записей"
-        ordering = ['order']
+    @classmethod
+    def get_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_user_staff_lists(cls, user_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists_count(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def get_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query)
+    @classmethod
+    def is_have_community_staff_lists(cls, community_pk):
+        query = ~Q(type__contains="THIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists_count(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def create_list(cls, creator, name, description, order, is_public):
+        #from notify.models import Notify, Wall, get_user_managers_ids
+        #from common.notify import send_notify_socket
+        from common.processing.post import get_post_list_processing
+        if not order:
+            order = 1
+        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+        if is_public:
+            get_postlist_processing(list, PostList.LIST)
+            #for user_id in creator.get_user_news_notify_ids():
+            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
+                #send_notify_socket(object_id, user_id, "create_post_list_notify")
+            #Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
+            #send_notify_socket(object_id, user_id, "create_post_list_wall")
+        else:
+            get_post_list_processing(list, PostList.PRIVATE)
+        return list
+    def edit_list(self, name, description, order, is_public):
+        from common.processing.post import get_post_list_processing
+        if not order:
+            order = 1
+        self.name = name
+        self.description = description
+        self.order = order
+        self.save()
+        if is_public:
+            get_post_list_processing(self, PostList.LIST)
+            self.make_publish()
+        else:
+            get_post_list_processing(self, PostList.PRIVATE)
+            self.make_private()
+        return self
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.type = PostList.PRIVATE
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.type = PostList.LIST
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PostList.THIS_DELETED
+        elif self.type == "PRI":
+            self.type = PostList.THIS_DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = PostList.THIS_DELETED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TDEL":
+            self.type = PostList.LIST
+        elif self.type == "TDELP":
+            self.type = PostList.PRIVATE
+        elif self.type == "TDELM":
+            self.type = PostList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PostList.THIS_CLOSED
+        elif self.type == "MAI":
+            self.type = PostList.THIS_CLOSED_MAIN
+        elif self.type == "PRI":
+            self.type = PostList.THIS_CLOSED_PRIVATE
+        elif self.type == "FIX":
+            self.type = PostList.THIS_CLOSED_FIXED
+        elif self.type == "MAN":
+            self.type = PostList.THIS_CLOSED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TCLO":
+            self.type = PostList.LIST
+        elif self.type == "TCLOM":
+            self.type = PostList.MAIN
+        elif self.type == "TCLOP":
+            self.type = PostList.PRIVATE
+        elif self.type == "TCLOF":
+            self.type = PostList.THIS_FIXED
+        elif self.type == "TCLOM":
+            self.type = PostList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class PostCategory(models.Model):
@@ -93,26 +264,26 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    STATUS_DRAFT, STATUS_PROCESSING, STATUS_MESSAGE_PUBLISHED, STATUS_PUBLISHED = 'D', 'PG', 'MP', 'P'
-    STATUSES = (
-        (STATUS_DRAFT,'Черновик'),(STATUS_PROCESSING,'Обработка'),(STATUS_PUBLISHED,'Опубликована'),(STATUS_MESSAGE_PUBLISHED,'Репост в сообщения'),
+    THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"DRA", 'PUB','PRI','MAN','DEL','CLO''MES'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    STATUS = (
+        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
-    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
     list = models.ManyToManyField(PostList, related_name='post_list')
 
-    created = models.DateTimeField(default=timezone.now, verbose_name="Создан")
-    status = models.CharField(choices=STATUSES, default=STATUS_PROCESSING, max_length=5, verbose_name="Статус статьи")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
 
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    is_deleted = models.BooleanField(verbose_name="Удален", default=False)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
     class Meta:
@@ -124,28 +295,26 @@ class Post(models.Model):
         return self.creator.get_full_name()
 
     @classmethod
-    def create_post(cls, creator, text, category, lists, attach, community, parent, comments_enabled, is_signature, votes_on, status):
+    def create_post(cls, creator, text, category, lists, community, attach, parent, comments_enabled, is_signature, votes_on, status, is_public):
         from common.processing.post import get_post_processing
-
-        # если списки для новой записи не выбраны, то мы вернём ошибку
+        from rest_framework.exceptions import ValidationError
         if not lists:
             raise ValidationError("Не выбран список для новой записи")
-
-        # записываем правильно в поле прикрепленнх объектов сведения о них, если они есть
+        private = 0
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = cls.objects.create(creator=creator,text=text,category=category,community=community,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
+        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
 
-        # привязываем новую запись к выбранным спискам записей
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
+            if post_list.is_private():
+                private = 1
             post_list.post_list.add(post)
 
-        # программа для проверки содержимого записи. Если все хорошо, то она меняет статус новой записи на STATUS_PUBLISHED
         get_post_processing(post)
 
         # если запись не в приватном списке, то создаём уведомления
-        if not post.is_have_private_lists():
+        if not private and is_public:
             from notify.models import Notify, Wall
             from asgiref.sync import async_to_sync
             from channels.layers import get_channel_layer
@@ -157,9 +326,9 @@ class Post(models.Model):
             # если запись имеет сообщество, и всем подписантам на уведомления пользователя (UserProfileNotify) -
             # если сообщество создается в ленту пользователя.
             if community:
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
                 for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, attach="pos"+str(post.pk), verb="ITE")
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
                     payload = {
                         'type': 'receive',
                         'key': 'notification',
@@ -170,9 +339,9 @@ class Post(models.Model):
                     }
                     async_to_sync(channel_layer.group_send)('notification', payload)
             else:
-                Wall.objects.create(creator_id=creator.pk, attach="pos"+str(post.pk), verb="ITE")
+                Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
                 for user_id in creator.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, attach="pos"+str(post.pk), verb="ITE")
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
                     payload = {
                         'type': 'receive',
                         'key': 'notification',
@@ -183,28 +352,102 @@ class Post(models.Model):
                     async_to_sync(channel_layer.group_send)('notification', payload)
         return post
 
+    def edit_post(self, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public):
+        from common.processing.post  import get_post_processing
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
+        self.text = text
+        self.category = category
+        self.lists = lists
+        self.attach = _attach
+        self.comments_enabled = comments_enabled
+        self.is_signature = is_signature
+        self.votes_on = votes_on
+        if is_public:
+            get_post_processing(self, Post.PUBLISHED)
+            self.make_publish()
+        else:
+            get_post_processing(self, Post.PRIVATE)
+            self.make_private()
+        return self.save()
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.status = Post.PRIVATE
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.status = Post.PUBLISHED
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_post(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Post.THIS_DELETED
+        elif self.status == "PRI":
+            self.status = Post.THIS_DELETED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Post.THIS_DELETED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_post(self):
+        from notify.models import Notify, Wall
+        if self.status == "TDEL":
+            self.status = Post.PUBLISHED
+        elif self.status == "TDELP":
+            self.status = Post.PRIVATE
+        elif self.status == "TDELM":
+            self.status = Post.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_post(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Post.THIS_CLOSED
+        elif self.status == "PRI":
+            self.status = Post.THIS_CLOSED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Post.THIS_CLOSED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_post(self):
+        from notify.models import Notify, Wall
+        if self.status == "TCLO":
+            self.status = Post.PUBLISHED
+        elif self.status == "TCLOP":
+            self.status = Post.PRIVATE
+        elif self.status == "TCLOM":
+            self.status = Post.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
+
     @classmethod
     def create_parent_post(cls, creator, community, attach):
         post = cls.objects.create(creator=creator, community=community, attach=attach, )
         return post
-
-    def delete_post(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="goo" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
-
-    def abort_delete_post(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="pos" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
 
     def get_u_new_parent(self, user):
         from common.attach.post_attach import get_u_news_parent
@@ -235,7 +478,7 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        parents = PostComment.objects.filter(post_id=self.pk, is_deleted=False)
+        parents = PostComment.objects.filter(post_id=self.pk, status="PUB")
         parents_count = parents.count()
         i = 0
         for comment in parents:

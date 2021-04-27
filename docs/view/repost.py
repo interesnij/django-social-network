@@ -242,7 +242,7 @@ class UCDocListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="ldo"+str(list.pk))
+            parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
@@ -264,7 +264,7 @@ class CCDocListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, attach="ldo"+str(list.pk))
+            parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")

@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from goods.models import Good, GoodAlbum
+from goods.models import Good, GoodList
 from users.models import User
 from django.http import Http404
 from common.check.user import check_user_can_get_list
@@ -59,7 +59,7 @@ class UUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album, self.user, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
@@ -67,7 +67,7 @@ class UUCMGoodListWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UUCMGoodListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.album
+        context["object"] = self.list
         context["user"] = self.user
         return context
 
@@ -78,14 +78,14 @@ class CUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.album, self.c, self.template_name = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMGoodListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = self.album
+        context["object"] = self.list
         context["community"] = self.c
         return context
 
@@ -202,15 +202,15 @@ class UUGoodListRepost(View):
     создание репоста плейлиста пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        album, user, lists, form_post, attach = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), PostForm(request.POST), request.POST.getlist('attach_items')
+        list, user, lists, form_post, attach = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=None, attach="lgo"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lgo"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            user_notify(request.user, album.creator.pk, None, "lgo"+album.pk, "u_good_list_repost", "LRE")
+            user_notify(request.user, list.creator.pk, None, "lgo"+list.pk, "u_good_list_repost", "LRE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -220,14 +220,14 @@ class CUGoodListRepost(View):
     создание репоста плейлиста сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        album, c, form_post, lists, attach = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        list, c, form_post, lists, attach = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, c)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=c, attach="lgo"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=c, attach="lgo"+str(list.pk))
             new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
             get_post_processing(new_post)
-            community_notify(request.user, community, None, "lgo"+album.pk, "c_good_repost", 'LRE')
+            community_notify(request.user, community, None, "lgo"+list.pk, "c_good_repost", 'LRE')
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -238,7 +238,7 @@ class UCGoodListRepost(View):
     создание репоста плейлиста пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        album, user = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
@@ -249,12 +249,12 @@ class UCGoodListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lgo"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lgo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    user_notify(request.user, album.creator.pk, community_id, "lgo"+album.pk, "u_good_list_repost", 'CLR')
+                    user_notify(request.user, list.creator.pk, community_id, "lgo"+list.pk, "u_good_list_repost", 'CLR')
         return HttpResponse()
 
 class CCGoodListRepost(View):
@@ -262,7 +262,7 @@ class CCGoodListRepost(View):
     создание репоста плейлиста сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        album, c = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, c = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
         communities = request.POST.getlist("communities")
         lists = request.POST.getlist("lists")
@@ -272,12 +272,12 @@ class CCGoodListRepost(View):
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=album.creator, community=community, attach="lgo"+str(album.pk))
+            parent = Post.create_parent_post(creator=list.creator, community=community, attach="lgo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
                     new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
                     get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "lgo"+album.pk, "c_album_list_repost", 'CLR')
+                    community_notify(request.user, community, community_id, "lgo"+list.pk, "c_list_list_repost", 'CLR')
         return HttpResponse()
 
 
@@ -286,10 +286,10 @@ class UMGoodListRepost(View):
     создание репоста плейлиста пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        album, user = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(album, "lgo"+str(album.pk), None, request, "Репост списка товаров пользователя")
+        repost_message_send(list, "lgo"+str(list.pk), None, request, "Репост списка товаров пользователя")
         return HttpResponse()
 
 
@@ -298,7 +298,7 @@ class CMGoodListRepost(View):
     создание репоста плейлиста сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        album, c = GoodAlbum.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, c = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_message_send(album, "lgo"+str(album.pk), c, request, "Репост списка товаров сообщества")
+        repost_message_send(list, "lgo"+str(list.pk), c, request, "Репост списка товаров сообщества")
         return HttpResponse()

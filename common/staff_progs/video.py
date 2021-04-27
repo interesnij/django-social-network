@@ -10,8 +10,8 @@ def add_video_administrator(user, request_user):
         user.video_user_staff.save(update_fields=['level'])
     except:
         user_staff = VideoUserStaff.objects.create(user=user, level="A")
-    user.perm = User.MANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.MANAGER
+    user.save(update_fields=['type'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
     return user_staff
 
@@ -21,8 +21,8 @@ def add_video_moderator(user, request_user):
         user.video_user_staff.save(update_fields=['level'])
     except:
         user_staff = VideoUserStaff.objects.create(user=user, level="M")
-    user.perm = User.MANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.MANAGER
+    user.save(update_fields=['type'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
     return user_staff
 
@@ -32,8 +32,8 @@ def add_video_editor(user, request_user):
         user.video_user_staff.save(update_fields=['level'])
     except:
         user_staff = VideoUserStaff.objects.create(user=user, level="E")
-    user.perm = User.MANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.MANAGER
+    user.save(update_fields=['type'])
     VideoWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_EDITOR)
     return user_staff
 
@@ -71,8 +71,8 @@ def add_video_administrator_worker(user, request_user):
         user.can_work_staff_video_user.save(update_fields=['is_administrator'])
     except:
         user_staff = CanWorkStaffVideo.objects.create(user=user, is_administrator=True)
-    user.perm = User.SUPERMANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.SUPERMANAGER
+    user.save(update_fields=['type'])
     VideoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADMIN)
     return user_staff
 
@@ -82,8 +82,8 @@ def add_video_moderator_worker(user, request_user):
         user.can_work_staff_video_user.save(update_fields=['is_moderator'])
     except:
         user_staff = CanWorkStaffVideo.objects.create(user=user, is_moderator=True)
-    user.perm = User.SUPERMANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.SUPERMANAGER
+    user.save(update_fields=['type'])
     VideoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_MODERATOR)
     return user_staff
 
@@ -93,8 +93,8 @@ def add_video_editor_worker(user, request_user):
         user.can_work_staff_video_user.save(update_fields=['is_editor'])
     except:
         user_staff = CanWorkStaffVideo.objects.create(user=user, is_editor=True)
-    user.perm = User.SUPERMANAGER
-    user.save(update_fields=['perm'])
+    user.type = User.SUPERMANAGER
+    user.save(update_fields=['type'])
     VideoCreateWorkerManageLog.objects.create(user=user, manager=request_user, action_type=CREATE_ADVERTISER)
     return user_staff
 

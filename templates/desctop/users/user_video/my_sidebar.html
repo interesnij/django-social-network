@@ -37,14 +37,14 @@
       </div>
     </div>
 </div>
-{% if user.my_user_video_album_exists %}
+{% if is_have_lists %}
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
       <h6 style="margin-bottom:15px">Альбомы</h6>
-      {% for object in user.get_my_video_albums %}
-        <a class="ajax" href="{% url 'user_video_album' pk=user.pk uuid=object.uuid %}">
-          {{ object.title }}
+      {% for object in get_lists %}
+        <a class="ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">
+          {{ object.name }}
         </a>
       {% endfor %}
     </div>

@@ -20,12 +20,10 @@ urlpatterns=[
 
     url(r'^add/(?P<pk>\d+)/$', GoodUserCreate.as_view()),
 
-    url(r'^add_album/(?P<pk>\d+)/$', GoodAlbumUserCreate.as_view()),
-    url(r'^edit_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumEdit.as_view()),
-    url(r'^delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumDelete.as_view()),
-    url(r'^abort_delete_album/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumAbortDelete.as_view()),
-    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumAdd.as_view()),
-    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodAlbumRemove.as_view()),
-
-    url(r'^get_album_preview/(?P<pk>\d+)/$', UserGoodAlbumPreview.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', GoodListUserCreate.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListDelete.as_view()),
+    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListAbortDelete.as_view()),
+    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodListAdd.as_view()),
+    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodListRemove.as_view()),
 ]
