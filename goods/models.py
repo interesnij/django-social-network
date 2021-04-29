@@ -42,11 +42,11 @@ class GoodSubCategory(models.Model):
 class GoodList(models.Model):
 	MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
 	THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-	THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
+	THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA'
 	TYPE = (
 		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
 		(THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
+		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
 	#community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -68,7 +68,7 @@ class GoodList(models.Model):
 	def __str__(self):
 		return self.title
 
-	@receiver(post_save, sender='communities.Сommunity') 
+	@receiver(post_save, sender='communities.Сommunity')
 	def create_c_model(sender, instance, created, **kwargs):
 		if created:
 			community=instance

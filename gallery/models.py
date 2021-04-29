@@ -17,7 +17,7 @@ class PhotoList(models.Model):
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
     #community = models.ForeignKey('communities.Community', related_name='post_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
