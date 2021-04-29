@@ -322,10 +322,11 @@ class Good(models.Model):
 	list = models.ManyToManyField(GoodList, related_name="good_list", blank=True)
 
 	comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
-    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+	views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+	ad_views = models.PositiveIntegerField(default=0, verbose_name="Кол-во рекламных просмотров")
+	likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+	dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+	reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	def __str__(self):
 		return self.title
