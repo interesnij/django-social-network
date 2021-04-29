@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
-from docs.helpers import upload_to_doc_directory
+from docs.helpers import upload_to_doc_directory, validate_file_extension
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
