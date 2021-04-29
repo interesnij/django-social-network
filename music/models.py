@@ -392,7 +392,7 @@ class Music(models.Model):
     class Meta:
         verbose_name = "спарсенные треки"
         verbose_name_plural = "спарсенные треки"
-        indexes = (BrinIndex(fields=['created_at']),)
+        indexes = (BrinIndex(fields=['created']),)
         ordering = ['-created']
 
     def __str__(self):
