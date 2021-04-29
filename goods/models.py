@@ -40,268 +40,265 @@ class GoodSubCategory(models.Model):
 
 
 class GoodList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
-    TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
-    )
-
-    #community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    name = models.CharField(max_length=250, verbose_name="Название")
-    type = models.CharField(max_length=5, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    order = models.PositiveIntegerField(default=0)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
+	MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+	THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
+	THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
+	TYPE = (
+		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+		(THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
+		)
+	#community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
+	name = models.CharField(max_length=250, verbose_name="Название")
+	type = models.CharField(max_length=5, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
+	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+	order = models.PositiveIntegerField(default=0)
+	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+	#users = models.ManyToManyField("users.User", blank=True, related_name='+')
+	#communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
-    class Meta:
-        indexes = (BrinIndex(fields=['created']),)
-        verbose_name = 'Подборка товаров'
-        verbose_name_plural = 'Подборки товаров'
+	class Meta:
+		indexes = (BrinIndex(fields=['created']),)
+		verbose_name = 'Подборка товаров'
+		verbose_name_plural = 'Подборки товаров'
 
 	def __str__(self):
-        return self.title
+		return self.title
 
 	@receiver(post_save, sender=Сommunity)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            community=instance
-            GoodList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
-    @receiver(post_save, sender=User)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            GoodList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+	def create_c_model(sender, instance, created, **kwargs):
+		if created:
+			community=instance
+			GoodList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+	@receiver(post_save, sender=User)
+	def create_u_model(sender, instance, created, **kwargs):
+		if created:
+			GoodList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
 
-    def is_main_list(self):
-        return self.type == self.MAIN
-    def is_user_list(self):
-        return self.type == self.LIST
-    def is_private(self):
-        return self.type == self.PRIVATE
-    def is_open(self):
-        return self.type[0] != "T"
+	def is_main_list(self):
+		return self.type == self.MAIN
+	def is_user_list(self):
+		return self.type == self.LIST
+	def is_private(self):
+		return self.type == self.PRIVATE
+	def is_open(self):
+		return self.type[0] != "T"
 
-    def get_items(self):
-        return self.good_list.filter(status="PUB")
-    def get_staff_items(self):
-        return self.good_list.filter(Q(status="PUB")|Q(status="PRI"))
+	def get_items(self):
+		return self.good_list.filter(status="PUB")
+	def get_staff_items(self):
+		return self.good_list.filter(Q(status="PUB")|Q(status="PRI"))
 	def count_items(self):
 		try:
 			return self.good_list.filter(status="PUB").values("pk").count()
 		except:
 			return 0
-    def count_items_ru(self):
-	    count = self.count_items()
-	    a, b = count % 10, count % 100
-	    if (a == 1) and (b != 11):
-		    return str(count) + " товар"
-	    elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-		    return str(count) + " товара"
-	    else:
-		    return str(count) + " товаров"
+	def count_items_ru(self):
+		count = self.count_items()
+		a, b = count % 10, count % 100
+		if (a == 1) and (b != 11):
+			return str(count) + " товар"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " товара"
+		else:
+			return str(count) + " товаров"
 
-    def is_not_empty(self):
-	    return self.good_list.filter(status="PUB").values("pk").exists()
+	def is_not_empty(self):
+		 return self.good_list.filter(status="PUB").values("pk").exists()
+	def get_users_ids(self):
+		users = self.users.exclude(type__contains="THIS").values("pk")
+		return [i['pk'] for i in users]
+	def get_communities_ids(self):
+		communities = self.communities.exclude(type__contains="THIS").values("pk")
+		return [i['pk'] for i in communities]
 
-    def get_users_ids(self):
-        users = self.users.exclude(type__contains="THIS").values("pk")
-        return [i['pk'] for i in users]
+	def is_user_can_add_list(self, user_id):
+		return self.creator.pk != user_id and user_id not in self.get_users_ids():
+	def is_user_can_delete_list(self, user_id):
+		return self.creator.pk != user_id and user_id in self.get_users_ids():
 
-    def get_communities_ids(self):
-        communities = self.communities.exclude(type__contains="THIS").values("pk")
-        return [i['pk'] for i in communities]
+	def is_community_can_add_list(self, community_id):
+		return self.community.pk != community_id and community_id not in self.get_communities_ids():
+	def is_community_can_delete_list(self, community_id):
+		return self.community.pk != community_id and community_id in self.get_communities_ids():
 
-    def is_user_can_add_list(self, user_id):
-        return self.creator.pk != user_id and user_id not in self.get_users_ids():
-    def is_user_can_delete_list(self, user_id):
-        return self.creator.pk != user_id and user_id in self.get_users_ids():
-
-    def is_community_can_add_list(self, community_id):
-        return self.community.pk != community_id and community_id not in self.get_communities_ids():
-    def is_community_can_delete_list(self, community_id):
-        return self.community.pk != community_id and community_id in self.get_communities_ids():
-
-    def get_cover(self):
-	    if self.image:
-		    return self.image.url
-	    else:
-		    return '/static/images/no_img/list.jpg'
+	def get_cover(self):
+		if self.image:
+			 return self.image.url
+		 else:
+			 return '/static/images/no_img/list.jpg'
 
 	@classmethod
-    def get_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query)
-    @classmethod
-    def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
-    def get_user_lists(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_user_lists(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
-    def get_user_lists_count(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).values("pk").count()
-
-    @classmethod
-    def get_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
-        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query)
-    @classmethod
-    def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
-    def get_community_lists(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_community_lists(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
-    def get_community_lists_count(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).values("pk").count()
+	def get_user_staff_lists(cls, user_pk):
+		query = ~Q(type__contains="THIS")
+		query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+		return cls.objects.filter(query)
+	@classmethod
+	def is_have_user_staff_lists(cls, user_pk):
+		query = ~Q(type__contains="THIS")
+		query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).exists()
+	@classmethod
+	def get_user_lists(cls, user_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).order_by("order")
+	@classmethod
+	def is_have_user_lists(cls, user_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).exists()
+	@classmethod
+	def get_user_lists_count(cls, user_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).values("pk").count()
 
 	@classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
-        from notify.models import Notify, Wall
-        from common.processing.good import get_good_list_processing
-        if not order:
-            order = 1
-        if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
-            if is_public:
-                from common.notify.progs import community_send_notify, community_send_wall
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
-                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_good_list_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
-                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_good_list_notify")
-        else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-            if is_public:
-                from common.notify.progs import user_send_notify, user_send_wall
-                Wall.objects.create(creator_id=creator.pk, type="GOL", object_id=list.pk, verb="ITE")
-                user_send_wall(list.pk, None, "create_u_good_list_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
-                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
-        get_good_list_processing(list, GoodList.LIST)
-        return list
-    def edit_list(self, name, description, order, is_public):
-        from common.processing.good import get_good_list_processing
-        if not order:
-            order = 1
-        self.name = name
-        self.description = description
-        self.order = order
-        self.save()
-        if is_public:
-            get_good_list_processing(self, GoodList.LIST)
-            self.make_publish()
-        else:
-            get_good_list_processing(self, GoodList.PRIVATE)
-            self.make_private()
-        return self
+	def get_community_staff_lists(cls, community_pk):
+		query = ~Q(type__contains="THIS")
+		query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+		return cls.objects.filter(query)
+	@classmethod
+	def is_have_community_staff_lists(cls, community_pk):
+		query = ~Q(type__contains="THIS")
+		query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).exists()
+	@classmethod
+	def get_community_lists(cls, community_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).order_by("order")
+	@classmethod
+	def is_have_community_lists(cls, community_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).exists()
+	@classmethod
+	def get_community_lists_count(cls, community_pk):
+		query = Q(type="LIS")
+		query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+		return cls.objects.filter(query).values("pk").count()
 
-    def make_private(self):
-        from notify.models import Notify, Wall
-        self.type = GoodList.PRIVATE
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def make_publish(self):
-        from notify.models import Notify, Wall
-        self.type = GoodList.LIST
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	@classmethod
+	def create_list(cls, creator, name, description, order, community, is_public):
+		from notify.models import Notify, Wall
+		from common.processing.good import get_good_list_processing
+		if not order:
+			order = 1
+		if community:
+			list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+			get_good_list_processing(list, GoodList.LIST)
+			if is_public:
+				from common.notify.progs import community_send_notify, community_send_wall
+				Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+				community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_good_list_wall")
+				for user_id in community.get_member_for_notify_ids():
+					Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+					community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_good_list_notify")
+		else:
+			list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+			get_good_list_processing(list, GoodList.LIST)
+			if is_public:
+				from common.notify.progs import user_send_notify, user_send_wall
+				Wall.objects.create(creator_id=creator.pk, type="GOL", object_id=list.pk, verb="ITE")
+				user_send_wall(list.pk, None, "create_u_good_list_wall")
+				for user_id in creator.get_user_news_notify_ids():
+					Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+					user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
+		return list
+	def edit_list(self, name, description, order, is_public):
+			from common.processing.good import get_good_list_processing
+		if not order:
+			order = 1
+		self.name = name
+		self.description = description
+		self.order = order
+		self.save()
+		if is_public:
+			get_good_list_processing(self, GoodList.LIST)
+			self.make_publish()
+		else:
+			get_good_list_processing(self, GoodList.PRIVATE)
+			self.make_private()
+		return self
 
-    def delete_list(self):
-        from notify.models import Notify, Wall
-        if self.type == "LIS":
-            self.type = GoodList.THIS_DELETED
-        elif self.type == "PRI":
-            self.type = GoodList.THIS_DELETED_PRIVATE
-        elif self.type == "MAN":
-            self.type = GoodList.THIS_DELETED_MANAGER
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
-        from notify.models import Notify, Wall
-        if self.type == "TDEL":
-            self.type = GoodList.LIST
-        elif self.type == "TDELP":
-            self.type = GoodList.PRIVATE
-        elif self.type == "TDELM":
-            self.type = GoodList.MANAGER
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	def make_private(self):
+		from notify.models import Notify, Wall
+		self.type = GoodList.PRIVATE
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def make_publish(self):
+		from notify.models import Notify, Wall
+		self.type = GoodList.LIST
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	def delete_list(self):
+		from notify.models import Notify, Wall
+		if self.type == "LIS":
+			self.type = GoodList.THIS_DELETED
+		elif self.type == "PRI":
+			self.type = GoodList.THIS_DELETED_PRIVATE
+		elif self.type == "MAN":
+			self.type = GoodList.THIS_DELETED_MANAGER
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def abort_delete_list(self):
+		from notify.models import Notify, Wall
+		if self.type == "TDEL":
+			self.type = GoodList.LIST
+		elif self.type == "TDELP":
+			self.type = GoodList.PRIVATE
+		elif self.type == "TDELM":
+			self.type = GoodList.MANAGER
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_list(self):
-        from notify.models import Notify, Wall
-        if self.type == "LIS":
-            self.type = GoodList.THIS_CLOSED
-        elif self.type == "MAI":
-            self.type = GoodList.THIS_CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = GoodList.THIS_CLOSED_PRIVATE
-        elif self.type == "MAN":
-            self.type = GoodList.THIS_CLOSED_MANAGER
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_list(self):
-        from notify.models import Notify, Wall
-        if self.type == "TCLO":
-            self.type = GoodList.LIST
-        elif self.type == "TCLOM":
-            self.type = GoodList.MAIN
-        elif self.type == "TCLOP":
-            self.type = GoodList.PRIVATE
-        elif self.type == "TCLOM":
-            self.type = GoodList.MANAGER
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	def close_list(self):
+		from notify.models import Notify, Wall
+		if self.type == "LIS":
+			self.type = GoodList.THIS_CLOSED
+		elif self.type == "MAI":
+			self.type = GoodList.THIS_CLOSED_MAIN
+		elif self.type == "PRI":
+			self.type = GoodList.THIS_CLOSED_PRIVATE
+		elif self.type == "MAN":
+			self.type = GoodList.THIS_CLOSED_MANAGER
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def abort_close_list(self):
+		from notify.models import Notify, Wall
+		if self.type == "TCLO":
+			self.type = GoodList.LIST
+		elif self.type == "TCLOM":
+			self.type = GoodList.MAIN
+		elif self.type == "TCLOP":
+			self.type = GoodList.PRIVATE
+		elif self.type == "TCLOM":
+			self.type = GoodList.MANAGER
+		self.save(update_fields=['type'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class Good(models.Model):
