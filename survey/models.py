@@ -9,7 +9,7 @@ from imagekit.models import ProcessedImageField
 class SurveyList(models.Model):
     MAIN, LIST, MANAGER, THIS_PROCESSING = 'MAI', 'LIS', 'MAN', 'TPRO'
     THIS_DELETED, THIS_DELETED_MANAGER = 'TDEL', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOM', 'TCLOMA',
+    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_PRIVATE = 'TCLO', 'TCLOM', 'TCLOMA', 'TCLOP'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
