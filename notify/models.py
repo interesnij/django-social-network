@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core import serializers
 from django.contrib.postgres.indexes import BrinIndex
-from notify.helpers import VERB, STATUS
+from notify.helpers import VERB, STATUS, TYPE
 
 """
 итак, ниже у нас уведомления, рассылаемые скопом каждому подписичку на уведомления и управленцу сообществ -
