@@ -4,7 +4,7 @@ from django.conf.urls import url
 
 urlpatterns=[
 	url(r'^photos/(?P<pk>\d+)/$', UserPhotosList.as_view()),
-	url(r'^photo_list_photos/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoListPhotosList.as_view(), name="user_photos"),
+	url(r'^photo_list_photos/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumList.as_view(), name="user_photos"),
 
 	url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhoto.as_view(), name="user_photo"),
     url(r'^list_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoAlbumList.as_view(), name="user_list_photo"),
