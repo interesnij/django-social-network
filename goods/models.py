@@ -116,9 +116,9 @@ class GoodList(models.Model):
 		return [i['pk'] for i in communities]
 
 	def is_user_can_add_list(self, user_id):
-		return self.creator.pk != user_id and user_id not in self.get_users_ids():
+		return self.creator.pk != user_id and user_id not in self.get_users_ids()
 	def is_user_can_delete_list(self, user_id):
-		return self.creator.pk != user_id and user_id in self.get_users_ids():
+		return self.creator.pk != user_id and user_id in self.get_users_ids()
 
 	def is_community_can_add_list(self, community_id):
 		return self.community.pk != community_id and community_id not in self.get_communities_ids():
