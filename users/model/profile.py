@@ -34,7 +34,7 @@ class UserProfile(models.Model):
         verbose_name_plural = 'Профили пользователей'
         index_together = [('id', 'user'),]
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)
@@ -60,7 +60,7 @@ class UserLocation(models.Model):
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserLocation.objects.create(user=instance)
@@ -126,7 +126,7 @@ class UserProfileFamily(models.Model):
         verbose_name = 'Семья пользователя'
         verbose_name_plural = 'Семьи пользователей'
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfileFamily.objects.create(user=instance)
@@ -202,7 +202,7 @@ class UserProfileAnketa(models.Model):
         verbose_name = "Анкета"
         verbose_name_plural = "Анкеты"
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfileAnketa.objects.create(user=instance)

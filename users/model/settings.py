@@ -10,7 +10,7 @@ class UserNotifications(models.Model):
     connection_confirmed = models.BooleanField(default=True, verbose_name="Заявка принята")
     community_invite = models.BooleanField(default=True, verbose_name="Приглашение в сообщество")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotifications.objects.create(user=instance)
@@ -29,7 +29,7 @@ class UserNotificationsPost(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotificationsPost.objects.create(user=instance)
@@ -46,7 +46,7 @@ class UserNotificationsPhoto(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotificationsPhoto.objects.create(user=instance)
@@ -63,7 +63,7 @@ class UserNotificationsGood(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotificationsGood.objects.create(user=instance)
@@ -80,7 +80,7 @@ class UserNotificationsVideo(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotificationsVideo.objects.create(user=instance)
@@ -89,7 +89,7 @@ class UserNotificationsMusic(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_music_notify', verbose_name="Пользователь")
     repost = models.BooleanField(default=True, verbose_name="Репост аудиозаписи")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserNotificationsMusic.objects.create(user=instance)
@@ -118,7 +118,7 @@ class UserColorSettings(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='color_settings', verbose_name="Пользователь")
     color = models.CharField(max_length=20, choices=COLOR, default='white', verbose_name="Цвет")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserColorSettings.objects.create(user=instance)
@@ -145,7 +145,7 @@ class UserPrivate(models.Model):
     message = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivate.objects.create(user=instance)
@@ -181,7 +181,7 @@ class UserPrivatePost(models.Model):
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivatePost.objects.create(user=instance)
@@ -217,7 +217,7 @@ class UserPrivatePhoto(models.Model):
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivatePhoto.objects.create(user=instance)
@@ -253,7 +253,7 @@ class UserPrivateGood(models.Model):
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivateGood.objects.create(user=instance)
@@ -289,7 +289,7 @@ class UserPrivateVideo(models.Model):
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivateVideo.objects.create(user=instance)
@@ -315,7 +315,7 @@ class UserPrivateMusic(models.Model):
     music = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет аудиозаписи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivateMusic.objects.create(user=instance)
