@@ -380,7 +380,7 @@ class PhotoListUserAbortDelete(View):
             raise Http404
 
 
-class UserPhotoPhotoListAdd(View):
+class UserPhotoListAdd(View):
     """
     Добавляем фото в любой альбом, если его там нет
     """
@@ -394,7 +394,7 @@ class UserPhotoPhotoListAdd(View):
         else:
             raise Http404
 
-class UserPhotoPhotoListRemove(View):
+class UserPhotoListRemove(View):
     """
     Удаляем фото из любого альбома, если он там есть
     """
