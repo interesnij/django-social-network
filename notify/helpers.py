@@ -30,6 +30,25 @@ REGISTER, WOMEN_REGISTER, GROUP_REGISTER = 'REG', 'WREG', 'GREG'
 
 UNREAD, READ, DELETED, CLOSED = 'U', 'R', 'D', "C"
 
+USER, COMMUNITY = 'USE', 'COM'
+POST_LIST, POST, POST_COMMENT = 'POL', 'POS', 'POSC'
+PHOTO_LIST, PHOTO, PHOTO_COMMENT = 'PHL', 'PHO', 'PHOC'
+GOOD_LIST, GOOD, GOOD_COMMENT = 'GOL', 'GOO', 'GOOC'
+DOC_LIST, DOC = 'DOL', 'DOC'
+SURVEY_LIST, SURVEY = 'SUL', 'SUR'
+MUSIC_LIST, MUSIC = 'MUL', 'MUS'
+VIDEO_LIST, VIDEO, VIDEO_COMMENT = 'VIL', 'VID', 'VIDC'
+
+TYPE = (
+    (USER, 'Пользователь'), (COMMUNITY, 'Сообщество'),
+    (MUSIC_LIST, 'Плейлист'), (MUSIC, 'Трек'),
+    (ELECT_NEW, 'Активность'), (ELECT_NEW_COMMENT, 'Коммент к активности'),
+    (BLOG, 'Новость'), (BLOG_COMMENT, 'Коммент к новости'),
+    (DOC_LIST, 'Список документов'), (DOC, 'документ'),
+    (PHOTO_LIST, 'Список фотографий'), (PHOTO, 'Фотография'), (PHOTO_COMMENT, 'Коммент к фотографии'),
+    (VIDEO_LIST, 'Список роликов'), (VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),
+)
+
 VERB = (
     (ITEM, ' разместил'), (SUGGEST_ITEM, ' предложил'), (ITEMS, ' разместили'),
     (COMMENT, ' оставил'), (WOMEN_COMMENT, ' оставила'), (GROUP_COMMENT, ' оставили'),
