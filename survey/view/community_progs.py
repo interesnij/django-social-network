@@ -33,7 +33,7 @@ class SurveyCommunityCreate(TemplateView):
             new_survey = survey.create_survey(
                                             title=survey.title,
                                             image=survey.image,
-                                            lists=request.POST.get("list")
+                                            lists=request.POST.get("list"),
                                             creator=request.user,
                                             order=survey.order,
                                             is_anonymous=survey.is_anonymous,
@@ -71,7 +71,7 @@ class SurveyCommunityEdit(TemplateView):
             new_survey = survey.edit_survey(
                                             title=survey.title,
                                             image=survey.image,
-                                            lists=request.POST.get("list")
+                                            lists=request.POST.get("list"),
                                             order=survey.order,
                                             is_anonymous=survey.is_anonymous,
                                             is_multiple=survey.is_multiple,
