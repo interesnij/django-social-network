@@ -739,7 +739,7 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', PRO'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', 'PRO'
     THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
     THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
     STATUS = (
