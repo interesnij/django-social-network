@@ -49,7 +49,7 @@ class Community(models.Model):
         (THIS_OPEN_DELETED, 'Открытый удалённый'),(THIS_PRIVATE_DELETED, 'Приватный удалённый'),(THIS_CLOSED_DELETED, 'Закрытый удалённый'),(THIS_MANAGER_DELETED, 'Менеджерский удалённый'),
         (THIS_BANNER_OPEN, 'Открытый баннер'),(THIS_BANNER_PRIVATE, 'Приватный баннер'),(THIS_BANNER_CLOSED, 'Закрытый баннер'),(THIS_BANNER_MANAGER, 'Менеджерский баннер'),
         (THIS_SUSPENDED_OPEN, 'Открытый замороженный'),(THIS_SUSPENDED_PRIVATE, 'Приватный замороженный'), (THIS_SUSPENDED_BANNER, 'Закрытый замороженный'),(THIS_SUSPENDED_BANNER, 'Менеджерский замороженный'),
-        (THIS_BLOCKED_OPEN, 'Открытый блокнутый'),(THIS_BLOCKED_PRIVATE, 'Приватный блокнутый'), (THIS_BLOCKED_BANNER, 'Закрытый блокнутый'),(THIS_BLOCKED_BANNER 'Менеджерский блокнутый'),
+        (THIS_BLOCKED_OPEN, 'Открытый блокнутый'),(THIS_BLOCKED_PRIVATE, 'Приватный блокнутый'), (THIS_BLOCKED_BANNER, 'Закрытый блокнутый'),(THIS_BLOCKED_BANNER, 'Менеджерский блокнутый'),
     )
 
     CHILD, STANDART, VERIFIED_SEND, VERIFIED = 'CH', 'ST', 'VS', 'VE'
