@@ -566,7 +566,7 @@ class Good(models.Model):
 
 class GoodImage(models.Model):
 	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
-	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(1000,1000)],upload_to=upload_to_sub_good_directory)
+	image = ProcessedImageField(verbose_name='Изображение', format='JPEG',options={'quality': 100}, processors=[Transpose(), ResizeToFit(1000,1000)],upload_to=upload_to_good_directory)
 
 	def __str__(self):
 		return str(self.pk)
