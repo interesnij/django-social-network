@@ -65,7 +65,7 @@ class PostList(models.Model):
 
     def get_posts(self):
         select_related = ('creator', 'community')
-        only = ('creator__id', 'community__id', 'created')
+        only = ('creator__id', 'created')
         posts = self.post_list.select_related(*select_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
         return posts
     def get_posts_ids(self):
@@ -505,16 +505,10 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        parents = PostComment.objects.filter(post_id=self.pk, status="PUB")
-        parents_count = parents.count()
-        i = 0
-        for comment in parents:
-            i = i + comment.count_replies()
-        i = i + parents_count
-        if i == 0:
+        if self.comments == 0:
             return ''
         else:
-            return i
+            return self.comments
 
     def __str__(self):
         return self.creator.get_full_name()
@@ -615,16 +609,12 @@ class Post(models.Model):
         return dislikes
 
     def likes_count(self):
-        from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent_id=self.pk, vote__gt=0).values('pk').count()
-        if likes > 0:
+        if self.likes > 0:
             return likes
         else:
             return ''
     def dislikes_count(self):
-        from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent_id=self.pk, vote__lt=0).values('pk').count()
-        if dislikes > 0:
+        if self.dislikes > 0:
             return dislikes
         else:
             return ''
@@ -658,14 +648,12 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
     def is_have_likes(self):
-        from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0).exists()
+        return self.likes > 0
     def window_dislikes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
     def is_have_dislikes(self):
-        from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0).exists()
+        return self.dislikes > 0
 
     def get_reposts(self):
         parents = Post.objects.filter(parent=self)
@@ -678,10 +666,10 @@ class Post(models.Model):
     def count_reposts(self):
         parents = self.get_reposts()
         count_reposts = parents.values('pk').count()
-        if count_reposts == 0:
+        if self.reposts == 0:
             return ''
         else:
-            return count_reposts
+            return self.reposts
 
     def get_visiter_sity(self):
         from stst.models import PostNumbers, PostAdNumbers
@@ -706,7 +694,11 @@ class Post(models.Model):
         return count
 
     def all_visits_count(self):
-        return self.post_visits_count()
+        count = self.visits_count() + self.ad_visits_count()
+        if count == 0:
+            return ''
+        else:
+            return count
 
     def get_list_pk(self):
         return self.list.all()[0].pk
@@ -720,9 +712,10 @@ class Post(models.Model):
                 return True
         return False
 
-    def post_visits_count(self):
-        from stst.models import PostNumbers
-        return PostNumbers.objects.filter(post=self.pk).values('pk').count()
+    def visits_count(self):
+        return self.views
+    def ad_visits_count(self):
+        return self.ad_views
 
     def get_attach_photos(self):
         if "pho" in self.attach:
@@ -791,18 +784,14 @@ class PostComment(models.Model):
         return PostCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def likes_count(self):
-        from common.model.votes import PostCommentVotes
-        qs = PostCommentVotes.objects.filter(item=self, vote__gt=0).values("pk").count()
-        if qs > 0:
-            return qs
+        if self.likes > 0:
+            return self.likes
         else:
             return ''
 
     def dislikes_count(self):
-        from common.model.votes import PostCommentVotes
-        qs = PostCommentVotes.objects.filter(item=self, vote__lt=0).values("pk").count()
-        if qs > 0:
-            return qs
+        if self.dislikes > 0:
+            return self.dislikes
         else:
             return ''
 
