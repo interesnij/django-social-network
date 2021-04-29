@@ -590,8 +590,8 @@ class GoodComment(models.Model):
 	status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
 
 	likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+	dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+	reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )
