@@ -18,4 +18,4 @@ class CommentForm(forms.ModelForm):
 class GoodListForm(forms.ModelForm):
 	class Meta:
 		model = GoodList
-		fields = ['title', 'order', 'description',]
+		fields = ['name', 'order', 'description',]
