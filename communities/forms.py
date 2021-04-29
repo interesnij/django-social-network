@@ -15,12 +15,12 @@ class GeneralCommunityForm(forms.ModelForm):
 	status = forms.CharField( label="",required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
 	class Meta:
 		model = Community
-		fields = ['name', 'description', 'status', 'category',]
+		fields = ['name', 'status', 'category',]
 
 
 class CoverCommunityForm(forms.ModelForm):
 	class Meta:
-		model = Community
+		model = CommunityInfo
 		fields = ['cover', ]
 
 
