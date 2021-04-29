@@ -242,7 +242,7 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
     THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
