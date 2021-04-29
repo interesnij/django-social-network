@@ -127,9 +127,9 @@ class GoodList(models.Model):
 
 	def get_cover(self):
 		if self.image:
-			 return self.image.url
-		 else:
-			 return '/static/images/no_img/list.jpg'
+			return self.image.url
+		else:
+			return '/static/images/no_img/list.jpg'
 
 	@classmethod
 	def get_user_staff_lists(cls, user_pk):
