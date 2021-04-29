@@ -29,7 +29,7 @@ class CommunityInfo(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]
 
     #@receiver(post_save, sender='communities.Сommunity')
     def create_model(sender, instance, created, **kwargs):

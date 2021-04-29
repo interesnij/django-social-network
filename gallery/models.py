@@ -41,7 +41,7 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
-    @receiver(post_save, sender='communities.Сommunity')
+    #@receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance

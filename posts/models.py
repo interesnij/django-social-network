@@ -36,7 +36,7 @@ class PostList(models.Model):
         verbose_name_plural = "списки записей"
         ordering = ['order']
 
-    @receiver(post_save, sender='communities.Сommunity')
+    #@receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance

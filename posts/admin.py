@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
                     #'community',
                     'created',
                     ]
-    list_filter = ['is_deleted', 'created',]
+    list_filter = ['created',]
 
 
 class PostCommentAdmin(admin.ModelAdmin):
