@@ -382,7 +382,7 @@ class Music(models.Model):
     uri = models.CharField(max_length=255, blank=True, null=True)
     list = models.ManyToManyField(SoundList, related_name='playlist', blank="True")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
-    file = models.FileField(upload_to=music, validators=[validate_file_extension], verbose_name="Аудиозапись")
+    file = models.FileField(upload_to=music, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
 
     views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")

@@ -304,7 +304,7 @@ class Video(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
-    file = models.FileField(upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
+    file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
 
     comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
