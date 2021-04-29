@@ -372,7 +372,7 @@ class Music(models.Model):
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
-    image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_user_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
+    image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     duration = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
@@ -382,7 +382,7 @@ class Music(models.Model):
     uri = models.CharField(max_length=255, blank=True, null=True)
     list = models.ManyToManyField(SoundList, related_name='playlist', blank="True")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
-    file = models.FileField(upload_to=music, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
+    file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
 
     views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
