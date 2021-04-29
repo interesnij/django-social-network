@@ -51,7 +51,7 @@ class GoodList(models.Model):
 	#community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
-	type = models.CharField(max_length=5, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
+	type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	order = models.PositiveIntegerField(default=0)
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
@@ -315,7 +315,7 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
-	status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=2, verbose_name="Статус")
+	status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=6, verbose_name="Статус")
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
