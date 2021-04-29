@@ -74,7 +74,7 @@ class AddPlayListInUserCollections(View):
         else:
             return HttpResponse()
 
-class RemovePlayListInUserCollections(View):
+class RemovePlayListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)

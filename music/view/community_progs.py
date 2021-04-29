@@ -71,7 +71,7 @@ class AddPlayListInCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-class RemovePlayListInCommunityCollections(View):
+class RemovePlayListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
