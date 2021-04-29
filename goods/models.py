@@ -302,10 +302,10 @@ class GoodList(models.Model):
 
 
 class Good(models.Model):
-	THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO', 'DRA','PUB','PRI','MAN','DEL','CLO'
+	THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO', 'DRA','PUB','PRI','MAN','TDEL','TCLO'
 	THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
 	STATUS = (
-		(THIS_PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+		(THIS_PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
 		(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
 	)
 	title = models.CharField(max_length=200, verbose_name="Название")
@@ -578,8 +578,8 @@ class GoodComment(models.Model):
 	THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
 	STATUS = (
 	(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
-		(DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
-		(CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+		(THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
+		(THIS_CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
 	)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
