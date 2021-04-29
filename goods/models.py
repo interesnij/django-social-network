@@ -211,7 +211,7 @@ class GoodList(models.Model):
 					user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
 		return list
 	def edit_list(self, name, description, order, is_public):
-			from common.processing.good import get_good_list_processing
+		from common.processing.good import get_good_list_processing
 		if not order:
 			order = 1
 		self.name = name
