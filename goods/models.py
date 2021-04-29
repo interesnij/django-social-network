@@ -305,7 +305,7 @@ class Good(models.Model):
 	THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO', 'DRA','PUB','PRI','MAN','DEL','CLO'
 	THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
 	STATUS = (
-		(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+		(THIS_PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
 		(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
 	)
 	title = models.CharField(max_length=200, verbose_name="Название")
