@@ -77,7 +77,7 @@ class UUCMVideoListWindow(TemplateView):
         context["user"] = self.user
         return context
 
-class CUCMVideoAListWindow(TemplateView):
+class CUCMVideoListWindow(TemplateView):
     """
     форма репоста видеоальбома сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
