@@ -49,7 +49,7 @@ def community_notify(creator, community, action_community_id, object_id, type, s
             Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, action_community_id=action_community_id, community_id=community.pk, object_id=object_id, type=type, verb="G"+verb, object_set=notify)
         else:
             Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, action_community_id=action_community_id, community_id=community.pk, object_id=object_id, type=type, verb=current_verb)
-        community_send_notify(attach[3:], creator.pk, recipient_id=user_id, community, action_community_id, socket_name)
+        community_send_notify(attach[3:], creator.pk, user_id, community, action_community_id, socket_name)
 
 
 def user_wall(creator, action_community_id, object_id, type, socket_name, verb):
