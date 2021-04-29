@@ -48,7 +48,7 @@ class CUCMPhotoWindow(TemplateView):
         return context
 
 
-class UUCMPhotoPhotoListWindow(TemplateView):
+class UUCMPhotoListWindow(TemplateView):
     """
     форма репоста фотоальбома пользователя к себе на стену, в свои сообщества, в несколько сообщений
     """
@@ -68,7 +68,7 @@ class UUCMPhotoPhotoListWindow(TemplateView):
         c["form"], c["object"], c["user"] = PostForm(), self.list, self.user
         return context
 
-class CUCMPhotoPhotoListWindow(TemplateView):
+class CUCMPhotoListWindow(TemplateView):
     """
     форма репоста фотоальбома сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
