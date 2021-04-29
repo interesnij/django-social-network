@@ -7,7 +7,7 @@ from users.models import User
 class InfoUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('sity','status')
+        fields = ('sity', 'status')
 
 class UserNotifyForm(forms.ModelForm):
     class Meta:
