@@ -192,3 +192,22 @@ class CommunitySurveyListEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(CommunitySurveyListEdit,self).get(request,*args,**kwargs)
+
+
+class CommunitySurveyListDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
+            list.delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunitySurveyListAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404

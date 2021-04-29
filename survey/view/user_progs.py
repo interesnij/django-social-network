@@ -195,3 +195,21 @@ class UserSurveyListEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
         return super(UserSurveyListEdit,self).get(request,*args,**kwargs)
+
+class UserSurveyListDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.pk == self.list.creator.pk and list.type == DocList.LIST:
+            list.delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class UserSurveyListAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.pk == self.list.creator.pk:
+            list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
