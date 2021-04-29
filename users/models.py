@@ -100,9 +100,9 @@ class User(AbstractUser):
         return self.gender == User.MALE
 
     def is_suspended(self):
-        return self.type[:4] = "TSUS"
+        return self.type[:4] == "TSUS"
     def is_have_warning_banner(self):
-        return self.type[:4] = "TBAN"
+        return self.type[:4] == "TBAN"
     def is_deleted(self):
         return self.type[:4] == "TDEL"
     def is_clocked(self):
