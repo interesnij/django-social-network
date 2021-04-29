@@ -59,7 +59,7 @@ class Community(models.Model):
 
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='+', verbose_name="Подкатегория сообщества")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_communities', null=False, blank=False, verbose_name="Создатель")
-    name = models.CharField(max_length=100, blank=False, null=False, verbose_name="Название" )
+    name = models.CharField(max_length=settings.COMMUNITY_NAME_MAX_LENGTH, blank=False, null=False, verbose_name="Название" )
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=TYPE, default=THIS_PROCESSING, max_length=5)
