@@ -42,10 +42,11 @@ VIDEO_LIST, VIDEO, VIDEO_COMMENT = 'VIL', 'VID', 'VIDC'
 TYPE = (
     (USER, 'Пользователь'), (COMMUNITY, 'Сообщество'),
     (MUSIC_LIST, 'Плейлист'), (MUSIC, 'Трек'),
-    (ELECT_NEW, 'Активность'), (ELECT_NEW_COMMENT, 'Коммент к активности'),
-    (BLOG, 'Новость'), (BLOG_COMMENT, 'Коммент к новости'),
     (DOC_LIST, 'Список документов'), (DOC, 'документ'),
+    (SURVEY_LIST, 'Список опросов'), (SURVEY, 'опрос'),
     (PHOTO_LIST, 'Список фотографий'), (PHOTO, 'Фотография'), (PHOTO_COMMENT, 'Коммент к фотографии'),
+    (POST_LIST, 'Список записей'), (POST, 'запись'), (POST_COMMENT, 'Коммент к записи'),
+    (GOOD_LIST, 'Список товаров'), (GOOD, 'товар'), (GOOD_COMMENT, 'Коммент к товару'),
     (VIDEO_LIST, 'Список роликов'), (VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),
 )
 
