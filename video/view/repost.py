@@ -112,7 +112,7 @@ class UUVideoRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=video.creator, community=None, attach="vid"+str(video.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             get_post_processing(new_post)
             user_notify(request.user, video.creator.pk, None, "vid"+video.pk, "u_video_repost", "RE")
             return HttpResponse()
@@ -132,10 +132,8 @@ class CUVideoRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=video.creator, community=community, attach="vid"+str(video.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_processing(new_post)
-            community_notify(request.user, community, None, "vid"+video.pk, "c_video_repost", 'RE')
-            return HttpResponse("")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
@@ -160,9 +158,7 @@ class UCVideoRepost(View):
             parent = Post.create_parent_post(creator=video.creator, community=community, attach="vid"+str(video.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    user_notify(request.user, video.creator.pk, community_id, "vid"+video.pk, "u_video_repost", 'CR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -185,9 +181,7 @@ class CCVideoRepost(View):
             parent = Post.create_parent_post(creator=video.creator, community=community, attach="vid"+str(video.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "vid"+video.pk, "c_video_repost", 'CR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -230,9 +224,7 @@ class UUVideoListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="lvi"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_processing(new_post)
-            user_notify(request.user, list.creator.pk, None, "vid"+list.pk, "u_video_list_repost", "LRE")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -250,10 +242,8 @@ class CUVideoListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=None, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-            get_post_processing(new_post)
-            community_notify(request.user, community, None, "vid"+list.pk, "c_video_list_repost", 'LRE')
-            return HttpResponse("")
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
@@ -278,9 +268,7 @@ class UCVideoListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    user_notify(request.user, list.creator.pk, community_id, "vid"+list.pk, "u_video_list_repost", 'CLR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -303,9 +291,7 @@ class CCVideoListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lvi"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "vid"+list.pk, "c_video_list_repost", 'CLR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

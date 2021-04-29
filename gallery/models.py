@@ -30,8 +30,8 @@ class PhotoList(models.Model):
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_photolist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_photolist')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -171,6 +171,123 @@ class PhotoList(models.Model):
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
+    @classmethod
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
+        from common.processing.photo import get_photo_list_processing
+        if not order:
+            order = 1
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_photo_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_photo_list_notify")
+        else:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="PHL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_photo_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_photo_list_notify")
+        get_photo_list_processing(list, PhotoList.LIST)
+        return list
+    def edit_list(self, name, description, order, is_public):
+        from common.processing.photo import get_photo_list_processing
+        if not order:
+            order = 1
+        self.name = name
+        self.description = description
+        self.order = order
+        self.save()
+        if is_public:
+            get_photo_list_processing(self, PhotoList.LIST)
+            self.make_publish()
+        else:
+            get_photo_list_processing(self, PhotoList.PRIVATE)
+            self.make_private()
+        return self
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.type = PhotoList.PRIVATE
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.type = PhotoList.LIST
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PhotoList.THIS_DELETED
+        elif self.type == "PRI":
+            self.type = PhotoList.THIS_DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = PhotoList.THIS_DELETED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TDEL":
+            self.type = PhotoList.LIST
+        elif self.type == "TDELP":
+            self.type = PhotoList.PRIVATE
+        elif self.type == "TDELM":
+            self.type = PhotoList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PhotoList.THIS_CLOSED
+        elif self.type == "MAI":
+            self.type = PhotoList.THIS_CLOSED_MAIN
+        elif self.type == "PRI":
+            self.type = PhotoList.THIS_CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = PhotoList.THIS_CLOSED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TCLO":
+            self.type = PhotoList.LIST
+        elif self.type == "TCLOM":
+            self.type = PhotoList.MAIN
+        elif self.type == "TCLOP":
+            self.type = PhotoList.PRIVATE
+        elif self.type == "TCLOM":
+            self.type = PhotoList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
+
 
 class Photo(models.Model):
     THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
@@ -191,6 +308,12 @@ class Photo(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
 
+    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Фото'
@@ -202,9 +325,33 @@ class Photo(models.Model):
         return naturaltime(self.created)
 
     @classmethod
-    def create_photo(cls, creator, list=None, file=None, community=None, created=None, is_public=None, description=None, item=None):
-        photo = Photo.objects.create(creator=creator, file=file, community=community, is_public=is_public, list=list, description=description, item=item, )
-        return photo
+    def create_photo(cls, creator, image, list, community):
+        from common.processing.photo import get_photo_processing
+
+        photo = cls.objects.create(creator=creator,preview=image,file=image)
+        list.photo_list.add(photo)
+        if not list.is_private():
+            get_photo_processing(photo, Photo.PUBLISHED)
+            if community:
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
+                community_send_wall(photo.pk, creator.pk, community.pk, None, "create_c_photo_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
+                    community_send_notify(photo.pk, creator.pk, user_id, community.pk, None, "create_c_photo_notify")
+            else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, type="PHO", object_id=photo.pk, verb="ITE")
+                user_send_wall(photo.pk, None, "create_u_photo_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
+                    user_send_notify(photo.pk, creator.pk, user_id, None, "create_u_photo_notify")
+        else:
+            get_photo_processing(photo, Photo.PRIVATE)
 
     def is_list_exists(self):
         return self.photo_list.filter(creator=self.creator).exists()
@@ -282,17 +429,13 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    EDITED = 'EDI'
-    DELETED = 'DEL'
-    CLOSED = 'CLO'
-    PROCESSING = 'PRO'
-    PUBLISHED = 'PUB'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
     STATUS = (
-        (DELETED, 'Удалённый'),
-        (EDITED, 'Изменённый'),
-        (CLOSED, 'Закрытый менеджером'),
-        (PROCESSING, 'Обработка'),
-        (PUBLISHED, 'Опубликовано'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
     )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -300,7 +443,11 @@ class PhotoComment(models.Model):
     text = models.TextField(blank=True,null=True)
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    status = models.CharField(max_length=5, choices=STATUS, default=PROCESSING, verbose_name="Тип альбома")
+    status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )

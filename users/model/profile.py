@@ -16,6 +16,16 @@ class UserProfile(models.Model):
     favorite_quotes = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Любимые цитаты")
     about = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="О себе")
 
+    posts = models.PositiveIntegerField(default=0, verbose_name="Кол-во постов")
+    views_post = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров постов")
+    friends = models.PositiveIntegerField(default=0, verbose_name="Кол-во друзей")
+    follows = models.PositiveIntegerField(default=0, verbose_name="Кол-во подписчиков")
+    communities = models.PositiveIntegerField(default=0, verbose_name="Кол-во групп")
+    photos = models.PositiveIntegerField(default=0, verbose_name="Кол-во фотографий")
+    goods = models.PositiveIntegerField(default=0, verbose_name="Кол-во товаров")
+    traks = models.PositiveIntegerField(default=0, verbose_name="Кол-во аудиозаписей")
+    videos = models.PositiveIntegerField(default=0, verbose_name="Кол-во видеозаписей")
+
     def __str__(self):
         return self.user.last_name
 

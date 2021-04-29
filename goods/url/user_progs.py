@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns=[
-    url(r'^delete/(?P<pk>\d+)/$', UserGoodDelete.as_view()),
-    url(r'^abort_delete/(?P<pk>\d+)/$', UserGoodAbortDelete.as_view()),
     url(r'^on_comment/(?P<pk>\d+)/$', UserOpenCommentGood.as_view()),
     url(r'^off_comment/(?P<pk>\d+)/$', UserCloseCommentGood.as_view()),
     url(r'^hide/(?P<pk>\d+)/$', UserHideGood.as_view()),
@@ -18,12 +16,15 @@ urlpatterns=[
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserDelete.as_view())),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserAbortDelete.as_view())),
 
-    url(r'^add/(?P<pk>\d+)/$', GoodUserCreate.as_view()),
+    url(r'^add/$', GoodUserCreate.as_view()),
+    url(r'^edit/(?P<pk>\d+)/$', GoodUserEdit.as_view()),
+    url(r'^delete/(?P<pk>\d+)/$', UserGoodDelete.as_view()),
+    url(r'^abort_delete/(?P<pk>\d+)/$', UserGoodAbortDelete.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', GoodListUserCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListDelete.as_view()),
     url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserGoodListAbortDelete.as_view()),
-    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodListAdd.as_view()),
-    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodListRemove.as_view()),
+    url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddGoodListInUserCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodListFromUserCollections.as_view()),
 ]

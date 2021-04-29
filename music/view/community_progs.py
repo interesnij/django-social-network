@@ -60,7 +60,7 @@ class CommunitySoundcloudSet(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityPlaylistAdd(View):
+class AddPlayListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -71,7 +71,7 @@ class CommunityPlaylistAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityPlaylistRemove(View):
+class RemovePlayListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -90,7 +90,7 @@ class CommunityTrackAdd(View):
     def get(self, request, *args, **kwargs):
         track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
+        if request.is_ajax() and not list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.add(track)
             return HttpResponse()
         else:
@@ -102,7 +102,7 @@ class CommunityTrackRemove(View):
     """
     def get(self, request, *args, **kwargs):
         track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
+        if request.is_ajax() and list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.players.remove(track)
             return HttpResponse()
         else:
@@ -164,12 +164,8 @@ class CommunityPlaylistCreate(View):
         form_post, community = PlaylistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            new_list = form_post.save(commit=False)
-            new_list.creator = request.user
-            new_list.community = community
-            if not new_list.order:
-                new_list.order = 0
-            new_list.save()
+            list = form_post.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=community,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'communities/music_list/admin_list.html',{'playlist': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()

@@ -7,13 +7,23 @@
                 <h5 class="content-color-primary mb-0">Изменение плейлиста {{ playlist.title }}</h5>
             </div>
             <div class="card-body">
-                <div class="form-group ">
+                <div class="form-group">
                   <label>Название</label>
                   <input type="text" value="{{ playlist.name }}" name="name" class="form-control" id="id_name">
                 </div>
-                <div class="form-group ">
+                <div class="form-group">
+                  <label>Описание</label>
+                  <input name="description" value="{{ list.description }}" class="form-control">
+                </div>
+                <div class="form-group">
                   <label>Порядковый номер</label>
                   <input type="number" value="{{ playlist.order }}" name="order" class="form-control" id="id_order">
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_public" class="custom-control-input" {% if list.is_public %}checked{% endif %} id="id_is_public">
+                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
+                  </div>
                 </div>
             </div>
             <div class="card-footer">

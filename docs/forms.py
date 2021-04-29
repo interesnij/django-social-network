@@ -7,7 +7,7 @@ class DoclistForm(forms.ModelForm):
 
 	class Meta:
 		model = DocList
-		fields = ['name', 'is_public', 'order']
+		fields = ['name', 'description', 'order']
 
 class DocForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))

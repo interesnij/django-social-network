@@ -29,10 +29,10 @@ urlpatterns=[
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListUserCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserEdit.as_view(), name="photo_list_edit_user"),
-    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserDelete.as_view()),
-    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserAbortDelete.as_view()),
+    url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserDelete.as_view()),
+    url(r'^abort_delete_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserAbortDelete.as_view()),
     url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoListAdd.as_view()),
     url(r'^remove_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoListRemove.as_view()),
-    url(r'^add_list/(?P<uuid>[0-9a-f-]+)/$', UserPhotoListdd.as_view()),
-    url(r'^remove_list/(?P<uuid>[0-9a-f-]+)/$', UserPhotoListRemove.as_view()),
+    url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddPhotoListInUserCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoListFromUserCollections.as_view()),
 ]

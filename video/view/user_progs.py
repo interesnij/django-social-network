@@ -13,7 +13,7 @@ from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
 
 
-class UserVideoListAdd(View):
+class AddVideoListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -23,7 +23,7 @@ class UserVideoListAdd(View):
         else:
             return HttpResponse()
 
-class UserVideoListRemove(View):
+class RemoveVideoListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -204,9 +204,8 @@ class UserVideoListCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
-            new_list = self.form_post.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
+            list = self.form_post.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/user_video_list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()

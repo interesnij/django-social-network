@@ -50,8 +50,8 @@ class VideoList(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_video_lists')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_video_lists')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -93,11 +93,11 @@ class VideoList(models.Model):
         return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
 
     def get_users_ids(self):
-        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
+        users = self.users.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        communities = self.communities.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -163,23 +163,30 @@ class VideoList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
         from common.processing.video import get_video_list_processing
-
         if not order:
             order = 1
-        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-        if is_public:
-            get_video_list_processing(list, VideoList.LIST)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VIL", object_id=list.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_video_list_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="VIL", object_id=list.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_video_list_wall")
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VIL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_video_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VIL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_video_list_notify")
         else:
-            get_video_list_processing(list, VideoList.PRIVATE)
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="VIL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_video_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VIL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_video_list_notify")
+        get_video_list_processing(list, VideoList.LIST)
         return list
 
     def edit_list(self, name, description, order, is_public):
@@ -298,6 +305,12 @@ class Video(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
+
+    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         verbose_name = "Видео-ролики"
@@ -500,17 +513,13 @@ class Video(models.Model):
 
 
 class VideoComment(models.Model):
-    EDITED = 'EDI'
-    DELETED = 'DEL'
-    CLOSED = 'CLO'
-    PROCESSING = 'PRO'
-    PUBLISHED = 'PUB'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
     STATUS = (
-        (DELETED, 'Удалённый'),
-        (EDITED, 'Изменённый'),
-        (CLOSED, 'Закрытый менеджером'),
-        (PROCESSING, 'Обработка'),
-        (PUBLISHED, 'Опубликовано'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
     )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -518,7 +527,11 @@ class VideoComment(models.Model):
     text = models.TextField(blank=True)
     video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    status = models.CharField(max_length=5, choices=STATUS, default=PROCESSING, verbose_name="Тип альбома")
+    status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )

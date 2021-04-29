@@ -75,8 +75,8 @@ class SoundList(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='user_soundlist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='community_soundlist')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -112,11 +112,11 @@ class SoundList(models.Model):
         return self.players.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
 
     def get_users_ids(self):
-        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
+        users = self.users.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        communities = self.communities.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -151,23 +151,30 @@ class SoundList(models.Model):
         return self.type[0] == "T"
 
     @classmethod
-    def create_list(cls, creator, name, description, order, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
-        from common.processing.music import get_playlist_processing
-
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
+        from common.processing.music import get_music_list_processing
         if not order:
             order = 1
-        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-        if is_public:
-            get_playlist_processing(list, SoundList.LIST)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_playlist_notify")
-            #Wall.objects.create(creator_id=creator.pk, ype="MUL", object_id=list.pk), verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_doc_list_wall")
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_music_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_music_list_notify")
         else:
-            get_playlist_processing(list, SoundList.PRIVATE)
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="MUL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_music_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_music_list_notify")
+        get_music_list_processing(list, SoundList.LIST)
         return list
 
     def edit_list(self, name, description, order, is_public):
@@ -376,6 +383,11 @@ class Music(models.Model):
     list = models.ManyToManyField(SoundList, related_name='playlist', blank="True")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(upload_to=music, validators=[validate_file_extension], verbose_name="Аудиозапись")
+
+    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         verbose_name = "спарсенные треки"

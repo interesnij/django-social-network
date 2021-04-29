@@ -8,13 +8,13 @@ from django.dispatch import receiver
 
 
 class DocList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI'
     THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
     THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     #community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -24,8 +24,8 @@ class DocList(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_doclist')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_doclist')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -142,22 +142,30 @@ class DocList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
         from common.processing.doc import get_doc_list_processing
         if not order:
             order = 1
-        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-        if is_public:
-            get_doc_list_processing(list, DocList.LIST)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_doc_list_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_doc_list_wall")
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_doc_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_doc_list_notify")
         else:
-            get_doc_list_processing(list, DocList.PRIVATE)
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_doc_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_doc_list_notify")
+        get_doc_list_processing(list, DocList.LIST)
         return list
     def edit_list(self, name, description, order, is_public):
         from common.processing.doc import get_doc_list_processing
@@ -291,28 +299,41 @@ class Doc(models.Model):
         return mime_type
 
     @classmethod
-    def create_doc(cls, creator, title, file, lists, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_doc(cls, creator, title, file, lists, is_public, community):
         from common.processing.doc import get_doc_processing
-        from rest_framework.exceptions import ValidationError
 
         if not lists:
+            from rest_framework.exceptions import ValidationError
             raise ValidationError("Не выбран список для нового документа")
-
+        private = 0
         doc = cls.objects.create(creator=creator,title=title,file=file)
-        if is_public:
-            get_doc_processing(doc, Doc.PUBLISHED)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_doc_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_doc_wall")
-        else:
-            get_doc_processing(doc, Doc.PRIVATE)
         for list_id in lists:
             doc_list = DocList.objects.get(pk=list_id)
             doc_list.doc_list.add(doc)
+            if doc_list.is_private():
+                private = 1
+        if not private and is_public:
+            get_doc_processing(doc, Doc.PUBLISHED)
+            if community:
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
+                community_send_wall(doc.pk, creator.pk, community.pk, None, "create_c_doc_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
+                    community_send_notify(doc.pk, creator.pk, user_id, community.pk, None, "create_c_doc_notify")
+            else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
+                user_send_wall(doc.pk, None, "create_u_doc_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
+                    user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
+        else:
+            get_doc_processing(doc, Doc.PRIVATE)
         return doc
 
     def edit_doc(self, title, file, lists, is_public):

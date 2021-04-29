@@ -1,5 +1,5 @@
-<div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form id="u_good_list_create">
+<div class="">
+    <form id="c_good_list_create">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
@@ -11,13 +11,23 @@
                     <input type="text" name="title" class="form-control" id="id_title">
                   </div>
                   <div class="form-group">
+                    <label>Описание</label>
+                    <input name="description" class="form-control">
+                  </div>
+                  <div class="form-group">
                     <label>Порядковый номер</label>
                     <input type="number" value="0" min="0" name="order" class="form-control" id="id_order">
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
+                      <label class="custom-control-label" for="id_is_public">Виден всем</label>
+                    </div>
                   </div>
             </div>
             <div class="card-footer">
                 <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-                <button type="button" class="btn btn-success float-right" id="u_create_good_list_btn">Создать</button>
+                <button type="button" class="btn btn-success float-right" id="c_create_good_list_btn">Создать</button>
             </div>
         </div>
     </form>

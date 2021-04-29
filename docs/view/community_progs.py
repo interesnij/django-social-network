@@ -10,7 +10,7 @@ from common.template.community import get_community_manage_template
 from common.check.community import check_can_get_lists
 
 
-class CommunityDoclistAdd(View):
+class AddDocListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
@@ -20,7 +20,7 @@ class CommunityDoclistAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityDoclistRemove(View):
+class RemoveDocListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list, community = DocList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
@@ -43,85 +43,32 @@ class CommunityDocAdd(View):
         else:
             raise Http404
 
-class CommunityDocRemove(View):
-    """
-    Удаляем документ
-    """
-    def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            doc.remove()
-            return HttpResponse()
-        else:
-            raise Http404
 
 class CommunityDocListAdd(View):
-    """
-    Добавляем документ в любой список сообщества, если его там нет
-    """
     def get(self, request, *args, **kwargs):
         doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
+        if request.is_ajax() and not list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityDocListRemove(View):
-    """
-    Удаляем документ из любого списка сообщества, если он там есть
-    """
+class CommunityDoclistRemove(View):
     def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_doc_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
+        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.remove(doc)
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityCreateDoclistWindow(TemplateView):
-    template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(CommunityCreateDoclistWindow,self).get(request,*args,**kwargs)
-
-class CommunityCreateDocWindow(TemplateView):
+class CommunityDocCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(CommunityCreateDocWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityCreateDocWindow,self).get_context_data(**kwargs)
-        context["form_post"] = DocForm()
-        return context
-
-
-class CommunityDoclistCreate(View):
-    form_post = None
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityDoclistCreate,self).get_context_data(**kwargs)
-        context["form_post"] = DoclistForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        form_post, community = DoclistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
-            new_list = form_post.save(commit=False)
-            new_list.creator, new_list.community = request.user, community
-            if not new_list.order:
-                new_list.order = 0
-            new_list.save()
-            return render_for_platform(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
-        else:
-            return HttpResponseBadRequest()
-
-
-class CommunityDocCreate(View):
-    form_post = None
+        return super(CommunityDocCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDocCreate,self).get_context_data(**kwargs)
@@ -129,26 +76,59 @@ class CommunityDocCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        form_post, community = DocForm(request.POST, request.FILES), Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
-            from common.notify.notify import community_notify
+        form_post = DocForm(request.POST, request.FILES)
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+            doc = form_post.save(commit=False)
+            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,lists=form_post.cleaned_data.get("list"),is_public=request.POST.get("is_public"),community=Community.objects.get(pk=self.kwargs["pk"]))
+            return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
+        else:
+            return HttpResponseBadRequest()
 
-            list = DocList.objects.get(community_id=community.pk, type=DocList.MAIN)
-            new_doc = form_post.save(commit=False)
-            new_doc.creator, new_doc.is_community, lists = community.creator, True, form_post.cleaned_data.get("list")
-            new_doc.save()
-            if not lists:
-                list.doc_list.add(new_doc)
-            else:
-                for _list in lists:
-                    _list.doc_list.add(new_doc)
-            community_notify(request.user, community, None, "doc"+str(new_doc.pk), "c_doc_notify", "ITE")
+class CommunityDocEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(CommunityDocEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityDocEdit,self).get_context_data(**kwargs)
+        context["form_post"] = DocForm(request.POST,instance=self.doc)
+        context["doc"] = self.doc
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post, DocForm(request.POST, request.FILES)
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+            doc = form_post.save(commit=False)
+            new_doc = doc.edit_doc(title=doc.title,file=doc.file,lists=form_post.cleaned_data.get("list"),is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 
 
-class CommunityDoclistEdit(TemplateView):
+class CommunityDocListCreate(View):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(CommunityCreateDocListWindow,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityDocListCreate,self).get_context_data(**kwargs)
+        context["form_post"] = DoclistForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post, community = DoclistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
+            list = form_post.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=community,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
+        else:
+            return HttpResponseBadRequest()
+
+class CommunityDocListEdit(TemplateView):
     """
     изменение списка документов пользователя
     """
@@ -157,10 +137,10 @@ class CommunityDoclistEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-        return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
+        return super(CommunityDocListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        c = super(CommunityDoclistEdit,self).get_context_data(**kwargs)
+        c = super(CommunityDocListEdit,self).get_context_data(**kwargs)
         c["community"], c["list"] = self.c, DocList.objects.get(uuid=self.kwargs["uuid"])
         return c
 
@@ -169,28 +149,46 @@ class CommunityDoclistEdit(TemplateView):
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             list = self.form.save(commit=False)
-            self.form.save()
+            list.edit_list(name=list.name, description=list.description, order=list.order, community=self.c,lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(CommunityDoclistEdit,self).get(request,*args,**kwargs)
+        return super(CommunityDocListEdit,self).get(request,*args,**kwargs)
 
-class CommunityDoclistDelete(View):
+
+class CommunityDocListDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityDoclistAbortDelete(View):
+class CommunityDocListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+            list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class CommunityDocRemove(View):
+    def get(self, request, *args, **kwargs):
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            doc.delete_doc()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityDocAbortRemove(View):
+    def get(self, request, *args, **kwargs):
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            doc.abort_delete_doc()
             return HttpResponse()
         else:
             raise Http404

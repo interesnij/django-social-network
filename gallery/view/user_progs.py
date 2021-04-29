@@ -10,7 +10,7 @@ from common.template.user import get_settings_template, render_for_platform
 from django.views.generic.base import TemplateView
 
 
-class UserPhotoListAdd(View):
+class AddPhotoListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -20,7 +20,7 @@ class UserPhotoListAdd(View):
         else:
             return HttpResponse()
 
-class UserPhotoListRemove(View):
+class RemovePhotoListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -63,12 +63,10 @@ class PhotoUserCreate(View):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
         if request.is_ajax() and self.user == request.user:
-            _list = PhotoList.objects.get(creator_id=self.user.id, community__isnull=True, type=PhotoList.MAIN)
+            list = PhotoList.objects.get(creator_id=self.user.id, community__isnull=True, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=self.user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
-
             return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
         else:
             raise Http404
@@ -79,13 +77,12 @@ class PhotoPhotoListUserCreate(View):
     """
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        _list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         photos = []
         uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
         else:
@@ -100,12 +97,11 @@ class PhotoAttachUserCreate(View):
         photos = []
         if request.is_ajax() and self.user == request.user:
             try:
-                _list = PhotoList.objects.get(creator=request.user, community__isnull=True, type=PhotoList.WALL)
+                list = PhotoList.objects.get(creator=request.user, community__isnull=True, type=PhotoList.WALL)
             except:
-                _list = PhotoList.objects.create(creator=request.user, type=PhotoList.WALL, name="Фото со стены", description="Фото со стены")
+                list = PhotoList.objects.create(creator=request.user, type=PhotoList.WALL, name="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=self.user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
@@ -309,14 +305,13 @@ class PhotoListUserCreate(TemplateView):
     form = None
 
     def get(self,request,*args,**kwargs):
-        self.form = PhotoListForm()
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("users/user_list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(PhotoListUserCreate,self).get_context_data(**kwargs)
-        context["form"] = self.form
+        context["form"] = PhotoListForm()
         context["user"] = self.user
         return context
 
@@ -327,7 +322,7 @@ class PhotoListUserCreate(TemplateView):
             list = self.form.save(commit=False)
             if not list.description:
                 list.description = "Без описания"
-            new_list = PhotoList.objects.create(name=list.name, description=list.description, type=PhotoList.LIST, is_public=list.is_public, order=list.order,creator=self.user)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/user_list/new_list.html',{'list': new_list, 'user': self.user})
         else:
             return HttpResponseBadRequest()
@@ -368,22 +363,18 @@ class PhotoListUserEdit(TemplateView):
 
 class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == PhotoList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+        if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
 
 class PhotoListUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+        if request.is_ajax() and list.creator.pk == request.user.pk:
+            list.abort_delete_list()
             return HttpResponse()
         else:
             raise Http404
@@ -397,7 +388,7 @@ class UserPhotoPhotoListAdd(View):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not list.is_photo_in_list(photo.pk):
+        if request.is_ajax() and not list.is_item_in_list(photo.pk):
             list.photo_list.add(photo)
             return HttpResponse()
         else:

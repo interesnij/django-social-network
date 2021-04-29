@@ -1,23 +1,23 @@
 
 <div class="">
-    <form id="c_create_list_form">
+    <form id="post_list_form">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Добавление альбома</h5>
+                <h5 class="content-color-primary mb-0">Создание списка записей</h5>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                  <label>Название</label>
-                  <input data-error="Это поле обязательно" type="text" name="title" class="form-control" id="id_title" required>
-                </div>
-                <div class="form-group">
+              <div class="form-group ">
+                <label>Название</label>
+                <input type="text" name="name" id="id_name" class="form-control">
+              </div>
+              <div class="form-group">
                   <label>Описание</label>
-                  <input type="text" name="description" class="form-control" id="id_description">
+                  <input name="description" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label>Порядковый номер</label>
-                  <input type="number" value="0" name="order" class="form-control" id="id_order">
+                    <label>Порядковый номер</label>
+                    <input type="number" value="1" min="1" name="order" class="form-control" id="id_order">
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
@@ -28,7 +28,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-                <button id="c_create_list_btn" type="button" class="btn btn-success float-right">Создать</button>
+                <button type="button" class="btn btn-success float-right" id="c_add_post_list_btn">Создать</button>
             </div>
         </div>
     </form>

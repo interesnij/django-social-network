@@ -6,32 +6,232 @@ from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 
 
+class SurveyList(models.Model):
+    MAIN, LIST, MANAGER, THIS_PROCESSING = 'MAI', 'LIS', 'MAN', 'TPRO'
+    THIS_DELETED, THIS_DELETED_MANAGER = 'TDEL', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOM', 'TCLOMA',
+    TYPE = (
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
+        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+    )
+    name = models.CharField(max_length=255)
+    #community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
+    order = models.PositiveIntegerField(default=0)
+    uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+
+    def __str__(self):
+        return self.name + " " + self.creator.get_full_name()
+
+    class Meta:
+        verbose_name = "список опросов"
+        verbose_name_plural = "списки опросов"
+        ordering = ['order']
+
+    @receiver(post_save, sender=Сommunity)
+    def create_c_model(sender, instance, created, **kwargs):
+        if created:
+            community=instance
+            SurveyList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+    @receiver(post_save, sender=User)
+    def create_u_model(sender, instance, created, **kwargs):
+        if created:
+            SurveyList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+
+    def is_item_in_list(self, item_id):
+        return self.survey_list.filter(pk=item_id).values("pk").exists()
+
+    def is_not_empty(self):
+        return self.survey_list.exclude(status__contains="THIS").values("pk").exists()
+
+    def get_items(self):
+        return self.survey_list.filter(status="PUB")
+    def get_manager_items(self):
+        return self.survey_list.filter(status="MAN")
+    def count_items(self):
+        return self.survey_list.exclude(status__contains="THIS").values("pk").count()
+
+    def get_users_ids(self):
+        users = self.users.exclude(type__contains="THIS").values("pk")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        return [i['pk'] for i in communities]
+
+    def is_user_can_add_list(self, user_id):
+        return self.creator.pk != user_id and user_id not in self.get_users_ids()
+
+    def is_user_can_delete_list(self, user_id):
+        return self.creator.pk != user_id and user_id in self.get_users_ids()
+
+    def is_community_can_add_list(self, community_id):
+        return self.community.pk != community_id and community_id not in self.get_communities_ids()
+
+    def is_community_can_delete_list(self, community_id):
+        return self.community.pk != community_id and community_id in self.get_communities_ids()
+
+    def is_main_list(self):
+        return self.type == self.MAIN
+    def is_user_list(self):
+        return self.type == self.LIST
+    def is_open(self):
+        return self.type[0] != "T"
+
+    @classmethod
+    def get_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_user_lists(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_user_lists_count(cls, user_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def get_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).order_by("order")
+    @classmethod
+    def is_have_community_lists(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).exists()
+    @classmethod
+    def get_community_lists_count(cls, community_pk):
+        query = Q(type="LIS")
+        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        return cls.objects.filter(query).values("pk").count()
+
+    @classmethod
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
+        from common.processing.survey import get_survey_list_processing
+        if not order:
+            order = 1
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="SUL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_survey_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="SUL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_survey_list_notify")
+        else:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="SUL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_survey_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="SUL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_survey_list_notify")
+        get_survey_list_processing(list, SurveyList.LIST)
+        return list
+    def edit_list(self, name, description, order, is_public):
+        from common.processing.survey import get_survey_list_processing
+        if not order:
+            order = 1
+        self.name = name
+        self.description = description
+        self.order = order
+        self.save()
+        if is_public:
+            get_survey_list_processing(self, SurveyList.LIST)
+            self.make_publish()
+        else:
+            get_survey_list_processing(self, SurveyList.PRIVATE)
+            self.make_private()
+        return self
+
+    def delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = SurveyList.THIS_DELETED
+        elif self.type == "MAN":
+            self.type = SurveyList.THIS_DELETED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TDEL":
+            self.type = SurveyList.LIST
+        elif self.type == "TDELM":
+            self.type = SurveyList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = SurveyList.THIS_CLOSED
+        elif self.type == "MAI":
+            self.type = SurveyList.THIS_CLOSED_MAIN
+        elif self.type == "MAN":
+            self.type = SurveyList.THIS_CLOSED_MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_list(self):
+        from notify.models import Notify, Wall
+        if self.type == "TCLO":
+            self.type = SurveyList.LIST
+        elif self.type == "TCLOM":
+            self.type = SurveyList.MAIN
+        elif self.type == "TCLOM":
+            self.type = SurveyList.MANAGER
+        self.save(update_fields=['type'])
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+
+
 class Survey(models.Model):
-    PROCESSING = 'PRO'
-    PUBLISHED = 'PUB'
-    DELETED = 'DEL'
-    TIME_END = 'TIM'
-    CLOSED = 'CLO'
-    MANAGER = 'MAN'
+    THIS_PROCESSING, MANAGER, PUBLISHED = 'PRO', 'PUB', 'MAN'
+    THIS_DELETED, THIS_DELETED_MANAGER = 'TDEL', 'TDELM'
+    THIS_CLOSED, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOM'
     STATUS = (
-        (PROCESSING, 'Обработка'),
-        (PUBLISHED, 'Опубликовано'),
-        (DELETED, 'Удалено'),
-        (TIME_END, 'Время вышло'),
-        (CLOSED, 'Закрыто модератором'),
-        (MANAGER, 'Созданный персоналом'),
+        (THIS_PROCESSING, 'Обработка'),(MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
+        (THIS_DELETED, 'Удалено'),(THIS_DELETED_MANAGER, 'Удален менеджерский'),
+        (THIS_CLOSED, 'Закрыто модератором'),(THIS_CLOSED_MANAGER, 'Закрыт менеджерский'),
     )
     title = models.CharField(max_length=250, verbose_name="Название")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='survey_creator', verbose_name="Создатель")
-    #community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     is_anonymous = models.BooleanField(verbose_name="Анонимный", default=False)
     is_multiple = models.BooleanField(verbose_name="Несколько вариантов", default=False)
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
-    status = models.CharField(choices=STATUS, default=PROCESSING, max_length=3)
+    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
+
+    votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
+    voters = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -42,19 +242,57 @@ class Survey(models.Model):
         return self.title
 
     @classmethod
-    def create_survey(cls, title, community, image, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
-        survey = cls.objects.create(
-                                    title=title,
-                                    community=community,
-                                    image=image,
-                                    creator=creator,
-                                    order=order,
-                                    is_anonymous=is_anonymous,
-                                    is_multiple=is_multiple,
-                                    is_no_edited=is_no_edited,
-                                    time_end=time_end)
+    def create_survey(cls, title, image, lists, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
+        from common.processing.survey import get_survey_processing
+
+        if not lists:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Не выбран список для нового документа")
+
+        survey = cls.objects.create(title=title,image=image,creator=creator,order=order,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
         for answer in answers:
             Answer.objects.create(survey=survey, text=answer)
+        for list_id in lists:
+            list = SurveyList.objects.get(pk=list_id)
+            list.survey_list.add(survey)
+        get_survey_processing(survey, Survey.PUBLISHED)
+        if community:
+            from common.notify.progs import community_send_notify, community_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="SUR", object_id=survey.pk, verb="ITE")
+            community_send_wall(doc.pk, creator.pk, community.pk, None, "create_c_survey_wall")
+            for user_id in community.get_member_for_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="SUR", object_id=survey.pk, verb="ITE")
+                community_send_notify(doc.pk, creator.pk, user_id, community.pk, None, "create_c_survey_notify")
+        else:
+            from common.notify.progs import user_send_notify, user_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, type="SUR", object_id=survey.pk, verb="ITE")
+            user_send_wall(survey.pk, None, "create_u_survey_wall")
+            for user_id in creator.get_user_news_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="SUR", object_id=survey.pk, verb="ITE")
+                user_send_notify(survey.pk, creator.pk, user_id, None, "create_u_survey_notify")
+        return survey
+
+    def edit_survey(self, title, image, lists, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+        from common.processing.survey  import get_survey_processing
+
+        get_survey_processing(self, Survey.PUBLISHED)
+        self.title = title
+        self.image = image
+        self.lists = lists
+        self.order = order
+        self.is_anonymous = is_anonymous
+        self.is_multiple = is_multiple
+        self.is_no_edited = is_no_edited
+        self.time_end = time_end
+        self.save()
+        if set(answers) != set(self.get_answers()):
+            self.survey.all().delete()
+            for answer in answers:
+                Answer.objects.create(survey=survey, text=answer)
         return survey
 
     def is_user_voted(self, user_id):
@@ -64,27 +302,16 @@ class Survey(models.Model):
         if self.time_end:
             from datetime import datetime
             now = datetime.now()
-            return self.time_end < now:
+            return self.time_end < now
         else:
             return False
 
     def get_answers(self):
-        return self.survey.only("pk")
+        return self.survey.only("text")
 
     def get_all_count(self):
-        count = 0
-        for answer in self.get_answers():
-            count += answer.get_count()
-        if count > 0:
-            return count
-        else:
-            return ''
-
-    def get_votes_count(self):
-        query = []
-        for answer in self.get_answers():
-            query += [answer.get_count()]
-        return query
+        if self.votes > 0:
+            return self.votes
 
     def get_users(self):
         from users.models import User
@@ -99,10 +326,57 @@ class Survey(models.Model):
     def is_have_votes(self):
         return SurveyVote.objects.filter(answer__survey_id=self.pk).values("id").exists()
 
+    def delete_survey(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Survey.THIS_DELETED
+        elif self.status == "MAN":
+            self.status = Survey.THIS_DELETED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_survey(self):
+        from notify.models import Notify, Wall
+        if self.status == "TDEL":
+            self.status = Survey.PUBLISHED
+        elif self.status == "TDELM":
+            self.status = Survey.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_survey(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Survey.THIS_CLOSED
+        elif self.status == "MAN":
+            self.status = Survey.THIS_CLOSED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_survey(self):
+        from notify.models import Notify, Wall
+        if self.status == "TCLO":
+            self.status = Survey.PUBLISHED
+        elif self.status == "TCLOM":
+            self.status = Survey.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey', verbose_name="Опрос")
+    votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
 
     class Meta:
         verbose_name = 'Вариант ответа'
@@ -122,10 +396,38 @@ class Answer(models.Model):
 
     def get_procent(self):
         if self.get_count():
-            count = self.get_count() / self.survey.get_all_count() * 100
+            count = self.votes / self.survey.votes * 100
             return int(count)
         else:
             return 0
+
+    def vote(self, user, community):
+        import json
+        from datetime import datetime
+        from django.http import HttpResponse
+
+        survey = self.survey
+        if survey.time_end < datetime.now():
+            pass
+        try:
+            answer = SurveyVote.objects.get(answer=answer, user_id=user.pk)
+            if survey.is_no_edited:
+                pass
+            else:
+                answer.delete()
+        except SurveyVote.DoesNotExist:
+            if not survey.is_multiple and user.is_voted_of_survey(survey.pk):
+                user.get_vote_of_survey(survey.pk).delete()
+            SurveyVote.objects.create(answer=answer, user=user.user)
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, survey.pk, "SUR", "c_survey_vote_notify", "SVO")
+                community_wall(user, community, None, survey.pk, "SUR", "c_survey_vote_wall", "SVO")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, survey.pk, "SUR", "u_survey_vote_notify", "SVO")
+                user_wall(user, None, survey.pk, "SUR", "u_survey_vote_wall", "SVO")
+        return HttpResponse(json.dumps({"votes": survey.get_votes_count()}), content_type="application/json")
 
 
 class SurveyVote(models.Model):

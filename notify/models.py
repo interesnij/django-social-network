@@ -5,18 +5,6 @@ from django.contrib.postgres.indexes import BrinIndex
 from notify.helpers import VERB, STATUS
 
 """
-Поле attach - содержит сведения о прикрепленных элементах.
-- Если начинается с "pos" - прикреплена запись
-- Если с "phc" - комментарий к фото (ph - позывные фотографий, c - комментарий)
-- Если с "phr" - ответ на комментарий к фото (ph - позывные фотографий, r - ответ на коммент).
---------
-Это всё нужно для быстрого выявления объекта уведомления. Нарпимер, человек удаляет свой пост, мы ищем его уведомление с
-началом поля attach "pos" и окончанием с id записи. Мы меняем статус найденного на CLOSED и такие уведы не показываем.
-Если человек нажимает отмену сразу или потом достаёт пост из архива, то снова находим запись и меняем статус на READ
-"""
-
-
-"""
 итак, ниже у нас уведомления, рассылаемые скопом каждому подписичку на уведомления и управленцу сообществ -
 по отношению к другим, и все уведомления, которые применимы к самому пользователю
 человек их получает пока подписан на уведомления (состоит в таблице CommunityProfileNotifyб UserProfileNotify).
@@ -28,7 +16,8 @@ class Notify(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
-    attach = models.CharField(max_length=30, verbose_name="Объект")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
+    object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
     #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
     #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
@@ -105,7 +94,7 @@ class Notify(models.Model):
     def is_unread(self):
         return self.status is "U"
 
-    def get__notify(self, user):
+    def get_notify(self, user):
         from common.attach.notify import get_notify
         return get_notify(user, self)
 
@@ -120,7 +109,8 @@ class Wall(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
-    attach = models.CharField(max_length=30, verbose_name="Объект")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
+    object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
     #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
     #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
@@ -186,13 +176,6 @@ class Wall(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
-    def get_info(self):
-        if self.post.text:
-            return self.post.text[:50]
-        else:
-            from django.utils.formats import localize
-            return "от " + str(localize(self.post.created))
-
     @classmethod
     def u_notify_unread(cls, user_pk):
         cls.objects.filter(recipient_id=user_pk, status="U").update(status="R")
@@ -202,27 +185,9 @@ class Wall(models.Model):
         cls.objects.filter(community_id=community_id, status="U").update(status="R")
 
     def is_unread(self):
-        return self.status is "U"
+        return self.status == "U"
 
     def get_notify(self, user):
-        #from common.attach.notify import get_notify
-        if self.attach[:3] == "pos":
-            from posts.models import Post
-            post = Post.objects.get(pk=self.attach[3:], is_deleted=False)
-            if post.community:
-                if user.is_administrator_of_community(post.community.pk):
-                    return 'mobile/posts/post_community/admin_post.html'
-                else:
-                    return 'mobile/posts/post_community/post.html'
-            else:
-                if post.creator.pk == user.pk:
-                    return 'mobile/posts/post_user/my_post.html'
-                else:
-                    return 'mobile/posts/post_user/post.html'
-        else:
-            pass
-
-    def get__notify(self, user):
         from common.attach.notify import get_notify
         return get_notify(user, self)
 

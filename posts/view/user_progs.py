@@ -7,6 +7,27 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
+class AddPostListInUserCollections(View):
+    def get(self,request,*args,**kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
+            list.users.add(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
+
+class RemovePostListFromUserCollections(View):
+    def get(self,request,*args,**kwargs):
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        check_user_can_get_list(request.user, list.creator)
+        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
+            list.users.remove(request.user)
+            return HttpResponse()
+        else:
+            return HttpResponse()
+
+
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, user, lists, attach = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), request.POST.getlist('attach_items')
@@ -17,7 +38,19 @@ class PostUserCreate(View):
             if request.POST.get('text') or attach:
                 from common.template.user import render_for_platform
 
-                new_post = post.create_post(creator=request.user, text=post.text, community=None, category=post.category, lists=lists, attach=attach, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                new_post = post.create_post(
+                                            creator=request.user,
+                                            text=post.text,
+                                            category=post.category,
+                                            lists=lists,
+                                            attach=attach,
+                                            parent=None,
+                                            comments_enabled=post.comments_enabled,
+                                            is_signature=post.is_signature,
+                                            votes_on=post.votes_on,
+                                            is_public=request.POST.get("is_public"),
+                                            community=None
+                                            )
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -264,11 +297,7 @@ class UserPostListCreate(TemplateView):
             from common.template.user import render_for_platform
 
             list = self.form.save(commit=False)
-            list.creator = request.user
-            list.type = PostList.LIST
-            if list.order < 1:
-                list.order = 1
-            list.save()
+            list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': list})
         else:
             return HttpResponse()

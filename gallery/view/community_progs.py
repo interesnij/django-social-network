@@ -10,7 +10,7 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
-class CommunityPhotoListAdd(View):
+class AddPhotoListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -21,7 +21,7 @@ class CommunityPhotoListAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityPhotoListRemove(View):
+class RemovePhotoListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -42,10 +42,9 @@ class PhotoCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            _list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
+            list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
@@ -57,14 +56,13 @@ class PhotoListCommunityCreate(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        _list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             photos = []
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
             return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})
         else:
@@ -79,10 +77,9 @@ class PhotoAttachCommunityCreate(View):
         if request.is_ajax():
             photos = []
             check_can_get_lists(request.user, community)
-            _list = PhotoList.objects.filter(type=PhotoList.WALL, community=community)[0]
+            list = PhotoList.objects.filter(type=PhotoList.WALL, community=community)[0]
             for p in request.FILES.getlist('file'):
-                photo = Photo.objects.create(file=p, preview=p, creator=request.user)
-                _list.photo_list.add(photo)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
             return render_for_platform(request, 'communities/gallery/list.html',{'object_list': photos, 'community': community})
         else:
@@ -335,13 +332,13 @@ class PhotoListCommunityCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = PhotoListForm(request.POST)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_administrator_of_community(self.community.pk):
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
             if not list.description:
                 list.description = "Без описания"
-            new_list = PhotoList.objects.create(name=list.name, community=self.community, description=list.description, type=PhotoList.PhotoList, is_public=list.is_public, order=list.order,creator=self.community.creator)
-            return render_for_platform(request, 'communities/list/new_list.html',{'list': new_list, 'community': self.community})
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'communities/list/new_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
@@ -384,8 +381,7 @@ class PhotoListCommunityDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk) and list.type == PhotoList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
@@ -395,8 +391,7 @@ class PhotoListCommunityAbortDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+            list.abort_delete_list()
             return HttpResponse()
         else:
             raise Http404

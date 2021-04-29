@@ -5,11 +5,10 @@ from django.views import View
 from common.check.community import check_can_get_lists
 from goods.forms import CommentForm, GoodForm, GoodListForm
 from communities.models import Community
-from common.processing.good import get_good_processing, get_good_offer_processing
 from common.template.user import render_for_platform
 
 
-class CommunityGoodListAdd(View):
+class AddGoodListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -20,7 +19,7 @@ class CommunityGoodListAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityGoodListRemove(View):
+class RemoveGoodListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -30,6 +29,236 @@ class CommunityGoodListRemove(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class CommunityOpenCommentGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.comments_enabled = True
+            good.save(update_fields=['comments_enabled'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityCloseCommentGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.comments_enabled = False
+            good.save(update_fields=['comments_enabled'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityOffVotesGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.votes_on = False
+            good.save(update_fields=['votes_on'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityOnVotesGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.votes_on = True
+            good.save(update_fields=['votes_on'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class CommunityHideGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.is_hide = True
+            good.save(update_fields=['is_hide'])
+            return HttpResponse("!")
+
+class CommunityUnHideGood(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+            good.is_hide = False
+            good.save(update_fields=['is_hide'])
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityGoodDelete(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
+        if request.is_ajax() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+            good.delete_good()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityGoodAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(self.kwargs["pk"]):
+            good.abort_delete_good()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class GoodCommunityCreate(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = GoodForm()
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["community"] = self.community
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodForm(request.POST,request.FILES)
+        if request.is_ajax() and self.form.is_valid():
+            good = self.form.save(commit=False)
+            new_good = good.create_good(
+                                        title=good.title,
+                                        image=good.image,
+                                        images=request.POST.getlist('images'),
+                                        lists=request.POST.get("list"),
+                                        sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
+                                        creator=request.user,
+                                        description=good.description,
+                                        price=good.price,
+                                        comments_enabled=good.comments_enabled,
+                                        votes_on=good.votes_on,
+                                        community=good.community,
+                                        is_public=request.POST.get("is_public"))
+            return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
+        else:
+            return HttpResponseBadRequest()
+
+class GoodCommunityEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_detect_platform_template("goods/c_good/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(GoodCommunityEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodCommunityEdit,self).get_context_data(**kwargs)
+        context["form"] = GoodForm()
+        context["sub_categories"] = GoodSubCategory.objects.only("id")
+        context["categories"] = GoodCategory.objects.only("id")
+        context["good"] = Good.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.good = Good.objects.get(pk=self.kwargs["good_pk"])
+        self.form = GoodForm(request.POST,request.FILES, instance=self.good)
+        if request.is_ajax() and self.form.is_valid() and request.user.pk.is_administrator_of_community(self.kwargs["pk"]):
+            from common.notify.notify import user_notify
+            good = self.form.save(commit=False)
+            new_good = self.good.create_good(
+                                        title=good.title,
+                                        image=good.image,
+                                        images=request.POST.getlist('images'),
+                                        lists=request.POST.getlist('list'),
+                                        sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
+                                        description=good.description,
+                                        price=good.price,
+                                        comments_enabled=good.comments_enabled,
+                                        votes_on=good.votes_on,
+                                        is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'goods/good_base/c_new_good.html',{'object': new_good})
+        else:
+            return HttpResponseBadRequest()
+
+
+class GoodListCommunityCreate(TemplateView):
+    """
+    создание списка товаров сообщества
+    """
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+
+        self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(GoodListCommunityCreate,self).get_context_data(**kwargs)
+        context["form"] = GoodListForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.form = GoodListForm(request.POST)
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
+            list = self.form.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'list': new_list, 'community': self.c})
+        else:
+            return HttpResponseBadRequest()
+        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
+
+
+class CommunityGoodListEdit(TemplateView):
+    """
+    изменение списка товаров пользователя
+    """
+    template_name = None
+    form = None
+
+    def get(self,request,*args,**kwargs):
+        from common.template.community import get_community_manage_template
+
+        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityGoodListEdit,self).get_context_data(**kwargs)
+        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.form = GoodListForm(request.POST,instance=self.list)
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+            list = self.form.save(commit=False)
+            list.edit_list(name=list.name, description=list.description, order=list.order, community=Community.objects.get(pk=self.kwargs["pk"]),lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
+
+class CommunityGoodListDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == GoodList.LIST:
+            list.delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityGoodListAbortDelete(View):
+    def get(self,request,*args,**kwargs):
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
 
 
 class GoodCommentCommunityCreate(View):
@@ -106,210 +335,6 @@ class GoodCommentCommunityAbortDelete(View):
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             comment.abort_delete_comment(self)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class CommunityOpenCommentGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.comments_enabled = True
-            good.save(update_fields=['comments_enabled'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityCloseCommentGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.comments_enabled = False
-            good.save(update_fields=['comments_enabled'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityOffVotesGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.votes_on = False
-            good.save(update_fields=['votes_on'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityOnVotesGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.votes_on = True
-            good.save(update_fields=['votes_on'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class CommunityHideGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.is_hide = True
-            good.save(update_fields=['is_hide'])
-            return HttpResponse("!")
-
-class CommunityUnHideGood(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.is_hide = False
-            good.save(update_fields=['is_hide'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityGoodDelete(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.delete_good()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityGoodAbortDelete(View):
-    def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
-            good.abort_delete_good()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class GoodCommunityCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(GoodCommunityCreate,self).get_context_data(**kwargs)
-        context["form"] = GoodForm()
-        context["sub_categories"] = GoodSubCategory.objects.only("id")
-        context["categories"] = GoodCategory.objects.only("id")
-        context["community"] = self.community
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form = GoodForm(request.POST,request.FILES)
-        if request.is_ajax() and self.form.is_valid():
-            from common.notify.notify import community_notify
-
-            good = self.form.save(commit=False)
-            lists = self.form.cleaned_data.get("list")
-            images = request.POST.getlist('images')
-            if not good.price:
-                new_good.price = 0
-            new_good = good.create_good(
-                                        title=good.title,
-                                        image=good.image,
-                                        images=images,
-                                        lists=lists,
-                                        sub_category=GoodSubCategory.objects.get(pk=request.POST.get('sub_category')),
-                                        creator=request.user,
-                                        description=good.description,
-                                        price=good.price,
-                                        comments_enabled=good.comments_enabled,
-                                        votes_on=good.votes_on,
-                                        status="PG")
-            get_good_processing(new_good)
-            community_notify(request.user, community, None, "goo"+str(new_good.pk), "c_good_notify", "ITE")
-            return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
-        else:
-            return HttpResponseBadRequest()
-
-
-class GoodListCommunityCreate(TemplateView):
-    """
-    создание списка товаров сообщества
-    """
-    template_name = None
-    form = None
-
-    def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
-
-        self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context=super(GoodListCommunityCreate,self).get_context_data(**kwargs)
-        context["form"] = GoodListForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form = GoodListForm(request.POST)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
-            list = self.form.save(commit=False)
-            new_list = GoodList.objects.create(name=list.name, type=GoodList.LIST, order=list.order, creator=request.user, community=self.community)
-            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'list': new_list, 'community': self.community})
-        else:
-            return HttpResponseBadRequest()
-        return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
-
-
-class CommunityGoodListEdit(TemplateView):
-    """
-    изменение списка товаров пользователя
-    """
-    template_name = None
-    form = None
-
-    def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
-
-        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityGoodListEdit,self).get_context_data(**kwargs)
-        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        self.form = GoodListForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
-            list = self.form.save(commit=False)
-            self.form.save()
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-        return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
-
-class CommunityGoodListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == GoodList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityGoodListAbortDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
             return HttpResponse()
         else:
             raise Http404

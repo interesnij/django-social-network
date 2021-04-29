@@ -7,10 +7,9 @@ from music.models import SoundList, Music
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import get_post_processing, repost_message_send
+from common.processing.post import repost_message_send
 from common.template.user import get_detect_platform_template
 from django.views import View
-from common.notify.notify import *
 
 
 class UUCMMusicWindow(TemplateView):
@@ -105,9 +104,7 @@ class UUMusicRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=user, community=None, attach="mus"+str(track.pk))
             track.item.add(parent)
-            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status=Post.STATUS_PROCESSING)
-            get_post_processing(new_post)
-            user_notify(request.user, track.creator.pk, None, "mus"+track.pk, "u_music_repost", "RE")
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -123,9 +120,7 @@ class CUMusicRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=request.user, community=community, attach="mus"+str(track.pk))
             track.item.add(parent)
-            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_processing(new_post)
-            community_notify(request.user, community, None, "mus"+track.pk, "c_music_repost", "RE")
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -149,9 +144,7 @@ class UCMusicRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, attach="mus"+str(track.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    user_notify(request.user, track.creator.pk, community_id, "mus"+track.pk, "u_music_repost", 'CR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 class CCMusicRepost(View):
@@ -171,9 +164,7 @@ class CCMusicRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=community, attach="mus"+str(track.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "mus"+track.pk, "c_music_repost", 'CR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -212,9 +203,7 @@ class UUMusicListRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=playlist.creator, community=None, attach="lmu"+str(playlist.pk))
             playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_processing(new_post)
-            user_notify(request.user, playlist.creator.pk, None, "lmu"+playlist.pk, "u_playlist_repost", "LRE")
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -230,9 +219,7 @@ class CUMusicListRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=playlist.creator, community=community, attach="lmu"+str(playlist.pk))
             playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, community=None, comments_enabled=post.comments_enabled, parent=parent, status="PG")
-            get_post_processing(new_post)
-            community_notify(request.user, community, None, "lmu"+playlist.pk, "c_playrepost", 'LRE')
+            new_post = post.create_post(creator=request.user, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -256,9 +243,7 @@ class UCMusicListRepost(View):
             parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    user_notify(request.user, playlist.creator.pk, community_id, "lmu"+playlist.pk, "u_playlist_repost", 'CLR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -279,9 +264,7 @@ class CCMusicListRepost(View):
             parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community_id=community_id, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
-                    get_post_processing(new_post)
-                    community_notify(request.user, community, community_id, "lmu"+playlist.pk, "c_playlist_repost", 'CLR')
+                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

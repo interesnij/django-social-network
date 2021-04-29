@@ -64,7 +64,7 @@ class UserSoundcloudSet(View):
         else:
             return HttpResponseBadRequest()
 
-class UserPlaylistAdd(View):
+class AddPlayListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -74,7 +74,7 @@ class UserPlaylistAdd(View):
         else:
             return HttpResponse()
 
-class UserPlaylistRemove(View):
+class RemovePlayListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
@@ -172,11 +172,8 @@ class UserPlaylistCreate(View):
         form_post = PlaylistForm(request.POST)
 
         if request.is_ajax() and form_post.is_valid():
-            new_list = form_post.save(commit=False)
-            new_list.creator = request.user
-            if not new_list.order:
-                new_list.order = 0
-            new_list.save()
+            list = form_post.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()

@@ -58,8 +58,8 @@ class GoodList(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_good_lists')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_good_lists')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -111,11 +111,11 @@ class GoodList(models.Model):
 	    return self.good_list.filter(status="PUB").values("pk").exists()
 
     def get_users_ids(self):
-        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
+        users = self.users.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        communities = self.communities.exclude(type__contains="THIS").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -187,22 +187,30 @@ class GoodList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
 	@classmethod
-    def create_list(cls, creator, name, description, order, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
         from common.processing.good import get_good_list_processing
         if not order:
             order = 1
-        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-        if is_public:
-            get_good_list_processing(list, GoodList.LIST)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_good_list_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_good_list_wall")
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_good_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_good_list_notify")
         else:
-            get_good_list_processing(list, GoodList.PRIVATE)
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="GOL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_good_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
+        get_good_list_processing(list, GoodList.LIST)
         return list
     def edit_list(self, name, description, order, is_public):
         from common.processing.good import get_good_list_processing
@@ -314,8 +322,13 @@ class Good(models.Model):
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-	is_deleted = models.BooleanField(default=False, verbose_name="Удалено")
 	list = models.ManyToManyField(GoodList, related_name="good_list", blank=True)
+
+	comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	def __str__(self):
 		return self.title
@@ -419,34 +432,58 @@ class Good(models.Model):
 		return GoodImage.objects.filter(good_id=self.pk)
 
 	@classmethod
-    def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
         from common.processing.good import get_good_processing
-		from rest_framework.exceptions import ValidationError
 
-		if not lists:
-			raise ValidationError("Не выбран ни один список")
-
-        good = cls.objects.create(creator=creator,title=title,description=description, image=image,comments_enabled=comments_enabled, votes_on=votes_on,price=price,sub_category=sub_category)
-        if is_public:
-            get_good_processing(good, Good.PUBLISHED)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_good_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="GOO", object_id=good.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_good_wall")
-        else:
-            get_good_processing(good, Good.PRIVATE)
+        if not lists:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Не выбран список для нового Товара")
+        private = 0
+		if not price:
+			price = 0
+        good = cls.objects.create(
+								creator=creator,
+								title=title,
+								description=description,
+								votes_on=votes_on,
+								comments_enabled=comments_enabled,
+								image=image,
+								price=price,
+								sub_category=sub_category,
+								community=community
+								)
+		for img in images:
+			GoodImage.objects.create(good=good, image=img)
         for list_id in lists:
             good_list = GoodList.objects.get(pk=list_id)
             good_list.good_list.add(good)
-		if images:
-			for image in images:
-				GoodImage.objects.create(good=good, image=image)
-        return good
+            if good_list.is_private():
+                private = 1
+        if not private and is_public:
+            get_good_processing(good, Good.PUBLISHED)
+            if community:
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
 
-    def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+                community_send_wall(good.pk, creator.pk, community.pk, None, "create_c_good_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+                    community_send_notify(good.pk, creator.pk, user_id, community.pk, None, "create_c_good_notify")
+            else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, type="GOO", object_id=good.pk, verb="ITE")
+                user_send_wall(good.pk, None, "create_u_good_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+                    user_send_notify(good.pk, creator.pk, user_id, None, "create_u_good_notify")
+        else:
+            get_good_processing(good, Good.PRIVATE)
+		return good
+
+    def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
         from common.processing.good import get_good_processing
 
         self.title = title
@@ -457,6 +494,7 @@ class Good(models.Model):
         self.image = image
 		self.price = price
 		self.sub_category = sub_category
+		self.community = community
         if is_public:
             get_good_processing(self, Good.PUBLISHED)
             self.make_publish()
@@ -550,15 +588,25 @@ class GoodImage(models.Model):
 
 
 class GoodComment(models.Model):
+	EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
+    STATUS = (
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+    )
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
 	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
 	text = models.TextField(blank=True,null=True)
-	is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-	is_deleted = models.BooleanField(default=False,verbose_name="Удаено")
 	comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+	status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+
+	likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )

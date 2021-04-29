@@ -1,6 +1,6 @@
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form id="c_edit_good_list_form" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+    <form id="u_edit_good_list_form" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -11,14 +11,24 @@
                   <label>Название</label>
                   <input type="text" value="{{ list.name }}" name="title" class="form-control" id="id_title">
                 </div>
+                <div class="form-group">
+                  <label>Описание</label>
+                  <input name="description" value="{{ list.description }}" class="form-control">
+                </div>
                 <div class="form-group ">
                   <label>Порядковый номер</label>
                   <input type="number" min="0" value="{{ list.order }}" name="order" class="form-control" id="id_order">
                 </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="is_public" class="custom-control-input" {% if list.is_public %}checked{% endif %} id="id_is_public">
+                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
+                  </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button class="btn btn-secondary create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-                <button id="c_edit_good_list_btn" type="button" class="btn btn-success float-right">Изменить</button>
+                <button id="u_edit_good_list_btn" type="button" class="btn btn-success float-right">Изменить</button>
             </div>
         </div>
     </form>

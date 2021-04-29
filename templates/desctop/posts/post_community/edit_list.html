@@ -1,33 +1,34 @@
+
 <div class="">
-    <form id="u_music_list_create">
+    <form id="post_list_form" data-pk="{{ list.pk }}">
       {% csrf_token %}
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Создание плейлиста</h5>
+                <h5 class="content-color-primary mb-0">Изменение списка записей</h5>
             </div>
             <div class="card-body">
                 <div class="form-group">
                     <label>Название</label>
-                    <input type="text" name="name" class="form-control" id="id_name">
+                    <input type="text" value="{{ list.name}}" name="name" id="id_name" class="form-control">
                 </div>
                 <div class="form-group">
                   <label>Описание</label>
-                  <input name="description" class="form-control">
+                  <input name="description" value="{{ list.description }}" class="form-control">
                 </div>
                   <div class="form-group">
                     <label>Порядковый номер</label>
-                    <input type="number" value="0" min="0" name="order" class="form-control" id="id_order">
+                    <input type="number" value="{{ list.order }}" min="1" name="order" class="form-control" id="id_order">
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
+                      <input type="checkbox" name="is_public" class="custom-control-input" {% if list.is_public %}checked{% endif %} id="id_is_public">
                       <label class="custom-control-label" for="id_is_public">Виден всем</label>
                     </div>
                   </div>
             </div>
             <div class="card-footer">
                 <button class="btn custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
-                <button type="button" class="btn btn-success float-right" id="u_create_music_list_btn">Создать</button>
+                <button type="button" class="btn btn-success float-right" id="c_edit_post_list_btn">Сохранить</button>
             </div>
         </div>
     </form>

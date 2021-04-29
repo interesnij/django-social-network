@@ -9,6 +9,27 @@ from common.check.community import check_can_get_lists
 from django.views.generic.base import TemplateView
 
 
+class AddPostListInCommunityCollections(View):
+    def post(self,request,*args,**kwargs):
+        list, community = PostList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_community_can_add_list(community.pk):
+            list.communities.add(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class RemovePostListFromCommunityCollections(View):
+    def post(self,request,*args,**kwargs):
+        list, community = PostList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, community)
+        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
+            list.communities.remove(community)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
 class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         from common.check.community import check_private_post_exists
@@ -28,7 +49,19 @@ class PostCommunityCreate(View):
                 from common.template.user import render_for_platform
 
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
-                new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                new_post = post.create_post(
+                                            creator=request.user,
+                                            attach=attach,
+                                            text=post.text,
+                                            category=post.category,
+                                            lists=lists,
+                                            parent=None,
+                                            comments_enabled=post.comments_enabled,
+                                            is_signature=post.is_signature,
+                                            votes_on=post.votes_on,
+                                            is_public=request.POST.get("is_public"),
+                                            community=community
+                                            )
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
@@ -57,7 +90,18 @@ class PostOfferCommunityCreate(View):
                 from common.template.user import render_for_platform
 
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
-                new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, community=community, parent=None, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, status="PG")
+                new_post = post.create_offer_post(
+                                            creator=request.user,
+                                            attach=attach,
+                                            text=post.text,
+                                            category=post.category,
+                                            lists=lists,
+                                            parent=None,
+                                            comments_enabled=post.comments_enabled,
+                                            is_signature=post.is_signature,
+                                            votes_on=post.votes_on,
+                                            is_public=request.POST.get("is_public"),
+                                            community=community)
                 get_post_offer_processing(new_post)
                 community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "SIT")
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
@@ -280,10 +324,7 @@ class CommunityPostListCreate(TemplateView):
             from common.template.user import render_for_platform
 
             list = self.form.save(commit=False)
-            list.creator = request.user
-            list.community_id = self.kwargs["pk"]
-            list.type = PostList.LIST
-            list.save()
+            list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': list})
         else:
             return HttpResponse()

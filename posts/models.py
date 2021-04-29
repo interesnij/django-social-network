@@ -20,10 +20,13 @@ class PostList(models.Model):
     name = models.CharField(max_length=255)
     #community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип листа")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
@@ -68,6 +71,26 @@ class PostList(models.Model):
     def get_posts_ids(self):
         ids =  self.post_list.filter(is_deleted=False).values("pk")
         return [id['pk'] for id in ids]
+
+    def is_user_can_add_list(self, user_id):
+        return self.creator.pk != user_id and user_id not in self.get_users_ids()
+
+    def is_user_can_delete_list(self, user_id):
+        return self.creator.pk != user_id and user_id in self.get_users_ids()
+
+    def is_community_can_add_list(self, community_id):
+        return self.community.pk != community_id and community_id not in self.get_communities_ids()
+
+    def is_community_can_delete_list(self, community_id):
+        return self.community.pk != community_id and community_id in self.get_communities_ids()
+
+    def get_users_ids(self):
+        users = self.users.exclude(type__contains="THIS").values("pk")
+        return [i['pk'] for i in users]
+
+    def get_communities_ids(self):
+        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        return [i['pk'] for i in communities]
 
     def is_full_list(self):
         return self.is_fix_list() and self.count_posts() > 10:
@@ -138,22 +161,30 @@ class PostList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+    def create_list(cls, creator, name, description, order, community, is_public):
+        from notify.models import Notify, Wall
         from common.processing.post import get_post_list_processing
         if not order:
             order = 1
-        list = cls.objects.create(creator=creator,name=name,description=description, order=order)
-        if is_public:
-            get_postlist_processing(list, PostList.LIST)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_post_list_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_post_list_wall")
+        if community:
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            if is_public:
+                from common.notify.progs import community_send_notify, community_send_wall
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
+                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_post_list_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
+                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_post_list_notify")
         else:
-            get_post_list_processing(list, PostList.PRIVATE)
+            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            if is_public:
+                from common.notify.progs import user_send_notify, user_send_wall
+                Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
+                user_send_wall(list.pk, None, "create_u_post_list_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
+                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_post_list_notify")
+        get_post_list_processing(list, PostList.LIST)
         return list
     def edit_list(self, name, description, order, is_public):
         from common.processing.post import get_post_list_processing
@@ -286,6 +317,12 @@ class Post(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
+    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+
     class Meta:
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
@@ -294,16 +331,21 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def is_private(self):
+        return self.type == self.PRIVATE
+    def is_open(self):
+        return self.type == self.MANAGER or self.type == self.PUBLISHED
+
     @classmethod
-    def create_post(cls, creator, text, category, lists, community, attach, parent, comments_enabled, is_signature, votes_on, status, is_public):
+    def create_post(cls, creator, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
         from common.processing.post import get_post_processing
-        from rest_framework.exceptions import ValidationError
         if not lists:
+            from rest_framework.exceptions import ValidationError
             raise ValidationError("Не выбран список для новой записи")
         private = 0
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,status=status,attach=_attach,)
+        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
 
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)
@@ -311,45 +353,27 @@ class Post(models.Model):
                 private = 1
             post_list.post_list.add(post)
 
-        get_post_processing(post)
-
-        # если запись не в приватном списке, то создаём уведомления
         if not private and is_public:
-            from notify.models import Notify, Wall
-            from asgiref.sync import async_to_sync
-            from channels.layers import get_channel_layer
-
-            channel_layer = get_channel_layer()
-
-            # здесь мы создадим одну запись в модель Wall для новостей. А также по одной записи на каждого подписанта.
-            # То есть персоналу сообщеста и всем подписанным на уведомления сообщества (CommunityProfileNotify) -
-            # если запись имеет сообщество, и всем подписантам на уведомления пользователя (UserProfileNotify) -
-            # если сообщество создается в ленту пользователя.
+            get_post_processing(post, Post.PUBLISHED)
             if community:
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
+                community_send_wall(post.pk, creator.pk, community.pk, None, "create_c_post_wall")
                 for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
-                    payload = {
-                        'type': 'receive',
-                        'key': 'notification',
-                        'id': str(post.pk),
-                        'community_id': str(community.pk),
-                        'recipient_id': str(user_id),
-                        'name': "c_post_create",
-                    }
-                    async_to_sync(channel_layer.group_send)('notification', payload)
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
+                    community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "create_c_post_notify")
             else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
                 Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
-                for user_id in creator.get_member_for_notify_ids():
+                user_send_wall(post.pk, None, "create_u_post_wall")
+                for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
-                    payload = {
-                        'type': 'receive',
-                        'key': 'notification',
-                        'id': str(post.pk),
-                        'recipient_id': str(user_id),
-                        'name': "u_post_create",
-                    }
-                    async_to_sync(channel_layer.group_send)('notification', payload)
+                    user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
+        else:
+            get_post_processing(post, Post.PRIVATE)
         return post
 
     def edit_post(self, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public):
@@ -365,12 +389,15 @@ class Post(models.Model):
         self.comments_enabled = comments_enabled
         self.is_signature = is_signature
         self.votes_on = votes_on
-        if is_public:
+
+        if is_public and self.is_private():
             get_post_processing(self, Post.PUBLISHED)
             self.make_publish()
-        else:
+        elif not is_public and self.is_open():
             get_post_processing(self, Post.PRIVATE)
             self.make_private()
+        else:
+            get_post_processing(self, self.status)
         return self.save()
 
     def make_private(self):
@@ -719,15 +746,25 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
+    STATUS = (
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+    )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now_add=True, auto_now=False, db_index=False)
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True)
-    is_edited = models.BooleanField(default=False, null=False, blank=False,verbose_name="Изменено")
-    is_deleted = models.BooleanField(default=False,verbose_name="Удалено")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+
+    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

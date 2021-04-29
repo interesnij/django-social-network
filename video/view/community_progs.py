@@ -10,7 +10,7 @@ from common.template.video import get_permission_community_video
 from common.template.user import render_for_platform
 
 
-class CommunityVideoListAdd(View):
+class AddVideoListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -21,7 +21,7 @@ class CommunityVideoListAdd(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityVideoListRemove(View):
+class RemoveVideoListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -199,14 +199,12 @@ class CommunityVideoListCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form_post = VideoListForm(request.POST)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.community.pk):
-            new_list = form_post.save(commit=False)
-            new_list.creator = request.user
-            new_list.community = community
-            new_list.save()
-            return render_for_platform(request, 'communities/video_list/admin_list.html',{'list': new_list, 'community': community})
+        if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.c.pk):
+            list = form_post.save(commit=False)
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'communities/video_list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
 

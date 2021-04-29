@@ -3,6 +3,37 @@ from django.db import models
 from communities.models import Community
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from pilkit.processors import ResizeToFill, ResizeToFit
+from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
+from imagekit.models import ProcessedImageField
+
+
+class CommunityInfo(models.Model):
+    community = models.OneToOneField(Community, primary_key=True, related_name="community_info", verbose_name="Сообщество", on_delete=models.CASCADE)
+    description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Описание" )
+    cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
+
+    posts = models.PositiveIntegerField(default=0, verbose_name="Кол-во постов")
+    views_post = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров постов")
+    members = models.PositiveIntegerField(default=0, verbose_name="Кол-во участников")
+    photos = models.PositiveIntegerField(default=0, verbose_name="Кол-во фотографий")
+    goods = models.PositiveIntegerField(default=0, verbose_name="Кол-во товаров")
+    traks = models.PositiveIntegerField(default=0, verbose_name="Кол-во аудиозаписей")
+    videos = models.PositiveIntegerField(default=0, verbose_name="Кол-во видеозаписей")
+
+    def __str__(self):
+        return self.user.last_name
+
+    class Meta:
+        verbose_name = 'Профиль пользователя'
+        verbose_name_plural = 'Профили пользователей'
+        index_together = [('id', 'user'),]
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
 
 
 class CommunityNotificationsPost(models.Model):

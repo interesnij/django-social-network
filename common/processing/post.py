@@ -1,11 +1,8 @@
-from posts.models import Post
-from django.http import HttpResponse, HttpResponseBadRequest
-from posts.forms import PostForm
-
 
 def get_post_processing(doc, status):
     doc.status = status
     doc.save(update_fields=['status'])
+
     return doc
 def get_post_list_processing(list, status):
     list.type = status
@@ -16,6 +13,9 @@ def repost_message_send(list, attach, community, request, text):
     from chat.models import Message, Chat
     from common.attach.message_attach import message_attach
     from users.models import User
+    from posts.forms import PostForm
+    from posts.models import Post
+    from django.http import HttpResponse, HttpResponseBadRequest
 
     connections = request.POST.getlist("chat_items")
     if not connections:
