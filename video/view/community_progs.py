@@ -10,7 +10,7 @@ from common.template.video import get_permission_community_video
 from common.template.user import render_for_platform
 
 
-class AddVideoListFromCommunityCollections(View):
+class AddVideoListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])

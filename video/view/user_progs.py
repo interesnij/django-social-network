@@ -13,7 +13,7 @@ from django.http import Http404
 from common.template.user import get_settings_template, render_for_platform
 
 
-class AddVideoListFromUserCollections(View):
+class AddVideoListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
