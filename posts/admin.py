@@ -8,15 +8,13 @@ class PostAdmin(admin.ModelAdmin):
                     'creator',
                     #'community',
                     'created',
-                    'is_deleted'
                     ]
     list_filter = ['is_deleted', 'created',]
 
 
 class PostCommentAdmin(admin.ModelAdmin):
     search_fields = ('commenter',)
-    list_display = ['commenter','created', 'is_deleted']
-    list_filter = ['is_deleted']
+    list_display = ['commenter','created']
 
 
 class PostListAdmin(admin.ModelAdmin):

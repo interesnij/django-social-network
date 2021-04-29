@@ -3,7 +3,7 @@ from chat.models import *
 
 
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ("creator", "type", "is_deleted")
+    list_display = ("creator", "type")
     list_filter = ("creator", )
 
 class ChatUsersAdmin(admin.ModelAdmin):

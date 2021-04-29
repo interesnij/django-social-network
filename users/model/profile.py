@@ -41,7 +41,7 @@ class UserProfile(models.Model):
 
 
 class UserLocation(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, primary_key=True, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_location", verbose_name="Пользователь", on_delete=models.CASCADE)
     city_ru = models.CharField(max_length=100, blank=True, verbose_name="Город по-русски")
     city_en = models.CharField(max_length=100, blank=True, verbose_name="Город по-английски")
     city_lat = models.FloatField(blank=True, null=True, verbose_name="Ширина города")
@@ -60,14 +60,9 @@ class UserLocation(models.Model):
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
 
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserLocation.objects.create(user=instance)
-
 
 class IPUser(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, primary_key=True, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="user_ip", verbose_name="Пользователь", on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(protocol='both', null=True, blank=True, verbose_name="ip")
 
     class Meta:
