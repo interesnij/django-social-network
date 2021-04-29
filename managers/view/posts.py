@@ -5,7 +5,7 @@ from common.staff_progs.posts import *
 from posts.models import Post, PostComment
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
-from managers.model.post import Moderated
+from managers.models import Moderated
 from django.http import Http404
 from common.template.user import get_detect_platform_template
 
