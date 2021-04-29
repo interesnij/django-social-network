@@ -31,7 +31,7 @@ REGISTER, WOMEN_REGISTER, GROUP_REGISTER = 'REG', 'WREG', 'GREG'
 UNREAD, READ, DELETED, CLOSED = 'U', 'R', 'D', "C"
 
 VERB = (
-    (ITEM, ' разместил'), SUGGEST_ITEM, ' предложил'), (ITEMS, ' разместили'),
+    (ITEM, ' разместил'), (SUGGEST_ITEM, ' предложил'), (ITEMS, ' разместили'),
     (COMMENT, ' оставил'), (WOMEN_COMMENT, ' оставила'), (GROUP_COMMENT, ' оставили'),
     (REPLY, ' ответил на'), (WOMEN_REPLY, ' ответила на'), (GROUP_REPLY, ' ответили на'),
 
