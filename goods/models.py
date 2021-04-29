@@ -537,31 +537,31 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 	def close_good(self):
-		from notify.models import Notify, Wall
-		if self.status == "PUB":
-			self.status = Good.THIS_CLOSED
-		elif self.status == "PRI":
-			self.status = Good.THIS_CLOSED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Good.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_good(self):
-        from notify.models import Notify, Wall
-        if self.status == "TCLO":
-            self.status = Good.PUBLISHED
-        elif self.status == "TCLOP":
-            self.status = Good.PRIVATE
-        elif self.status == "TCLOM":
-            self.status = Good.MANAGER
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	    from notify.models import Notify, Wall
+	    if self.status == "PUB":
+	        self.status = Good.THIS_CLOSED
+	    elif self.status == "PRI":
+	        self.status = Good.THIS_CLOSED_PRIVATE
+	    elif self.status == "MAN":
+	        self.status = Good.THIS_CLOSED_MANAGER
+	    self.save(update_fields=['status'])
+	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def abort_close_good(self):
+	    from notify.models import Notify, Wall
+	    if self.status == "TCLO":
+	        self.status = Good.PUBLISHED
+	    elif self.status == "TCLOP":
+	        self.status = Good.PRIVATE
+	    elif self.status == "TCLOM":
+	        self.status = Good.MANAGER
+	    self.save(update_fields=['status'])
+	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class GoodImage(models.Model):
