@@ -41,14 +41,14 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
-    @receiver(post_save, sender=Сommunity)
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
             PhotoList.objects.create(community=community, type=PhotoList.MAIN, name="Основной альбом", creator=community.creator)
             PhotoList.objects.create(community=community, type=PhotoList.AVATAR, name="Фото со страницы", creator=community.creator)
             PhotoList.objects.create(community=community, type=PhotoList.WALL, name="Фото со стены", creator=community.creator)
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
             PhotoList.objects.create(creator=instance, type=PhotoList.MAIN, name="Основной альбом")

@@ -34,12 +34,12 @@ class SurveyList(models.Model):
         verbose_name_plural = "списки опросов"
         ordering = ['order']
 
-    @receiver(post_save, sender=Сommunity)
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
             SurveyList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
             SurveyList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
