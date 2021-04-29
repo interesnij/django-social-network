@@ -40,11 +40,11 @@ class GoodSubCategory(models.Model):
 
 
 class GoodList(models.Model):
-	MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+	MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI'
 	THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
 	THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA'
 	TYPE = (
-		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка')
 		(THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
 		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
