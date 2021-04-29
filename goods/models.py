@@ -430,131 +430,118 @@ class Good(models.Model):
 		return GoodImage.objects.filter(good_id=self.pk)
 
 	@classmethod
-    def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
-        from common.processing.good import get_good_processing
-
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для нового Товара")
-        private = 0
+	def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
+		from common.processing.good import get_good_processing
+		if not lists:
+			from rest_framework.exceptions import ValidationError
+			raise ValidationError("Не выбран список для нового Товара")
+		private = 0
 		if not price:
 			price = 0
-        good = cls.objects.create(
-								creator=creator,
-								title=title,
-								description=description,
-								votes_on=votes_on,
-								comments_enabled=comments_enabled,
-								image=image,
-								price=price,
-								sub_category=sub_category,
-								community=community
-								)
+		good = cls.objects.create(creator=creator,title=title,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
 		for img in images:
 			GoodImage.objects.create(good=good, image=img)
-        for list_id in lists:
-            good_list = GoodList.objects.get(pk=list_id)
-            good_list.good_list.add(good)
-            if good_list.is_private():
-                private = 1
-        if not private and is_public:
-            get_good_processing(good, Good.PUBLISHED)
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
+		for list_id in lists:
+			good_list = GoodList.objects.get(pk=list_id)
+			good_list.good_list.add(good)
+			if good_list.is_private():
+				private = 1
+		if not private and is_public:
+			get_good_processing(good, Good.PUBLISHED)
+			if community:
+				from common.notify.progs import community_send_notify, community_send_wall
+				from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
-                community_send_wall(good.pk, creator.pk, community.pk, None, "create_c_good_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
-                    community_send_notify(good.pk, creator.pk, user_id, community.pk, None, "create_c_good_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
+				Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+				community_send_wall(good.pk, creator.pk, community.pk, None, "create_c_good_wall")
+				for user_id in community.get_member_for_notify_ids():
+					Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+					community_send_notify(good.pk, creator.pk, user_id, community.pk, None, "create_c_good_notify")
+			else:
+				from common.notify.progs import user_send_notify, user_send_wall
+				from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, type="GOO", object_id=good.pk, verb="ITE")
-                user_send_wall(good.pk, None, "create_u_good_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
-                    user_send_notify(good.pk, creator.pk, user_id, None, "create_u_good_notify")
-        else:
-            get_good_processing(good, Good.PRIVATE)
-		return good
+				Wall.objects.create(creator_id=creator.pk, type="GOO", object_id=good.pk, verb="ITE")
+				user_send_wall(good.pk, None, "create_u_good_wall")
+				for user_id in creator.get_user_news_notify_ids():
+					Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
+					user_send_notify(good.pk, creator.pk, user_id, None, "create_u_good_notify")
+		else:
+			get_good_processing(good, Good.PRIVATE)
+			return good
 
-    def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
-        from common.processing.good import get_good_processing
-
-        self.title = title
-        self.description = description
-        self.lists = lists
+	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
+		from common.processing.good import get_good_processing
+		self.title = title
+		self.description = description
+		self.lists = lists
 		self.votes_on = votes_on
-        self.comments_enabled = comments_enabled
-        self.image = image
+		self.comments_enabled = comments_enabled
+		self.image = image
 		self.price = price
 		self.sub_category = sub_category
 		self.community = community
-        if is_public:
-            get_good_processing(self, Good.PUBLISHED)
-            self.make_publish()
-        else:
-            get_good_processing(self, Good.PRIVATE)
-            self.make_private()
+		if is_public:
+			get_good_processing(self, Good.PUBLISHED)
+			self.make_publish()
+		else:
+			get_good_processing(self, Good.PRIVATE)
+			self.make_private()
 		if images:
 			for image in images:
 				GoodImage.objects.create(good=good, image=image)
-			GoodImage.objects.filter(good=good).delete()
-        return self.save()
+		return self.save()
 
-    def make_private(self):
-        from notify.models import Notify, Wall
-        self.status = Good.PRIVATE
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def make_publish(self):
-        from notify.models import Notify, Wall
-        self.status = Good.PUBLISHED
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	def make_private(self):
+		from notify.models import Notify, Wall
+		self.status = Good.PRIVATE
+		self.save(update_fields=['status'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def make_publish(self):
+		from notify.models import Notify, Wall
+		self.status = Good.PUBLISHED
+		self.save(update_fields=['status'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_good(self):
-        from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Good.THIS_DELETED
-        elif self.status == "PRI":
-            self.status = Good.THIS_DELETED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Good.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_good(self):
-        from notify.models import Notify, Wall
-        if self.status == "TDEL":
-            self.status = Good.PUBLISHED
-        elif self.status == "TDELP":
-            self.status = Good.PRIVATE
-        elif self.status == "TDELM":
-            self.status = Good.MANAGER
-        self.save(update_fields=['status'])
-        if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+	def delete_good(self):
+		from notify.models import Notify, Wall
+		if self.status == "PUB":
+			self.status = Good.THIS_DELETED
+		elif self.status == "PRI":
+			self.status = Good.THIS_DELETED_PRIVATE
+		elif self.status == "MAN":
+			self.status = Good.THIS_DELETED_MANAGER
+		self.save(update_fields=['status'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+	def abort_delete_good(self):
+		from notify.models import Notify, Wall
+		if self.status == "TDEL":
+			self.status = Good.PUBLISHED
+		elif self.status == "TDELP":
+			self.status = Good.PRIVATE
+		elif self.status == "TDELM":
+			self.status = Good.MANAGER
+		self.save(update_fields=['status'])
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_good(self):
-        from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Good.THIS_CLOSED
-        elif self.status == "PRI":
-            self.status = Good.THIS_CLOSED_PRIVATE
+	def close_good(self):
+		from notify.models import Notify, Wall
+		if self.status == "PUB":
+			self.status = Good.THIS_CLOSED
+		elif self.status == "PRI":
+			self.status = Good.THIS_CLOSED_PRIVATE
         elif self.status == "MAN":
             self.status = Good.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
