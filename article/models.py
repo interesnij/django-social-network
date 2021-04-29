@@ -12,7 +12,7 @@ class Article(models.Model):
     THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PRO','PUB','PRI','MAN','DEL','CLO'
     THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
     STATUS = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
@@ -22,7 +22,7 @@ class Article(models.Model):
     #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
-    status = models.CharField(choices=STATUSES, default=THIS_PROCESSING, max_length=5, verbose_name="Статус статьи")
+    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5, verbose_name="Статус статьи")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')

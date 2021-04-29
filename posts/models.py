@@ -298,7 +298,7 @@ class Post(models.Model):
     THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"DRA", 'PUB','PRI','MAN','DEL','CLO''MES'
     THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
     STATUS = (
-        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_PROCESSING, 'Обработка'),(DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -743,7 +743,7 @@ class PostComment(models.Model):
     THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
     THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
     STATUS = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
         (CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
     )

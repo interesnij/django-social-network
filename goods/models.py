@@ -577,7 +577,7 @@ class GoodComment(models.Model):
 	THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
 	THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
 	STATUS = (
-	(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+	(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
 		(DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
 		(CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
 	)
