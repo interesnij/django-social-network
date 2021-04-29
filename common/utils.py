@@ -165,7 +165,7 @@ def update_activity(user, user_agent):
     from datetime import datetime
     import re
     MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+    if MOBILE_AGENT_RE.match(user_agent):
         user.update(last_activity=datetime.now(), device="Ph")
     else:
         user.update(last_activity=datetime.now(), device="De")
@@ -173,7 +173,7 @@ def update_activity(user, user_agent):
 def get_folder(user_agent):
     import re
     MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-    if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+    if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
         return "desctop/"
