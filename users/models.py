@@ -105,7 +105,7 @@ class User(AbstractUser):
         return self.type[:4] == "TBAN"
     def is_deleted(self):
         return self.type[:4] == "TDEL"
-    def is_clocked(self):
+    def is_blocked(self):
         return self.type[:4] == "TBLO"
     def is_manager(self):
         return self.type == User.MANAGER
