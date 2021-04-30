@@ -37,7 +37,7 @@ class SurveyList(models.Model):
         verbose_name_plural = "списки опросов"
         ordering = ['order']
 
-    @receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
