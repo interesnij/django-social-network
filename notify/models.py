@@ -11,15 +11,15 @@ from notify.helpers import VERB, STATUS, TYPE
 Он их может их скрывать для себя и отписываться от таблиц выше
 """
 class Notify(models.Model):
-    #recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
-    #creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
+    recipient = models.ForeignKey('users.User', blank=True, null=True, on_delete=models.CASCADE, related_name='notifications', verbose_name="Получатель")
+    creator = models.ForeignKey('users.User', verbose_name="Инициатор", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
-    #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
-    #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
     object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
@@ -105,14 +105,14 @@ class Notify(models.Model):
 ты свободен от новостей этого пользователя. И тут не нужен получатель(упоминанием человека - он становится creator)
 """
 class Wall(models.Model):
-    #creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
+    creator = models.ForeignKey('users.User', verbose_name="Инициатор", related_name='creator_wall', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     verb = models.CharField(max_length=5, choices=VERB, verbose_name="Тип уведомления")
     status = models.CharField(max_length=1, choices=STATUS, default="U", verbose_name="Статус")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
-    #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
-    #action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
+    action_community = models.ForeignKey('communities.Community', related_name='+', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Сообщество")
 
     user_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, человек лайкает несколько постов. Нужно для группировки")
     object_set = models.ForeignKey('self', related_name='+', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Например, несколько человек лайкает пост. Нужно для группировки")
