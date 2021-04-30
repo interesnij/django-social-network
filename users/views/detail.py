@@ -183,7 +183,7 @@ class UserGoods(ListView):
         from common.template.good import get_template_user_good
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_good_lists()
+        self.list = self.user.get_good_list() 
         if self.user.pk == request.user.pk:
             self.goods_list = self.list.get_staff_items()
         else:
