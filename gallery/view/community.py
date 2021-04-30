@@ -22,9 +22,9 @@ class CommunityLoadPhotoList(ListView):
 			from common.template.photo import get_permission_user_photo
 			self.template_name = get_permission_user_photo(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.photo_list = self.list.get_staff_photos()
+			self.photo_list = self.list.get_staff_items()
 		else:
-			self.photo_list = self.list.get_photos()
+			self.photo_list = self.list.get_items()
 		return super(CommunityLoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -49,9 +49,9 @@ class CommunityPhotosList(ListView):
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-            self.photo_list = self.list.get_staff_photos()
+            self.photo_list = self.list.get_staff_items()
         else:
-            self.photo_list = self.list.get_photos()
+            self.photo_list = self.list.get_items()
         return super(CommunityPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -75,9 +75,9 @@ class CommunityAlbumPhotoList(ListView):
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-            self.photo_list = self.list.get_staff_photos()
+            self.photo_list = self.list.get_staff_items()
         else:
-            self.photo_list = self.list.get_photos()
+            self.photo_list = self.list.get_items()
         return super(CommunityAlbumPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -129,7 +129,7 @@ class CommunityDetailAvatar(TemplateView):
         except:
             self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -159,7 +159,7 @@ class CommunityFirstAvatar(TemplateView):
             self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
         self.photo = self.list.get_first_photo()
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -184,7 +184,7 @@ class CommunityPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -216,9 +216,9 @@ class CommunityPhotoListPhoto(TemplateView):
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_administrator_of_community(self.list.community.pk):
-            self.photos = self.list.get_staff_photos()
+            self.photos = self.list.get_staff_items()
         else:
-            self.photos = self.list.get_photos()
+            self.photos = self.list.get_items()
         return super(CommunityPhotoListPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -248,7 +248,7 @@ class CommunityWallPhoto(TemplateView):
             self.list = PhotoList.objects.get(community=self.community, type=PhotoList.WALL)
         except:
             self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.WALL, title="Фото со стены", description="Фото со стены")
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.list, self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -278,7 +278,7 @@ class CommunityPostPhoto(TemplateView):
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.post.get_attach_photos()
+        self.photos = self.post.get_attach_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -307,7 +307,7 @@ class CommunityCommentPhoto(TemplateView):
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.comment.get_attach_photos()
+        self.photos = self.comment.get_attach_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.post.community, self.photo, "gallery/c_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -355,7 +355,7 @@ class CommunityChatPhoto(TemplateView):
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.chat.get_attach_photos()
+        self.photos = self.chat.get_attach_items()
         if request.is_ajax():
             self.template_name = get_permission_community_photo_detail(self.photo.community, self.photo, "chat/attach/photo/", "c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         else:

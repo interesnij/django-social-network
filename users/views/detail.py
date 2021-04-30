@@ -146,8 +146,7 @@ class UserMusic(ListView):
         return c
 
     def get_queryset(self):
-        music_list = self.playlist.get_items().order_by('-created_at')
-        return music_list
+        return self.playlist.get_items().order_by('-created')
 
 
 class UserDocs(ListView):
@@ -172,8 +171,7 @@ class UserDocs(ListView):
         return c
 
     def get_queryset(self):
-        doc_list = self.doc_list
-        return doc_list
+        return self.doc_list
 
 
 class UserGoods(ListView):
@@ -198,8 +196,7 @@ class UserGoods(ListView):
         return c
 
     def get_queryset(self):
-        goods_list = self.goods_list
-        return goods_list
+        return self.goods_list
 
 
 class UserVideo(ListView):

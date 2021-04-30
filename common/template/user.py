@@ -62,7 +62,7 @@ def get_settings_template(template, request_user, user_agent):
             template_name = "main/phone_verification.html"
         elif request_user.is_suspended():
             template_name = "generic/u_template/you_suspended.html"
-        elif user.is_deleted():
+        elif request_user.is_deleted():
             template_name = "generic/u_template/you_deleted.html"
         elif request_user.is_blocked():
             template_name = "generic/u_template/you_global_block.html"

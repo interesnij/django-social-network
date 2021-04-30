@@ -17,9 +17,9 @@ class UserLoadPhotoList(ListView):
 		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_permission_user_photo(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.pk == self.list.creator.pk:
-			self.photo_list = self.list.get_staff_photos()
+			self.photo_list = self.list.get_staff_items()
 		else:
-			self.photo_list = self.list.get_photos()
+			self.photo_list = self.list.get_items()
 		return super(UserLoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -28,8 +28,7 @@ class UserLoadPhotoList(ListView):
 		return c
 
 	def get_queryset(self):
-		list = self.photo_list
-		return list
+		return self.photo_list
 
 
 class UserPhotosList(ListView):
@@ -45,9 +44,9 @@ class UserPhotosList(ListView):
             raise Http404
 
         if self.user == request.user:
-            self.photo_list = self.list.get_staff_photos()
+            self.photo_list = self.list.get_staff_items()
         else:
-            self.photo_list = self.list.get_photos()
+            self.photo_list = self.list.get_items()
         return super(UserPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -56,8 +55,7 @@ class UserPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.photo_list
-        return photo_list
+        return self.photo_list
 
 class UserPhotoAlbumList(ListView):
     template_name = None
@@ -71,9 +69,9 @@ class UserPhotoAlbumList(ListView):
         else:
             raise Http404
         if self.user == request.user:
-            self.photo_list = self.list.get_staff_photos()
+            self.photo_list = self.list.get_staff_items()
         else:
-            self.photo_list = self.list.get_photos()
+            self.photo_list = self.list.get_items()
         return super(UserPhotoAlbumList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -83,8 +81,7 @@ class UserPhotoAlbumList(ListView):
         return context
 
     def get_queryset(self):
-        photo_list = self.photo_list
-        return photo_list
+        return self.photo_list
 
 
 class PhotoUserCommentList(ListView):
@@ -107,8 +104,7 @@ class PhotoUserCommentList(ListView):
 		return context
 
 	def get_queryset(self):
-		comments = self.photo.get_comments()
-		return comments
+		return self.photo.get_comments()
 
 
 class UserPhoto(TemplateView):
@@ -120,7 +116,7 @@ class UserPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -147,7 +143,7 @@ class UserPhotosListPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotosList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -178,7 +174,7 @@ class UserWallPhoto(TemplateView):
             self.list = PhotosList.objects.get(creator=self.user, type=PhotosList.WALL, community__isnull=True)
         except:
             self.list = PhotosList.objects.create(creator=self.user, type=PhotosList.WALL, title="Фото со стены", description="Фото со стены")
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.list, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -210,7 +206,7 @@ class UserDetailAvatar(TemplateView):
             self.list = PhotoList.objects.get(creator=self.user, community__isnull=True, type=PhotoList.AVATAR)
         except:
             self.list = PhotoList.objects.create(creator=self.user, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
-        self.photos = self.list.get_photos()
+        self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -268,7 +264,7 @@ class UserCommentPhoto(TemplateView):
 
 		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
 		self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-		self.photos = self.comment.get_attach_photos()
+		self.photos = self.comment.get_attach_items()
 		if request.is_ajax():
 			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -295,7 +291,7 @@ class UserFirstAvatar(TemplateView):
 			self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
 		except:
 			self.list = PhotoList.objects.create(creator=self.user, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
-		self.photo, self.photos = self.list.get_first_photo(), self.list.get_photos()
+		self.photo, self.photos = self.list.get_first_photo(), self.list.get_items()
 		if request.is_ajax():
 			self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -347,7 +343,7 @@ class UserChatPhoto(TemplateView):
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.chat.get_attach_photos()
+        self.photos = self.chat.get_attach_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.photo.creator, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         else:

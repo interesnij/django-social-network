@@ -75,7 +75,7 @@ class VideoList(models.Model):
         return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
 
     def get_staff_items(self):
-        return self.video_listfilter(Q(status="PUB")|Q(status="PRI"))
+        return self.video_list.filter(Q(status="PUB")|Q(status="PRI"))
     def get_items(self):
         return self.video_list.filter(status="PUB")
     def get_manager_items(self):
