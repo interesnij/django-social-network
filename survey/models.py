@@ -379,7 +379,7 @@ class Survey(models.Model):
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey', verbose_name="Опрос")
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='+', verbose_name="Опрос")
     votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
 
     class Meta:
