@@ -33,7 +33,7 @@ class CommunityInfo(models.Model):
         verbose_name_plural = 'Профили пользователей'
         #index_together = [('id', 'user'),]
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)
@@ -53,7 +53,7 @@ class CommunityNotificationsPost(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к комментарию")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к комментарию")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityNotificationsPost.objects.create(community=instance)
@@ -70,7 +70,7 @@ class CommunityNotificationsPhoto(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к фото")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к фото")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityNotificationsPhoto.objects.create(community=instance)
@@ -87,7 +87,7 @@ class CommunityNotificationsGood(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к товару")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к товару")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityNotificationsGood.objects.create(community=instance)
@@ -104,7 +104,7 @@ class CommunityNotificationsVideo(models.Model):
     comment_reply_like = models.BooleanField(default=True, verbose_name="Лайк на ответ к ролику")
     comment_reply_dislike = models.BooleanField(default=True, verbose_name="Дизлайк на ответ к ролику")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityNotificationsVideo.objects.create(community=instance)
@@ -113,7 +113,7 @@ class CommunityNotificationsMusic(models.Model):
     community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_notifications_music', verbose_name="Сообщество")
     repost = models.BooleanField(default=True, verbose_name="Репост аудиозаписи")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityNotificationsMusic.objects.create(community=instance)
@@ -147,7 +147,7 @@ class CommunityPrivatePost(models.Model):
     wall = models.CharField(max_length=5, choices=WALL, default=STAFF_POST, verbose_name="Стена")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivatePost.objects.create(community=instance)
@@ -174,7 +174,7 @@ class CommunityPrivatePhoto(models.Model):
     photo = models.CharField(max_length=5, choices=PHOTO, default=PHOTO_ADMIN, verbose_name="Фотографии")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivatePhoto.objects.create(community=instance)
@@ -202,7 +202,7 @@ class CommunityPrivateGood(models.Model):
     good = models.CharField(max_length=5, choices=GOOD, default=GOOD_ADMIN, verbose_name="Товар")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivateGood.objects.create(community=instance)
@@ -230,7 +230,7 @@ class CommunityPrivateVideo(models.Model):
     video = models.CharField(max_length=5, choices=VIDEO, default=VIDEO_ADMIN, verbose_name="Ролик")
     comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_NOMEMBER, verbose_name="Комментарии")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivateVideo.objects.create(community=instance)
@@ -248,7 +248,7 @@ class CommunityPrivateMusic(models.Model):
     community = models.OneToOneField(Community, on_delete=models.CASCADE, related_name='community_private_music', verbose_name="Сообщество")
     music = models.CharField(max_length=5, choices=MUSIC, default=MUSIC_ADMIN, verbose_name="Аудиозапись")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivateMusic.objects.create(community=instance)
@@ -266,7 +266,7 @@ class CommunitySectionsOpen(models.Model):
     discussion = models.BooleanField(default=True, verbose_name="Обсуждения открыты")
     members = models.BooleanField(default=True, verbose_name="Подписчики открыты")
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunitySectionsOpen.objects.create(community=instance)
