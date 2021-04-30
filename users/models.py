@@ -575,7 +575,7 @@ class User(AbstractUser):
 
     def is_user_playlist(self):
         from music.models import UserTempSoundList
-            return UserTempSoundList.objects.filter(user=self, tag=None, genre=None).exists()
+        return UserTempSoundList.objects.filter(user=self, tag=None, genre=None).exists()
 
     def is_user_temp_list(self, list):
         return UserTempSoundList.objects.filter(user=self, tag=None, genre=None, list=list).exists()
