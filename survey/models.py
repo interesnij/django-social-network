@@ -80,10 +80,12 @@ class SurveyList(models.Model):
     def is_community_can_delete_list(self, community_id):
         return self.community.pk != community_id and community_id in self.get_communities_ids()
 
-    def is_main_list(self):
+    def is_main(self):
         return self.type == self.MAIN
-    def is_user_list(self):
+    def is_list(self):
         return self.type == self.LIST
+    def is_private(self):
+        return self.type == self.PRIVATE
     def is_open(self):
         return self.type[0] != "T"
 

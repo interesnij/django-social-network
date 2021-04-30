@@ -14,8 +14,7 @@ class UserVisitCommunities(ListView):
 		return super(UserVisitCommunities,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		communities = self.request.user.get_visited_communities()
-		return communities
+		return self.request.user.get_visited_communities()
 
 class BlackListUsers(ListView):
 	template_name, paginate_by = None, 15
@@ -25,8 +24,7 @@ class BlackListUsers(ListView):
 		return super(BlackListUsers,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		communities = self.request.user.get_blocked_users()
-		return communities
+		return self.request.user.get_blocked_users()
 
 
 class UserVideoList(ListView):
@@ -39,9 +37,9 @@ class UserVideoList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user == request.user:
-			self.video_list = self.list.get_my_queryset()
+			self.video_list = self.list.get_staff_items()
 		else:
-			self.video_list = self.list.get_queryset()
+			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
 			self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -55,8 +53,7 @@ class UserVideoList(ListView):
 		return context
 
 	def get_queryset(self):
-		video_list = self.video_list
-		return video_list
+		return self.video_list
 
 
 class UserGoodsList(ListView):
@@ -69,9 +66,9 @@ class UserGoodsList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user == request.user:
-			self.goods_list = self.list.get_staff_goods()
+			self.goods_list = self.list.get_staff_items()
 		else:
-			self.goods_list = self.list.get_goods()
+			self.goods_list = self.list.getitems()
 		if self.list.type == GoodList.MAIN:
 			self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -85,8 +82,7 @@ class UserGoodsList(ListView):
 		return context
 
 	def get_queryset(self):
-		goods_list = self.goods_list
-		return goods_list
+		return self.goods_list
 
 
 class UserMusicList(ListView):
@@ -111,8 +107,7 @@ class UserMusicList(ListView):
 		return context
 
 	def get_queryset(self):
-		playlist = self.playlist.playlist_too()
-		return playlist
+		return self.playlist.get_items()
 
 
 class UserDocsList(ListView):
@@ -124,9 +119,9 @@ class UserDocsList(ListView):
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
-			self.doc_list = self.list.get_my_docs()
+			self.doc_list = self.list.get_staff_items()
 		else:
-			self.doc_list = self.list.get_docs()
+			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -157,8 +152,7 @@ class AllPossibleUsersList(ListView):
 		return context
 
 	def get_queryset(self):
-		possible_list = self.request.user.get_possible_friends()
-		return possible_list
+		return self.request.user.get_possible_friends()
 
 class UserPostsListView(ListView):
 	template_name, paginate_by = None, 15
@@ -167,10 +161,12 @@ class UserPostsListView(ListView):
 		from common.template.post import get_permission_user_post
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if (self.user.pk != request.user.pk and self.list.is_private_list()) or not request.is_ajax():
-			raise Http404
+		if self.user.pk != request.user.pk and self.list.is_private():
+			return raise Http404
+		elif self.user.pk == request.user.pk:
+			self.posts_list = self.list.get_staff_items()
 		else:
-			self.posts_list = self.list.get_posts()
+			self.posts_list = self.list.get_items()
 		self.template_name = get_permission_user_post(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 

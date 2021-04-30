@@ -934,10 +934,10 @@ class User(AbstractUser):
         return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
     def get_fix_list(self):
         from posts.models import PostList
-        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.THIS_FIX)
+        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.THIS_FIXED)
     def get_survey_list(self):
         from survey.models import SurveyList
-        return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.THIS_FIX)
+        return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
     def get_playlists(self):
         from music.models import SoundList
         return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="THIS")

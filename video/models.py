@@ -83,9 +83,9 @@ class VideoList(models.Model):
     def count_items(self):
         return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
 
-    def is_main_list(self):
+    def is_main(self):
         return self.type == self.MAIN
-    def is_user_list(self):
+    def is_list(self):
         return self.type == self.LIST
     def is_private(self):
         return self.type == self.PRIVATE

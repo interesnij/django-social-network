@@ -78,9 +78,9 @@ class GoodList(models.Model):
 		if created:
 			GoodList.objects.create(creator=instance, type=GoodList.MAIN, name="Основной список", order=0)
 
-	def is_main_list(self):
+	def is_main(self):
 		return self.type == self.MAIN
-	def is_user_list(self):
+	def is_list(self):
 		return self.type == self.LIST
 	def is_private(self):
 		return self.type == self.PRIVATE

@@ -79,8 +79,10 @@ class PhotoList(models.Model):
         return self.type == self.WALL
     def is_main(self):
         return self.type == self.MAIN
-    def is_user(self):
+    def is_list(self):
         return self.type == self.LIST
+    def is_private(self):
+        return self.type == self.PRIVATE
     def is_open(self):
         return self.type[0] != "T"
 

@@ -91,15 +91,11 @@ class CommunityDocs(ListView):
 		from common.template.doc import get_template_community_doc
 
 		self.c, user = Community.objects.get(pk=self.kwargs["pk"]), request.user
-
-		try:
-			self.list = DocList.objects.get(community_id=self.c.pk, type=DocList.MAIN)
-		except:
-			self.list = DocList.objects.create(community_id=self.c.pk, creator=self.c.creator, type=DocList.MAIN, name="Основной список")
+		self.list = DocList.objects.get(community_id=self.c.pk, type=DocList.MAIN)
 		if user.is_authenticated and user.is_staff_of_community(self.c.pk):
-			self.doc_list = self.list.get_my_docs()
+			self.doc_list = self.list.get_staff_items()
 		else:
-			self.doc_list = self.list.get_docs()
+			self.doc_list = self.list.get_items()
 		self.template_name = get_template_community_doc(self.list, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
@@ -120,9 +116,9 @@ class CommunityDocsList(ListView):
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.doc_list = self.list.get_my_docs()
+			self.doc_list = self.list.get_staff_items()
 		else:
-			self.doc_list = self.list.get_docs()
+			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			self.template_name = get_template_community_doc(self.list, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -147,9 +143,9 @@ class CommunityGoods(ListView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_good_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.goods_list = self.list.get_staff_goods()
+			self.goods_list = self.list.get_staff_items()
 		else:
-			self.goods_list = self.list.get_goods()
+			self.goods_list = self.list.get_items()
 		self.template_name = get_template_community_good(self.list, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
@@ -170,9 +166,9 @@ class CommunityGoodsList(ListView):
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.goods_list = self.list.get_staff_goods()
+			self.goods_list = self.list.get_staff_items()
 		else:
-			self.goods_list = self.list.get_goods()
+			self.goods_list = self.list.get_items()
 
 		if self.list.type == GoodList.MAIN:
 			self.template_name = get_template_community_good(self.list, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -197,7 +193,7 @@ class CommunityMusic(ListView):
 		from common.template.music import get_template_community_music
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.playlist = self.c.get_or_create_playlist()
+		self.playlist = self.c.get_playlist()
 		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
@@ -207,7 +203,7 @@ class CommunityMusic(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.c.get_music()
+		return self.playlist.get_items()
 
 class CommunityMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -229,7 +225,7 @@ class CommunityMusicList(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.playlist.playlist_too()
+		return self.playlist.get_items()
 
 
 class CommunityVideo(ListView):
@@ -242,9 +238,9 @@ class CommunityVideo(ListView):
 		self.list = self.c.get_or_create_video_list()
 		self.template_name = get_template_community_video(self.list, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.video_list = self.list.get_my_queryset()
+			self.video_list = self.list.get_staff_items()
 		else:
-			self.video_list = self.list.get_queryset()
+			self.video_list = self.list.get_items()
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -265,9 +261,9 @@ class CommunityVideoList(ListView):
 
 		self.community,self.list = Community.objects.get(pk=self.kwargs["pk"]), VideoList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.video_list = self.list.get_my_queryset()
+			self.video_list = self.list.get_staff_items()
 		else:
-			self.video_list = self.list.get_queryset()
+			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
 			self.template_name = get_template_community_video(self.list, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -292,13 +288,10 @@ class CommunityPostsListView(ListView):
 		from common.template.post import get_permission_community_post
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if self.list.is_private_list():
-			if request.user.is_anonymous or not request.user.is_staff_of_community(self.c.pk):
-				raise Http404
-			else:
-				self.posts_list = self.list.get_posts()
+		if self.list.is_private_list() and request.user.is_staff_of_community(self.c.pk):
+				self.posts_list = self.list.get_staff_items()
 		else:
-			self.posts_list = self.list.get_posts()
+			self.posts_list = self.list.get_items()
 		self.template_name = get_permission_community_post(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostsListView,self).get(request,*args,**kwargs)
 

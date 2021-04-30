@@ -218,7 +218,7 @@ class Community(models.Model):
 
     def get_fix_list(self):
         from posts.models import PostList
-        return PostList.objects.get(community_id=self.pk, type=PostList.FIX)
+        return PostList.objects.get(community_id=self.pk, type=PostList.THIS_FIXED)
 
     def get_draft_posts(self):
         from posts.models import PostList

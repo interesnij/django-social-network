@@ -32,7 +32,7 @@ class UserFixPostView(TemplateView):
 
         self.user, self.post = User.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = self.user.get_or_create_fix_list()
-        self.posts = self.list.get_posts()
+        self.posts = self.list.get_items()
         self.template_name = get_template_user_post(self.list, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserFixPostView,self).get(request,*args,**kwargs)
 
@@ -51,10 +51,8 @@ class UserGallery(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
-        from gallery.models import PhotoList
-
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=PhotoList.MAIN)
+        self.list = self.user.get_photo_list()
         self.template_name = get_template_user_photo(self.list, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
@@ -99,8 +97,7 @@ class UserCommunities(ListView):
         return context
 
     def get_queryset(self):
-        communities_list = self.user.get_communities()
-        return communities_list
+        return self.user.get_communities()
 
 class UserStaffCommunities(ListView):
     template_name, paginate_by = None, 15
@@ -117,8 +114,7 @@ class UserStaffCommunities(ListView):
         return context
 
     def get_queryset(self):
-        communities_list = self.user.get_staffed_communities()
-        return communities_list
+        return self.user.get_staffed_communities()
 
 
 class UserMobStaffed(ListView):
@@ -129,8 +125,7 @@ class UserMobStaffed(ListView):
         return super(UserMobStaffed,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        music_list = self.user.get_staffed_communities()
-        return music_list
+        return self.user.get_staffed_communities()
 
 
 class UserMusic(ListView):
@@ -140,7 +135,8 @@ class UserMusic(ListView):
         from common.template.music import get_template_user_music
         from music.models import SoundList
 
-        self.user, self.playlist = User.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(creator_id=self.kwargs["pk"], community__isnull=True, type=SoundList.MAIN)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.playlist = self.user.get_playlist()
         self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
@@ -158,18 +154,14 @@ class UserDocs(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from docs.models import DocList
         from common.template.doc import get_template_user_doc
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.list = DocList.objects.get(creator_id=self.user.id, community__isnull=True, type=DocList.MAIN)
-        except:
-            self.list = DocList.objects.create(creator_id=self.user.id, type=DocList.MAIN, name="Основной список")
+        self.list = self.user.get_doc_list()
         if self.user.pk == request.user.pk:
-            self.doc_list = self.list.get_my_docs()
+            self.doc_list = self.list.get_staff_items()
         else:
-            self.doc_list = self.list.get_docs()
+            self.doc_list = self.list.get_items()
 
         self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
@@ -188,18 +180,14 @@ class UserGoods(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from goods.models import GoodList
         from common.template.good import get_template_user_good
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.list = GoodList.objects.get(creator_id=self.user.id, community__isnull=True, type=GoodList.MAIN)
-        except:
-            self.list = GoodList.objects.create(creator_id=self.user.id, type=GoodList.MAIN, name="Основной список")
+        self.list = self.user.get_goo_lists()
         if self.user.pk == request.user.pk:
-            self.goods_list = self.list.get_staff_goods()
+            self.goods_list = self.list.get_staff_items()
         else:
-            self.goods_list = self.list.get_goods()
+            self.goods_list = self.list.get_items()
 
         self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
@@ -222,14 +210,11 @@ class UserVideo(ListView):
         from common.template.video import get_template_user_video
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.list = VideoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoList.MAIN)
-        except:
-            self.list = VideoList.objects.create(creator_id=self.user.id, type=VideoList.MAIN, name="Основной список")
+        self.list = self.user.get_video_list()
         if self.user == request.user:
-            self.video_list = self.list.get_my_queryset()
+            self.video_list = self.list.get_staff_items()
         else:
-            self.video_list = self.list.get_queryset()
+            self.video_list = self.list.get_items()
         self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
@@ -239,8 +224,7 @@ class UserVideo(ListView):
         return c
 
     def get_queryset(self):
-        video_list = self.video_list
-        return video_list
+        return self.video_list
 
 
 class ProfileUserView(TemplateView):
