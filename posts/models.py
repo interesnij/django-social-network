@@ -9,11 +9,11 @@ from django.dispatch import receiver
 
 
 class PostList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED, DRAFT = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX', 'DRA'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED, THIS_DRAFT = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', '_FIX', '_DRA'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),(THIS_DRAFT, 'Предложка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
@@ -87,11 +87,11 @@ class PostList(models.Model):
         return self.community.pk != community_id and community_id in self.get_communities_ids()
 
     def get_users_ids(self):
-        users = self.users.exclude(type__contains="THIS").values("pk")
+        users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
     def is_full_list(self):
@@ -108,16 +108,16 @@ class PostList(models.Model):
     def is_private_list(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] == "T"
+        return self.type[0] == "_"
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -138,12 +138,12 @@ class PostList(models.Model):
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -297,10 +297,10 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    THIS_PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED, THIS_MESSAGE = 'PRO',"DRA", 'PUB','PRI','MAN','TDEL','TCLO', 'TMES'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, THIS_DRAFT, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED, THIS_MESSAGE = 'PRO',"_DRA", 'PUB','PRI','MAN','_DEL','_CLO', '_MES'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_PROCESSING, 'Обработка'),(THIS_DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -741,9 +741,9 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', 'PRO'
-    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
-    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
     STATUS = (
         (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),

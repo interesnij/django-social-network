@@ -8,9 +8,9 @@ from django.dispatch import receiver
 
 
 class DocList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -49,16 +49,16 @@ class DocList(models.Model):
         return self.doc_list.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.doc_list.exclude(status__contains="THIS").values("pk").exists()
+        return self.doc_list.exclude(status__contains="_").values("pk").exists()
 
     def get_staff_items(self):
-        return self.doc_list.exclude(status__contains="THIS")
+        return self.doc_list.exclude(status__contains="_")
     def get_items(self):
         return self.doc_list.filter(status="PUB")
     def get_manager_items(self):
         return self.doc_list.filter(status="MAN")
     def count_items(self):
-        return self.doc_list.exclude(status__contains="THIS").values("pk").count()
+        return self.doc_list.exclude(status__contains="_").values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
@@ -87,16 +87,16 @@ class DocList(models.Model):
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -117,12 +117,12 @@ class DocList(models.Model):
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -260,8 +260,8 @@ class DocList(models.Model):
 
 
 class Doc(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
@@ -286,7 +286,7 @@ class Doc(models.Model):
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     def get_mime_type(self):
         import magic

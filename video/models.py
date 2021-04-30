@@ -93,11 +93,11 @@ class VideoList(models.Model):
         return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
 
     def get_users_ids(self):
-        users = self.users.exclude(type__contains="THIS").values("pk")
+        users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -283,8 +283,8 @@ class VideoList(models.Model):
 
 
 class Video(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
@@ -513,9 +513,9 @@ class Video(models.Model):
 
 
 class VideoComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', 'PRO'
-    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
-    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
     STATUS = (
         (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),

@@ -39,11 +39,11 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    PRIVATE, CLOSED, MANAGER, THIS_PROCESSING, PUBLIC = 'PRI', 'CLO', 'MAN', 'TPRO', 'PUB'
-    THIS_OPEN_DELETED, THIS_PRIVATE_DELETED, THIS_CLOSED_DELETED, THIS_MANAGER_DELETED = 'TDELO', 'TDELP', 'TDELC', 'TDELM'
-    THIS_BANNER_OPEN, THIS_BANNER_PRIVATE, THIS_BANNER_CLOSED, THIS_BANNER_MANAGER = 'TBANO', 'TBANP', 'TBANC', 'TBANM'
-    THIS_SUSPENDED_OPEN, THIS_SUSPENDED_PRIVATE, THIS_SUSPENDED_CLOSED, THIS_SUSPENDED_MANAGER = 'TSUSO', 'TSUSP', 'TSUSC', 'TSUSM'
-    THIS_BLOCKED_OPEN, THIS_BLOCKED_PRIVATE, THIS_BLOCKED_CLOSED, THIS_BLOCKED_MANAGER = 'TBLOO', 'TBLOP', 'TBLOC', 'TBLOM'
+    PRIVATE, CLOSED, MANAGER, THIS_PROCESSING, PUBLIC = 'PRI', '_CLO', 'MAN', '_PRO', 'PUB'
+    THIS_OPEN_DELETED, THIS_PRIVATE_DELETED, THIS_CLOSED_DELETED, THIS_MANAGER_DELETED = '_DELO', '_DELP', '_DELC', '_DELM'
+    THIS_BANNER_OPEN, THIS_BANNER_PRIVATE, THIS_BANNER_CLOSED, THIS_BANNER_MANAGER = '_BANO', '_BANP', '_BANC', '_BANM'
+    THIS_SUSPENDED_OPEN, THIS_SUSPENDED_PRIVATE, THIS_SUSPENDED_CLOSED, THIS_SUSPENDED_MANAGER = '_SUSO', '_SUSP', '_SUSC', '_SUSM'
+    THIS_BLOCKED_OPEN, THIS_BLOCKED_PRIVATE, THIS_BLOCKED_CLOSED, THIS_BLOCKED_MANAGER = '_BLOO', '_BLOP', '_BLOC', '_BLOM'
     TYPE = (
         (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'), (THIS_PROCESSING, 'Обработка'),
         (THIS_OPEN_DELETED, 'Открытый удалённый'),(THIS_PRIVATE_DELETED, 'Приватный удалённый'),(THIS_CLOSED_DELETED, 'Закрытый удалённый'),(THIS_MANAGER_DELETED, 'Менеджерский удалённый'),
@@ -87,13 +87,13 @@ class Community(models.Model):
     def is_child(self):
         return self.perm == Community.CHILD
     def is_suspended(self):
-        return self.type[:4] != "TSUS"
+        return self.type[:4] != "_SUS"
     def is_blocked(self):
-        return self.type[:4] != "TBLO"
+        return self.type[:4] != "_BLO"
     def is_deleted(self):
-        return self.type[:4] != "TDEL"
+        return self.type[:4] != "_DEL"
     def is_have_warning_banner(self):
-        return self.type[:4] != "TBAN"
+        return self.type[:4] != "_BAN"
     def is_private(self):
         return self.type == self.PRIVATE
     def is_closed(self):
@@ -101,7 +101,7 @@ class Community(models.Model):
     def is_public(self):
         return self.type == self.PUBLIC
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     def create_banned_user(self, user):
         self.banned_users.add(user)
@@ -184,7 +184,7 @@ class Community(models.Model):
 
     @classmethod
     def is_community_private(cls, community_pk):
-        return cls.objects.filter(pk=community_pk, type='CLO').exists()
+        return cls.objects.filter(pk=community_pk, type='_CLO').exists()
 
     @classmethod
     def get_community_for_user_with_id(cls, community_pk, user_id):
@@ -195,7 +195,7 @@ class Community(models.Model):
     @classmethod
     def count_user_community(cls, user_pk):
         query = Q(memberships__user_id=user_id)
-        query.add(~Q(type__contains='THIS'), Q.AND)
+        query.add(~Q(type__contains='_'), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
@@ -242,7 +242,7 @@ class Community(models.Model):
         return list.get_items().filter(creator_id=user_pk)
     def get_count_draft_posts_for_user(self, user_pk):
         from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        list = PostList.objects.get(community_id=self.pk, type="_DRA")
         posts_query = list.get_items()
         return list.get_items().filter(creator_id=user_pk).values("pk").count()
 
@@ -336,7 +336,7 @@ class Community(models.Model):
 
     @classmethod
     def _make_trending_communities_query(cls, category_name=None):
-        trending_communities_query = ~Q(type__contains="THIS")
+        trending_communities_query = ~Q(type__contains="_")
         if category_name:
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query

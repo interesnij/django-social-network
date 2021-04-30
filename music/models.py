@@ -57,9 +57,9 @@ class SoundSymbol(models.Model):
 
 
 class SoundList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -112,11 +112,11 @@ class SoundList(models.Model):
         return self.playlist.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
 
     def get_users_ids(self):
-        users = self.users.exclude(type__contains="THIS").values("pk")
+        users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -148,7 +148,7 @@ class SoundList(models.Model):
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] == "T"
+        return self.type[0] == "_"
 
     @classmethod
     def create_list(cls, creator, name, description, order, community, is_public):
@@ -271,12 +271,12 @@ class SoundList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -297,12 +297,12 @@ class SoundList(models.Model):
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -366,8 +366,8 @@ class UserTempSoundList(models.Model):
 
 
 class Music(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),

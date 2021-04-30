@@ -9,12 +9,12 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    THIS_PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = 'TPV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
-    THIS_CLOSED_CHILD, THIS_CLOSED_STANDART, THIS_CLOSED_VERIFIED_SEND, THIS_CLOSED_VERIFIED, THIS_CLOSED_IDENTIFIED_SEND, THIS_CLOSED_IDENTIFIED, THIS_CLOSED_MANAGER = 'TCLOC', 'TCLOS', 'TCLOVS', 'TCLOV', 'TCLOIS', 'TCLOI', 'TCLOM'
-    THIS_DELETED_CHILD, THIS_DELETED_STANDART, THIS_DELETED_VERIFIED_SEND, THIS_DELETED_VERIFIED, THIS_DELETED_IDENTIFIED_SEND, THIS_DELETED_IDENTIFIED, THIS_DELETED_MANAGER = 'TDELC', 'TDELS', 'TDELVS', 'TDELV', 'TDELIS', 'TDELI', 'TDELM'
-    THIS_SUSPENDED_CHILD, THIS_SUSPENDED_STANDART, THIS_SUSPENDED_VERIFIED_SEND, THIS_SUSPENDED_VERIFIED, THIS_SUSPENDED_IDENTIFIED_SEND, THIS_SUSPENDED_IDENTIFIED, THIS_SUSPENDED_MANAGER = 'TSUSC', 'TSUSS', 'TSUSVS', 'TSUSV', 'TSUSIS', 'TSUSI', 'TSUSM'
-    THIS_BANNER_CHILD, THIS_BANNER_STANDART, THIS_BANNER_VERIFIED_SEND, THIS_BANNER_VERIFIED, THIS_BANNER_IDENTIFIED_SEND, THIS_BANNER_IDENTIFIED, THIS_BANNER_MANAGER = 'TBANC', 'TBANS', 'TBANVS', 'TBANV', 'TBANIS', 'TBANI', 'TBANM'
-    THIS_BLOCKED_CHILD, THIS_BLOCKED_STANDART, THIS_BLOCKED_VERIFIED_SEND, THIS_BLOCKED_VERIFIED, THIS_BLOCKED_IDENTIFIED_SEND, THIS_BLOCKED_IDENTIFIED, THIS_BLOCKED_MANAGER = 'TBLOC', 'TBLOS', 'TBLOVS', 'TBLOV', 'TBLOIS', 'TBLOI', 'TBLOM'
+    THIS_PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = '_PV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
+    THIS_CLOSED_CHILD, THIS_CLOSED_STANDART, THIS_CLOSED_VERIFIED_SEND, THIS_CLOSED_VERIFIED, THIS_CLOSED_IDENTIFIED_SEND, THIS_CLOSED_IDENTIFIED, THIS_CLOSED_MANAGER = '_CLOC', '_CLOS', '_CLOVS', '_CLOV', '_CLOIS', '_CLOI', '_CLOM'
+    THIS_DELETED_CHILD, THIS_DELETED_STANDART, THIS_DELETED_VERIFIED_SEND, THIS_DELETED_VERIFIED, THIS_DELETED_IDENTIFIED_SEND, THIS_DELETED_IDENTIFIED, THIS_DELETED_MANAGER = '_DELC', '_DELS', '_DELVS', '_DELV', '_DELIS', '_DELI', '_DELM'
+    THIS_SUSPENDED_CHILD, THIS_SUSPENDED_STANDART, THIS_SUSPENDED_VERIFIED_SEND, THIS_SUSPENDED_VERIFIED, THIS_SUSPENDED_IDENTIFIED_SEND, THIS_SUSPENDED_IDENTIFIED, THIS_SUSPENDED_MANAGER = '_SUSC', '_SUSS', '_SUSVS', '_SUSV', '_SUSIS', '_SUSI', '_SUSM'
+    THIS_BANNER_CHILD, THIS_BANNER_STANDART, THIS_BANNER_VERIFIED_SEND, THIS_BANNER_VERIFIED, THIS_BANNER_IDENTIFIED_SEND, THIS_BANNER_IDENTIFIED, THIS_BANNER_MANAGER = '_BANC', '_BANS', '_BANVS', '_BANV', '_BANIS', '_BANI', '_BANM'
+    THIS_BLOCKED_CHILD, THIS_BLOCKED_STANDART, THIS_BLOCKED_VERIFIED_SEND, THIS_BLOCKED_VERIFIED, THIS_BLOCKED_IDENTIFIED_SEND, THIS_BLOCKED_IDENTIFIED, THIS_BLOCKED_MANAGER = '_BLOC', '_BLOS', '_BLOVS', '_BLOV', '_BLOIS', '_BLOI', '_BLOM'
     TYPE = (
         (CHILD, 'Ребенок'),(THIS_PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
         (THIS_DELETED_CHILD, 'Удален ребенок'),(THIS_DELETED_STANDART, 'Удален'),(THIS_DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_DELETED_VERIFIED, 'Удален верифицированный'),(THIS_DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(THIS_DELETED_IDENTIFIED, 'Удален идентифиированный'),(THIS_DELETED_MANAGER, 'Удален менеджер'),
@@ -29,7 +29,7 @@ class User(AbstractUser):
 
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    type = models.CharField(max_length=6, choices=TYPE, default=_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
@@ -100,13 +100,13 @@ class User(AbstractUser):
         return self.gender == User.MALE
 
     def is_suspended(self):
-        return self.type[:4] == "TSUS"
+        return self.type[:4] == "_SUS"
     def is_have_warning_banner(self):
-        return self.type[:4] == "TBAN"
+        return self.type[:4] == "_BAN"
     def is_deleted(self):
-        return self.type[:4] == "TDEL"
+        return self.type[:4] == "_DEL"
     def is_blocked(self):
-        return self.type[:4] == "TBLO"
+        return self.type[:4] == "_BLO"
     def is_manager(self):
         return self.type == User.MANAGER
     def is_supermanager(self):
@@ -778,7 +778,7 @@ class User(AbstractUser):
     ''''' GET всякие  219-186 '''''
     def get_6_default_connection(self):
         my_frends = self.connections.values('target_user_id')
-        connection_query = Q(id__in=[target_user['target_user_id'] for target_user in my_frends])
+        connection_query = Q(id__in=[i['target_user_id'] for i in my_frends])
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         return User.objects.filter(connection_query)[0:6]
 
@@ -879,22 +879,22 @@ class User(AbstractUser):
 
     def get_draft_posts(self):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, status=Post.STATUS_DRAFT, community__isnull=True)
+        return Post.objects.filter(creator_id=self.id, status=Post.THIS_DRAFT, community__isnull=True)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, community_id=community_pk, status=Post.STATUS_DRAFT)
+        return Post.objects.filter(creator_id=self.id, community_id=community_pk, status=Post.THIS_DRAFT)
 
     def get_post_lists(self):
         from posts.models import PostList
         query = Q(creator_id=self.id, community__isnull=True)
-        query.add(~Q(type__contains="T"), Q.AND)
+        query.add(~Q(type__contains="!"), Q.AND)
         return PostList.objects.filter(query).order_by("order")
 
     def get_survey_lists(self):
         from survey.models import SurveyList
         query = Q(creator_id=self.id, community__isnull=True)
-        query.add(~Q(status__contains="T"), Q.AND)
+        query.add(~Q(status__contains="!"), Q.AND)
         return SurveyList.objects.filter(query).order_by("order")
 
     def get_post_categories(self):
@@ -903,19 +903,19 @@ class User(AbstractUser):
 
     def get_photo_lists(self):
         from gallery.models import PhotoList
-        return PhotoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
+        return PhotoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
 
     def get_video_lists(self):
         from video.models import VideoList
-        return VideoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS"))
+        return VideoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_"))
 
     def get_audio_playlists(self):
         from music.models import SoundList
-        return SoundList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
+        return SoundList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
 
     def get_good_lists(self):
         from goods.models import GoodList
-        return GoodList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
+        return GoodList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
 
     def get_good_list(self):
         from goods.models import GoodList
@@ -940,7 +940,7 @@ class User(AbstractUser):
         return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
     def get_playlists(self):
         from music.models import SoundList
-        return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="THIS")
+        return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
     def get_music_count(self):
         return self.profile.tracks
@@ -982,27 +982,27 @@ class User(AbstractUser):
 
     def get_docs_lists(self):
         from docs.models import DocList
-        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="THIS").order_by("order")
+        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_").order_by("order")
 
     def get_followers(self):
         query = Q(follows__followed_user_id=self.pk)
-        query.add(~Q(type__contains="THIS"), Q.AND)
+        query.add(~Q(type__contains="!"), Q.AND)
         return User.objects.filter(query)
 
     def get_all_users(self):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="!")
         if self.is_child():
             query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
         return User.objects.filter(query)
 
     def get_pop_followers(self):
         query = Q(follows__followed_user_id=self.pk)
-        query.add(~Q(type__contains="THIS"), Q.AND)
+        query.add(~Q(type__contains="!"), Q.AND)
         return User.objects.filter(query)[0:6]
 
     def get_followings(self):
         query = Q(followers__user_id=self.pk)
-        query.add(~Q(type__contains="THIS"), Q.AND)
+        query.add(~Q(type__contains="!"), Q.AND)
         return User.objects.filter(query)
 
     def get_friends_and_followings_ids(self):
@@ -1178,7 +1178,7 @@ class User(AbstractUser):
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk).exclude(type__contains="THIS")
+        return Chat.objects.filter(chat_relation__user_id=self.pk).exclude(type__contains="_")
 
     def get_chats_and_connections(self):
         from itertools import chain
@@ -1192,7 +1192,7 @@ class User(AbstractUser):
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0
         for chat in chats:
-            if chat.chat_message.filter(unread=True, type__contains="THIS").exclude(creator__user_id=self.pk).exists():
+            if chat.chat_message.filter(unread=True, type__contains="_").exclude(creator__user_id=self.pk).exists():
                 count += 1
         if count > 0:
             return count

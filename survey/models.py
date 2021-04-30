@@ -10,9 +10,9 @@ from django.dispatch import receiver
 
 
 class SurveyList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING = 'MAI', 'LIS', 'MAN', 'TPRO'
-    THIS_DELETED, THIS_DELETED_MANAGER = 'TDEL', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_PRIVATE = 'TCLO', 'TCLOM', 'TCLOMA', 'TCLOP'
+    MAIN, LIST, MANAGER, THIS_PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
+    THIS_DELETED, THIS_DELETED_MANAGER = '_DEL', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_PRIVATE = '_CLO', '_CLOM', '_CLOMA', '_CLOP'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -51,21 +51,21 @@ class SurveyList(models.Model):
         return self.survey_list.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.survey_list.exclude(status__contains="THIS").values("pk").exists()
+        return self.survey_list.exclude(status__contains="_").values("pk").exists()
 
     def get_items(self):
         return self.survey_list.filter(status="PUB")
     def get_manager_items(self):
         return self.survey_list.filter(status="MAN")
     def count_items(self):
-        return self.survey_list.exclude(status__contains="THIS").values("pk").count()
+        return self.survey_list.exclude(status__contains="_").values("pk").count()
 
     def get_users_ids(self):
-        users = self.users.exclude(type__contains="THIS").values("pk")
+        users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(type__contains="THIS").values("pk")
+        communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
@@ -87,7 +87,7 @@ class SurveyList(models.Model):
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     @classmethod
     def get_user_lists(cls, user_pk):
@@ -215,9 +215,9 @@ class SurveyList(models.Model):
 
 
 class Survey(models.Model):
-    THIS_PROCESSING, MANAGER, PUBLISHED = 'PRO', 'PUB', 'MAN'
-    THIS_DELETED, THIS_DELETED_MANAGER = 'TDEL', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOM'
+    THIS_PROCESSING, MANAGER, PUBLISHED = '_PRO', 'PUB', 'MAN'
+    THIS_DELETED, THIS_DELETED_MANAGER = '_DEL', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_MANAGER = '_CLO', '_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
         (THIS_DELETED, 'Удалено'),(THIS_DELETED_MANAGER, 'Удален менеджерский'),

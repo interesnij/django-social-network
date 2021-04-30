@@ -9,9 +9,9 @@ from django.contrib.postgres.indexes import BrinIndex
 
 
 class Chat(models.Model):
-    LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
+    LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'LIS', 'MAN', '_PRO', 'PRI', '_FIX'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
     TYPE = (
         (LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -41,7 +41,7 @@ class Chat(models.Model):
     def is_manager(self):
         return self.type == Chat.MANAGER
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     def get_members(self):
         from users.models import User
@@ -56,13 +56,13 @@ class Chat(models.Model):
         return self.get_members().values('id').count()
 
     def get_first_message(self):
-        return self.chat_message.exclude(status__contains="THIS").last()
+        return self.chat_message.exclude(status__contains="_").last()
 
     def get_messages(self):
-        return self.chat_message.exclude(status__contains="THIS")
+        return self.chat_message.exclude(status__contains="_")
 
     def get_messages_uuids(self):
-        messages = self.chat_message.exclude(status__contains="THIS").values('uuid')
+        messages = self.chat_message.exclude(status__contains="_").values('uuid')
         return [i['uuid'] for i in messages]
 
     def get_attach_photos(self):
@@ -70,14 +70,14 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        count = self.chat_message.filter(unread=True).exclude(status__contains="THIS", creator__user_id=user_id).values("pk").count()
+        count = self.chat_message.filter(unread=True).exclude(status__contains="_", creator__user_id=user_id).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, status__contains="THIS")
+        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, status__contains="_")
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -197,7 +197,7 @@ class Chat(models.Model):
             return ''.join([figure, media_body])
 
     def is_not_empty(self):
-        return self.chat_message.exclude(status__contains="THIS").values("pk").exists()
+        return self.chat_message.exclude(status__contains="_").values("pk").exists()
 
     def add_administrator(self, user):
         member = self.chat_relation.get(user=user)
@@ -242,8 +242,8 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
@@ -392,10 +392,10 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.repost.parent.post_soundlist.exclude(type__contains="THIS")[0]
+        playlist = self.repost.parent.post_soundlist.exclude(type__contains="_")[0]
         return playlist
     def get_music_repost(self):
-        music = self.repost.parent.item_music.exclude(type__contains="THIS")[0]
+        music = self.repost.parent.item_music.exclude(type__contains="_")[0]
         return music
 
     def is_good_repost(self):
@@ -405,9 +405,9 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
-        return self.repost.item_good.exclude(type__contains="THIS")[0]
+        return self.repost.item_good.exclude(type__contains="_")[0]
     def get_good_list_repost(self):
-        return self.repost.parent.post_good_list.exclude(type__contains="THIS")[0]
+        return self.repost.parent.post_good_list.exclude(type__contains="_")[0]
 
     def is_doc_repost(self):
         from posts.models import Post
@@ -416,9 +416,9 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
-        return self.repost.parent.post_doclist.exclude(type__contains="THIS")[0]
+        return self.repost.parent.post_doclist.exclude(type__contains="_")[0]
     def get_doc_repost(self):
-        return self.repost.parent.item_doc.exclude(type__contains="THIS")[0]
+        return self.repost.parent.item_doc.exclude(type__contains="_")[0]
 
     def is_video_repost(self):
         from posts.models import Post
@@ -427,7 +427,7 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
-        return self.repost.parent.post_video_list.exclude(type__contains="THIS")[0]
+        return self.repost.parent.post_video_list.exclude(type__contains="_")[0]
 
     def get_fixed_message_for_chat(self, chat_id):
         try:

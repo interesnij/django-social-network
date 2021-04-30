@@ -11,9 +11,9 @@ from django.dispatch import receiver
 
 
 class PhotoList(models.Model):
-    MAIN, LIST, WALL, AVATAR, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', 'TPRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_WALL, THIS_CLOSED_AVATAR = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOW', 'TCLOA'
+    MAIN, LIST, WALL, AVATAR, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO', 'PRI'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_WALL, THIS_CLOSED_AVATAR = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -84,7 +84,7 @@ class PhotoList(models.Model):
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
-        return self.type[0] != "T"
+        return self.type[0] != "_"
 
     def get_cover_photo(self):
         if self.cover_photo:
@@ -93,15 +93,15 @@ class PhotoList(models.Model):
             return self.photo_list.filter(status="PUB").first()
 
     def get_first_photo(self):
-        return self.photo_list.exclude(status__contains="THIS").first()
+        return self.photo_list.exclude(status__contains="_").first()
 
     def get_items(self):
-        return self.photo_list.exclude(status__contains="THIS")
+        return self.photo_list.exclude(status__contains="_")
     def get_staff_items(self):
-        return self.photo_list.exclude(status__contains="THIS")
+        return self.photo_list.exclude(status__contains="_")
     def count_items(self):
         try:
-            return self.photo_list.exclude(status__contains="THIS").values("pk").count()
+            return self.photo_list.exclude(status__contains="_").values("pk").count()
         except:
             return 0
     def count_items_ru(self):
@@ -123,12 +123,12 @@ class PhotoList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -149,12 +149,12 @@ class PhotoList(models.Model):
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="THIS")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
@@ -292,8 +292,8 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = 'PRO','PUB','PRI','MAN','TDEL','TCLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = 'TDELP','TDELM','TCLOP','TCLOM'
+    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
         (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
@@ -431,9 +431,9 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', 'PRO'
-    THIS_DELETED, THIS_EDITED_DELETED = 'TDEL', 'TDELE'
-    THIS_CLOSED, THIS_EDITED_CLOSED = 'TCLO', 'TCLOE'
+    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
+    THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
+    THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
     STATUS = (
         (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
