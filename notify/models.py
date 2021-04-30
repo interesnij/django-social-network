@@ -92,7 +92,7 @@ class Notify(models.Model):
         cls.objects.filter(community_id=community_id, status="U").update(status="R")
 
     def is_unread(self):
-        return self.status is "U"
+        return self.status == "U"
 
     def get_notify(self, user):
         from common.attach.notify import get_notify
