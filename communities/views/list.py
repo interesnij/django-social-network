@@ -145,7 +145,7 @@ class CommunityGoods(ListView):
 		from common.template.good import get_template_community_good
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_or_create_good_list()
+		self.list = self.c.get_good_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.goods_list = self.list.get_staff_goods()
 		else:

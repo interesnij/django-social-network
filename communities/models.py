@@ -284,7 +284,7 @@ class Community(models.Model):
             count += list.count_goods()
         return count
 
-    def get_or_create_good_list(self):
+    def get_good_list(self):
         from goods.models import GoodList
         try:
             return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)

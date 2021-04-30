@@ -316,7 +316,7 @@ TYPE = (
 class Moderated(models.Model):
     # рассмотрение жалобы на объект, получаемфй по attach. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
     PENDING, SUSPEND, BLOCKED, BANNER_GET, REJECTED, DELETED = 'P', 'S', 'B', 'BG', 'R', "D"
-    STATUSES = (
+    STATUS = (
         (PENDING, 'На рассмотрении'),
         (SUSPEND, 'Объект заморожен'),
         (BLOCKED, 'Объект заблокирован'),
@@ -325,9 +325,16 @@ class Moderated(models.Model):
     )
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
-    status = models.CharField(max_length=5, choices=STATUSES, default=PENDING, verbose_name="Статус")
+    status = models.CharField(max_length=5, choices=STATUS, default=PENDING, verbose_name="Статус")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Проверяемый объект'
+        verbose_name_plural = 'Проверяемые объект'
 
     @classmethod
     def create_moderated_object(cls, type, object_id):
@@ -372,7 +379,7 @@ class Moderated(models.Model):
 
     def create_suspend(self, manager_id, severity_int):
         from django.utils import timezone
-        
+
         self.verified = True
         severity = None
         duration_of_penalty = None
@@ -440,12 +447,66 @@ class Moderated(models.Model):
         #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.REJECT)
         self.save()
 
-    def __str__(self):
-        return self.user.get_full_name()
+    @classmethod
+    def get_moderation_users(cls):
+        return cls.objects.filter(type="USE", verified=False)
+    @classmethod
+    def get_moderation_communities(cls):
+        return cls.objects.filter(type="COM", verified=False)
 
-    class Meta:
-        verbose_name = 'Проверяемый объект'
-        verbose_name_plural = 'Проверяемые объект'
+    @classmethod
+    def get_moderation_post_lists(cls):
+        return cls.objects.filter(verified=False, type="POL")
+    @classmethod
+    def get_moderation_posts(cls):
+        return cls.objects.filter(verified=False, type="POS")
+    @classmethod
+    def get_moderation_post_comments(cls):
+        return cls.objects.filter(verified=False, type="POSC")
+
+    @classmethod
+    def get_moderation_photo_lists(cls):
+        return cls.objects.filter(verified=False, type="PHL")
+    @classmethod
+    def get_moderation_photos(cls):
+        return cls.objects.filter(verified=False, type="PHO")
+    @classmethod
+    def get_moderation_photos_comments(cls):
+        return cls.objects.filter(verified=False, type="PHOC")
+
+    @classmethod
+    def get_moderation_good_lists(cls):
+        return cls.objects.filter(verified=False, type="GOL")
+    @classmethod
+    def get_moderation_goods(cls):
+        return cls.objects.filter(verified=False, type="GOO")
+    @classmethod
+    def get_moderation_goods_comments(cls):
+        return cls.objects.filter(verified=False, type="GOOC")
+
+    @classmethod
+    def get_moderation_video_lists(cls):
+        return cls.objects.filter(verified=False, type="VIL")
+    @classmethod
+    def get_moderation_videos(cls):
+        return cls.objects.filter(verified=False, type="VID")
+    @classmethod
+    def get_moderation_videos_comments(cls):
+        return cls.objects.filter(verified=False, type="VIDC")
+
+    @classmethod
+    def get_moderation_playlists(cls):
+        return cls.objects.filter(verified=False, type="MUL")
+    @classmethod
+    def get_moderation_audios(cls):
+        return cls.objects.filter(verified=False, type="MUS")
+
+    @classmethod
+    def get_moderation_survey_lists(cls):
+        return cls.objects.filter(verified=False, type="SUL")
+    @classmethod
+    def get_moderation_surveys(cls):
+        return cls.objects.filter(verified=False, type="SUR")
 
 
 class ModerationReport(models.Model):
@@ -507,6 +568,13 @@ class ModerationPenalty(models.Model):
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
     status = models.CharField(max_length=5, choices=STATUSES, verbose_name="Тип")
 
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Оштрафованный объект'
+        verbose_name_plural = 'Оштрафованные объект'
+
     @classmethod
     def create_suspension_penalty(cls, object_id, type, manager_id, moderated_object, expiration):
         try:
@@ -542,9 +610,62 @@ class ModerationPenalty(models.Model):
         # Объект блокирован
         return self.status == BANNER
 
-    def __str__(self):
-        return self.user.get_full_name()
+    @classmethod
+    def get_penalty_users(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="USE")
+    @classmethod
+    def get_penalty_communities(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="COM")
 
-    class Meta:
-        verbose_name = 'Оштрафованный объект'
-        verbose_name_plural = 'Оштрафованные объект'
+    @classmethod
+    def get_penalty_post_lists(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="POL")
+    @classmethod
+    def get_penalty_posts(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="POS")
+    def get_penalty_post_comments(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="POSC")
+
+    @classmethod
+    def get_penalty_photo_lists(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="PHL")
+    @classmethod
+    def get_penalty_photos(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="PHO")
+    @classmethod
+    def get_penalty_photos_comments(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="PHOC")
+
+    @classmethod
+    def get_penalty_good_lists(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="GOL")
+    @classmethod
+    def get_penalty_goods(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="GOO")
+    @classmethod
+    def get_penalty_goods_comments(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="GOOC")
+
+    @classmethod
+    def get_penalty_video_lists(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="VIL")
+    @classmethod
+    def get_penalty_videos(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="VID")
+    @classmethod
+    def get_penalty_videos_comments(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="VIDC")
+
+    @classmethod
+    def get_penalty_playlists(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="MUL")
+    @classmethod
+    def get_penalty_audios(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="MUS")
+
+    @classmethod
+    def get_penalty_survey_lists(cls, user_id):
+        return cls.objects.filter(vmanager__id=user_id, type="SUL")
+    @classmethod
+    def get_penalty_surveys(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type="SUR")

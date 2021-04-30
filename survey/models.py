@@ -41,11 +41,11 @@ class SurveyList(models.Model):
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
-            SurveyList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+            SurveyList.objects.create(community=community, type=SurveyList.MAIN, name="Основной список", order=0, creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            SurveyList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+            SurveyList.objects.create(creator=instance, type=SurveyList.MAIN, name="Основной список", order=0)
 
     def is_item_in_list(self, item_id):
         return self.survey_list.filter(pk=item_id).values("pk").exists()
@@ -231,6 +231,7 @@ class Survey(models.Model):
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
 
     votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voters = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")

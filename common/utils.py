@@ -166,9 +166,11 @@ def update_activity(user, user_agent):
     import re
     MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
     if MOBILE_AGENT_RE.match(user_agent):
-        user.update(last_activity=datetime.now(), device="Ph")
+        user.last_activity, user.device = datetime.now(), "Ph"
+        user.save(update_fields=['last_activity', 'device'])
     else:
-        user.update(last_activity=datetime.now(), device="De")
+        user.last_activity, user.device = datetime.now(), "De"
+        user.save(update_fields=['last_activity', 'device'])
 
 def get_folder(user_agent):
     import re

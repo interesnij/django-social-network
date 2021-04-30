@@ -39,11 +39,11 @@ class DocList(models.Model):
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
-            DocList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+            DocList.objects.create(community=community, type=DocList.MAIN, name="Основной список", order=0, creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            DocList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+            DocList.objects.create(creator=instance, type=DocList.MAIN, name="Основной список", order=0)
 
     def is_item_in_list(self, item_id):
         return self.doc_list.filter(pk=item_id).values("pk").exists()

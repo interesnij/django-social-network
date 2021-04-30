@@ -22,7 +22,7 @@ class SoundGenres(models.Model):
     def is_track_in_genre(self, track_id):
         self.track_genre.filter(id=track_id).exists()
 
-    def playlist_too(self):
+    def get_items(self):
         queryset = self.track_genre.all()
         return queryset[:300]
 
@@ -90,11 +90,11 @@ class SoundList(models.Model):
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
-            SoundList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+            SoundList.objects.create(community=community, type=SoundList.MAIN, name="Основной список", order=0, creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            SoundList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+            SoundList.objects.create(creator=instance, type=SoundList.MAIN, name="Основной список", order=0)
 
     def is_item_in_list(self, item_id):
         return self.players.filter(pk=item_id).values("pk").exists()
@@ -347,7 +347,7 @@ class SoundTags(models.Model):
         result = SoundGenres.objects.filter(genres_query)
         return result
 
-    def playlist_too(self):
+    def get_items(self):
         queryset = self.track_tag.all()
         return queryset
 

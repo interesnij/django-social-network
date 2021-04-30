@@ -110,8 +110,12 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDetail,self).get_context_data(**kwargs)
-        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_list'], c['video_list'], c['music_list'], c['docs_list'], c['good_list'], c['fix_list'] = self.c.get_members(self.c.pk)[0:6], self.c, self.common_friends, self.common_friends_count, self.c.get_or_create_photo_list(), self.c.get_or_create_video_list(), self.c.get_or_create_playlist(), \
-        self.c.get_or_create_doc_list(), self.c.get_or_create_good_list(), self.c.get_or_create_fix_list()
+        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_list'], c['video_list'], \
+        c['music_list'], c['docs_list'], c['good_list'], c['fix_list'] = self.c.get_members(self.c.pk)[0:6], self.c, \
+        self.common_friends, self.common_friends_count, self.c.get_fhoto_list(), \
+        self.c.get_video_list(), self.c.get_soundlist(), \
+        self.c.get_doc_list(), self.c.get_good_list(), \
+        self.c.get_fix_list()
         return c
 
 

@@ -65,11 +65,11 @@ class VideoList(models.Model):
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
-            VideoList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+            VideoList.objects.create(community=community, type=VideoList.MAIN, name="Основной список", order=0, creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            VideoList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+            VideoList.objects.create(creator=instance, type=VideoList.MAIN, name="Основной список", order=0)
 
     def is_not_empty(self):
         return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()

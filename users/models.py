@@ -483,12 +483,8 @@ class User(AbstractUser):
     def is_connected_with_user_with_id(self, user_id):
         return self.connections.filter(target_connection__user_id=user_id).exists()
 
-    def is_connected_with_user_with_username(self, username):
-        return self.connections.filter(target_connection__user__username=username).exists()
-
     def is_invited_to_community(self, community_pk):
         from communities.models import Community
-
         return Community.is_user_with_username_invited_to_community(username=self.username, community_pk=community_pk)
 
     def is_staff_of_community(self, community_pk):
@@ -509,35 +505,24 @@ class User(AbstractUser):
         return self.community_follows.filter(community__pk=community_pk).exists()
 
     def is_closed_profile(self):
-        from users.model.settings import UserPrivate
-        try:
-            user_private = UserPrivate.objects.get(user=self)
-            return user_private.is_private
-        except:
-            user_private = UserPrivate.objects.create(user=self)
-            return False
+        return self.user_private.is_private
 
     def is_creator_of_community(self, community_pk):
         return self.created_communities.filter(pk=community_pk).exists()
 
     def is_staffed_user(self):
         return self.communities_memberships.filter(Q(is_administrator=True) | Q(is_moderator=True) | Q(is_editor=True)).exists()
-
     def is_administrator_of_community(self, community_pk):
         return self.communities_memberships.filter(community__pk=community_pk, is_administrator=True).exists()
-
     def is_moderator_of_community(self, community_pk):
         return self.communities_memberships.filter(community__pk=community_pk, is_moderator=True).exists()
-
     def is_advertiser_of_community(self, community_pk):
         return self.communities_memberships.filter(community__pk=community_pk, is_advertiser=True).exists()
-
     def is_editor_of_community(self, community_pk):
         return self.communities_memberships.filter(community__pk=community_pk, is_editor=True).exists()
 
     def is_following_user_with_id(self, user_id):
         return self.follows.filter(followed_user__id=user_id).exists()
-
     def is_followers_user_with_id(self, user_id):
         return self.followers.filter(user__id=user_id).exists()
     def is_followers_user_view(self, user_id):
@@ -583,46 +568,23 @@ class User(AbstractUser):
             return "desctop/users/button/null_value.html"
 
     def is_photo_exists(self):
-        return self.photo_creator.filter(creator_id=self.pk, community__isnull=True).exists()
+        return self.profile.photos > 0
 
     def is_track_exists(self, track_id):
-        from music.models import SoundList, Music
-
-        return SoundList.objects.values("creator", "players").filter(creator=self, players__id=track_id).exists()
+        return self.profile.tracks > 0
 
     def is_user_playlist(self):
         from music.models import UserTempSoundList
-        try:
-            UserTempSoundList.objects.get(user=self, tag=None, genre=None)
-            return True
-        except:
-            return False
+            return UserTempSoundList.objects.filter(user=self, tag=None, genre=None).exists()
 
     def is_user_temp_list(self, list):
-        from music.models import UserTempSoundList
-        try:
-            UserTempSoundList.objects.get(user=self, tag=None, genre=None, list=list)
-            return True
-        except:
-            return False
+        return UserTempSoundList.objects.filter(user=self, tag=None, genre=None, list=list).exists()
 
     def is_tag_playlist(self, tag):
-        from music.models import UserTempSoundList
-
-        try:
-            UserTempSoundList.objects.get(user=self, tag=tag, genre=None)
-            return True
-        except:
-            return False
+        return UserTempSoundList.objects.filter(user=self, tag=tag, genre=None).exists()
 
     def is_genre_playlist(self, genre):
-        from music.models import UserTempSoundList
-
-        try:
-            UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre)
-            return True
-        except:
-            return False
+        return UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
 
     def is_user_administrator(self):
         return try_except(self.user_staff.level == "A")
@@ -633,10 +595,7 @@ class User(AbstractUser):
     def is_user_advertiser(self):
         return try_except(self.user_staff.level == "R")
     def is_user_manager(self):
-        try:
-            return try_except(self.user_staff.level and self.user_staff.level != "R")
-        except:
-            return None
+        return try_except(self.user_staff.level and self.user_staff.level != "R")
 
     def is_community_administrator(self):
         return try_except(self.user_community_staff.level == "A")
@@ -647,10 +606,7 @@ class User(AbstractUser):
     def is_community_advertiser(self):
         return try_except(self.user_community_staff.level == "R")
     def is_community_manager(self):
-        try:
-            return try_except(self.user_community_staff.level and self.user_community_staff.level != "R")
-        except:
-            return None
+        return try_except(self.user_community_staff.level and self.user_community_staff.level != "R")
 
     def is_post_administrator(self):
         return try_except(self.post_user_staff.level == "A")
@@ -659,10 +615,7 @@ class User(AbstractUser):
     def is_post_editor(self):
         return try_except(self.post_user_staff.level == "E")
     def is_post_manager(self):
-        try:
-            return try_except(self.post_user_staff.level)
-        except:
-            return None
+        return try_except(self.post_user_staff.level)
 
     def is_good_administrator(self):
         return try_except(self.good_user_staff.level == "A")
@@ -671,10 +624,7 @@ class User(AbstractUser):
     def is_good_editor(self):
         return try_except(self.good_user_staff.level == "E")
     def is_good_manager(self):
-        try:
-            return try_except(self.good_user_staff.level)
-        except:
-            return None
+        return try_except(self.good_user_staff.level)
 
     def is_doc_administrator(self):
         return try_except(self.doc_user_staff.level == "A")
@@ -683,10 +633,7 @@ class User(AbstractUser):
     def is_doc_editor(self):
         return try_except(self.doc_user_staff.level == "E")
     def is_doc_manager(self):
-        try:
-            return try_except(self.doc_user_staff.level)
-        except:
-            return None
+        return try_except(self.doc_user_staff.level)
 
 
     def is_photo_administrator(self):
@@ -696,10 +643,7 @@ class User(AbstractUser):
     def is_photo_editor(self):
         return try_except(self.photo_user_staff.level == "E")
     def is_photo_manager(self):
-        try:
-            return try_except(self.photo_user_staff.level)
-        except:
-            return None
+        return try_except(self.photo_user_staff.level)
 
     def is_video_administrator(self):
         return try_except(self.video_user_staff.level == "A")
@@ -708,10 +652,7 @@ class User(AbstractUser):
     def is_video_editor(self):
         return try_except(self.video_user_staff.level == "E")
     def is_video_manager(self):
-        try:
-            return try_except(self.video_user_staff.level)
-        except:
-            return None
+        return try_except(self.video_user_staff.level)
 
     def is_audio_administrator(self):
         return try_except(self.music_user_staff.level == "A")
@@ -720,10 +661,7 @@ class User(AbstractUser):
     def is_audio_editor(self):
         return try_except(self.music_user_staff.level == "E")
     def is_audio_manager(self):
-        try:
-            return try_except(self.music_user_staff.level)
-        except:
-            return None
+        return try_except(self.music_user_staff.level)
 
     def is_work_administrator(self):
         return try_except(self.can_work_staff_user.can_work_administrator)
@@ -734,10 +672,7 @@ class User(AbstractUser):
     def is_work_advertiser(self):
         return try_except(self.can_work_staff_user.can_work_advertiser)
     def is_user_supermanager(self):
-        if self.is_work_administrator() or self.is_work_moderator() or is_work_editor() or is_work_advertiser():
-            return True
-        else:
-            return False
+        return self.is_work_administrator() or self.is_work_moderator() or is_work_editor() or is_work_advertiser()
 
     def is_work_community_administrator(self):
         return try_except(self.can_work_staff_community.can_work_administrator)
@@ -748,10 +683,7 @@ class User(AbstractUser):
     def is_work_community_advertiser(self):
         return try_except(self.can_work_staff_community.can_work_advertiser)
     def is_community_supermanager(self):
-        if self.is_work_community_administrator() or self.is_work_community_moderator() or is_work_community_editor() or is_work_community_advertiser():
-            return True
-        else:
-            return False
+        return self.is_work_community_administrator() or self.is_work_community_moderator() or is_work_community_editor() or is_work_community_advertiser()
 
     def is_work_post_administrator(self):
         return try_except(self.can_work_staff_post_user.can_work_administrator)
@@ -760,10 +692,7 @@ class User(AbstractUser):
     def is_work_post_editor(self):
         return try_except(self.can_work_staff_post_user.can_work_editor)
     def is_work_supermanager(self):
-        if self.is_work_post_administrator() or self.is_work_post_moderator() or is_work_post_editor():
-            return True
-        else:
-            return False
+        return self.is_work_post_administrator() or self.is_work_post_moderator() or is_work_post_editor()
 
     def is_work_good_administrator(self):
         return try_except(self.can_work_staff_good_user.can_work_administrator)
@@ -772,10 +701,7 @@ class User(AbstractUser):
     def is_work_good_editor(self):
         return try_except(self.can_work_staff_good_user.can_work_editor)
     def is_work_good_supermanager(self):
-        if self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor():
-            return True
-        else:
-            return False
+        return self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor()
 
     def is_work_doc_administrator(self):
         return try_except(self.can_work_staff_doc_user.can_work_administrator)
@@ -784,10 +710,7 @@ class User(AbstractUser):
     def is_work_doc_editor(self):
         return try_except(self.can_work_staff_doc_user.can_work_editor)
     def is_work_doc_supermanager(self):
-        if self.is_work_doc_administrator() or self.is_doc_good_moderator() or is_work_doc_editor():
-            return True
-        else:
-            return False
+        return self.is_work_doc_administrator() or self.is_doc_good_moderator() or is_work_doc_editor()
 
     def is_work_photo_administrator(self):
         return try_except(self.can_work_staff_photo_user.can_work_administrator)
@@ -796,10 +719,7 @@ class User(AbstractUser):
     def is_work_photo_editor(self):
         return try_except(self.can_work_staff_photo_user.can_work_editor)
     def is_work_photo_supermanager(self):
-        if self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor():
-            return True
-        else:
-            return False
+        return self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor()
 
     def is_work_video_administrator(self):
         return try_except(self.can_work_staff_video_user.can_work_administrator)
@@ -808,10 +728,7 @@ class User(AbstractUser):
     def is_work_video_editor(self):
         return try_except(self.can_work_staff_video_user.can_work_editor)
     def is_work_video_supermanager(self):
-        if self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor():
-            return True
-        else:
-            return False
+        return self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor()
 
     def is_work_music_administrator(self):
         return try_except(self.can_work_staff_music_user.can_work_administrator)
@@ -820,10 +737,7 @@ class User(AbstractUser):
     def is_work_music_editor(self):
         return try_except(self.can_work_staff_music_user.can_work_editor)
     def is_music_supermanager(self):
-        if self.is_work_music_administrator() or self.is_work_music_moderator() or is_work_music_editor():
-            return True
-        else:
-            return False
+        return self.is_work_music_administrator() or self.is_work_music_moderator() or is_work_music_editor()
 
     ''''' количества всякие  196-216 '''''
 
@@ -831,36 +745,34 @@ class User(AbstractUser):
         return self.followers.filter(view=False).exists()
 
     def is_have_followers(self):
-        return self.followers.values('pk').exists()
+        return self.profile.follows > 0
     def is_have_followings(self):
         return self.follows.values('pk').exists()
     def is_have_blacklist(self):
         return self.user_blocks.values('pk').exists()
     def is_have_friends(self):
-        return self.connections.values('pk').exists()
+        return self.profile.friends > 0
+    def is_have_communities(self):
+        return self.profile.communities > 0
+    def is_have_music(self):
+        return self.profile.tracks > 0
 
     def count_no_view_followers(self):
         return self.followers.filter(view=False).values('pk').count()
-
     def count_following(self):
         return self.follows.values('pk').count()
-
     def count_followers(self):
-        return self.followers.values('pk').count()
-
+        return self.profile.follows
     def count_blacklist(self):
         return self.user_blocks.values('pk').count()
-
     def count_goods(self):
-        return self.good_creator.values('pk').count()
-
+        return self.profile.goods
     def count_docs(self):
-        return self.doc_creator.values('pk').count()
-
+        return self.profile.goods
     def count_public_posts(self):
-        return self.post_creator.filter(status="P").values('pk').count()
+        return self.profile.posts
     def count_public_articles(self):
-        return self.article_creator.filter(status="P").values('pk').count()
+        return self.profile.articles
 
 
     ''''' GET всякие  219-186 '''''
@@ -872,25 +784,13 @@ class User(AbstractUser):
 
     def get_6_populate_friends_ids(self):
         from users.model.list import UserPopulateFriend
-
         frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
         return [user['friend'] for user in frends_query][:6]
-
-    def is_have_friends(self):
-        return self.connections.only("pk").exists()
 
     def get_6_populate_friends(self):
         query = []
         for frend_id in self.get_6_populate_friends_ids():
-            user = User.objects.get(pk=frend_id)
-            query = query + [user]
-        return query
-
-    def get_6_populate_friends(self):
-        from users.model.list import UserPopulateFriend
-
-        frends_query = UserPopulateFriend.objects.filter(user=self.pk)
-        return frends_query
+            query.append(User.objects.get(pk=frend_id))
 
     def get_6_friends(self):
         try:
@@ -898,21 +798,16 @@ class User(AbstractUser):
         except:
             return self.get_6_default_connection()
 
-    def is_have_communities(self):
-        return self.communities_memberships.only("pk").exists()
-
     def get_6_default_communities(self):
         from communities.models import Community
-
-        query = Q(memberships__user=self)
-        return Community.objects.filter(query)[0:6]
+        return Community.objects.filter(memberships__user=self)[0:6]
 
     def get_6_populate_communities(self):
         from users.model.list import UserPopulateCommunity
         from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        return Community.objects.filter(id__in=[community['community'] for community in communities_query][:6])
+        return Community.objects.filter(id__in=[i['community'] for i in communities_query][:6])
 
     def get_default_communities(self):
         from communities.models import Community
@@ -923,7 +818,7 @@ class User(AbstractUser):
         from communities.models import Community
 
         communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
-        return Community.objects.filter(id__in=[community['community'] for community in communities_query])
+        return Community.objects.filter(id__in=[i['community'] for i in communities_query])
 
     def get_6_communities(self):
         try:
@@ -939,7 +834,7 @@ class User(AbstractUser):
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')
-        return [target_user['target_user_id'] for target_user in my_frends]
+        return [i['target_user_id'] for i in my_frends]
 
     def get_friend_and_friend_of_friend_ids(self):
         frends = self.get_all_connection()
@@ -982,55 +877,29 @@ class User(AbstractUser):
                 query += [frend]
         return query
 
-    def is_have_fixed_posts(self):
-        return self.get_or_create_fix_list().is_not_empty()
-    def get_or_create_fix_list(self):
-        from posts.models import PostList
-        try:
-            return PostList.objects.get(creator_id=self.pk, community=None, type=PostList.FIX)
-        except:
-            return PostList.objects.create(creator_id=self.pk, community=None, type=PostList.FIX, name="Закрепленный список")
-
     def get_draft_posts(self):
         from posts.models import Post
-        query = Q(creator_id=self.id, status=Post.STATUS_DRAFT, community__isnull=True)
-        query.add(~Q(type__contains="THIS"), Q.AND)
-        return Post.objects.filter(query)
+        return Post.objects.filter(creator_id=self.id, status=Post.STATUS_DRAFT, community__isnull=True)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-        query = Q(creator_id=self.id, community_id=community_pk, status=Post.STATUS_DRAFT)
-        query.add(~Q(type__contains="THIS"), Q.AND)
-        return Post.objects.filter(query)
+        return Post.objects.filter(creator_id=self.id, community_id=community_pk, status=Post.STATUS_DRAFT)
 
     def get_post_lists(self):
         from posts.models import PostList
+        query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(status__contains="THIS"), Q.AND)
+        return PostList.objects.filter(query).order_by("order")
 
-        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
-        lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.PRIVATE)|Q(type=PostList.FIX)), Q.AND)
-        return PostList.objects.filter(lists_query).order_by("order")
+    def get_survey_lists(self):
+        from survey.models import SurveyList
+        query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(status__contains="THIS"), Q.AND)
+        return SurveyList.objects.filter(query).order_by("order")
 
     def get_post_categories(self):
         from posts.models import PostCategory
         return PostCategory.objects.only("pk")
-
-    def get_my_all_post_lists(self):
-        from posts.models import PostList
-        lists_query = Q(creator_id=self.id, community__isnull=True, is_deleted=False)
-        lists_query.add(~Q(Q(type=PostList.DELETED)|Q(type=PostList.FIX)), Q.AND)
-        return PostList.objects.filter(lists_query)
-
-    def get_articles(self):
-        from article.models import Article
-
-        articles_query = Q(creator_id=self.id, is_deleted=False)
-        return Article.objects.filter(articles_query)
-
-    def get_surveys(self):
-        from survey.models import Survey
-
-        query = Q(creator_id=self.id, is_deleted=False)
-        return Survey.objects.filter(query)
 
     def get_photo_lists(self):
         from gallery.models import PhotoList
@@ -1048,166 +917,93 @@ class User(AbstractUser):
         from goods.models import GoodList
         return GoodList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="THIS")).order_by("order")
 
-    def get_or_create_good_list(self):
+    def get_good_list(self):
         from goods.models import GoodList
-        try:
-            return GoodList.objects.get(creator_id=self.pk, community=None, type=GoodList.MAIN)
-        except:
-            return GoodList.objects.create(creator_id=self.pk, community=None, type=GoodList.MAIN, title="Основной альбом")
-    def get_or_create_playlist(self):
+        GoodList.objects.get(creator_id=self.pk, community__isnull=True, type=GoodList.MAIN)
+    def get_playlist(self):
         from music.models import SoundList
-        try:
-            return SoundList.objects.get(creator_id=self.pk, community=None, type=SoundList.MAIN)
-        except:
-            return SoundList.objects.create(creator_id=self.pk, community=None, type=SoundList.MAIN, name="Основной плейлист")
-    def get_or_create_video_list(self):
+        return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
+    def get_video_list(self):
         from video.models import VideoList
-        try:
-            return VideoList.objects.get(creator_id=self.pk, community=None, type=VideoList.MAIN)
-        except:
-            return VideoList.objects.create(creator_id=self.pk, community=None, type=VideoList.MAIN, title="Основной альбом")
-    def get_or_create_photo_list(self):
+        return VideoList.objects.get(creator_id=self.pk, community__isnull=True, type=VideoList.MAIN)
+    def get_photo_list(self):
         from gallery.models import PhotoList
-        try:
-            return PhotoList.objects.get(creator_id=self.pk, community=None, type=PhotoList.MAIN)
-        except:
-            return PhotoList.objects.create(creator_id=self.pk, community=None, type=PhotoList.MAIN, title="Основной альбом")
-    def get_or_create_doc_list(self):
+        return PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.MAIN)
+    def get_doc_list(self):
         from docs.models import DocList
-        try:
-            return DocList.objects.get(creator_id=self.pk, community=None, type=DocList.MAIN)
-        except:
-            return DocList.objects.create(creator_id=self.pk, community=None, type=DocList.MAIN, name="Основной список")
-
-    def get_music(self):
-        from music.models import SoundList, Music
-
-        list = SoundList.objects.get(creator_id=self.id, community__isnull=True, type=SoundList.MAIN)
-        return list.players.filter(is_deleted=False)
-
-    def is_have_music(self):
-        for list in self.get_playlists():
-            if list.is_not_empty():
-                return True
-        return False
-
+        return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
+    def get_fix_list(self):
+        from posts.models import PostList
+        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.THIS_FIX)
+    def get_survey_list(self):
+        from survey.models import SurveyList
+        return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.THIS_FIX)
     def get_playlists(self):
         from music.models import SoundList
-
-        return SoundList.objects.filter(creator_id=self.id, is_deleted=False, community__isnull=True)
+        return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="THIS")
 
     def get_music_count(self):
-        count = 0
-        for list in self.get_playlists():
-            count += list.count_tracks()
-        return count
+        return self.profile.tracks
 
     def get_last_music(self):
-        lists = []
-        for i in self.get_music():
-            if len(lists) < 6:
-                lists += [i]
-        return lists
+        return self.get_playlist().get_items()[:6]
 
     def get_video_count(self):
-        from video.models import Video, VideoList
-
-        list = VideoList.objects.get(creator_id=self.id, community__isnull=True, type=VideoList.MAIN)
-        video_query = Q(list=list, is_deleted=False)
-        return Video.objects.filter(video_query).values("pk").count()
+        return self.profile.videos
 
     def get_last_video(self):
-        from video.models import Video, VideoList
-
-        list = VideoList.objects.get(creator_id=self.id, community__isnull=True, type=VideoList.MAIN)
-        video_query = Q(list=list, is_deleted=False, is_public=True)
-        return Video.objects.filter(video_query).order_by("-created")[0:2]
+        return self.get_video_list().get_items()[:2]
 
     def my_playlist_too(self):
         from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
 
-        temp_list = UserTempSoundList.objects.get(user=self)
-        try:
-            list = SoundList.objects.get(pk=temp_list.list.pk)
-        except:
-            list = None
-        try:
-            tag_music = SoundTags.objects.get(pk=temp_list.tag.pk)
-        except:
-            tag_music = None
-        try:
-            genre_music = SoundGenres.objects.get(pk=temp_list.genre.pk)
-        except:
-            genre_music = None
-        if list:
-            return list.playlist_too().order_by('-created_at')
-        elif tag_music:
-            return tag_music.playlist_too()
-        elif genre_music:
-            return genre_music.playlist_too()
+        if UserTempSoundList.objects.filter(user_id=self.pk).exists():
+            temp_list = UserTempSoundList.objects.get(user_id=self.pk)
         else:
-            return self.get_music()
+            return self.get_playlist().get_items()
+        try:
+            return SoundList.objects.get(pk=temp_list.list.pk).get_items()
+        except:
+            pass
+        try:
+            return SoundTags.objects.get(pk=temp_list.tag.pk).get_items()
+        except:
+            pass
+        try:
+            return SoundGenres.objects.get(pk=temp_list.genre.pk).get_items()
+        except:
+            pass
 
     def get_docs_count(self):
-        from docs.models import Doc
-
-        return Doc.objects.filter(creator_id=self.pk, community__isnull=True).values("pk").count()
+        return self.profile.docs
 
     def get_last_docs(self):
-        from docs.models import DocList, Doc
-
-        docs_list = Doc.objects.filter(creator_id=self.pk, community__isnull=True, is_deleted=False).exclude(type=Doc.PRIVATE)[0:5]
-        return docs_list[0:5]
-
-    def is_doc_list_exists(self):
-        from docs.models import DocList
-
-        lists_query = Q(creator_id=self.id, community__isnull=True, type=DocList.LIST, is_deleted=False)
-        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return DocList.objects.filter(lists_query).exists()
+        return self.get_doc_list().get_items()[:6]
 
     def get_docs_lists(self):
         from docs.models import DocList
-
-        lists_query = Q(creator_id=self.id, community__isnull=True, type=DocList.LIST, is_deleted=False)
-        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return DocList.objects.filter(lists_query).order_by("order")
-
-    def get_my_docs_lists(self):
-        from docs.models import DocList
-
-        lists_query = Q(community__isnull=True, is_public=True, type=DocList.LIST, is_deleted=False)
-        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return DocList.objects.filter(lists_query).order_by("order")
-
-    def get_all_docs_lists(self):
-        from docs.models import DocList
-
-        lists_query = Q(community__isnull=True, is_deleted=False)
-        lists_query.add(Q(Q(creator_id=self.id)|Q(users__id=self.pk)), Q.AND)
-        return DocList.objects.filter(lists_query).order_by("order")
+        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="THIS").order_by("order")
 
     def get_followers(self):
-        followers_query = Q(follows__followed_user_id=self.pk)
-        followers_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query)
+        query = Q(follows__followed_user_id=self.pk)
+        query.add(~Q(type__contains="THIS"), Q.AND)
+        return User.objects.filter(query)
 
     def get_all_users(self):
-        all_query = Q()
-        all_query.add(~Q(Q(type=User.DELETED)|Q(type=User.BLOCKED)|Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
+        query = ~Q(type__contains="THIS")
         if self.is_child():
-            all_query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
-        return User.objects.filter(all_query)
+            query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
+        return User.objects.filter(query)
 
     def get_pop_followers(self):
-        followers_query = Q(follows__followed_user_id=self.pk)
-        followers_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followers_query)[0:6]
+        query = Q(follows__followed_user_id=self.pk)
+        query.add(~Q(type__contains="THIS"), Q.AND)
+        return User.objects.filter(query)[0:6]
 
     def get_followings(self):
-        followings_query = Q(followers__user_id=self.pk)
-        followings_query.add(~Q(Q(type=User.DELETED) | Q(type=User.BLOCKED) | Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
-        return User.objects.filter(followings_query)
+        query = Q(followers__user_id=self.pk)
+        query.add(~Q(type__contains="THIS"), Q.AND)
+        return User.objects.filter(query)
 
     def get_friends_and_followings_ids(self):
         my_frends = self.connections.values('target_user_id')
@@ -1220,18 +1016,16 @@ class User(AbstractUser):
             return ""
         my_frends = self.connections.values('target_user_id')
         user_frends = user.connections.values('target_user_id')
-        result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([target_user['target_user_id'] for target_user in user_frends]))
-        query = Q(id__in=result)
-        return User.objects.filter(query)
+        result=list(set([i['target_user_id'] for i in my_frends]) & set([a['target_user_id'] for a in user_frends]))
+        return User.objects.filter(id__in=result)
 
     def get_common_friends_of_community(self, community_id):
         from communities.models import Community
 
         community, my_frends = Community.objects.get(pk=community_id), self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
-        result=list(set([target_user['target_user_id'] for target_user in my_frends]) & set([user_id['user_id'] for user_id in community_frends]))
-        query = Q(id__in=result)
-        return User.objects.filter(query)
+        result=list(set([i['target_user_id'] for i in my_frends]) & set([a['user_id'] for a in community_frends]))
+        return User.objects.filter(id__in=result)
 
     def get_common_friends_of_community_count_ru(self, community_id):
         from communities.models import Community
@@ -1239,23 +1033,22 @@ class User(AbstractUser):
         community = Community.objects.get(pk=community_id)
         my_frends = self.connections.values('target_user_id')
         community_frends = community.memberships.values('user_id')
-        my_frends_ids = [target_user['target_user_id'] for target_user in my_frends]
-        community_frends_ids = [user_id['user_id'] for user_id in community_frends]
+        my_frends_ids = [i['target_user_id'] for i in my_frends]
+        community_frends_ids = [i['user_id'] for i in community_frends]
         result=list(set(my_frends_ids) & set(community_frends_ids))
-        query = Q(id__in=result)
-        count = User.objects.filter(query).values("pk").count()
+        count = User.objects.filter(id__in=result).values("pk").count()
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
-            return '{}{}'.format(str(count)," друг")
+            return str(count) + " друг"
         elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-            return '{}{}'.format(str(count)," друга")
+            return str(count) + " друга"
         else:
-            return '{}{}'.format(str(count)," друзей")
+            return str(count) + " друзей"
 
     def get_target_users(self):
         from stst.models import UserNumbers
         query = []
-        for user in [user['target'] for user in UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")]:
+        for user in [i['target'] for i in UserNumbers.objects.filter(visitor=self.pk).values('target').order_by("-count")]:
             query = query + [User.objects.get(id=user)]
         return query
 
@@ -1264,7 +1057,7 @@ class User(AbstractUser):
         from communities.models import Community
         v_s = CommunityNumbers.objects.filter(user=self.pk).values('community')
         result = list()
-        map(lambda x: not x in result and result.append(x), [use['community'] for use in v_s])
+        map(lambda x: not x in result and result.append(x), [i['community'] for i in v_s])
         query = []
         for i in result:
             query = query + [Community.objects.get(id=i), ]
@@ -1278,7 +1071,6 @@ class User(AbstractUser):
 
     def get_visited_communities_count(self):
         from stst.models import CommunityNumbers
-        from communities.models import Community
         return CommunityNumbers.objects.filter(user=self.pk).distinct("community").values("community").count()
 
 
@@ -1346,146 +1138,47 @@ class User(AbstractUser):
         from users.model.profile import UserLocation
 
         v_s = UserNumbers.objects.filter(target=self.pk).values('target')
-        count = UserLocation.objects.filter(user_id__in=[use['target'] for use in v_s], city_ru=sity).count()
-        return count
+        return UserLocation.objects.filter(user_id__in=[use['target'] for use in v_s], city_ru=sity).count()
 
     def get_post_views_for_year(self, year):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists())
         for i in posts:
             count += i.post_visits_year(year)
         return count
     def get_post_views_for_month(self, month):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists())
         for i in posts:
             count += i.post_visits_month(month)
         return count
     def get_post_views_for_week(self, week):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists())
         for i in posts:
             count += i.post_visits_week(week)
         return count
     def get_post_views_for_day(self, day):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists(), is_deleted=False)
+        count, posts = 0, Post.objects.filter(list__in=self.get_my_all_post_lists())
         for i in posts:
             count += i.post_visits_day(day)
         return count
 
-    ''''' модерация '''''
     def get_longest_user_penalties(self):
         return self.user_penalties.filter(user=self)[0].expiration
     def get_moderated_description(self):
         return self.moderated_user.filter(user=self)[0].description
 
-    def get_moderation_users(self):
-        # пользователи, на которых пожаловались
-        from managers.model.user import ModeratedUser
-        return ModeratedUser.objects.filter(verified=False)
-    def get_penalty_users(self):
-        # оштрафованные пользователи
-        from managers.model.user import ModerationPenaltyUser
-        return ModerationPenaltyUser.objects.filter(manager__id=self.pk)
-
-    def get_moderation_communities(self):
-        # сообщества, на которых пожаловались
-        from managers.model.community import ModeratedCommunity
-        return ModeratedCommunity.objects.filter(verified=False)
-    def get_penalty_communities(self):
-        # оштрафованные сообщества
-        from managers.model.community import ModerationPenaltyCommunity
-        return ModerationPenaltyCommunity.objects.filter(manager__id=self.pk)
-
-    def get_moderation_posts(self):
-        # записи, на которых пожаловались
-        from managers.model.post import ModeratedPost
-        return ModeratedPost.objects.filter(verified=False)
-    def get_moderation_post_comments(self):
-        # записи, на которых пожаловались
-        from managers.model.post import ModeratedPostComment
-        return ModeratedPostComment.objects.filter(verified=False)
-    def get_penalty_posts(self):
-        # оштрафованные записи
-        from managers.model.post import ModerationPenaltyPost
-        return ModerationPenaltyPost.objects.filter(manager__id=self.pk)
-    def get_penalty_post_comments(self):
-        # оштрафованные записи
-        from managers.model.post import ModerationPenaltyPostComment
-        return ModerationPenaltyPostComment.objects.filter(manager__id=self.pk)
-
-    def get_moderation_photos(self):
-        # записи, на которых пожаловались
-        from managers.model.photo import ModeratedPhoto
-        return ModeratedPhoto.objects.filter(verified=False)
-    def get_moderation_photo_comments(self):
-        # записи, на которых пожаловались
-        from managers.model.photo import ModeratedPhotoComment
-        return ModeratedPhotoComment.objects.filter(verified=False)
-    def get_penalty_photos(self):
-        # оштрафованные записи
-        from managers.model.photo import ModerationPenaltyPhoto
-        return ModerationPenaltyPhoto.objects.filter(manager__id=self.pk)
-    def get_penalty_photo_comments(self):
-        # оштрафованные записи
-        from managers.model.photo import ModerationPenaltyPhotoComment
-        return ModerationPenaltyPhotoComment.objects.filter(manager__id=self.pk)
-
-    def get_moderation_goods(self):
-        # записи, на которых пожаловались
-        from managers.model.good import ModeratedGood
-        return ModeratedGood.objects.filter(verified=False)
-    def get_moderation_good_comments(self):
-        # записи, на которых пожаловались
-        from managers.model.good import ModeratedGoodComment
-        return ModeratedGoodComment.objects.filter(verified=False)
-    def get_penalty_goods(self):
-        # оштрафованные записи
-        from managers.model.good import ModerationPenaltyGood
-        return ModerationPenaltyGood.objects.filter(manager__id=self.pk)
-    def get_penalty_good_comments(self):
-        # оштрафованные записи
-        from managers.model.good import ModerationPenaltyGoodComment
-        return ModerationPenaltyGoodComment.objects.filter(manager__id=self.pk)
-
-    def get_moderation_videos(self):
-        # записи, на которых пожаловались
-        from managers.model.video import ModeratedVideo
-        return ModeratedVideo.objects.filter(verified=False)
-    def get_moderation_video_comments(self):
-        # записи, на которых пожаловались
-        from managers.model.video import ModeratedVideoComment
-        return ModeratedVideoComment.objects.filter(verified=False)
-    def get_penalty_videos(self):
-        # оштрафованные записи
-        from managers.model.video import ModerationPenaltyVideo
-        return ModerationPenaltyVideo.objects.filter(manager__id=self.pk)
-    def get_penalty_video_comments(self):
-        # оштрафованные записи
-        from managers.model.video import ModerationPenaltyVideoComment
-        return ModerationPenaltyVideoComment.objects.filter(manager__id=self.pk)
-
-    def get_moderation_audios(self):
-        # записи, на которых пожаловались
-        from managers.model.audio import ModeratedAudio
-        return ModeratedAudio.objects.filter(verified=False)
-    def get_penalty_audios(self):
-        # оштрафованные записи
-        from managers.model.audio import ModerationPenaltyAudio
-        return ModerationPenaltyAudio.objects.filter(manager_id=self.pk)
-    ''''' конец модерации '''''
-
-
     ''''' начало сообщения '''''
 
     def get_private_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk, type=Chat.TYPE_PRIVATE, is_deleted=False)
+        return Chat.objects.filter(chat_relation__user_id=self.pk, type=Chat.PRIVATE)
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk, is_deleted=False)
+        return Chat.objects.filter(chat_relation__user_id=self.pk).exclude(type__contains="THIS")
 
     def get_chats_and_connections(self):
         from itertools import chain
@@ -1499,7 +1192,7 @@ class User(AbstractUser):
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0
         for chat in chats:
-            if chat.chat_message.filter(is_deleted=False, unread=True).exclude(creator__user_id=self.pk).exists():
+            if chat.chat_message.filter(unread=True, type__contains="THIS").exclude(creator__user_id=self.pk).exists():
                 count += 1
         if count > 0:
             return count
@@ -1516,7 +1209,6 @@ class User(AbstractUser):
 
     def read_user_notify(self):
         from notify.models import Notify
-
         Notify.u_notify_unread(self.pk)
 
     def count_user_unread_notify(self):

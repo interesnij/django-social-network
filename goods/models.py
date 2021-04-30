@@ -72,11 +72,11 @@ class GoodList(models.Model):
 	def create_c_model(sender, instance, created, **kwargs):
 		if created:
 			community=instance
-			GoodList.objects.create(community=community, type=PostList.MAIN, name="Основной список", order=0, creator=community.creator)
+			GoodList.objects.create(community=community, type=GoodList.MAIN, name="Основной список", order=0, creator=community.creator)
 	@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 	def create_u_model(sender, instance, created, **kwargs):
 		if created:
-			GoodList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список", order=0)
+			GoodList.objects.create(creator=instance, type=GoodList.MAIN, name="Основной список", order=0)
 
 	def is_main_list(self):
 		return self.type == self.MAIN

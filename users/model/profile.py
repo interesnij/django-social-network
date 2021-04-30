@@ -23,8 +23,10 @@ class UserProfile(models.Model):
     communities = models.PositiveIntegerField(default=0, verbose_name="Кол-во групп")
     photos = models.PositiveIntegerField(default=0, verbose_name="Кол-во фотографий")
     goods = models.PositiveIntegerField(default=0, verbose_name="Кол-во товаров")
-    traks = models.PositiveIntegerField(default=0, verbose_name="Кол-во аудиозаписей")
+    docs = models.PositiveIntegerField(default=0, verbose_name="Кол-во документов")
+    tracks = models.PositiveIntegerField(default=0, verbose_name="Кол-во аудиозаписей")
     videos = models.PositiveIntegerField(default=0, verbose_name="Кол-во видеозаписей")
+    articles = models.PositiveIntegerField(default=0, verbose_name="Кол-во статей")
 
     def __str__(self):
         return self.user.last_name
