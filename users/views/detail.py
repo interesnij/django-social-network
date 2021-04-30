@@ -183,7 +183,7 @@ class UserGoods(ListView):
         from common.template.good import get_template_user_good
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_good_list() 
+        self.list = self.user.get_good_list()
         if self.user.pk == request.user.pk:
             self.goods_list = self.list.get_staff_items()
         else:
@@ -291,7 +291,7 @@ class ProfileUserView(TemplateView):
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:
-            self.template_name = "mobile/" + self.template_name
+            self.template_name = "desctop/" + self.template_name
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
