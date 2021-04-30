@@ -1,5 +1,6 @@
-function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
- 
+function on(e,t,i,c){var l=document.querySelector(e);l.addEventListener(t,function(e){for(var t=l.querySelectorAll(i),n=e.target,r=0,o=t.length;r<o;r++)for(var a=n,d=t[r];a&&a!==l;){if(a===d)return c.call(d,e);a=a.parentNode}})}function loadScripts(r){var e=document.createElement("SCRIPT"),t=document.getElementsByTagName("head")[0],o=!1;function n(e,t,n){return t==r&&(o=!0,a()),!1}function a(){e.onreadystatechange=e.onload=e.onerror=null,window.removeEventListener?window.removeEventListener("error",n,!1):window.detachEvent("onerror",n)}e.type="text/javascript",e.onload=e.onreadystatechange=function(e){this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||o||a()},e.onerror=function(){o=!0,a()},window.addEventListener?window.addEventListener("error",n,!1):window.attachEvent("onerror",n),e.src=r,t.appendChild(e)}
+
+
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
     document.body.querySelector(".create_fullscreen").style.display = "none";
