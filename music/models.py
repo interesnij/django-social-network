@@ -97,19 +97,19 @@ class SoundList(models.Model):
             SoundList.objects.create(creator=instance, type=SoundList.MAIN, name="Основной список", order=0)
 
     def is_item_in_list(self, item_id):
-        return self.players.filter(pk=item_id).values("pk").exists()
+        return self.playlist.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.players.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
+        return self.playlist.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
 
     def get_staff_items(self):
-        return self.players.filter(Q(status="PUB")|Q(status="PRI"))
+        return self.playlist.filter(Q(status="PUB")|Q(status="PRI"))
     def get_items(self):
-        return self.players.filter(status="PUB")
+        return self.playlist.filter(status="PUB")
     def get_manager_items(self):
-        return self.players.filter(status="MAN")
+        return self.playlist.filter(status="MAN")
     def count_items(self):
-        return self.players.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
+        return self.playlist.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="THIS").values("pk")

@@ -94,7 +94,7 @@ class UserTrackAdd(View):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_track_in_list(track.pk):
-            list.players.add(track)
+            list.playlist.add(track)
             return HttpResponse()
         else:
             raise Http404
@@ -107,7 +107,7 @@ class UserTrackRemove(View):
         track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk):
-            list.players.remove(track)
+            list.playlist.remove(track)
             return HttpResponse()
         else:
             raise Http404
@@ -121,7 +121,7 @@ class UserTrackListAdd(View):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_track_in_list(track.pk):
-            list.players.add(track)
+            list.playlist.add(track)
             return HttpResponse()
         else:
             raise Http404
@@ -134,7 +134,7 @@ class UserTrackListRemove(View):
         track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_track_in_list(track.pk):
-            list.players.remove(track)
+            list.playlist.remove(track)
             return HttpResponse()
         else:
             raise Http404
