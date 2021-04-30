@@ -888,7 +888,7 @@ class User(AbstractUser):
     def get_post_lists(self):
         from posts.models import PostList
         query = Q(creator_id=self.id, community__isnull=True)
-        query.add(~Q(status__contains="THIS"), Q.AND)
+        query.add(~Q(type__contains="THIS"), Q.AND)
         return PostList.objects.filter(query).order_by("order")
 
     def get_survey_lists(self):
