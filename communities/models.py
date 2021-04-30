@@ -153,8 +153,8 @@ class Community(models.Model):
         return try_except(self.community_sections_open.discussion)
 
     @classmethod
-    def create_community(cls, name, category, creator, type, description=None):
-        community = cls.objects.create(name=name, creator=creator, description=description, type=type, category=category)
+    def create_community(cls, name, category, creator, type):
+        community = cls.objects.create(name=name, creator=creator, type=type, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, community=community)
         community.save()
         creator.create_or_plus_populate_community(community.pk)
@@ -216,104 +216,60 @@ class Community(models.Model):
         trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
-    def is_have_fixed_posts(self):
+    def get_fix_list(self):
         from posts.models import PostList
-        try:
-            list = PostList.objects.get(community_id=self.pk, type=PostList.FIX)
-            return list.is_not_empty()
-        except:
-            pass
+        return PostList.objects.get(community_id=self.pk, type=PostList.FIX)
 
-    def get_or_create_fix_list(self):
-        from posts.models import PostList
-        try:
-            return PostList.objects.get(community_id=self.pk, type=PostList.FIX)
-        except:
-            return PostList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=PostList.FIX, name="Закрепленный список")
-
-    def get_posts(self):
-        from posts.models import Post, PostList
-        list = PostList.objects.get(community_id=self.id, type=PostList.MAIN)
-        return Post.objects.filter(list=list, status="PUB")
     def get_draft_posts(self):
-        from posts.models import Post, PostList
-        posts_query = Q(community_id=self.pk, status=Post.DRAFT)
-        return Post.objects.filter(posts_query)
+        from posts.models import PostList
+        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        return list.get_items()
     def get_count_draft_posts(self):
-        from posts.models import Post
-        posts_query = Q(community_id=self.pk, status=Post.DRAFT)
-        return Post.objects.filter(posts_query).values("pk").count()
+        from posts.models import PostList
+        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        return list.get_items().values("pk").count()
 
     def get_count_articles(self):
-        from article.models import Article
-        articles_query = Q(community_id=self.pk, status=Article.DRAFT)
-        return Article.objects.filter(articles_query).values("pk").count()
+        return self.community_info.articles
 
     def id_draft_posts_exists(self):
-        from posts.models import Post
-        posts_query = Q(community_id=self.pk, status=Post.DRAFT)
-        return Post.objects.filter(posts_query).exists()
+        return self.get_count_draft_posts() > 0
 
     def get_draft_posts_for_user(self, user_pk):
-        from posts.models import Post
-        posts_query = Q(creator_id=user_pk, community_id=self.pk, status=Post.DRAFT)
-        return Post.objects.filter(posts_query)
+        from posts.models import PostList
+        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        posts_query = list.get_items()
+        return list.get_items().filter(creator_id=user_pk)
     def get_count_draft_posts_for_user(self, user_pk):
-        from posts.models import Post
-
-        posts_query = Q(creator_id=user_pk, community_id=self.pk, status=Post.DRAFT)
-        return Post.objects.filter(posts_query).values("pk").count()
-
-    def get_archive_posts(self):
-        from posts.models import Post
-        return Post.objects.filter(list__community_id=self.id, status=Post.THIS_DELETED)
+        from posts.models import PostList
+        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        posts_query = list.get_items()
+        return list.get_items().filter(creator_id=user_pk).values("pk").count()
 
     def get_count_photos(self):
-        from gallery.models import PhotoList
-        lists, count = PhotoList.objects.filter(community_id=self.id).exclude(type__contains="THE"), 0
-        for list in lists:
-            count += list.count_photo()
-        return count
+        return self.community_info.photos
 
     def get_profile_photos(self):
-        return self.get_photos()[0:6]
+        return self.get_photo_list().get_items()[:6]
 
     def get_goods_count(self):
-        count = 0
-        for list in self.get_all_good_lists():
-            count += list.count_goods()
-        return count
+        return self.community_info.goods
 
     def get_good_list(self):
         from goods.models import GoodList
-        try:
-            return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)
-        except:
-            return GoodList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=GoodList.MAIN, name="Основной альбом")
-    def get_or_create_playlist(self):
+        return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)
+    def get_playlist(self):
         from music.models import SoundList
-        try:
-            return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
-        except:
-            return SoundList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=SoundList.MAIN, name="Основной плейлист")
-    def get_or_create_video_list(self):
+        return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
+    def get_video_list(self):
         from video.models import VideoList
-        try:
-            return VideoList.objects.get(community_id=self.pk, type=VideoList.MAIN)
-        except:
-            return VideoList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=VideoList.MAIN, name="Основной альбом")
-    def get_or_create_photo_list(self):
+        return VideoList.objects.get(community_id=self.pk, type=VideoList.MAIN)
+    def get_photo_list(self):
         from gallery.models import PhotoList
-        try:
-            return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
-        except:
-            return PhotoList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=PhotoList.MAIN, name="Основной альбом")
-    def get_or_create_doc_list(self):
+        return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
+    def get_doc_list(self):
         from docs.models import DocList
-        try:
-            return DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
-        except:
-            return DocList.objects.create(creator_id=self.creator.pk, community_id=self.pk, type=DocList.MAIN, name="Основной список")
+        return DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
 
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
@@ -345,58 +301,28 @@ class Community(models.Model):
             return None
 
     def get_music(self):
-        from music.models import SoundList, Music
-
-        list = SoundList.objects.get(community=self, type="MAI")
-        music_query = Q(list=list, status="PUB")
-        return Music.objects.filter(music_query)
+        return self.get_playlist().get_items()
 
     def get_music_count(self):
-        from music.models import SoundList
-        playlists, count = SoundList.objects.filter(community_id=self.id, type="PUB"), 0
-        for playlist in playlists:
-            count += playlist.count_tracks()
-        return count
+        return self.community_info.tracks
 
     def get_last_music(self):
-        from music.models import Music
-        list = self.get_or_create_playlist()
-        music_query = Q(list=list, status="PUB")
-        return Music.objects.filter(music_query)[0:5]
+        return self.get_playlist().get_items()[0:5]
 
     def get_docs(self):
-        from docs.models import DocList, Doc
-        list = DocList.objects.get(community=self, type="PUB")
-        docs_query = Q(list=list, status="PUB")
-        return Doc.objects.filter(Doc_query)
+        return self.get_doc_list().get_items()
 
     def get_last_docs(self):
-        from docs.models import Doc
-        docs_query = Q(list__in=self.get_docs_lists())
-        return Doc.objects.filter(docs_query, status="PUB")[0:5]
+        return self.get_doc_list().get_items()[0:5]
 
     def get_docs_count(self):
-        from docs.models import DocList
-        lists, count = DocList.objects.filter(community_id=self.id, type="PUB"), 0
-        for i in lists:
-            count += i.count_docs()
-        return count
+        return self.community_info.docs
 
     def get_last_video(self):
-        from video.models import Video, VideoList
-        try:
-            list = VideoList.objects.get(community_id=self.pk, type="PUB")
-            video_query = Q(list=list, status="PUB")
-            return Video.objects.filter(video_query).order_by("-created")[0:2]
-        except:
-            return None
+        return self.get_video_list().get_items()[0:2]
 
     def get_video_count(self):
-        from video.models import VideoList
-        lists, count = VideoList.objects.filter(community_id=self.id, type="PUB"), 0
-        for i in lists:
-            count += i.count_video()
-        return count
+        return self.community_info.videos
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
@@ -648,7 +574,7 @@ class Community(models.Model):
         user_membership.delete()
 
     def count_members(self):
-        return self.memberships.values("pk").count()
+        return self.community_info.members
 
     def count_members_ru(self):
         count = self.count_members()
@@ -709,7 +635,7 @@ class CommunityMembership(models.Model):
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:
-        #unique_together = (('user', 'community'),)
+        unique_together = (('user', 'community'),)
         indexes = [
             models.Index(fields=['community', 'user']),
             models.Index(fields=['community', 'user', 'is_administrator']),

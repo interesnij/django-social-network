@@ -22,7 +22,7 @@ class Chat(models.Model):
     image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
 

@@ -20,18 +20,18 @@ class PhotoList(models.Model):
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
-    #community = models.ForeignKey('communities.Community', related_name='post_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='post_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     name = models.CharField(max_length=250, verbose_name="Название")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
-    #cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
+    cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -41,7 +41,7 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
-    #@receiver(post_save, sender='communities.Сommunity')
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance

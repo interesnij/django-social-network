@@ -48,7 +48,7 @@ class GoodList(models.Model):
 		(THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
 		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
-	#community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
 	type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
@@ -57,8 +57,8 @@ class GoodList(models.Model):
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-	#users = models.ManyToManyField("users.User", blank=True, related_name='+')
-	#communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+	users = models.ManyToManyField("users.User", blank=True, related_name='+')
+	communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
@@ -68,7 +68,7 @@ class GoodList(models.Model):
 	def __str__(self):
 		return self.title
 
-	#@receiver(post_save, sender='communities.Сommunity')
+	@receiver(post_save, sender='communities.Сommunity')
 	def create_c_model(sender, instance, created, **kwargs):
 		if created:
 			community=instance

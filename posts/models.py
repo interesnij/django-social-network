@@ -9,24 +9,24 @@ from django.dispatch import receiver
 
 
 class PostList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED, DRAFT = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', 'TFIX', 'DRA'
     THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
     THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA', 'TCLOF'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
     )
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
@@ -36,17 +36,19 @@ class PostList(models.Model):
         verbose_name_plural = "списки записей"
         ordering = ['order']
 
-    #@receiver(post_save, sender='communities.Сommunity')
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
             PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", creator=community.creator)
             PostList.objects.create(community=community, type=PostList.THIS_FIXED, name="Закреплённый список", creator=community.creator)
+            PostList.objects.create(community=community, type=PostList.DRAFT, name="Предложка", creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
             PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
             PostList.objects.create(creator=instance, type=PostList.THIS_FIXED, name="Закреплённый список")
+            PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
 
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()

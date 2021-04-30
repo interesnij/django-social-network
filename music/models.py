@@ -66,7 +66,7 @@ class SoundList(models.Model):
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=0)
@@ -75,8 +75,8 @@ class SoundList(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -86,7 +86,7 @@ class SoundList(models.Model):
         verbose_name_plural = "плейлисты"
         ordering = ['order']
 
-    #@receiver(post_save, sender='communities.Сommunity')
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance

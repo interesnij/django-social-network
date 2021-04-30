@@ -41,7 +41,7 @@ class VideoList(models.Model):
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
-    #community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     name = models.CharField(max_length=250, verbose_name="Название")
     order = models.PositiveIntegerField(default=0)
@@ -50,8 +50,8 @@ class VideoList(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -61,7 +61,7 @@ class VideoList(models.Model):
     def __str__(self):
         return self.title
 
-    #@receiver(post_save, sender='communities.Сommunity')
+    @receiver(post_save, sender='communities.Сommunity')
     def create_c_model(sender, instance, created, **kwargs):
         if created:
             community=instance
