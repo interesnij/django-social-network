@@ -146,7 +146,7 @@ class UserMusic(ListView):
         return c
 
     def get_queryset(self):
-        music_list = self.playlist.playlist_too().order_by('-created_at')
+        music_list = self.playlist.get_items().order_by('-created_at')
         return music_list
 
 
