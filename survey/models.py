@@ -19,7 +19,7 @@ class SurveyList(models.Model):
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_doclist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=0)
