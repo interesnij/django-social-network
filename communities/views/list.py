@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityCategory
-from common.template.user import get_default_template
+from common.template.user import get_default_template, get_detect_platform_template
 
 
 class CommunityMembersView(ListView):
@@ -121,8 +121,10 @@ class CommunityDocsList(ListView):
 			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			self.template_name = get_template_community_doc(self.list, "communities/docs/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
+		elif not self.list.is_private():
 			self.template_name = get_template_community_doc(self.list, "communities/docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_detect_platform_template("communities/docs_list/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -171,9 +173,11 @@ class CommunityGoodsList(ListView):
 			self.goods_list = self.list.get_items()
 
 		if self.list.type == GoodList.MAIN:
-			self.template_name = get_template_community_good(self.list, "communities/goods/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
 			self.template_name = get_template_community_good(self.list, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif not self.list.is_private():
+			self.template_name = get_template_community_good(self.list, "communities/goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_detect_platform_template("communities/goods_list/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -214,9 +218,11 @@ class CommunityMusicList(ListView):
 
 		self.c, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
 			self.template_name = get_template_community_music(self.playlist, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif not self.list.is_private():
+			self.template_name = get_template_community_music(self.list, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_detect_platform_template("communities/music_list/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -265,9 +271,11 @@ class CommunityVideoList(ListView):
 		else:
 			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
-			self.template_name = get_template_community_video(self.list, "communities/video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
 			self.template_name = get_template_community_video(self.list, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif not self.list.is_private():
+			self.template_name = get_template_community_video(self.list, "communities/video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_detect_platform_template("communities/video_list/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -288,8 +296,8 @@ class CommunityPostsListView(ListView):
 		from common.template.post import get_permission_community_post
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if self.list.is_private_list() and request.user.is_staff_of_community(self.c.pk):
-				self.posts_list = self.list.get_staff_items()
+		if request.user.is_staff_of_community(self.c.pk):
+			self.posts_list = self.list.get_staff_items()
 		else:
 			self.posts_list = self.list.get_items()
 		self.template_name = get_permission_community_post(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])

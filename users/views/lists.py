@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from posts.models import Post, PostList
-from common.template.user import get_settings_template
+from common.template.user import get_settings_template, get_detect_platform_template
 from django.http import Http404
 from django.db.models import Q
 
@@ -65,12 +65,14 @@ class UserGoodsList(ListView):
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-		if self.user == request.user:
-			self.goods_list = self.list.get_staff_items()
+		if self.user.pk == request.user.pk:
+			self.good_list = self.list.get_staff_items()
 		else:
-			self.goods_list = self.list.getitems()
+			self.good_list = self.list.get_items()
 		if self.list.type == GoodList.MAIN:
 			self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif self.user.pk != request.user.pk and self.list.is_private():
+			self.template_name = get_detect_platform_template("users/user_goods/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_user_good(self.list, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
@@ -94,8 +96,14 @@ class UserMusicList(ListView):
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		if self.user.pk == request.user.pk:
+			self.sound_list = self.playlist.get_staff_items()
+		else:
+			self.sound_list = self.playlist.get_items()
 		if self.playlist.type == SoundList.MAIN:
 			self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif self.user.pk != request.user.pk and self.list.is_private():
+			self.template_name = get_detect_platform_template("users/user_music/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_user_music(self.playlist, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMusicList,self).get(request,*args,**kwargs)
@@ -124,6 +132,8 @@ class UserDocsList(ListView):
 			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif self.user.pk != request.user.pk and self.list.is_private():
+			self.template_name = get_detect_platform_template("users/user_docs/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_user_doc(self.list, "users/user_docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDocsList,self).get(request,*args,**kwargs)
@@ -162,7 +172,7 @@ class UserPostsListView(ListView):
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if self.user.pk != request.user.pk and self.list.is_private():
-			return raise Http404
+			raise Http404
 		elif self.user.pk == request.user.pk:
 			self.posts_list = self.list.get_staff_items()
 		else:
