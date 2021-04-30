@@ -29,7 +29,7 @@ class User(AbstractUser):
 
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    type = models.CharField(max_length=6, choices=TYPE, default=_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
