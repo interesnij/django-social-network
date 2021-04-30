@@ -137,6 +137,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 AUTH_USER_MODEL = 'users.User'
+COMMUNITY_MODEL = 'communities.Сommunity'
 ACCOUNT_USERNAME_REQUIRED = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
