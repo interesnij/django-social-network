@@ -67,7 +67,7 @@ class GoodList(models.Model):
 		verbose_name_plural = 'Подборки товаров'
 
 	def __str__(self):
-		return self.title
+		return self.name
 
 	@receiver(post_save, sender=Community)
 	def create_c_model(sender, instance, created, **kwargs):
