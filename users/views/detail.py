@@ -246,7 +246,7 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/my_user_child.html"
                 else:
                     self.template_name = "users/account/my_user.html"
-                self.post_lists = PostList.get_user_staff_lists(user_pk)
+                    self.post_lists = PostList.get_user_staff_lists(user_pk)
             elif r_user_pk != user_pk:
                 self.post_lists, self.get_buttons_block, self.common_frends = PostList.get_user_lists(user_pk), request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
