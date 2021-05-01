@@ -77,7 +77,8 @@ class Community(models.Model):
         return self.name
 
     def plus_photos(self, count):
-        return self.community_info.photos += count
+        self.community_info.photos += count
+        return self.community_info.save(update_fields=['vote'])
     def minus_photos(self, count):
         return self.community_info.photos -= count
     def plus_goods(self, count):
