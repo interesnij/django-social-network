@@ -31,7 +31,7 @@
                     список
                   </a>
                   <div class="dropdown-menu" style="right: 0;left: 100px;">
-                    {% for object in user.get_my_all_post_lists %}
+                    {% for object in request.user.get_post_lists %}
                       <span data-pk="{{ object.pk }}">
                         {% if object.is_main_list %}
                         <span class="dropdown-item post_list_select" style="">
@@ -72,6 +72,12 @@
                         <div class="custom-control custom-checkbox">
                           <input type="checkbox" name="votes_on" class="custom-control-input" checked id="id_votes_on">
                           <label class="custom-control-label" for="id_votes_on" style="padding-top: 5px;">Реакции включены</label>
+                        </div>
+                      </a>
+                      <a class="dropdown-item">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
+                          <label class="custom-control-label" for="id_is_public" style="padding-top: 5px;">Открытый режим</label>
                         </div>
                       </a>
                   </div>

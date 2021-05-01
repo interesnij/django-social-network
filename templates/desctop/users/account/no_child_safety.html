@@ -32,7 +32,9 @@
     <div class="col-lg-8 col-md-7 col-sm-12 order-2">
         <div class="card mb-3" style="padding:10px">
           <h1 class="mb-0 mt-1" style="font-size: 22px;">{{ user.get_full_name }}</h1>
+          <span>
             {{ user.get_online_display|safe }}
+          </span>
         </div>
 
         <div class="card mb-3 centered">
