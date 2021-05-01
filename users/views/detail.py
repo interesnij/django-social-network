@@ -233,6 +233,7 @@ class ProfileUserView(TemplateView):
         from posts.models import PostList
 
         self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), int(self.kwargs["pk"]), request.user.pk
+        self.post_lists = PostList.get_user_staff_lists(user_pk)
 
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():

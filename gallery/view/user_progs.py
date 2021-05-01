@@ -46,7 +46,7 @@ class UserAddAvatar(View):
             except:
                 _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
             photo = Photo.objects.create(file=photo_input, preview=photo_input,creator=user)
-            photo.дшые.add(_list)
+            photo.list.add(_list)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
