@@ -8,6 +8,7 @@ from django.db.models import Q
 from goods.helpers import upload_to_good_directory
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class GoodCategory(models.Model):
@@ -68,11 +69,10 @@ class GoodList(models.Model):
 	def __str__(self):
 		return self.title
 
-	#@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+	@receiver(post_save, sender=Community)
 	def create_c_model(sender, instance, created, **kwargs):
 		if created:
-			community=instance
-			GoodList.objects.create(community=community, type=GoodList.MAIN, name="Основной список", order=0, creator=community.creator)
+			GoodList.objects.create(community=instance, type=GoodList.MAIN, name="Основной список", order=0, creator=instance.creator)
 	@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 	def create_u_model(sender, instance, created, **kwargs):
 		if created:

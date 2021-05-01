@@ -6,6 +6,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from common.utils import try_except
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class PostList(models.Model):

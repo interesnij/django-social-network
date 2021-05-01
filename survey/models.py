@@ -7,6 +7,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class SurveyList(models.Model):
@@ -37,11 +38,10 @@ class SurveyList(models.Model):
         verbose_name_plural = "списки опросов"
         ordering = ['order']
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            community=instance
-            SurveyList.objects.create(community=community, type=SurveyList.MAIN, name="Основной список", order=0, creator=community.creator)
+            SurveyList.objects.create(community=instance, type=SurveyList.MAIN, name="Основной список", order=0, creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:

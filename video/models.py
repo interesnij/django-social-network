@@ -8,6 +8,7 @@ from video.helpers import upload_to_video_directory, validate_file_extension
 from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class VideoCategory(models.Model):
@@ -61,11 +62,10 @@ class VideoList(models.Model):
     def __str__(self):
         return self.title
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            community=instance
-            VideoList.objects.create(community=community, type=VideoList.MAIN, name="Основной список", order=0, creator=community.creator)
+            VideoList.objects.create(community=instance, type=VideoList.MAIN, name="Основной список", order=0, creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:

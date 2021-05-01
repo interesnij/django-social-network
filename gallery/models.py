@@ -8,6 +8,7 @@ from django.db.models import Q
 from gallery.helpers import upload_to_photo_directory
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from communities.models import Community
 
 
 class PhotoList(models.Model):
@@ -41,13 +42,12 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            community=instance
-            PhotoList.objects.create(community=community, type=PhotoList.MAIN, name="Основной альбом", creator=community.creator)
-            PhotoList.objects.create(community=community, type=PhotoList.AVATAR, name="Фото со страницы", creator=community.creator)
-            PhotoList.objects.create(community=community, type=PhotoList.WALL, name="Фото со стены", creator=community.creator)
+            PhotoList.objects.create(community=instance, type=PhotoList.MAIN, name="Основной альбом", creator=instance.creator)
+            PhotoList.objects.create(community=instance, type=PhotoList.AVATAR, name="Фото со страницы", creator=instance.creator)
+            PhotoList.objects.create(community=instance, type=PhotoList.WALL, name="Фото со стены", creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:

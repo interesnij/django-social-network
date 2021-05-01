@@ -8,6 +8,7 @@ from imagekit.models import ProcessedImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Q
+from communities.models import Community
 
 
 class SoundGenres(models.Model):
@@ -87,11 +88,10 @@ class SoundList(models.Model):
         verbose_name_plural = "плейлисты"
         ordering = ['order']
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            community=instance
-            SoundList.objects.create(community=community, type=SoundList.MAIN, name="Основной список", order=0, creator=community.creator)
+            SoundList.objects.create(community=instance, type=SoundList.MAIN, name="Основной список", order=0, creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
