@@ -235,9 +235,9 @@ class Survey(models.Model):
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     survey = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
 
-    votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
-    voters = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
+    voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -316,8 +316,8 @@ class Survey(models.Model):
         return self.survey.only("text")
 
     def get_all_count(self):
-        if self.votes > 0:
-            return self.votes
+        if self.vote > 0:
+            return self.vote
 
     def get_users(self):
         from users.models import User
@@ -382,7 +382,7 @@ class Survey(models.Model):
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='+', verbose_name="Опрос")
-    votes = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
+    vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
 
     class Meta:
         verbose_name = 'Вариант ответа'
@@ -392,7 +392,7 @@ class Answer(models.Model):
         return self.text
 
     def get_count(self):
-        return self.user_answer.all().values("pk").count()
+        return self.vote
 
     def is_user_voted(self, user_id):
         return SurveyVote.objects.filter(answer_id=self.pk, user_id=user_id).exists()
@@ -401,8 +401,8 @@ class Answer(models.Model):
         return SurveyVote.objects.filter(answer_id=self.pk)
 
     def get_procent(self):
-        if self.get_count():
-            count = self.votes / self.survey.votes * 100
+        if self.vote:
+            count = self.vote / self.survey.vote * 100
             return int(count)
         else:
             return 0

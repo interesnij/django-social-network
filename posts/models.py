@@ -301,11 +301,11 @@ class Post(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 
-    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
-    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         verbose_name = "Запись"
@@ -489,10 +489,10 @@ class Post(models.Model):
         return naturaltime(self.created)
 
     def count_comments(self):
-        if self.comments == 0:
+        if self.comment == 0:
             return ''
         else:
-            return self.comments
+            return self.comment
 
     def __str__(self):
         return self.creator.get_full_name()
@@ -584,22 +584,20 @@ class Post(models.Model):
 
     def likes(self):
         from common.model.votes import PostVotes
-        likes = PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)
-        return likes
+        return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)
 
     def dislikes(self):
         from common.model.votes import PostVotes
-        dislikes = PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)
-        return dislikes
+        return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)
 
     def likes_count(self):
-        if self.likes > 0:
-            return likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
     def dislikes_count(self):
         if self.dislikes > 0:
-            return dislikes
+            return self.dislikes
         else:
             return ''
 
@@ -632,20 +630,18 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
     def is_have_likes(self):
-        return self.likes > 0
+        return self.like > 0
     def window_dislikes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
     def is_have_dislikes(self):
-        return self.dislikes > 0
+        return self.dislike > 0
 
     def get_reposts(self):
-        parents = Post.objects.filter(parent=self)
-        return parents
+        return Post.objects.filter(parent=self)
 
     def get_window_reposts(self):
-        parents = Post.objects.filter(parent=self)
-        return parents[0:6]
+        return Post.objects.filter(parent=self)[0:6]
 
     def count_reposts(self):
         parents = self.get_reposts()
@@ -663,8 +659,7 @@ class Post(models.Model):
         ads_posts = PostAdNumbers.objects.filter(post=self.pk).values('user')
         user_ids = posts + ads_posts
         ids = [use['user'] for use in user_ids]
-        sities = UserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
-        return sities
+        return UserLocation.objects.filter(user_id__in=ids).distinct('city_ru')
 
     def get_sity_count(self, sity):
         from stst.models import PostNumbers, PostAdNumbers
@@ -674,8 +669,7 @@ class Post(models.Model):
         ads_posts = PostAdNumbers.objects.filter(post=self.pk).values('user')
         user_ids = posts + ads_posts
         ids = [use['user'] for use in user_ids]
-        count = UserLocation.objects.filter(user_id__in=ids, city_ru=sity).values('pk').count()
-        return count
+        return UserLocation.objects.filter(user_id__in=ids, city_ru=sity).values('pk').count()
 
     def all_visits_count(self):
         count = self.visits_count() + self.ad_visits_count()
@@ -697,9 +691,9 @@ class Post(models.Model):
         return False
 
     def visits_count(self):
-        return self.views
+        return self.view
     def ad_visits_count(self):
-        return self.ad_views
+        return self.ad_view
 
     def get_attach_photos(self):
         if "pho" in self.attach:
@@ -739,9 +733,9 @@ class PostComment(models.Model):
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
 
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -768,14 +762,20 @@ class PostComment(models.Model):
         return PostCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def likes_count(self):
-        if self.likes > 0:
-            return self.likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
 
     def dislikes_count(self):
-        if self.dislikes > 0:
-            return self.dislikes
+        if self.dislike > 0:
+            return self.dislike
+        else:
+            return ''
+
+    def reposts_count(self):
+        if self.repost > 0:
+            return self.repost
         else:
             return ''
 

@@ -310,11 +310,11 @@ class Photo(models.Model):
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
 
-    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
-    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -362,8 +362,8 @@ class Photo(models.Model):
         return PhotoComment.objects.filter(photo_id=self.pk, parent__isnull=True)
 
     def count_comments(self):
-        if self.comments > 0:
-            return self.comments
+        if self.comment > 0:
+            return self.comment
         else:
             return ''
 
@@ -379,14 +379,14 @@ class Photo(models.Model):
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
 
     def likes_count(self):
-        if self.likes > 0:
-            return self.likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
 
     def reposts_count(self):
-        if self.reposts > 0:
-            return self.reposts
+        if self.repost > 0:
+            return self.repost
         else:
             return ''
 
@@ -447,9 +447,9 @@ class PhotoComment(models.Model):
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
 
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
@@ -481,28 +481,36 @@ class PhotoComment(models.Model):
             return str(count) + " ответов"
 
     def likes(self):
+        from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
 
     def window_likes(self):
+        from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)[0:6]
 
     def dislikes(self):
+        from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 
     def window_dislikes(self):
+        from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)[0:6]
 
     def likes_count(self):
-        likes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk").count()
-        if likes > 0:
-            return likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
 
     def dislikes_count(self):
-        dislikes = PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk").count()
-        if dislikes > 0:
-            return dislikes
+        if self.dislike > 0:
+            return self.dislike
+        else:
+            return ''
+
+    def reposts_count(self):
+        if self.repost > 0:
+            return self.repost
         else:
             return ''
 

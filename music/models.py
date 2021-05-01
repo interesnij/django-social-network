@@ -385,10 +385,10 @@ class Music(models.Model):
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
 
-    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         verbose_name = "спарсенные треки"

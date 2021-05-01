@@ -51,14 +51,20 @@ class UserGallery(TemplateView):
     template_name = None
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_user_photo
+        from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_photo_list()
+        if reqest.user.pk == self.user.pk:
+            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
+        else:
+            self.get_lists = PhotoList.get_user_lists(self.user.pk)
+        self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_photo(self.list, "users/user_gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['list'] = self.user, self.list
+        c['user'], c['list'], c['get_lists'], c['count_lists'] = self.user, self.list, self.get_lists, self.count_lists
         return c
 
 class UserPhotoList(TemplateView):

@@ -321,12 +321,12 @@ class Good(models.Model):
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	list = models.ManyToManyField(GoodList, related_name="good_list", blank=True)
 
-	comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
-	views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-	ad_views = models.PositiveIntegerField(default=0, verbose_name="Кол-во рекламных просмотров")
-	likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-	dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-	reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+	comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+	view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+	ad_view = models.PositiveIntegerField(default=0, verbose_name="Кол-во рекламных просмотров")
+	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+	dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+	repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	def __str__(self):
 		return self.title
@@ -342,8 +342,7 @@ class Good(models.Model):
 		ordering = ["-created"]
 
 	def likes(self):
-		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
-		return likes
+		return GoodVotes.objects.filter(parent=self, vote__gt=0)
 
 	def is_draft(self):
 		if self.status == Good.DRAFT:
@@ -352,56 +351,50 @@ class Good(models.Model):
 			return False
 
 	def likes_count(self):
-		likes = GoodVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
-		if likes > 0:
-			return likes
+		if self.like > 0:
+			return self.like
 		else:
 			return ''
 
 	def window_likes(self):
-		likes = GoodVotes.objects.filter(parent=self, vote__gt=0)
-		return likes[0:6]
+		from common.model.votes import GoodVotes
+		return GoodVotes.objects.filter(parent=self, vote__gt=0)[0:6]
 
 	def dislikes(self):
-		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
-		return dislikes
+		from common.model.votes import GoodVotes
+		return GoodVotes.objects.filter(parent=self, vote__lt=0)
 
 	def dislikes_count(self):
-		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-		if dislikes > 0:
-			return dislikes
+		if self.dislike > 0:
+			return self.dislike
 		else:
 			return ''
 
 	def window_dislikes(self):
-		dislikes = GoodVotes.objects.filter(parent=self, vote__lt=0)
-		return dislikes[0:6]
+		from common.model.votes import GoodVotes
+		return GoodVotes.objects.filter(parent=self, vote__lt=0)[0:6]
 
 	def get_reposts(self):
-		parents = Good.objects.filter(parent=self)
-		return parents
+		return Good.objects.filter(parent=self)
 
 	def get_window_reposts(self):
-		parents = Good.objects.filter(parent=self)
-		return parents[0:6]
+		return Good.objects.filter(parent=self)[0:6]
 
 	def count_reposts(self):
-		parents = self.get_reposts()
-		count_reposts = parents.count()
-		return count_reposts
+		if self.repost > 0:
+			return self.repost
+		else:
+			return ''
 
 	def get_comments(self):
 		comments_query = Q(good_id=self.pk)
 		comments_query.add(Q(parent__isnull=True), Q.AND)
 		return GoodComment.objects.filter(comments_query)
 	def count_comments(self):
-		parent_comments = GoodComment.objects.filter(good_id=self.pk, is_deleted=False).values("pk")
-		parents_count = parent_comments.count()
-		i = 0
-		for comment in parent_comments:
-			i = i + comment.count_replies()
-		i = i + parents_count
-		return i
+		if self.comment > 0:
+			return self.comment
+		else:
+			return ''
 
 	def all_visits_count(self):
 		from stst.models import GoodNumbers
@@ -589,9 +582,9 @@ class GoodComment(models.Model):
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 	status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
 
-	likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-	dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-	reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+	dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+	repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )
@@ -602,39 +595,42 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def get_replies(self):
-		get_comments = GoodComment.objects.filter(parent=self).all()
-		return get_comments
+		return GoodComment.objects.filter(parent=self).all()
 
 	def count_replies(self):
 		return self.good_comment_replies.filter(is_deleted=False).values("pk").count()
 
 	def likes(self):
-		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-		return likes
+		from common.model.votes import GoodCommentVotes
+		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
 
 	def window_likes(self):
-		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-		return likes[0:6]
+		from common.model.votes import GoodCommentVotes
+		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)[0:6]
 
 	def dislikes(self):
-		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
-		return dislikes
+		from common.model.votes import GoodCommentVotes
+		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 
 	def window_dislikes(self):
-		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
-		return dislikes[0:6]
+		from common.model.votes import GoodCommentVotes
+		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)[0:6]
 
 	def likes_count(self):
-		likes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0).values("pk").count()
-		if likes > 0:
-			return likes
+		if self.like > 0:
+			return self.like
 		else:
 			return ''
 
 	def dislikes_count(self):
-		dislikes = GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0).values("pk").count()
-		if dislikes > 0:
-			return dislikes
+		if self.dislike > 0:
+			return self.dislike
+		else:
+			return ''
+
+	def reposts_count(self):
+		if self.repost > 0:
+			return self.repost
 		else:
 			return ''
 
