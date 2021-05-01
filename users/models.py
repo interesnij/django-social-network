@@ -946,10 +946,7 @@ class User(AbstractUser):
 
     def get_good_list(self):
         from goods.models import GoodList
-        try:
-            GoodList.objects.get(creator_id=self.pk, community__isnull=True, type="MAI")
-        except:
-            GoodList.objects.create(creator_id=self.pk, type=GoodList.MAIN, name="Основной список")
+        return GoodList.objects.get(creator_id=self.pk, community__isnull=True, type="MAI")
     def get_playlist(self):
         from music.models import SoundList
         return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
