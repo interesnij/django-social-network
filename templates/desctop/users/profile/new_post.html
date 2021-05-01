@@ -30,7 +30,7 @@
                   <a class="btn btn-link btn-sm pointer menu_drop">
                     список
                   </a>
-                  <div class="dropdown-menu" style="right: 0;left: 100px;">
+                  <div class="dropdown-menu" style="right: 0;left: 100px;width: 250px;">
                     {% for object in request.user.get_post_lists %}
                       <span data-pk="{{ object.pk }}">
                         {% if object.is_main %}
@@ -41,7 +41,7 @@
                           {{ object.name }}
                         </span>
                         {% else %}
-                        <span class="dropdown-item post_list_select" style="padding-left: 10px;">
+                        <span class="dropdown-item post_list_select" style="padding-left: 30px;">
                           {{ object.name }}
                         </span>
                         {% endif %}
