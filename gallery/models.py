@@ -359,18 +359,13 @@ class Photo(models.Model):
         return self.photo_list.filter(creator=self.creator).exists()
 
     def get_comments(self):
-        comments_query = Q(photo_id=self.pk)
-        comments_query.add(Q(parent__isnull=True), Q.AND)
-        return PhotoComment.objects.filter(comments_query)
+        return PhotoComment.objects.filter(photo_id=self.pk, parent__isnull=True)
 
     def count_comments(self):
-        parent_comments = PhotoComment.objects.filter(photo_id=self.pk, is_deleted=False)
-        parents_count = parent_comments.count()
-        i = 0
-        for comment in parent_comments:
-            i = i + comment.count_replies()
-        i = i + parents_count
-        return i
+        if self.comments > 0:
+            return self.comments
+        else:
+            return ''
 
     def is_avatar(self, user):
         try:
@@ -380,33 +375,38 @@ class Photo(models.Model):
             return None
 
     def likes(self):
+        from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
 
     def likes_count(self):
-        likes = PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0).values("pk").count()
-        if likes > 0:
-            return likes
+        if self.likes > 0:
+            return self.likes
+        else:
+            return ''
+
+    def reposts_count(self):
+        if self.reposts > 0:
+            return self.reposts
         else:
             return ''
 
     def window_likes(self):
-        likes = PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
-        return likes[0:6]
+        from common.model.votes import PhotoVotes
+        return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
 
     def dislikes(self):
-        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
-        return dislikes
+        from common.model.votes import PhotoVotes
+        return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
 
     def dislikes_count(self):
-        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0).values("pk").count()
-        if dislikes > 0:
-            return dislikes
+        if self.dislikes > 0:
+            return self.dislikes
         else:
             return ''
 
     def window_dislikes(self):
-        dislikes = PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
-        return dislikes[0:6]
+        from common.model.votes import PhotoVotes
+        return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
 
     def delete_photo(self):
         try:
