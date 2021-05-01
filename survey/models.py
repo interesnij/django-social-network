@@ -108,17 +108,17 @@ class SurveyList(models.Model):
     @classmethod
     def get_community_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(Q(type="LIS")), Q.AND)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).order_by("order")
     @classmethod
     def is_have_community_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(Q(type="LIS")), Q.AND)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(Q(type="LIS")), Q.AND)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
