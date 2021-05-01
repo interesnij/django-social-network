@@ -54,7 +54,7 @@ class UserGallery(TemplateView):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_photo_list()
-        if reqest.user.pk == self.user.pk:
+        if request.user.pk == self.user.pk:
             self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
