@@ -42,13 +42,13 @@ class PostList(models.Model):
             community=instance
             PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", creator=community.creator)
             PostList.objects.create(community=community, type=PostList.THIS_FIXED, name="Закреплённый список", creator=community.creator)
-            PostList.objects.create(community=community, type=PostList.DRAFT, name="Предложка", creator=community.creator)
+            PostList.objects.create(community=community, type=PostList.THIS_DRAFT, name="Предложка", creator=community.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
             PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
             PostList.objects.create(creator=instance, type=PostList.THIS_FIXED, name="Закреплённый список")
-            PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
+            PostList.objects.create(creator=instance, type=PostList.THIS_DRAFT, name="Предложка")
 
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()

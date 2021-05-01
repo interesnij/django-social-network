@@ -7,6 +7,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Q
 
 
 class SoundGenres(models.Model):
