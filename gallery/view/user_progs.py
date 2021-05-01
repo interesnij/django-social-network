@@ -178,6 +178,7 @@ class UserPhotoDescription(View):
 
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
@@ -189,6 +190,7 @@ class UserPhotoDescription(View):
 class UserPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.delete_photo()
             return HttpResponse()
@@ -198,6 +200,7 @@ class UserPhotoDelete(View):
 class UserPhotoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.abort_delete_photo()
             return HttpResponse()
@@ -207,6 +210,7 @@ class UserPhotoAbortDelete(View):
 class UserOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
@@ -217,6 +221,7 @@ class UserOpenCommentPhoto(View):
 class UserCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
@@ -227,6 +232,7 @@ class UserCloseCommentPhoto(View):
 class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = False
             photo.save(update_fields=['votes_on'])
@@ -237,6 +243,7 @@ class UserOffVotesPhoto(View):
 class UserOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
@@ -247,6 +254,7 @@ class UserOnVotesPhoto(View):
 class UserOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.is_public = False
             photo.save(update_fields=['is_public'])
@@ -257,6 +265,7 @@ class UserOnPrivatePhoto(View):
 class UserOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.is_public = True
             photo.save(update_fields=['is_public'])
@@ -367,6 +376,7 @@ class PhotoListUserEdit(TemplateView):
 class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
             list.delete_list()
             return HttpResponse()
@@ -376,6 +386,7 @@ class PhotoListUserDelete(View):
 class PhotoListUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.abort_delete_list()
             return HttpResponse()
