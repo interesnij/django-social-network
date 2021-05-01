@@ -118,20 +118,10 @@ class PostList(models.Model):
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
-    def is_have_user_staff_lists(cls, user_pk):
-        query = ~Q(type__contains="_")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
     def get_user_lists(cls, user_pk):
-        query = Q(type="LIS")
+        query = Q(type="LIS")|Q(type="MAI")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_user_lists(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_user_lists_count(cls, user_pk):
         query = Q(type="LIS")

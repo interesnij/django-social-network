@@ -35,7 +35,7 @@ class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'phone']
+    list_display = ['first_name', 'last_name', 'phone']
     inlines = [
         UserNotificationsInline,
         UserNotificationsPostInline,

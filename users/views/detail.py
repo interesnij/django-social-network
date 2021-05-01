@@ -245,8 +245,9 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/my_user_child.html"
                 else:
                     self.template_name = "users/account/my_user.html"
+                    self.post_lists = PostList.get_user_staff_lists(user_pk)
             elif r_user_pk != user_pk:
-                self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
+                self.post_lists, self.get_buttons_block, self.common_frends = PostList.get_user_lists(user_pk), request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_blocked():
@@ -294,8 +295,8 @@ class ProfileUserView(TemplateView):
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
         c['user'], c['fix_list'], c['photo_list'], c['video_list'], c['playlist'], \
-        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'] = \
+        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'], c['posts_lists'] = \
         self.user, self.user.get_fix_list(), self.user.get_photo_list(), self.user.get_video_list(), \
         self.user.get_playlist(), self.user.get_doc_list(), self.user.get_good_list(), \
-        self.get_buttons_block, self.common_frends
+        self.get_buttons_block, self.common_frends, self.posts_lists
         return c
