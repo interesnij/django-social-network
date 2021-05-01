@@ -97,15 +97,17 @@ class PostList(models.Model):
     def is_full_list(self):
         return self.is_fix_list() and self.count_posts() > 10
 
-    def is_main_list(self):
+    def is_main(self):
         return self.type == self.MAIN
-    def is_fix_list(self):
-        return self.type == self.FIX
-    def is_list_list(self):
+    def is_fix(self):
+        return self.type == self.THIS_FIXED
+    def is_list(self):
         return self.type == self.LIST
-    def is_deleted_list(self):
-        return self.type == self.DELETED
-    def is_private_list(self):
+    def is_deleted(self):
+        return self.type == self.THIS_DELETED
+    def is_closed(self):
+        return self.type == self.THIS_CLOSED
+    def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type[0] == "_"
