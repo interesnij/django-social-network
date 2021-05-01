@@ -34,9 +34,9 @@ class VideoCategory(models.Model):
 
 
 class VideoList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = 'TDEL', 'TDELP', 'TDELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = 'TCLO', 'TCLOP', 'TCLOM', 'TCLOMA'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
         (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -112,54 +112,54 @@ class VideoList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = Q(type="LIS") | Q(type="PRI")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query.add(Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_user_staff_lists(cls, user_pk):
-        query = Q(type="LIS") | Q(type="PRI")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query.add(Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_user_lists(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).order_by("order")
     @classmethod
     def is_have_user_lists(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_user_lists_count(cls, user_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = Q(type="LIS") | Q(type="PRI")
-        query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
+        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
+        query.add(~Q(type__contains="_")), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
-        query = Q(type="LIS") | Q(type="PRI")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
+        query.add(~Q(type__contains="_")), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
+        query.add(Q(type="LIS")), Q.AND)
         return cls.objects.filter(query).order_by("order")
     @classmethod
     def is_have_community_lists(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
+        query.add(Q(type="LIS")), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists_count(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
+        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
+        query.add(Q(type="LIS")), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
