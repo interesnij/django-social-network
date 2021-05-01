@@ -197,7 +197,7 @@ class AllUsers(ListView):
 
 		self.template_name = get_default_template("users/u_list/", "all_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		all_query = Q()
-		all_query.add(~Q(Q(type=User.DELETED)|Q(type=User.BLOCKED)|Q(type=User.THIS_PHONE_NO_VERIFIED)), Q.AND)
+		all_query.add(~Q(type__contains="_"), Q.AND)
 		if request.user.is_anonymous or request.user.is_child():
 			all_query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
 		self.all_users = User.objects.filter(all_query)
