@@ -228,10 +228,6 @@ on('#ajax', 'click', '.c_photo_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
-on('body', 'click', '#c_add_multi_photos', function(event) {
-  this.previousElementSibling.click();
-})
-
 on('#ajax', 'change', '#c_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));

@@ -242,9 +242,6 @@ on('#ajax', 'click', '.c_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_posts_comment_dislikes")
 });
 
-on('body', 'click', '#community_avatar_btn', function(event) {
-  this.previousElementSibling.click();
-})
 on('#ajax', 'change', '#community_avatar_upload', function() {
   parent = this.parentElement;
   post_with_pk_and_reload(parent, "/gallery/community_progs/add_avatar/")
@@ -369,11 +366,6 @@ on('#ajax', 'click', '.c_post_wall_abort_remove', function() {
 
   link.send();
 });
-
-
-on('body', 'click', '#c_multi_photos', function(event) {
-  this.previousElementSibling.click();
-})
 
 on('#ajax', 'change', '#c_photo_post_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

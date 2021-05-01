@@ -101,9 +101,6 @@ on('#ajax', 'click', '.create_ajax', function() {
     open_load_fullscreen(link, loader)
 });
 
-on('body', 'click', '#u_multi_comments_photos', function(event) {
-  this.previousElementSibling.click();
-})
 
 on('#ajax', 'click', '.u_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

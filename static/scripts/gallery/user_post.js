@@ -224,10 +224,6 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
-on('body', 'click', '#u_add_multi_photos', function(event) {
-  this.previousElementSibling.click();
-})
-
 on('#ajax', 'change', '#u_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
@@ -266,9 +262,6 @@ on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
   link_.send(form_data);
 });
 
-on('body', 'click', '#user_avatar_btn', function(event) {
-  this.previousElementSibling.click();
-})
 on('#ajax', 'change', '#user_avatar_upload', function() {
   parent = this.parentElement;
   post_with_pk_and_reload(parent, "/gallery/user_progs/add_avatar/")
