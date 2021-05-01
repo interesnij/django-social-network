@@ -927,19 +927,19 @@ class User(AbstractUser):
 
     def get_photo_lists(self):
         from gallery.models import PhotoList
-        return PhotoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
+        return PhotoList.objects.filter(creator_id=self.id, type__contains="_")
 
     def get_video_lists(self):
         from video.models import VideoList
-        return VideoList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_"))
+        return VideoList.objects.filter(creator_id=self.id, type__contains="_")
 
     def get_audio_playlists(self):
         from music.models import SoundList
-        return SoundList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
+        return SoundList.objects.filter(creator_id=self.id, type__contains="_")
 
     def get_good_lists(self):
         from goods.models import GoodList
-        return GoodList.objects.filter(Q(creator_id=self.id)|~Q(type__contains="_")).order_by("order")
+        return GoodList.objects.filter(creator_id=self.id, type__contains="_")
 
     def get_good_list(self):
         from goods.models import GoodList
