@@ -127,8 +127,8 @@ class UserPhoto(TemplateView):
         context = super(UserPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["list"] = self.list
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
@@ -154,8 +154,8 @@ class UserPhotosListPhoto(TemplateView):
         context = super(UserPhotosListPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["list"] = self.list
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["avatar"] = self.photo.is_avatar(self.request.user)
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
@@ -186,8 +186,8 @@ class UserWallPhoto(TemplateView):
         context["object"] = self.photo
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["list"] = self.list
         context["user"] = self.user
         return context
@@ -217,8 +217,8 @@ class UserDetailAvatar(TemplateView):
         context = super(UserDetailAvatar,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["user"] = self.user
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         context["list"] = self.list
         return context
@@ -247,8 +247,8 @@ class UserPostPhoto(TemplateView):
 		context["object"] = self.photo
 		context["post"] = self.post
 		context["user"] = self.request.user
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
 		return context
 
@@ -275,8 +275,8 @@ class UserCommentPhoto(TemplateView):
 		context = super(UserCommentPhoto,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["user"] = self.request.user
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
 		return context
 
@@ -354,7 +354,7 @@ class UserChatPhoto(TemplateView):
         context = super(UserChatPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["chat"] = self.chat
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk, is_deleted=False).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
