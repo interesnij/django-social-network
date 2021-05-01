@@ -578,12 +578,15 @@ class User(AbstractUser):
         return UserTempSoundList.objects.filter(user=self, tag=None, genre=None).exists()
 
     def is_user_temp_list(self, list):
+        from music.models import UserTempSoundList
         return UserTempSoundList.objects.filter(user=self, tag=None, genre=None, list=list).exists()
 
     def is_tag_playlist(self, tag):
+        from music.models import UserTempSoundList
         return UserTempSoundList.objects.filter(user=self, tag=tag, genre=None).exists()
 
     def is_genre_playlist(self, genre):
+        from music.models import UserTempSoundList
         return UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
 
     def is_user_administrator(self):
