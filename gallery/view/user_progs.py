@@ -45,12 +45,11 @@ class UserAddAvatar(View):
                 _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
             except:
                 _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
-            photo = Photo.objects.create(file=photo_input, preview=photo_input,creator=user)
+            photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
             photo.list.add(_list)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
-            user_notify(request.user, new_post.creator.pk, None, "pho"+str(photo.pk), "u_photo_create", "ITE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

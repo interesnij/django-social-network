@@ -100,11 +100,10 @@ class CommunityAddAvatar(View):
                 _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
             except:
                 _list = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.AVATAR, description="Фото со страницы сообщества")
-            photo = Photo.objects.create(file=photo_input, preview=photo_input, creator=request.user)
+            photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
             photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
-            community_notify(request.user, community, None, "pho"+str(photo.pk), "c_photo_notify", "ITE")
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
