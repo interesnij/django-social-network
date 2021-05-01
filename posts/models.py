@@ -114,9 +114,9 @@ class PostList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        №query = ~Q(type__contains="_")
+        query = ~Q(type__contains="_")
         query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
-        return cls.objects.filter(query) 
+        return cls.objects.filter(query)
     @classmethod
     def get_user_lists(cls, user_pk):
         query = Q(type="LIS")|Q(type="MAI")
