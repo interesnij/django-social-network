@@ -233,7 +233,7 @@ class ProfileUserView(TemplateView):
         from posts.models import PostList
 
         self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), int(self.kwargs["pk"]), request.user.pk
-
+        self.post_lists = PostList.get_user_lists(user_pk)
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
@@ -248,7 +248,7 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/my_user.html"
                     self.post_lists = PostList.get_user_staff_lists(user_pk)
             elif r_user_pk != user_pk:
-                self.post_lists, self.get_buttons_block, self.common_frends = PostList.get_user_lists(user_pk), request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
+                self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_blocked():
