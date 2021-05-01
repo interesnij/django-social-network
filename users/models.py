@@ -943,7 +943,7 @@ class User(AbstractUser):
 
     def get_good_list(self):
         from goods.models import GoodList
-        GoodList.objects.get(creator_id=self.pk)
+        GoodList.objects.get(creator=self, community__isnull=True, type=GoodList.MAIN)
     def get_playlist(self):
         from music.models import SoundList
         return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
