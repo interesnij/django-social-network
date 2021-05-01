@@ -804,45 +804,65 @@ class User(AbstractUser):
         return self.profile.articles
 
     def plus_photos(self, count):
-        return self.profile.photos += count
+        self.profile.photos += count
+        return self.profile.save(update_fields=['photos'])
     def minus_photos(self, count):
-        return self.profile.photos -= count
+        self.profile.photos -= count
+        return self.profile.save(update_fields=['photos'])
     def plus_goods(self, count):
-        return self.profile.goods += count
+        self.profile.goods += count
+        return self.profile.save(update_fields=['goods'])
     def minus_goods(self, count):
-        return self.profile.goods -= count
+        self.profile.goods -= count
+        return self.profile.save(update_fields=['goods'])
     def plus_posts(self, count):
-        return self.profile.posts += count
+        self.profile.posts += count
+        return self.profile.save(update_fields=['posts'])
     def minus_posts(self, count):
-        return self.profile.posts -= count
+        self.profile.posts -= count
+        return self.profile.save(update_fields=['posts'])
     def plus_videos(self, count):
-        return self.profile.videos += count
+        self.profile.videos += count
+        return self.profile.save(update_fields=['videos'])
     def minus_videos(self, count):
-        return self.profile.videos -= count
+        self.profile.videos -= count
+        return self.profile.save(update_fields=['videos'])
     def plus_docs(self, count):
-        return self.profile.docs += count
+        self.profile.docs += count
+        return self.profile.save(update_fields=['docs'])
     def minus_docs(self, count):
-        return self.profile.docs -= count
+        self.profile.docs -= count
+        return self.profile.save(update_fields=['docs'])
     def plus_tracks(self, count):
-        return self.profile.tracks += count
+        self.profile.tracks += count
+        return self.profile.save(update_fields=['tracks'])
     def minus_tracks(self, count):
-        return self.profile.tracks -= count
+        self.profile.tracks -= count
+        return self.profile.save(update_fields=['tracks'])
     def plus_communities(self, count):
-        return self.profile.communities += count
+        self.profile.communities += count
+        return self.profile.save(update_fields=['communities'])
     def minus_communities(self, count):
-        return self.profile.communities -= count
+        self.profile.communities -= count
+        return self.profile.save(update_fields=['communities'])
     def plus_articles(self, count):
-        return self.profile.articles += count
+        self.profile.articles += count
+        return self.profile.save(update_fields=['articles'])
     def minus_articles(self, count):
-        return self.profile.articles -= count
+        self.profile.articles -= count
+        return self.profile.save(update_fields=['articles'])
     def plus_friends(self, count):
-        return self.profile.friends += count
+        self.profile.friends += count
+        return self.profile.save(update_fields=['friends'])
     def minus_friends(self, count):
-        return self.profile.friends -= count
+        self.profile.friends -= count
+        return self.profile.save(update_fields=['friends'])
     def plus_follows(self, count):
-        return self.profile.follows += count
+        self.profile.follows += count
+        return self.profile.save(update_fields=['follows'])
     def minus_follows(self, count):
-        return self.profile.follows -= count
+        self.profile.follows -= count
+        return self.profile.save(update_fields=['follows'])
 
 
     ''''' GET всякие  219-186 '''''
