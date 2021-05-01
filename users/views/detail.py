@@ -230,6 +230,7 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
         import re
+        from posts.models import PostList
 
         self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), int(self.kwargs["pk"]), request.user.pk
 
