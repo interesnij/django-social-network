@@ -921,7 +921,7 @@ class User(AbstractUser):
     def get_survey_lists(self):
         from survey.models import SurveyList
         query = Q(creator_id=self.id, community__isnull=True)
-        query.add(~Q(type__contains="_") Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return SurveyList.objects.filter(query).order_by("order")
 
     def get_post_categories(self):
