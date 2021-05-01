@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 
 class PostList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED, THIS_DRAFT = 'MAI', 'LIS', 'MAN', 'TPRO', 'PRI', '_FIX', '_DRA'
+    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED, THIS_DRAFT = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI', '_FIX', '_DRA'
     THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
     THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
     TYPE = (
@@ -36,13 +36,12 @@ class PostList(models.Model):
         verbose_name_plural = "списки записей"
         ordering = ['order']
 
-    #@receiver(post_save, sender=settings.COMMUNITY_MODEL)
+    @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            community=instance
-            PostList.objects.create(community=community, type=PostList.MAIN, name="Основной список", creator=community.creator)
-            PostList.objects.create(community=community, type=PostList.THIS_FIXED, name="Закреплённый список", creator=community.creator)
-            PostList.objects.create(community=community, type=PostList.THIS_DRAFT, name="Предложка", creator=community.creator)
+            PostList.objects.create(community=instance, type=PostList.MAIN, name="Основной список", creator=instance.creator)
+            PostList.objects.create(community=instance, type=PostList.THIS_FIXED, name="Закреплённый список", creator=instance.creator)
+            PostList.objects.create(community=instance, type=PostList.THIS_DRAFT, name="Предложка", creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
@@ -71,7 +70,7 @@ class PostList(models.Model):
         posts = self.post_list.select_related(*select_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
         return posts
     def get_posts_ids(self):
-        ids =  self.post_list.filter(is_deleted=False).values("pk")
+        ids = self.post_list.exclude(type__contains="_").values("pk")
         return [id['pk'] for id in ids]
 
     def is_user_can_add_list(self, user_id):
@@ -115,7 +114,7 @@ class PostList(models.Model):
     @classmethod
     def get_user_staff_lists(cls, user_pk):
         query = ~Q(type__contains="_")
-        query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
+        #query.add(Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def get_user_lists(cls, user_pk):
@@ -134,20 +133,10 @@ class PostList(models.Model):
         query.add(Q(Q(community_id=user_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
-    def is_have_community_staff_lists(cls, community_pk):
-        query = ~Q(type__contains="_")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
-    @classmethod
     def get_community_lists(cls, community_pk):
         query = Q(type="LIS")
         query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
         return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_community_lists(cls, community_pk):
-        query = Q(type="LIS")
-        query.add(Q(Q(community_id=community_pk)|Q(communities__id=user_pk)), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(type="LIS")
