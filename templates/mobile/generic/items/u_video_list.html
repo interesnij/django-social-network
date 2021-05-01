@@ -16,7 +16,7 @@
             {{ list.creator.get_full_name_genitive }}
           </a>
           <br>
-          Видеороликов: {{ list.count_video }}
+          Видеороликов: {{ list.count_items }}
         </p>
       </div>
       {% if list.creator.pk == request.user %}

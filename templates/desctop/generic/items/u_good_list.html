@@ -16,7 +16,7 @@
             {{ list.creator.get_full_name_genitive }}
           </a>
           <br>
-          Товаров: {{ list.count_goods }}
+          Товаров: {{ list.count_items }}
         </p>
       </div>
       {% if request.user.pk != list.creator.pk %}

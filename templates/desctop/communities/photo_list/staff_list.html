@@ -9,7 +9,7 @@
       Галерея
     </a> - {{ list.name }}
   </h5>
-  Фото: {{ list.count_photo }}
+  Фото: {{ list.count_items }}
 
   {% if not list.is_user_list and community.community_private_settings.open_photo %}
   <form id="c_add_photos">

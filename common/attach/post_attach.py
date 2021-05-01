@@ -27,8 +27,8 @@ def get_u_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_all_audio_playlists():
-                        if list.is_track_in_list(music.pk):
+                    for list in user.get_audio_playlists():
+                        if list.is_item_in_list(music.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
@@ -65,8 +65,8 @@ def get_u_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_all_docs_lists():
-                        if list.is_doc_in_list(doc.pk):
+                    for list in user.get_docs_lists():
+                        if list.is_item_in_list(doc.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_doc_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_add_doc_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
@@ -123,7 +123,7 @@ def get_u_post_attach(post, user):
                         add_svg = '<span title="Добавить плейлист" class="u_add_music_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in playlist.get_users_ids():
                         add_svg = '<span title="Удалить плейлист" class="u_remove_music_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(playlist.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Треков: ', str(playlist.count_tracks()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(playlist.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
         elif item[:3] == "ldo":
@@ -140,7 +140,7 @@ def get_u_post_attach(post, user):
                         add_svg = '<span title="Добавить список документов" class="u_add_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in list.get_users_ids():
                         add_svg = '<span title="Удалить список документов" class="u_remove_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_doc_list pointer">', list.name, '</h6><p>Список документов <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Документов: ', str(list.count_docs()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_doc_list pointer">', list.name, '</h6><p>Список документов <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
         elif item[:3] == "lph":
@@ -156,7 +156,7 @@ def get_u_post_attach(post, user):
                         add = '<a class="col pointer u_add_photo_list">В коллекцию</a>'
                     elif user.pk in list.get_users_ids():
                         add = '<a class="col pointer u_remove_photo_list">Удалить</a>'
-                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="u_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', str(list.creator), '</a></p><hr class="my-3"><a class="u_load_photo_list pointer">', list.count_photo_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
+                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="u_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', str(list.creator), '</a></p><hr class="my-3"><a class="u_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
             except:
                 pass
         elif item[:3] == "lgo":
@@ -171,7 +171,7 @@ def get_u_post_attach(post, user):
                         add = '<a class="btn btn-sm primary-gradient u_add_good_list"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a>'
                     elif user.pk in list.get_users_ids():
                         add = '<a class="btn btn-sm primary-gradient u_remove_good_list"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg></a>'
-                block = ''.join([block, '<div data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 u_load_good_list pointer"><a>', list.name, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="u_load_good_list pointer image_fit_small" src="', list.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', creator.get_full_name(), '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_goods_ru(), '</h6></div>'])
+                block = ''.join([block, '<div data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 u_load_good_list pointer"><a>', list.name, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="u_load_good_list pointer image_fit_small" src="', list.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', creator.get_full_name(), '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
             except:
                 pass
         elif item[:3] == "lvi":
@@ -188,7 +188,7 @@ def get_u_post_attach(post, user):
                         add_svg = '<span title="Добавить список видеозаписей" class="u_add_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in list.get_users_ids():
                         add_svg = '<span title="Удалить список видеозаписей" class="u_remove_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Видеозаписей: ', str(list.count_video()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a class="ajax underline" href="', creator.get_link(), '">', str(creator.get_full_name_genitive()), '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
@@ -221,8 +221,8 @@ def get_c_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_all_audio_playlists():
-                        if list.is_track_in_list(music.pk):
+                    for list in user.get_audio_playlists():
+                        if list.is_item_in_list(music.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_add_track_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
@@ -259,8 +259,8 @@ def get_c_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_all_docs_lists():
-                        if list.is_doc_in_list(doc.pk):
+                    for list in user.get_docs_lists():
+                        if list.is_item_in_list(doc.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_remove_doc_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_add_doc_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
@@ -317,7 +317,7 @@ def get_c_post_attach(post, user):
                         add_svg = '<span title="Добавить плейлист" class="c_add_music_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in playlist.get_users_ids():
                         add_svg = '<span title="Удалить плейлист" class="c_remove_music_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(community.pk), '" data-uuid="', str(playlist.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_music_list pointer">', playlist.name, '</h6><p>Плейлист - <a class="ajax underline" href="', community.get_link(), '">', str(community.name), '</a><br>Треков: ', str(playlist.count_tracks()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(community.pk), '" data-uuid="', str(playlist.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_music_list pointer">', playlist.name, '</h6><p>Плейлист - <a class="ajax underline" href="', community.get_link(), '">', str(community.name), '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
         elif item[:3] == "ldo":
@@ -337,7 +337,7 @@ def get_c_post_attach(post, user):
                         add_svg = '<span title="Добавить список документов" class="c_add_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in list.get_users_ids():
                         add_svg = '<span title="Удалить список документов" class="c_remove_doc_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_doc_list pointer">', list.name, '</h6><p>Список документов - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Документов: ', str(list.count_docs()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_doc_list pointer">', list.name, '</h6><p>Список документов - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
         elif item[:3] == "lph":
@@ -356,7 +356,7 @@ def get_c_post_attach(post, user):
                         add = '<a class="col pointer c_add_photo_list">В коллекцию</a>'
                     elif user.pk in list.get_users_ids():
                         add = '<a class="col pointer c_remove_photo_list">Удалить</a>'
-                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', item.get_link(), '">', name, '</a></p><hr class="my-3"><a class="c_load_photo_list pointer">', list.count_photo_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
+                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', item.get_link(), '">', name, '</a></p><hr class="my-3"><a class="c_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
             except:
                 pass
         elif item[:3] == "lgo":
@@ -375,7 +375,7 @@ def get_c_post_attach(post, user):
                         add = '<a class="btn btn-sm primary-gradient c_add_good_list"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a>'
                     elif user.pk in list.get_users_ids():
                         add = '<a class="btn btn-sm primary-gradient c_remove_good_list"><svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg></a>'
-                block = ''.join([block, '<div data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 c_load_good_list pointer"><a>', list.title, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="c_load_good_list pointer image_fit_small" src="', list.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', item.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_goods_ru(), '</h6></div>'])
+                block = ''.join([block, '<div data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 c_load_good_list pointer"><a>', list.title, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="c_load_good_list pointer image_fit_small" src="', list.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', item.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
             except:
                 pass
         elif item[:3] == "lvi":
@@ -395,7 +395,7 @@ def get_c_post_attach(post, user):
                         add_svg = '<span title="Добавить список видеозаписей" class="c_add_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
                     elif user.pk in list.get_users_ids():
                         add_svg = '<span title="Удалить список видеозаписей" class="c_remove_video_list btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_video_list pointer">', list.namr, '</h6><p>Список видеозаписей - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_video()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="c_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 c_load_video_list pointer">', list.namr, '</h6><p>Список видеозаписей - <a class="ajax underline" href="', item.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])

@@ -20,7 +20,7 @@
             {{ list.creator.get_full_name_genitive }}
           </a>
           <br>
-          Фотографий: {{ list.count_photo }}
+          Фотографий: {{ list.count_items }}
         </p>
       </div>
       {% if list.creator.pk == request.user %}
