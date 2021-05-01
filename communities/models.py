@@ -76,6 +76,39 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def plus_photos(self, count):
+        return self.community_info.photos += count
+    def minus_photos(self, count):
+        return self.community_info.photos -= count
+    def plus_goods(self, count):
+        return self.community_info.goods += count
+    def minus_goods(self, count):
+        return self.community_info.goods -= count
+    def plus_posts(self, count):
+        return self.community_info.posts += count
+    def minus_posts(self, count):
+        return self.community_info.posts -= count
+    def plus_videos(self, count):
+        return self.community_info.videos += count
+    def minus_videos(self, count):
+        return self.community_info.videos -= count
+    def plus_docs(self, count):
+        return self.community_info.docs += count
+    def minus_docs(self, count):
+        return self.community_info.docs -= count
+    def plus_tracks(self, count):
+        return self.community_info.tracks += count
+    def minus_tracks(self, count):
+        return self.community_info.tracks -= count
+    def plus_articles(self, count):
+        return self.community_info.articles += count
+    def minus_articles(self, count):
+        return self.community_info.articles -= count
+    def plus_members(self, count):
+        return self.community_info.members += count
+    def minus_members(self, count):
+        return self.community_info.members -= count
+
     def is_deleted(self):
         return self.type == Community.DELETED
     def is_standart(self):

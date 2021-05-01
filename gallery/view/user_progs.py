@@ -47,6 +47,7 @@ class UserAddAvatar(View):
                 _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
             photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
             photo.list.add(_list)
+            self.user.plus_photos(1)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
@@ -66,6 +67,7 @@ class PhotoUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
+            self.user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
         else:
             raise Http404
@@ -83,6 +85,7 @@ class PhotoPhotoListUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
+            self.user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
         else:
             raise Http404
@@ -102,6 +105,7 @@ class PhotoAttachUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=None)
                 photos += [photo,]
+            self.user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404

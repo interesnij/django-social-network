@@ -46,6 +46,7 @@ class PhotoCommunityCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
+            community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
@@ -64,6 +65,7 @@ class PhotoListCommunityCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
+            community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})
         else:
             raise Http404
@@ -81,6 +83,7 @@ class PhotoAttachCommunityCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
                 photos += [photo,]
+            community.plus_photos(len(photos))
             return render_for_platform(request, 'communities/gallery/list.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
@@ -104,6 +107,7 @@ class CommunityAddAvatar(View):
             photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
+            community.plus_photos(1)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

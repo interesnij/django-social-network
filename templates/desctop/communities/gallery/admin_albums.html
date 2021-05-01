@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="card-body">
-              <a href="{% url 'community_list' pk=community.pk uuid=object.uuid %}" class="ajax">
+              <a href="{% url 'community_photo_list' pk=community.pk uuid=object.uuid %}" class="ajax">
                 {% if object.get_cover_photo %}
                   <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
                 {% else %}

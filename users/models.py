@@ -794,12 +794,55 @@ class User(AbstractUser):
         return self.user_blocks.values('pk').count()
     def count_goods(self):
         return self.profile.goods
+    def count_photos(self):
+        return self.profile.photos
     def count_docs(self):
-        return self.profile.goods
+        return self.profile.docs
     def count_public_posts(self):
         return self.profile.posts
     def count_public_articles(self):
         return self.profile.articles
+
+    def plus_photos(self, count):
+        return self.profile.photos += count
+    def minus_photos(self, count):
+        return self.profile.photos -= count
+    def plus_goods(self, count):
+        return self.profile.goods += count
+    def minus_goods(self, count):
+        return self.profile.goods -= count
+    def plus_posts(self, count):
+        return self.profile.posts += count
+    def minus_posts(self, count):
+        return self.profile.posts -= count
+    def plus_videos(self, count):
+        return self.profile.videos += count
+    def minus_videos(self, count):
+        return self.profile.videos -= count
+    def plus_docs(self, count):
+        return self.profile.docs += count
+    def minus_docs(self, count):
+        return self.profile.docs -= count
+    def plus_tracks(self, count):
+        return self.profile.tracks += count
+    def minus_tracks(self, count):
+        return self.profile.tracks -= count
+    def plus_communities(self, count):
+        return self.profile.communities += count
+    def minus_communities(self, count):
+        return self.profile.communities -= count
+    def plus_articles(self, count):
+        return self.profile.articles += count
+    def minus_articles(self, count):
+        return self.profile.articles -= count
+    def plus_friends(self, count):
+        return self.profile.friends += count
+    def minus_friends(self, count):
+        return self.profile.friends -= count
+    def plus_follows(self, count):
+        return self.profile.follows += count
+    def minus_follows(self, count):
+        return self.profile.follows -= count
 
 
     ''''' GET всякие  219-186 '''''
