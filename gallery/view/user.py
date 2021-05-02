@@ -202,10 +202,7 @@ class UserDetailAvatar(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.list = PhotoList.objects.get(creator=self.user, community__isnull=True, type=PhotoList.AVATAR)
-        except:
-            self.list = PhotoList.objects.create(creator=self.user, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
+        self.list = PhotoList.objects.get(creator=self.user, community__isnull=True, type=PhotoList.AVATAR)
         self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -287,11 +284,9 @@ class UserFirstAvatar(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		try:
-			self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
-		except:
-			self.list = PhotoList.objects.create(creator=self.user, type=PhotoList.AVATAR, title="Фото со страницы", description="Фото со страницы")
-		self.photo, self.photos = self.list.get_first_photo(), self.list.get_items()
+		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
+		self.photos = self.list.get_items()
+		self.photo = self.photos[0]
 		if request.is_ajax():
 			self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -302,7 +297,7 @@ class UserFirstAvatar(TemplateView):
 		context = super(UserFirstAvatar,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		try:
-			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, is_deleted=False).order_by('-pk').first()
+			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, status="PUB").order_by('-pk').first()
 		except:
 			pass
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
