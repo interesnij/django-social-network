@@ -2,7 +2,7 @@
 {% if photo_list %}
 {% for object in photo_list %}
   <div class="col-md-6 col-lg-4 u_photo_detail p-1 pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}">
-    <div class="card rounded-0 border-0 mb-3 progressive replace" data-href="{{ object.file.url }}">
+    <div class="progressive replace" data-href="{{ object.file.url }}">
       {% if object.preview %}
         <img class="preview image_fit_200" src="{{ object.preview.url }}" alt="img">
       {% else %}
