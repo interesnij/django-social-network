@@ -3,7 +3,7 @@ def get_notify(user, notify):
     if type[:1] == "PO":
         from common.items.post import get_post
         return get_post(user, notify)
-    elif type[:1] == "PH":
+    elif type == "PHOTO":
         from common.items.photo import get_photo
         return get_photo(user, notify)
     else:
