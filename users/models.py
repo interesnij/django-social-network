@@ -49,6 +49,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_last_location(self):
+        return UserLocation.objects.filter(user=self)[0]
+
     def get_verb_gender(self, verb):
         if self.is_women():
             return "W" + verb
