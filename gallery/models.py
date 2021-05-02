@@ -340,7 +340,7 @@ class Photo(models.Model):
 
                 community_id = community.pk
                 Wall.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
-                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall") 
+                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
                 for user_id in list.community.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
                     community_send_notify(photo.pk, creator.pk, user_id, community_id, None, "create_c_photo_notify")
@@ -379,6 +379,10 @@ class Photo(models.Model):
     def likes(self):
         from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
+        
+    def dislikes(self):
+        from common.model.votes import PhotoVotes
+        return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
 
     def likes_count(self):
         if self.like > 0:
@@ -395,10 +399,6 @@ class Photo(models.Model):
     def window_likes(self):
         from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
-
-    def dislikes(self):
-        from common.model.votes import PhotoVotes
-        return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
 
     def dislikes_count(self):
         if self.dislikes > 0:
