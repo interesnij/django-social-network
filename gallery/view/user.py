@@ -286,7 +286,7 @@ class UserFirstAvatar(TemplateView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
 		self.photos = self.list.get_items()
-		self.photo = self.photos[0]
+		self.photo = self.photos.first()
 		if request.is_ajax():
 			self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
