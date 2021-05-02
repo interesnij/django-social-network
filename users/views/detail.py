@@ -217,7 +217,7 @@ class UserGoods(ListView):
         return c
 
     def get_queryset(self):
-        return self.goods_list
+        return self.get_items
 
 
 class UserVideo(ListView):
@@ -245,7 +245,7 @@ class UserVideo(ListView):
         return c
 
     def get_queryset(self):
-        return self.video_list
+        return self.get_items
 
 
 class ProfileUserView(TemplateView):
