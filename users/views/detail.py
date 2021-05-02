@@ -55,7 +55,7 @@ class UserGallery(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_photo_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
+            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk) 
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
