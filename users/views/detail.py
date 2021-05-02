@@ -55,7 +55,7 @@ class UserGallery(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_photo_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk) 
+            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
@@ -143,16 +143,23 @@ class UserMusic(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.playlist = self.user.get_playlist()
+        if request.user.pk == self.user.pk:
+            self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
+            self.get_items = self.playlist.get_staff_items(self.user.pk)
+        else:
+            self.get_lists = SoundList.get_user_lists(self.user.pk)
+            self.get_items = self.playlist.get_items(self.user.pk)
+        self.count_lists = SoundList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['playlist'] = self.user, self.playlist
+        c['user'], c['playlist'], c['count_lists'] = self.user, self.playlist, self.count_lists
         return c
 
     def get_queryset(self):
-        return self.playlist.get_items().order_by('-created')
+        return self.get_items
 
 
 class UserDocs(ListView):
@@ -160,24 +167,28 @@ class UserDocs(ListView):
 
     def get(self,request,*args,**kwargs):
         from common.template.doc import get_template_user_doc
+        from docs.models import DocList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_doc_list()
-        if self.user.pk == request.user.pk:
-            self.doc_list = self.list.get_staff_items()
+        if request.user.pk == self.user.pk:
+            self.get_lists = DocList.get_user_staff_lists(self.user.pk)
+            self.get_items = self.list.get_staff_items(self.user.pk)
         else:
-            self.doc_list = self.list.get_items()
+            self.get_lists = DocList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items(self.user.pk)
+        self.count_lists = DocList.get_user_lists_count(self.user.pk)
 
         self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserDocs,self).get_context_data(**kwargs)
-        c['user'], c['list'] = self.user, self.list
+        c['user'], c['list'], c['count_lists'] = self.user, self.list, self.count_lists
         return c
 
     def get_queryset(self):
-        return self.doc_list
+        return self.get_items
 
 
 class UserGoods(ListView):
@@ -185,20 +196,24 @@ class UserGoods(ListView):
 
     def get(self,request,*args,**kwargs):
         from common.template.good import get_template_user_good
+        from goods.models import GoodList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_good_list()
-        if self.user.pk == request.user.pk:
-            self.goods_list = self.list.get_staff_items()
+        if request.user.pk == self.user.pk:
+            self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
+            self.get_items = self.list.get_staff_items(self.user.pk)
         else:
-            self.goods_list = self.list.get_items()
+            self.get_lists = GoodList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items(self.user.pk)
+        self.count_lists = GoodList.get_user_lists_count(self.user.pk)
 
         self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGoods,self).get_context_data(**kwargs)
-        c['user'], c['list'] = self.user, self.list
+        c['user'], c['list'], c['count_lists'] = self.user, self.list, self.count_lists
         return c
 
     def get_queryset(self):
@@ -214,16 +229,19 @@ class UserVideo(ListView):
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_video_list()
-        if self.user == request.user:
-            self.video_list = self.list.get_staff_items()
+        if request.user.pk == self.user.pk:
+            self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
+            self.get_items = self.list.get_staff_items(self.user.pk)
         else:
-            self.video_list = self.list.get_items()
+            self.get_lists = VideoList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items(self.user.pk)
+        self.count_lists = VideoList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserVideo,self).get_context_data(**kwargs)
-        c['user'], c['list'] = self.user, self.list
+        c['user'], c['list'], c['count_lists'] = self.user, self.list, self.count_lists
         return c
 
     def get_queryset(self):
