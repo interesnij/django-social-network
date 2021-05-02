@@ -45,9 +45,9 @@ class UserAddAvatar(View):
                 _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
             except:
                 _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
-            photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHAVA")
+            photo = Photo.create_photo(creator=user, image=p, list=list, type="PHAVA")
             photo.list.add(_list)
-            self.user.plus_photos(1)
+            user.plus_photos(1)
 
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
