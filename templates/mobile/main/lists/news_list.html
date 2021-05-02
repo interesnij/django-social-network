@@ -11,7 +11,7 @@
             <span class="post_stream stream is_post_paginate">
               {% for object in object_list %}
                 <div class="pag card mb-3 {% if forloop.last %}last{% endif %}">
-                  {{ object|get__notify:request.user|safe }}
+                  {{ object|get_notify:request.user|safe }}
                 </div>
               {% endfor %}
             </span>
