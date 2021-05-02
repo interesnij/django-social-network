@@ -155,7 +155,7 @@ class PhotoList(models.Model):
     @classmethod
     def is_have_community_staff_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND))
+        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND)
         return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists(cls, community_pk):
