@@ -1,5 +1,5 @@
 .avatar_figure:hover .change_avatar{
-  display: none;
+  display: block;
 }
 
 .progress2 {
