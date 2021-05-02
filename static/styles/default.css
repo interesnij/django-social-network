@@ -1,3 +1,7 @@
+.avatar_figure:hover .change_avatar{
+  display: none;
+}
+
 .progress2 {
 bottom:0;
 left:0;
