@@ -16,7 +16,7 @@ class PostCommunity(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(PostCommunity,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.list.community, self.posts.filter(pk__gt=self.post.pk, is_deleted=False).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk, is_deleted=False).order_by('pk').first()
+        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.list.community, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
         return c
 
 class CommunityFixPostView(TemplateView):
@@ -35,8 +35,8 @@ class CommunityFixPostView(TemplateView):
     def get_context_data(self,**kwargs):
         c = super(CommunityFixPostView,self).get_context_data(**kwargs)
         c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.community, \
-        self.posts.filter(pk__gt=self.post.pk, is_deleted=False).order_by('pk').first(), \
-        self.posts.filter(pk__lt=self.post.pk, is_deleted=False).order_by('pk').first()
+        self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
+        self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
         return c
 
 
