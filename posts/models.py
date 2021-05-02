@@ -99,7 +99,7 @@ class PostList(models.Model):
 
     def is_main(self):
         return self.type == self.MAIN
-    def is_fix(self):
+    def is_fix_list(self):
         return self.type == self.THIS_FIXED
     def is_list(self):
         return self.type == self.LIST
