@@ -96,12 +96,16 @@ class PhotoList(models.Model):
         return self.photo_list.exclude(status__contains="_").first()
 
     def get_items(self):
-        return self.photo_list.exclude(status__contains="_")
+        return self.photo_list.filter(status="PUB")
     def get_staff_items(self):
         return self.photo_list.exclude(status__contains="_")
+    def get_6_items(self):
+        return self.photo_list.filter(status="PUB")[:6]
+    def get_6_staff_items(self):
+        return self.photo_list.exclude(status__contains="_")[:6]
     def count_items(self):
         try:
-            return self.photo_list.exclude(status__contains="_").values("pk").count()
+            return self.photo_list.filter(status="PUB").values("pk").count()
         except:
             return 0
     def count_items_ru(self):

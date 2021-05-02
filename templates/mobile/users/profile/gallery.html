@@ -1,4 +1,4 @@
-{% if photo_list.get_6_photos %}
+{% if photo_list.is_not_empty %}
 <div class="card mb-3" data-uuid="{{ photo_list.uuid }}">
     <div class="card-header" style="padding: 5px;">
       <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
@@ -12,7 +12,7 @@
     </div>
     <div class="card-body p-1">
         <div class="row no-gutters">
-          {% for object in photo_list.get_6_photos %}
+          {% for object in photo_list.get_6_items %}
             <div style="flex: 0 0 33.33333%;max-width:33.33333%;padding:5px;" class="u_MAI_photo" photo-pk="{{ object.pk }}">
               <img class="image_fit_70" src="{{ object.file.url }}" alt="">
             </div>
