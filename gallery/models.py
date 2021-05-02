@@ -339,9 +339,8 @@ class Photo(models.Model):
                 from notify.models import Notify, Wall
 
                 community_id = community.pk
-
                 Wall.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
-                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
+                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall") 
                 for user_id in list.community.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
                     community_send_notify(photo.pk, creator.pk, user_id, community_id, None, "create_c_photo_notify")
@@ -356,6 +355,7 @@ class Photo(models.Model):
                     user_send_notify(photo.pk, creator.pk, user_id, None, "create_u_photo_notify")
         else:
             get_photo_processing(photo, Photo.PRIVATE)
+        return photo
 
     def is_list_exists(self):
         return self.photo_list.filter(creator=self.creator).exists()
