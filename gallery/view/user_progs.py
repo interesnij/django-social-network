@@ -251,8 +251,7 @@ class UserOnPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.status = "PRI"
-            photo.save(update_fields=['status'])
+            photo.make_private()
             return HttpResponse()
         else:
             raise Http404
@@ -262,8 +261,7 @@ class UserOffPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.status = "PUB"
-            photo.save(update_fields=['status'])
+            photo.make_publish()
             return HttpResponse()
         else:
             raise Http404
@@ -273,8 +271,7 @@ class PhotoWallCommentUserDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -284,8 +281,7 @@ class PhotoWallCommentUserAbortDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404

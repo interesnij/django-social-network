@@ -178,8 +178,7 @@ class PostWallCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            comment.is_deleted = True
-            comment.save(update_fields=['is_deleted'])
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -188,8 +187,7 @@ class PostWallCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -208,7 +206,6 @@ class PostCommunityUnFixed(View):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
             post.unfixed_community_post(post.community.pk)
-            return HttpResponse()
             return HttpResponse()
         else:
             raise Http404
@@ -237,8 +234,7 @@ class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.is_deleted = True
-            post.save(update_fields=['is_deleted'])
+            post.delete_post()
             return HttpResponse()
         else:
             raise Http404
@@ -247,8 +243,7 @@ class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            post.is_deleted = True
-            post.save(update_fields=['is_deleted'])
+            post.delete_post()
             return HttpResponse()
         else:
             raise Http404
@@ -257,8 +252,7 @@ class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            post.is_deleted = False
-            post.save(update_fields=['is_deleted'])
+            post.abort_delete_post()
             return HttpResponse()
         else:
             raise Http404
@@ -267,8 +261,7 @@ class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.is_deleted = False
-            post.save(update_fields=['is_deleted'])
+            post.abort_delete_post()
             return HttpResponse()
         else:
             raise Http404
@@ -365,8 +358,7 @@ class CommunityPostListDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.type == PostList.LIST and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
@@ -375,8 +367,7 @@ class CommunityPostListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+            list.abort_delete_list()
             return HttpResponse()
         else:
             raise Http404

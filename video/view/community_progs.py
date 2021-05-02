@@ -308,8 +308,7 @@ class CommunityVideolistDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type == VideoList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
@@ -319,8 +318,7 @@ class CommunityVideolistAbortDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+            list.abort_delete_list()
             return HttpResponse()
         else:
             raise Http404

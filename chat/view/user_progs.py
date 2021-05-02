@@ -235,8 +235,7 @@ class MessageDelete(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.creator == request.user:
-			message.is_deleted = True
-			message.save(update_fields=['is_deleted'])
+			message.delete_message()
 			return HttpResponse()
 		else:
 			raise Http404
@@ -248,8 +247,7 @@ class MessageAbortDelete(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.creator == request.user:
-			message.is_deleted = False
-			message.save(update_fields=['is_deleted'])
+			message.abort_delete_message()
 			return HttpResponse()
 		else:
 			raise Http404

@@ -241,8 +241,7 @@ class UserGoodListDelete(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user and list.type == GoodList.LIST:
-            list.is_deleted = True
-            list.save(update_fields=['is_deleted'])
+            list.delete_list()
             return HttpResponse()
         else:
             raise Http404
@@ -251,8 +250,7 @@ class UserGoodListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            list.is_deleted = False
-            list.save(update_fields=['is_deleted'])
+            list.abort_delete_list()
             return HttpResponse()
         else:
             raise Http404

@@ -73,8 +73,7 @@ class ChatDelete(View):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			check_can_change_chat(request.user, chat)
-			chat.is_deleted = True
-			message.save(update_fields=['is_deleted'])
+			chat.delete_chat()
 			return HttpResponse()
 		else:
 			raise Http404
@@ -88,8 +87,7 @@ class ChatAbortDelete(View):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			check_can_change_chat(request.user, chat)
-			chat.is_deleted = False
-			message.save(update_fields=['is_deleted'])
+			chat.abort_delete_chat()
 			return HttpResponse()
 		else:
 			raise Http404

@@ -126,7 +126,7 @@ class Community(models.Model):
         return self.community_info.save(update_fields=['members'])
 
     def is_deleted(self):
-        return self.type == Community.DELETED
+        return self.type == Community.THIS_DELETED
     def is_standart(self):
         return self.perm == Community.STANDART
     def is_verified_send(self):
@@ -139,8 +139,6 @@ class Community(models.Model):
         return self.type[:4] != "_SUS"
     def is_blocked(self):
         return self.type[:4] != "_BLO"
-    def is_deleted(self):
-        return self.type[:4] != "_DEL"
     def is_have_warning_banner(self):
         return self.type[:4] != "_BAN"
     def is_private(self):
@@ -237,8 +235,8 @@ class Community(models.Model):
 
     @classmethod
     def get_community_for_user_with_id(cls, community_pk, user_id):
-        query = Q(pk=community_pk, is_deleted=False)
-        query.add(~Q(banned_users__id=user_id), Q.AND)
+        query = Q(pk=community_pk)
+        query.add(~Q(banned_users__id=user_id, type__contains="_"), Q.AND)
         return cls.objects.get(query)
 
     @classmethod
@@ -256,7 +254,7 @@ class Community(models.Model):
     def _make_search_communities_query(cls, query):
         communities_query = Q(name__icontains=query)
         communities_query.add(Q(title__icontains=query), Q.OR)
-        communities_query.add(Q(is_deleted=False), Q.AND)
+        communities_query.add(~Q(type__contains="_"), Q.AND)
         return communities_query
 
     @classmethod

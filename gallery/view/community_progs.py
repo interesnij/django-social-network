@@ -270,8 +270,7 @@ class CommunityOnPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.status = "PRI"
-            photo.save(update_fields=['status'])
+            photo.make_private()
             return HttpResponse()
         else:
             raise Http404
@@ -281,8 +280,7 @@ class PhotoWallCommentCommunityDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
-            comment.status = "PUB"
-            comment.save(update_fields=['status'])
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -292,8 +290,7 @@ class PhotoWallCommentCommunityAbortDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
-            comment.is_deleted = False
-            comment.save(update_fields=['is_deleted'])
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -303,8 +300,7 @@ class CommunityOffPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.is_public = True
-            photo.save(update_fields=['is_public'])
+            comment.make_publish()
             return HttpResponse()
         else:
             raise Http404
