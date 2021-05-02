@@ -11,7 +11,7 @@ class PostCommunity(TemplateView):
         from posts.models import Post, PostList
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.posts, self.template_name = self.list.get_posts(), get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.posts, self.template_name = self.list.get_items(), get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class CommunityFixPostView(TemplateView):
 
         self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = self.community.get_or_create_fix_list()
-        self.posts = self.list.get_posts()
+        self.posts = self.list.get_items()
         self.template_name = get_template_community_post(self.list, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityFixPostView,self).get(request,*args,**kwargs)
 

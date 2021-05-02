@@ -54,9 +54,10 @@ class PostList(models.Model):
         return self.post_list.filter(pk=item_id).values("pk").exists()
 
     def get_staff_items(self):
-        return self.post_list.filter(Q(status="PUB")|Q(status="PRI"))
+        query = Q(status="PUB")|Q(status="PRI")
+        return self.post_list.select_related('creator').only('creator__id', 'created').filter(query, list=self)
     def get_items(self):
-        return self.post_list.filter(status="PUB")
+        return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self, status="PUB")
     def get_manager_items(self):
         return self.post_list.filter(status="MAN")
     def count_items(self):
@@ -64,12 +65,7 @@ class PostList(models.Model):
 
     def is_not_empty(self):
         return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
-
-    def get_posts(self):
-        select_related = ('creator', 'community')
-        only = ('creator__id', 'created')
-        posts = self.post_list.select_related(*select_related).only(*only).filter(list=self, is_deleted=False, status="P").order_by("-created")
-        return posts
+        
     def get_posts_ids(self):
         ids = self.post_list.exclude(type__contains="_").values("pk")
         return [id['pk'] for id in ids]
@@ -312,6 +308,7 @@ class Post(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
+        ordering = ["-posted"]
 
     def __str__(self):
         return self.creator.get_full_name()

@@ -12,7 +12,7 @@ class UserPostView(TemplateView):
         from posts.models import Post, PostList
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user, self.posts = self.list.creator, self.list.get_posts()
+        self.user, self.posts = self.list.creator, self.list.get_items()
         self.template_name = get_template_user_post(self.list, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 

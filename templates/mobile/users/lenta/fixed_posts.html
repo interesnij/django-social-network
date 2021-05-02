@@ -21,7 +21,7 @@
     <label class="goto-last" for="s_{{ fix_list.count_items }}"></label>
   </div>
 </div>
-{% elif fix_list.count_posts == 1 %}
+{% elif fix_list.count_items == 1 %}
 
 {% for object in fix_list.get_items %}
   {% include 'mobile/users/lenta/my_fix_post.html' %}
