@@ -1,30 +1,22 @@
-{% extends "base_anon.html" %}
-{% block title %}{{ list.name }} - альбом {{ user.get_full_name_genitive }}{% endblock %}
-{% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row mb-3">
-      <div class="col-12 col-md-8">
-        <h5 class="mt-1">{{ list.name }} - <a class="ajax underline" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
-          {% include 'desctop/generic/user/user_gen.html' %}
-        </h5>
-        Фото: {{ list.count_items }}
-      </div>
-      <div class="col-12 col-md-4">
-        {% if list.is_user_list %}
-        <form id="add_photos">
-            {% csrf_token %}
-              <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
-              <button class="btn btn-outline-success previous_click" type="button">
-                Добавить фотографии
-              </button>
-        </form>
-        {% endif %}
-      </div>
+{% if photo_list %}
+{% for object in photo_list %}
+  <div class="pointer p-1 col-md-6 col-lg-4 u_{{ list.type }}_photo pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}">
+    <div class="card rounded-0 border-0 mb-3 progressive replace" data-href="{{ object.file.url }}">
+      {% if object.preview %}
+        <img class="preview image_fit_200" src="{{ object.preview.url }}" alt="img">
+      {% else %}
+        <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      {% endif %}
     </div>
+  </div>
+  {% endfor %}
 
-  <div class="row is_block_paginate no-gutters" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
-
+{% else %}
+<div class="card mb-3 centered" style="width: 100%;">
+  <div class="card-body">
+  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+  </div>
+  <h6 style="margin: 20px;text-align: center;"> Фотографий пока нет...</h6>
 </div>
-
-{% endblock %}
+{% endif %}
