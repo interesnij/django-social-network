@@ -65,7 +65,7 @@ class PostList(models.Model):
 
     def is_not_empty(self):
         return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
-        
+
     def get_posts_ids(self):
         ids = self.post_list.exclude(type__contains="_").values("pk")
         return [id['pk'] for id in ids]
@@ -308,7 +308,7 @@ class Post(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
-        ordering = ["-posted"]
+        ordering = ["-created"]
 
     def __str__(self):
         return self.creator.get_full_name()
