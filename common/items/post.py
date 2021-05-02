@@ -8,7 +8,7 @@ def linebreaks(value, autoescape=None):
 def post(user, value):
     try:
         from posts.models import Post
-        block, post = '', Post.objects.get(pk=value)
+        block, post = '', Post.objects.get(pk=value, type="PUB")
         if post.votes_on:
             votes_on = ''
         else:
@@ -135,14 +135,14 @@ def post(user, value):
 
 def get_post(user, notify):
     if notify.verb == "ITE":
-        return post(user, notify.attach[3:])
+        return post(user, notify.object_id)
     else:
         if notify.is_have_object_set():
             first_notify = notify.get_first_object_set()
             return '<p style="padding-left: 7px;"><a href="' + first_notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
             first_notify.creator.get_full_name() + '</a> и ещё ' + str(notify.count_object_set()) + first_notify.get_verb_display()\
-             + ' запись </p>' + post(user, notify.attach[3:])
+             + ' запись </p>' + post(user, notify.object_id)
         else:
             return '<p style="padding-left: 7px;"><a href="' + notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
             notify.creator.get_full_name() + '</a>' + notify.get_verb_display()\
-             + ' запись </p>' + post(user, notify.attach[3:])
+             + ' запись </p>' + post(user, notify.object_id)
