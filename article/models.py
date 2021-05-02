@@ -3,9 +3,8 @@ import uuid
 from pilkit.processors import ResizeToFit, ResizeToFill
 from django.conf import settings
 from imagekit.models import ProcessedImageField
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from django.contrib.postgres.indexes import BrinIndex
+from django.db.models import Q
 
 
 class Article(models.Model):

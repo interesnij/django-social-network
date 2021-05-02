@@ -6,6 +6,7 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from chat.helpers import upload_to_chat_directory, validate_file_extension
 from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
+from django.db.models import Q
 
 
 class Chat(models.Model):
