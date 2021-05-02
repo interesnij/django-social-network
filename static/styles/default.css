@@ -1,5 +1,9 @@
 .avatar_figure:hover .change_avatar{
-  display: block;
+  display: block !important;
+  position: absolute;
+  padding: 2px;
+  top: 5px;
+  background: black;
 }
 
 .progress2 {
