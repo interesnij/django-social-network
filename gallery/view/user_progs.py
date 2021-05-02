@@ -256,8 +256,8 @@ class UserOnPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.is_public = False
-            photo.save(update_fields=['is_public'])
+            photo.type = "PRI"
+            photo.save(update_fields=['type'])
             return HttpResponse()
         else:
             raise Http404
@@ -267,8 +267,8 @@ class UserOffPrivatePhoto(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.is_public = True
-            photo.save(update_fields=['is_public'])
+            photo.type = "PUB"
+            photo.save(update_fields=['type'])
             return HttpResponse()
         else:
             raise Http404
