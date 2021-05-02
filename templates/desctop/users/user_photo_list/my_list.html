@@ -17,7 +17,7 @@
         <form id="add_photos">
             {% csrf_token %}
               <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
-              <button id="u_add_multi_photos" class="btn btn-outline-success" type="button">
+              <button class="btn btn-outline-success previous_click" type="button">
                 Добавить фотографии
               </button>
         </form>
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-  <div class="row is_block_paginate no-gutters" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
+  <div class="row is_block_paginate no-gutters"id="u_list_photos_container"  data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
 
 </div>
 
