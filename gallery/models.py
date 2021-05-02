@@ -327,22 +327,24 @@ class Photo(models.Model):
         return naturaltime(self.created)
 
     @classmethod
-    def create_photo(cls, creator, image, list, community):
+    def create_photo(cls, creator, image, list, type):
         from common.processing.photo import get_photo_processing
 
         photo = cls.objects.create(creator=creator,preview=image,file=image)
         list.photo_list.add(photo)
         if not list.is_private():
             get_photo_processing(photo, Photo.PUBLISHED)
-            if community:
+            if list.community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
-                community_send_wall(photo.pk, creator.pk, community.pk, None, "create_c_photo_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
-                    community_send_notify(photo.pk, creator.pk, user_id, community.pk, None, "create_c_photo_notify")
+                community_id = community.pk
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
+                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
+                for user_id in list.community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type="PHO", object_id=photo.pk, verb="ITE")
+                    community_send_notify(photo.pk, creator.pk, user_id, community_id, None, "create_c_photo_notify")
             else:
                 from common.notify.progs import user_send_notify, user_send_wall
                 from notify.models import Notify, Wall

@@ -1,4 +1,5 @@
 ITEM, SUGGEST_ITEM, ITEMS = "ITE", "SIT", "ITS"
+
 COMMENT, WOMEN_COMMENT, GROUP_COMMENT = 'COM', 'WCOM', 'GCOM'
 REPLY, WOMEN_REPLY, GROUP_REPLY = 'REP', 'WREP', 'GREP'
 
@@ -32,7 +33,7 @@ UNREAD, READ, DELETED, CLOSED = 'U', 'R', 'D', "C"
 
 USER, COMMUNITY = 'USE', 'COM'
 POST_LIST, POST, POST_COMMENT = 'POL', 'POS', 'POSC'
-PHOTO_LIST, PHOTO, PHOTO_COMMENT = 'PHL', 'PHO', 'PHOC'
+PHOTO_LIST, PHOTO, WALL_PHOTO, AVATAR, LIST_PHOTO, PHOTO_COMMENT = 'PHL', 'PHO', 'WAL', 'AVA', 'LIS', 'PHOC'
 GOOD_LIST, GOOD, GOOD_COMMENT = 'GOL', 'GOO', 'GOOC'
 DOC_LIST, DOC = 'DOL', 'DOC'
 SURVEY_LIST, SURVEY = 'SUL', 'SUR'
@@ -44,7 +45,7 @@ TYPE = (
     (MUSIC_LIST, 'Плейлист'), (MUSIC, 'Трек'),
     (DOC_LIST, 'Список документов'), (DOC, 'документ'),
     (SURVEY_LIST, 'Список опросов'), (SURVEY, 'опрос'),
-    (PHOTO_LIST, 'Список фотографий'), (PHOTO, 'Фотография'), (PHOTO_COMMENT, 'Коммент к фотографии'),
+    (PHOTO_LIST, 'Список фотографий'), (PHOTO, 'Фото'), (WALL_PHOTO, 'Фото со стены'), (AVATAR, 'Фото со страницы'), (LIST_PHOTO, 'Фото альбома'), (PHOTO_COMMENT, 'Коммент к фотографии'),
     (POST_LIST, 'Список записей'), (POST, 'запись'), (POST_COMMENT, 'Коммент к записи'),
     (GOOD_LIST, 'Список товаров'), (GOOD, 'товар'), (GOOD_COMMENT, 'Коммент к товару'),
     (VIDEO_LIST, 'Список роликов'), (VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),

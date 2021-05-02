@@ -44,7 +44,7 @@ class PhotoCommunityCreate(View):
             check_can_get_lists(request.user, community)
             list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="MAI")
                 photos += [photo,]
             community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
@@ -63,7 +63,7 @@ class PhotoListCommunityCreate(View):
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="LIS")
                 photos += [photo,]
             community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})
@@ -81,7 +81,7 @@ class PhotoAttachCommunityCreate(View):
             check_can_get_lists(request.user, community)
             list = PhotoList.objects.filter(type=PhotoList.WALL, community=community)[0]
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="WAL")
                 photos += [photo,]
             community.plus_photos(len(photos))
             return render_for_platform(request, 'communities/gallery/list.html',{'object_list': photos, 'community': community})
@@ -103,7 +103,7 @@ class CommunityAddAvatar(View):
                 _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
             except:
                 _list = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.AVATAR, description="Фото со страницы сообщества")
-            photo = Photo.create_photo(creator=self.user, image=p, list=list, community=community)
+            photo = Photo.create_photo(creator=self.user, image=p, list=list, type="AVA")
             photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
