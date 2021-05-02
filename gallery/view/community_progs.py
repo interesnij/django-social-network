@@ -96,14 +96,9 @@ class CommunityAddAvatar(View):
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
-            from common.notify.notify import community_notify
-
             photo_input = request.FILES.get('file')
-            try:
-                _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
-            except:
-                _list = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.AVATAR, description="Фото со страницы сообщества")
-            photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHAVA")
+            _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
+            photo = Photo.create_photo(creator=self.user, image=photo_input, list=_list, type="PHAVA")
             photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)

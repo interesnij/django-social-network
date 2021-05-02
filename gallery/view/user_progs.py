@@ -38,14 +38,9 @@ class UserAddAvatar(View):
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and user == request.user:
-            from common.notify.notify import user_notify
-
             photo_input = request.FILES.get('file')
-            try:
-                _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
-            except:
-                _list = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы", description="Фото со страницы")
-            photo = Photo.create_photo(creator=user, image=photo_input, list=list, type="PHAVA")
+            _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
+            photo = Photo.create_photo(creator=user, image=photo_input, list=_list, type="PHAVA")
             photo.list.add(_list)
             user.plus_photos(1)
 
