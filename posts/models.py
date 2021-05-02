@@ -494,9 +494,6 @@ class Post(models.Model):
         else:
             return self.comment
 
-    def __str__(self):
-        return self.creator.get_full_name()
-
     def get_comments(self):
         comments_query = Q(post_id=self.pk)
         comments_query.add(Q(parent__isnull=True), Q.AND)
@@ -596,8 +593,8 @@ class Post(models.Model):
         else:
             return ''
     def dislikes_count(self):
-        if self.dislikes > 0:
-            return self.dislikes
+        if self.dislike > 0:
+            return self.dislike
         else:
             return ''
 
@@ -644,12 +641,10 @@ class Post(models.Model):
         return Post.objects.filter(parent=self)[0:6]
 
     def count_reposts(self):
-        parents = self.get_reposts()
-        count_reposts = parents.values('pk').count()
-        if self.reposts == 0:
+        if self.repost == 0:
             return ''
         else:
-            return self.reposts
+            return self.repost
 
     def get_visiter_sity(self):
         from stst.models import PostNumbers, PostAdNumbers
