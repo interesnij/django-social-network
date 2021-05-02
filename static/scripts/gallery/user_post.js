@@ -236,7 +236,7 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    document.body.querySelector("#photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".photos_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
   link_.send(form_data);
@@ -256,7 +256,7 @@ on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
     response = document.createElement("span");
     photo_list = document.createElement("div");
     response.innerHTML = elem;
-    document.body.querySelector("#u_list_photos_container").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
   }}
   link_.send(form_data);
