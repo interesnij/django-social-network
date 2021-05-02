@@ -1,11 +1,11 @@
 
 def u_photo(user, value):
-    try:
-        from gallery.models import Photo
-        photo = Photo.objects.get(pk=value, type="PUB")
-        return ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_' + photo.get_type() + '_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-    except:
-        pass
+    #try:
+    from gallery.models import Photo
+    photo = Photo.objects.get(pk=value, type="PUB")
+    return ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_' + photo.get_type() + '_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+    #except:
+    #    pass
 
 def c_photo(user, value):
     try:
@@ -22,7 +22,7 @@ def get_photo(user, notify):
             notify.community.name + '</a> обновило аватар' + c_photo(user, notify.object_id)
         else:
             return '<p style="padding-left: 7px;">У <a href="' + notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
-            notify.creator.get_full_name_genitive() + '</a> новый аватар' + str(u_photo(user, notify.object_id))
+            notify.creator.get_full_name_genitive() + '</a> новый аватар' + u_photo(user, notify.object_id)
     elif notify.verb == "ITS":
         if notify.is_have_object_set():
             photos, set = '', notify.get_object_set()
