@@ -16,7 +16,7 @@ def c_photo(user, value):
         return ''
 
 def get_photo(user, notify):
-    if notify.TYPE == "PHAVA":
+    if notify.type == "PHAVA":
         if notify.community:
             return '<p style="padding-left: 7px;">Сообщество <a href="' + notify.community.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
             notify.community.name + '</a> обновило аватар' + c_photo(user, notify.object_id)
