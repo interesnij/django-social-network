@@ -1,5 +1,5 @@
 
-{% if user.is_have_friends %}
+{% if user.profile.friends %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'frends' pk=user.pk %}" class="ajax">
@@ -7,7 +7,7 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Друзья </h6>
             </div>
-            {{ user.count_connections }}
+            {{ user.profile.friends }}
         </div>
       </a>
     </div>

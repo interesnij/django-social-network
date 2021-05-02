@@ -1,12 +1,12 @@
 {% load liked_user %}
 
-{% if user.is_have_friends %}
+{% if user.profile.friends %}
 <div class="card mb-3">
   <a href="{% url 'frends' pk=user.pk %}" class="ajax">
     <div class="card-body py-2">
         <div class="media">
             <div class="media-body">
-              <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"друг,друга,друзей" }}</h6>
+              <h6 class="my-0 text-truncated">{{ user.profile.friends }} {{ user.profile.friends|rupluralize:"друг,друга,друзей" }}</h6>
               <p class="small">{{ user.get_online_connection_count }} онлайн</p>
             </div>
             {% for object in user.get_6_friends %}

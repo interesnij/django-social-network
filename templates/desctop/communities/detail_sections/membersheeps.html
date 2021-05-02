@@ -1,5 +1,5 @@
 
-{% if membersheeps %}
+{% if community.community_info.members %}
 <div class="card mb-3" style="">
   <div class="card-header">
       <div class="media">
@@ -7,6 +7,7 @@
           <div class="media-body">
               <h4 class="content-color-primary mb-0">Подписчики</h4>
           </div>
+          {{ community.community_info.members }}
         </a>
       </div>
   </div>

@@ -1,11 +1,11 @@
 
-{% if membersheeps %}
+{% if community.community_info.members %}
 <div class="card mb-3">
     <div class="card-body py-2">
         <div class="media">
             <div class="media-body">
               <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
-                <h6 class="my-0 text-truncated">{{ community.count_members_ru }}</h6>
+                <h6 class="my-0 text-truncated">{{ community.community_info.members }}</h6>
               </a>
               <a href="{% url 'community_friends' pk=community.pk %}" class="ajax">
                 <p class="small">{{ common_friends_count }}</p>

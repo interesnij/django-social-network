@@ -504,14 +504,14 @@ class Post(models.Model):
 
     def is_fixed_in_community(self):
         try:
-            list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIX)
+            list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
             if list.is_post_in_list(self.pk):
                 return True
         except:
             pass
     def is_fixed_in_user(self):
         try:
-            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
             if list.is_post_in_list(self.pk):
                 return True
         except:
@@ -520,9 +520,9 @@ class Post(models.Model):
     def is_can_fixed_in_community(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
         try:
-            list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIX)
+            list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=self.community.pk, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=self.creator.pk, community_id=self.community.pk, type=PostList.THIS_FIXED, name="Закрепленный список")
         if list.is_full_list():
             return ValidationError("Запись нельзя прикрепить.")
         else:
@@ -530,9 +530,9 @@ class Post(models.Model):
     def is_can_fixed_in_user(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_user. Потому осталось проверить, не полон ли список"""
         try:
-            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=self.creator.pk, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=self.creator.pk, type=PostList.THIS_FIXED, name="Закрепленный список")
         if list.is_full_list():
             return ValidationError("Запись нельзя прикрепить.")
         else:
@@ -540,9 +540,9 @@ class Post(models.Model):
 
     def fixed_user_post(self, user_id):
         try:
-            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=user_id, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=user_id, type=PostList.THIS_FIXED, name="Закрепленный список")
         if not list.is_full_list():
             self.list.add(list)
             return True
@@ -551,9 +551,9 @@ class Post(models.Model):
 
     def unfixed_user_post(self, user_id):
         try:
-            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.FIX)
+            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=user_id, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=user_id, type=PostList.THIS_FIXED, name="Закрепленный список")
         if list.is_post_in_list(self.pk):
             self.list.remove(list)
             return True
@@ -562,9 +562,9 @@ class Post(models.Model):
 
     def fixed_community_post(self, community_id):
         try:
-            list = PostList.objects.get(community_id=community_id, type=PostList.FIX)
+            list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.THIS_FIXED, name="Закрепленный список")
         if not list.is_full_list():
             self.list.add(list)
             return True
@@ -573,9 +573,9 @@ class Post(models.Model):
 
     def unfixed_community_post(self, community_id):
         try:
-            list = PostList.objects.get(community_id=community_id, type=PostList.FIX)
+            list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
         except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.FIX, name="Закрепленный список")
+            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.THIS_FIXED, name="Закрепленный список")
         if list.is_post_in_list(self.pk):
             self.list.remove(list)
             return True
