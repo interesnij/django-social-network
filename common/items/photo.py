@@ -21,8 +21,8 @@ def get_photo(user, notify):
             return '<p style="padding-left: 7px;">Сообщество <a href="' + notify.community.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
             notify.community.name + '</a> обновило аватар' + c_photo(user, notify.object_id)
         else:
-            return '<p style="padding-left: 7px;">У <a href="' + 'notify.creator.get_link()' + '" class="ajax" style="font-weight: bold;">'+ \
-            notify.creator.get_full_name_genitive() + '</a> новый аватар' + u_photo(user, notify.object_id)
+            return '<p style="padding-left: 7px;">У <a href="' + notify.creator.get_link() + '" class="ajax" style="font-weight: bold;">'+ \
+            notify.creator.get_full_name_genitive() + '</a> новый аватар' + str(u_photo(user, notify.object_id))
     elif notify.verb == "ITS":
         if notify.is_have_object_set():
             photos, set = '', notify.get_object_set()
