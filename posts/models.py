@@ -95,7 +95,7 @@ class PostList(models.Model):
         return [i['pk'] for i in communities]
 
     def is_full_list(self):
-        return self.is_fix_list() and self.count_posts() > 10
+        return self.is_fix_list() and self.count_items() > 10
 
     def is_main(self):
         return self.type == self.MAIN
