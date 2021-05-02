@@ -303,6 +303,7 @@ class Post(models.Model):
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    ad_view = models.PositiveIntegerField(default=0, verbose_name="Кол-во рекламных просмотров")
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
