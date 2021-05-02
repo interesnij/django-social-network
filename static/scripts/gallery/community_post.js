@@ -133,7 +133,7 @@ on('#ajax', 'click', '.c_photo_comment_abort_remove', function() {
 });
 
 
-on('#ajax', 'click', '.u_photo_off_private', function() {
+on('#ajax', 'click', '.c_photo_off_private', function() {
   send_photo_change(this, "/gallery/community_progs/off_private/", "c_photo_on_private", "Вкл. приватность")
 })
 on('#ajax', 'click', '.c_photo_on_private', function() {
