@@ -145,10 +145,10 @@ class UserMusic(ListView):
         self.playlist = self.user.get_playlist()
         if request.user.pk == self.user.pk:
             self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
-            self.get_items = self.playlist.get_staff_items(self.user.pk)
+            self.get_items = self.playlist.get_staff_items()
         else:
             self.get_lists = SoundList.get_user_lists(self.user.pk)
-            self.get_items = self.playlist.get_items(self.user.pk)
+            self.get_items = self.playlist.get_items()
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
@@ -173,10 +173,10 @@ class UserDocs(ListView):
         self.list = self.user.get_doc_list()
         if request.user.pk == self.user.pk:
             self.get_lists = DocList.get_user_staff_lists(self.user.pk)
-            self.get_items = self.list.get_staff_items(self.user.pk)
+            self.get_items = self.list.get_staff_items()
         else:
             self.get_lists = DocList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items(self.user.pk)
+            self.get_items = self.list.get_items()
         self.count_lists = DocList.get_user_lists_count(self.user.pk)
 
         self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -202,10 +202,10 @@ class UserGoods(ListView):
         self.list = self.user.get_good_list()
         if request.user.pk == self.user.pk:
             self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
-            self.get_items = self.list.get_staff_items(self.user.pk)
+            self.get_items = self.list.get_staff_items()
         else:
             self.get_lists = GoodList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items(self.user.pk)
+            self.get_items = self.list.get_items()
         self.count_lists = GoodList.get_user_lists_count(self.user.pk)
 
         self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -231,10 +231,10 @@ class UserVideo(ListView):
         self.list = self.user.get_video_list()
         if request.user.pk == self.user.pk:
             self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
-            self.get_items = self.list.get_staff_items(self.user.pk)
+            self.get_items = self.list.get_staff_items()
         else:
             self.get_lists = VideoList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items(self.user.pk)
+            self.get_items = self.list.get_items()
         self.count_lists = VideoList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
