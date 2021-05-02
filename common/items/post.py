@@ -8,7 +8,7 @@ def linebreaks(value, autoescape=None):
 def post(user, value):
     try:
         from posts.models import Post
-        block, post = '', Post.objects.get(pk=value, type="PUB")
+        block, post = '', Post.objects.get(pk=value, status="PUB")
         if post.votes_on:
             votes_on = ''
         else:

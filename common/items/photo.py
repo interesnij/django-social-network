@@ -1,19 +1,19 @@
 
 def u_photo(user, value):
-    #try:
-    from gallery.models import Photo
-    photo = Photo.objects.get(pk=value, type="PUB")
-    return ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_' + photo.get_type() + '_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-    #except:
-    #    pass
+    try:
+        from gallery.models import Photo
+        photo = Photo.objects.get(pk=value, status="PUB")
+        return ''.join([block, '<div class="photo"><div class="progressive replace image_fit u_' + photo.get_type() + '_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+    except:
+        return ''
 
 def c_photo(user, value):
     try:
         from gallery.models import Photo
-        photo = Photo.objects.get(pk=value, type="PUB")
+        photo = Photo.objects.get(pk=value, status="PUB")
         return ''.join([block, '<div class="photo"><div class="progressive replace image_fit c_' + photo.get_type() + '_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
     except:
-        pass
+        return ''
 
 def get_photo(user, notify):
     if notify.verb == "ITE":
