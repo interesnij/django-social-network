@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-{% if photo_lists %}
+
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-12 col-md-8">
@@ -19,20 +19,6 @@
 <div class="container mt-4">
   {% include 'desctop/users/user_gallery/my_photo_lists.html' %}
 </div>
-{% else %}
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <h5 class="mt-1">У Вас нет альбомов</h5>
-        </div>
-        <div class="col-12 col-md-4">
-          <button class="u_photo_list_add btn btn-outline-success" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
-            Добавить альбом
-          </button>
-        </div>
-    </div>
-</div>
-{% endif %}
 
 <div class="container-fluid mt-3">
     <div class="row">

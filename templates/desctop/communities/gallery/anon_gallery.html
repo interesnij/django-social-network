@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
-{% if photo_lists %}
+
   <div class="container-fluid mt-3">
       <div class="row">
           <div class="col-12 col-md-8">
@@ -17,18 +17,6 @@
   <div class="container mt-4">
     {% include 'desctop/communities/gallery/lists.html' %}
   </div>
-{% else %}
-  <div class="container-fluid mt-3">
-      <div class="row">
-          <div class="col-12 col-md-8">
-              <h5 class="mt-1">
-                {% include 'desctop/generic/community/community.html' %}
-                - Альбомов нет</h5>
-          </div>
-          <div class="col-12 col-md-4"></div>
-      </div>
-  </div>
-{% endif %}
 
 <div class="container-fluid mt-3">
     <div class="row">
