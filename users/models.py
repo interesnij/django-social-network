@@ -50,6 +50,7 @@ class User(AbstractUser):
         return self.get_full_name()
 
     def get_last_location(self):
+        from users.model.profile import UserLocation
         return UserLocation.objects.filter(user=self)[0]
 
     def get_verb_gender(self, verb):
