@@ -6,3 +6,5 @@ def get_notify(user, notify):
     elif type[:1] == "PH":
         from common.items.photo import get_photo
         return get_photo(user, notify)
+    else:
+        return 'ggg'
