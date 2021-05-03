@@ -11,7 +11,7 @@ def add_playlist(url, request_user, list):
     response = requests.get(url= "https://api.soundcloud.com/resolve?url=" + url + "&client_id=dce5652caa1b66331903493735ddd64d")
     data = response.json()
 
-    if data:
+    if data: 
         try:
             playlist_url = data['artwork_url'].replace("large.jpg", "crop.jpg")
             list.get_remote_image(playlist_url)

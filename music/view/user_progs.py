@@ -47,9 +47,8 @@ class UserSoundcloudSetCreate(View):
         form_post = PlaylistForm(request.POST)
 
         if request.is_ajax() and form_post.is_valid():
-            new_list = form_post.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
+            list = form_post.save(commit=False)
+            new_list = Music.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None, is_public=request.POST.get("is_public"))
             add_playlist(request.POST.get('permalink'), request.user, new_list)
             return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'user': request.user})
         else:
@@ -202,7 +201,7 @@ class UserPlaylistEdit(TemplateView):
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            self.form.save()
+            new_list = list.create_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
