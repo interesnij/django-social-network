@@ -504,7 +504,7 @@ class PhotoComment(models.Model):
         return PhotoComment.objects.filter(parent=self).all()
 
     def count_replies(self):
-        return self.photo_comment_replies.filter(Q(type=EDITED)|Q(type=PUBLISHED)).values("pk").count()
+        return self.photo_comment_replies.filter(Q(status=EDITED)|Q(status=PUBLISHED)).values("pk").count()
 
     def count_replies_ru(self):
         count = self.count_replies()

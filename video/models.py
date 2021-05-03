@@ -581,10 +581,10 @@ class VideoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        return self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).all()
+        return self.video_comment_replies.filter(Q(status=EDITED)|Q(status=PUBLISHED)).only("pk")
 
     def count_replies(self):
-        return self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).values("pk").count()
+        return self.video_comment_replies.filter(Q(status=EDITED)|Q(status=PUBLISHED)).values("pk").count()
 
     def likes(self):
         likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)

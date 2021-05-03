@@ -617,7 +617,7 @@ class GoodComment(models.Model):
 		return GoodComment.objects.filter(parent=self).all()
 
 	def count_replies(self):
-		return self.good_comment_replies.filter(is_deleted=False).values("pk").count()
+		return self.good_comment_replies.filter(Q(status=EDITED)|Q(status=PUBLISHED)).values("pk").count()
 
 	def likes(self):
 		from common.model.votes import GoodCommentVotes
