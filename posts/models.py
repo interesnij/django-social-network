@@ -624,7 +624,7 @@ class Post(models.Model):
 
     def unfixed_user_post(self, user_id):
         list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
-        if list.is_post_in_list(self.pk):
+        if list.is_item_in_list(self.pk):
             self.list.remove(list)
             self.status = Post.PUBLISHED
             return self.save(update_fields=["status"])
