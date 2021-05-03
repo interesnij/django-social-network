@@ -126,7 +126,7 @@ class PostCommunityCommentCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -148,7 +148,7 @@ class PostCommunityReplyCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None, community=community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()

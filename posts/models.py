@@ -936,29 +936,28 @@ class PostComment(models.Model):
         return self.commenter.get_full_name()
 
     @classmethod
-    def create_comment(cls, commenter, attach, post, parent, text):
-        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
-
+    def create_comment(cls, commenter, attach, post, parent, text, community):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
-        if comment.parent:
-            post = comment.parent.post
-            type = "por"+str(comment.pk)+",poc"+str(comment.parent.pk)+",pos"+str(post.pk)
-            if post.community:
-                community_wall(commenter, community, None, type, "c_post_comment_notify", "REP")
-                community_notify(commenter, community, None, type, "c_post_comment_notify", "REP")
+        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
+        if parent:
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "REP")
+                community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "REP")
             else:
-                user_wall(commenter, None, type, "u_post_comment_notify", "REP")
-                user_notify(commenter, post.creator.pk, None, type, "u_post_comment_notify", "REP")
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "POSC", "u_post_notify", "REP")
+                user_wall(user, None, self.pk, "POSC", "u_post_notify", "REP")
         else:
-            type = "poc"+str(comment.pk)+", pos"+str(post.pk)
-            if comment.post.community:
-                community_wall(commenter, community, None, type, "c_post_comment_notify", "COM")
-                community_notify(commenter, community, None, type, "c_post_comment_notify", "COM")
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "COM")
+                community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "COM")
             else:
-                user_wall(commenter, None, type, "u_post_comment_notify", "COM")
-                user_notify(commenter, post.creator.pk, None, type, "u_post_comment_notify", "COM")
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "POSC", "u_post_notify", "COM")
+                user_wall(user, None, self.pk, "POSC", "u_post_notify", "COM")
         return comment
 
     def count_replies_ru(self):
