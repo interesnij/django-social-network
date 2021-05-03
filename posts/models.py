@@ -387,7 +387,7 @@ class Post(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(user, None, self.pk, "POS", "u_post_notify", "LIK")
                 user_wall(user, None, self.pk, "POS", "u_post_notify", "LIK")
-        return HttpResponse(json.dumps({"like_count": str(self.count_likes()),"dislike_count": str(self.count_dislike())}),content_type="application/json")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
     def create_post(cls, creator, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
