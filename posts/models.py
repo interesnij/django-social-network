@@ -313,10 +313,79 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def plus_likes(self, count):
+        self.like += count
+        return self.save(update_fields=['like'])
+    def minus_likes(self, count):
+        self.like -= count
+        return self.save(update_fields=['like'])
+    def plus_dislikes(self, count):
+        self.dislike += count
+        return self.save(update_fields=['dislike'])
+    def minus_dislikes(self, count):
+        self.dislike -= count
+        return self.save(update_fields=['dislike'])
+    def plus_comments(self, count):
+        self.comment += count
+        return self.save(update_fields=['comment'])
+    def minus_comments(self, count):
+        self.comment -= count
+        return self.save(update_fields=['comment'])
+    def plus_views(self, count):
+        self.view += count
+        return self.save(update_fields=['view'])
+    def minus_views(self, count):
+        self.view -= count
+        return self.save(update_fields=['view'])
+    def plus_ad_views(self, count):
+        self.ad_view += count
+        return self.save(update_fields=['ad_view'])
+    def minus_ad_views(self, count):
+        self.ad_view -= count
+        return self.save(update_fields=['ad_view'])
+    def plus_reposts(self, count):
+        self.repost += count
+        return self.save(update_fields=['repost'])
+    def minus_reposts(self, count):
+        self.repost -= count
+        return self.save(update_fields=['repost'])
+
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
+
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import PostVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = PostVotes.objects.get(parent=self, user=user)
+            if item.vote != PostVotes.LIKE:
+                item.vote = PostVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=self, user=user, vote=PostVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "POS", "u_post_notify", "LIK")
+                community_wall(user, community, None, self.pk, "POS", "u_post_notify", "LIK")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "POS", "u_post_notify", "LIK")
+                user_wall(user, None, self.pk, "POS", "u_post_notify", "LIK")
+        return HttpResponse(json.dumps({"like_count": str(self.like),"dislike_count": str(self.dislike)}),content_type="application/json")
 
     @classmethod
     def create_post(cls, creator, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
@@ -493,51 +562,32 @@ class Post(models.Model):
             return self.comment
 
     def get_comments(self):
-        comments_query = Q(post_id=self.pk)
-        comments_query.add(Q(parent__isnull=True), Q.AND)
-        return PostComment.objects.filter(comments_query)
+        return PostComment.objects.filter(post_id=self.pk, parent__isnull=True, status="PUB")
 
     def is_fixed_in_community(self):
-        try:
-            list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
-            if list.is_post_in_list(self.pk):
-                return True
-        except:
-            pass
+        list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
+        return list.is_post_in_list(self.pk)
     def is_fixed_in_user(self):
-        try:
-            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
-            if list.is_post_in_list(self.pk):
-                return True
-        except:
-            pass
+        list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
+        return list.is_post_in_list(self.pk)
 
     def is_can_fixed_in_community(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
-        try:
-            list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=self.community.pk, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
         if list.is_full_list():
             return ValidationError("Запись нельзя прикрепить.")
         else:
             return True
     def is_can_fixed_in_user(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_user. Потому осталось проверить, не полон ли список"""
-        try:
-            list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=self.creator.pk, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         if list.is_full_list():
             return ValidationError("Запись нельзя прикрепить.")
         else:
             return True
 
     def fixed_user_post(self, user_id):
-        try:
-            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=user_id, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         if not list.is_full_list():
             self.list.add(list)
             return True
@@ -545,10 +595,7 @@ class Post(models.Model):
             return ValidationError("Список уже заполнен.")
 
     def unfixed_user_post(self, user_id):
-        try:
-            list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=user_id, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         if list.is_post_in_list(self.pk):
             self.list.remove(list)
             return True
@@ -556,10 +603,7 @@ class Post(models.Model):
             return ValidationError("Запись и так не в списке.")
 
     def fixed_community_post(self, community_id):
-        try:
-            list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
         if not list.is_full_list():
             self.list.add(list)
             return True
@@ -567,10 +611,7 @@ class Post(models.Model):
             return ValidationError("Список уже заполнен.")
 
     def unfixed_community_post(self, community_id):
-        try:
-            list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
-        except:
-            list = PostList.objects.create(creator_id=self.creator.pk, community_id=community_id, type=PostList.THIS_FIXED, name="Закрепленный список")
+        list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
         if list.is_post_in_list(self.pk):
             self.list.remove(list)
             return True

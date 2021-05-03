@@ -14,26 +14,11 @@ from common.notify.notify import *
 class PostUserLikeCreate(View):
     def get(self, request, **kwargs):
         item, user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not item.votes_on:
+        if not request.is_ajax():
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PostVotes.LIKE:
-                likedislike.vote = PostVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostVotes.DoesNotExist:
-            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
-            result = True
-            user_notify(request.user, item.creator.pk, None, "pos"+str(item.pk), "u_post_notify", "LIK")
-        likes = item.likes_count()
-        dislikes = item.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_like(requset.user, None)
 
 
 class PostUserDislikeCreate(View):

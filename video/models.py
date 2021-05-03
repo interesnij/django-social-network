@@ -321,6 +321,37 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def plus_likes(self, count):
+        self.like += count
+        return self.save(update_fields=['like'])
+    def minus_likes(self, count):
+        self.like -= count
+        return self.save(update_fields=['like'])
+    def plus_dislikes(self, count):
+        self.dislike += count
+        return self.save(update_fields=['dislike'])
+    def minus_dislikes(self, count):
+        self.dislike -= count
+        return self.save(update_fields=['dislike'])
+    def plus_comments(self, count):
+        self.comment += count
+        return self.save(update_fields=['comment'])
+    def minus_comments(self, count):
+        self.comment -= count
+        return self.save(update_fields=['comment'])
+    def plus_views(self, count):
+        self.view += count
+        return self.save(update_fields=['view'])
+    def minus_views(self, count):
+        self.view -= count
+        return self.save(update_fields=['view'])
+    def plus_reposts(self, count):
+        self.repost += count
+        return self.save(update_fields=['repost'])
+    def minus_reposts(self, count):
+        self.repost -= count
+        return self.save(update_fields=['repost'])
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)

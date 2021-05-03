@@ -247,6 +247,25 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+    def plus_reposts(self, count):
+        self.repost += count
+        return self.save(update_fields=['repost'])
+    def minus_reposts(self, count):
+        self.repost -= count
+        return self.save(update_fields=['repost'])
+    def plus_votes(self, count):
+        self.vote += count
+        return self.save(update_fields=['vote'])
+    def minus_votes(self, count):
+        self.vote -= count
+        return self.save(update_fields=['vote'])
+    def plus_voters(self, count):
+        self.voter += count
+        return self.save(update_fields=['voter'])
+    def minus_voters(self, count):
+        self.voter -= count
+        return self.save(update_fields=['voter'])
+
     @classmethod
     def create_survey(cls, title, image, lists, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
         from common.processing.survey import get_survey_processing
@@ -406,6 +425,13 @@ class Answer(models.Model):
             return int(count)
         else:
             return 0
+
+    def plus_votes(self, count):
+        self.vote += count
+        return self.save(update_fields=['vote'])
+    def minus_votes(self, count):
+        self.vote -= count
+        return self.save(update_fields=['vote'])
 
     def vote(self, user, community):
         import json
