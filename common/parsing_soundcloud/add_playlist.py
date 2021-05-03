@@ -37,7 +37,8 @@ def add_playlist(url, request_user, list):
                                                         duration=track['duration'],
                                                         genre=genre,
                                                         title=track['title'],
-                                                        uri=track['uri'])
+                                                        uri=track['uri'],
+                                                        status=Music.PUBLISHED)
                 try:
                     new_track.get_remote_image(track['artwork_url'])
                 except:
