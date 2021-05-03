@@ -1,7 +1,15 @@
-<span class="post_stream stream post_container">
+{% load get_key %}
      <span class="list_pk" list-pk="{{ list.pk }}">
        <span>
-
+         <a class="claim_post_list pointer">Пожаловаться</a>
+           &nbsp;
+         {% if list|is_user_can_add_list:request.user.pk %}
+           <a class="c_copy_post_list pointer">Добавить список</a>
+         {% elif request.user.pk in list.get_users_ids %}
+           <a class="c_uncopy_post_list pointer">Удалить список</a>
+         {% endif %}
+       </span>
+       <span class="post_stream is_post_paginate">
          {% for object in object_list %}
            {% include 'mobile/posts/post_community/post.html' %}
          {% endfor %}
@@ -15,4 +23,3 @@
          {% endif %}
        </span>
    </span>
-</span>

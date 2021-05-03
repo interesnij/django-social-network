@@ -1,11 +1,15 @@
-<div id="lenta_container">
-
-    <span class="post_stream stream post_container">
+{% load get_key %}
       <span class="list_pk" list-pk="{{ list.pk }}">
         <span>
-          <a class="u_close_post_list pointer">закрыть список</a>
+          <a class="close_post_list pointer">Закрыть</a>
+            &nbsp;
+          {% if list|is_user_can_add_list:request.user.pk %}
+            <a class="u_copy_post_list pointer">Добавить список</a>
+          {% elif request.user.pk in list.get_users_ids %}
+            <a class="u_uncopy_post_list pointer">Удалить список</a>
+          {% endif %}
         </span>
-        <span>
+        <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
@@ -18,7 +22,4 @@
           </div>
           {% endif %}
         </span>
-
     </span>
-    </span>
-</div>

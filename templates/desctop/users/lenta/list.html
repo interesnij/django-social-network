@@ -1,6 +1,5 @@
 {% load get_key %}
-<div id="lenta_container">
-    <span class="post_stream stream post_container">
+
       <span class="list_pk" list-pk="{{ list.pk }}">
         <span>
           <a class="claim_post_list pointer">Пожаловаться</a>
@@ -11,7 +10,7 @@
             <a class="u_uncopy_post_list pointer">Удалить список</a>
           {% endif %}
         </span>
-        <span>
+        <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
@@ -24,7 +23,4 @@
           </div>
           {% endif %}
         </span>
-
     </span>
-    </span>
-</div>

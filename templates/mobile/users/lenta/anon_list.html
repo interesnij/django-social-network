@@ -1,6 +1,5 @@
-<span class="post_stream stream post_container">
      <span class="list_pk" list-pk="{{ list.pk }}">
-       <span>
+       <span class="post_stream is_post_paginate">
 
          {% for object in object_list %}
            {% include 'mobile/posts/post_user/anon_post.html' %}
@@ -15,4 +14,3 @@
          {% endif %}
        </span>
    </span>
-</span>

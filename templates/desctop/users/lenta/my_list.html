@@ -1,6 +1,3 @@
-<div id="lenta_container">
-
-    <span class="post_stream stream post_container">
 
       <span class="list_pk" list-pk="{{ list.pk }}">
         {% if list.is_list %}
@@ -11,7 +8,7 @@
         </span>
         {% endif %}
 
-        <span>
+        <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
@@ -24,7 +21,4 @@
           </div>
           {% endif %}
         </span>
-
     </span>
-    </span>
-</div>

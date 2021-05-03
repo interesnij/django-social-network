@@ -39,7 +39,7 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
     moderation_container = document.body.querySelector("#moderation_post_container");
   } else if (_this.getAttribute){
     uuid = _this.getAttribute("data-uuid");
-    container_object = document.body.querySelector(".post_container");
+    container_object = document.body.querySelector(".post_stream");
     div = container_object.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' )
   }
 

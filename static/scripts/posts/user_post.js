@@ -166,7 +166,7 @@ on('#ajax', 'click', '#article_post', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     response = new_post.querySelector(".card");
-    document.querySelector(".stream").prepend(response)
+    document.querySelector(".post_stream").prepend(response)
     document.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
   }};
 
@@ -213,7 +213,7 @@ on('#ajax', 'click', '.u_post_remove', function() {
     p.innerHTML = "Запись удалена. <span class='u_post_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
-    block = document.body.querySelector(".post_container"),
+    block = document.body.querySelector(".post_stream"),
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
     item.parentElement.insertBefore(p, item),
     item.style.display = "none")

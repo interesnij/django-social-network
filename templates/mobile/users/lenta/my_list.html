@@ -1,7 +1,4 @@
 <div id="lenta_container">
-
-    <span class="post_stream stream post_container">
-
       <span class="list_pk" list-pk="{{ list.pk }}">
         {% if list.is_list %}
         <span>
@@ -11,7 +8,7 @@
         </span>
         {% endif %}
 
-        <span>
+        <span class="post_stream post_container">
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/my_post.html' %}
           {% endfor %}
@@ -25,6 +22,5 @@
           {% endif %}
         </span>
 
-    </span>
     </span>
 </div>

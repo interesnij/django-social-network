@@ -1,5 +1,5 @@
- <span class="post_stream stream post_container">
-      <span class="list_pk" list-pk="{{ list.pk }}">
+
+    <span class="list_pk" list-pk="{{ list.pk }}">
         {% if list.is_user_list %}
         <span>
           <a class="u_edit_post_list pointer">изменить список</a>
@@ -7,8 +7,8 @@
           <a class="u_delete_post_list pointer">удалить список</a>
         </span>
         {% endif %}
-        <span>
 
+        <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'mobile/posts/post_community/admin_post.html' %}
           {% endfor %}
@@ -22,4 +22,3 @@
           {% endif %}
         </span>
     </span>
-</span>
