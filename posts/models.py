@@ -943,21 +943,21 @@ class PostComment(models.Model):
         if parent:
             if community:
                 from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, community, None, self.pk, "POSC", "u_post_comment_notify", "REP")
-                community_wall(comment.commenter, community, None, self.pk, "POSC", "u_post_comment_notify", "REP")
+                community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
             else:
                 from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, self.pk, "POSC", "u_post_notify", "REP")
-                user_wall(comment.commenter, None, self.pk, "POSC", "u_post_notify", "REP")
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "REP")
         else:
             if community:
                 from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, community, None, self.pk, "POSC", "u_post_comment_notify", "COM")
-                community_wall(comment.commenter, community, None, self.pk, "POSC", "u_post_comment_notify", "COM")
+                community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
             else:
                 from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, self.pk, "POSC", "u_post_notify", "COM")
-                user_wall(comment.commenter, None, self.pk, "POSC", "u_post_notify", "COM")
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "COM")
         return comment
 
     def count_replies_ru(self):
