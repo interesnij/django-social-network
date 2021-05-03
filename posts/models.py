@@ -373,6 +373,8 @@ class Post(models.Model):
                 self.save(update_fields=['like', 'dislike'])
             else:
                 item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
         except PostVotes.DoesNotExist:
             PostVotes.objects.create(parent=self, user=user, vote=PostVotes.LIKE)
             self.like += 1
