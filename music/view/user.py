@@ -20,5 +20,5 @@ class UserLoadPlaylist(ListView):
 		return context
 
 	def get_queryset(self):
-		playlist = self.playlist.playlist_too()
+		playlist = self.playlist.get_items()
 		return playlist
