@@ -341,22 +341,22 @@ class Good(models.Model):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
 		return naturaltime(self.created)
 
-    def plus_comments(self, count):
+	def plus_comments(self, count):
 		self.comment += count
 		return self.save(update_fields=['comment'])
-    def minus_comments(self, count):
+	def minus_comments(self, count):
 		self.comment -= count
 		return self.save(update_fields=['comment'])
-    def plus_views(self, count):
+	def plus_views(self, count):
 		self.view += count
 		return self.save(update_fields=['view'])
-    def minus_views(self, count):
+	def minus_views(self, count):
 		self.view -= count
 		return self.save(update_fields=['view'])
-    def plus_reposts(self, count):
+	def plus_reposts(self, count):
 		self.repost += count
 		return self.save(update_fields=['repost'])
-    def minus_reposts(self, count):
+	def minus_reposts(self, count):
 		self.repost -= count
 		return self.save(update_fields=['repost'])
 
