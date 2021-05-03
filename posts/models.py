@@ -58,6 +58,8 @@ class PostList(models.Model):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(query, list=self)
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self, status="PUB")
+    def get_fix_items(self):
+        return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self, status="_FIX")
     def get_manager_items(self):
         return self.post_list.filter(status="MAN")
     def count_items(self):
