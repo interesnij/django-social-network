@@ -64,6 +64,8 @@ class PostList(models.Model):
         return self.post_list.filter(status="MAN")
     def count_items(self):
         return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
+    def count_items(self):
+        return self.post_list.filter(status="_FIX").values("pk").count()
 
     def is_not_empty(self):
         return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()

@@ -1,5 +1,5 @@
 
-{% if fix_list.count_items > 1 %}
+{% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
   {% for object in fix_list.get_posts_ids %}
@@ -21,7 +21,7 @@
     <label class="goto-last" for="s_{{ fix_list.count_posts }}"></label>
   </div>
 </div>
-{% elif fix_list.count_items == 1 %}
+{% elif fix_list.count_fix_items == 1 %}
 
 {% for object in fix_list.get_fix_items %}
   {% include 'mobile/communities/lenta/admin_fix_post.html' %}
