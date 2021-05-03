@@ -896,7 +896,7 @@ class PostComment(models.Model):
         return get_comments
 
     def count_replies(self):
-        return self.replies.filter(Q(status=EDITED)|Q(status=PUBLISHED)).values("pk").count()
+        return self.replies.filter(Q(status=PostComment.EDITED)|Q(status=PostComment.PUBLISHED)).values("pk").count()
 
     def likes(self):
         from common.model.votes import PostCommentVotes
