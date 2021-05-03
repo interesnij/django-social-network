@@ -71,7 +71,7 @@ class PostList(models.Model):
         return self.post_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
 
     def get_posts_ids(self):
-        ids = self.post_list.exclude(type__contains="_").values("pk")
+        ids = self.post_list.exclude(status="_FIX").values("pk")
         return [id['pk'] for id in ids]
 
     def is_user_can_add_list(self, user_id):
