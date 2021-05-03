@@ -38,9 +38,8 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
 
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  this.parentElement.parentElement.parentElement.getAttribute('list-pk') ? pk = this.parentElement.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/communities/post/" + pk + "/" + uuid + "/", loader)
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk') ? (tab_container = this.parentElement.parentElement.parentElement, pk = tab_container.querySelector(".tab_active").getAttribute('list-pk')) : pk = this.parentElement.getAttribute('list-pk');
+  open_fullscreen("/communities/post/" + pk + "/" + uuid + "/", document.getElementById("item_loader"))
 });
 on('#ajax', 'click', '.c_fix_fullscreen', function() {
   container = this.parentElement;
