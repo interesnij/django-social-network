@@ -1,18 +1,18 @@
 
-{% if playlist.playlist_6 %}
-<div class="card mb-3">
+{% if music_list.is_not_empty %}
+<div class="card mb-3"> 
     <div class="card-header">
       <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Аудиозаписи</h6>
             </div>
-            {{ playlist.count_items }}
+            {{ user.profile.tracks }}
         </div>
       </a>
     </div>
 
-    {% for object in playlist.playlist_6 %}
+    {% for object in music_list.get_6_items %}
     <div data-pk="{{ playlist.pk }}" class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter }}">
