@@ -518,11 +518,11 @@ class Post(models.Model):
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_post(self):
         from notify.models import Notify, Wall
-        if self.status == "TDEL":
+        if self.status == "_DEL":
             self.status = Post.PUBLISHED
-        elif self.status == "TDELP":
+        elif self.status == "_DELP":
             self.status = Post.PRIVATE
-        elif self.status == "TDELM":
+        elif self.status == "_DELM":
             self.status = Post.MANAGER
         self.save(update_fields=['status'])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -545,11 +545,11 @@ class Post(models.Model):
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_post(self):
         from notify.models import Notify, Wall
-        if self.status == "TCLO":
+        if self.status == "_CLO":
             self.status = Post.PUBLISHED
-        elif self.status == "TCLOP":
+        elif self.status == "_CLOP":
             self.status = Post.PRIVATE
-        elif self.status == "TCLOM":
+        elif self.status == "_CLOM":
             self.status = Post.MANAGER
         self.save(update_fields=['status'])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
