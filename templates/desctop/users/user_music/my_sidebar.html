@@ -47,12 +47,12 @@
       </div>
     </div>
 </div>
-{% if user.is_music_playlist_exists %}
+{% if is_list_exists %}
 <div class="card">
   <div class="card-body">
     <div class="nav flex-column nav-pills faqnav">
       <h6 style="margin-bottom:15px">Плейлисты</h6>
-      {% for object in user.get_audio_playlists %}
+      {% for object in get_lists %}
         <a class="ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">
           {{ object.name }}
         </a>

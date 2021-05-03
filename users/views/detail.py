@@ -141,21 +141,24 @@ class UserMusic(ListView):
         from common.template.music import get_template_user_music
         from music.models import SoundList
 
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.playlist = self.user.get_playlist()
+        self.user, self.playlist, self.get_lists = User.objects.get(pk=self.kwargs["pk"]), self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
-            self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
             self.get_items = self.playlist.get_staff_items()
+            self.lists_exists = SoundList.is_have_user_staff_lists(self.user.pk)
+            if self.lists_exists:
+                self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
         else:
-            self.get_lists = SoundList.get_user_lists(self.user.pk)
             self.get_items = self.playlist.get_items()
+            self.lists_exists = SoundList.is_have_user_lists(self.user.pk)
+            if self.lists_exists:
+                self.get_lists = SoundList.get_user_lists(self.user.pk)
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
         self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['playlist'], c['count_lists'] = self.user, self.playlist, self.count_lists
+        c['user'], c['playlist'], c['count_lists'], c['lists_exists'], c['get_lists'] = self.user, self.playlist, self.count_lists, self.lists_exists, self.get_lists
         return c
 
     def get_queryset(self):
