@@ -42,6 +42,6 @@ def add_playlist(url, request_user, list):
                     new_track.get_remote_image(track['artwork_url'])
                 except:
                     pass
-                request_user.profile.tracks += len(data['tracks'])
+                request_user.profile.tracks += 1
                 request_user.profile.save(update_fields=["tracks"])
                 list.playlist.add(new_track)
