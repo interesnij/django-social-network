@@ -18,7 +18,7 @@ class PostUserLikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        return item.send_like(requset.user, None)
+        return item.send_like(request.user, None)
 
 
 class PostUserDislikeCreate(View):
