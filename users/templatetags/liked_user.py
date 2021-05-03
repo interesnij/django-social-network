@@ -13,6 +13,8 @@ def user_in(objects, user):
 @register.filter
 def rupluralize(value, arg="единица,единицы,единиц"):
     args = arg.split(",")
+    if value == '':
+        value = 0
     number = abs(int(value))
     a = number % 10
     b = number % 100
