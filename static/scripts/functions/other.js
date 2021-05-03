@@ -296,7 +296,6 @@ function comment_wall_delete(_this, _link, _class) {
 
 function comment_abort_delete(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
-    comment.style.display = "flex";
     pk = _this.getAttribute("data-pk");
     block = _this.parentElement;
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -304,7 +303,8 @@ function comment_abort_delete(_this, _link) {
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
-            block.remove()
+            block.remove();
+            comment.style.display = "flex";
         }
     };
     link.send()
@@ -312,7 +312,6 @@ function comment_abort_delete(_this, _link) {
 
 function comment_wall_abort_delete(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
-    comment.style.display = "flex";
     comment_pk = _this.getAttribute("data-pk");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     block = _this.parentElement;
@@ -321,7 +320,8 @@ function comment_wall_abort_delete(_this, _link) {
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
-            block.remove()
+            block.remove();
+            comment.style.display = "flex";
         }
     };
     link.send()

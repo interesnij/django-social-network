@@ -299,7 +299,7 @@ on('#ajax', 'click', '.c_post_remove', function() {
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
     item.parentElement.insertBefore(p, item),
     item.style.display = "none",
-    p.style.display =  "block";)
+    p.style.display =  "block")
   }};
 
   link.send( );
