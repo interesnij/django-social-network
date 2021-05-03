@@ -892,8 +892,7 @@ class PostComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = self.replies.filter(~Q(status__contains="_")).only("pk")
-        return get_comments
+        return self.replies.filter(~Q(status__contains="_")).only("pk")
 
     def count_replies(self):
         return self.replies.filter(Q(status=PostComment.EDITED)|Q(status=PostComment.PUBLISHED)).values("pk").count()
@@ -940,6 +939,8 @@ class PostComment(models.Model):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
+        post.comment += 1
+        post.save(update_fields=["comment"])
         if parent:
             if community:
                 from common.notify.notify import community_notify, community_wall
@@ -978,46 +979,64 @@ class PostComment(models.Model):
         from common.attach.comment_attach import get_c_comment_attach
         return get_c_comment_attach(self, user)
 
-    def get_attach_photos(self):
-        if "pho" in self.attach:
-            query = []
-            from gallery.models import Photo
-
-            for item in self.attach.split(","):
-                if item[:3] == "pho":
-                    query.append(item[3:])
-        return Photo.objects.filter(id__in=query)
-
-    def get_attach_videos(self):
-        if "pho" in self.attach:
-            query = []
-            from video.models import Video
-
-            for item in self.attach.split(","):
-                if item[:3] == "vid":
-                    query.append(item[3:])
-        return Video.objects.filter(id__in=query)
-
     def delete_comment(self):
-        try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="por" + str(self.pk)).update(status="C")
-            else:
-                Notify.objects.filter(attach="poc" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
-
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = PostComment.THIS_DELETED
+        elif self.status == "EDI":
+            self.status = PostComment.THIS_EDITED_DELETED
+        self.save(update_fields=['status'])
+        if self.parent:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="C")
     def abort_delete_comment(self):
-        try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="por" + str(self.pk)).update(status="R")
-            else:
-                Notify.objects.filter(attach="poc" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
+        from notify.models import Notify, Wall
+        if self.status == "_DEL":
+            self.status = PostComment.PUBLISHED
+        elif self.status == "_DELE":
+            self.status = PostComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="R")
+
+    def close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = PostComment.THIS_CLOSED
+        elif self.status == "EDI":
+            self.status = PostComment.THIS_EDITED_CLOSED
+        self.save(update_fields=['status'])
+        if self.parent:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="C")
+    def abort_close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "_CLO":
+            self.status = PostComment.PUBLISHED
+        elif self.status == "_CLO":
+            self.status = PostComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="R")
