@@ -42,4 +42,4 @@ def add_playlist(url, request_user, list):
                     new_track.get_remote_image(track['artwork_url'])
                 except:
                     pass
-                list.players.add(new_track)
+                list.playlist.add(new_track)
