@@ -275,10 +275,10 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    THIS_PROCESSING, THIS_DRAFT, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED, THIS_MESSAGE = 'PRO',"_DRA", 'PUB','PRI','MAN','_DEL','_CLO', '_MES'
+    THIS_PROCESSING, THIS_DRAFT, THIS_FIXED, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED, THIS_MESSAGE = 'PRO',"_DRA","_FIX", 'PUB','PRI','MAN','_DEL','_CLO', '_MES'
     THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(THIS_DRAFT, 'Черновик'), (PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (THIS_PROCESSING, 'Обработка'),(THIS_DRAFT, 'Черновик'),(THIS_FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -617,7 +617,8 @@ class Post(models.Model):
         list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         if not list.is_full_list():
             self.list.add(list)
-            return True
+            self.status = Post.THIS_FIXED
+            return self.save(update_fields=["status"])
         else:
             return ValidationError("Список уже заполнен.")
 
@@ -625,7 +626,8 @@ class Post(models.Model):
         list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
         if list.is_post_in_list(self.pk):
             self.list.remove(list)
-            return True
+            self.status = Post.PUBLISHED
+            return self.save(update_fields=["status"])
         else:
             return ValidationError("Запись и так не в списке.")
 
