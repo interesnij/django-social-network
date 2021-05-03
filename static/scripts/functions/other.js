@@ -266,8 +266,8 @@ function comment_delete(_this, _link, _class) {
             div = document.createElement("div");
             div.classList.add("media", "comment");
             div.innerHTML = "<p class='" + _class + "'style='cursor:pointer;text-decoration:underline;padding:15px' data-pk='" + comment_pk + "'>Комментарий удален. Восстановить</p>";
-            comment.parentElement.insertBefore(div, comment);
             comment.style.display = "none"
+            comment.parentElement.insertBefore(div, comment);
         }
     };
     link.send()
