@@ -40,11 +40,9 @@ on('#ajax', 'click', '#holder_article_image', function() {
 });
 
 on('#ajax', 'click', '.fullscreen', function() {
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  container.parentElement.parentElement.getAttribute('list-pk') ? pk = container.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", loader)
+  uuid = this.parentElement.getAttribute('data-uuid');
+  this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk') ? pk = this.parentElement.parentElement.parentElement.previousElementSibling.querySelector(".tab_active").getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
+  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", document.getElementById("item_loader"))
 })
 on('#ajax', 'click', '.fix_fullscreen', function() {
   container = this.parentElement;
