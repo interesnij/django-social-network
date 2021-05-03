@@ -573,18 +573,10 @@ class Post(models.Model):
 
     def is_can_fixed_in_community(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
-        list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
-        if list.is_full_list():
-            return ValidationError("Запись нельзя прикрепить.")
-        else:
-            return True
+        return self.is_full_list()
     def is_can_fixed_in_user(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_user. Потому осталось проверить, не полон ли список"""
-        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
-        if list.is_full_list():
-            return ValidationError("Запись нельзя прикрепить.")
-        else:
-            return True
+        return self.is_full_list()
 
     def fixed_user_post(self, user_id):
         list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.THIS_FIXED)
