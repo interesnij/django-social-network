@@ -18,8 +18,8 @@ def add_playlist(url, request_user, list):
         except:
             pass
         for track in data['tracks']:
-            created_at = track['created_at']
-            created_at = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+            created = track['created_at']
+            created = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
             if track['description']:
                 description = track['description'][:500]
@@ -32,7 +32,7 @@ def add_playlist(url, request_user, list):
                     genre = SoundGenres.objects.get(name=track_genre)
                 except:
                     genre = SoundGenres.objects.create(name=track_genre)
-                new_track = Music.objects.create(created_at=created_at,
+                new_track = Music.objects.create(created=created,
                                                         description=description,
                                                         duration=track['duration'],
                                                         genre=genre,

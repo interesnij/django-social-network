@@ -209,14 +209,14 @@ on('#ajax', 'click', '.u_post_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.style.display =  "block";
     p.innerHTML = "Запись удалена. <span class='u_post_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
-    item.parentElement.insertBefore(p, item),
-    item.style.display = "none")
+    item.style.display = "none",
+    p.style.display =  "block",
+    item.parentElement.insertBefore(p, item))
   }};
 
   link.send( );
@@ -234,14 +234,14 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.style.display =  "block";
     p.innerHTML = "Запись удалена. <span class='u_post_wall_abort_remove pointer' data-uuid='" + uuid + "'>Восстановить</span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
     item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
-    item.parentElement.insertBefore(p, item),
-    item.style.display = "none")
+    item.style.display = "none",
+    p.style.display =  "block",
+    item.parentElement.insertBefore(p, item))
   }};
 
   link.send( );
@@ -249,9 +249,7 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
 
 on('#ajax', 'click', '.u_post_abort_remove', function() {
   item = this.parentElement.nextElementSibling;
-  item.style.display = "block";
   uuid = this.getAttribute("data-uuid");
-  block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/posts/user_progs/abort_delete/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -259,13 +257,13 @@ on('#ajax', 'click', '.u_post_abort_remove', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
+    item.style.display = "block";
   }};
   link.send();
 });
 on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
   item = this.parentElement.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  item.style.display = "block";
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -275,6 +273,7 @@ on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
+    item.style.display = "block";
   }};
   link.send();
 });
