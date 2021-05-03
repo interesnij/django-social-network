@@ -987,9 +987,13 @@ class PostComment(models.Model):
             self.status = PostComment.THIS_EDITED_DELETED
         self.save(update_fields=['status'])
         if self.parent:
+            self.parent.post.comment -= 1
+            self.parent.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
+            self.post.comment -= 1
+            self.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
@@ -1002,9 +1006,13 @@ class PostComment(models.Model):
             self.status = PostComment.EDITED
         self.save(update_fields=['status'])
         if self.parent:
+            self.parent.post.comment += 1
+            self.parent.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
+            self.post.comment += 1
+            self.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
@@ -1018,9 +1026,13 @@ class PostComment(models.Model):
             self.status = PostComment.THIS_EDITED_CLOSED
         self.save(update_fields=['status'])
         if self.parent:
+            self.parent.post.comment -= 1
+            self.parent.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
+            self.post.comment -= 1
+            self.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
@@ -1033,9 +1045,13 @@ class PostComment(models.Model):
             self.status = PostComment.EDITED
         self.save(update_fields=['status'])
         if self.parent:
+            self.parent.post.comment += 1
+            self.parent.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
+            self.post.comment += 1
+            self.post.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
