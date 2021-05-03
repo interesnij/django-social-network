@@ -566,10 +566,10 @@ class Post(models.Model):
 
     def is_fixed_in_community(self):
         list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
-        return list.is_post_in_list(self.pk)
+        return list.is_item_in_list(self.pk)
     def is_fixed_in_user(self):
         list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.THIS_FIXED)
-        return list.is_post_in_list(self.pk)
+        return list.is_item_in_list(self.pk)
 
     def is_can_fixed_in_community(self):
         """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
