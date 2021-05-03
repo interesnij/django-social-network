@@ -24,26 +24,11 @@ class PostUserLikeCreate(View):
 class PostUserDislikeCreate(View):
     def get(self, request, **kwargs):
         item, user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not item.votes_on:
+        if not request.is_ajax():
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PostVotes.DISLIKE:
-                likedislike.vote = PostVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostVotes.DoesNotExist:
-            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
-            result = True
-            user_notify(request.user, item.creator.pk, None, "pos"+str(item.pk), "u_post_notify", "DIS")
-        likes = item.likes_count()
-        dislikes = item.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_dislike(request.user, None)
 
 
 class PostCommentUserLikeCreate(View):
@@ -53,25 +38,7 @@ class PostCommentUserLikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PostCommentVotes.LIKE:
-                likedislike.vote = PostCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pos"+str(comment.parent.post.pk), "u_post_comment_notify", "LRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pos"+str(comment.post.pk), "u_post_comment_notify", "LCO")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, None)
 
 class PostCommentUserDislikeCreate(View):
     def get(self, request, **kwargs):
@@ -80,49 +47,16 @@ class PostCommentUserDislikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PostCommentVotes.DISLIKE:
-                likedislike.vote = PostCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pos"+str(comment.parent.post.pk), "u_post_comment_notify", "DRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pos"+str(comment.post.pk), "u_post_comment_notify", "DCO")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_dislike(request.user, None)
 
 
 class PostCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item, community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax() and not item.votes_on:
+        if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user, community)
-        try:
-            likedislike = PostVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PostVotes.LIKE:
-                likedislike.vote = PostVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostVotes.DoesNotExist:
-            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.LIKE)
-            result = True
-            community_notify(request.user, community, None, "pos"+str(item.pk), "c_post_notify", "LIK")
-        likes = item.likes_count()
-        dislikes = item.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_like(request.user, community)
 
 
 class PostCommunityDislikeCreate(View):
@@ -131,22 +65,7 @@ class PostCommunityDislikeCreate(View):
         if not request.is_ajax() and not item.votes_on:
             raise Http404
         check_can_get_lists(request.user, community)
-        try:
-            likedislike = PostVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PostVotes.DISLIKE:
-                likedislike.vote = PostVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostVotes.DoesNotExist:
-            PostVotes.objects.create(parent=item, user=request.user, vote=PostVotes.DISLIKE)
-            result = True
-            community_notify(request.user, community, None, "pos"+str(item.pk), "c_post_notify", "DIS")
-        likes = item.likes_count()
-        dislikes = item.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_dislike(request.user, community)
 
 
 class PostCommentCommunityLikeCreate(View):
@@ -155,25 +74,7 @@ class PostCommentCommunityLikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PostCommentVotes.LIKE:
-                likedislike.vote = PostCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pos"+str(comment.parent.post.pk), "c_post_comment_notify", "LRE")
-            else:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pos"+str(comment.post.pk), "c_post_comment_notify", "LCO")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, community)
 
 
 class PostCommentCommunityDislikeCreate(View):
@@ -182,22 +83,4 @@ class PostCommentCommunityDislikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PostCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PostCommentVotes.DISLIKE:
-                likedislike.vote = PostCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PostCommentVotes.DoesNotExist:
-            PostCommentVotes.objects.create(item=comment, user=request.user, vote=PostCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pos"+str(comment.parent.post.pk), "c_post_comment_notify", "DRE")
-            else:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pos"+str(comment.post.pk), "c_post_comment_notify", "DCO")
-        likes = comment.likes_count()
-        dislikes = comment.dislikes_count()
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_dislike(request.user, community)

@@ -388,6 +388,39 @@ class Post(models.Model):
                 user_notify(user, None, self.pk, "POS", "u_post_notify", "LIK")
                 user_wall(user, None, self.pk, "POS", "u_post_notify", "LIK")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import PostVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = PostVotes.objects.get(parent=self, user=user)
+            if item.vote != PostVotes.DISLIKE:
+                item.vote = PostVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except PostVotes.DoesNotExist:
+            PostVotes.objects.create(parent=self, user=user, vote=PostVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "POS", "u_post_notify", "DIS")
+                community_wall(user, community, None, self.pk, "POS", "u_post_notify", "DIS")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "POS", "u_post_notify", "DIS")
+                user_wall(user, None, self.pk, "POS", "u_post_notify", "DIS")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
     def create_post(cls, creator, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
@@ -769,6 +802,90 @@ class PostComment(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "комментарий к записи"
         verbose_name_plural = "комментарии к записи"
+
+    def __str__(self):
+        return self.commenter.get_full_name()
+
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import PostCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = PostCommentVotes.objects.get(item=self, user=user)
+            if item.vote != PostCommentVotes.LIKE:
+                item.vote = PostCommentVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=self, user=user, vote=PostCommentVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "LRE")
+                    community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "LRE")
+                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "LCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
+                    community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "LCO")
+                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "LCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import PostCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = PostCommentVotes.objects.get(item=self, user=user)
+            if item.vote != PostCommentVotes.DISLIKE:
+                item.vote = PostCommentVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except PostCommentVotes.DoesNotExist:
+            PostCommentVotes.objects.create(item=self, user=user, vote=PostCommentVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DRE")
+                    community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "DRE")
+                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "DCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
+                    community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "DCO")
+                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "DCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
