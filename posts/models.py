@@ -892,7 +892,7 @@ class PostComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        get_comments = PostComment.objects.filter(parent=self).all()
+        get_comments = self.replies.filter(~Q(status__contains="_")).only("pk")
         return get_comments
 
     def count_replies(self):
