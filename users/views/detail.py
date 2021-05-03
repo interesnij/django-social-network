@@ -141,7 +141,8 @@ class UserMusic(ListView):
         from common.template.music import get_template_user_music
         from music.models import SoundList
 
-        self.user, self.playlist, self.get_lists = User.objects.get(pk=self.kwargs["pk"]), self.user.get_playlist(), None
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.playlist, self.get_lists = self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
             self.get_items = self.playlist.get_staff_items()
             self.lists_exists = SoundList.is_have_user_staff_lists(self.user.pk)
