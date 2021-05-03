@@ -18,7 +18,7 @@
               <span>
                 {% if object.is_fixed_in_user %}
                   <span class="dropdown-item u_post_unfixed">Открепить</span>
-                {% elif object.is_can_fixed_in_user %}
+                {% elif request.user.is_can_fixed_post %}
                   <span class="dropdown-item u_post_fixed">Закрепить</span>
                 {% endif %}
               </span>

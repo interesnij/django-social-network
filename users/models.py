@@ -53,6 +53,11 @@ class User(AbstractUser):
         from users.model.profile import UserLocation
         return UserLocation.objects.filter(user=self)[0]
 
+    def is_can_fixed_post(self):
+        from posts.models import PostList
+        list = PostList.objects.get(creator_pk=self.pk, type=PostList.THIS_FIXED)
+        return list.count_items < 10
+
     def get_verb_gender(self, verb):
         if self.is_women():
             return "W" + verb
