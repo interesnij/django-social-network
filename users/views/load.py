@@ -9,11 +9,12 @@ class UserLoadPhoto(ListView):
 		from gallery.models import PhotoList
 
 		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = PhotoList.get_user_lists(self.user.pk)
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadPhoto,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):

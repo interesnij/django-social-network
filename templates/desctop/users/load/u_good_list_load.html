@@ -60,7 +60,7 @@
 {% endif %}
 </div>
 <div class="col-md-4">
-  {% if is_have_lists %}
+  {% if lists_exists %}
   <div class="card">
       <div class="nav flex-column nav-pills faqnav">
         <h6 style="margin-bottom:15px">Альбомы</h6>
@@ -70,7 +70,7 @@
 
         {% for get_good_lists %}
           <a {% if object.pk != list.pk %}class="create_ajax pointer" data-href="{% url 'u_good_list_load' uuid=object.uuid %}"{% endif %}">
-            {{ object.title }}
+            {{ object.name }}
           </a>
         {% endfor %}
       </div>

@@ -67,14 +67,14 @@
   {% endif %}
 </div>
 <div class="col-md-4">
-  {% if user.is_music_playlist_exists %}
+  {% if lists_exists %}
   <div class="card">
       <div class="nav flex-column nav-pills faqnav">
         <h6 style="margin-bottom:15px">Плейлисты</h6>
         <a class="create_ajax pointer" data-href="{% url 'u_music_load' %}">
           Основной плейлист
         </a>
-        {% for object in user.get_audio_playlists %}
+        {% for object in get_lists %}
           <a {% if object.pk != playlist.pk %}class="create_ajax pointer" data-href="{% url 'u_music_list_load' uuid=object.uuid %}"{% endif %}>
             {{ object.name }}
           </a>

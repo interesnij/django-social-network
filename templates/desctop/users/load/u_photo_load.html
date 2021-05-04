@@ -14,14 +14,14 @@
 <form id="add_photos">
     {% csrf_token %}
       <input type="file" id="u_photo_post_attach" class="upload_for_post_attach" name="file" style="display:none" multiple="multiple">
-      <div id="u_multi_comments_photos" class="border centered" style="cursor:pointer">
+      <div class="border centered previous_click" style="cursor:pointer">
           <h4>загрузить и прикрепить (до 10)</h4>
       </div>
 </form>
 <br>
 
 <div class="row" style="margin-left: 0;margin-right: 0;">
-    {% for object in request.user.get_photo_list %}
+    {% for object in get_lists %}
     <div class="col-md-6 mb-3 col-lg-4 cover_block">
         <div class="card rounded-0 border mb-3">
             <div class="card-header">
@@ -50,7 +50,7 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="img_load_container" data-link="/users/load/u_img_load/">
 {% for object in object_list %}
-<div class="col-md-4 mb-3 load_pag {% if forloop.last %}load_last{% endif %}">
+<div class="col-md-4 mb-3 pointer load_pag {% if forloop.last %}load_last{% endif %}">
   <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
       <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
   </div>
