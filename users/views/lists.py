@@ -172,7 +172,7 @@ class UserPostsListView(ListView):
 		from posts.models import PostList
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if user_pk != request.user.pk and self.list.is_private():
+		if user_pk != request.user.pk and self.post_list.is_private():
 			raise Http404
 		elif user_pk == request.user.pk:
 			self.list = self.post_list.get_staff_items()
