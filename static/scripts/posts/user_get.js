@@ -142,7 +142,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/posts/user/comment/" + uuid + "/" + pk + "/";
+    block.firstChild ? null : list_load(block, "/posts/user/comment/" + uuid + "/" + pk + "/");
     block.classList.add("show")
   }
 });
