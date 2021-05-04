@@ -8,7 +8,7 @@ class UserLoadPhoto(ListView):
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 
-		self.list, self.template_name = PhotoList.objects.get(creator_id=request.user.pk, type=PhotoList.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -17,8 +17,7 @@ class UserLoadPhoto(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.list.get_photos()
-		return photo_list
+		return self.list.get_items()
 
 
 class UserLoadPhotoList(ListView):
@@ -36,20 +35,18 @@ class UserLoadPhotoList(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.list.get_photos()
-		return photo_list
+		return self.list.get_itemp()
 
 class UserLoadPhotoComment(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
-		self.list, self.template_name = PhotoList.objects.get(creator_id=request.user.pk, type=PhotoList.MAIN, community__isnull=True), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		photos_list = self.list.get_photos()
-		return photos_list
+		return self.list.get_items()
 
 class UserLoadPhotoListComment(ListView):
 	template_name, paginate_by = None, 15
@@ -66,8 +63,7 @@ class UserLoadPhotoListComment(ListView):
 		return context
 
 	def get_queryset(self):
-		photo_list = self.list.get_photos()
-		return photo_list
+		return self.list.get_items()
 
 
 class UserLoadVideo(ListView):
@@ -76,7 +72,7 @@ class UserLoadVideo(ListView):
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoList
 
-		self.list, self.template_name = VideoList.objects.get(creator_id=request.user.pk, type=VideoList.MAIN, community__isnull=True), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_video_list(), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -85,8 +81,7 @@ class UserLoadVideo(ListView):
 		return context
 
 	def get_queryset(self):
-		videos_list = self.list.get_queryset()
-		return videos_list
+		return self.list.get_items()
 
 class UserLoadVideoList(ListView):
 	template_name, paginate_by = None, 15
@@ -103,8 +98,7 @@ class UserLoadVideoList(ListView):
 		return context
 
 	def get_queryset(self):
-		video_list = self.list.get_queryset().order_by('-created')
-		return video_list
+		return self.list.get_items()
 
 
 class UserLoadMusic(ListView):
@@ -112,7 +106,7 @@ class UserLoadMusic(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		self.playlist = SoundList.objects.get(creator_id=request.user.pk, type=SoundList.MAIN, community__isnull=True)
+		self.playlist = request.user.get_playlist()
 		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
@@ -122,8 +116,7 @@ class UserLoadMusic(ListView):
 		return context
 
 	def get_queryset(self):
-		musics_list = self.playlist.get_items().order_by('-created_at')
-		return musics_list
+		return self.playlist.get_items().order_by('-created_at')
 
 class UserLoadMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -140,8 +133,7 @@ class UserLoadMusicList(ListView):
 		return context
 
 	def get_queryset(self):
-		musics_list = self.playlist.get_items().order_by('-created_at')
-		return musics_list
+		return self.playlist.get_items().order_by('-created_at')
 
 
 class UserLoadDoc(ListView):
@@ -149,7 +141,7 @@ class UserLoadDoc(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
-		self.list = DocList.objects.get(creator_id=request.user.pk, type=DocList.MAIN, community__isnull=True)
+		self.list = request.user.get_doc_list()
 		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadDoc,self).get(request,*args,**kwargs)
 
@@ -159,8 +151,7 @@ class UserLoadDoc(ListView):
 		return context
 
 	def get_queryset(self):
-		doc_list = self.list.get_docs().order_by('-created')
-		return doc_list
+		return self.list.get_items()
 
 class UserLoadDocList(ListView):
 	template_name, paginate_by = None, 15
@@ -177,28 +168,48 @@ class UserLoadDocList(ListView):
 		return context
 
 	def get_queryset(self):
-		doc_list = self.list.get_docs().order_by('-created')
-		return doc_list
-
+		return self.list.get_items()
 
 class UserLoadArticle(ListView):
 	template_name = 'load/u_article_load.html'
 	paginate_by = 15
 
 	def get_queryset(self):
-		articles_list = self.request.user.get_articles().order_by('-created')
-		return articles_list
+		return self.request.user.get_articles().order_by('-created')
 
 class UserLoadSurvey(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from docs.models import DocList
+		self.list = request.user.get_survey_list()
 		self.template_name = get_settings_template("users/load/u_survey_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadSurvey,self).get(request,*args,**kwargs)
 
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadSurvey,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context
+
 	def get_queryset(self):
-		surveys_list = self.request.user.get_surveys()
-		return surveys_list
+		return self.list.get_items()
+
+class UserLoadSurveyList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from docs.models import DocList
+		self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+		self.template_name = get_settings_template("users/load/u_survey_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserSurveyDocList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadSurveyList,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()
 
 
 class UserLoadGood(ListView):
@@ -206,7 +217,7 @@ class UserLoadGood(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodList
-		self.list = GoodList.objects.get(type=GoodList.MAIN, creator=request.user, community__isnull=True)
+		self.list = request.user.get_good_list()
 		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
@@ -216,8 +227,7 @@ class UserLoadGood(ListView):
 		return context
 
 	def get_queryset(self):
-		goods_list = self.list.get_goods()
-		return goods_list
+		return self.list.get_items()
 
 class UserLoadGoodList(ListView):
 	template_name, paginate_by = None, 15
@@ -234,8 +244,7 @@ class UserLoadGoodList(ListView):
 		return context
 
 	def get_queryset(self):
-		good_list = self.list.get_goods().order_by('-created')
-		return good_list
+		return self.list.get_items()
 
 
 class CommunityLoadPhoto(ListView):
@@ -243,40 +252,35 @@ class CommunityLoadPhoto(ListView):
 	paginate_by = 15
 
 	def get_queryset(self):
-		photos_list = self.request.user.get_photos().order_by('-created')
-		return photos_list
+		return self.request.user.get_photos().order_by('-created')
 
 class CommunityLoadPhotoComment(ListView):
 	template_name = 'users/load/c_photo_comments_load.html'
 	paginate_by = 15
 
 	def get_queryset(self):
-		photos_list = self.request.user.get_photos().order_by('-created')
-		return photos_list
+		return self.request.user.get_photos().order_by('-created')
 
 class CommunityLoadVideo(ListView):
 	template_name = 'users/load/c_video_load.html'
 	paginate_by = 15
 
 	def get_queryset(self):
-		videos_list = self.request.user.get_video().order_by('-created')
-		return videos_list
+		return self.request.user.get_video().order_by('-created')
 
 class CommunityLoadMusic(ListView):
 	template_name = 'users/load/c_music_load.html'
 	paginate_by = 15
 
 	def get_queryset(self):
-		musics_list = self.request.user.get_music().order_by('-created_at')
-		return musics_list
+		return self.request.user.get_music().order_by('-created_at')
 
 class CommunityLoadArticle(ListView):
 	template_name = 'users/load/c_article_load.html'
 	paginate_by = 15
 
 	def get_queryset(self):
-		articles_list = self.request.user.get_articles().order_by('-created')
-		return articles_list
+		return self.request.user.get_articles().order_by('-created')
 
 
 class CommunityLoadGood(ListView):
@@ -295,8 +299,7 @@ class CommunityLoadGood(ListView):
 		return context
 
 	def get_queryset(self):
-		goods_list = self.list.get_goods()
-		return goods_list
+		return self.list.get_goods()
 
 
 class ChatItemsLoad(ListView):
@@ -308,8 +311,7 @@ class ChatItemsLoad(ListView):
 		return super(ChatItemsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		total_list = self.total_list
-		return total_list
+		return self.total_list
 
 
 class CommunitiesLoad(ListView):
@@ -321,8 +323,7 @@ class CommunitiesLoad(ListView):
 		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		list = self.list
-		return list
+		return self.list
 
 
 class FriendsLoad(ListView):
@@ -334,5 +335,4 @@ class FriendsLoad(ListView):
 		return super(FriendsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		list = self.list
-		return list
+		return self.list

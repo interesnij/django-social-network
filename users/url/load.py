@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^u_article_load/$', login_required(UserLoadArticle.as_view())),
     url(r'^u_survey_load/$', login_required(UserLoadSurvey.as_view()), name="u_survey_load"),
+    url(r'^u_survey_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadSurveyList.as_view()), name="u_survey_list_load"),
 
     url(r'^u_good_load/$', login_required(UserLoadGood.as_view()), name="u_good_load"),
     url(r'^u_good_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadGoodList.as_view()), name="u_good_list_load"),
