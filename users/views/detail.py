@@ -322,7 +322,7 @@ class ProfileUserView(TemplateView):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
         c['user'], c['photo_list'], c['video_list'], c['music_list'], \
         c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'] = \
-        self.user, self.user.get_fix_list().pk, self.user.get_photo_list(), self.user.get_video_list(), \
+        self.user, self.user.get_photo_list(), self.user.get_video_list(), \
         self.user.get_playlist(), self.user.get_doc_list(), self.user.get_good_list(), \
         self.get_buttons_block, self.common_frends
         return c
