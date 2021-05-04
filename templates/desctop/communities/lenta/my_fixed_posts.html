@@ -8,7 +8,7 @@
   <ul>
     {% for object in fix_list.get_fix_items %}
     <li class="scrollable">
-      {% include 'mobile/communities/lenta/fix_post.html' %}
+      {% include 'desctop/communities/lenta/fix_post.html' %}
     </li>
     {% endfor %}
   </ul>
@@ -24,7 +24,7 @@
 {% elif fix_list.count_fix_items == 1 %}
 
 {% for object in fix_list.get_fix_items %}
-  {% include 'mobile/communities/lenta/fix_post.html' %}
+  {% include 'desctop/communities/lenta/fix_post.html' %}
 {% endfor %}
 
 {% endif %}
