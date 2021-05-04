@@ -5,7 +5,7 @@ from posts.models import Post, PostComment
 from communities.models import Community
 from common.model.votes import PostVotes, PostCommentVotes
 from rest_framework.exceptions import PermissionDenied
-from common.template.post import get_permission_community_post, get_permission_user_post
+from common.template.post import get_permission_community_post_2, get_permission_user_post_2
 
 
 class PostUserLikeWindow(TemplateView):
