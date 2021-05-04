@@ -57,7 +57,7 @@ class User(AbstractUser):
         from posts.models import PostList
         #try:
         list = PostList.objects.get(creator_id=self.pk, type=PostList.THIS_FIXED)
-        return list.count_items() < 10 
+        return list.count_items() < 10
         #except:
         #    return None
 
@@ -1031,6 +1031,9 @@ class User(AbstractUser):
     def get_photo_list(self):
         from gallery.models import PhotoList
         return PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.MAIN)
+    def get_post_list(self):
+        from posts.models import PostList
+        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.MAIN)
     def get_doc_list(self):
         from docs.models import DocList
         return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)

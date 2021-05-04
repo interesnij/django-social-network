@@ -169,24 +169,28 @@ class UserPostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.template.post import get_permission_user_post
+		from posts.models import PostList
 
-		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
+		self.user, user_pk = User.objects.get(pk=self.kwargs["pk"])
+		self.list = self.user.get_post_list()
 		if self.user.pk != request.user.pk and self.list.is_private():
 			raise Http404
 		elif self.user.pk == request.user.pk:
-			self.posts_list = self.list.get_staff_items()
+			self.list = self.list.get_staff_items()
+			self.post_lists = PostList.get_user_staff_lists(sself.kwargs["pk"])
 		else:
-			self.posts_list = self.list.get_items()
+			self.list = self.list.get_items()
+			self.post_lists = PostList.get_user_lists(self.kwargs["pk"])
 		self.template_name = get_permission_user_post(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPostsListView,self).get_context_data(**kwargs)
-		c['user'], c['list'] = self.user, self.list
+		c['user'], c['list'], c['fix_list'] = self.user, self.list, self.user.get_fix_list()
 		return c
 
 	def get_queryset(self):
-		return self.posts_list
+		return self.list
 
 
 class AllUsers(ListView):
