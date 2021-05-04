@@ -1,9 +1,64 @@
-{% load get_key %}
+<span class="post_container">
+{% if fix_list.count_fix_items > 1 %}
+<div class="csslider infinity mt-5" id="slider1">
+  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
+  {% for object in fix_list.get_posts_ids %}
+    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
+  {% endfor %}
+  <ul>
+    {% for object in fix_list.get_fix_items %}
+    <li class="scrollable">
+      {% include 'desctop/users/lenta/fix_post.html' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="arrows">
+    {% for object in fix_list.get_posts_ids %}
+      <label for="s_{{ forloop.counter }}"></label>
+    {% endfor %}
 
+    <label class="goto-first" for="s_1"></label>
+    <label class="goto-last" for="s_{{ fix_list.count_fix_items }}"></label>
+  </div>
+</div>
+{% elif fix_list.count_fix_items == 1 %}
+
+{% for object in fix_list.get_fix_items %}
+  {% include 'desctop/users/lenta/fix_post.html' %}
+{% endfor %}
+
+{% endif %}
+
+<div class="row overflow-x-auto no-gutters">
+  <div class="col-12">
+  <ul class="date-list" style="width:max-content">
+    {% for object in post_lists %}
+      {% if object.is_main %}
+      <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
+        <div class="media">
+          <div class="media-body">
+              <h6 class="mb-0">Записи</h6>
+          </div>
+        </div>
+      </li>
+      {% else %}
+        <li class="date pointer u_post_list_change list" list-pk="{{ object.pk }}">
+          <div class="media">
+            <div class="media-body">
+              <h6 class="mb-0 list_name">{{ object.name }}</h6>
+            </div>
+          </div>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  </div>
+</div>
       <span class="list_pk" list-pk="{{ list.pk }}">
         <span>
           <a class="claim_post_list pointer">Пожаловаться</a>
             &nbsp;
+          {% load get_key %}
           {% if list|is_user_can_add_list:request.user.pk %}
             <a class="u_copy_post_list pointer">Добавить список</a>
           {% elif request.user.pk in list.get_users_ids %}
@@ -24,3 +79,4 @@
           {% endif %}
         </span>
     </span>
+</span>
