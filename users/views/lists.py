@@ -181,7 +181,7 @@ class UserPostsListView(ListView):
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
-		self.template_name = get_permission_user_post(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_permission_user_post(self.post_list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
