@@ -315,11 +315,11 @@ class ProfileUserView(TemplateView):
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:
-            self.template_name = "desctop/" + self.template_name
+            self.template_name = "mobile/" + self.template_name
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
-        c = super(ProfileUserView, self).get_context_data(**kwargs) 
+        c = super(ProfileUserView, self).get_context_data(**kwargs)
         c['user'], c['photo_list'], c['video_list'], c['music_list'], \
         c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'], c['post_list_pk'] = \
         self.user, self.user.get_photo_list(), self.user.get_video_list(), \
