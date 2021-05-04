@@ -177,7 +177,7 @@ class UserPostsListView(ListView):
 			raise Http404
 		elif self.user.pk == request.user.pk:
 			self.list = self.list.get_staff_items()
-			self.post_lists = PostList.get_user_staff_lists(sself.kwargs["pk"])
+			self.post_lists = PostList.get_user_staff_lists(self.kwargs["pk"])
 		else:
 			self.list = self.list.get_items()
 			self.post_lists = PostList.get_user_lists(self.kwargs["pk"])

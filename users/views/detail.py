@@ -258,10 +258,8 @@ class ProfileUserView(TemplateView):
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
         import re
-        from posts.models import PostList
 
         self.user, user_agent, MOBILE_AGENT_RE, user_pk, r_user_pk = User.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE), int(self.kwargs["pk"]), request.user.pk
-        self.post_lists = PostList.get_user_lists(user_pk)
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
@@ -274,7 +272,6 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/my_user_child.html"
                 else:
                     self.template_name = "users/account/my_user.html"
-                    self.post_lists = PostList.get_user_staff_lists(user_pk)
             elif r_user_pk != user_pk:
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
@@ -323,9 +320,9 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
-        c['user'], c['fix_list'], c['photo_list'], c['video_list'], c['music_list'], \
-        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'], c['post_lists'] = \
-        self.user, self.user.get_fix_list(), self.user.get_photo_list(), self.user.get_video_list(), \
+        c['user'], c['photo_list'], c['video_list'], c['music_list'], \
+        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'] = \
+        self.user, self.user.get_fix_list().pk, self.user.get_photo_list(), self.user.get_video_list(), \
         self.user.get_playlist(), self.user.get_doc_list(), self.user.get_good_list(), \
-        self.get_buttons_block, self.common_frends, self.post_lists
+        self.get_buttons_block, self.common_frends
         return c

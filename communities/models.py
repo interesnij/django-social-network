@@ -305,6 +305,9 @@ class Community(models.Model):
     def get_good_list(self):
         from goods.models import GoodList
         return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)
+    def get_post_list(self):
+        from posts.models import PostList
+        return PostList.objects.get(community_id=self.pk, type=PostList.MAIN)
     def get_playlist(self):
         from music.models import SoundList
         return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
