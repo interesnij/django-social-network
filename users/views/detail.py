@@ -64,7 +64,7 @@ class UserGallery(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['get_lists'], c['count_lists'] = self.user, self.list, self.get_lists, self.count_lists
+        c['user'], c['list'], c['get_lists'], c['count_lists'], c['post_lists'] = self.user, self.list, self.get_lists, self.count_lists, self.get_lists
         return c
 
 class UserPhotoList(TemplateView):
