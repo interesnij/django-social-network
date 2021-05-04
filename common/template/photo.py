@@ -64,7 +64,7 @@ def get_permission_community_photo(list, folder, template, request_user, user_ag
     from common.check.community import check_can_get_lists, check_anon_can_get_list
     community = list.community
 
-    if community.type[0] == "T":
+    if community.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -89,7 +89,7 @@ def get_permission_community_photo(list, folder, template, request_user, user_ag
 def get_permission_community_photo_2(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
 
-    if community.type[0] == "T":
+    if community.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -114,7 +114,7 @@ def get_permission_community_photo_2(community, folder, template, request_user, 
 
 def get_permission_community_photo_detail(list, photo, folder, template, request_user, user_agent):
     community = list.community
-    if community.type[0] == "T":
+    if community.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -192,7 +192,7 @@ def get_permission_user_photo(list, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
     user = list.creator
 
-    if user.type[0] == "T":
+    if user.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -212,7 +212,7 @@ def get_permission_user_photo(list, folder, template, request_user, user_agent):
 def get_permission_user_photo_2(user, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
-    if user.type[0] == "T":
+    if user.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -234,7 +234,7 @@ def get_permission_user_photo_detail(list, photo, folder, template, request_user
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
     user = list.creator
 
-    if user.type[0] == "T":
+    if user.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():

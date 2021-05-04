@@ -64,7 +64,7 @@ def get_permission_community_post(list, folder, template, request_user, user_age
     from common.check.community import check_can_get_lists, check_anon_can_get_list
     community = list.community
 
-    if community.type[0] == "T":
+    if community.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -89,7 +89,7 @@ def get_permission_community_post(list, folder, template, request_user, user_age
 def get_permission_community_post_2(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
 
-    if community.type[0] == "T":
+    if community.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -165,7 +165,7 @@ def get_permission_user_post(list, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
     user = list.creator
 
-    if user.type[0] == "T":
+    if user.type[0] == "_":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
@@ -185,7 +185,7 @@ def get_permission_user_post(list, folder, template, request_user, user_agent):
 def get_permission_user_post_2(user, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
 
-    if user.type[0] == "T":
+    if user.type[0] == "_" and user.type[1] != "F":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():

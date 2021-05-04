@@ -146,7 +146,7 @@ class AllPostUserLikeWindow(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         if not self.item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_post(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_post_2(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -166,7 +166,7 @@ class AllPostUserDislikeWindow(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         if not self.item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_post(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_post_2(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -185,7 +185,7 @@ class AllPostUserCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_post(self.comment.commenter, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_post_2(self.comment.commenter, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -204,7 +204,7 @@ class AllPostUserCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_post(self.comment.commenter, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_user_post_2(self.comment.commenter, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -226,7 +226,7 @@ class AllPostCommunityLikeWindow(ListView):
         if not self.item.votes_on:
             raise PermissionDenied('Реакции отключены.')
 
-        self.template_name = get_permission_community_post(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -246,7 +246,7 @@ class AllPostCommunityDislikeWindow(ListView):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
         if not self.item.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_community_post(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -265,7 +265,7 @@ class AllPostCommunityCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_post(self.comment.post.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.comment.post.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -284,7 +284,7 @@ class AllPostCommunityCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_post(self.comment.post.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.comment.post.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -303,7 +303,7 @@ class AllPostCommunityRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_community_post(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.item.community, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -321,7 +321,7 @@ class AllPostUserRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_user_post(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_permission_community_post_2(self.item.creator, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
