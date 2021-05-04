@@ -1,4 +1,11 @@
-.u_load_comments {
+.u_load_comments,
+.c_item_comments,
+.c_photo_comments,
+.u_photo_comments,
+.c_good_comments,
+.u_good_comments
+.c_video_comments,
+.u_video_comments {
   display:none
 }
 

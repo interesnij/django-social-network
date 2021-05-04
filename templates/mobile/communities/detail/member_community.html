@@ -32,8 +32,6 @@
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
-  {% include 'mobile/communities/lenta/fixed_posts.html' %}
-
   <span class="draft_post_container">
   {% if request.user|is_community_draft_exists:community.pk %}
   <div class="card mt-3 user_draft_list">
@@ -56,8 +54,6 @@
   {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
     {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
   {% endif %}
-
-  {% include 'mobile/communities/detail_sections/post_lists.html' %}
 
   <div class="is_community_post_paginate mt-3" list-pk="{{ post_list_pk }}"></div>
 

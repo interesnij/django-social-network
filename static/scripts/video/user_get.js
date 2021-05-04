@@ -72,6 +72,19 @@ on('#video_loader', 'click', '.u_video_comments', function() {
   list_load(video_display.nextElementSibling, url);
   this.classList.toggle("comments_open");
 });
+on('#video_loader', 'click', '.u_video_comments', function() {
+  clear_comment_dropdown();
+  video_display = this.parentElement.parentElement.parentElement;
+  pk = video_display.getAttribute("data-pk");
+  uuid = video_display.getAttribute("data-uuid");
+  block_comments = video_display.nextElementSibling;
+  if (block_comments.classList.contains("show")){
+    block_comments.classList.remove("show")
+  } else {
+    block_comments.firstChild ? null : list_load(block_comments, "/video/user/comment/" + uuid + "/" + pk + "/");
+    block_comments.classList.add("show")
+  }
+});
 
 on('#ajax', 'click', '.u_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");

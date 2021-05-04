@@ -167,7 +167,11 @@ on('#ajax', 'click', '.c_photo_comments', function() {
   data = document.body.querySelector(".data_display");
   pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
-  url = "/gallery/community/comment/" + pk + "/" + uuid + "/";
-  list_load(data.querySelector(".c_load_comments"), url);
-  this.classList.toggle("comments_open");
+  block = data.querySelector(".c_load_comments");
+  if (block.classList.contains("show")){
+    block.classList.remove("show")
+  } else {
+    block.firstChild ? null : list_load(block, "/gallery/community/comment/" + uuid + "/" + pk + "/");
+    block.classList.add("show")
+  }
 });

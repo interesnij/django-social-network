@@ -77,9 +77,13 @@ on('#ajax', 'click', '.c_good_comments', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute("data-pk");
   good_pk = block.getAttribute("good-pk");
-  url = "/goods/community/comment/" + good_pk + "/" + pk + "/";
-  list_load(block.querySelector(".c_load_comments"), url);
-  this.classList.toggle("comments_open");
+  block_comments = block.querySelector(".c_load_comments");
+  if (block_comments.classList.contains("show")){
+    block_comments.classList.remove("show")
+  } else {
+    block_comments.firstChild ? null : list_load(block_comments, "/goods/community/comment/" + uuid + "/" + pk + "/");
+    block_comments.classList.add("show")
+  }
 });
 
 on('#ajax', 'click', '.c_load_good_list', function() {

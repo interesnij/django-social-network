@@ -87,9 +87,13 @@ on('#video_loader', 'click', '.c_video_comments', function() {
   video_display = this.parentElement.parentElement.parentElement;
   pk = video_display.getAttribute("data-pk");
   uuid = video_display.getAttribute("data-uuid");
-  url = "/video/community/comment/" + uuid + "/" + pk + "/";
-  list_load(data.querySelector(".c_load_comments"), url);
-  this.classList.toggle("comments_open");
+  block_comments = video_display.nextElementSibling;
+  if (block_comments.classList.contains("show")){
+    block_comments.classList.remove("show")
+  } else {
+    block_comments.firstChild ? null : list_load(block_comments, "/video/community/comment/" + uuid + "/" + pk + "/");
+    block_comments.classList.add("show")
+  }
 });
 
 on('#ajax', 'click', '.c_video_list_detail', function() {

@@ -13,7 +13,7 @@
           <form id="add_user_avatar">
             {% csrf_token %}
             <input type="file" id="community_avatar_upload" name="file" style="display:none">
-            <svg id="community_avatar_btn" fill="currentColor" viewBox="0 0 24 24" class="svg_default" style="width:30px;position: absolute;top: 8px;cursor: pointer;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+            <svg id="community_avatar_btn" fill="currentColor" viewBox="0 0 24 24" class="svg_default pointer" style="width:30px;position: absolute;top: 8px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
           </form>
       </figure>
       {% else %}
@@ -67,10 +67,6 @@
   {% endif %}
 
   {% include 'mobile/communities/detail_sections/create_post.html' %}
-
-  {% include 'mobile/communities/lenta/admin_fixed_posts.html' %}
-
-  {% include 'mobile/communities/detail_sections/admin_post_lists.html' %}
 
   <div class="is_community_post_paginate mt-3" list-pk="{{ post_list_pk }}"></div>
 

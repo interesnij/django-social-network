@@ -89,7 +89,7 @@ def get_permission_community_post(list, folder, template, request_user, user_age
 def get_permission_community_post_2(community, folder, template, request_user, user_agent):
     from common.check.community import check_can_get_lists, check_anon_can_get_list
 
-    if community.type[0] == "_":
+    if community.type[0] == "_" and user.type[1] != "F":
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated:
         if request_user.is_no_phone_verified():
