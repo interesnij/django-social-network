@@ -13,7 +13,7 @@ urlpatterns = [
 
     url(r'^post/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PostCommunity.as_view(), name='community_post'),
     url(r'^fix_post/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityFixPostView.as_view(), name='community_fix_post'),
-    url(r'^list/(?P<pk>\d+)/$', CommunityPostsListView.as_view()),
+    url(r'^list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CommunityPostsListView.as_view()),
     url(r'^draft/(?P<pk>\d+)/$', PostsDraftCommunity.as_view(), name="community_draft_list"),
     url(r'^user_draft/(?P<pk>\d+)/$', PostsUserDraftCommunity.as_view(), name="community_user_draft_list"),
 

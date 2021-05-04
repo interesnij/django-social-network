@@ -88,7 +88,9 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
     date_list = document.body.querySelector(".date-list");
     list = date_list.querySelectorAll(".list");
     for (var i = 0; i < list.length; i++) {list[i].classList.remove("tab_active");list[i].classList.add("pointer", "c_post_list_change");};
-
+    date_list.querySelector(".is_main_post_list").classList.remove("tab_active");
+    date_list.querySelector(".is_main_post_list").classList.add("pointer", "u_posts_change");
+    
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;

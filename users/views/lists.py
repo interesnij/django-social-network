@@ -171,8 +171,7 @@ class UserPostsListView(ListView):
 		from common.template.post import get_permission_user_post
 		from posts.models import PostList
 
-		self.user, user_pk = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"])
-		self.post_list = self.user.get_post_list()
+		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk != request.user.pk and self.list.is_private():
 			raise Http404
 		elif user_pk == request.user.pk:

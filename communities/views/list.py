@@ -295,8 +295,7 @@ class CommunityPostsListView(ListView):
 		from django.http import Http404
 		from common.template.post import get_permission_community_post
 
-		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_post_list()
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if request.user.is_staff_of_community(self.c.pk):
 			self.posts_list = self.list.get_staff_items()
 			self.post_lists = PostList.get_community_staff_lists(self.kwargs["pk"])
