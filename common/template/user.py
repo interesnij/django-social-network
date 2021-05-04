@@ -89,7 +89,7 @@ def get_detect_platform_template(template, request_user, user_agent):
     elif request_user.is_no_phone_verified():
         template = "main/phone_verification.html"
 
-    return get_folder(user_agent) + template_name
+    return get_folder(user_agent) + template
 
 def render_for_platform(request, template, data):
     from django.shortcuts import render
