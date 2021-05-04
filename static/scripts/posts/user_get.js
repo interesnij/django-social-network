@@ -139,7 +139,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute("data-uuid");
   block = parent.querySelector(".u_load_comments");
-  block.classList.contains("show") ? (block.style.display == "none", block.classList.remove("show")) : (list_load(block, "/posts/user/comment/" + uuid + "/" + pk + "/"), block.classList.add("show"), (block.style.display == "block")
+  block.classList.contains("show") ? (block.style.display == "none", block.classList.remove("show")) : (list_load(block, "/posts/user/comment/" + uuid + "/" + pk + "/"), block.classList.add("show"), block.style.display == "block")
 });
 
 on('#ajax', 'click', '.u_comment_photo', function() {
