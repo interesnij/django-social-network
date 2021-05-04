@@ -1,3 +1,7 @@
+.u_load_comments {
+  display:none
+}
+
 .avatar_figure:hover .change_avatar{
   display: block !important;
   position: absolute;
