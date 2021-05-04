@@ -442,11 +442,11 @@ function open_fullscreen(link, block) {
 function if_list(block) {
     if (block.querySelector('.is_profile_post_paginate')) {
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/";
-        list_block_load(block.querySelector('.is_profile_post_paginate'), ".post_stream", link);
+        list_block_load(block.querySelector('.is_profile_post_paginate'), ".post_container", link);
         scrolled(link, '.list_pk', target = 0)
     } else if (block.querySelector('.is_community_post_paginate')) {
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/";
-        list_block_load(block.querySelector('.is_community_post_paginate'), ".post_stream", link);
+        list_block_load(block.querySelector('.is_community_post_paginate'), ".post_container", link);
         scrolled(link, '.list_pk', target = 0)
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
