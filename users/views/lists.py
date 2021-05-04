@@ -172,14 +172,14 @@ class UserPostsListView(ListView):
 		from posts.models import PostList
 
 		self.user, user_pk = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"])
-		self.list = self.user.get_post_list()
+		self.post_list = self.user.get_post_list()
 		if user_pk != request.user.pk and self.list.is_private():
 			raise Http404
 		elif user_pk == request.user.pk:
-			self.list = self.list.get_staff_items()
+			self.list = self.post_list.get_staff_items()
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
 		else:
-			self.list = self.list.get_items()
+			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 		self.template_name = get_permission_user_post(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
