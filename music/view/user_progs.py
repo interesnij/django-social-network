@@ -48,7 +48,7 @@ class UserSoundcloudSetCreate(View):
 
         if request.is_ajax() and form_post.is_valid():
             list = form_post.save(commit=False)
-            new_list = Music.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None, is_public=request.POST.get("is_public"))
+            new_list = SoundList.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None, is_public=request.POST.get("is_public"))
             add_playlist(request.POST.get('permalink'), request.user, new_list)
             return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'user': request.user})
         else:
