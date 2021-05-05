@@ -849,8 +849,8 @@ class PostComment(models.Model):
                     community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
                 else:
                     from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "LCO")
-                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "LCO")
+                    user_notify(user, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
+                    user_wall(user, None, self.pk, "POSC", "u_post_comment_notify", "LCO")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
     def send_dislike(self, user, community):
         import json
@@ -880,8 +880,8 @@ class PostComment(models.Model):
                     community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
                 else:
                     from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "DRE")
-                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "DCO")
+                    user_notify(user, None, self.pk, "POSC", "u_post_comment_notify", "DRE")
+                    user_wall(user, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
             else:
                 if community:
                     from common.notify.notify import community_notify, community_wall
@@ -889,8 +889,8 @@ class PostComment(models.Model):
                     community_wall(user, community, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
                 else:
                     from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "POSC", "u_post_notify", "DCO")
-                    user_wall(user, None, self.pk, "POSC", "u_post_notify", "DCO")
+                    user_notify(user, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
+                    user_wall(user, None, self.pk, "POSC", "u_post_comment_notify", "DCO")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     def get_created(self):
@@ -954,8 +954,8 @@ class PostComment(models.Model):
                 community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
             else:
                 from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "REP")
-                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "REP")
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
         else:
             if community:
                 from common.notify.notify import community_notify, community_wall
@@ -963,8 +963,8 @@ class PostComment(models.Model):
                 community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
             else:
                 from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "COM")
-                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_notify", "COM")
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
         return comment
 
     def count_replies_ru(self):

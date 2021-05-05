@@ -21,7 +21,7 @@ class PhotoList(models.Model):
         (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
-    community = models.ForeignKey('communities.Community', related_name='post_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='photo_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     name = models.CharField(max_length=250, verbose_name="Название")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -273,11 +273,15 @@ class PhotoList(models.Model):
             self.type = PhotoList.THIS_CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = PhotoList.THIS_CLOSED_MANAGER
+        elif self.type == "AVA":
+            self.type = PhotoList.THIS_CLOSED_AVATAR
+        elif self.type == "WAL":
+            self.type = PhotoList.THIS_CLOSED_WALL
         self.save(update_fields=['type'])
-        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
         if self.type == "TCLO":
@@ -288,11 +292,15 @@ class PhotoList(models.Model):
             self.type = PhotoList.PRIVATE
         elif self.type == "TCLOM":
             self.type = PhotoList.MANAGER
+        elif self.type == "TCLOW":
+            self.type = PhotoList.WALL
+        elif self.type == "TCLOA":
+            self.type = PhotoList.AVATAR
         self.save(update_fields=['type'])
-        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class Photo(models.Model):
@@ -436,8 +444,8 @@ class Photo(models.Model):
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
 
     def dislikes_count(self):
-        if self.dislikes > 0:
-            return self.dislikes
+        if self.dislike > 0:
+            return self.dislike
         else:
             return ''
 
@@ -445,26 +453,146 @@ class Photo(models.Model):
         from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
 
-    def delete_photo(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="pho" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
-
-    def abort_delete_photo(self):
-        try:
-            from notify.models import Notify
-            Notify.objects.filter(attach="pho" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
-
     def get_type(self):
         return self.list.all()[0].type
+
+    def make_private(self):
+        from notify.models import Notify, Wall
+        self.status = Photo.PRIVATE
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+    def make_publish(self):
+        from notify.models import Notify, Wall
+        self.status = Photo.PUBLISHED
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def delete_photo(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Photo.THIS_DELETED
+        elif self.status == "PRI":
+            self.status = Photo.THIS_DELETED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Photo.THIS_DELETED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_delete_photo(self):
+        from notify.models import Notify, Wall
+        if self.status == "_DEL":
+            self.status = Photo.PUBLISHED
+        elif self.status == "_DELP":
+            self.status = Photo.PRIVATE
+        elif self.status == "_DELM":
+            self.status = Photo.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def close_photo(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = Photo.THIS_CLOSED
+        elif self.status == "PRI":
+            self.status = Photo.THIS_CLOSED_PRIVATE
+        elif self.status == "MAN":
+            self.status = Photo.THIS_CLOSED_MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
+    def abort_close_photo(self):
+        from notify.models import Notify, Wall
+        if self.status == "_CLO":
+            self.status = Photo.PUBLISHED
+        elif self.status == "_CLOP":
+            self.status = Photo.PRIVATE
+        elif self.status == "_CLOM":
+            self.status = Photo.MANAGER
+        self.save(update_fields=['status'])
+        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
+
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import PhotoVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = PhotoVotes.objects.get(parent=self, user=user)
+            if item.vote != PhotoVotes.LIKE:
+                item.vote = PhotoVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except PhotoVotes.DoesNotExist:
+            PhotoVotes.objects.create(parent=self, user=user, vote=PhotoVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "PHO", "u_photo_notify", "LIK")
+                community_wall(user, community, None, self.pk, "PHO", "u_photo_notify", "LIK")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "PHO", "u_photo_notify", "LIK")
+                user_wall(user, None, self.pk, "PHO", "u_photo_notify", "LIK")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import PhotoVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = PhotoVotes.objects.get(parent=self, user=user)
+            if item.vote != PhotoVotes.DISLIKE:
+                item.vote = PhotoVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except PhotoVotes.DoesNotExist:
+            PhotoVotes.objects.create(parent=self, user=user, vote=PhotoVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "PHO", "u_photo_notify", "DIS")
+                community_wall(user, community, None, self.pk, "PHO", "u_photo_notify", "DIS")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "PHO", "u_photo_notify", "DIS")
+                user_wall(user, None, self.pk, "PHO", "u_photo_notify", "DIS")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
 
 class PhotoComment(models.Model):
@@ -586,29 +714,160 @@ class PhotoComment(models.Model):
         return get_c_comment_attach(self, user)
 
     def delete_comment(self):
-        try:
-            from notify.models import Notify, Wall
-
-            Wall.objects.filter(attach="phc" + str(self.pk)).update(status="C")
-            if self.parent:
-                Notify.objects.filter(attach="phr" + str(self.pk)).update(status="C")
-            else:
-                Notify.objects.filter(attach="phc" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.status = DELETED
-        return self.save(update_fields=['status'])
-
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = PhotoComment.THIS_DELETED
+        elif self.status == "EDI":
+            self.status = PhotoComment.THIS_EDITED_DELETED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.photo.comment -= 1
+            self.parent.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.photo.comment -= 1
+            self.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="C")
     def abort_delete_comment(self):
-        try:
-            from notify.models import Notify, Wall
+        from notify.models import Notify, Wall
+        if self.status == "_DEL":
+            self.status = PhotoComment.PUBLISHED
+        elif self.status == "_DELE":
+            self.status = PhotoComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.photo.comment += 1
+            self.parent.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.photo.comment += 1
+            self.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="R")
 
-            Wall.objects.filter(attach="phc" + str(self.pk)).update(status="R")
-            if self.parent:
-                Notify.objects.filter(attach="phr" + str(self.pk)).update(status="R")
+    def close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = PhotoComment.THIS_CLOSED
+        elif self.status == "EDI":
+            self.status = PhotoComment.THIS_EDITED_CLOSED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.photo.comment -= 1
+            self.parent.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.photo.comment -= 1
+            self.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="C")
+    def abort_close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "_CLO":
+            self.status = PhotoComment.PUBLISHED
+        elif self.status == "_CLO":
+            self.status = PhotoComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.photo.comment += 1
+            self.parent.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.photo.comment += 1
+            self.photo.save(update_fields=["comment"])
+            if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="R")
+
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import PhotoCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = PhotoCommentVotes.objects.get(item=self, user=user)
+            if item.vote != PhotoCommentVotes.LIKE:
+                item.vote = PhotoCommentVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
             else:
-                Notify.objects.filter(attach="phc" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.status = PUBLISHED
-        return self.save(update_fields=['status'])
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except PhotoCommentVotes.DoesNotExist:
+            PhotoCommentVotes.objects.create(item=self, user=user, vote=PhotoCommentVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "LRE")
+                    community_wall(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "PHOC", "u_photo_comment_notify", "LRE")
+                    user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+                    community_wall(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+                    user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "LCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import PhotoCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = PhotoCommentVotes.objects.get(item=self, user=user)
+            if item.vote != PhotoCommentVotes.DISLIKE:
+                item.vote = PhotoCommentVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except PhotoCommentVotes.DoesNotExist:
+            PhotoCommentVotes.objects.create(item=self, user=user, vote=PhotoCommentVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "DRE")
+                    community_wall(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DRE")
+                    user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+                    community_wall(user, community, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+                    user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")

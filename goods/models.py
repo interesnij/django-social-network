@@ -230,18 +230,18 @@ class GoodList(models.Model):
 		from notify.models import Notify, Wall
 		self.type = GoodList.PRIVATE
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 	def make_publish(self):
 		from notify.models import Notify, Wall
 		self.type = GoodList.LIST
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 	def delete_list(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
@@ -251,10 +251,10 @@ class GoodList(models.Model):
 		elif self.type == "MAN":
 			self.type = GoodList.THIS_DELETED_MANAGER
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_delete_list(self):
 		from notify.models import Notify, Wall
 		if self.type == "TDEL":
@@ -264,10 +264,10 @@ class GoodList(models.Model):
 		elif self.type == "TDELM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 
 	def close_list(self):
 		from notify.models import Notify, Wall
@@ -280,10 +280,10 @@ class GoodList(models.Model):
 		elif self.type == "MAN":
 			self.type = GoodList.THIS_CLOSED_MANAGER
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_close_list(self):
 		from notify.models import Notify, Wall
 		if self.type == "TCLO":
@@ -295,10 +295,10 @@ class GoodList(models.Model):
 		elif self.type == "TCLOM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 
 
 class Good(models.Model):
@@ -575,6 +575,73 @@ class Good(models.Model):
 	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
+	def send_like(self, user, community):
+        import json
+        from common.model.votes import GoodVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = GoodVotes.objects.get(parent=self, user=user)
+            if item.vote != GoodVotes.LIKE:
+                item.vote = GoodVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except GoodVotes.DoesNotExist:
+            GoodVotes.objects.create(parent=self, user=user, vote=GoodVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
+                community_wall(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "GOO", "u_good_notify", "LIK")
+                user_wall(user, None, self.pk, "GOO", "u_good_notify", "LIK")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import GoodVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on:
+            from django.http import Http404
+            raise Http404
+        try:
+            item = GoodVotes.objects.get(parent=self, user=user)
+            if item.vote != GoodVotes.DISLIKE:
+                item.vote = GoodVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except GoodVotes.DoesNotExist:
+            GoodVotes.objects.create(parent=self, user=user, vote=GoodVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "GOO", "u_good_notify", "DIS")
+                community_wall(user, community, None, self.pk, "GOO", "u_good_notify", "DIS")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "GOO", "u_good_notify", "DIS")
+                user_wall(user, None, self.pk, "GOO", "u_good_notify", "DIS")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+
 
 class GoodImage(models.Model):
 	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
@@ -614,10 +681,10 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def get_replies(self):
-		return GoodComment.objects.filter(parent=self).all()
+		return self.good_comment_replies.filter(Q(status=GoodComment.EDITED)|Q(status=GoodComment.PUBLISHED)).all()
 
 	def count_replies(self):
-		return self.good_comment_replies.filter(Q(status=GoodComment.EDITED)|Q(status=GoodComment.PUBLISHED)).values("pk").count()
+		return self.get_replies().values("pk").count()
 
 	def likes(self):
 		from common.model.votes import GoodCommentVotes
@@ -703,26 +770,161 @@ class GoodComment(models.Model):
 		from common.attach.comment_attach import get_c_comment_attach
 		return get_c_comment_attach(self, user)
 
-	def delete_comment(self):
-		try:
-			from notify.models import Notify
-			if self.parent:
-				Notify.objects.filter(attach="gor" + str(self.pk)).update(status="C")
-			else:
-				Notify.objects.filter(attach="goc" + str(self.pk)).update(status="C")
-		except:
-			pass
-		self.is_deleted = True
-		return self.save(update_fields=['is_deleted'])
+	def send_like(self, user, community):
+        import json
+        from common.model.votes import GoodCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = GoodCommentVotes.objects.get(item=self, user=user)
+            if item.vote != GoodCommentVotes.LIKE:
+                item.vote = GoodCommentVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except GoodCommentVotes.DoesNotExist:
+            GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LRE")
+                    community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "GOOC", "u_good_notify", "LRE")
+                    user_wall(user, None, self.pk, "GOOC", "u_good_notify", "LCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+                    community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import GoodCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = GoodCommentVotes.objects.get(item=self, user=user)
+            if item.vote != GoodCommentVotes.DISLIKE:
+                item.vote = GoodCommentVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except GoodCommentVotes.DoesNotExist:
+            GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DRE")
+                    community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DRE")
+                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+                    community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
-	def abort_delete_comment(self):
-		try:
-			from notify.models import Notify
-			if self.parent:
-				Notify.objects.filter(attach="gor" + str(self.pk)).update(status="R")
-			else:
-				Notify.objects.filter(attach="goc" + str(self.pk)).update(status="R")
-		except:
-			pass
-		self.is_deleted = False
-		return self.save(update_fields=['is_deleted'])
+	def delete_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = GoodComment.THIS_DELETED
+        elif self.status == "EDI":
+            self.status = GoodComment.THIS_EDITED_DELETED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.good.comment -= 1
+            self.parent.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.good.comment -= 1
+            self.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
+    def abort_delete_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "_DEL":
+            self.status = GoodComment.PUBLISHED
+        elif self.status == "_DELE":
+            self.status = GoodComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.good.comment += 1
+            self.parent.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.good.comment += 1
+            self.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
+
+    def close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = GoodComment.THIS_CLOSED
+        elif self.status == "EDI":
+            self.status = GoodComment.THIS_EDITED_CLOSED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.good.comment -= 1
+            self.parent.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.good.comment -= 1
+            self.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
+    def abort_close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "_CLO":
+            self.status = GoodComment.PUBLISHED
+        elif self.status == "_CLO":
+            self.status = GoodComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.good.comment += 1
+            self.parent.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.good.comment += 1
+            self.good.save(update_fields=["comment"])
+            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")

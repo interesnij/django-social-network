@@ -238,11 +238,11 @@ class VideoList(models.Model):
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = VideoList.LIST
-        elif self.type == "TDELP":
+        elif self.type == "_DELP":
             self.type = VideoList.PRIVATE
-        elif self.type == "TDELM":
+        elif self.type == "_DELM":
             self.type = VideoList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
@@ -267,13 +267,13 @@ class VideoList(models.Model):
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = VideoList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = VideoList.MAIN
-        elif self.type == "TCLOP":
+        elif self.type == "_CLOP":
             self.type = VideoList.PRIVATE
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = VideoList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
@@ -306,11 +306,11 @@ class Video(models.Model):
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
 
-    comments = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
-    views = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
+    view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         verbose_name = "Видео-ролики"
@@ -357,20 +357,16 @@ class Video(models.Model):
         return naturaltime(self.created)
 
     def likes(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0)
-        return likes
+        return VideoVotes.objects.filter(parent=self, vote__gt=0)
 
     def window_likes(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0)
-        return likes[0:6]
+        return VideoVotes.objects.filter(parent=self, vote__gt=0)[0:6]
 
     def dislikes(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes
+        return VideoVotes.objects.filter(parent=self, vote__lt=0)
 
     def window_dislikes(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0)
-        return dislikes[0:6]
+        return VideoVotes.objects.filter(parent=self, vote__lt=0)[0:6]
 
     def visits_count_ru(self):
         count = self.all_visits_count()
@@ -388,32 +384,25 @@ class Video(models.Model):
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
 
     def likes_count(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
-        if likes > 0:
-            return likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
 
     def dislikes_count(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-        if dislikes > 0:
-            return dislikes
+        if self.dislike > 0:
+            return self.dislike
         else:
             return ''
 
     def count_comments(self):
-        parent_comments = VideoComment.objects.filter(video_id=self.pk, is_deleted=False).values("pk").count()
-        parents_count = parent_comments.count()
-        i = 0
-        for comment in parent_comments:
-            i = i + comment.count_replies()
-        i = i + parents_count
-        return i
+        if self.comment > 0:
+            return self.comment
+        else:
+            return ''
 
     def get_comments(self):
-        comments_query = Q(video_id=self.pk)
-        comments_query.add(Q(parent__isnull=True), Q.AND)
-        return VideoComment.objects.filter(comments_query)
+        return VideoComment.objects.filter(video_id=self.pk, parent__isnull=True)
 
     def get_lists_for_video(self):
         return self.list.all()
@@ -422,8 +411,8 @@ class Video(models.Model):
 
     @classmethod
     def create_video(cls, creator, title, file, uri, lists, is_public):
-        #from notify.models import Notify, Wall, get_user_managers_ids
-        #from common.notify import send_notify_socket
+        from notify.models import Notify, Wall, get_user_managers_ids
+        from common.notify import send_notify_socket
         from common.processing.video import get_video_processing
         from rest_framework.exceptions import ValidationError
 
@@ -433,11 +422,11 @@ class Video(models.Model):
         video = cls.objects.create(creator=creator,title=title,file=file,uri=uri)
         if is_public:
             get_video_processing(video, Video.PUBLISHED)
-            #for user_id in creator.get_user_news_notify_ids():
-            #    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
-                #send_notify_socket(object_id, user_id, "create_video_notify")
-            #Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
-            #send_notify_socket(object_id, user_id, "create_video_wall")
+            for user_id in creator.get_user_news_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                send_notify_socket(object_id, user_id, "create_video_notify")
+            Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
+            send_notify_socket(object_id, user_id, "create_video_wall")
         else:
             get_video_processing(video, VIDEO.PRIVATE)
         for list_id in lists:
@@ -498,11 +487,11 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_video(self):
         from notify.models import Notify, Wall
-        if self.status == "TDEL":
+        if self.status == "_DEL":
             self.status = Video.PUBLISHED
-        elif self.status == "TDELP":
+        elif self.status == "_DELP":
             self.status = Video.PRIVATE
-        elif self.status == "TDELM":
+        elif self.status == "_DELM":
             self.status = Video.MANAGER
         self.save(update_fields=['status'])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -525,11 +514,11 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_video(self):
         from notify.models import Notify, Wall
-        if self.status == "TCLO":
+        if self.status == "_CLO":
             self.status = Video.PUBLISHED
-        elif self.status == "TCLOP":
+        elif self.status == "_CLOP":
             self.status = Video.PRIVATE
-        elif self.status == "TCLOM":
+        elif self.status == "_CLOM":
             self.status = Video.MANAGER
         self.save(update_fields=['status'])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -560,21 +549,21 @@ class VideoComment(models.Model):
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
 
-    likes = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislikes = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
-    reposts = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
+    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']), )
         verbose_name = "комментарий к ролику"
         verbose_name_plural = "комментарии к ролику"
 
+    def __str__(self):
+        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
     def all_visits_count(self):
         from stst.models import VideoNumbers
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
-
-    def __str__(self):
-        return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -587,68 +576,54 @@ class VideoComment(models.Model):
         return self.video_comment_replies.filter(Q(status=VideoComment.EDITED)|Q(status=VideoComment.PUBLISHED)).values("pk").count()
 
     def likes(self):
-        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
-        return likes
+        return VideoCommentVotes.objects.filter(item=self, vote__gt=0)
 
     def likes_count(self):
-        likes = VideoVotes.objects.filter(parent=self, vote__gt=0).values("pk").count()
-        if likes > 0:
-            return likes
+        if self.like > 0:
+            return self.like
         else:
             return ''
 
     def dislikes_count(self):
-        dislikes = VideoVotes.objects.filter(parent=self, vote__lt=0).values("pk").count()
-        if dislikes > 0:
-            return dislikes
+        if self.dislike > 0:
+            return self.dislike
         else:
             return ''
 
     def window_likes(self):
-        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0)
-        return likes[0:6]
+        return VideoCommentVotes.objects.filter(item=self, vote__gt=0)[0:6]
 
     def dislikes(self):
-        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0)
-        return dislikes
+        return VideoCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def window_dislikes(self):
-        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0)
-        return dislikes[0:6]
-
-    def likes_count(self):
-        likes = VideoCommentVotes.objects.filter(item=self, vote__gt=0).values("pk")
-        return likes.count()
-
-    def dislikes_count(self):
-        dislikes = VideoCommentVotes.objects.filter(item=self, vote__lt=0).values("pk")
-        return dislikes.count()
+        return VideoCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
 
     @classmethod
-    def create_comment(cls, commenter, attach, video, parent, text):
-        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
-        from django.utils import timezone
-
+    def create_comment(cls, commenter, attach, video, parent, text, community):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text, created=timezone.now())
-        if comment.parent:
-            video = comment.parent.video
-            type = "vir"+str(comment.pk)+",vic"+str(comment.parent.pk)+",vid"+str(video.pk)
-            if video.community:
-                community_wall(commenter, community, None, type, "c_video_comment_notify", "REP")
-                community_notify(commenter, community, None, type, "c_video_comment_notify", "REP")
+        comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text)
+        video.comment += 1
+        video.save(update_fields=["comment"])
+        if parent:
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, community, None, comment.pk, "VIDC", "u_video_comment_notify", "REP")
+                community_wall(comment.commenter, community, None, comment.pk, "VIDC", "u_video_comment_notify", "REP")
             else:
-                user_wall(commenter, None, type, "u_video_comment_notify", "REP")
-                user_notify(commenter, video.creator.pk, None, type, "u_post_comment_notify", "REP")
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "REP")
         else:
-            type = "vic"+str(comment.pk)+", vid"+str(video.pk)
-            if comment.video.community:
-                community_wall(commenter, community, None, type, "c_video_comment_notify", "COM")
-                community_notify(commenter, community, None, type, "c_video_comment_notify", "COM")
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, community, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
+                community_wall(comment.commenter, community, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
             else:
-                user_wall(commenter, None, type, "u_video_comment_notify", "COM")
-                user_notify(commenter, video.creator.pk, None, type, "u_video_comment_notify", "COM")
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
         return comment
 
     def count_replies_ru(self):
@@ -670,26 +645,161 @@ class VideoComment(models.Model):
         from common.attach.comment_attach import get_c_comment_attach
         return get_c_comment_attach(self, user)
 
-    def delete_comment(self):
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import VideoCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
         try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="vir" + str(self.pk)).update(status="C")
+            item = VideoCommentVotes.objects.get(item=self, user=user)
+            if item.vote != VideoCommentVotes.LIKE:
+                item.vote = VideoCommentVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
             else:
-                Notify.objects.filter(attach="vic" + str(self.pk)).update(status="C")
-        except:
-            pass
-        self.is_deleted = True
-        return self.save(update_fields=['is_deleted'])
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except VideoCommentVotes.DoesNotExist:
+            VideoCommentVotes.objects.create(item=self, user=user, vote=VideoCommentVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_video_comment_notify", "LRE")
+                    community_wall(user, community, None, self.pk, "POSC", "u_video_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "VIDC", "u_video_comment_notify", "LRE")
+                    user_wall(user, None, self.pk, "VIDC", "u_video_comment_notify", "LCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "POSC", "u_video_comment_notify", "LCO")
+                    community_wall(user, community, None, self.pk, "POSC", "u_video_comment_notify", "LCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "VIDC", "u_video_comment_notify", "LCO")
+                    user_wall(user, None, self.pk, "VIDC", "u_video_comment_notify", "LCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import VideoCommentVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        try:
+            item = VideoCommentVotes.objects.get(item=self, user=user)
+            if item.vote != VideoCommentVotes.DISLIKE:
+                item.vote = VideoCommentVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except VideoCommentVotes.DoesNotExist:
+            VideoCommentVotes.objects.create(item=self, user=user, vote=VideoCommentVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if self.parent:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "VIDC", "u_video_comment_notify", "DRE")
+                    community_wall(user, community, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "VIDC", "u_video_comment_notify", "DRE")
+                    user_wall(user, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+            else:
+                if community:
+                    from common.notify.notify import community_notify, community_wall
+                    community_notify(user, community, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+                    community_wall(user, community, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    user_notify(user, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+                    user_wall(user, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
+    def delete_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = VideoComment.THIS_DELETED
+        elif self.status == "EDI":
+            self.status = VideoComment.THIS_EDITED_DELETED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.video.comment -= 1
+            self.parent.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.video.comment -= 1
+            self.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
     def abort_delete_comment(self):
-        try:
-            from notify.models import Notify
-            if self.parent:
-                Notify.objects.filter(attach="vir" + str(self.pk)).update(status="R")
-            else:
-                Notify.objects.filter(attach="vic" + str(self.pk)).update(status="R")
-        except:
-            pass
-        self.is_deleted = False
-        return self.save(update_fields=['is_deleted'])
+        from notify.models import Notify, Wall
+        if self.status == "_DEL":
+            self.status = VideoComment.PUBLISHED
+        elif self.status == "_DELE":
+            self.status = VideoComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.video.comment += 1
+            self.parent.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.video.comment += 1
+            self.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="R")
+
+    def close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "PUB":
+            self.status = VideoComment.THIS_CLOSED
+        elif self.status == "EDI":
+            self.status = VideoComment.THIS_EDITED_CLOSED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.video.comment -= 1
+            self.parent.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
+        else:
+            self.video.comment -= 1
+            self.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
+        if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
+    def abort_close_comment(self):
+        from notify.models import Notify, Wall
+        if self.status == "_CLO":
+            self.status = VideoComment.PUBLISHED
+        elif self.status == "_CLO":
+            self.status = VideoComment.EDITED
+        self.save(update_fields=['status'])
+        if self.parent:
+            self.parent.video.comment += 1
+            self.parent.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="R")
+        else:
+            self.video.comment += 1
+            self.video.save(update_fields=["comment"])
+            if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
+                Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="R")
+        if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
+            Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="R")
