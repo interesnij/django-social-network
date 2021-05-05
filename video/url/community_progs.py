@@ -6,8 +6,8 @@ urlpatterns = [
     url(r'^create_video_attach/(?P<pk>\d+)/$', CommunityVideoAttachCreate.as_view()),
     url(r'^create_video/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoCreate.as_view()),
 
-    url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoDelete.as_view()),
-    url(r'^abort_delete/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAbortDelete.as_view()),
+    url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoDelete.as_view()),
+    url(r'^abort_delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAbortDelete.as_view()),
     url(r'^on_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityOpenCommentVideo.as_view()),
     url(r'^off_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityCloseCommentVideo.as_view()),
     url(r'^on_private/(?P<uuid>[0-9a-f-]+)/$', CommunityOnPrivateVideo.as_view()),

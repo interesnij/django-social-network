@@ -481,6 +481,10 @@ class Video(models.Model):
         elif self.status == "MAN":
             self.status = Video.THIS_DELETED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.minus_videos(1)
+		else:
+			self.creator.minus_videos(1)
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -494,6 +498,10 @@ class Video(models.Model):
         elif self.status == "_DELM":
             self.status = Video.MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.plus_videos(1)
+		else:
+			self.creator.plus_videos(1)
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -508,6 +516,10 @@ class Video(models.Model):
         elif self.status == "MAN":
             self.status = Video.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.minus_videos(1)
+		else:
+			self.creator.minus_videos(1)
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -521,6 +533,10 @@ class Video(models.Model):
         elif self.status == "_CLOM":
             self.status = Video.MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.plus_videos(1)
+		else:
+			self.creator.plus_videos(1)
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():

@@ -521,7 +521,7 @@ class Good(models.Model):
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-	def delete_good(self):
+	def delete_good(self, community):
 		from notify.models import Notify, Wall
 		if self.status == "PUB":
 			self.status = Good.THIS_DELETED
@@ -530,11 +530,15 @@ class Good(models.Model):
 		elif self.status == "MAN":
 			self.status = Good.THIS_DELETED_MANAGER
 		self.save(update_fields=['status'])
+		if community:
+			community.minus_goods(1)
+		else:
+			self.creator.minus_goods(1)
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_delete_good(self):
+	def abort_delete_good(self, community):
 		from notify.models import Notify, Wall
 		if self.status == "TDEL":
 			self.status = Good.PUBLISHED
@@ -543,12 +547,16 @@ class Good(models.Model):
 		elif self.status == "TDELM":
 			self.status = Good.MANAGER
 		self.save(update_fields=['status'])
+		if community:
+			community.plus_goods(1)
+		else:
+			self.creator.plus_goods(1)
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-	def close_good(self):
+	def close_good(self, community):
 	    from notify.models import Notify, Wall
 	    if self.status == "PUB":
 	        self.status = Good.THIS_CLOSED
@@ -557,11 +565,15 @@ class Good(models.Model):
 	    elif self.status == "MAN":
 	        self.status = Good.THIS_CLOSED_MANAGER
 	    self.save(update_fields=['status'])
+		if community:
+			community.minus_goods(1)
+		else:
+			self.creator.minus_goods(1)
 	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_close_good(self):
+	def abort_close_good(self, community):
 	    from notify.models import Notify, Wall
 	    if self.status == "TCLO":
 	        self.status = Good.PUBLISHED
@@ -570,6 +582,10 @@ class Good(models.Model):
 	    elif self.status == "TCLOM":
 	        self.status = Good.MANAGER
 	    self.save(update_fields=['status'])
+		if community:
+			community.plus_goods(1)
+		else:
+			self.creator.plus_goods(1)
 	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():

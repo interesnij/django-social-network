@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from music.view.community_progs import *
-from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
@@ -18,8 +17,10 @@ urlpatterns = [
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPlayListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePlayListFromCommunityCollections.as_view()),
 
-    url(r'^c_add_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackAdd.as_view())),
-    url(r'^c_remove_track/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackRemove.as_view())),
-    url(r'^c_add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackListAdd.as_view())),
-    url(r'^c_remove_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', login_required(CommunityTrackListRemove.as_view())),
+    url(r'^add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityTrackListAdd.as_view()),
+    url(r'^remove_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityTrackListRemove.as_view()),
+    url(r'^create_track/(?P<pk>\d+)/$', CommunityTrackCreate.as_view()),
+    url(r'^edit_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackEdit.as_view()),
+    url(r'^delete_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackRemove.as_view()),
+    url(r'^abort_delete_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackAbortRemove.as_view()),
 ]

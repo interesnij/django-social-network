@@ -232,36 +232,36 @@ class PostCommunityOnComment(View):
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.delete_post()
+        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            post.delete_post(c)
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            post.delete_post()
+        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            post.delete_post(c)
             return HttpResponse()
         else:
             raise Http404
 
 class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            post.abort_delete_post()
+        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            post.abort_delete_post(c)
             return HttpResponse()
         else:
             raise Http404
 
 class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.abort_delete_post()
+        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            post.abort_delete_post(c)
             return HttpResponse()
         else:
             raise Http404

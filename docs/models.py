@@ -308,6 +308,10 @@ class Doc(models.Model):
             raise ValidationError("Не выбран список для нового документа")
         private = 0
         doc = cls.objects.create(creator=creator,title=title,file=file)
+        if community:
+            community.plus_docs(1)
+        else:
+            user.plus_docs(1)
         for list_id in lists:
             doc_list = DocList.objects.get(pk=list_id)
             doc_list.doc_list.add(doc)
@@ -368,7 +372,7 @@ class Doc(models.Model):
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_doc(self):
+    def delete_doc(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Doc.THIS_DELETED
@@ -377,11 +381,15 @@ class Doc(models.Model):
         elif self.status == "MAN":
             self.status = Doc.THIS_DELETED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.minus_docs(1)
+        else:
+            self.creator.minus_docs(1)
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_doc(self):
+    def abort_delete_doc(self, community):
         from notify.models import Notify, Wall
         if self.status == "TDEL":
             self.status = Doc.PUBLISHED
@@ -390,12 +398,16 @@ class Doc(models.Model):
         elif self.status == "TDELM":
             self.status = Doc.MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.plus_docs(1)
+        else:
+            self.creator.plus_docs(1)
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_doc(self):
+    def close_doc(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Doc.THIS_CLOSED
@@ -404,11 +416,15 @@ class Doc(models.Model):
         elif self.status == "MAN":
             self.status = Doc.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.minus_docs(1)
+        else:
+            self.creator.minus_docs(1)
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_doc(self):
+    def abort_close_doc(self, community):
         from notify.models import Notify, Wall
         if self.status == "TCLO":
             self.status = Doc.PUBLISHED
@@ -417,6 +433,10 @@ class Doc(models.Model):
         elif self.status == "TCLOM":
             self.status = Doc.MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.plus_docs(1)
+        else:
+            self.creator.plus_docs(1)
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():

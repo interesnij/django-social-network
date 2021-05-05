@@ -92,18 +92,18 @@ class CommunityUnHideGood(View):
 
 class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"])
-        if request.is_ajax() and request.user.is_administrator_of_community(self.kwargs["pk"]):
-            good.delete_good()
+        good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
+            good.delete_good(c)
             return HttpResponse()
         else:
             raise Http404
 
 class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
-        good = Good.objects.get(pk=self.kwargs["good_pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(self.kwargs["pk"]):
-            good.abort_delete_good()
+        good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(c.pk):
+            good.abort_delete_good(c)
             return HttpResponse()
         else:
             raise Http404

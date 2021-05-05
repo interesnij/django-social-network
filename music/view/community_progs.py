@@ -3,7 +3,7 @@ from communities.models import Community
 from django.views import View
 from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
-from music.forms import PlaylistForm
+from music.forms import PlaylistForm, TrackForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.parsing_soundcloud.add_playlist import add_playlist
 from django.http import Http404
@@ -81,32 +81,6 @@ class RemovePlayListFromCommunityCollections(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-
-
-class CommunityTrackAdd(View):
-    """
-    Добавляем трек в плейлист сообщества, если его там нет
-    """
-    def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-
-        if request.is_ajax() and not list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.playlist.add(track)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityTrackRemove(View):
-    """
-    Удаляем трек из плейлиста сообщества, если он там есть
-    """
-    def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.playlist.remove(track)
-            return HttpResponse()
-        else:
-            raise Http404
 
 class CommunityTrackListAdd(View):
     """
@@ -216,3 +190,68 @@ class CommunityPlaylistAbortDelete(View):
             return HttpResponse()
         else:
             raise Http404
+
+class CommunityTrackRemove(View):
+    def get(self, request, *args, **kwargs):
+        track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            track.delete_track(c)
+            return HttpResponse()
+        else:
+            raise Http404
+class CommunityTrackAbortRemove(View):
+    def get(self,request,*args,**kwargs):
+        track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            track.abort_delete_track(c)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class CommunityTrackCreate(TemplateView):
+    form_post = None
+
+    def get(self,request,*args,**kwargs):
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("music_create/c_create_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommunityTrackCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityTrackCreate,self).get_context_data(**kwargs)
+        context["form_post"] = TrackForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        form_post = TrackForm(request.POST, request.FILES)
+
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            track = form_post.save(commit=False)
+            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, lists=request.POST.getlist("list"), is_public=request.POST.get("is_public"), community=community)
+            return render_for_platform(request, 'music_create/c_new_track.html',{'object': new_track})
+        else:
+            return HttpResponseBadRequest()
+
+class CommunityTrackEdit(TemplateView):
+    form_post = None
+
+    def get(self,request,*args,**kwargs):
+        self.track = Music.objects.get(pk=self.kwargs["track_pk"])
+        self.template_name = get_community_manage_template("music_create/c_edit_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommunityTrackEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(CommunityTrackEdit,self).get_context_data(**kwargs)
+        context["form_post"] = TrackForm(instance=self.track)
+        context["track"] = self.track
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.track = Music.objects.get(pk=self.kwargs["track_pk"])
+        form_post = TrackForm(request.POST, request.FILES, instance=self.track)
+
+        if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(self.kwargs["pk"]):
+            _track = form_post.save(commit=False)
+            new_doc = self.track.edit_track(title=_track.title, file=_track.file, lists=request.POST.getlist("list"), is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'music_create/c_new_track.html',{'object': self.track})
+        else:
+            return HttpResponseBadRequest()

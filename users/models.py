@@ -40,7 +40,7 @@ class User(AbstractUser):
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="ru")
-    #USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
@@ -55,11 +55,11 @@ class User(AbstractUser):
 
     def is_can_fixed_post(self):
         from posts.models import PostList
-        #try:
-        list = PostList.objects.get(creator_id=self.pk, type=PostList.THIS_FIXED)
-        return list.count_items() < 10
-        #except:
-        #    return None
+        try:
+            list = PostList.objects.get(creator_id=self.pk, type=PostList.THIS_FIXED)
+            return list.count__fix_items() < 10
+        except:
+            return None
 
     def get_verb_gender(self, verb):
         if self.is_women():
@@ -260,7 +260,8 @@ class User(AbstractUser):
         '''''проги для подписчиков  60-109'''''
 
     def follow_user(self, user):
-        return self.follow_user_with_id(user.pk)
+        self.follow_user_with_id(user.pk)
+        user.plus_follows(1)
 
     def follow_user_with_id(self, user_id):
         from follows.models import Follow
@@ -342,6 +343,8 @@ class User(AbstractUser):
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
+        user.plus_friends(1)
+        self.plus_friends(1)
         try:
             for frend in user.get_6_friends():
                 self.get_or_create_possible_friend(frend)
@@ -394,15 +397,15 @@ class User(AbstractUser):
         return [user['featured_user'] for user in featured][:6]
 
     def unfollow_user(self, user):
-        return self.unfollow_user_with_id(user.pk)
+        self.unfollow_user_with_id(user.pk)
+        return user.minus_follows(1)
 
     def unfollow_user_with_id(self, user_id):
         from follows.models import Follow
 
         check_not_can_follow_user(user=self, user_id=user_id)
-        follow = Follow.objects.get(user=self,followed_user_id=user_id)
-        follow.delete()
-        self.delete_news_subscriber(user_pk)
+        follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
+        self.delete_news_subscriber(user_id)
 
     def get_or_create_possible_friend(self, user):
         from users.model.list import UserFeaturedFriend
@@ -414,6 +417,8 @@ class User(AbstractUser):
 
     def unfrend_user(self, user):
         self.unfrend_user_with_id(user.pk)
+        user.minus_friends(1)
+        self.minus_friends(1)
         return self.get_or_create_possible_friend(user)
 
     def unfrend_user_with_id(self, user_id):
@@ -1005,19 +1010,19 @@ class User(AbstractUser):
 
     def get_photo_lists(self):
         from gallery.models import PhotoList
-        return PhotoList.objects.filter(creator_id=self.id, type__contains="_")
+        return PhotoList.objects.filter(creator_id=self.id, community__isnull=True, type__contains="_")
 
     def get_video_lists(self):
         from video.models import VideoList
-        return VideoList.objects.filter(creator_id=self.id, type__contains="_")
+        return VideoList.objects.filter(creator_id=self.id, community__isnull=True, type__contains="_")
 
-    def get_audio_playlists(self):
+    def get_playlists(self):
         from music.models import SoundList
-        return SoundList.objects.filter(creator_id=self.id, type__contains="_")
+        return SoundList.objects.filter(creator_id=self.id, community__isnull=True, type__contains="_")
 
     def get_good_lists(self):
         from goods.models import GoodList
-        return GoodList.objects.filter(creator_id=self.id, type__contains="_")
+        return GoodList.objects.filter(creator_id=self.id, community__isnull=True, type__contains="_")
 
     def get_good_list(self):
         from goods.models import GoodList
@@ -1087,27 +1092,27 @@ class User(AbstractUser):
 
     def get_docs_lists(self):
         from docs.models import DocList
-        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_").order_by("order")
+        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
     def get_followers(self):
         query = Q(follows__followed_user_id=self.pk)
-        query.add(~Q(type__contains="!"), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return User.objects.filter(query)
 
     def get_all_users(self):
-        query = ~Q(type__contains="!")
+        query = ~Q(type__contains="_")
         if self.is_child():
             query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
         return User.objects.filter(query)
 
     def get_pop_followers(self):
         query = Q(follows__followed_user_id=self.pk)
-        query.add(~Q(type__contains="!"), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return User.objects.filter(query)[0:6]
 
     def get_followings(self):
         query = Q(followers__user_id=self.pk)
-        query.add(~Q(type__contains="!"), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return User.objects.filter(query)
 
     def get_friends_and_followings_ids(self):
@@ -1191,7 +1196,6 @@ class User(AbstractUser):
             CommunityInvite.objects.filter(community_pk=community.pk, invited_user__id=self.id).delete()
         elif community_to_join.is_closed():
             CommunityFollow.objects.filter(community__pk=community.pk, user__id=self.id).delete()
-        community.create_community_notify(self.pk)
         return community_to_join
 
     def add_news_subscriber(self, user_id):
@@ -1229,14 +1233,9 @@ class User(AbstractUser):
         return [i['community'] for i in CommunityProfileNotify.objects.filter(user=self.pk).values('community')]
 
 
-    def leave_community(self, community_pk):
-        from communities.models import Community
-
-        check_can_leave_community(user=self, community_id=community_pk)
-        community_to_leave = Community.objects.get(pk=community_pk)
-        community_to_leave.remove_member(self)
-        delete_community_notify(self, community_pk)
-        return community_to_leave
+    def leave_community(self, community):
+        check_can_leave_community(user=self, community_id=community.pk)
+        return community.remove_member(self)
 
     def get_sity_count(self, sity):
         from stst.models import UserNumbers

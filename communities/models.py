@@ -617,11 +617,17 @@ class Community(models.Model):
         user_membership.save(update_fields=['is_advertiser'])
 
     def add_member(self, user):
-        return CommunityMembership.create_membership(user=user, community=self)
+        CommunityMembership.create_membership(user=user, community=self)
+        user.plus_communities(1)
+        self.plus_members(1)
+        user.create_or_plus_populate_community(self.pk)
+        self.add_news_subscriber(user.pk)
     def remove_member(self, user):
-        user_membership = self.memberships.get(user=user)
+        user_membership = self.memberships.get(user=user).delete()
+        self.minus_members(1)
+        user.minus_communities(1)
+        user.delete_populate_community(self.pk)
         self.delete_news_subscriber(user.pk)
-        user_membership.delete()
 
     def count_members(self):
         return self.community_info.members

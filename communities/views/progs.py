@@ -53,43 +53,33 @@ class CommunitiesCatsView(TemplateView):
 class CommunityMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		if request.is_ajax():
-			from common.notify.notify import community_notify
-
 			c = Community.objects.get(pk=self.kwargs["pk"])
-			request.user.join_community(self.c.pk)
-			request.user.create_or_plus_populate_community(self.c.pk)
-			community_notify(request.user, community, None, "no", "member_create", "CJO")
+			request.user.join_community(c)
 			return HttpResponse()
 		else:
 			raise Http404
 class CommunityMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		if request.is_ajax():
-			request.user.leave_community(self.kwargs["pk"])
-			request.user.delete_populate_community(self.kwargs["pk"])
+			c = Community.objects.get(pk=self.kwargs["pk"])
+			request.user.leave_community(c)
 			return HttpResponse()
 		else:
 			raise Http404
 
 class CommunityManageMemberCreate(View):
 	def get(self,request,*args,**kwargs):
-		user, c_pk = User.objects.get(pk=self.kwargs["user_pk"]), self.kwargs["community_pk"]
-		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
-			from common.notify.notify import user_notify
-
-			new_member = user.join_community(c_pk)
-			user.create_or_plus_populate_community(c_pk)
-			user_notify(request.user, user.pk, None, "no", "member_create", "CCO")
-			community_notify(request.user, c_pk, None, "no", "member_create", "CCO")
+		user, c = User.objects.get(pk=self.kwargs["user_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
+			user.join_community(c)
 			return HttpResponse()
 		else:
 			raise Http404
 class CommunityManageMemberDelete(View):
 	def get(self,request,*args,**kwargs):
-		user, c_pk = User.objects.get(pk=self.kwargs["user_pk"]), self.kwargs["community_pk"]
-		if request.is_ajax() and request.user.is_administrator_of_community(c_pk):
-			user.leave_community(c_pk)
-			user.delete_populate_community(c_pk)
+		user, c = User.objects.get(pk=self.kwargs["user_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
+			user.leave_community(ck)
 			return HttpResponse()
 		else:
 			raise Http404

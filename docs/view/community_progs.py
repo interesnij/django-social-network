@@ -177,18 +177,18 @@ class CommunityDocListAbortDelete(View):
 
 class CommunityDocRemove(View):
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            doc.delete_doc()
+        doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            doc.delete_doc(c)
             return HttpResponse()
         else:
             raise Http404
 
 class CommunityDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
-        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            doc.abort_delete_doc()
+        doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+            doc.abort_delete_doc(c)
             return HttpResponse()
         else:
             raise Http404

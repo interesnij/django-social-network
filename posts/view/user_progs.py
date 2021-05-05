@@ -213,7 +213,7 @@ class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.delete_post()
+            post.delete_post(None)
             return HttpResponse()
         else:
             raise Http404
@@ -222,7 +222,7 @@ class PostWallUserDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            post.delete_post()
+            post.delete_post(None)
             return HttpResponse()
         else:
             raise Http404
@@ -231,7 +231,7 @@ class PostUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.abort_delete_post()
+            post.abort_delete_post(None)
             return HttpResponse()
         else:
             raise Http404
@@ -240,7 +240,7 @@ class PostWallUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            post.abort_delete_post()
+            post.abort_delete_post(None)
             return HttpResponse()
         else:
             raise Http404

@@ -205,7 +205,7 @@ class CommunityPhotoDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.delete_photo()
+            photo.delete_photo(community)
             return HttpResponse()
         else:
             raise Http404
@@ -215,7 +215,7 @@ class CommunityPhotoAbortDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.abort_delete_photo()
+            photo.abort_delete_photo(community)
             return HttpResponse()
         else:
             raise Http404

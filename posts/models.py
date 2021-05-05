@@ -501,7 +501,7 @@ class Post(models.Model):
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_post(self):
+    def delete_post(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Post.THIS_DELETED
@@ -510,11 +510,15 @@ class Post(models.Model):
         elif self.status == "MAN":
             self.status = Post.THIS_DELETED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.minus_posts(1)
+		else:
+			self.creator.minus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_post(self):
+    def abort_delete_post(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Post.PUBLISHED
@@ -523,12 +527,16 @@ class Post(models.Model):
         elif self.status == "_DELM":
             self.status = Post.MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.plus_posts(1)
+		else:
+			self.creator.plus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_post(self):
+    def close_post(self, comunity):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Post.THIS_CLOSED
@@ -537,11 +545,15 @@ class Post(models.Model):
         elif self.status == "MAN":
             self.status = Post.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+			community.minus_posts(1)
+		else:
+			self.creator.minus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_post(self):
+    def abort_close_post(self, community):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = Post.PUBLISHED
