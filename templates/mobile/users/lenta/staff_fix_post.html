@@ -1,4 +1,4 @@
-<div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 pag" data-uuid="{{ object.uuid }}">
   <div class="card-header">
       <div class="media">
         {% include 'mobile/generic/user/creator_figure.html' %}
@@ -36,6 +36,6 @@
   </div>
 
   {% include 'base_block/post.html' %}
-  
+
   {% include 'mobile/posts/post_user/info.html' %}
 </div>
