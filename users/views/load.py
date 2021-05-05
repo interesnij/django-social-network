@@ -117,7 +117,7 @@ class UserLoadMusic(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.playlist.get_items().order_by('-created_at')
+		return self.playlist.get_items().order_by('-created')
 
 class UserLoadMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -134,7 +134,7 @@ class UserLoadMusicList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.playlist.get_items().order_by('-created_at')
+		return self.playlist.get_items().order_by('-created')
 
 
 class UserLoadDoc(ListView):
@@ -274,7 +274,7 @@ class CommunityLoadMusic(ListView):
 	paginate_by = 15
 
 	def get_queryset(self):
-		return self.request.user.get_music().order_by('-created_at')
+		return self.request.user.get_music().order_by('-created')
 
 class CommunityLoadArticle(ListView):
 	template_name = 'users/load/c_article_load.html'
