@@ -338,14 +338,8 @@ class Post(models.Model):
     def plus_views(self, count):
         self.view += count
         return self.save(update_fields=['view'])
-    def minus_views(self, count):
-        self.view -= count
-        return self.save(update_fields=['view'])
     def plus_ad_views(self, count):
         self.ad_view += count
-        return self.save(update_fields=['ad_view'])
-    def minus_ad_views(self, count):
-        self.ad_view -= count
         return self.save(update_fields=['ad_view'])
     def plus_reposts(self, count):
         self.repost += count
