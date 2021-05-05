@@ -104,7 +104,7 @@ on('#ajax', 'click', '.u_photos_add', function() {
 on('#ajax', 'click', '.u_photo_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user_progs/add_photo_list/" + pk + "/", loader)
+  open_fullscreen("/gallery/user_progs/add_list/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_photo_list_edit', function() {
   list = document.body.querySelectorAll('.cover_block');
@@ -116,14 +116,14 @@ on('#ajax', 'click', '.u_photo_list_edit', function() {
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user_progs/edit_photo_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_photo_list_remove', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/delete_photo_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/user_progs/delete_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -141,7 +141,7 @@ on('#ajax', 'click', '.u_photo_list_abort_remove', function() {
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/abort_delete_photo_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
