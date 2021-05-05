@@ -1,4 +1,4 @@
-from music.models import SoundList
+from music.models import SoundList, Music
 from django import forms
 
 
