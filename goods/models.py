@@ -771,85 +771,85 @@ class GoodComment(models.Model):
 		return get_c_comment_attach(self, user)
 
 	def send_like(self, user, community):
-        import json
-        from common.model.votes import GoodCommentVotes
-        from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
-        try:
-            item = GoodCommentVotes.objects.get(item=self, user=user)
-            if item.vote != GoodCommentVotes.LIKE:
-                item.vote = GoodCommentVotes.LIKE
-                item.save(update_fields=['vote'])
-                self.like += 1
-                self.dislike -= 1
-                self.save(update_fields=['like', 'dislike'])
-            else:
-                item.delete()
-                self.like -= 1
-                self.save(update_fields=['like'])
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.LIKE)
-            self.like += 1
-            self.save(update_fields=['like'])
-            if self.parent:
-                if community:
-                    from common.notify.notify import community_notify, community_wall
-                    community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LRE")
-                    community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
-                else:
-                    from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "GOOC", "u_good_notify", "LRE")
-                    user_wall(user, None, self.pk, "GOOC", "u_good_notify", "LCO")
-            else:
-                if community:
-                    from common.notify.notify import community_notify, community_wall
-                    community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
-                    community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
-                else:
-                    from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
-                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
-        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
-    def send_dislike(self, user, community):
-        import json
-        from common.model.votes import GoodCommentVotes
-        from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
-        try:
-            item = GoodCommentVotes.objects.get(item=self, user=user)
-            if item.vote != GoodCommentVotes.DISLIKE:
-                item.vote = GoodCommentVotes.DISLIKE
-                item.save(update_fields=['vote'])
-                self.like -= 1
-                self.dislike += 1
-                self.save(update_fields=['like', 'dislike'])
-            else:
-                item.delete()
-                self.dislike -= 1
-                self.save(update_fields=['dislike'])
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.DISLIKE)
-            self.dislike += 1
-            self.save(update_fields=['dislike'])
-            if self.parent:
-                if community:
-                    from common.notify.notify import community_notify, community_wall
-                    community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DRE")
-                    community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
-                else:
-                    from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DRE")
-                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
-            else:
-                if community:
-                    from common.notify.notify import community_notify, community_wall
-                    community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
-                    community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
-                else:
-                    from common.notify.notify import user_notify, user_wall
-                    user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
-                    user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
-        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+		import json
+		from common.model.votes import GoodCommentVotes
+		from django.http import HttpResponse
+		from common.notify.notify import user_notify, user_wall
+		try:
+			item = GoodCommentVotes.objects.get(item=self, user=user)
+			if item.vote != GoodCommentVotes.LIKE:
+				item.vote = GoodCommentVotes.LIKE
+				item.save(update_fields=['vote'])
+				self.like += 1
+				self.dislike -= 1
+				self.save(update_fields=['like', 'dislike'])
+			else:
+				item.delete()
+				self.like -= 1
+				self.save(update_fields=['like'])
+		except GoodCommentVotes.DoesNotExist:
+			GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.LIKE)
+			self.like += 1
+			self.save(update_fields=['like'])
+			if self.parent:
+				if community:
+					from common.notify.notify import community_notify, community_wall
+					community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LRE")
+					community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+				else:
+					from common.notify.notify import user_notify, user_wall
+					user_notify(user, None, self.pk, "GOOC", "u_good_notify", "LRE")
+					user_wall(user, None, self.pk, "GOOC", "u_good_notify", "LCO")
+			else:
+				if community:
+					from common.notify.notify import community_notify, community_wall
+					community_notify(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+					community_wall(user, community, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+				else:
+					from common.notify.notify import user_notify, user_wall
+					user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+					user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "LCO")
+		return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+	def send_dislike(self, user, community):
+		import json
+		from common.model.votes import GoodCommentVotes
+		from django.http import HttpResponse
+		from common.notify.notify import user_notify, user_wall
+		try:
+			item = GoodCommentVotes.objects.get(item=self, user=user)
+			if item.vote != GoodCommentVotes.DISLIKE:
+				item.vote = GoodCommentVotes.DISLIKE
+				item.save(update_fields=['vote'])
+				self.like -= 1
+				self.dislike += 1
+				self.save(update_fields=['like', 'dislike'])
+			else:
+				item.delete()
+				self.dislike -= 1
+				self.save(update_fields=['dislike'])
+		except GoodCommentVotes.DoesNotExist:
+			GoodCommentVotes.objects.create(item=self, user=user, vote=GoodCommentVotes.DISLIKE)
+			self.dislike += 1
+			self.save(update_fields=['dislike'])
+			if self.parent:
+				if community:
+					from common.notify.notify import community_notify, community_wall
+					community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DRE")
+					community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+				else:
+					from common.notify.notify import user_notify, user_wall
+					user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DRE")
+					user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+			else:
+				if community:
+					from common.notify.notify import community_notify, community_wall
+					community_notify(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+					community_wall(user, community, None, self.pk, "POSC", "u_good_comment_notify", "DCO")
+				else:
+					from common.notify.notify import user_notify, user_wall
+					user_notify(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+					user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
+		return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
 	def delete_comment(self):
         from notify.models import Notify, Wall
