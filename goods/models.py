@@ -557,39 +557,39 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 	def close_good(self, community):
-	    from notify.models import Notify, Wall
-	    if self.status == "PUB":
-	        self.status = Good.THIS_CLOSED
-	    elif self.status == "PRI":
-	        self.status = Good.THIS_CLOSED_PRIVATE
-	    elif self.status == "MAN":
-	        self.status = Good.THIS_CLOSED_MANAGER
-	    self.save(update_fields=['status'])
+		from notify.models import Notify, Wall
+		if self.status == "PUB":
+			self.status = Good.THIS_CLOSED
+		elif self.status == "PRI":
+			self.status = Good.THIS_CLOSED_PRIVATE
+		elif self.status == "MAN":
+			self.status = Good.THIS_CLOSED_MANAGER
+		self.save(update_fields=['status'])
 		if community:
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
-	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_close_good(self, community):
-	    from notify.models import Notify, Wall
-	    if self.status == "TCLO":
-	        self.status = Good.PUBLISHED
-	    elif self.status == "TCLOP":
-	        self.status = Good.PRIVATE
-	    elif self.status == "TCLOM":
-	        self.status = Good.MANAGER
-	    self.save(update_fields=['status'])
+		from notify.models import Notify, Wall
+		if self.status == "TCLO":
+			self.status = Good.PUBLISHED
+		elif self.status == "TCLOP":
+			self.status = Good.PRIVATE
+		elif self.status == "TCLOM":
+			self.status = Good.MANAGER
+		self.save(update_fields=['status'])
 		if community:
 			community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
-	    if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-	        Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-	    if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 	def send_like(self, user, community):
 		import json
