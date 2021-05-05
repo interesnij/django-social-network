@@ -359,7 +359,7 @@ music_player = new FWDMSP({
     trackTitleNormalColor:"#737373",      // цвет заголовка трека
     trackTitleSelectedColor:get_audio_dop()[3],    // цвет заголовка выбранного трека
     trackDurationColor:"#7C7C7C",         // цвет времени трека
-    maxPlaylistItems:30,                  // Макс. количество плейлистов
+    maxPlaylistItems:1000,                  // Макс. количество плейлистов
     nrOfVisiblePlaylistItems:12,          // число видимых элементов списка воспроизведения
     trackTitleOffsetLeft:0,               // смещение слева заголовка трека
     playPauseButtonOffsetLeftAndRight:11, // смещение слева и справа кнопки play
