@@ -6,8 +6,8 @@ urlpatterns = [
 	url(r'^add_post/(?P<pk>\d+)/$', PostCommunityCreate.as_view()),
 	url(r'^add_offer_post/(?P<pk>\d+)/$', PostOfferCommunityCreate.as_view()),
 
-	url(r'^post-comment/$', login_required(PostCommunityCommentCreate.as_view())),
-    url(r'^reply-comment/$', login_required(PostCommunityReplyCreate.as_view())),
+	url(r'^post-comment/$', PostCommunityCommentCreate.as_view()),
+    url(r'^reply-comment/$', PostCommunityReplyCreate.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityDelete.as_view()),
 	url(r'^abort_delete_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityAbortDelete.as_view()),
 	url(r'^delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentCommunityDelete.as_view()),
