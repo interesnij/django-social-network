@@ -53,7 +53,7 @@
           {% endfor %}
           {% for music in comment.comment_music.all %}
           <div class="col-md-12 music" style="flex-basis: 100%;">
-            <div class="media" music-counter="{{ forloop.counter0 }}">
+            <div class="media" music-counter="{{ forloop.counter }}">
                 <figure>
                   <a class="music_thumb">
                     {% if music.artwork_url %}
