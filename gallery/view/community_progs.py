@@ -315,7 +315,7 @@ class PhotoListCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("communities/photo_list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -332,7 +332,7 @@ class PhotoListCommunityCreate(TemplateView):
             if not list.description:
                 list.description = "Без описания"
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/list/new_list.html',{'list': new_list, 'community': self.c})
+            return render_for_platform(request, 'communities/photo_list/new_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
@@ -346,7 +346,7 @@ class PhotoListCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("communities/photo_list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

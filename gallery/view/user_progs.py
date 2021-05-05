@@ -309,7 +309,7 @@ class PhotoListUserCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/user_photo_list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -326,7 +326,7 @@ class PhotoListUserCreate(TemplateView):
             if not list.description:
                 list.description = "Без описания"
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/user_list/new_list.html',{'list': new_list, 'user': self.user})
+            return render_for_platform(request, 'users/user_photo_list/new_list.html',{'list': new_list, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
@@ -340,7 +340,7 @@ class PhotoListUserEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/user_photo_list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
