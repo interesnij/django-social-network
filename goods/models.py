@@ -890,41 +890,41 @@ class GoodComment(models.Model):
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
 
-    def close_comment(self):
-        from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = GoodComment.THIS_CLOSED
-        elif self.status == "EDI":
-            self.status = GoodComment.THIS_EDITED_CLOSED
-        self.save(update_fields=['status'])
-        if self.parent:
-            self.parent.good.comment -= 1
-            self.parent.good.save(update_fields=["comment"])
-            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
-                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
-        else:
-            self.good.comment -= 1
-            self.good.save(update_fields=["comment"])
-            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
-                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
-        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
-            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
-    def abort_close_comment(self):
-        from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = GoodComment.PUBLISHED
-        elif self.status == "_CLO":
-            self.status = GoodComment.EDITED
-        self.save(update_fields=['status'])
-        if self.parent:
-            self.parent.good.comment += 1
-            self.parent.good.save(update_fields=["comment"])
-            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
-                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
-        else:
-            self.good.comment += 1
-            self.good.save(update_fields=["comment"])
-            if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
-                Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
-        if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
-            Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
+	def close_comment(self):
+		from notify.models import Notify, Wall
+		if self.status == "PUB":
+			self.status = GoodComment.THIS_CLOSED
+		elif self.status == "EDI":
+			self.status = GoodComment.THIS_EDITED_CLOSED
+		self.save(update_fields=['status'])
+		if self.parent:
+			self.parent.good.comment -= 1
+			self.parent.good.save(update_fields=["comment"])
+			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
+		else:
+			self.good.comment -= 1
+			self.good.save(update_fields=["comment"])
+			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
+		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
+	def abort_close_comment(self):
+		from notify.models import Notify, Wall
+		if self.status == "_CLO":
+			self.status = GoodComment.PUBLISHED
+		elif self.status == "_CLO":
+			self.status = GoodComment.EDITED
+		self.save(update_fields=['status'])
+		if self.parent:
+			self.parent.good.comment += 1
+			self.parent.good.save(update_fields=["comment"])
+			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
+				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
+		else:
+			self.good.comment += 1
+			self.good.save(update_fields=["comment"])
+			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
+				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
+		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
+			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
