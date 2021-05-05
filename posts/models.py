@@ -511,9 +511,9 @@ class Post(models.Model):
             self.status = Post.THIS_DELETED_MANAGER
         self.save(update_fields=['status'])
         if community:
-			community.minus_posts(1)
-		else:
-			self.creator.minus_posts(1)
+            community.minus_posts(1)
+        else:
+            self.creator.minus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -528,9 +528,9 @@ class Post(models.Model):
             self.status = Post.MANAGER
         self.save(update_fields=['status'])
         if community:
-			community.plus_posts(1)
-		else:
-			self.creator.plus_posts(1)
+            community.plus_posts(1)
+        else:
+            self.creator.plus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -546,9 +546,9 @@ class Post(models.Model):
             self.status = Post.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
         if community:
-			community.minus_posts(1)
-		else:
-			self.creator.minus_posts(1)
+            community.minus_posts(1)
+        else:
+            self.creator.minus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -562,6 +562,10 @@ class Post(models.Model):
         elif self.status == "_CLOM":
             self.status = Post.MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.plus_posts(1)
+        else:
+            self.creator.plus_posts(1)
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
