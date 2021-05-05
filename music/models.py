@@ -107,6 +107,8 @@ class SoundList(models.Model):
         return self.playlist.filter(Q(status="PUB")|Q(status="PRI"))
     def get_items(self):
         return self.playlist.filter(status="PUB")
+    def get_6_items(self):
+        return self.playlist.filter(status="PUB")[:6]
     def get_manager_items(self):
         return self.playlist.filter(status="MAN")
     def count_items(self):
