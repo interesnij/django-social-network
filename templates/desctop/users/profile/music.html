@@ -1,6 +1,6 @@
 
 {% if music_list.is_not_empty %}
-<div class="card mb-3"> 
+<div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
         <div class="media">
@@ -15,7 +15,7 @@
     {% for object in music_list.get_6_items %}
     <div data-pk="{{ playlist.pk }}" class="card border-top">
         <div class="card-body" style="padding:7px;">
-            <div class="media" music-counter="{{ forloop.counter }}">
+            <div class="media" music-counter="{{ forloop.counter0 }}">
                 <figure>
                   <a class="music_list_item pointer">
                     {% if object.artwork_url %}

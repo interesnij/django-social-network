@@ -156,7 +156,7 @@ class SoundList(models.Model):
     @classmethod
     def create_list(cls, creator, name, description, order, community, is_public):
         from notify.models import Notify, Wall
-        from common.processing.music import get_music_list_processing
+        from common.processing.music import get_playlist_processing
         if not order:
             order = 1
         if community:
@@ -177,7 +177,7 @@ class SoundList(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_music_list_notify")
-        get_music_list_processing(list, SoundList.LIST)
+        get_playlist_processing(list, SoundList.LIST)
         return list
 
     def edit_list(self, name, description, order, is_public):
