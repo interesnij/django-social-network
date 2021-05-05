@@ -576,38 +576,38 @@ class Good(models.Model):
 	        Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
 	def send_like(self, user, community):
-        import json
-        from common.model.votes import GoodVotes
-        from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
-        if not self.votes_on:
-            from django.http import Http404
-            raise Http404
-        try:
-            item = GoodVotes.objects.get(parent=self, user=user)
-            if item.vote != GoodVotes.LIKE:
-                item.vote = GoodVotes.LIKE
-                item.save(update_fields=['vote'])
-                self.like += 1
-                self.dislike -= 1
-                self.save(update_fields=['like', 'dislike'])
-            else:
-                item.delete()
-                self.like -= 1
-                self.save(update_fields=['like'])
-        except GoodVotes.DoesNotExist:
-            GoodVotes.objects.create(parent=self, user=user, vote=GoodVotes.LIKE)
-            self.like += 1
-            self.save(update_fields=['like'])
-            if community:
-                from common.notify.notify import community_notify, community_wall
-                community_notify(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
-                community_wall(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
-            else:
-                from common.notify.notify import user_notify, user_wall
-                user_notify(user, None, self.pk, "GOO", "u_good_notify", "LIK")
-                user_wall(user, None, self.pk, "GOO", "u_good_notify", "LIK")
-        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+		import json
+		from common.model.votes import GoodVotes
+		from django.http import HttpResponse
+		from common.notify.notify import user_notify, user_wall
+		if not self.votes_on:
+			from django.http import Http404
+			raise Http404
+		try:
+			item = GoodVotes.objects.get(parent=self, user=user)
+			if item.vote != GoodVotes.LIKE:
+				item.vote = GoodVotes.LIKE
+				item.save(update_fields=['vote'])
+				self.like += 1
+				self.dislike -= 1
+				self.save(update_fields=['like', 'dislike'])
+			else:
+				item.delete()
+				self.like -= 1
+				self.save(update_fields=['like'])
+		except GoodVotes.DoesNotExist:
+			GoodVotes.objects.create(parent=self, user=user, vote=GoodVotes.LIKE)
+			self.like += 1
+			self.save(update_fields=['like'])
+			if community:
+				from common.notify.notify import community_notify, community_wall
+				community_notify(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
+				community_wall(user, community, None, self.pk, "GOO", "u_good_notify", "LIK")
+			else:
+				from common.notify.notify import user_notify, user_wall
+				user_notify(user, None, self.pk, "GOO", "u_good_notify", "LIK")
+				user_wall(user, None, self.pk, "GOO", "u_good_notify", "LIK")
+		return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
     def send_dislike(self, user, community):
         import json
         from common.model.votes import GoodVotes
