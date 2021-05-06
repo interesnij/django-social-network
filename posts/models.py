@@ -430,6 +430,10 @@ class Post(models.Model):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
+        if community:
+            community.plus_posts(1)
+        else:
+            creator.plus_posts(1)
 
         for list_id in lists:
             post_list = PostList.objects.get(pk=list_id)

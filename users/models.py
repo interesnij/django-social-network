@@ -815,7 +815,7 @@ class User(AbstractUser):
         return self.profile.photos
     def count_docs(self):
         return self.profile.docs
-    def count_public_posts(self):
+    def count_posts(self):
         return self.profile.posts
     def count_public_articles(self):
         return self.profile.articles

@@ -311,7 +311,7 @@ class Doc(models.Model):
         if community:
             community.plus_docs(1)
         else:
-            user.plus_docs(1)
+            creator.plus_docs(1)
         for list_id in lists:
             doc_list = DocList.objects.get(pk=list_id)
             doc_list.doc_list.add(doc)
