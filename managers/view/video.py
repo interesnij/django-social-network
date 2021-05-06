@@ -252,7 +252,7 @@ class VideoClaimWindow(TemplateView):
         return context
 
 
-class UserVideoCommentCloseWindow(TemplateView):
+class VideoCommentCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
