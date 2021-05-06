@@ -305,6 +305,7 @@ class Video(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
+    community = models.ForeignKey('communities.Community', related_name='video_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")

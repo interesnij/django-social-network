@@ -320,6 +320,7 @@ class Good(models.Model):
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	list = models.ManyToManyField(GoodList, related_name="good_list", blank=True)
+	community = models.ForeignKey('communities.Community', related_name='good_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
 	comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
 	view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")

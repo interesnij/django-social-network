@@ -234,6 +234,7 @@ class Survey(models.Model):
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     survey = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
+    community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")

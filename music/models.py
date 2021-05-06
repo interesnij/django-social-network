@@ -386,6 +386,7 @@ class Music(models.Model):
     list = models.ManyToManyField(SoundList, related_name='playlist', blank="True")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
+    community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")

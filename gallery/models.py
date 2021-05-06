@@ -321,6 +321,7 @@ class Photo(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    community = models.ForeignKey('communities.Community', related_name='photo_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")

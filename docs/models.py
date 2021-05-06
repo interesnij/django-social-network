@@ -273,7 +273,7 @@ class Doc(models.Model):
     list = models.ManyToManyField(DocList, related_name='doc_list', blank=True)
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
-    is_community = models.BooleanField(default=False, verbose_name="Пренадлежит к сообществу")
+    community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     class Meta:
         ordering = ["-created"]

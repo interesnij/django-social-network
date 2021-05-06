@@ -300,6 +300,7 @@ class Post(models.Model):
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
