@@ -120,7 +120,7 @@ on('#ajax', 'click', '.c_remove_doc_in_list', function() {
 })
 
 on('#ajax', 'click', '#c_create_doc_list_btn', function() {
-  form = document.body.querySelector("#c_doc_list_create");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
@@ -197,8 +197,8 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#c_edit_doclist_btn', function() {
-  form = document.body.querySelector("#c_edit_doclist_form");
+on('#ajax', 'click', '#c_edit_doc_list_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";

@@ -148,7 +148,7 @@ on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
 })
 
 on('#ajax', 'click', '#с_create_music_list_btn', function() {
-  form = document.body.querySelector("#с_music_list_create");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
@@ -177,7 +177,7 @@ on('#ajax', 'click', '#с_create_music_list_btn', function() {
 });
 
 on('#ajax', 'click', '#c_edit_playlist_btn', function() {
-  form = document.body.querySelector("#c_edit_playlist_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";

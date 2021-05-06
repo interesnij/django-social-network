@@ -35,20 +35,20 @@ on('#ajax', 'click', '.c_remove_photo_list', function(e) {
 });
 
 on('#ajax', 'click', '#c_create_photo_list_btn', function() {
-  form = document.body.querySelector("#c_create_photo_list_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
   post_and_load_object_page(form, "/gallery/community_progs/add_photo_list/", "/communities/", "/list/");
 });
 
 on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
-  form = document.body.querySelector("#c_edit_photo_list_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
   pk = form.getAttribute("data-pk");

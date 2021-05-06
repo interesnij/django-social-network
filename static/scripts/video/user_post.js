@@ -209,10 +209,10 @@ on('#ajax', 'click', '#u_create_video_list_btn', function() {
 });
 
 on('#ajax', 'click', '#u_edit_video_list_btn', function() {
-  form = document.body.querySelector("#u_edit_video_list_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
 
