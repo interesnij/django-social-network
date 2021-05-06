@@ -419,7 +419,7 @@ class Music(models.Model):
         from urllib import request
 
         result = request.urlretrieve(image_url)
-        self.artwork_url.save(
+        self.image.save(
             os.path.basename(image_url),
             File(open(result[0], 'rb'))
         )
