@@ -118,7 +118,7 @@ class VideoWorkerEditorDelete(View):
         else:
             raise Http404
 
-class UserVideoCloseCreate(View):
+class VideoCloseCreate(View):
     def post(self,request,*args,**kwargs):
         video, form = Video.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_video_manager() or request.user.is_superuser):
