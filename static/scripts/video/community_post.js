@@ -122,6 +122,16 @@ on('#video_loader', 'click', '.c_video_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_comment_dislikes")
 });
 
+on('#ajax', 'click', '#c_add_video_list_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+  post_and_load_object_page(form, "/video/community_progs/add_list/", "/communities/", "/video_list/");
+});
+
 on('#ajax', 'click', '#c_edit_video_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
@@ -184,15 +194,4 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/community_progs/create_video/" + pk + "/", loader);
-});
-
-on('#ajax', 'click', '#c_create_video_list_btn', function() {
-  this.disabled = true;
-  form = document.body.querySelector("#c_video_list_create");
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/video/community_progs/create_list/", "/communities/", "/video_list/")
-
 });
