@@ -182,26 +182,23 @@ class UserSuspensionDelete(View):
         else:
             raise Http404
 
-class UserBlockCreate(View):
+class UserCloseCreate(View):
     def post(self,request,*args,**kwargs):
         user, form = User.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_user_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type="USE")
-            moderate_obj.status = Moderated.BLOCKED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_block(manager_id=request.user.pk)
+            moderate_obj.create_close(object=user, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class UserBlockDelete(View):
+class UserCloseDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_user_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=user.pk, type="USE")
-            moderate_obj.delete_block(manager_id=request.user.pk)
+            moderate_obj.delete_close(object=user, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -268,18 +265,18 @@ class UserSuspendWindow(TemplateView):
         context["user"] = User.objects.get(pk=self.kwargs["pk"])
         return context
 
-class UserBlockWindow(TemplateView):
+class UserCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         if request.user.is_user_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/user_block.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/user_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(UserBlockWindow,self).get(request,*args,**kwargs)
+        return super(UserCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserBlockWindow,self).get_context_data(**kwargs)
+        context = super(UserCloseWindow,self).get_context_data(**kwargs)
         context["user"] = User.objects.get(pk=self.kwargs["pk"])
         return context
 

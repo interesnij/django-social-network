@@ -118,30 +118,23 @@ class VideoWorkerEditorDelete(View):
         else:
             raise Http404
 
-class VideoDeleteCreate(View):
+class UserVideoCloseCreate(View):
     def post(self,request,*args,**kwargs):
         video, form = Video.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_video_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=video.pk, type="VID")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            video.status = "CLO"
-            video.save(update_fields=['status'])
+            moderate_obj.create_close(object=video, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class VideoDeleteDelete(View):
+class VideoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=video.pk, type="VID")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            video.status = "PRI"
-            video.save(update_fields=['status'])
+            moderate_obj.delete_close(object=video, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -186,30 +179,23 @@ class CommentVideoUnverify(View):
         else:
             raise Http404
 
-class CommentVideoDeleteCreate(View):
+class CommentVideoCloseCreate(View):
     def post(self,request,*args,**kwargs):
         comment, form = VideoComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_video_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type="VIDC")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            comment.status = "CLO"
-            comment.save(update_fields=['status'])
+            moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CommentVideoDeleteDelete(View):
+class CommentVideoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_video_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type="VIDC")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            comment.status = "PUB"
-            comment.save(update_fields=['status'])
+            moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -237,19 +223,19 @@ class CommentVideoRejectedCreate(View):
         else:
             raise Http404
 
-class VideoDeleteWindow(TemplateView):
+class VideoCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_video_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/video/video_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/video/video_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(VideoDeleteWindow,self).get(request,*args,**kwargs)
+        return super(VideoCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(VideoDeleteWindow,self).get_context_data(**kwargs)
+        context = super(VideoCloseWindow,self).get_context_data(**kwargs)
         context["object"] = self.video
         return context
 
@@ -266,19 +252,19 @@ class VideoClaimWindow(TemplateView):
         return context
 
 
-class VideoCommentDeleteWindow(TemplateView):
+class UserVideoCommentCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_video_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/video/video_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/video/u_video_comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(VideoCommentDeleteWindow,self).get(request,*args,**kwargs)
+        return super(UserVideoCommentCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(VideoCommentDeleteWindow,self).get_context_data(**kwargs)
+        context = super(UserVideoCommentCloseWindow,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         return context
 

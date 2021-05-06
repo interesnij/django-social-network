@@ -183,26 +183,24 @@ class CommunitySuspensionDelete(View):
         else:
             raise Http404
 
-class CommunityBlockCreate(View):
+class CommunityCloseCreate(View):
     def post(self,request,*args,**kwargs):
+        community = Community.objects.get(pk=self.kwargs["pk"])
         form = ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_community_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
-            moderate_obj = Moderated.get_or_create_moderated_object(type="COM", object_id=self.kwargs["pk"])
-            moderate_obj.status = Moderated.BLOCKED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_block(manager_id=request.user.pk)
+            moderate_obj = Moderated.get_or_create_moderated_object(type="COM", object_id=community.pk)
+            moderate_obj.create_close(object=community, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CommunityBlockDelete(View):
+class CommunityCloseDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_community_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(type="COM", object_id=self.kwargs["pk"])
-            moderate_obj.delete_block(manager_id=request.user.pk)
+            moderate_obj.delete_close(object=community, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -268,19 +266,19 @@ class CommunitySuspendWindow(TemplateView):
         context["community"] = self.community
         return context
 
-class CommunityBlockWindow(TemplateView):
+class CommunityCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_community_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/community_block.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/community_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(CommunityBlockWindow,self).get(request,*args,**kwargs)
+        return super(CommunityCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityBlockWindow,self).get_context_data(**kwargs)
+        context = super(CommunityCloseWindow,self).get_context_data(**kwargs)
         context["community"] = self.community
         return context
 

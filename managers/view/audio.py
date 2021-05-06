@@ -123,7 +123,7 @@ class AudioWorkerEditorDelete(View):
             raise Http404
 
 
-class AudioDeleteCreate(View):
+class AudioCloseCreate(View):
     def post(self,request,*args,**kwargs):
         from managers.forms import ModeratedForm
 
@@ -131,24 +131,17 @@ class AudioDeleteCreate(View):
         if request.is_ajax() and form.is_valid() and (request.user.is_audio_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=audio.pk, type="MUS")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            audio.status = "CLO"
-            audio.save(update_fields=['status'])
+            moderate_obj.create_close(object=audio, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class AudioDeleteDelete(View):
+class AudioCloseDelete(View):
     def get(self,request,*args,**kwargs):
         audio = Music.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=audio.pk, type="MUS")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            audio.status = "PRI"
-            audio.save(update_fields=['status'])
+            moderate_obj.delete_close(object=audio, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -186,16 +179,16 @@ class AudioUnverify(View):
             raise Http404
 
 
-class AudioDeleteWindow(TemplateView):
+class AudioCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and (request.user.is_audio_manager() or request.user.is_superuser):
-            self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
     def get_context_data(self,**kwargs):
-        context = super(AudioDeleteWindow,self).get_context_data(**kwargs)
+        context = super(AudioCloseWindow,self).get_context_data(**kwargs)
         context["object"] = Music.objects.get(pk=self.kwargs["pk"])
         return context
 

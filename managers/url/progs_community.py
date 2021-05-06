@@ -24,8 +24,8 @@ urlpatterns = [
 
     url(r'^create_suspension/(?P<pk>\d+)/$', login_required(CommunitySuspensionCreate.as_view())),
     url(r'^delete_suspension/(?P<pk>\d+)/$', login_required(CommunitySuspensionDelete.as_view())),
-    url(r'^create_block/(?P<pk>\d+)/$', login_required(CommunityBlockCreate.as_view())),
-    url(r'^delete_block/(?P<pk>\d+)/$', login_required(CommunityBlockDelete.as_view())),
+    url(r'^create_close/(?P<pk>\d+)/$', login_required(CommunityCloseCreate.as_view())),
+    url(r'^delete_close/(?P<pk>\d+)/$', login_required(CommunityCloseDelete.as_view())),
     url(r'^create_warning_banner/(?P<pk>\d+)/$', login_required(CommunityWarningBannerCreate.as_view())),
     url(r'^delete_warning_banner/(?P<pk>\d+)/$', login_required(CommunityWarningBannerDelete.as_view())),
     url(r'^create_rejected/(?P<pk>\d+)/$', login_required(CommunityRejectedCreate.as_view())),
@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^unverify/(?P<community_pk>\d+)/(?P<obj_pk>\d+)/$', login_required(CommunityUnverify.as_view())),
 
     url(r'^suspend_window/(?P<pk>\d+)/$', login_required(CommunitySuspendWindow.as_view())),
-    url(r'^block_window/(?P<pk>\d+)/$', login_required(CommunityBlockWindow.as_view())),
+    url(r'^close_window/(?P<pk>\d+)/$', login_required(CommunityCloseWindow.as_view())),
     url(r'^warning_banner_window/(?P<pk>\d+)/$', login_required(CommunityWarningBannerdWindow.as_view())),
     url(r'^claim_window/(?P<pk>\d+)/$', login_required(CommunityClaimWindow.as_view())),
 ]

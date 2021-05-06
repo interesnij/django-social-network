@@ -18,20 +18,20 @@ urlpatterns = [
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(PhotoWorkerEditorCreate.as_view())),
     url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(PhotoWorkerEditorDelete.as_view())),
 
-    url(r'^create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoDeleteCreate.as_view())),
-    url(r'^delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoDeleteDelete.as_view())),
+    url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoCloseCreate.as_view())),
+    url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoCloseDelete.as_view())),
     url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoRejectedCreate.as_view())),
     url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoClaimCreate.as_view())),
     url(r'^unverify/(?P<photo_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(PhotoUnverify.as_view())),
 
-    url(r'^comment_create_delete/(?P<pk>\d+)/$', login_required(CommentPhotoDeleteCreate.as_view())),
-    url(r'^comment_delete_delete/(?P<pk>\d+)/$', login_required(CommentPhotoDeleteDelete.as_view())),
+    url(r'^comment_create_close/(?P<pk>\d+)/$', login_required(CommentPhotoCloseCreate.as_view())),
+    url(r'^comment_delete_close/(?P<pk>\d+)/$', login_required(CommentPhotoCloseDelete.as_view())),
     url(r'^comment_create_rejected/(?P<pk>\d+)/$', login_required(CommentPhotoRejectedCreate.as_view())),
     url(r'^comment_create_claim/(?P<pk>\d+)/$', login_required(CommentPhotoClaimCreate.as_view())),
     url(r'^comment_unverify/(?P<pk>\d+)/(?P<obj_pk>\d+)/$', login_required(CommentPhotoUnverify.as_view())),
 
-    url(r'^delete_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoDeleteWindow.as_view())),
+    url(r'^close_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoCloseWindow.as_view())),
     url(r'^claim_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PhotoClaimWindow.as_view())),
-    url(r'^delete_comment_window/(?P<pk>\d+)/$', login_required(PhotoCommentDeleteWindow.as_view())),
+    url(r'^close_comment_window/(?P<pk>\d+)/$', login_required(PhotoCommentCloseWindow.as_view())),
     url(r'^claim_comment_window/(?P<pk>\d+)/$', login_required(PhotoCommentClaimWindow.as_view())),
 ]

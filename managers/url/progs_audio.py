@@ -18,12 +18,12 @@ urlpatterns = [
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(AudioWorkerEditorCreate.as_view())),
     url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(AudioWorkerEditorDelete.as_view())),
 
-    url(r'^create_delete/(?P<pk>\d+)/$', login_required(AudioDeleteCreate.as_view())),
-    url(r'^delete_delete/(?P<pk>\d+)/$', login_required(AudioDeleteDelete.as_view())),
+    url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', login_required(AudioCloseCreate.as_view())),
+    url(r'^delete_close/(?P<pk>\d+)/$', login_required(AudioCloseDelete.as_view())),
     url(r'^create_rejected/(?P<pk>\d+)/$', login_required(AudioRejectedCreate.as_view())),
     url(r'^create_claim/(?P<pk>\d+)/$', login_required(AudioClaimCreate.as_view())),
     url(r'^unverify/(?P<pk>\d+)/(?P<obj_pk>\d+)/$', login_required(AudioUnverify.as_view())),
 
-    url(r'^delete_window/(?P<pk>\d+)/$', login_required(AudioDeleteWindow.as_view())),
+    url(r'^close_window/(?P<pk>\d+)/$', login_required(AudioCloseWindow.as_view())),
     url(r'^claim_window/(?P<pk>\d+)/$', login_required(AudioClaimWindow.as_view()))
 ]

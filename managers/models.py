@@ -3,15 +3,9 @@ from django.conf import settings
 
 
 class UserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
-    ADVERTISER = 'R'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
-        (ADVERTISER, 'Рекламодатель'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -24,15 +18,9 @@ class UserStaff(models.Model):
         verbose_name_plural = 'Полномочия в профиле'
 
 class CommunityStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
-    ADVERTISER = 'R'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
-        (ADVERTISER, 'Рекламодатель'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_community_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -45,13 +33,9 @@ class CommunityStaff(models.Model):
         verbose_name_plural = 'Полномочия в сообществе'
 
 class PostUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -64,13 +48,9 @@ class PostUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в постах пользователей'
 
 class GoodUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -83,13 +63,9 @@ class GoodUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в товарах пользователей'
 
 class DocUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -102,13 +78,9 @@ class DocUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в документах'
 
 class PhotoUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -121,13 +93,9 @@ class PhotoUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в фотографиях'
 
 class VideoUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -140,13 +108,9 @@ class VideoUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в видеозаписях'
 
 class AudioUserStaff(models.Model):
-    ADMINISTRATOR = 'A'
-    MODERATOR = 'M'
-    EDITOR = 'E'
+    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
     LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),
-        (MODERATOR, 'Модератор'),
-        (EDITOR, 'Редактор'),
+        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
     )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='music_user_staff', verbose_name="Особый пользователь")
     level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
@@ -315,11 +279,11 @@ TYPE = (
 
 class Moderated(models.Model):
     # рассмотрение жалобы на объект, получаемфй по attach. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
-    PENDING, SUSPEND, BLOCKED, BANNER_GET, REJECTED, DELETED = 'P', 'S', 'B', 'BG', 'R', "D"
+    PENDING, SUSPEND, CLOSE, BANNER_GET, REJECTED = 'P', 'S', 'C', 'BG', 'R'
     STATUS = (
         (PENDING, 'На рассмотрении'),
         (SUSPEND, 'Объект заморожен'),
-        (BLOCKED, 'Объект заблокирован'),
+        (CLOSE, 'Объект закрыт'),
         (BANNER_GET, 'Объекту присвоен баннер'),
         (REJECTED, 'Отвергнутый'),
     )
@@ -374,8 +338,6 @@ class Moderated(models.Model):
     def is_banner(self):
         # Объект блокирован
         return self.status == Moderated.BANNER_GET
-    def is_deleted(self):
-        return self.status == ModeratedAudio.DELETED
 
     def create_suspend(self, manager_id, severity_int):
         from django.utils import timezone
@@ -399,24 +361,29 @@ class Moderated(models.Model):
         ModerationPenalty.create_suspension_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id, expiration=moderation_expiration)
         #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=severity)
         self.save()
-    def create_block(self, manager_id):
-        self.verified = True
-        self.save()
-        ModerationPenalty.create_block_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.BLOCK)
     def create_warning_banner(self, manager_id):
         self.verified = True
         self.save()
         ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
         #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.WARNING_BANNER)
-    def create_deleted(self, manager_id):
+    def create_close(self, object, description, manager_id):
+        self.status = Moderated.CLOSE
+        self.description = description
         self.verified = True
         self.save()
-        ModerationPenalty.create_delete_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
+        ModerationPenalty.create_close_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
+        if object.community:
+            object.close_item(object.community)
+        else:
+            object.close_item(None)
         #AudioManageLog.objects.create(audio=audio_id, manager=manager_id, action_type=AudioManageLog.DELETED)
-    def delete_deleted(self, manager_id):
+    def delete_close(self, object, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
+        if object.community:
+            object.abort_close_item(object.community)
+        else:
+            object.close_item(None)
         self.delete()
         #AudioManageLog.objects.create(audio=audio_id, manager=manager_id, action_type=AudioManageLog.UNDELETED)
     def delete_suspend(self, manager_id):
@@ -424,11 +391,6 @@ class Moderated(models.Model):
         obj.delete()
         self.delete()
         #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.UNSUSPENDED)
-    def delete_block(self, manager_id):
-        obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
-        obj.delete()
-        self.delete()
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.UNBLOCK)
     def delete_warning_banner(self, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
@@ -556,9 +518,9 @@ class ModerationReport(models.Model):
 
 class ModerationPenalty(models.Model):
     # сами санкции против объекта.
-    SUSPENSION, BLOCK, BANNER = 'S', 'B', 'BA'
+    SUSPENSION, CLOSE, BANNER = 'S', 'B', 'BA'
     STATUSES = (
-        (SUSPENSION, 'Приостановлено'), (BLOCK, 'Заблокировано'), (BANNER, 'Вывешен баннер'),
+        (SUSPENSION, 'Приостановлено'), (CLOSE, 'Закрыто'), (BANNER, 'Вывешен баннер'),
     )
 
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_penalties', verbose_name="Менеджер")
@@ -584,13 +546,13 @@ class ModerationPenalty(models.Model):
         except:
             return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, object_id=object_id, type=type, status=cls.SUSPENSION, expiration=expiration)
     @classmethod
-    def create_block_penalty(cls, object_id, type, manager_id, moderated_object):
+    def create_close_penalty(cls, object_id, type, manager_id, moderated_object):
         try:
             obj = cls.objects.get(moderated_object=moderated_object)
             obj.delete()
-            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, object_id=object_id, type=type, status=cls.BLOCK)
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, object_id=object_id, type=type, status=cls.CLOSE)
         except:
-            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, object_id=object_id, type=type, status=cls.BLOCK)
+            return cls.objects.create(moderated_object=moderated_object, manager_id=manager_id, object_id=object_id, type=type, status=cls.CLOSE)
     @classmethod
     def create_banner_penalty(cls, object_id, type, manager_id, moderated_object):
         try:
@@ -603,9 +565,9 @@ class ModerationPenalty(models.Model):
     def is_suspend(self):
         # Объект заморожен
         return self.status == SUSPENSION
-    def is_bloked(self):
+    def is_closed(self):
         # Объект блокирован
-        return self.status == BLOCK
+        return self.status == CLOSE
     def is_banner(self):
         # Объект блокирован
         return self.status == BANNER
@@ -665,7 +627,7 @@ class ModerationPenalty(models.Model):
 
     @classmethod
     def get_penalty_survey_lists(cls, user_id):
-        return cls.objects.filter(vmanager__id=user_id, type="SUL")
+        return cls.objects.filter(manager__id=user_id, type="SUL")
     @classmethod
     def get_penalty_surveys(cls, user_id):
         return cls.objects.filter(manager__id=user_id, type="SUR")

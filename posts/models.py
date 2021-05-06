@@ -230,7 +230,7 @@ class PostList(models.Model):
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_list(self):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = PostList.THIS_CLOSED
@@ -247,7 +247,7 @@ class PostList(models.Model):
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_list(self):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = PostList.LIST
@@ -540,7 +540,7 @@ class Post(models.Model):
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_post(self, comunity):
+    def close_item(self, comunity):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Post.THIS_CLOSED
@@ -557,7 +557,7 @@ class Post(models.Model):
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_post(self, community):
+    def abort_close_item(self, community):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = Post.PUBLISHED
@@ -1038,7 +1038,7 @@ class PostComment(models.Model):
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="R")
 
-    def close_comment(self):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = PostComment.THIS_CLOSED
@@ -1057,7 +1057,7 @@ class PostComment(models.Model):
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="C")
-    def abort_close_comment(self):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = PostComment.PUBLISHED

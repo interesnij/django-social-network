@@ -18,20 +18,21 @@ urlpatterns = [
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(GoodWorkerEditorCreate.as_view())),
     url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(GoodWorkerEditorDelete.as_view())),
 
-    url(r'^create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodDeleteCreate.as_view())),
-    url(r'^delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodDeleteDelete.as_view())),
+    url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodCloseCreate.as_view())),
+    url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodCloseDelete.as_view())),
     url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodRejectedCreate.as_view())),
     url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodClaimCreate.as_view())),
     url(r'^unverify/(?P<good_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(GoodUnverify.as_view())),
 
-    url(r'^comment_create_delete/(?P<pk>\d+)/$', login_required(CommentGoodDeleteCreate.as_view())),
-    url(r'^comment_delete_delete/(?P<pk>\d+)/$', login_required(CommentGoodDeleteDelete.as_view())),
+    url(r'^u_comment_create_close/(?P<pk>\d+)/$', login_required(CommentGoodCloseCreate.as_view())),
+    url(r'^c_comment_create_close/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(CommunityCommentGoodCloseCreate.as_view())),
+    url(r'^comment_delete_close/(?P<pk>\d+)/$', login_required(CommentGoodCloseDelete.as_view())),
     url(r'^comment_create_rejected/(?P<pk>\d+)/$', login_required(CommentGoodRejectedCreate.as_view())),
     url(r'^comment_create_claim/(?P<pk>\d+)/$', login_required(CommentGoodClaimCreate.as_view())),
     url(r'^comment_unverify/(?P<pk>\d+)/(?P<obj_pk>\d+)/$', login_required(CommentGoodUnverify.as_view())),
 
-    url(r'^delete_window/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodDeleteWindow.as_view())),
+    url(r'^close_window/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodCloseWindow.as_view())),
     url(r'^claim_window/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodClaimWindow.as_view())),
-    url(r'^delete_comment_window/(?P<pk>\d+)/$', login_required(GoodCommentDeleteWindow.as_view())),
+    url(r'^close_comment_window/(?P<pk>\d+)/$', login_required(GoodCommentCloseWindow.as_view())),
     url(r'^claim_comment_window/(?P<pk>\d+)/$', login_required(GoodCommentClaimWindow.as_view())),
 ]

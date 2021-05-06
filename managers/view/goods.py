@@ -118,30 +118,23 @@ class GoodWorkerEditorDelete(View):
         else:
             raise Http404
 
-class GoodDeleteCreate(View):
+class GoodCloseCreate(View):
     def post(self,request,*args,**kwargs):
         good, form = Good.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=good.pk, type="GOO")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            good.status = "CLO"
-            good.save(update_fields=['status'])
+            moderate_obj.create_close(object=good, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class GoodDeleteDelete(View):
+class GoodCloseDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=self.kwargs["pk"], type="GOO")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            good.status = "PUB"
-            good.save(update_fields=['status'])
+            moderate_obj.delete_close(object=good, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -185,30 +178,23 @@ class CommentGoodUnverify(View):
         else:
             raise Http404
 
-class CommentGoodDeleteCreate(View):
+class CommentGoodCloseCreate(View):
     def post(self,request,*args,**kwargs):
         comment, form = GoodComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_good_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=self.kwargs["pk"], type="GOOC")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            comment.status = "CLO"
-            comment.save(update_fields=['status'])
+            moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CommentGoodDeleteDelete(View):
+class CommentGoodCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_good_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=self.kwargs["pk"], type="GOOC")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            comment.status = "PUB"
-            comment.save(update_fields=['status'])
+            moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -234,19 +220,19 @@ class CommentGoodRejectedCreate(View):
         else:
             raise Http404
 
-class GoodDeleteWindow(TemplateView):
+class GoodCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_good_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/good/good_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/good/good_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(GoodDeleteWindow,self).get(request,*args,**kwargs)
+        return super(GoodCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(GoodDeleteWindow,self).get_context_data(**kwargs)
+        context = super(GoodCloseWindow,self).get_context_data(**kwargs)
         context["object"] = self.good
         return context
 
@@ -263,19 +249,19 @@ class GoodClaimWindow(TemplateView):
         return context
 
 
-class GoodCommentDeleteWindow(TemplateView):
+class GoodCommentCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_good_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/good/good_comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(GoodCommentDeleteWindow,self).get(request,*args,**kwargs)
+        return super(GoodCommentCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(GoodCommentDeleteWindow,self).get_context_data(**kwargs)
+        context = super(GoodCommentCloseWindow,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         return context
 

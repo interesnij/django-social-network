@@ -18,20 +18,20 @@ urlpatterns = [
     url(r'^add_worker_editor/(?P<pk>\d+)/$', login_required(PostWorkerEditorCreate.as_view())),
     url(r'^delete_worker_editor/(?P<pk>\d+)/$', login_required(PostWorkerEditorDelete.as_view())),
 
-    url(r'^create_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteCreate.as_view())),
-    url(r'^delete_delete/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteDelete.as_view())),
+    url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', login_required(PostCloseCreate.as_view())),
+    url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', login_required(PostCloseDelete.as_view())),
     url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', login_required(PostRejectedCreate.as_view())),
     url(r'^create_claim/(?P<pk>\d+)/$', login_required(PostClaimCreate.as_view())),
     url(r'^unverify/(?P<post_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(PostUnverify.as_view())),
 
-    url(r'^comment_create_delete/(?P<pk>\d+)/$', login_required(CommentPostDeleteCreate.as_view())),
-    url(r'^comment_delete_delete/(?P<pk>\d+)/$', login_required(CommentPostDeleteDelete.as_view())),
+    url(r'^comment_create_close/(?P<pk>\d+)/$', login_required(CommentPostCloseCreate.as_view())),
+    url(r'^comment_delete_close/(?P<pk>\d+)/$', login_required(CommentPostCloseDelete.as_view())),
     url(r'^comment_create_rejected/(?P<pk>\d+)/$', login_required(CommentPostRejectedCreate.as_view())),
     url(r'^comment_create_claim/(?P<pk>\d+)/$', login_required(CommentPostClaimCreate.as_view())),
     url(r'^comment_unverify/(?P<pk>\d+)/(?P<obj_pk>\d+)/$', login_required(CommentPostUnverify.as_view())),
 
-    url(r'^delete_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostDeleteWindow.as_view())),
+    url(r'^close_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostCloseWindow.as_view())),
     url(r'^claim_window/(?P<uuid>[0-9a-f-]+)/$', login_required(PostClaimWindow.as_view())),
-    url(r'^delete_comment_window/(?P<pk>\d+)/$', login_required(PostCommentDeleteWindow.as_view())),
+    url(r'^close_comment_window/(?P<pk>\d+)/$', login_required(PostCommentCloseWindow.as_view())),
     url(r'^claim_comment_window/(?P<pk>\d+)/$', login_required(PostCommentClaimWindow.as_view())),
 ]

@@ -186,7 +186,7 @@ class SurveyList(models.Model):
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_list(self):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = SurveyList.THIS_CLOSED
@@ -199,7 +199,7 @@ class SurveyList(models.Model):
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_list(self):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "TCLO":
             self.type = SurveyList.LIST
@@ -374,7 +374,7 @@ class Survey(models.Model):
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_survey(self):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Survey.THIS_CLOSED
@@ -385,7 +385,7 @@ class Survey(models.Model):
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_survey(self):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.status == "TCLO":
             self.status = Survey.PUBLISHED

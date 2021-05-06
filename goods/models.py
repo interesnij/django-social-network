@@ -269,7 +269,7 @@ class GoodList(models.Model):
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 
-	def close_list(self):
+	def close_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
 			self.type = GoodList.THIS_CLOSED
@@ -284,7 +284,7 @@ class GoodList(models.Model):
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_close_list(self):
+	def abort_close_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "_CLO":
 			self.type = GoodList.LIST
@@ -556,7 +556,7 @@ class Good(models.Model):
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-	def close_good(self, community):
+	def close_item(self, community):
 		from notify.models import Notify, Wall
 		if self.status == "PUB":
 			self.status = Good.THIS_CLOSED
@@ -573,7 +573,7 @@ class Good(models.Model):
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_close_good(self, community):
+	def abort_close_item(self, community):
 		from notify.models import Notify, Wall
 		if self.status == "_CLO":
 			self.status = Good.PUBLISHED
@@ -905,7 +905,7 @@ class GoodComment(models.Model):
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
 
-	def close_comment(self):
+	def close_item(self):
 		from notify.models import Notify, Wall
 		if self.status == "PUB":
 			self.status = GoodComment.THIS_CLOSED
@@ -924,7 +924,7 @@ class GoodComment(models.Model):
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
-	def abort_close_comment(self):
+	def abort_close_item(self):
 		from notify.models import Notify, Wall
 		if self.status == "_CLO":
 			self.status = GoodComment.PUBLISHED

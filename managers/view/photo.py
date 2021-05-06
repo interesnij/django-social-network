@@ -118,30 +118,23 @@ class PhotoWorkerEditorDelete(View):
         else:
             raise Http404
 
-class PhotoDeleteCreate(View):
+class PhotoCloseCreate(View):
     def post(self,request,*args,**kwargs):
         photo, form = Photo.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_photo_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=photo.pk, type="PHO")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            photo.status = "CLO"
-            photo.save(update_fields=['status'])
+            moderate_obj.create_close(object=photo, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class PhotoDeleteDelete(View):
+class PhotoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_photo_manager() or request.user.is_superuser:
             moderate_obj = Moderated.objects.get(object_id=photo.pk, type="PHO")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            photo.status = "PRI"
-            photo.save(update_fields=['status'])
+            moderate_obj.delete_close(object=photo, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -187,30 +180,23 @@ class CommentPhotoUnverify(View):
         else:
             raise Http404
 
-class CommentPhotoDeleteCreate(View):
+class CommentPhotoCloseCreate(View):
     def post(self,request,*args,**kwargs):
         comment, form = PhotoComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_photo_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type="PHOC")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            comment.status = "CLO"
-            comment.save(update_fields=['status'])
+            moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CommentPhotoDeleteDelete(View):
+class CommentPhotoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_photo_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type="PHOC")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            comment.status = "PUB"
-            comment.save(update_fields=['status'])
+            moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -236,18 +222,18 @@ class CommentPhotoRejectedCreate(View):
         else:
             raise Http404
 
-class PhotoDeleteWindow(TemplateView):
+class PhotoCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         if request.user.is_photo_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_delete", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_close", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(PhotoDeleteWindow,self).get(request,*args,**kwargs)
+        return super(PhotoCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PhotoDeleteWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCloseWindow,self).get_context_data(**kwargs)
         context["object"] = Photo.objects.get(uuid=self.kwargs["uuid"])
         return context
 
@@ -264,18 +250,18 @@ class PhotoClaimWindow(TemplateView):
         return context
 
 
-class PhotoCommentDeleteWindow(TemplateView):
+class PhotoCommentCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         if request.user.is_photo_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_delete", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/photo/photo_comment_close", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(PhotoCommentDeleteWindow,self).get(request,*args,**kwargs)
+        return super(PhotoCommentCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PhotoCommentDeleteWindow,self).get_context_data(**kwargs)
+        context = super(PhotoCommentCloseWindow,self).get_context_data(**kwargs)
         context["comment"] = PhotoComment.objects.get(pk=self.kwargs["pk"])
         return context
 

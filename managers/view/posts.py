@@ -118,30 +118,23 @@ class PostWorkerEditorDelete(View):
         else:
             raise Http404
 
-class PostDeleteCreate(View):
+class PostCloseCreate(View):
     def post(self,request,*args,**kwargs):
         post, form = Post.objects.get(uuid=self.kwargs["uuid"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type="POS")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            post.status = "CLO"
-            post.save(update_fields=['status'])
+            moderate_obj.create_close(object=post, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class PostDeleteDelete(View):
+class PostCloseDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=post.pk, type="POS")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            post.status = "PRI"
-            post.save(update_fields=['status'])
+            moderate_obj.delete_close(object=post, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -189,31 +182,24 @@ class CommentPostUnverify(View):
         else:
             raise Http404
 
-class CommentPostDeleteCreate(View):
+class CommentPostCloseCreate(View):
     def post(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         form = ModeratedForm(request.POST)
         if form.is_valid() and (request.user.is_post_manager() or request.user.is_superuser):
             mod = form.save(commit=False)
             moderate_obj = ModeratedPostComment.get_or_create_moderated_object(object_id=comment.pk, type="POSC")
-            moderate_obj.status = Moderated.DELETED
-            moderate_obj.description = mod.description
-            moderate_obj.save()
-            moderate_obj.create_deleted(manager_id=request.user.pk)
-            comment.status = "CLO"
-            comment.save(update_fields=['status'])
+            moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
-class CommentPostDeleteDelete(View):
+class CommentPostCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.is_post_manager() or request.user.is_superuser):
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type="POSC")
-            moderate_obj.delete_deleted(manager_id=request.user.pk)
-            comment.status = "PUB"
-            comment.save(update_fields=['status'])
+            moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -241,19 +227,19 @@ class CommentPostRejectedCreate(View):
         else:
             raise Http404
 
-class PostDeleteWindow(TemplateView):
+class PostCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/post/post_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/post/post_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(PostDeleteWindow,self).get(request,*args,**kwargs)
+        return super(PostCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PostDeleteWindow,self).get_context_data(**kwargs)
+        context = super(PostCloseWindow,self).get_context_data(**kwargs)
         context["object"] = self.post
         return context
 
@@ -270,19 +256,19 @@ class PostClaimWindow(TemplateView):
         return context
 
 
-class PostCommentDeleteWindow(TemplateView):
+class PostCommentCloseWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.user.is_post_manager() or request.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_delete.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/manage_create/post/post_comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(PostCommentDeleteWindow,self).get(request,*args,**kwargs)
+        return super(PostCommentCloseWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PostCommentDeleteWindow,self).get_context_data(**kwargs)
+        context = super(PostCommentCloseWindow,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         return context
 
