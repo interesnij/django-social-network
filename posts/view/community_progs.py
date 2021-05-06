@@ -125,7 +125,6 @@ class PostCommunityCommentCreate(View):
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
-
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
@@ -147,7 +146,6 @@ class PostCommunityReplyCreate(View):
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
-
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=None, community=community)
                 return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
@@ -160,7 +158,7 @@ class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -169,7 +167,7 @@ class PostCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -294,14 +292,10 @@ def post_update_interactions(request):
 
 
 class CommunityPostListCreate(TemplateView):
-    """
-    создание списка записей сообщества
-    """
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
-
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("posts/post_community/add_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
@@ -315,10 +309,9 @@ class CommunityPostListCreate(TemplateView):
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.template.user import render_for_platform
-
             list = self.form.save(commit=False)
-            list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': list})
+            new_list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': new_list})
         else:
             return HttpResponse()
         return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
@@ -347,7 +340,7 @@ class CommunityPostListEdit(TemplateView):
         self.form = PostListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            self.form.save()
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -368,6 +361,28 @@ class CommunityPostListAbortDelete(View):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AddPostInCommunityList(View):
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+
+        if request.is_ajax() and not list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
+            list.post_list.add(post)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class RemovePostInCommunityList(View):
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
+            list.post_list.remove(post)
             return HttpResponse()
         else:
             raise Http404

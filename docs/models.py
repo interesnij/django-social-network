@@ -216,11 +216,11 @@ class DocList(models.Model):
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = DocList.LIST
-        elif self.type == "TDELP":
+        elif self.type == "_DELP":
             self.type = DocList.PRIVATE
-        elif self.type == "TDELM":
+        elif self.type == "_DELM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -245,13 +245,13 @@ class DocList(models.Model):
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = DocList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = DocList.MAIN
-        elif self.type == "TCLOP":
+        elif self.type == "_CLOP":
             self.type = DocList.PRIVATE
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -391,11 +391,11 @@ class Doc(models.Model):
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_doc(self, community):
         from notify.models import Notify, Wall
-        if self.status == "TDEL":
+        if self.status == "_DEL":
             self.status = Doc.PUBLISHED
-        elif self.status == "TDELP":
+        elif self.status == "_DELP":
             self.status = Doc.PRIVATE
-        elif self.status == "TDELM":
+        elif self.status == "_DELM":
             self.status = Doc.MANAGER
         self.save(update_fields=['status'])
         if community:
@@ -426,11 +426,11 @@ class Doc(models.Model):
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_doc(self, community):
         from notify.models import Notify, Wall
-        if self.status == "TCLO":
+        if self.status == "_CLO":
             self.status = Doc.PUBLISHED
-        elif self.status == "TCLOP":
+        elif self.status == "_CLOP":
             self.status = Doc.PRIVATE
-        elif self.status == "TCLOM":
+        elif self.status == "_CLOM":
             self.status = Doc.MANAGER
         self.save(update_fields=['status'])
         if community:

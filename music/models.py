@@ -190,10 +190,10 @@ class SoundList(models.Model):
         self.order = order
         self.save()
         if is_public:
-            get_playlist_processing(self, DocList.LIST)
+            get_playlist_processing(self, SoundList.LIST)
             self.make_publish()
         else:
-            get_playlist_processing(self, DocList.PRIVATE)
+            get_playlist_processing(self, SoundList.PRIVATE)
             self.make_private()
         return self
 
@@ -229,11 +229,11 @@ class SoundList(models.Model):
             Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = SoundList.LIST
-        elif self.type == "TDELP":
+        elif self.type == "_DELP":
             self.type = SoundList.PRIVATE
-        elif self.type == "TDELM":
+        elif self.type == "_DELM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
@@ -258,13 +258,13 @@ class SoundList(models.Model):
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = SoundList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = SoundList.MAIN
-        elif self.type == "TCLOP":
+        elif self.type == "_CLOP":
             self.type = SoundList.PRIVATE
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -499,11 +499,11 @@ class Music(models.Model):
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_track(self, community):
         from notify.models import Notify, Wall
-        if self.status == "TDEL":
+        if self.status == "_DEL":
             self.status = Music.PUBLISHED
-        elif self.status == "TDELP":
+        elif self.status == "_DELP":
             self.status = Music.PRIVATE
-        elif self.status == "TDELM":
+        elif self.status == "_DELM":
             self.status = Music.MANAGER
         self.save(update_fields=['status'])
         if community:
@@ -534,11 +534,11 @@ class Music(models.Model):
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_track(self, community):
         from notify.models import Notify, Wall
-        if self.status == "TCLO":
+        if self.status == "_CLO":
             self.status = Music.PUBLISHED
-        elif self.status == "TCLOP":
+        elif self.status == "_CLOP":
             self.status = Music.PRIVATE
-        elif self.status == "TCLOM":
+        elif self.status == "_CLOM":
             self.status = Music.MANAGER
         self.save(update_fields=['status'])
         if community:

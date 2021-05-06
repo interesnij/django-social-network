@@ -23,6 +23,8 @@ urlpatterns = [
 	url(r'^wall_abort_delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PostWallCommunityAbortDelete.as_view()),
 	url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOnVotesPost.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOffVotesPost.as_view()),
+	url(r'^add_post_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPostInCommunityList.as_view()),
+    url(r'^remove_post_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePostInCommunityList.as_view()),
 
 	url(r'^add_list/(?P<pk>\d+)/$', CommunityPostListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CommunityPostListEdit.as_view()),

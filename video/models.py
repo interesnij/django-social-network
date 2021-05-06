@@ -410,42 +410,62 @@ class Video(models.Model):
         return self.list.all()[0].uuid
 
     @classmethod
-    def create_video(cls, creator, title, file, uri, lists, is_public):
-        from notify.models import Notify, Wall, get_user_managers_ids
-        from common.notify import send_notify_socket
+    def create_video(cls, creator, title, file, uri, description, lists, comments_enabled, votes_on, is_public, community):
         from common.processing.video import get_video_processing
-        from rest_framework.exceptions import ValidationError
 
         if not lists:
-            raise ValidationError("Не выбран список для нового ролика")
-
-        video = cls.objects.create(creator=creator,title=title,file=file,uri=uri)
-        if is_public:
-            get_video_processing(video, Video.PUBLISHED)
-            for user_id in creator.get_user_news_notify_ids():
-                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
-                send_notify_socket(object_id, user_id, "create_video_notify")
-            Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
-            send_notify_socket(object_id, user_id, "create_video_wall")
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Не выбран список для нового документа")
+        private = 0
+        video = cls.objects.create(creator=creator,title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
+        if community:
+            community.plus_videos(1)
         else:
-            get_video_processing(video, VIDEO.PRIVATE)
+            creator.plus_videos(1)
         for list_id in lists:
-            video_list = VIDEO.objects.get(pk=list_id)
+            video_list = VideoList.objects.get(pk=list_id)
             video_list.video_list.add(video)
+            if video_list.is_private():
+                private = 1
+        if not private and is_public:
+            get_video_processing(video, Video.PUBLISHED)
+            if community:
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                community_send_wall(video.pk, creator.pk, community.pk, None, "create_c_video_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                    community_send_notify(video.pk, creator.pk, user_id, community.pk, None, "create_c_video_notify")
+            else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
+                user_send_wall(video.pk, None, "create_u_video_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                    user_send_notify(video.pk, creator.pk, user_id, None, "create_u_video_notify")
+        else:
+            get_video_processing(video, Video.PRIVATE)
         return video
 
-    def edit_video(self, title, file, uri, lists, is_public):
+    def edit_video(self, title, file, uri, description, lists, comments_enabled, votes_on, is_public):
         from common.processing.video import get_video_processing
 
         self.title = title
         self.file = file
         self.uri = uri
         self.lists = lists
+        self.description = description
+        self.comments_enabled = comments_enabled
+        self.votes_on = votes_on
         if is_public:
-            get_video_processing(self, VIDEO.PUBLISHED)
+            get_video_processing(self, Video.PUBLISHED)
             self.make_publish()
         else:
-            get_video_processing(self, VIDEO.PRIVATE)
+            get_video_processing(self, Video.PRIVATE)
             self.make_private()
         return self.save()
 
@@ -804,7 +824,7 @@ class VideoComment(models.Model):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = VideoComment.PUBLISHED
-        elif self.status == "_CLO":
+        elif self.status == "_CLOE":
             self.status = VideoComment.EDITED
         self.save(update_fields=['status'])
         if self.parent:

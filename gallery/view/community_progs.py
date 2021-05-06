@@ -123,10 +123,7 @@ class PhotoCommentCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
-                community_notify(request.user, community, None, "phc"+str(new_comment.pk)+", pho"+str(photo.pk), "c_photo_comment_notify", "COM")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text, community=community)
                 return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -149,10 +146,7 @@ class PhotoReplyCommunityCreate(View):
 
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=None, text=comment.text)
-                community_notify(request.user, community, None, "phr"+str(new_comment.pk)+",phc"+str(parent.pk)+",pho"+str(parent.photo.pk), "c_photo_comment_notify", "REP")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=None, text=comment.text, community=community)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'gallery/c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
@@ -167,7 +161,7 @@ class PhotoCommentCommunityDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -180,7 +174,7 @@ class PhotoCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -275,6 +269,17 @@ class CommunityOnPrivatePhoto(View):
         else:
             raise Http404
 
+class CommunityOffPrivatePhoto(View):
+    def get(self,request,*args,**kwargs):
+        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+            comment.make_publish()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
 class PhotoWallCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
@@ -291,16 +296,6 @@ class PhotoWallCommentCommunityAbortDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
             comment.abort_delete_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityOffPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            comment.make_publish()
             return HttpResponse()
         else:
             raise Http404
@@ -362,9 +357,7 @@ class PhotoListCommunityEdit(TemplateView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             list = self.form.save(commit=False)
-            if not list.description:
-                list.description = "Без описания"
-            self.form.save()
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -390,7 +383,7 @@ class PhotoListCommunityAbortDelete(View):
         else:
             raise Http404
 
-class CommunityPhotoListAdd(View):
+class AddPhotoInCommunityList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
@@ -401,7 +394,7 @@ class CommunityPhotoListAdd(View):
         else:
             raise Http404
 
-class CommunityPhotoListRemove(View):
+class RemovePhotoInCommunityList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])

@@ -257,11 +257,11 @@ class GoodList(models.Model):
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_delete_list(self):
 		from notify.models import Notify, Wall
-		if self.type == "TDEL":
+		if self.type == "_DEL":
 			self.type = GoodList.LIST
-		elif self.type == "TDELP":
+		elif self.type == "_DELP":
 			self.type = GoodList.PRIVATE
-		elif self.type == "TDELM":
+		elif self.type == "_DELM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
@@ -286,13 +286,13 @@ class GoodList(models.Model):
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_close_list(self):
 		from notify.models import Notify, Wall
-		if self.type == "TCLO":
+		if self.type == "_CLO":
 			self.type = GoodList.LIST
-		elif self.type == "TCLOM":
+		elif self.type == "_CLOM":
 			self.type = GoodList.MAIN
-		elif self.type == "TCLOP":
+		elif self.type == "_CLOP":
 			self.type = GoodList.PRIVATE
-		elif self.type == "TCLOM":
+		elif self.type == "_CLOM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
@@ -482,7 +482,7 @@ class Good(models.Model):
 			get_good_processing(good, Good.PRIVATE)
 			return good
 
-	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
+	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
 		from common.processing.good import get_good_processing
 		self.title = title
 		self.description = description
@@ -540,11 +540,11 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_delete_good(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "TDEL":
+		if self.status == "_DEL":
 			self.status = Good.PUBLISHED
-		elif self.status == "TDELP":
+		elif self.status == "_DELP":
 			self.status = Good.PRIVATE
-		elif self.status == "TDELM":
+		elif self.status == "_DELM":
 			self.status = Good.MANAGER
 		self.save(update_fields=['status'])
 		if community:
@@ -575,11 +575,11 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_close_good(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "TCLO":
+		if self.status == "_CLO":
 			self.status = Good.PUBLISHED
-		elif self.status == "TCLOP":
+		elif self.status == "_CLOP":
 			self.status = Good.PRIVATE
-		elif self.status == "TCLOM":
+		elif self.status == "_CLOM":
 			self.status = Good.MANAGER
 		self.save(update_fields=['status'])
 		if community:
@@ -737,30 +737,29 @@ class GoodComment(models.Model):
 			return ''
 
 	@classmethod
-	def create_comment(cls, commenter, attach, good, parent, text):
+	def create_comment(cls, commenter, attach, good, parent, text, community):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 		from django.utils import timezone
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 		comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
+		good.comment += 1
+		good.save(update_fields=["comment"])
 		if comment.parent:
-			good = comment.parent.good
-			type = "gor"+str(comment.pk)+",goc"+str(comment.parent.pk)+",goo"+str(post.pk)
-			if good.community:
-				community_wall(commenter, community, None, type, "c_good_comment_notify", "REP")
-				community_notify(commenter, community, None, type, "c_good_comment_notify", "REP")
+			if community:
+				community_notify(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
+				community_wall(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
 			else:
-				user_wall(commenter, None, type, "u_good_comment_notify", "REP")
-				user_notify(commenter, good.creator.pk, None, type, "u_good_comment_notify", "REP")
+				user_notify(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
+				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
 		else:
-			type = "goc"+str(comment.pk)+", goo"+str(good.pk)
 			if comment.good.community:
-				community_wall(commenter, community, None, type, "c_good_comment_notify", "COM")
-				community_notify(commenter, community, None, type, "c_good_comment_notify", "COM")
+				community_notify(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
+				community_wall(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 			else:
-				user_wall(commenter, None, type, "u_good_comment_notify", "COM")
-				user_notify(commenter, good.creator.pk, None, type, "u_good_comment_notify", "COM")
+				user_notify(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
+				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 		return comment
 
 	def get_created(self):
@@ -929,7 +928,7 @@ class GoodComment(models.Model):
 		from notify.models import Notify, Wall
 		if self.status == "_CLO":
 			self.status = GoodComment.PUBLISHED
-		elif self.status == "_CLO":
+		elif self.status == "_CLOE":
 			self.status = GoodComment.EDITED
 		self.save(update_fields=['status'])
 		if self.parent:

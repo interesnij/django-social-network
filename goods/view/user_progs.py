@@ -167,7 +167,7 @@ class GoodUserEdit(TemplateView):
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.good.pk:
             from common.notify.notify import user_notify
             good = self.form.save(commit=False)
-            new_good = self.good.create_good(
+            new_good = self.good.edit_good(
                                         title=good.title,
                                         image=good.image,
                                         images=request.POST.getlist('images'),
@@ -231,7 +231,7 @@ class UserGoodListEdit(TemplateView):
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, order=list.order, community=None,lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, order=list.order, lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -267,10 +267,7 @@ class GoodCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                user_notify(request.user, good.creator.pk, None, "goc"+str(new_comment.pk)+", goo"+str(good.pk), "u_good_comment_notify", "COM")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text, community=None)
                 return render_for_platform(request, 'goods/u_good_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -288,10 +285,7 @@ class GoodReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                user_notify(request.user, parent.photo.creator.pk, None, "gor"+str(new_comment.pk)+",goc"+str(parent.pk)+",goo"+str(parent.good.pk), "u_good_comment_notify", "REP")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text, community=None)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/u_good_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
@@ -302,7 +296,7 @@ class GoodCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -311,7 +305,29 @@ class GoodCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AddGoodInUserList(View):
+    def get(self, request, *args, **kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+
+        if request.is_ajax() and not list.is_item_in_list(good.pk):
+            list.good_list.add(good)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class RemoveGoodInUserList(View):
+    def get(self, request, *args, **kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(good.pk):
+            list.good_list.remove(good)
             return HttpResponse()
         else:
             raise Http404

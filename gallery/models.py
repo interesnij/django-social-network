@@ -251,11 +251,11 @@ class PhotoList(models.Model):
             Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = PhotoList.LIST
-        elif self.type == "TDELP":
+        elif self.type == "_DELP":
             self.type = PhotoList.PRIVATE
-        elif self.type == "TDELM":
+        elif self.type == "_DELM":
             self.type = PhotoList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
@@ -284,17 +284,17 @@ class PhotoList(models.Model):
             Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = PhotoList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = PhotoList.MAIN
-        elif self.type == "TCLOP":
+        elif self.type == "_CLOP":
             self.type = PhotoList.PRIVATE
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = PhotoList.MANAGER
-        elif self.type == "TCLOW":
+        elif self.type == "_CLOW":
             self.type = PhotoList.WALL
-        elif self.type == "TCLOA":
+        elif self.type == "_CLOA":
             self.type = PhotoList.AVATAR
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
@@ -680,29 +680,28 @@ class PhotoComment(models.Model):
             return ''
 
     @classmethod
-    def create_comment(cls, commenter, attach, photo, parent, text):
+    def create_comment(cls, commenter, attach, photo, parent, text, community):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text)
+        photo.comment += 1
+        photo.save(update_fields=["comment"])
         if comment.parent:
-            photo = comment.parent.photo
-            type = "phr"+str(comment.pk)+",phc"+str(comment.parent.pk)+",pho"+str(photo.pk)
-            if photo.community:
-                community_wall(commenter, community, None, type, "c_photo_comment_notify", "REP")
-                community_notify(commenter, community, None, type, "c_photo_comment_notify", "REP")
+            if community:
+                community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+                community_wall(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
             else:
-                user_wall(commenter, None, type, "u_photo_comment_notify", "REP")
-                user_notify(commenter, photo.creator.pk, None, type, "u_photo_comment_notify", "REP")
+                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
         else:
-            type = "phc"+str(comment.pk)+", pho"+str(photo.pk)
             if comment.photo.community:
-                community_wall(commenter, community, None, type, "c_photo_comment_notify", "COM")
-                community_notify(commenter, community, None, type, "c_photo_comment_notify", "COM")
+                community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+                community_wall(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
             else:
-                user_wall(commenter, None, type, "u_photo_comment_notify", "COM")
-                user_notify(commenter, photo.creator.pk, None, type, "u_photo_comment_notify", "COM")
+                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
         return comment
 
     def get_u_attach(self, user):
@@ -775,7 +774,7 @@ class PhotoComment(models.Model):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = PhotoComment.PUBLISHED
-        elif self.status == "_CLO":
+        elif self.status == "_CLOE":
             self.status = PhotoComment.EDITED
         self.save(update_fields=['status'])
         if self.parent:

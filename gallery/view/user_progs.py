@@ -117,10 +117,7 @@ class PhotoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text)
-                user_notify(request.user, photo.creator.pk, None, "phc"+str(new_comment.pk)+", pho"+str(photo.pk), "u_photo_comment_notify", "COM")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text, community=None)
                 return render_for_platform(request, 'gallery/u_photo_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -140,10 +137,7 @@ class PhotoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, photo=None, text=comment.text)
-                user_notify(request.user, parent.photo.creator.pk, None, "phr"+str(new_comment.pk)+",phc"+str(parent.pk)+",pho"+str(parent.photo.pk), "u_photo_comment_notify", "REP")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, photo=None, text=comment.text, community=None)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'gallery/u_photo_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
@@ -154,7 +148,7 @@ class PhotoCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -163,7 +157,7 @@ class PhotoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -250,7 +244,7 @@ class UserOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.is_ajax() and photo.creator.pk == request.user.pk:
             photo.make_private()
             return HttpResponse()
         else:
@@ -291,7 +285,7 @@ class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
+        if request.is_ajax() and user.pk == request.user.pk:
             photo.list = None
             list = PhotoList.objects.get(creator=user, community__isnull=True, type=PhotoList.AVATAR)
             photo.list = list
@@ -301,9 +295,6 @@ class UserRemoveAvatarPhoto(View):
             raise Http404
 
 class PhotoListUserCreate(TemplateView):
-    """
-    создание альбома пользователя
-    """
     template_name = None
     form = None
 
@@ -323,8 +314,6 @@ class PhotoListUserCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
-            if not list.description:
-                list.description = "Без описания"
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/user_photo_list/new_list.html',{'list': new_list, 'user': self.user})
         else:
@@ -332,9 +321,6 @@ class PhotoListUserCreate(TemplateView):
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
 class PhotoListUserEdit(TemplateView):
-    """
-    изменение альбома пользователя
-    """
     template_name = None
     form=None
 
@@ -356,9 +342,7 @@ class PhotoListUserEdit(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
-            if not list.description:
-                list.description = "Без описания"
-            self.form.save()
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -385,10 +369,7 @@ class PhotoListUserAbortDelete(View):
             raise Http404
 
 
-class UserPhotoListAdd(View):
-    """
-    Добавляем фото в любой альбом, если его там нет
-    """
+class AddPhotoInUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
@@ -399,10 +380,7 @@ class UserPhotoListAdd(View):
         else:
             raise Http404
 
-class UserPhotoListRemove(View):
-    """
-    Удаляем фото из любого альбома, если он там есть
-    """
+class RemovePhotoInUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])

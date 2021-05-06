@@ -78,7 +78,7 @@ class CommunityHideGood(View):
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
-            return HttpResponse("!")
+            return HttpResponse()
 
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
@@ -168,7 +168,7 @@ class GoodCommunityEdit(TemplateView):
         if request.is_ajax() and self.form.is_valid() and request.user.pk.is_administrator_of_community(self.kwargs["pk"]):
             from common.notify.notify import user_notify
             good = self.form.save(commit=False)
-            new_good = self.good.create_good(
+            new_good = self.good.edit_good(
                                         title=good.title,
                                         image=good.image,
                                         images=request.POST.getlist('images'),
@@ -236,7 +236,7 @@ class CommunityGoodListEdit(TemplateView):
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, order=list.order, community=Community.objects.get(pk=self.kwargs["pk"]),lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, order=list.order, lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -277,10 +277,7 @@ class GoodCommentCommunityCreate(View):
 
             check_can_get_lists(request.user, c)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text)
-                community_notify(request.user, community, None, "goc"+str(new_comment.pk)+", goo"+str(good.pk), "c_good_comment_notify", "COM")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text, community=c)
                 return render_for_platform(request, 'goods/c_good_comment/admin_parent.html',{'comment': new_comment, 'community': c})
             else:
                 return HttpResponseBadRequest()
@@ -303,10 +300,7 @@ class GoodReplyCommunityCreate(View):
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
             elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import community_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text)
-                community_notify(request.user, community, None, "gor"+str(new_comment.pk)+",goc"+str(parent.pk)+",goo"+str(parent.good.pk), "c_good_comment_notify", "REP")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text, community=c)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': c})
@@ -321,7 +315,7 @@ class GoodCommentCommunityDelete(View):
         except:
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -334,7 +328,29 @@ class GoodCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AddGoodInCommunityList(View):
+    def get(self, request, *args, **kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+
+        if request.is_ajax() and not list.is_item_in_list(good.pk) and request.user.is_administrator_of_community(list.community.pk):
+            list.good_list.add(good)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class RemoveGoodInCommunityList(View):
+    def get(self, request, *args, **kwargs):
+        good = Good.objects.get(pk=self.kwargs["pk"])
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(good.pk) and request.user.is_administrator_of_community(list.community.pk):
+            list.good_list.remove(good)
             return HttpResponse()
         else:
             raise Http404

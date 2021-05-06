@@ -218,11 +218,11 @@ class PostList(models.Model):
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_delete_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = PostList.LIST
-        elif self.type == "TDELP":
+        elif self.type == "_DELP":
             self.type = PostList.PRIVATE
-        elif self.type == "TDELM":
+        elif self.type == "_DELM":
             self.type = PostList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -249,15 +249,15 @@ class PostList(models.Model):
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_list(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = PostList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = PostList.MAIN
-        elif self.type == "TCLOP":
+        elif self.type == "_CLOP":
             self.type = PostList.PRIVATE
-        elif self.type == "TCLOF":
+        elif self.type == "_CLOF":
             self.type = PostList.THIS_FIXED
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = PostList.MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -961,7 +961,7 @@ class PostComment(models.Model):
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
         post.comment += 1
         post.save(update_fields=["comment"])
-        if parent:
+        if parent: 
             if community:
                 from common.notify.notify import community_notify, community_wall
                 community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
@@ -1061,7 +1061,7 @@ class PostComment(models.Model):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = PostComment.PUBLISHED
-        elif self.status == "_CLO":
+        elif self.status == "_CLOE":
             self.status = PostComment.EDITED
         self.save(update_fields=['status'])
         if self.parent:

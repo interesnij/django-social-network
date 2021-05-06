@@ -275,9 +275,6 @@ class PostGetVotes(View):
 
 
 class UserPostListCreate(TemplateView):
-    """
-    создание списка записей пользователя
-    """
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
@@ -297,8 +294,8 @@ class UserPostListCreate(TemplateView):
             from common.template.user import render_for_platform
 
             list = self.form.save(commit=False)
-            list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/lenta/my_list.html',{'list': list})
+            new_list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
         return super(UserPostListCreate,self).get(request,*args,**kwargs)
@@ -326,9 +323,7 @@ class UserPostListEdit(TemplateView):
         self.form = PostListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            if list.order < 1:
-                list.order = 1
-            self.form.save()
+            new_list = list.create_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -349,6 +344,28 @@ class UserPostListAbortDelete(View):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AddPostInUserList(View):
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+
+        if request.is_ajax() and not list.is_item_in_list(post.pk):
+            list.post_list.add(post)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class RemovePostInUserList(View):
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(post.pk):
+            list.post_list.remove(post)
             return HttpResponse()
         else:
             raise Http404

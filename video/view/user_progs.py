@@ -45,10 +45,7 @@ class VideoCommentUserCreate(View):
             if request.user.pk != user.pk:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text)
-                user_notify(request.user, video.creator.pk, None, "vic"+str(new_comment.pk)+", vid"+str(video.pk), "u_video_comment_notify", "COM")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text, community=None)
                 return render_for_platform(request, 'video/u_video_comment/my_parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -68,10 +65,7 @@ class VideoReplyUserCreate(View):
             if request.user != user:
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.notify.notify import user_notify
-
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text)
-                user_notify(request.user, parent.post.creator.pk, None, "vir"+str(new_comment.pk)+",vic"+str(parent.pk)+",pos"+str(parent.post.pk), "u_post_comment_notify", "REP")
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text, community=None)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'video/u_video_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
@@ -82,7 +76,7 @@ class VideoCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment(self)
+            comment.delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -91,7 +85,7 @@ class VideoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment(self)
+            comment.abort_delete_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -158,8 +152,7 @@ class UserOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
-            video.is_public = False
-            video.save(update_fields=['is_public'])
+            video.make_private()
             return HttpResponse()
         else:
             raise Http404
@@ -168,8 +161,7 @@ class UserOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
-            video.is_public = True
-            video.save(update_fields=['is_public'])
+            video.make_publish()
             return HttpResponse()
         else:
             raise Http404
@@ -183,6 +175,76 @@ class VideoWallCommentUserDelete(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class UserVideoCreate(TemplateView):
+	form_post = None
+
+	def get(self,request,*args,**kwargs):
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("video/user_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserVideoCreate,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserVideoCreate,self).get_context_data(**kwargs)
+		context["form_post"] = VideoForm()
+		context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
+		return context
+
+	def post(self,request,*args,**kwargs):
+		self.form_post = VideoForm(request.POST, request.FILES)
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+
+		if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
+			video = self.form_post.save(commit=False)
+			new_video = video.create_video(
+                                            creator=request.user,
+                                            title=new_video.title,
+                                            file=new_video.file,
+                                            uri=new_video.uri,
+                                            description=new_video.description,
+                                            lists=request.POST.get("list"),
+                                            comments_enabled=new_video.comments_enabled,
+                                            votes_on=new_video.votes_on,
+                                            is_public=request.POST.get("is_public"),
+                                            community=None)
+			return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
+		else:
+			return HttpResponseBadRequest()
+
+class UserVideoEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_detect_platform_template("video/user_create/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserVideoEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserVideoEdit,self).get_context_data(**kwargs)
+        context["form"] = VideoForm()
+        context["sub_categories"] = VideoSubCategory.objects.only("id")
+        context["categories"] = VideoCategory.objects.only("id")
+        context["video"] = Video.objects.get(pk=self.kwargs["pk"])
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.form = VideoForm(request.POST,request.FILES, instance=self.video)
+        if request.is_ajax() and self.form.is_valid() and request.user == self.user:
+            video = self.form.save(commit=False)
+            new_video = video.edit_video(
+                                        title=new_video.title,
+                                        file=new_video.file,
+                                        uri=new_video.uri,
+                                        description=new_video.description,
+                                        lists=request.POST.getlist('list'),
+                                        comments_enabled=new_video.comments_enabled,
+                                        votes_on=new_video.votes_on,
+                                        is_public=request.POST.get("is_public"))
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
+        else:
+            return HttpResponseBadRequest()
+
 
 class UserVideoListCreate(TemplateView):
     form_post = None
@@ -209,85 +271,6 @@ class UserVideoListCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-
-class UserVideoAttachCreate(TemplateView):
-    form_post = None
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("video/user_create/create_video_attach.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserVideoAttachCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserVideoAttachCreate,self).get_context_data(**kwargs)
-        context["form_post"] = VideoForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form_post = VideoForm(request.POST, request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-
-        if request.is_ajax() and form_post.is_valid() and request.user == self.user:
-            self.my_list = VideoList.objects.get(creator_id=self.user.pk, community__isnull=True, type=VideoList.MAIN)
-            new_video = self.form_post.save(commit=False)
-            new_video.creator = request.user
-            new_video.save()
-            my_list.video_list.add(new_video)
-            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
-        else:
-            return HttpResponseBadRequest()
-
-
-class UserVideoCreate(TemplateView):
-    form_post = None
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserVideoCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserVideoCreate,self).get_context_data(**kwargs)
-        context["form_post"] = VideoForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.form_post = VideoForm(request.POST, request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-
-        if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
-            from common.notify.notify import user_notify
-
-            new_video = self.form_post.save(commit=False)
-            new_video.creator = request.user
-            lists = request.POST.getlist("list")
-            new_video.save()
-            for _list_pk in lists:
-                _list = VideoList.objects.get(pk=_list_pk)
-                _list.video_list.add(new_video)
-            if new_video.is_public:
-                user_notify(request.user, new_video.creator.pk, None, "vid"+str(new_video.pk), "u_video_create", "ITE")
-            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
-        else:
-            return HttpResponse()
-
-
-class UserVideoListPreview(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = VideoList.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("users/user_video/list_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserVideoListPreview,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(UserVideoListPreview,self).get_context_data(**kwargs)
-		context["list"] = self.list
-		return context
-
-
 class UserVideolistEdit(TemplateView):
     """
     изменение списка видео пользователя
@@ -307,15 +290,10 @@ class UserVideolistEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        self.form = VideoListForm(request.POST,instance=self.list)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
-            list = self.form.save(commit=False)
-            self.form.save()
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        list = VideoListForm(request.POST,instance=self.list)
+        new_list = list.create_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
+        return HttpResponse()
+
         return super(UserVideolistEdit,self).get(request,*args,**kwargs)
 
 class UserVideolistDelete(View):
@@ -334,6 +312,28 @@ class UserVideolistAbortDelete(View):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             list.abort_delete_list()
+            return HttpResponse()
+        else:
+            raise Http404
+
+
+class AddVideoInUserList(View):
+    def get(self, request, *args, **kwargs):
+        video = Video.objects.get(pk=self.kwargs["pk"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+
+        if request.is_ajax() and not list.is_item_in_list(video.pk):
+            list.video_list.add(video)
+            return HttpResponse()
+        else:
+            raise Http404
+
+class RemoveVideoInUserList(View):
+    def get(self, request, *args, **kwargs):
+        video = Video.objects.get(pk=self.kwargs["pk"])
+        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.is_item_in_list(video.pk):
+            list.video_list.remove(video)
             return HttpResponse()
         else:
             raise Http404

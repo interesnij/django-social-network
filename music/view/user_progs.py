@@ -83,28 +83,22 @@ class RemovePlayListFromUserCollections(View):
         else:
             return HttpResponse()
 
-class UserTrackListAdd(View):
-    """
-    Добавляем трек в любой плейлист, если его там нет
-    """
+class AddTrackInUserList(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 
-        if request.is_ajax() and not list.is_track_in_list(track.pk):
+        if request.is_ajax() and not list.is_item_in_list(track.pk):
             list.playlist.add(track)
             return HttpResponse()
         else:
             raise Http404
 
-class UserTrackListRemove(View):
-    """
-    Удаляем трек из любого плейлиста, если он там есть
-    """
+class RemoveTrackInUserList(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_track_in_list(track.pk):
+        if request.is_ajax() and list.is_item_in_list(track.pk):
             list.playlist.remove(track)
             return HttpResponse()
         else:

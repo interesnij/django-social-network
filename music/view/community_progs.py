@@ -82,25 +82,25 @@ class RemovePlayListFromCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityTrackListAdd(View):
+class AddTrackInCommunityList(View):
     """
     Добавляем трек в любой плейлист сообщества, если его там нет
     """
     def get(self, request, *args, **kwargs):
         track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
+        if request.is_ajax() and not list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.playlist.add(track)
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityTrackListRemove(View):
+class RemoveTrackInCommunityList(View):
     """
     Удаляем трек из любого плейлиста сообщества, если он там есть
     """
     def get(self, request, *args, **kwargs):
         track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.is_track_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
+        if request.is_ajax() and list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.playlist.remove(track)
             return HttpResponse()
         else:
