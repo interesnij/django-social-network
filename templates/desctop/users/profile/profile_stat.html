@@ -1,11 +1,11 @@
 {% load liked_user %}
 
-<div class="row mb-3">
+<div class="row no-gutters mb-3" style="width:max-content">
   {% if user.count_posts %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'frends' user.pk %}" class="ajax">
+         <a href="" class="">
          <h4 class="content-color-primary mb-0">{{ user.count_posts }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_posts|rupluralize:"запись,записи,записей" }}</p>
          </a>
@@ -37,13 +37,13 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_community %}
+   {% if user.count_communities %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_community }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_communities }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_communities|rupluralize:"сообщество,сообщества,сообществ" }}</p>
          </a>
        </div>
      </div>
@@ -68,6 +68,30 @@
          <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_photos }}</h4>
          <p class="content-color-secondary mb-0">{{ user.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
+         </a>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if user.count_tracks %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+         <h4 class="content-color-primary mb-0">{{ user.count_tracks }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_tracks|rupluralize:"трек,трека,треков" }}</p>
+         </a>
+       </div>
+     </div>
+   </div>
+   {% endif %}
+   {% if user.count_videos %}
+   <div class="col text-center">
+     <div class="media">
+       <div class="media-body">
+         <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+         <h4 class="content-color-primary mb-0">{{ user.count_videos }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_videos|rupluralize:"ролик,ролика,роликов" }}</p>
          </a>
        </div>
      </div>
