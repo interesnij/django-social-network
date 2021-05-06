@@ -72,9 +72,9 @@ class UserPostView(View):
             else:
                 PostNumbers.objects.create(user=request.user.pk, post=post.pk, device=request.user.get_device())
                 post.plus_views(1)
-            return HttpResponse()
         else:
             pass
+        return HttpResponse()
 
 class UserAdPostView(View):
     def get(self,request,*args,**kwargs):
