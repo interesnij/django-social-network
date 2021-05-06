@@ -24,7 +24,7 @@ urlpatterns = [
 	url(r'^abort_delete/(?P<uuid>[0-9a-f-]+)/$', PostUserAbortDelete.as_view()),
 	url(r'^wall_abort_delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PostWallUserAbortDelete.as_view()),
 	url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', UserOnVotesPost.as_view()),
-    url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesPost.as_view())
+    url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesPost.as_view()),
 	url(r'^add_post_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPostInUserList.as_view()),
     url(r'^remove_post_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePostInUserList.as_view()),
 
