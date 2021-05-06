@@ -95,7 +95,7 @@ class VideoCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -113,7 +113,7 @@ class CommunityVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video, c = Video.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
-            video.abort_delete_video(c)
+            video.restore_video(c)
             return HttpResponse()
         else:
             raise Http404
@@ -315,7 +315,7 @@ class CommunityVideolistAbortDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

@@ -214,7 +214,7 @@ class DocList(models.Model):
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = DocList.LIST
@@ -389,7 +389,7 @@ class Doc(models.Model):
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_doc(self, community):
+    def restore_doc(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Doc.PUBLISHED

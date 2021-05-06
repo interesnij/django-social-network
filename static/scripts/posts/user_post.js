@@ -125,25 +125,25 @@ on('#ajax', 'click', '.u_delete_post_list', function() {
         block.style.display = "none";
         _this.innerHTML = "Отменить удаление";
         _this.classList.remove("u_delete_post_list");
-        _this.classList.add("u_abort_delete_post_list", "mb-5");
+        _this.classList.add("u_restore_post_list", "mb-5");
         toast_success("Список удален");
       }
     }
     ajax_link.send();
 });
-on('#ajax', 'click', '.u_abort_delete_post_list', function() {
+on('#ajax', 'click', '.u_restore_post_list', function() {
   _this = this;
   list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
   block = _this.parentElement.nextElementSibling;
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/posts/user_progs/abort_delete_list/" + list_pk + "/", true );
+    ajax_link.open( 'GET', "/posts/user_progs/restore_list/" + list_pk + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         block.style.display = "block";
         _this.innerHTML = "удалить список";
-        _this.classList.remove("u_abort_delete_post_list", "mb-5");
+        _this.classList.remove("u_restore_post_list", "mb-5");
         _this.classList.add("u_delete_post_list");
         toast_success("Список восстановлен");
       }
@@ -209,7 +209,7 @@ on('#ajax', 'click', '.u_post_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.innerHTML = "<span class='u_post_abort_remove pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
+    p.innerHTML = "<span class='u_post_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
@@ -234,7 +234,7 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.innerHTML = "<span class='u_post_wall_abort_remove pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
+    p.innerHTML = "<span class='u_post_wall_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
@@ -247,11 +247,11 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
   link.send( );
 });
 
-on('#ajax', 'click', '.u_post_abort_remove', function() {
+on('#ajax', 'click', '.u_post_restore', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/abort_delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/restore/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -261,13 +261,13 @@ on('#ajax', 'click', '.u_post_abort_remove', function() {
   }};
   link.send();
 });
-on('#ajax', 'click', '.u_post_wall_abort_remove', function() {
+on('#ajax', 'click', '.u_post_wall_restore', function() {
   item = this.parentElement.nextElementSibling;
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/wall_abort_delete/" + pk + "/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/wall_restore/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -344,19 +344,19 @@ on('#ajax', 'click', '.u_dislike2', function() {
 });
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
-  comment_delete(this, "/posts/user_progs/delete_comment/", "u_post_comment_abort_remove")
+  comment_delete(this, "/posts/user_progs/delete_comment/", "u_post_comment_restore")
 })
 
-on('#ajax', 'click', '.u_post_comment_abort_remove', function() {
-  comment_abort_delete(this, "/posts/user_progs/abort_delete_comment/")
+on('#ajax', 'click', '.u_post_comment_restore', function() {
+  comment_restore(this, "/posts/user_progs/restore_comment/")
 });
 
 on('#ajax', 'click', '.u_post_wall_comment_delete', function() {
-  comment_wall_delete(this, "/posts/user_progs/delete_wall_comment/", "u_post_comment_abort_remove")
+  comment_wall_delete(this, "/posts/user_progs/delete_wall_comment/", "u_post_comment_restore")
 })
 
-on('#ajax', 'click', '.u_post_wall_comment_abort_remove', function() {
-  comment_wall_abort_delete(this, "/posts/user_progs/abort_delete_wall_comment/")
+on('#ajax', 'click', '.u_post_wall_comment_restore', function() {
+  comment_wall_restore(this, "/posts/user_progs/restore_wall_comment/")
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {

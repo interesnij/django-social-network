@@ -126,10 +126,10 @@ on('#ajax', 'click', '.c_photo_on_comment', function() {
 })
 
 on('#ajax', 'click', '.c_photo_comment_delete', function() {
-  comment_delete(this, "/gallery/community_progs/delete_comment/", "c_photo_comment_abort_remove")
+  comment_delete(this, "/gallery/community_progs/delete_comment/", "c_photo_comment_restore")
 })
-on('#ajax', 'click', '.c_photo_comment_abort_remove', function() {
-  comment_abort_delete(this, "/gallery/community_progs/abort_delete_comment/")
+on('#ajax', 'click', '.c_photo_comment_restore', function() {
+  comment_restore(this, "/gallery/community_progs/restore_comment/")
 });
 
 
@@ -182,15 +182,15 @@ on('#ajax', 'click', '.c_photo_on_votes', function() {
 })
 
 on('#ajax', 'click', '.community_photo_remove', function() {
-  send_photo_change(this, "/gallery/community_progs/delete/", "community_photo_abort_remove", "Отмена");
+  send_photo_change(this, "/gallery/community_progs/delete/", "community_photo_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
 })
-on('#ajax', 'click', '.community_photo_abort_remove', function() {
-  send_photo_change(this, "/gallery/community_progs/abort_delete/", "community_photo_remove", "Удалить");
+on('#ajax', 'click', '.community_photo_restore', function() {
+  send_photo_change(this, "/gallery/community_progs/restore/", "community_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
@@ -296,13 +296,13 @@ on('#ajax', 'click', '.mob_c_photo_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
 })
 on('#ajax', 'click', '.mob_community_photo_remove', function() {
-  mob_send_change(this, "/gallery/community_progs/delete/", "mob_community_photo_abort_remove", "Отмена");
+  mob_send_change(this, "/gallery/community_progs/delete/", "mob_community_photo_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "none";
   post.querySelector(".image_card").style.opacity = "0.5";
 })
-on('#ajax', 'click', '.mob_community_photo_abort_remove', function() {
-  mob_send_change(this, "/gallery/community_progs/abort_delete/", "mob_community_photo_remove", "Удалить");
+on('#ajax', 'click', '.mob_community_photo_restore', function() {
+  mob_send_change(this, "/gallery/community_progs/restore/", "mob_community_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "unset";
   post.querySelector(".image_card").style.opacity = "1";

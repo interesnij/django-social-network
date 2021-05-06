@@ -294,7 +294,7 @@ function comment_wall_delete(_this, _link, _class) {
     link.send()
 }
 
-function comment_abort_delete(_this, _link) {
+function comment_restore(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
     pk = _this.getAttribute("data-pk");
     block = _this.parentElement;
@@ -310,7 +310,7 @@ function comment_abort_delete(_this, _link) {
     link.send()
 }
 
-function comment_wall_abort_delete(_this, _link) {
+function comment_wall_restore(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
     comment_pk = _this.getAttribute("data-pk");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

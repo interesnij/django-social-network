@@ -87,7 +87,7 @@ class ChatAbortDelete(View):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			check_can_change_chat(request.user, chat)
-			chat.abort_delete_chat()
+			chat.restore_chat()
 			return HttpResponse()
 		else:
 			raise Http404

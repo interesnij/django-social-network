@@ -185,7 +185,7 @@ on('#ajax', 'click', '.c_music_list_recover', function() {
   uuid = saver.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/music/community_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'GET', "/music/community_progs/restore_list/" + pk + "/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {

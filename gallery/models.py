@@ -249,7 +249,7 @@ class PhotoList(models.Model):
             Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PhotoList.LIST
@@ -486,7 +486,7 @@ class Photo(models.Model):
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_photo(self):
+    def restore_photo(self):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Photo.PUBLISHED
@@ -731,7 +731,7 @@ class PhotoComment(models.Model):
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="C")
-    def abort_delete_comment(self):
+    def restore_comment(self):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = PhotoComment.PUBLISHED

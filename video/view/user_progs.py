@@ -85,7 +85,7 @@ class VideoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -103,7 +103,7 @@ class UserVideoAbortDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
-            video.abort_delete_video(None)
+            video.restore_video(None)
             return HttpResponse()
         else:
             raise Http404
@@ -311,7 +311,7 @@ class UserVideolistAbortDelete(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

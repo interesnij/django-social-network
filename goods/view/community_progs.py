@@ -103,7 +103,7 @@ class CommunityGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(c.pk):
-            good.abort_delete_good(c)
+            good.restore_good(c)
             return HttpResponse()
         else:
             raise Http404
@@ -255,7 +255,7 @@ class CommunityGoodListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404
@@ -328,7 +328,7 @@ class GoodCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404

@@ -158,7 +158,7 @@ class UserDocListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == self.list.creator.pk:
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404
@@ -177,7 +177,7 @@ class UserDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
         if request.is_ajax() and request.user.pk == self.doc.creator.pk:
-            doc.abort_delete_doc(None)
+            doc.restore_doc(None)
             return HttpResponse()
         else:
             raise Http404

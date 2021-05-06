@@ -103,17 +103,17 @@ on('#ajax', 'click', '.c_photo_list_remove', function() {
     block.querySelector(".card").style.display = "none";
     $block = document.createElement("div");
     $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
-    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 c_photo_list_abort_remove pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/list.jpg" /></a></div>'
+    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 c_photo_list_restore pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/list.jpg" /></a></div>'
     block.append($block);
   }}
   link_.send();
 });
-on('#ajax', 'click', '.c_photo_list_abort_remove', function() {
+on('#ajax', 'click', '.c_photo_list_restore', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/community_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/community_progs/restore_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

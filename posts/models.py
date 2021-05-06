@@ -216,7 +216,7 @@ class PostList(models.Model):
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PostList.LIST
@@ -522,7 +522,7 @@ class Post(models.Model):
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_post(self, community):
+    def restore_post(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Post.PUBLISHED
@@ -961,7 +961,7 @@ class PostComment(models.Model):
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
         post.comment += 1
         post.save(update_fields=["comment"])
-        if parent: 
+        if parent:
             if community:
                 from common.notify.notify import community_notify, community_wall
                 community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
@@ -1018,7 +1018,7 @@ class PostComment(models.Model):
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="C")
-    def abort_delete_comment(self):
+    def restore_comment(self):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = PostComment.PUBLISHED

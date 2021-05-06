@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^favorite/(?P<uuid>[0-9a-f-]+)/$', MessageFavorite.as_view()),
     url(r'^unfavorite/(?P<uuid>[0-9a-f-]+)/$', MessageUnFavorite.as_view()),
     url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', MessageDelete.as_view()),
-	url(r'^abort_delete/(?P<uuid>[0-9a-f-]+)/$', MessageAbortDelete.as_view()),
+	url(r'^restore/(?P<uuid>[0-9a-f-]+)/$', MessageAbortDelete.as_view()),
 ]

@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^create_video/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoCreate.as_view()),
     url(r'^edit/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoDelete.as_view()),
-    url(r'^abort_delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAbortDelete.as_view()),
+    url(r'^restore/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoAbortDelete.as_view()),
     url(r'^on_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityOpenCommentVideo.as_view()),
     url(r'^off_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityCloseCommentVideo.as_view()),
     url(r'^on_private/(?P<uuid>[0-9a-f-]+)/$', CommunityOnPrivateVideo.as_view()),
@@ -19,12 +19,12 @@ urlpatterns = [
     url(r'^post-comment/$', VideoCommentCommunityCreate.as_view()),
     url(r'^reply-comment/$', VideoReplyCommunityCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
-	url(r'^abort_delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityAbortDelete.as_view()),
+	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentCommunityAbortDelete.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
-    url(r'^abort_delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistAbortDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistAbortDelete.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddVideoListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoListFromCommunityCollections.as_view()),
 ]

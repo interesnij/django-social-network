@@ -69,10 +69,10 @@ on('#video_loader', 'click', '.u_video_on_comment', function() {
 })
 
 on('#video_loader', 'click', '.u_video_comment_delete', function() {
-  comment_delete(this, "/video/user_progs/delete_comment/", "u_video_comment_abort_remove")
+  comment_delete(this, "/video/user_progs/delete_comment/", "u_video_comment_restore")
 })
-on('#video_loader', 'click', '.u_video_comment_abort_remove', function() {
-  comment_abort_delete(this, "/video/user_progs/abort_delete_comment/")
+on('#video_loader', 'click', '.u_video_comment_restore', function() {
+  comment_restore(this, "/video/user_progs/restore_comment/")
 });
 
 on('#video_loader', 'click', '.u_video_off_private', function() {
@@ -100,15 +100,15 @@ on('#video_loader', 'click', '.u_video_on_votes', function() {
 })
 
 on('body', 'click', '.user_video_remove', function() {
-  send_photo_change(this, "/video/user_progs/delete/", "user_video_abort_remove", "Отмена");
+  send_photo_change(this, "/video/user_progs/delete/", "user_video_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
 })
-on('body', 'click', '.user_video_abort_remove', function() {
-  send_photo_change(this, "/video/user_progs/abort_delete/", "user_video_remove", "Удалить");
+on('body', 'click', '.user_video_restore', function() {
+  send_photo_change(this, "/video/user_progs/restore/", "user_video_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
@@ -255,7 +255,7 @@ on('#ajax', 'click', '.u_video_list_recover', function() {
   uuid = saver.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/video/user_progs/abort_delete_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'GET', "/video/user_progs/restore_list/" + pk + "/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {

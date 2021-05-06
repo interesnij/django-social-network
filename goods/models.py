@@ -255,7 +255,7 @@ class GoodList(models.Model):
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_delete_list(self):
+	def restore_list(self):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = GoodList.LIST
@@ -538,7 +538,7 @@ class Good(models.Model):
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def abort_delete_good(self, community):
+	def restore_good(self, community):
 		from notify.models import Notify, Wall
 		if self.status == "_DEL":
 			self.status = Good.PUBLISHED
@@ -885,7 +885,7 @@ class GoodComment(models.Model):
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
-	def abort_delete_comment(self):
+	def restore_comment(self):
 		from notify.models import Notify, Wall
 		if self.status == "_DEL":
 			self.status = GoodComment.PUBLISHED

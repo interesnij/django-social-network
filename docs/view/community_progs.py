@@ -169,7 +169,7 @@ class CommunityDocListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404
@@ -188,7 +188,7 @@ class CommunityDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
         doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            doc.abort_delete_doc(c)
+            doc.restore_doc(c)
             return HttpResponse()
         else:
             raise Http404

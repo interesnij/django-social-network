@@ -227,7 +227,7 @@ class SoundList(models.Model):
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = SoundList.LIST
@@ -497,7 +497,7 @@ class Music(models.Model):
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_track(self, community):
+    def restore_track(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Music.PUBLISHED

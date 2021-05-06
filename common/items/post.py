@@ -48,7 +48,7 @@ def post(user, value):
             if user.is_administrator_of_community(community.pk):
                 card_drop = '<span class="dropdown-item c_post_remove">Удалить</span>'
             elif user.is_post_manager():
-                card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
+                card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             return ''.join([block, '<span data-pk="', str(community.pk), '"list-pk="', str(post.get_list_pk()), '" data-uuid="', str(post.uuid), '"><div class="card-header">\
@@ -104,7 +104,7 @@ def post(user, value):
             if post.creator.pk == user.pk:
                 card_drop = '<span class="dropdown-item u_post_remove">Удалить</span>'
             elif user.is_post_manager():
-                card_drop = '<span class="dropdown-item post_delete_window">♦ Удалить</span>'
+                card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
             return ''.join([block, '<span data-pk="', str(creator.pk), '"list-pk="', str(post.get_list_pk()), '" data-uuid="', str(post.uuid), '"><div class="card-header">\

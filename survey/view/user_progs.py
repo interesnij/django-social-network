@@ -95,7 +95,7 @@ class SurveyUserAbortDelete(View):
     def get(self, request, *args, **kwargs):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == survey.creator.pk:
-            survey.abort_delete_survey()
+            survey.restore_survey()
             return HttpResponse()
         else:
             raise Http404
@@ -209,7 +209,7 @@ class UserSurveyListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.pk == self.list.creator.pk:
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

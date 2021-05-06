@@ -11,7 +11,7 @@ on('#ajax', 'click', '.c_manage_wall_image', function() {
   open_fullscreen("/gallery/load/community_wall/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.post_delete_window', function() {
+on('#ajax', 'click', '.post_close_window', function() {
   _this = this;
   if(_this.parentElement.classList.contains("btn_console")){
     div = _this.parentElement.parentElement.parentElement.parentElement;
@@ -25,14 +25,14 @@ on('#ajax', 'click', '.post_delete_window', function() {
     uuid = _this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   }
   loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_post/delete_window/" + uuid + "/", loader)
+  open_fullscreen("/managers/progs_post/close_window/" + uuid + "/", loader)
 })
 
-on('#ajax', 'click', '.create_post_delete_btn', function() {
+on('#ajax', 'click', '.create_post_close_btn', function() {
   var moderation_container, container_object
   _this = this;
-  form_data = new FormData(document.querySelector("#post_delete_form"));
-  form_post = document.querySelector("#post_delete_form");
+  form_data = new FormData(document.querySelector("#post_close_form"));
+  form_post = document.querySelector("#post_close_form");
   if (document.body.querySelector(".changed")){
     div = document.body.querySelector(".changed");
     uuid = div.getAttribute("data-uuid");
@@ -44,7 +44,7 @@ on('#ajax', 'click', '.create_post_delete_btn', function() {
   }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/managers/progs_post/create_delete/" + uuid + "/", true );
+  link_.open( 'POST', "/managers/progs_post/create_close/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

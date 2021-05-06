@@ -247,7 +247,7 @@ class MessageAbortDelete(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.creator == request.user:
-			message.abort_delete_message()
+			message.restore_message()
 			return HttpResponse()
 		else:
 			raise Http404

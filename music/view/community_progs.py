@@ -186,7 +186,7 @@ class CommunityPlaylistAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404
@@ -203,7 +203,7 @@ class CommunityTrackAbortRemove(View):
     def get(self,request,*args,**kwargs):
         track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            track.abort_delete_track(c)
+            track.restore_track(c)
             return HttpResponse()
         else:
             raise Http404

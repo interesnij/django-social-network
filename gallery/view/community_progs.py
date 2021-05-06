@@ -174,7 +174,7 @@ class PhotoCommentCommunityAbortDelete(View):
         except:
             community = comment.parent.post.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -209,7 +209,7 @@ class CommunityPhotoAbortDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.abort_delete_photo(community)
+            photo.restore_photo(community)
             return HttpResponse()
         else:
             raise Http404
@@ -295,7 +295,7 @@ class PhotoWallCommentCommunityAbortDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -378,7 +378,7 @@ class PhotoListCommunityAbortDelete(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

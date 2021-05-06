@@ -157,7 +157,7 @@ class PhotoCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -191,7 +191,7 @@ class UserPhotoAbortDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.abort_delete_photo(None)
+            photo.restore_photo(None)
             return HttpResponse()
         else:
             raise Http404
@@ -275,7 +275,7 @@ class PhotoWallCommentUserAbortDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -363,7 +363,7 @@ class PhotoListUserAbortDelete(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

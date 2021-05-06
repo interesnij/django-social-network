@@ -174,7 +174,7 @@ class SurveyList(models.Model):
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "TDEL":
             self.type = SurveyList.LIST
@@ -362,7 +362,7 @@ class Survey(models.Model):
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_survey(self):
+    def restore_survey(self):
         from notify.models import Notify, Wall
         if self.status == "TDEL":
             self.status = Survey.PUBLISHED

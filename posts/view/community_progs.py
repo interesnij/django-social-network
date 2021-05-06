@@ -167,7 +167,7 @@ class PostCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -185,7 +185,7 @@ class PostWallCommentCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
@@ -250,7 +250,7 @@ class PostWallCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.abort_delete_post(c)
+            post.restore_post(c)
             return HttpResponse()
         else:
             raise Http404
@@ -259,7 +259,7 @@ class PostCommunityAbortDelete(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.abort_delete_post(c)
+            post.restore_post(c)
             return HttpResponse()
         else:
             raise Http404
@@ -360,7 +360,7 @@ class CommunityPostListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404

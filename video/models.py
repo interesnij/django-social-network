@@ -236,7 +236,7 @@ class VideoList(models.Model):
             Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_list(self):
+    def restore_list(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = VideoList.LIST
@@ -509,7 +509,7 @@ class Video(models.Model):
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_delete_video(self):
+    def restore_video(self):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Video.PUBLISHED
@@ -781,7 +781,7 @@ class VideoComment(models.Model):
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
-    def abort_delete_comment(self):
+    def restore_comment(self):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = VideoComment.PUBLISHED

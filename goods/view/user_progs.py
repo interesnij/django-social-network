@@ -44,7 +44,7 @@ class UserGoodAbortDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.abort_delete_good()
+            good.restore_good()
             return HttpResponse(None)
         else:
             raise Http404
@@ -250,7 +250,7 @@ class UserGoodListAbortDelete(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            list.abort_delete_list()
+            list.restore_list()
             return HttpResponse()
         else:
             raise Http404
@@ -305,7 +305,7 @@ class GoodCommentUserAbortDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.abort_delete_comment()
+            comment.restore_comment()
             return HttpResponse()
         else:
             raise Http404
