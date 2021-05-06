@@ -24,8 +24,7 @@ urlpatterns = [
     url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', login_required(GoodClaimCreate.as_view())),
     url(r'^unverify/(?P<good_uuid>[0-9a-f-]+)/(?P<obj_pk>\d+)/$', login_required(GoodUnverify.as_view())),
 
-    url(r'^u_comment_create_close/(?P<pk>\d+)/$', login_required(CommentGoodCloseCreate.as_view())),
-    url(r'^c_comment_create_close/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(CommunityCommentGoodCloseCreate.as_view())),
+    url(r'^comment_create_close/(?P<pk>\d+)/$', login_required(CommentGoodCloseCreate.as_view())),
     url(r'^comment_delete_close/(?P<pk>\d+)/$', login_required(CommentGoodCloseDelete.as_view())),
     url(r'^comment_create_rejected/(?P<pk>\d+)/$', login_required(CommentGoodRejectedCreate.as_view())),
     url(r'^comment_create_claim/(?P<pk>\d+)/$', login_required(CommentGoodClaimCreate.as_view())),
