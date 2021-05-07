@@ -92,24 +92,30 @@ class UserMusicList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.template.music import get_template_user_music
+		from common.template import get_template_anon_user, get_template_user
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
-			self.sound_list = self.playlist.get_staff_items()
+			self.sound_list = self.list.get_staff_items()
 		else:
-			self.sound_list = self.playlist.get_items()
-		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+			self.sound_list = self.list.get_items()
+		if self.list.type == SoundList.MAIN:
+			if request.user.is_anonimous:
+				self.template_name = get_template_anon_user(self.list, "users/user_music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user(self.list, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
-			self.template_name = get_template_user_music(self.playlist, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+			if request.user.is_anonimous:
+				self.template_name = get_template_anon_user(self.list, "users/user_music_list/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user(self.list, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserMusicList,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		context['playlist'] = self.playlist
+		context['list'] = self.list
 		return context
 
 	def get_queryset(self):

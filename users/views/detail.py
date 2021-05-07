@@ -138,28 +138,31 @@ class UserMusic(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from common.template.music import get_template_user_music
+        from common.template.music import get_template_anon_user, get_template_user
         from music.models import SoundList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.playlist, self.get_lists = self.user.get_playlist(), None
+        self.list, self.get_lists = self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
             self.get_items = self.playlist.get_staff_items()
             self.lists_exists = SoundList.is_have_user_staff_lists(self.user.pk)
             if self.lists_exists:
                 self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
         else:
-            self.get_items = self.playlist.get_items()
+            self.get_items = self.list.get_items()
             self.lists_exists = SoundList.is_have_user_lists(self.user.pk)
             if self.lists_exists:
                 self.get_lists = SoundList.get_user_lists(self.user.pk)
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
-        self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+        if request.user.is_anonimous:
+            self.template_name = get_template_anon_user(self.list, "users/user_music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_user(self.list, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['playlist'], c['count_lists'], c['is_lists_exists'], c['get_lists'] = self.user, self.playlist, self.count_lists, self.lists_exists, self.get_lists
+        c['user'], c['list'], c['count_lists'], c['is_lists_exists'], c['get_lists'] = self.user, self.list, self.count_lists, self.lists_exists, self.get_lists
         return c
 
     def get_queryset(self):
