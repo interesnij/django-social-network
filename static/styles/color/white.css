@@ -12,7 +12,7 @@ a {
   box-shadow: inset 2px -2px 0 1px rgba(0, 0, 0, 0.8) !important;
 }
 .csslider > .arrows label:hover {
-box-shadow: inset 3px -3px 0 2px rgba(0, 0, 0, 0.8) !important;
+box-shadow: inset 2px -2px 0 1px black !important;
 }
 .border-top {
     border-top: 1px solid rgba(127,127,127, 0.7) !important;
