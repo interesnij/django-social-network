@@ -165,7 +165,7 @@ on('body', 'click', '.u_track_restore', function() {
   link.send();
 });
 
-on('#ajax', 'click', '.u_add_track_in_list', function() {
+on('#ajax', 'click', '.u_add_track_in_list', function() { 
   add_item_in_list(this, '/music/user_progs/add_track_in_list/', ".u_add_track_in_list", "u_remove_track_from_list")
 })
 on('#ajax', 'click', '.u_remove_track_from_list', function() {
