@@ -1,9 +1,9 @@
 from common.utils import update_activity, get_folder
 from rest_framework.exceptions import PermissionDenied
 
+
 def get_template_community_list(list, folder, template, request_user, user_agent, staff):
     community = list.community
-
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
         if request_user.is_no_phone_verified():
@@ -79,7 +79,7 @@ def get_template_community_list(list, folder, template, request_user, user_agent
             template_name = folder + "public_" + template
     return get_folder(user_agent) + template_name
 
-def get_anon_template_community_list(list, template, request_user, user_agent):
+def get_anon_template_community(list, template, request_user, user_agent):
     community = list.community
     if community.type[0] == "_":
         if community.is_suspended():
@@ -107,7 +107,7 @@ def get_anon_template_community_list(list, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 
-def get_template_user_music(playlist, folder, template, request_user, user_agent, staff):
+def get_template_user(playlist, folder, template, request_user, user_agent, staff):
     user = playlist.creator
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
