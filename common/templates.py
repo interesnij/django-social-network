@@ -144,7 +144,7 @@ def get_template_user(playlist, folder, template, request_user, user_agent, staf
             template_name = folder + template
     return get_folder(user_agent) + template_name
 
-def get_template_anon_user(list, folder, template, request_user, user_agent):
+def get_template_anon_user(list, template, request_user, user_agent):
     user = list.creator
     if user.type[0] == "_":
         if user.is_suspended():
@@ -158,5 +158,5 @@ def get_template_anon_user(list, folder, template, request_user, user_agent):
     elif not user.is_child_safety():
         template_name = "generic/u_template/anon_no_child_safety.html"
     else:
-        template_name = folder + "anon_" + template
+        template_name = template
     return get_folder(user_agent) + template_name
