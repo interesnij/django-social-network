@@ -92,7 +92,7 @@ class UserMusicList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.template import get_template_anon_user, get_template_user
+		from common.templates import get_template_anon_user, get_template_user
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
