@@ -194,11 +194,14 @@ class CommunityMusic(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.template.music import get_template_community_music
+		from common.templates import get_template_anon_community, get_template_community
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.playlist = self.c.get_playlist()
-		self.template_name = get_template_community_music(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_anonimous:
+			self.template_name = get_template_anon_community(self.list, "communities/music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_community(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -214,20 +217,24 @@ class CommunityMusicList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.template.music import get_template_community_music
+		from common.templates import get_template_anon_community, get_template_community
 
-		self.c, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_community_music(self.playlist, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		elif not self.list.is_private():
-			self.template_name = get_template_community_music(self.list, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.c, self.play = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.type == SoundList.MAIN:
+			if request.user.is_anonimous:
+				self.template_name = get_template_anon_community(self.list, "communities/music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_community(self.list, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
-			self.template_name = get_detect_platform_template("communities/music_list/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonimous:
+				self.template_name = get_template_anon_community(self.list, "communities/music_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_community(self.playlist, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusicList,self).get_context_data(**kwargs)
-		c['community'], c['playlist'] = self.c, self.playlist
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
