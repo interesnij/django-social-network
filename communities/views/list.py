@@ -197,16 +197,16 @@ class CommunityMusic(ListView):
 		from common.templates import get_template_anon_community, get_template_community
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.playlist = self.c.get_playlist()
+		self.list = self.c.get_playlist()
 		if request.user.is_anonimous:
 			self.template_name = get_template_anon_community(self.list, "communities/music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.playlist, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community(self.list, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusic,self).get_context_data(**kwargs)
-		c['community'], c['playlist'] = self.c, self.playlist
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
