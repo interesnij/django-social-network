@@ -138,7 +138,7 @@ class UserMusic(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from common.template.music import get_template_anon_user, get_template_user
+        from common.template import get_template_anon_user, get_template_user
         from music.models import SoundList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
