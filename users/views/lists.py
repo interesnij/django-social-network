@@ -101,11 +101,9 @@ class UserMusicList(ListView):
 		else:
 			self.sound_list = self.playlist.get_items()
 		if self.playlist.type == SoundList.MAIN:
-			self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
-		elif self.user.pk != request.user.pk and self.list.is_private():
-			self.template_name = get_detect_platform_template("users/user_music/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
-			self.template_name = get_template_user_music(self.playlist, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_music(self.playlist, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

@@ -154,7 +154,7 @@ class UserMusic(ListView):
             if self.lists_exists:
                 self.get_lists = SoundList.get_user_lists(self.user.pk)
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
-        self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_music(self.playlist, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

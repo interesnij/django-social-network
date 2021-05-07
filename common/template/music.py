@@ -130,32 +130,34 @@ def get_permission_community_music(playlist, folder, template, request_user, use
             raise PermissionDenied('Ошибка доступа')
     return get_folder(user_agent) + template_name
 
-def get_template_user_music(playlist, folder, template, request_user, user_agent):
+
+def get_template_user_music(playlist, folder, template, request_user, user_agent, staff):
     user = playlist.creator
     if request_user.is_authenticated:
         update_activity(request_user, user_agent)
-        if request_user.is_no_phone_verified():
-            template_name = "main/phone_verification.html"
-        elif user.pk == request_user.pk:
-            if request_user.is_suspended():
-                template_name = "generic/u_template/you_suspended.html"
+        if request_user.type[0] == "_":
+            if request_user.is_no_phone_verified():
+                template_name = "main/phone_verification.html"
             elif request_user.is_deleted():
                 template_name = "generic/u_template/you_deleted.html"
-            elif request_user.is_blocked():
-                template_name = "generic/u_template/you_global_block.html"
-            else:
+            elif request_user.is_closed():
+                template_name = "generic/u_template/you_closed.html"
+            elif request_user.is_suspended():
+                template_name = "generic/u_template/you_suspended.html"
+        elif user.pk == request_user.pk:
                 template_name = folder + "my_" + template
         elif request_user.pk != user.pk:
-            if user.is_suspended():
-                template_name = "generic/u_template/user_suspended.html"
-            elif user.is_deleted():
-                template_name = "generic/u_template/user_deleted.html"
-            elif user.is_blocked():
-                template_name = "generic/u_template/user_global_block.html"
-            elif request_user.is_audio_manager() or request_user.is_superuser:
-                template_name = folder + "staff_" + template
-            elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
-                template_name = "generic/u_template/block_user.html"
+            if user.type[0] == "_":
+                if user.is_suspended():
+                    template_name = "generic/u_template/user_suspended.html"
+                elif user.is_deleted():
+                    template_name = "generic/u_template/user_deleted.html"
+                elif user.is_blocked():
+                    template_name = "generic/u_template/user_global_block.html"
+                elif staff or request_user.is_superuser:
+                    template_name = folder + "staff_" + template
+                elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
+                    template_name = "generic/u_template/block_user.html"
             elif user.is_closed_profile():
                 if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                     template_name = folder + template
@@ -166,12 +168,13 @@ def get_template_user_music(playlist, folder, template, request_user, user_agent
             else:
                 template_name = folder + template
     elif request_user.is_anonymous:
-        if user.is_suspended():
-            template_name = "generic/u_template/anon_user_suspended.html"
-        elif user.is_deleted():
-            template_name = "generic/u_template/anon_user_deleted.html"
-        elif user.is_blocked():
-            template_name = "generic/u_template/anon_user_global_block.html"
+        if user.type[0] == "_":
+            if user.is_suspended():
+                template_name = "generic/u_template/anon_user_suspended.html"
+            elif user.is_deleted():
+                template_name = "generic/u_template/anon_user_deleted.html"
+            elif user.is_closed():
+                template_name = "generic/u_template/anon_closed.html"
         elif user.is_closed_profile():
             template_name = "generic/u_template/anon_close_user.html"
         elif not user.is_child_safety():
@@ -179,6 +182,7 @@ def get_template_user_music(playlist, folder, template, request_user, user_agent
         else:
             template_name = folder + "anon_" + template
     return get_folder(user_agent) + template_name
+
 
 def get_permission_user_music(playlist, folder, template, request_user, user_agent):
     from common.check.user import check_user_can_get_list, check_anon_user_can_get_list
