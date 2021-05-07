@@ -154,7 +154,7 @@ class UserMusic(ListView):
             if self.lists_exists:
                 self.get_lists = SoundList.get_user_lists(self.user.pk)
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
-        if request.user.is_anonimous:
+        if request.user.is_anonymous:
             self.template_name = get_template_anon_user(self.list, "users/user_music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             self.template_name = get_template_user(self.list, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())

@@ -198,7 +198,7 @@ class CommunityMusic(ListView):
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_playlist()
-		if request.user.is_anonimous:
+		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_community(self.list, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -221,12 +221,12 @@ class CommunityMusicList(ListView):
 
 		self.c, self.play = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.list.type == SoundList.MAIN:
-			if request.user.is_anonimous:
+			if request.user.is_anonymous:
 				self.template_name = get_template_anon_community(self.list, "communities/music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_community(self.list, "communities/music/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
-			if request.user.is_anonimous:
+			if request.user.is_anonymous:
 				self.template_name = get_template_anon_community(self.list, "communities/music_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_community(self.playlist, "communities/music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())

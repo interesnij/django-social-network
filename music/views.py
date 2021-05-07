@@ -89,7 +89,7 @@ class LoadPlaylist(ListView):
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_anonimous:
+        if request.user.is_anonymous:
             if self.list.community:
                 from common.templates import get_template_anon_community
                 self.template_name = get_template_anon_community(self.list, "music/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
