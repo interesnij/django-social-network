@@ -328,7 +328,7 @@ class AddVideoInUserList(View):
         else:
             raise Http404
 
-class RemoveVideoInUserList(View):
+class RemoveVideoFromUserList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])

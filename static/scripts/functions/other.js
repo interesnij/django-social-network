@@ -1,6 +1,75 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function check_span1(span1, uuid, response) {
+  if (span1.classList.contains(uuid)){
+    document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response)
+  }
+}
 
+function add_item_in_list(_this, url, old_class, new_class) {
+  parent = _this.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url + pk + "/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    list = parent.querySelector(old_class);
+    list.style.paddingLeft = "14px";
+    list.classList.add(new_class);
+    list.classList.remove(old_class);
+    span = document.createElement("span");
+    span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
+    list.prepend(span)
+  }};
+  link.send( null );
+}
+function remove_item_from_list(_this, url, old_class, new_class) {
+  parent = _this.parentElement;
+  uuid = parent.getAttribute("data-uuid");
+  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url + pk + "/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    list = parent.querySelector(old_class);
+    list.style.paddingLeft = "30px";
+    list.classList.add(new_class);
+    list.classList.remove(old_class);
+    list.querySelector("svg").remove();
+  }};
+  link.send( null );
+}
+
+function get_preview(response, type) {
+  if (document.body.querySelector(".current_file_dropdown")){
+    if (type == "doc") {
+      pk = response.querySelector(".span_btn").getAttribute("data-pk");
+      media_body = response.querySelector(".media-body");
+      media_body.querySelector(".span_btn").remove(); media_body.querySelector(".small").remove();
+      doc_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_body, pk)
+    } else if (type == "track") {
+      response.querySelector(".span_btn").remove(); response.querySelector(".small").remove();
+      track_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, response)
+    }
+  } else if (document.body.querySelector(".attach_block")){
+    if (type == "doc") {
+      pk = response.querySelector(".span_btn").getAttribute("data-pk");
+      media_body = response.querySelector(".media-body");
+      media_body.querySelector(".span_btn").remove(); media_body.querySelector(".small").remove();
+      doc_post_attach(document.body.querySelector(".attach_block"), response.querySelector(".media-body"), pk)
+    }
+  } else if (document.body.querySector(".message_attach_block")){
+    if (type == "doc") {
+      pk = response.querySelector(".span_btn").getAttribute("data-pk");
+      media_body = response.querySelector(".media-body");
+      media_body.querySelector(".span_btn").remove(); media_body.querySelector(".small").remove();
+      doc_message_attach(document.body.querySelector(".message_attach_block"), response.querySelector(".media-body"), pk)
+  }
+  };
+};
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
     document.body.querySelector(".create_fullscreen").style.display = "none";

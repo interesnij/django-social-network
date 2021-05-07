@@ -31,7 +31,7 @@ class RemoveDocListFromUserCollections(View):
             return HttpResponse()
 
 
-class UserDocListAdd(View):
+class AddDocInUserList(View):
     """
     Добавляем документ в любой список, если его там нет
     """
@@ -43,7 +43,7 @@ class UserDocListAdd(View):
         else:
             raise Http404
 
-class UserDocListRemove(View):
+class RemoveDocFromUserList(View):
     """
     Удаляем документ из любого списка, если он там есть
     """

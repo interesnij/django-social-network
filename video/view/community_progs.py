@@ -332,7 +332,7 @@ class AddVideoInCommunityList(View):
         else:
             raise Http404
 
-class RemoveVideoInCommunityList(View):
+class RemoveVideoFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])

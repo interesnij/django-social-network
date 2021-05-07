@@ -322,7 +322,7 @@ class AddGoodInUserList(View):
         else:
             raise Http404
 
-class RemoveGoodInUserList(View):
+class RemoveGoodFromUserList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])

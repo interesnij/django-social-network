@@ -380,7 +380,7 @@ class AddPhotoInUserList(View):
         else:
             raise Http404
 
-class RemovePhotoInUserList(View):
+class RemovePhotoFromUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])

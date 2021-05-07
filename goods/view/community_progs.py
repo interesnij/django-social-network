@@ -345,7 +345,7 @@ class AddGoodInCommunityList(View):
         else:
             raise Http404
 
-class RemoveGoodInCommunityList(View):
+class RemoveGoodFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])

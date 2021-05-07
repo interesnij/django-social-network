@@ -377,7 +377,7 @@ class AddPostInCommunityList(View):
         else:
             raise Http404
 
-class RemovePostInCommunityList(View):
+class RemovePostFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         list = PostList.objects.get(uuid=self.kwargs["uuid"])

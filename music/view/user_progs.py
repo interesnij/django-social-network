@@ -94,7 +94,7 @@ class AddTrackInUserList(View):
         else:
             raise Http404
 
-class RemoveTrackInUserList(View):
+class RemoveTrackFromUserList(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])

@@ -92,7 +92,7 @@ on('#ajax', 'click', '.c_add_doc_in_list', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     list = parent.querySelector(".c_add_doc_in_list");
     list.style.paddingLeft = "14px";
-    list.classList.add("c_remove_doc_in_list");
+    list.classList.add("c_remove_doc_from_list");
     list.classList.remove("c_add_doc_in_list");
     span = document.createElement("span");
     span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
@@ -100,20 +100,20 @@ on('#ajax', 'click', '.c_add_doc_in_list', function() {
   }};
   link.send( null );
 })
-on('#ajax', 'click', '.c_remove_doc_in_list', function() {
+on('#ajax', 'click', '.c_remove_doc_from_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/docs/community_progs/c_remove_doc_in_list/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/docs/community_progs/c_remove_doc_from_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".c_remove_doc_in_list");
+    list = parent.querySelector(".c_remove_doc_from_list");
     list.style.paddingLeft = "30px";
     list.classList.add("c_add_doc_in_list");
-    list.classList.remove("c_remove_doc_in_list");
+    list.classList.remove("c_remove_doc_from_list");
     list.querySelector("svg").remove();
   }};
   link.send( null );

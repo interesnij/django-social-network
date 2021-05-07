@@ -23,13 +23,13 @@ on('#ajax', 'click', '.c_add_track_in_list', function() {
   uuid = parent.getAttribute("data-uuid");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/music/community_progs/c_add_track_in_list/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/music/community_progs/add_track_in_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     list = parent.querySelector(".c_add_track_in_list");
     list.style.paddingLeft = "14px";
-    list.classList.add("c_remove_track_in_list");
+    list.classList.add("c_remove_track_from_list");
     list.classList.remove("c_add_track_in_list");
     span = document.createElement("span");
     span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
@@ -37,20 +37,20 @@ on('#ajax', 'click', '.c_add_track_in_list', function() {
   }};
   link.send( null );
 })
-on('#ajax', 'click', '.c_remove_track_in_list', function() {
+on('#ajax', 'click', '.c_remove_track_from_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/music/community_progs/c_remove_track_in_list/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/music/community_progs/remove_track_from_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".c_remove_track_in_list");
+    list = parent.querySelector(".c_remove_track_from_list");
     list.style.paddingLeft = "30px";
     list.classList.add("c_add_track_in_list");
-    list.classList.remove("c_remove_track_in_list");
+    list.classList.remove("c_remove_track_from_list");
     list.querySelector("svg").remove();
   }};
   link.send( null );
@@ -193,4 +193,124 @@ on('#ajax', 'click', '.c_music_list_recover', function() {
       }
     }
     ajax_link.send();
+});
+
+on('body', 'click', '#c_create_track_btn', function() {
+  _this = this;
+  form = _this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form);
+
+  lists = form.querySelector("#id_list");
+  selectedOptions = lists.selectedOptions;
+  val = false;
+  for (var i = 0; i < selectedOptions.length; i++) {
+    if(selectedOptions[i].value) {val = true}
+  }
+
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!")
+  } else if (!val){
+    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
+    toast_error("Выберите список!")
+  }
+  else if (!form.querySelector("#id_file").value){
+    form.querySelector("#id_file").style.border = "1px #FF0000 solid";
+    toast_error("Загрузите аудиозапись!")
+  } else { _this.disabled = true }
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/music/community_progs/create_track/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? (
+      uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid"),
+      check_span1(response.querySelector('.span1'), uuid, response.innerHTML),
+      document.body.querySelector(".track_empty") ? document.body.querySelector(".track_empty").style.display = "none" : null) : get_preview(response, "track");
+    toast_info("Аудиозапись создана!")
+    close_create_window();
+  }};
+
+  link_.send(form_data);
+});
+
+on('body', 'click', '#c_edit_track_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  pk = form.getAttribute("data-pk");
+  form_data = new FormData(form);
+
+  lists = form.querySelector("#id_list");
+  selectedOptions = lists.selectedOptions;
+  val = false;
+  for (var i = 0; i < selectedOptions.length; i++) {
+    if(selectedOptions[i].value) {val = true}
+  }
+
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!")
+  } else if (!val){
+    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
+    toast_error("Выберите список!")
+  }
+  else if (!form.querySelector("#id_file").value){
+    form.querySelector("#id_file").style.border = "1px #FF0000 solid";
+    toast_error("Загрузите аудиозапись!")
+  } else { this.disabled = true }
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/music/community_progs/edit_track/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Документ изменен!")
+    close_create_window();
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    track = document.body.querySelector(".edited_track");
+    track.innerHTML = response.querySelector(".pag").innerHTML;
+  }};
+
+  link_.send(form_data);
+});
+
+on('body', 'click', '.u_track_remove', function() {
+  saver = this.parentElement.parentElement.parentElement;
+  pk = saver.getAttribute("data-pk")
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/music/community_progs/delete_track/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    div = document.createElement("div");
+    div.classList.add("col-md-6", "col-sm-12");
+    div.style.padding = "20px";
+    div.style.display =  "block";
+    div.innerHTML = "Аудиозапись удалена. <span class='c_track_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
+    item = saver.parentElement.parentElement.parentElement;
+    item.style.display = "none"; item.parentElement.insertBefore(div, item)
+  }};
+  link.send( );
+});
+on('body', 'click', '.c_track_restore', function() {
+  pk = this.getAttribute("data-pk");
+  block = this.parentElement; next = block.nextElementSibling;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/music/community_progs/restore_track/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    next.style.display = "block";
+  }};
+  link.send();
 });

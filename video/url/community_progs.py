@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^on_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOnVotesVideo.as_view()),
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', CommunityOffVotesVideo.as_view()),
     url(r'^add_video_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddVideoInCommunityList.as_view()),
-    url(r'^remove_video_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoInCommunityList.as_view()),
+    url(r'^remove_video_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoFromCommunityList.as_view()),
 
     url(r'^post-comment/$', VideoCommentCommunityCreate.as_view()),
     url(r'^reply-comment/$', VideoReplyCommunityCreate.as_view()),

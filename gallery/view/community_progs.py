@@ -394,7 +394,7 @@ class AddPhotoInCommunityList(View):
         else:
             raise Http404
 
-class RemovePhotoInCommunityList(View):
+class RemovePhotoFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])

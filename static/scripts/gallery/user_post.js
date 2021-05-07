@@ -302,7 +302,7 @@ on('#ajax', 'click', '.u_add_photo_in_list', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     list = parent.querySelector(".u_add_photo_in_list");
     list.style.paddingLeft = "14px";
-    list.classList.add("u_remove_photo_in_list");
+    list.classList.add("u_remove_photo_from_list");
     list.classList.remove("u_add_photo_in_list");
     span = document.createElement("span");
     span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
@@ -310,20 +310,20 @@ on('#ajax', 'click', '.u_add_photo_in_list', function() {
   }};
   link.send( null );
 })
-on('#ajax', 'click', '.u_remove_photo_in_list', function() {
+on('#ajax', 'click', '.u_remove_photo_from_list', function() {
   _this = this;
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = parent.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/gallery/user_progs/remove_photo_in_list/' + pk + "/" + uuid + "/", true );
+  link.open( 'GET', '/gallery/user_progs/remove_photo_from_list/' + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".u_remove_photo_in_list");
+    list = parent.querySelector(".u_remove_photo_from_list");
     list.style.paddingLeft = "30px";
     list.classList.add("u_add_photo_in_list");
-    list.classList.remove("u_remove_photo_in_list");
+    list.classList.remove("u_remove_photo_from_list");
     list.querySelector("svg").remove();
   }};
   link.send( null );

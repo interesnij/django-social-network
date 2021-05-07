@@ -21,7 +21,7 @@ urlpatterns=[
     url(r'^delete/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodAbortDelete.as_view()),
     url(r'^add_good_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddGoodInCommunityList.as_view()),
-    url(r'^remove_good_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodInCommunityList.as_view()),
+    url(r'^remove_good_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodFromCommunityList.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', GoodListCommunityCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListEdit.as_view()),

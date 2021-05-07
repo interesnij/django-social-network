@@ -26,7 +26,7 @@ urlpatterns=[
 	url(r'^add_list_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
     url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPhotoInCommunityList.as_view()),
-    url(r'^remove_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoInCommunityList.as_view()),
+    url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoFromCommunityList.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListCommunityCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityEdit.as_view(), name="photo_list_edit_community"),
