@@ -144,7 +144,7 @@ class UserMusic(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list, self.get_lists = self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
-            self.get_items = self.playlist.get_staff_items()
+            self.get_items = self.list.get_staff_items()
             self.lists_exists = SoundList.is_have_user_staff_lists(self.user.pk)
             if self.lists_exists:
                 self.get_lists = SoundList.get_user_staff_lists(self.user.pk)

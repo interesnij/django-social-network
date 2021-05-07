@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ community.name }} - {{ playlist.name }}{% endblock %}
+{% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
 {% load get_key %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ playlist.uuid }}">
+<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row">
         <div class="col-md-8 mt-3">
-          {% if not playlist.is_deleted %}
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск музыки">
             <div class="input-group-append">
@@ -18,7 +17,7 @@
                 <div style="display:flex">
                   <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
                   <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1"><span class="playlist_name">{{ playlist.name }}</span>&nbsp;({{ playlist.count_items }})</h6>
+                    <h6 class="my-0 mt-1"><span class="playlist_name">{{ list.name }}</span>&nbsp;({{ list.count_items }})</h6>
                     <p class="">
                       <span class="c_music_list_edit_window pointer">изменить</span>
                         &nbsp;
@@ -34,7 +33,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ playlist.pk }}" class="is_paginate">
+                    <ul data-pk="{{ list.pk }}" class="is_paginate">
                       {% for object in object_list %}
                         {% include 'desctop/generic/track.html' %}
                       {% endfor %}
@@ -51,18 +50,10 @@
               </div>
           </div>
           <script>
-            {% if user|is_user_list:playlist.pk %}
-              document.querySelector("body").classList.add('list_' + {{ playlist.pk }});
+            {% if user|is_user_list:list.pk %}
+              document.querySelector("body").classList.add('list_' + {{ list.pk }});
             {% endif %}
           </script>
-          {% else %}
-          <div class="card centered" style="">
-            <div class="card-body" style="margin-top: 10%;">
-            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
-            </div>
-            <h6 style="margin: 20px;text-align: center;">Плейлист удален. Вы можете <span class="pointer c_music_list_recover underline">восстановить</span> его</h6>
-          </div>
-          {% endif %}
         </div>
         <div class="col-12 col-md-4">
           {% include 'desctop/communities/music_list/admin_sidebar.html' %}

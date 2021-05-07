@@ -5,19 +5,19 @@
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
-    {% if playlist.is_not_empty %}
+    {% if list.is_not_empty %}
     <div class="col">
-      <a class="btn btn-sm music_attach_playlist custom_color border" data-pk="{{ playlist.pk }}" style="width: -webkit-fill-available;">+ плейлист</a>
+      <a class="btn btn-sm music_attach_playlist custom_color border" data-pk="{{ list.pk }}" style="width: -webkit-fill-available;">+ плейлист</a>
     </div>
     {% endif %}
-    {% if request.user.is_music_playlist_exists %}
+    {% if is_lists_exists %}
     <div class="col">
         <button class="btn btn-sm custom_color border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
             Плейлисты
         </button>
         <div class="dropdown-menu" style="top: 34px;">
           <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_load' %}">Основной плейлист</a>
-          {% for object in request.user.get_audio_playlists %}
+          {% for object in request.user.get_playlists %}
             <a class="dropdown-item create_ajax pointer" data-href="{% url 'u_music_list_load' uuid=object.uuid %}">
               {{ object.name }}
             </a>

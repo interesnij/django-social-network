@@ -13,7 +13,7 @@
     </div>
 
     {% for object in music_list.get_6_items %}
-    <div data-pk="{{ playlist.pk }}" class="card border-top">
+    <div data-pk="{{ music_list.pk }}" class="card border-top">
         <div class="card-body" style="padding:7px;">
             <div class="media" music-counter="{{ forloop.counter }}">
                 <figure>

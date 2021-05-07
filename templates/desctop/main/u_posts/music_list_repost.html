@@ -1,7 +1,7 @@
-{% with playlist=object.get_playlist_repost %}
+{% with list=object.get_playlist_repost %}
 
   <span style="padding: 5px;">
-    {% include 'desctop/generic/user/creator.html' %} 
+    {% include 'desctop/generic/user/creator.html' %}
     {% if object.creator.is_women %}поделилась{% else %}поделился{% endif %} плейлистом
   </span>
 
