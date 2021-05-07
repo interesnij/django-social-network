@@ -12,7 +12,7 @@ def is_user_list(user, list):
 
 @register.filter
 def is_user_can_add_list(list, user_id):
-    return list.is_user_can_add_list(user_id):
+    return list.is_user_can_add_list(user_id)
 @register.filter
 def is_community_can_add_list(list, community_id):
     return list.is_community_can_add_list(community_id)
