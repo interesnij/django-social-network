@@ -2,8 +2,8 @@ from common.utils import update_activity, get_folder
 from rest_framework.exceptions import PermissionDenied
 
 
-def get_template_community_music(playlist, folder, template, request_user, user_agent):
-    community = playlist.community
+def get_template_community_music(list, folder, template, request_user, user_agent, staff):
+    community = list.community
     if request_user.is_authenticated:
         update_activity(request_user, user_agent)
         if request_user.type[0] == "_":
@@ -38,22 +38,29 @@ def get_template_community_music(playlist, folder, template, request_user, user_
                 else:
                     template_name = "generic/c_template/list_deleted.html"
             elif playlist.is_closed():
-                if request_user.is_audio_manager():
+                if staff:
                     template_name = folder + "staff_closed_" + template
                 if request_user.is_administrator_of_community(community.pk) and playlist.community.pk == community.pk:
                     template_name = "generic/c_template/admin_list_closed.html"
                 else:
                     template_name = "generic/c_template/list_closed.html"
+            elif playlist.is_suspended():
+                if staff:
+                    template_name = folder + "staff_suspended_" + template
+                if request_user.is_administrator_of_community(community.pk) and playlist.community.pk == community.pk:
+                    template_name = "generic/c_template/admin_list_suspended.html"
+                else:
+                    template_name = "generic/c_template/list_suspended.html"
         elif request_user.is_member_of_community(community.pk):
             if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template
-            elif request_user.is_audio_manager():
+            elif staff:
                 template_name = folder + "staff_member_" + template
             elif playlist.is_private():
                 template_name = folder + "private_" + template
             else:
                 template_name = folder + "member_" + template
-        elif request_user.is_audio_manager():
+        elif staff:
             template_name = folder + "staff_" + template
         elif community.is_close():
             if request_user.is_follow_from_community(community.pk):
@@ -79,6 +86,13 @@ def get_template_community_music(playlist, folder, template, request_user, user_
                 template_name = "generic/c_template/anon_community_deleted.html"
             elif community.is_closed():
                 template_name = "generic/c_template/anon_community_closed.html"
+        elif playlist.type[0] == "_":
+            if playlist.is_deleted():
+                template_name = "generic/c_template/anon_list_deleted.html"
+            elif playlist.is_closed():
+                template_name = "generic/c_template/anon_list_closed.html"
+            elif playlist.is_suspended():
+                template_name = "generic/c_template/anon_list_suspended.html"
         elif community.is_public():
             if not community.is_verified():
                 template_name = "generic/c_template/anon_no_child_safety.html"
