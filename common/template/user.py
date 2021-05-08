@@ -12,8 +12,8 @@ def get_template_user(user, folder, template, request_user, user_agent):
                 template_name = "generic/u_template/you_suspended.html"
             elif user.is_deleted():
                 template_name = "generic/u_template/you_deleted.html"
-            elif user.is_blocked():
-                template_name = "generic/u_template/you_global_block.html"
+            elif user.is_closed():
+                template_name = "generic/u_template/you_closed.html"
             else:
                 template_name = folder + "my_" + template
         elif request_user.pk != user.pk:
@@ -21,8 +21,8 @@ def get_template_user(user, folder, template, request_user, user_agent):
                 template_name = "generic/u_template/user_suspended.html"
             elif user.is_deleted():
                 template_name = "generic/u_template/user_deleted.html"
-            elif user.is_blocked():
-                template_name = "generic/u_template/user_global_block.html"
+            elif user.is_closed():
+                template_name = "generic/u_template/user_closed.html"
             elif request_user.is_manager() or request_user.is_superuser:
                 template_name = folder + "staff_" + template
                 request_user.create_or_plus_populate_friend(user.pk)
@@ -45,8 +45,8 @@ def get_template_user(user, folder, template, request_user, user_agent):
             template_name = "generic/u_template/anon_user_suspended.html"
         elif user.is_deleted():
             template_name = "generic/u_template/anon_user_deleted.html"
-        elif user.is_blocked():
-            template_name = "generic/u_template/anon_user_global_block.html"
+        elif user.is_closed():
+            template_name = "generic/u_template/anon_user_closed.html"
         elif user.is_closed_profile():
             template_name = "generic/u_template/anon_close_user.html"
         elif not user.is_child_safety():
@@ -62,8 +62,8 @@ def get_settings_template(template, request_user, user_agent):
             template_name = "main/phone_verification.html"
         elif request_user.is_suspended():
             template_name = "generic/u_template/you_suspended.html"
-        elif request_user.is_deleted():
-            template_name = "generic/u_template/you_deleted.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
         elif request_user.is_blocked():
             template_name = "generic/u_template/you_global_block.html"
         else:
@@ -103,8 +103,8 @@ def get_detect_main_template(template, request_user, user_agent):
             template_name = "main/phone_verification.html"
         elif request_user.is_suspended():
             template_name = "generic/u_template/you_suspended.html"
-        elif request_user.is_deleted():
-            template_name = "generic/u_template/you_deleted.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
         elif request_user.is_blocked():
             template_name = "generic/u_template/you_global_block.html"
         else:

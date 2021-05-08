@@ -12,8 +12,8 @@ def get_template_community_post(list, folder, template, request_user, user_agent
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_deleted():
             template_name = "generic/c_template/community_deleted.html"
-        elif community.is_blocked():
-            template_name = "generic/c_template/community_blocked.html"
+        elif community.is_closed():
+            template_name = "generic/c_template/community_closed.html"
         elif request_user.is_member_of_community(community.pk):
             if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template
@@ -47,8 +47,8 @@ def get_template_community_post(list, folder, template, request_user, user_agent
             template_name = "generic/c_template/anon_community_suspended.html"
         elif community.is_deleted():
             template_name = "generic/c_template/anon_community_deleted.html"
-        elif community.is_blocked():
-            template_name = "generic/c_template/anon_community_blocked.html"
+        elif community.is_closed():
+            template_name = "generic/c_template/anon_community_closed.html"
         elif community.is_public():
             if not community.is_verified():
                 template_name = "generic/c_template/anon_no_child_safety.html"
@@ -122,8 +122,8 @@ def get_template_user_post(list, folder, template, request_user, user_agent):
                 template_name = "generic/u_template/you_suspended.html"
             elif user.is_deleted():
                 template_name = "generic/u_template/you_deleted.html"
-            elif user.is_blocked():
-                template_name = "generic/u_template/you_global_block.html"
+            elif user.is_closed():
+                template_name = "generic/u_template/you_closed.html"
             else:
                 template_name = folder + "my_" + template
         elif request_user.pk != user.pk:
@@ -131,8 +131,8 @@ def get_template_user_post(list, folder, template, request_user, user_agent):
                 template_name = "generic/u_template/user_suspended.html"
             elif user.is_deleted():
                 template_name = "generic/u_template/user_deleted.html"
-            elif user.is_blocked():
-                template_name = "generic/u_template/user_global_block.html"
+            elif user.is_closed():
+                template_name = "generic/u_template/user_closed.html"
             elif request_user.is_post_manager() or request_user.is_superuser:
                 template_name = folder + "staff_" + template
             elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
@@ -151,8 +151,8 @@ def get_template_user_post(list, folder, template, request_user, user_agent):
             template_name = "generic/u_template/anon_user_suspended.html"
         elif user.is_deleted():
             template_name = "generic/u_template/anon_user_deleted.html"
-        elif user.is_blocked():
-            template_name = "generic/u_template/anon_user_global_block.html"
+        elif user.is_closed():
+            template_name = "generic/u_template/anon_user_closed.html"
         elif user.is_closed_profile():
             template_name = "generic/u_template/anon_close_user.html"
         elif not user.is_child_safety():
