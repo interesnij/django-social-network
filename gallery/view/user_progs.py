@@ -153,7 +153,7 @@ class PhotoCommentUserDelete(View):
         else:
             raise Http404
 
-class PhotoCommentUserAbortDelete(View):
+class PhotoCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
@@ -186,7 +186,7 @@ class UserPhotoDelete(View):
         else:
             raise Http404
 
-class UserPhotoAbortDelete(View):
+class UserPhotoRecover(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
@@ -270,7 +270,7 @@ class PhotoWallCommentUserDelete(View):
         else:
             raise Http404
 
-class PhotoWallCommentUserAbortDelete(View):
+class PhotoWallCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
@@ -300,7 +300,7 @@ class PhotoListUserCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_photo_list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/photos/list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -315,7 +315,7 @@ class PhotoListUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/user_photo_list/new_list.html',{'list': new_list, 'user': self.user})
+            return render_for_platform(request, 'users/photos/list/new_list.html',{'list': new_list, 'user': self.user})
         else:
             return HttpResponseBadRequest()
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
@@ -326,7 +326,7 @@ class PhotoListUserEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/user_photo_list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("users/photos/list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -358,7 +358,7 @@ class PhotoListUserDelete(View):
         else:
             raise Http404
 
-class PhotoListUserAbortDelete(View):
+class PhotoListUserRecover(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])

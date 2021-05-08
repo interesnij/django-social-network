@@ -163,7 +163,7 @@ class PostCommentCommunityDelete(View):
         else:
             raise Http404
 
-class PostCommentCommunityAbortDelete(View):
+class PostCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
@@ -181,7 +181,7 @@ class PostWallCommentCommunityDelete(View):
         else:
             raise Http404
 
-class PostWallCommentCommunityAbortDelete(View):
+class PostWallCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
@@ -246,7 +246,7 @@ class PostWallCommunityDelete(View):
         else:
             raise Http404
 
-class PostWallCommunityAbortDelete(View):
+class PostWallCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
@@ -255,7 +255,7 @@ class PostWallCommunityAbortDelete(View):
         else:
             raise Http404
 
-class PostCommunityAbortDelete(View):
+class PostCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
@@ -356,7 +356,7 @@ class CommunityPostListDelete(View):
         else:
             raise Http404
 
-class CommunityPostListAbortDelete(View):
+class CommunityPostListRecover(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):

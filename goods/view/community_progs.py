@@ -75,7 +75,7 @@ class CommunityOnVotesGood(View):
 class CommunityHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.is_ajax() and request.user.is_staff_of_community(good.community.pk):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
             return HttpResponse()
@@ -83,7 +83,7 @@ class CommunityHideGood(View):
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.is_ajax() and request.user.is_staff_of_community(good.community.pk):
             good.is_hide = False
             good.save(update_fields=['is_hide'])
             return HttpResponse()
@@ -99,10 +99,10 @@ class CommunityGoodDelete(View):
         else:
             raise Http404
 
-class CommunityGoodAbortDelete(View):
+class CommunityGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(c.pk):
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             good.restore_good(c)
             return HttpResponse()
         else:
@@ -251,7 +251,7 @@ class CommunityGoodListDelete(View):
         else:
             raise Http404
 
-class CommunityGoodListAbortDelete(View):
+class CommunityGoodListRecover(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
@@ -320,7 +320,7 @@ class GoodCommentCommunityDelete(View):
         else:
             raise Http404
 
-class GoodCommentCommunityAbortDelete(View):
+class GoodCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         try:

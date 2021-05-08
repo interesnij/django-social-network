@@ -47,7 +47,7 @@ class CommunitySoundcloudSetCreate(View):
             new_list.community_id = community.pk
             new_list.save()
             add_playlist(request.POST.get('permalink'), request.user, new_list)
-            return render_for_platform(request, 'communties/music_list/admin_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'community': community})
+            return render_for_platform(request, 'communties/music/list/admin_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -134,7 +134,7 @@ class CommunityPlaylistCreate(View):
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=community,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/music_list/admin_list.html',{'playlist': new_list, 'community': community})
+            return render_for_platform(request, 'communities/music/list/admin_list.html',{'playlist': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -176,7 +176,7 @@ class CommunityPlaylistDelete(View):
         else:
             raise Http404
 
-class CommunityPlaylistAbortDelete(View):
+class CommunityPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):

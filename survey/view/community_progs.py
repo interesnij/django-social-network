@@ -93,7 +93,7 @@ class SurveyCommunityDelete(View):
         else:
             raise Http404
 
-class SurveyCommunityAbortDelete(View):
+class SurveyCommunityRecover(View):
     def get(self, request, *args, **kwargs):
         survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
@@ -203,7 +203,7 @@ class CommunitySurveyListDelete(View):
         else:
             raise Http404
 
-class CommunitySurveyListAbortDelete(View):
+class CommunitySurveyListRecover(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):

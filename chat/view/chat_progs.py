@@ -78,7 +78,7 @@ class ChatDelete(View):
 		else:
 			raise Http404
 
-class ChatAbortDelete(View):
+class ChatRecover(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404

@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^create_list/$', UserDocListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDocListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDocListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDocListAbortDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserDocListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddDocListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemoveDocListFromUserCollections.as_view()),
 

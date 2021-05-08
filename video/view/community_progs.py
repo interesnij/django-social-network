@@ -87,7 +87,7 @@ class VideoCommentCommunityDelete(View):
             comment.delete_comment()
             return HttpResponse()
 
-class VideoCommentCommunityAbortDelete(View):
+class VideoCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         try:
@@ -109,7 +109,7 @@ class CommunityVideoDelete(View):
         else:
             raise Http404
 
-class CommunityVideoAbortDelete(View):
+class CommunityVideoRecover(View):
     def get(self,request,*args,**kwargs):
         video, c = Video.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
@@ -196,7 +196,7 @@ class CommunityVideoListCreate(TemplateView):
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.c.pk):
             list = form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/video_list/admin_list.html',{'list': new_list, 'community': self.c})
+            return render_for_platform(request, 'communities/video/list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
 
@@ -310,7 +310,7 @@ class CommunityVideolistDelete(View):
         else:
             raise Http404
 
-class CommunityVideolistAbortDelete(View):
+class CommunityVideolistRecover(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])

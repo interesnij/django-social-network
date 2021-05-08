@@ -84,7 +84,7 @@ class PhotoAttachCommunityCreate(View):
                 photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHWAL")
                 photos += [photo,]
             community.plus_photos(len(photos))
-            return render_for_platform(request, 'communities/gallery/list.html',{'object_list': photos, 'community': community})
+            return render_for_platform(request, 'communities/photos/list/my_photo_list.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
 
@@ -166,7 +166,7 @@ class PhotoCommentCommunityDelete(View):
         else:
             raise Http404
 
-class PhotoCommentCommunityAbortDelete(View):
+class PhotoCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         try:
@@ -204,7 +204,7 @@ class CommunityPhotoDelete(View):
         else:
             raise Http404
 
-class CommunityPhotoAbortDelete(View):
+class CommunityPhotoRecover(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -290,7 +290,7 @@ class PhotoWallCommentCommunityDelete(View):
         else:
             raise Http404
 
-class PhotoWallCommentCommunityAbortDelete(View):
+class PhotoWallCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
@@ -310,7 +310,7 @@ class PhotoListCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/photo_list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("communities/photos/list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -327,7 +327,7 @@ class PhotoListCommunityCreate(TemplateView):
             if not list.description:
                 list.description = "Без описания"
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/photo_list/new_list.html',{'list': new_list, 'community': self.c})
+            return render_for_platform(request, 'communities/photos/list/new_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
@@ -341,7 +341,7 @@ class PhotoListCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/photo_list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("communities/photos/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -373,7 +373,7 @@ class PhotoListCommunityDelete(View):
         else:
             raise Http404
 
-class PhotoListCommunityAbortDelete(View):
+class PhotoListCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])

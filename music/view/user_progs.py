@@ -50,7 +50,7 @@ class UserSoundcloudSetCreate(View):
             list = form_post.save(commit=False)
             new_list = SoundList.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None, is_public=request.POST.get("is_public"))
             add_playlist(request.POST.get('permalink'), request.user, new_list)
-            return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'user': request.user})
+            return render_for_platform(request, 'users/music/list/my_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -139,7 +139,7 @@ class UserPlaylistCreate(View):
         if request.is_ajax() and form_post.is_valid():
             list = form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/user_music_list/my_list.html',{'playlist': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/music/list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -182,7 +182,7 @@ class UserPlaylistDelete(View):
         else:
             raise Http404
 
-class UserPlaylistAbortDelete(View):
+class UserPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():

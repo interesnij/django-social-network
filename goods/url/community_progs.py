@@ -14,19 +14,19 @@ urlpatterns=[
     url(r'^post-comment/$', login_required(GoodCommentCommunityCreate.as_view())),
     url(r'^reply-comment/$', login_required(GoodReplyCommunityCreate.as_view())),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityDelete.as_view())),
-	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityAbortDelete.as_view())),
+	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityRecover.as_view())),
 
     url(r'^add/(?P<pk>\d+)/$', GoodCommunityCreate.as_view()),
     url(r'^edit/(?P<pk>\d+)/(?P<good_pk>\d+)$', GoodCommunityEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodDelete.as_view()),
-    url(r'^restore/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodAbortDelete.as_view()),
+    url(r'^restore/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodRecover.as_view()),
     url(r'^add_good_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddGoodInCommunityList.as_view()),
     url(r'^remove_good_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodFromCommunityList.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', GoodListCommunityCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListAbortDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddGoodListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodListFromCommunityCollections.as_view()),
 ]

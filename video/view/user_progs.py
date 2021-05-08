@@ -81,7 +81,7 @@ class VideoCommentUserDelete(View):
         else:
             raise Http404
 
-class VideoCommentUserAbortDelete(View):
+class VideoCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
@@ -99,7 +99,7 @@ class UserVideoDelete(View):
         else:
             raise Http404
 
-class UserVideoAbortDelete(View):
+class UserVideoRecover(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
@@ -267,7 +267,7 @@ class UserVideoListCreate(TemplateView):
         if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
             list = self.form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/user_video_list/my_list.html',{'list': new_list, 'user': request.user})
+            return render_for_platform(request, 'users/video/list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
 
@@ -306,7 +306,7 @@ class UserVideolistDelete(View):
         else:
             raise Http404
 
-class UserVideolistAbortDelete(View):
+class UserVideolistRecover(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])

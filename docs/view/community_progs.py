@@ -111,7 +111,7 @@ class CommunityDocListCreate(View):
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=community,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'communities/docs_list/admin_list.html',{'list': new_list, 'community': community})
+            return render_for_platform(request, 'communities/docs/list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
 
@@ -152,7 +152,7 @@ class CommunityDocListDelete(View):
         else:
             raise Http404
 
-class CommunityDocListAbortDelete(View):
+class CommunityDocListRecover(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):

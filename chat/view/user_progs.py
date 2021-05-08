@@ -240,7 +240,7 @@ class MessageDelete(View):
 		else:
 			raise Http404
 
-class MessageAbortDelete(View):
+class MessageRecover(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
 		from django.http import HttpResponse, Http404

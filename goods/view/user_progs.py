@@ -40,7 +40,7 @@ class UserGoodDelete(View):
         else:
             raise Http404
 
-class UserGoodAbortDelete(View):
+class UserGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
@@ -246,7 +246,7 @@ class UserGoodListDelete(View):
         else:
             raise Http404
 
-class UserGoodListAbortDelete(View):
+class UserGoodListRecover(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
@@ -301,7 +301,7 @@ class GoodCommentUserDelete(View):
         else:
             raise Http404
 
-class GoodCommentUserAbortDelete(View):
+class GoodCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
