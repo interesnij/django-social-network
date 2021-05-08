@@ -24,7 +24,6 @@ urlpatterns=[
     url(r'^add_photo/(?P<pk>\d+)/$', PhotoUserCreate.as_view()),
     url(r'^add_attach_photo/(?P<pk>\d+)/$', PhotoAttachUserCreate.as_view()),
 	url(r'^add_comment_photo/(?P<pk>\d+)/$', PhotoAttachUserCreate.as_view()),
-	url(r'^add_photo_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListUserCreate.as_view(), name="photo_list_add_user"),
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListUserCreate.as_view()),

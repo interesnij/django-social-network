@@ -40,7 +40,7 @@ on('#ajax', 'click', '#u_create_photo_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/user_progs/add_photo_list/", "/users/", "/list/");
+  post_and_load_object_page(form, "/gallery/user_progs/add_list/", "/users/", "/list/");
 });
 
 on('#ajax', 'click', '#u_edit_photo_list_btn', function() {
@@ -54,7 +54,7 @@ on('#ajax', 'click', '#u_edit_photo_list_btn', function() {
   uuid = form.getAttribute("data-uuid")
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/edit_photo_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/edit_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
