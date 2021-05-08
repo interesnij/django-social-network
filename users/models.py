@@ -14,14 +14,12 @@ class User(AbstractUser):
     THIS_DELETED_CHILD, THIS_DELETED_STANDART, THIS_DELETED_VERIFIED_SEND, THIS_DELETED_VERIFIED, THIS_DELETED_IDENTIFIED_SEND, THIS_DELETED_IDENTIFIED, THIS_DELETED_MANAGER = '_DELC', '_DELS', '_DELVS', '_DELV', '_DELIS', '_DELI', '_DELM'
     THIS_SUSPENDED_CHILD, THIS_SUSPENDED_STANDART, THIS_SUSPENDED_VERIFIED_SEND, THIS_SUSPENDED_VERIFIED, THIS_SUSPENDED_IDENTIFIED_SEND, THIS_SUSPENDED_IDENTIFIED, THIS_SUSPENDED_MANAGER = '_SUSC', '_SUSS', '_SUSVS', '_SUSV', '_SUSIS', '_SUSI', '_SUSM'
     THIS_BANNER_CHILD, THIS_BANNER_STANDART, THIS_BANNER_VERIFIED_SEND, THIS_BANNER_VERIFIED, THIS_BANNER_IDENTIFIED_SEND, THIS_BANNER_IDENTIFIED, THIS_BANNER_MANAGER = '_BANC', '_BANS', '_BANVS', '_BANV', '_BANIS', '_BANI', '_BANM'
-    THIS_BLOCKED_CHILD, THIS_BLOCKED_STANDART, THIS_BLOCKED_VERIFIED_SEND, THIS_BLOCKED_VERIFIED, THIS_BLOCKED_IDENTIFIED_SEND, THIS_BLOCKED_IDENTIFIED, THIS_BLOCKED_MANAGER = '_BLOC', '_BLOS', '_BLOVS', '_BLOV', '_BLOIS', '_BLOI', '_BLOM'
     TYPE = (
         (CHILD, 'Ребенок'),(THIS_PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
         (THIS_DELETED_CHILD, 'Удален ребенок'),(THIS_DELETED_STANDART, 'Удален'),(THIS_DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_DELETED_VERIFIED, 'Удален верифицированный'),(THIS_DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(THIS_DELETED_IDENTIFIED, 'Удален идентифиированный'),(THIS_DELETED_MANAGER, 'Удален менеджер'),
         (THIS_CLOSED_CHILD, 'Закрыт ребенок'),(THIS_CLOSED_STANDART, 'Закрыт'),(THIS_CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_CLOSED_VERIFIED, 'Закрыт верифицированный'),(THIS_CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(THIS_CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(THIS_CLOSED_MANAGER, 'Закрыт менеджер'),
         (THIS_SUSPENDED_CHILD, 'Заморожен ребенок'),(THIS_SUSPENDED_STANDART, 'Заморожен'),(THIS_SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(THIS_SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(THIS_SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(THIS_SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(THIS_SUSPENDED_MANAGER, 'Заморожен менеджер'),
         (THIS_BANNER_CHILD, 'Баннер ребенок'),(THIS_BANNER_STANDART, 'Баннер'),(THIS_BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(THIS_BANNER_VERIFIED, 'Баннер верифицированный'),(THIS_BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(THIS_BANNER_IDENTIFIED, 'Баннер идентифиированный'),(THIS_BANNER_MANAGER, 'Баннер менеджер'),
-        (THIS_BLOCKED_CHILD, 'Блокнут ребенок'),(THIS_BLOCKED_STANDART, 'Блокнут'),(THIS_BLOCKED_VERIFIED_SEND, 'Блокнут подавший на верификацию'),(THIS_BLOCKED_VERIFIED, 'Блокнут верифицированный'),(THIS_BLOCKED_IDENTIFIED_SEND, 'Блокнут подавший на идентификацию'),(THIS_BLOCKED_IDENTIFIED, 'Блокнут идентифиированный'),(THIS_BLOCKED_MANAGER, 'Блокнут менеджер'),
     )
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
@@ -116,9 +114,9 @@ class User(AbstractUser):
     def is_have_warning_banner(self):
         return self.type[:4] == "_BAN"
     def is_deleted(self):
-        return self.type[:5] == "_DEL"
+        return self.type[:4] == "_DEL"
     def is_closed(self):
-        return self.type[0] == "_"
+        return self.type[:4] == "_CLO"
     def is_manager(self):
         return self.type == User.MANAGER
     def is_supermanager(self):
