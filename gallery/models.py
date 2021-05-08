@@ -474,7 +474,7 @@ class Photo(models.Model):
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_photo(self):
+    def delete_photo(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Photo.THIS_DELETED
@@ -483,11 +483,15 @@ class Photo(models.Model):
         elif self.status == "MAN":
             self.status = Photo.THIS_DELETED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.minus_photos(1)
+        else:
+            self.creator.minus_photos(1)
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_photo(self):
+    def restore_photo(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Photo.PUBLISHED
@@ -496,12 +500,16 @@ class Photo(models.Model):
         elif self.status == "_DELM":
             self.status = Photo.MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.plus_photos(1)
+        else:
+            self.creator.plus_photos(1)
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_item(self):
+    def close_item(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Photo.THIS_CLOSED
@@ -510,11 +518,15 @@ class Photo(models.Model):
         elif self.status == "MAN":
             self.status = Photo.THIS_CLOSED_MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.minus_photos(1)
+        else:
+            self.creator.minus_photos(1)
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_item(self):
+    def abort_close_item(self, community):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = Photo.PUBLISHED
@@ -523,6 +535,10 @@ class Photo(models.Model):
         elif self.status == "_CLOM":
             self.status = Photo.MANAGER
         self.save(update_fields=['status'])
+        if community:
+            community.plus_photos(1)
+        else:
+            self.creator.plus_photos(1)
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():

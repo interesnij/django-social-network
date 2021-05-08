@@ -493,7 +493,7 @@ class Video(models.Model):
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_video(self):
+    def delete_video(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Video.THIS_DELETED
@@ -510,7 +510,7 @@ class Video(models.Model):
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_video(self):
+    def restore_video(self, community):
         from notify.models import Notify, Wall
         if self.status == "_DEL":
             self.status = Video.PUBLISHED
@@ -528,7 +528,7 @@ class Video(models.Model):
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_item(self):
+    def close_item(self, community):
         from notify.models import Notify, Wall
         if self.status == "PUB":
             self.status = Video.THIS_CLOSED
@@ -545,7 +545,7 @@ class Video(models.Model):
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_item(self):
+    def abort_close_item(self, community):
         from notify.models import Notify, Wall
         if self.status == "_CLO":
             self.status = Video.PUBLISHED
