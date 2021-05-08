@@ -39,7 +39,7 @@ class UserPhotosList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator_id=self.user.pk, type=PhotoList.MAIN, community__isnull=True)
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "users/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.list, "users/photo/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 
@@ -65,7 +65,7 @@ class UserPhotoAlbumList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "users/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.list, "users/photo/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if self.user == request.user:
