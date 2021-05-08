@@ -259,7 +259,7 @@ class ProfileUserView(TemplateView):
             elif user_pk == r_user_pk:
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/you_suspended.html"
-                elif self.user.is_blocked():
+                elif self.user.is_closed():
                     self.template_name = "generic/u_template/you_global_block.html"
                 elif self.user.is_child():
                     self.template_name = "users/account/my_user_child.html"
@@ -269,7 +269,7 @@ class ProfileUserView(TemplateView):
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
-                elif self.user.is_blocked():
+                elif self.user.is_closed():
                     self.template_name = "generic/u_template/user_global_block.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
                     self.template_name, self.get_buttons_block = "users/account/staff_user.html", request.user.get_staff_buttons_profile(user_pk)
@@ -296,7 +296,7 @@ class ProfileUserView(TemplateView):
         elif request.user.is_anonymous:
             if self.user.is_suspended():
                 self.template_name = "generic/u_template/anon_user_suspended.html"
-            elif self.user.is_blocked():
+            elif self.user.is_closed():
                 self.template_name = "generic/u_template/anon_user_global_block.html"
             elif self.user.is_closed_profile():
                 self.template_name = "users/account/anon_close_user.html"

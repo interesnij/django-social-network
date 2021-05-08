@@ -52,7 +52,7 @@ class CommunityDetail(TemplateView):
 
         if self.c.is_suspended():
             self.template_name = "communities/detail/community_suspended.html"
-        elif self.c.is_blocked():
+        elif self.c.is_closed():
             self.template_name = "communities/detail/community_blocked.html"
         elif request.user.is_authenticated:
             if request.user.is_member_of_community(self.c.pk):
@@ -80,7 +80,7 @@ class CommunityDetail(TemplateView):
                     self.template_name = "communities/detail/no_child_safety.html"
                 else:
                     self.template_name = "communities/detail/public_community.html"
-            elif self.c.is_closed():
+            elif self.c.is_close():
                 self.template_name = "communities/detail/close_community.html"
             elif self.c.is_private():
                 self.template_name = "generic/c_template/private_community.html"
