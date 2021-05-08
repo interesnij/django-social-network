@@ -59,9 +59,9 @@ class UserGallery(TemplateView):
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
         if request.user.is_anonymous:
-            self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+            self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
         return super(UserGallery,self).get(request,*args,**kwargs)
 
