@@ -5,6 +5,7 @@ from common.template.user import get_settings_template, get_detect_platform_temp
 from django.http import Http404
 from django.db.models import Q
 from common.templates import get_template_anon_user_list, get_template_user_list
+from django.views.generic.base import TemplateView
 
 
 class UserVisitCommunities(ListView):
