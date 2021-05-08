@@ -173,7 +173,7 @@ class UserDocs(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_docs_manager())
+            self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -203,7 +203,7 @@ class UserGoods(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_goods_manager())
+            self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -233,7 +233,7 @@ class UserVideo(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_user_list(self.list, "users/video/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+            self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
