@@ -118,7 +118,7 @@ class User(AbstractUser):
     def is_deleted(self):
         return self.type[:5] == "_DEL"
     def is_closed(self):
-        return self.type[:5] == "_BLO"
+        return self.type[0] == "_"
     def is_manager(self):
         return self.type == User.MANAGER
     def is_supermanager(self):
