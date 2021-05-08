@@ -64,12 +64,12 @@ class UserVideoList(ListView):
 
 
 class UserPhotoList(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from gallery.models import PhotoList
+	def get(self,request,*args,**kwargs):
+		from gallery.models import PhotoList
 
-        self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		if self.list.type == PhotoList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/photo/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -80,12 +80,12 @@ class UserPhotoList(TemplateView):
 				self.template_name = get_template_anon_user_list(self.list, "users/photo/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_user_list(self.list, "users/photo/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
-        return super(UserPhotoList,self).get(request,*args,**kwargs)
+		return super(UserPhotoList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        c = super(UserPhotoList,self).get_context_data(**kwargs)
-        c['user'], c['list'] = self.user, self.list
-        return c
+	def get_context_data(self,**kwargs):
+		c = super(UserPhotoList,self).get_context_data(**kwargs)
+		c['user'], c['list'] = self.user, self.list
+		return c
 
 
 class UserGoodsList(ListView):
