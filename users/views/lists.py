@@ -70,7 +70,7 @@ class UserPhotoList(TemplateView):
         from gallery.models import PhotoList
 
         self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if self.list.type == PhotoList.MAIN:
+		if self.list.type == PhotoList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/photo/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
