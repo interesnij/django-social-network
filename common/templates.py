@@ -119,7 +119,6 @@ def get_template_user_list(list, folder, template, request_user, user_agent, sta
             template_name = "generic/u_template/you_deleted.html"
         elif request_user.is_closed():
             template_name = "generic/u_template/you_closed.html"
-            return get_folder(user_agent) + template_name
         elif request_user.is_suspended():
             template_name = "generic/u_template/you_suspended.html"
     elif list.type[0] == "_":
