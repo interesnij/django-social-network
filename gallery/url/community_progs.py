@@ -23,7 +23,7 @@ urlpatterns=[
 
     url(r'^add_photo/(?P<pk>\d+)/$', PhotoCommunityCreate.as_view()),
 	url(r'^add_attach_photo/(?P<pk>\d+)/$', PhotoAttachCommunityCreate.as_view()),
-	url(r'^add_list_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityCreate.as_view()),
+	url(r'^add_photo_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
     url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPhotoInCommunityList.as_view()),
     url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoFromCommunityList.as_view()),
