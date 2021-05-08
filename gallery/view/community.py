@@ -45,7 +45,7 @@ class CommunityPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.list, "communities/gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_community_photo(self.list, "communities/gallery/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):

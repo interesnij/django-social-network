@@ -15,7 +15,7 @@ class UserLoadPhotoList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_permission_user_photo(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_permission_user_photo(self.list, "gallery/user/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.pk == self.list.creator.pk:
 			self.photo_list = self.list.get_staff_items()
 		else:
@@ -39,7 +39,7 @@ class UserPhotosList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator_id=self.user.pk, type=PhotoList.MAIN, community__isnull=True)
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "users/user_gallery/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_permission_user_photo(self.list, "users/user_gallery/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 
