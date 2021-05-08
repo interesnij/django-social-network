@@ -4,6 +4,7 @@ from posts.models import Post, PostList
 from common.template.user import get_settings_template, get_detect_platform_template
 from django.http import Http404
 from django.db.models import Q
+from common.templates import get_template_anon_user_list, get_template_user_list
 
 
 class UserVisitCommunities(ListView):
@@ -41,9 +42,15 @@ class UserVideoList(ListView):
 		else:
 			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
-			self.template_name = get_template_user_video(self.list, "users/user_video/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		else:
-			self.template_name = get_template_user_video(self.list, "users/user_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -54,6 +61,31 @@ class UserVideoList(ListView):
 
 	def get_queryset(self):
 		return self.video_list
+
+
+class UserPhotoList(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from gallery.models import PhotoList
+
+        self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        if self.list.type == PhotoList.MAIN:
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/photo/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/photo/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+		else:
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/photo/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/photo/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+        return super(UserPhotoList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        c = super(UserPhotoList,self).get_context_data(**kwargs)
+        c['user'], c['list'] = self.user, self.list
+        return c
 
 
 class UserGoodsList(ListView):
@@ -70,11 +102,15 @@ class UserGoodsList(ListView):
 		else:
 			self.good_list = self.list.get_items()
 		if self.list.type == GoodList.MAIN:
-			self.template_name = get_template_user_good(self.list, "users/user_goods/", "goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		elif self.user.pk != request.user.pk and self.list.is_private():
-			self.template_name = get_detect_platform_template("users/user_goods/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		else:
-			self.template_name = get_template_user_good(self.list, "users/user_goods_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -92,7 +128,6 @@ class UserMusicList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.templates import get_template_anon_user, get_template_user
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
@@ -102,14 +137,14 @@ class UserMusicList(ListView):
 			self.sound_list = self.list.get_items()
 		if self.list.type == SoundList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user(self.list, "users/user_music/anon_music.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user(self.list, "users/user_music/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user_list(self.list, "users/music/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user(self.list, "users/user_music_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_list(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user(self.list, "users/user_music_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user_list(self.list, "users/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -135,11 +170,15 @@ class UserDocsList(ListView):
 		else:
 			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
-			self.template_name = get_template_user_doc(self.list, "users/user_docs/", "docs.html", request.user, request.META['HTTP_USER_AGENT'])
-		elif self.user.pk != request.user.pk and self.list.is_private():
-			self.template_name = get_detect_platform_template("users/user_docs/private_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
-			self.template_name = get_template_user_doc(self.list, "users/user_docs_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.is_anonymous:
+				self.template_name = get_template_anon_user_list(self.list, "users/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_user_list(self.list, "users/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -149,8 +188,7 @@ class UserDocsList(ListView):
 		return context
 
 	def get_queryset(self):
-		doc_list = self.doc_list
-		return doc_list
+		return self.doc_list
 
 
 class AllPossibleUsersList(ListView):

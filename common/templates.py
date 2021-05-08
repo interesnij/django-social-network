@@ -79,7 +79,7 @@ def get_template_community_list(list, folder, template, request_user, user_agent
             template_name = folder + "public_" + template
     return get_folder(user_agent) + template_name
 
-def get_anon_template_community(list, template, request_user, user_agent):
+def get_anon_template_community_list(list, template, request_user, user_agent):
     community = list.community
     if community.type[0] == "_":
         if community.is_suspended():
@@ -109,7 +109,7 @@ def get_anon_template_community(list, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 
-def get_template_user(list, folder, template, request_user, user_agent, staff):
+def get_template_user_list(list, folder, template, request_user, user_agent, staff):
     user = list.creator
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
@@ -123,11 +123,20 @@ def get_template_user(list, folder, template, request_user, user_agent, staff):
             template_name = "generic/u_template/you_suspended.html"
     elif list.type[0] == "_":
         if list.is_deleted():
-            template_name = "generic/u_template/list_deleted.html"
+            if list.creator.pk == request_user.pk:
+                template_name = folder + "my_deleted_" + template
+            else:
+                template_name = "generic/u_template/list_deleted.html"
         elif list.is_closed():
-            template_name = "generic/u_template/list_closed.html"
+            if list.creator.pk == request_user.pk:
+                template_name = folder + "my_closed_" + template
+            else:
+                template_name = "generic/u_template/list_closed.html"
         elif list.is_suspended():
-            template_name = "generic/u_template/list_suspended.html"
+            if list.creator.pk == request_user.pk:
+                template_name = folder + "my_suspended_" + template
+            else:
+                template_name = "generic/u_template/list_suspended.html"
     elif user.pk == request_user.pk:
             template_name = folder + "my_" + template
     elif request_user.pk != user.pk:
@@ -155,7 +164,7 @@ def get_template_user(list, folder, template, request_user, user_agent, staff):
             template_name = folder + template
     return get_folder(user_agent) + template_name
 
-def get_template_anon_user(list, template, request_user, user_agent):
+def get_template_anon_user_list(list, template, request_user, user_agent):
     user = list.creator
     if user.type[0] == "_":
         if user.is_suspended():
