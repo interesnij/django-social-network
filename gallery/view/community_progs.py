@@ -33,7 +33,7 @@ class RemovePhotoListFromCommunityCollections(View):
             return HttpResponseBadRequest()
 
 
-class PhotoCommunityCreate(View):
+class CommunityCreatePhotosInMainList(View):
     """
     асинхронная мульти загрузка фотографий пользователя в основной альбом
     """
@@ -51,7 +51,7 @@ class PhotoCommunityCreate(View):
         else:
             raise Http404
 
-class PhotoListCommunityCreate(View):
+class CommunityCreatePhotosInPhotoList(View):
     """
     асинхронная мульти загрузка фотографий пользователя в альбом
     """

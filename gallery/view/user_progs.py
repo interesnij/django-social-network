@@ -50,7 +50,7 @@ class UserAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
-class PhotoUserCreate(View):
+class UserCreatePhotosInMainList(View):
     """
     асинхронная мульти загрузка фотографий пользователя в основной альбом
     """
@@ -67,7 +67,7 @@ class PhotoUserCreate(View):
         else:
             raise Http404
 
-class PhotoPhotoListUserCreate(View):
+class UserCreatePhotosInPhotoList(View):
     """
     асинхронная мульти загрузка фотографий пользователя в альбом
     """
@@ -307,7 +307,7 @@ class PhotoListUserCreate(TemplateView):
         context = super(PhotoListUserCreate,self).get_context_data(**kwargs)
         context["form"] = PhotoListForm()
         context["user"] = self.user
-        return context 
+        return context
 
     def post(self,request,*args,**kwargs):
         self.form = PhotoListForm(request.POST)

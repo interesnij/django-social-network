@@ -232,7 +232,7 @@ on('#ajax', 'change', '#c_gallery_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_photos_in_main_list/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -251,7 +251,7 @@ on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
   uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#c_add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_list_photo/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/add_photos_in_photo_list/" + pk + "/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
