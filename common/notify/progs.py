@@ -9,7 +9,7 @@ def user_send_notify(id, creator_id, recipient_id, action_community_id, socket_n
         payload = {
             'type': 'receive',
             'key': 'notification',
-            'id': str(post.pk),
+            'id': str(id),
             'recipient_id': str(recipient_id),
             'name': "u_post_create",
         }
@@ -25,7 +25,7 @@ def community_send_notify(id, creator_id, recipient_id, community, action_commun
             'recipient_id': str(recipient_id),
             'community_id': str(community.pk),
             'creator_community_id': str(action_community_id),
-            'id': id,
+            'id': str(id),
             'name': socket_name,
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
