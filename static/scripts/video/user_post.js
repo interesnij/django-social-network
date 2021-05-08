@@ -200,8 +200,8 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
 on('#ajax', 'click', '#u_create_video_list_btn', function() {
   this.disabled = true;
   form = document.body.querySelector("#u_video_list_create");
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
   post_and_load_object_page(form, "/video/user_progs/create_list/", "/users/", "/video_list/")

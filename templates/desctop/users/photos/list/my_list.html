@@ -13,7 +13,7 @@
         Фото: {{ list.count_items }}
       </div>
       <div class="col-12 col-md-4">
-        {% if list.is_user_list %}
+        {% if list.is_list %}
         <form id="add_photos">
             {% csrf_token %}
               <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
