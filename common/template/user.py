@@ -64,8 +64,8 @@ def get_settings_template(template, request_user, user_agent):
             template_name = "generic/u_template/you_suspended.html"
         elif request_user.is_closed():
             template_name = "generic/u_template/you_closed.html"
-        elif request_user.is_blocked():
-            template_name = "generic/u_template/you_global_block.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
         else:
             template_name = template
     elif request_user.is_anonymous:
@@ -105,8 +105,8 @@ def get_detect_main_template(template, request_user, user_agent):
             template_name = "generic/u_template/you_suspended.html"
         elif request_user.is_closed():
             template_name = "generic/u_template/you_closed.html"
-        elif request_user.is_blocked():
-            template_name = "generic/u_template/you_global_block.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
         else:
             template_name = template
     elif request_user.is_anonymous:

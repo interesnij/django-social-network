@@ -10,8 +10,8 @@ def get_template_community_video(list, folder, template, request_user, user_agen
             template_name = "generic/c_template/community_suspended.html"
         elif community.is_deleted():
             template_name = "generic/c_template/community_deleted.html"
-        elif community.is_blocked():
-            template_name = "generic/c_template/community_blocked.html"
+        elif community.is_closed():
+            template_name = "generic/c_template/community_closed.html"
         elif request_user.is_member_of_community(community.pk):
             if request_user.is_administrator_of_community(community.pk):
                 template_name = folder + "admin_" + template

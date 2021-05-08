@@ -50,8 +50,8 @@ def get_template_user_music(playlist, folder, template, request_user, user_agent
                     template_name = "generic/u_template/user_suspended.html"
                 elif user.is_deleted():
                     template_name = "generic/u_template/user_deleted.html"
-                elif user.is_blocked():
-                    template_name = "generic/u_template/user_global_block.html"
+                elif user.is_closed():
+                    template_name = "generic/u_template/user_closed.html"
                 elif staff or request_user.is_superuser:
                     template_name = folder + "staff_" + template
                 elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
