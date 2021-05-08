@@ -1,0 +1,34 @@
+{% extends "base_mobile.html" %}
+{% block title %}{{ community.name }} :: Фотографии{% endblock %}
+{% block content %}
+
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+  <div class="card-header p-0">
+    <div class="row no-gutters">
+      <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+        {% include 'mobile/generic/community/back.html' %}
+      </div>
+      <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+        <span class="btn btn-sm custom_color border ml-2 c_photo_list_add" style="width: -webkit-fill-available;">+ альбом</span>
+      </div>
+      <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
+        <form id="c_add_photos">
+          {% csrf_token %}
+          <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
+          <span class="btn btn-sm custom_color border ml-2 previous_click" style="width: -webkit-fill-available;">+ фото</span>
+        </form>
+      </div>
+    </div>
+  </div>
+{% include 'mobile/communities/photos/main_list/admin_photo_lists.html' %}
+
+<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
+  <h5 class="mt-1" style="flex: 1;">Фото</h5>
+  <span>{{ list.count_items }}</span>
+</div>
+
+<div class="row is_block_paginate no-gutters" id="c_photos_container" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+
+</div>
+
+{% endblock %}

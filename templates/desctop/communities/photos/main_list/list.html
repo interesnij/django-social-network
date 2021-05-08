@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ community.name }} :: Фотографии{% endblock %}
+{% block content %}
+
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+
+  <div class="container-fluid mt-3">
+      <div class="row">
+          <div class="col-12 col-md-8">
+            <h5 class="mt-1">
+              {% include 'desctop/generic/community/community.html' %} - альбомы
+            </h5>
+          </div>
+          <div class="col-12 col-md-4">
+
+          </div>
+      </div>
+  </div>
+  <div class="container mt-4">
+    {% include 'desctop/communities/photos/main_list/lists.html' %}
+  </div>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <h5 class="mt-1">
+              {% include 'desctop/generic/community/community.html' %} - фотографии
+            </h5>
+            Фото: {{ list.count_items }}
+        </div>
+        <div class="col-12 col-md-4">
+
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 main-container">
+      <div class="row is_block_paginate no-gutters" id="c_photos_container" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+  </div>
+</div>
+{% endblock %}
