@@ -142,7 +142,7 @@ class UserMusic(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_user_list(self.list, "users/music/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+            self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -234,7 +234,6 @@ class UserVideo(ListView):
             self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             self.template_name = get_template_user_list(self.list, "users/video/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
-        return super(UserDocs,self).get(request,*args,**kwargs)
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

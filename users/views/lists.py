@@ -140,7 +140,7 @@ class UserMusicList(ListView):
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/music/main_list/", "music.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
