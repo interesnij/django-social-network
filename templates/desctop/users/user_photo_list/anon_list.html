@@ -11,15 +11,9 @@
         Фото: {{ list.count_items }}
       </div>
       <div class="col-12 col-md-4">
-        {% if list.is_user_list %}
-        <form id="add_photos">
-            {% csrf_token %}
-              <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
-              <button class="btn btn-outline-success previous_click" type="button">
-                Добавить фотографии
-              </button>
-        </form>
-        {% endif %}
+          <button class="btn btn-outline-success copy_link" type="button">
+              Копировать ссылку
+          </button>
       </div>
     </div>
 

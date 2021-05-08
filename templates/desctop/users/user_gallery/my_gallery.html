@@ -10,7 +10,7 @@
             <h5 class="mt-1">Мои альбомы ({{ count_lists }})</h5>
         </div>
         <div class="col-12 col-md-4">
-          <button class="u_photo_list_add btn btn-sm btn-info" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
+          <button class="u_photo_list_add btn btn-sm custom_color border" class="btn btn-outline-success" style="margin-bottom:15px;width:100%" type="button">
             Добавить альбом
           </button>
         </div>
@@ -30,7 +30,7 @@
           <form id="add_photos">
               {% csrf_token %}
                 <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-                <button class="btn btn-sm btn-info previous_click" style="margin-bottom:15px;width:100%" type="button">
+                <button class="btn btn-sm custom_color border previous_click" style="margin-bottom:15px;width:100%" type="button">
                   Добавить фотографии
                 </button>
           </form>
