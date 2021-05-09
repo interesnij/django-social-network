@@ -73,7 +73,7 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
 });
 
 on('#ajax', 'click', '#c_add_post_list_btn', function() {
-  form = document.body.querySelector("#post_list_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   pk = form.getAttribute("data-pk");
   if (!form.querySelector("#id_name").value){form.querySelector("#id_name").style.border = "1px #FF0000 solid";toast_error("Название - обязательное поле!"); return
@@ -110,7 +110,7 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
 });
 
 on('#ajax', 'click', '#c_edit_post_list_btn', function() {
-  form = document.body.querySelector("#post_list_form");
+  form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
