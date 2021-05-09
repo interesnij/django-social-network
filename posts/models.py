@@ -654,15 +654,17 @@ class Post(models.Model):
         list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
         if not list.is_full_list():
             self.list.add(list)
-            return True
+            self.status = Post.THIS_FIXED
+            return self.save(update_fields=["status"])
         else:
             return ValidationError("Список уже заполнен.")
 
     def unfixed_community_post(self, community_id):
         list = PostList.objects.get(community_id=community_id, type=PostList.THIS_FIXED)
-        if list.is_post_in_list(self.pk):
+        if list.is_item_in_list(self.pk):
             self.list.remove(list)
-            return True
+            self.status = Post.PUBLISHED
+            return self.save(update_fields=["status"])
         else:
             return ValidationError("Запись и так не в списке.")
 

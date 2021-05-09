@@ -17,20 +17,7 @@ class PhotoUserLikeCreate(View):
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.LIKE:
-                likedislike.vote = PhotoVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoVotes.DoesNotExist:
-            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
-            result = True
-            user_notify(request.user, item.creator.pk, None, "pho"+str(item.pk), "u_post_notify", "LIK")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_like(request.user, None)
 
 
 class PhotoUserDislikeCreate(View):
@@ -39,20 +26,7 @@ class PhotoUserDislikeCreate(View):
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.DISLIKE:
-                likedislike.vote = PhotoVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoVotes.DoesNotExist:
-            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
-            result = True
-            user_notify(request.user, item.creator.pk, None, "pho"+str(item.pk), "u_post_notify", "DIS")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_dislike(request.user, None)
 
 
 class PhotoCommentUserLikeCreate(View):
@@ -63,23 +37,7 @@ class PhotoCommentUserLikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PhotoCommentVotes.LIKE:
-                likedislike.vote = PhotoCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoCommentVotes.DoesNotExist:
-            PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pho"+str(comment.parent.photo.pk), "u_photo_comment_notify", "LRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pho"+str(comment.photo.pk), "u_photo_comment_notify", "LCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, None)
 
 
 class PhotoCommentUserDislikeCreate(View):
@@ -90,23 +48,7 @@ class PhotoCommentUserDislikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PhotoCommentVotes.DISLIKE:
-                likedislike.vote = PhotoCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoCommentVotes.DoesNotExist:
-            PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pho"+str(comment.parent.photo.pk), "u_photo_comment_notify", "DRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", pho"+str(comment.photo.pk), "u_photo_comment_notify", "DCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_dislike(request.user, None)
 
 
 class PhotoCommunityLikeCreate(View):
@@ -116,20 +58,7 @@ class PhotoCommunityLikeCreate(View):
         if not item.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.LIKE:
-                likedislike.vote = PhotoVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoVotes.DoesNotExist:
-            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.LIKE)
-            result = True
-            community_notify(request.user, community, None, "pho"+str(item.pk), "c_photo_notify", "LIK")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_like(request.user, community)
 
 
 class PhotoCommunityDislikeCreate(View):
@@ -139,20 +68,7 @@ class PhotoCommunityDislikeCreate(View):
         if not item.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PhotoVotes.objects.get(parent=item, user=request.user)
-            if likedislike.vote is not PhotoVotes.DISLIKE:
-                likedislike.vote = PhotoVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoVotes.DoesNotExist:
-            PhotoVotes.objects.create(parent=item, user=request.user, vote=PhotoVotes.DISLIKE)
-            result = True
-            community_notify(request.user, community, None, "pho"+str(item.pk), "c_photo_notify", "DIS")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return item.send_dislike(request.user, community)
 
 
 class PhotoCommentCommunityLikeCreate(View):
@@ -162,23 +78,7 @@ class PhotoCommentCommunityLikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PhotoCommentVotes.LIKE:
-                likedislike.vote = PhotoCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoCommentVotes.DoesNotExist:
-            PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pho"+str(comment.parent.photo.pk), "c_photo_comment_notify", "LRE")
-            else:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pho"+str(comment.photo.pk), "c_photo_comment_notify", "LCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, community)
 
 
 class PhotoCommentCommunityDislikeCreate(View):
@@ -188,20 +88,4 @@ class PhotoCommentCommunityDislikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = PhotoCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not PhotoCommentVotes.DISLIKE:
-                likedislike.vote = PhotoCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except PhotoCommentVotes.DoesNotExist:
-            PhotoCommentVotes.objects.create(item=comment, user=request.user, vote=PhotoCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pho"+str(comment.parent.photo.pk), "c_photo_comment_notify", "DRE")
-            else:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", pho"+str(comment.photo.pk), "c_photo_comment_notify", "DCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(disliks)}),content_type="application/json")
+        return comment.send_dislike(request.user, community)

@@ -21,20 +21,7 @@ class GoodUserLikeCreate(View):
 
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = GoodVotes.objects.get(parent=good, user=request.user)
-            if likedislike.vote is not GoodVotes.LIKE:
-                likedislike.vote = GoodVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodVotes.DoesNotExist:
-            GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
-            result = True
-            user_notify(request.user, good.creator.pk, None, "goo"+str(good.pk), "u_good_notify", "LIK")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return good.send_like(request.user, None)
 
 
 class GoodUserDislikeCreate(View):
@@ -45,20 +32,7 @@ class GoodUserDislikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = GoodVotes.objects.get(parent=good, user=request.user)
-            if likedislike.vote is not GoodVotes.DISLIKE:
-                likedislike.vote = GoodVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodVotes.DoesNotExist:
-            GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
-            result = True
-            user_notify(request.user, good.creator.pk, None, "goo"+str(good.pk), "u_good_notify", "DIS")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return good.send_dislike(request.user, None)
 
 
 class GoodCommentUserLikeCreate(View):
@@ -69,23 +43,7 @@ class GoodCommentUserLikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not GoodCommentVotes.LIKE:
-                likedislike.vote = GoodCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", goo"+str(comment.parent.good.pk), "u_post_comment_notify", "LRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", goo"+str(comment.good.pk), "u_post_comment_notify", "LCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, None)
 
 
 class GoodCommentUserDislikeCreate(View):
@@ -96,23 +54,7 @@ class GoodCommentUserDislikeCreate(View):
             raise Http404
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        try:
-            likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not GoodCommentVotes.DISLIKE:
-                likedislike.vote = GoodCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", goo"+str(comment.parent.good.pk), "u_post_comment_notify", "DRE")
-            else:
-                user_notify(request.user, comment.commenter.pk, None, "com"+str(comment.pk)+", goo"+str(comment.good.pk), "u_post_comment_notify", "DCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_dislike(request.user, None)
 
 
 class GoodCommunityLikeCreate(View):
@@ -122,20 +64,7 @@ class GoodCommunityLikeCreate(View):
         if not good.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = GoodVotes.objects.get(parent=good, user=request.user)
-            if likedislike.vote is not GoodVotes.LIKE:
-                likedislike.vote = GoodVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodVotes.DoesNotExist:
-            GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.LIKE)
-            result = True
-            community_notify(request.user, good.creator.pk, None, "goo"+str(good.pk), "c_good_notify", "LIK")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return good.send_like(request.user, community)
 
 
 class GoodCommunityDislikeCreate(View):
@@ -145,20 +74,7 @@ class GoodCommunityDislikeCreate(View):
         if not good.votes_on or not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user, community)
-        try:
-            likedislike = GoodVotes.objects.get(parent=good, user=request.user)
-            if likedislike.vote is not GoodVotes.DISLIKE:
-                likedislike.vote = GoodVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodVotes.DoesNotExist:
-            GoodVotes.objects.create(parent=good, user=request.user, vote=GoodVotes.DISLIKE)
-            result = True
-            community_notify(request.user, good.creator.pk, None, "goo"+str(good.pk), "c_good_notify", "DIS")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return good.send_dislike(request.user, community)
 
 
 class GoodCommentCommunityLikeCreate(View):
@@ -168,23 +84,7 @@ class GoodCommentCommunityLikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not GoodCommentVotes.LIKE:
-                likedislike.vote = GoodCommentVotes.LIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.LIKE)
-            result = True
-            if comment.parent:
-                community_post_notify(request.user, community, None, "com"+str(comment.pk)+", goo"+str(comment.parent.good.pk), "c_good_comment_notify", "LRE")
-            else:
-                community_post_notify(request.user, community, None, "com"+str(comment.pk)+", goo"+str(comment.good.pk), "c_good_comment_notify", "LCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_like(request.user, community)
 
 
 class GoodCommentCommunityDislikeCreate(View):
@@ -194,20 +94,4 @@ class GoodCommentCommunityDislikeCreate(View):
         if not request.is_ajax():
             raise Http404
         check_can_get_lists(request.user,community)
-        try:
-            likedislike = GoodCommentVotes.objects.get(item=comment, user=request.user)
-            if likedislike.vote is not GoodCommentVotes.DISLIKE:
-                likedislike.vote = GoodCommentVotes.DISLIKE
-                likedislike.save(update_fields=['vote'])
-                result = True
-            else:
-                likedislike.delete()
-                result = False
-        except GoodCommentVotes.DoesNotExist:
-            GoodCommentVotes.objects.create(item=comment, user=request.user, vote=GoodCommentVotes.DISLIKE)
-            result = True
-            if comment.parent:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", goo"+str(comment.parent.good.pk), "c_good_comment_notify", "DRE")
-            else:
-                community_notify(request.user, community, None, "com"+str(comment.pk)+", goo"+str(comment.good.pk), "c_good_comment_notify", "DCO")
-        return HttpResponse(json.dumps({"result": result,"like_count": str(likes),"dislike_count": str(dislikes)}),content_type="application/json")
+        return comment.send_dislike(request.user, community)
