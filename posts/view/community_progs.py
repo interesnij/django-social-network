@@ -310,7 +310,7 @@ class CommunityPostListCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             from common.template.user import render_for_platform
             list = self.form.save(commit=False)
-            new_list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': new_list})
         else:
             return HttpResponse()
