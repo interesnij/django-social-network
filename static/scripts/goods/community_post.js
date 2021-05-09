@@ -325,6 +325,13 @@ on('#ajax', 'click', '.c_good_list_recover', function() {
     ajax_link.send();
 });
 
+on('#ajax', 'click', '.c_add_good_in_list', function() {
+  add_item_in_list(this, '/goods/community_progs/add_good_in_list/', "c_add_good_in_list", "c_remove_good_from_list")
+})
+on('#ajax', 'click', '.c_remove_good_from_list', function() {
+  remove_item_from_list(this, '/goods/community_progs/remove_good_from_list/', "c_remove_good_from_list", "c_add_good_in_list")
+})
+
 on('#ajax', 'click', '.mob_c_good_off_comment', function() {
   send_mob_good_change(this, "/goods/community_progs/off_comment/", "mob_c_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;

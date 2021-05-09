@@ -266,6 +266,12 @@ on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '.c_add_photo_in_list', function() {
+  add_item_in_list(this, '/gallery/community_progs/add_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
+})
+on('#ajax', 'click', '.u_remove_photo_from_list', function() {
+  remove_item_from_list(this, '/gallery/community_progs/remove_photo_from_list/', "c_remove_photo_from_list", "c_add_photo_in_list")
+})
 
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {
   mob_send_change(this, "/gallery/community_progs/off_comment/", "mob_c_photo_on_comment", "Вкл. комментарии");

@@ -264,3 +264,9 @@ on('#ajax', 'click', '.u_video_list_recover', function() {
     }
     ajax_link.send();
 });
+on('#ajax', 'click', '.u_add_video_in_list', function() {
+  add_item_in_list(this, '/video/user_progs/add_video_in_list/', "u_add_video_in_list", "u_remove_video_from_list")
+})
+on('#ajax', 'click', '.u_remove_video_from_list', function() {
+  remove_item_from_list(this, '/video/user_progs/remove_video_from_list/', "u_remove_video_from_list", "u_add_video_in_list")
+})

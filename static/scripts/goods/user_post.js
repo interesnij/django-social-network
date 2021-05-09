@@ -17,6 +17,13 @@ on('#ajax', 'click', '#u_ucm_good_list_repost_btn', function() {
                      "Репост списка товаров в сообщения сделан")
 });
 
+on('#ajax', 'click', '.u_add_good_in_list', function() {
+  add_item_in_list(this, '/goods/user_progs/add_good_in_list/', "u_add_good_in_list", "u_remove_good_from_list")
+})
+on('#ajax', 'click', '.u_remove_good_from_list', function() {
+  remove_item_from_list(this, '/goods/user_progs/remove_good_from_list/', "u_remove_good_from_list", "u_add_good_in_list")
+})
+
 on('#ajax', 'click', '.u_add_good_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;

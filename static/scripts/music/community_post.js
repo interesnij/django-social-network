@@ -28,42 +28,10 @@ on('#ajax', 'click', '#c_create_music_list_btn', function() {
 });
 
 on('#ajax', 'click', '.c_add_track_in_list', function() {
-  _this = this;
-  parent = _this.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/music/community_progs/add_track_in_list/' + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".c_add_track_in_list");
-    list.style.paddingLeft = "14px";
-    list.classList.add("c_remove_track_from_list");
-    list.classList.remove("c_add_track_in_list");
-    span = document.createElement("span");
-    span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
-    list.prepend(span)
-  }};
-  link.send( null );
+  add_item_in_list(this, '/music/community_progs/add_track_in_list/', "c_add_track_in_list", "c_remove_track_from_list")
 })
-on('#ajax', 'click', '.c_remove_track_from_list', function() {
-  _this = this;
-  parent = _this.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', '/music/community_progs/remove_track_from_list/' + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(".c_remove_track_from_list");
-    list.style.paddingLeft = "30px";
-    list.classList.add("c_add_track_in_list");
-    list.classList.remove("c_remove_track_from_list");
-    list.querySelector("svg").remove();
-  }};
-  link.send( null );
+on('#ajax', 'click', '.c_remove_video_from_list', function() {
+  remove_item_from_list(this, '/music/community_progs/remove_track_from_list/', "c_remove_track_from_list", "c_add_track_in_list")
 })
 
 on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {

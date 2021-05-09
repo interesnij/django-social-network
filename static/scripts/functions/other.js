@@ -15,9 +15,6 @@ function add_item_in_list(_this, url, old_class, new_class) {
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    //list = parent.querySelector(old_class);
-    //console.log(_this)
-    //console.log(list)
     _this.style.paddingLeft = "14px";
     _this.classList.add(new_class);
     _this.classList.remove(old_class);
@@ -36,7 +33,6 @@ function remove_item_from_list(_this, url, old_class, new_class) {
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    //list = parent.querySelector(old_class);
     _this.style.paddingLeft = "30px";
     _this.classList.add(new_class);
     _this.classList.remove(old_class);

@@ -195,3 +195,10 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/community_progs/create_video/" + pk + "/", loader);
 });
+
+on('#ajax', 'click', '.c_add_video_in_list', function() {
+  add_item_in_list(this, '/video/community_progs/add_video_in_list/', "c_add_video_in_list", "c_remove_video_from_list")
+})
+on('#ajax', 'click', '.c_remove_video_from_list', function() {
+  remove_item_from_list(this, '/video/community_progs/remove_video_from_list/', "c_remove_video_from_list", "c_add_video_in_list")
+})
