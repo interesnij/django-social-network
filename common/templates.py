@@ -79,7 +79,7 @@ def get_template_community(list, folder, template, request_user, user_agent, sta
             template_name = folder + "public_" + template
     return get_folder(user_agent) + template_name
 
-def get_anon_template_community(list, template, request_user, user_agent):
+def get_anon_template_anon_community(list, template, request_user, user_agent):
     community = list.community
     if community.type[0] == "_":
         if community.is_suspended():
