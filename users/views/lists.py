@@ -4,7 +4,7 @@ from posts.models import Post, PostList
 from common.template.user import get_settings_template, get_detect_platform_template
 from django.http import Http404
 from django.db.models import Q
-from common.templates import get_template_anon_user_list, get_template_user_list
+from common.templates import get_template_anon_user, get_template_user
 from django.views.generic.base import TemplateView
 
 
@@ -44,14 +44,14 @@ class UserVideoList(ListView):
 			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+				self.template_name = get_template_user(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+				self.template_name = get_template_user(self.list, "users/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -73,14 +73,14 @@ class UserPhotoList(TemplateView):
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		if self.list.type == PhotoList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+				self.template_name = get_template_user(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+				self.template_name = get_template_user(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
 		return super(UserPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -104,14 +104,14 @@ class UserGoodsList(ListView):
 			self.good_list = self.list.get_items()
 		if self.list.type == GoodList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
+				self.template_name = get_template_user(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
+				self.template_name = get_template_user(self.list, "users/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -138,14 +138,14 @@ class UserMusicList(ListView):
 			self.sound_list = self.list.get_items()
 		if self.list.type == SoundList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user(self.list, "users/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -172,14 +172,14 @@ class UserDocsList(ListView):
 			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user(self.list, "users/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_user_list(self.list, "users/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_user(self.list, "users/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(UserDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
