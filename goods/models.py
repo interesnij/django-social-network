@@ -194,7 +194,7 @@ class GoodList(models.Model):
 			get_good_list_processing(list, GoodList.LIST)
 			if is_public:
 				from common.notify.progs import community_send_notify, community_send_wall
-				Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
+				Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="GOL", object_id=list.pk, verb="ITE")
 				community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_good_list_wall")
 				for user_id in community.get_member_for_notify_ids():
 					Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
