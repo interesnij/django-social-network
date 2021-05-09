@@ -2,14 +2,14 @@
 {% if community.count_members %}
 <div class="card mb-3" style="">
   <div class="card-header">
+    <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
       <div class="media">
-        <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
           <div class="media-body">
               <h4 class="content-color-primary mb-0">Подписчики</h4>
           </div>
           {{ community.community_info.members }}
-        </a>
       </div>
+    </a>
   </div>
 
     {% for user in membersheeps %}
