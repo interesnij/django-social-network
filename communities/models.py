@@ -136,11 +136,11 @@ class Community(models.Model):
     def is_child(self):
         return self.perm == Community.CHILD
     def is_suspended(self):
-        return self.type[:4] != "_SUS"
+        return self.type[:4] == "_SUS"
     def is_closed(self):
-        return self.type[:4] != "_BLO"
+        return self.type[:4] == "_BLO"
     def is_have_warning_banner(self):
-        return self.type[:4] != "_BAN"
+        return self.type[:4] == "_BAN"
     def is_private(self):
         return self.type == self.PRIVATE
     def is_close(self):
