@@ -18,7 +18,7 @@ function add_item_in_list(_this, url, old_class, new_class) {
     //list = parent.querySelector(old_class);
     //console.log(_this)
     //console.log(list)
-    list.style.paddingLeft = "14px";
+    _this.style.paddingLeft = "14px";
     _this.classList.add(new_class);
     _this.classList.remove(old_class);
     span = document.createElement("span");
