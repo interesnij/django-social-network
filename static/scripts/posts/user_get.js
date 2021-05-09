@@ -18,7 +18,7 @@ on('#ajax', 'click', '.u_post_list_change', function() {
     };
     current_list =
     block = parent.nextElementSibling;
-    list_block_load(block, parent, "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    list_block_load(block, "list_pk", "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "u_post_list_change");
     this.classList.add("tab_active");
   }
