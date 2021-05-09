@@ -94,32 +94,7 @@
               {% include 'desctop/communities/detail_sections/frends_member.html' %}
             {% endif %}
 
-            {% if membersheeps %}
-            <div class="card mb-3" style="">
-                <div class="card-header">
-                    <div class="media">
-                      <a href="{% url 'community_members' pk=community.pk %}" class="ajax">
-                        <div class="media-body">
-                            <h4 class="content-color-primary mb-0">Подписчики</h4>
-                        </div>
-                      </a>
-                    </div>
-                </div>
-
-                {% for user in membersheeps %}
-                <div class="card border-top">
-                  <div class="card-body" style="padding:7px;">
-                  <div class="media">
-                    {% include 'desctop/generic/user/figure.html' %}
-                    <div class="media-body">
-                      {% include 'desctop/generic/user/user.html' %}
-                    </div>
-                  </div>
-              </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% include 'desctop/communities/detail_sections/membersheeps.html' %}
 
             {% if community.is_music_open %}
               {% include 'desctop/communities/detail_sections/admin_music.html' %}
