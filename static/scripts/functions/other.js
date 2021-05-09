@@ -7,7 +7,7 @@ function check_span1(span1, uuid, response) {
 }
 
 function add_item_in_list(_this, url, old_class, new_class) {
-  //parent = _this.parentElement;
+  parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
