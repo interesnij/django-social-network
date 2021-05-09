@@ -306,6 +306,7 @@ class CommunityPostListCreate(TemplateView):
         return c
 
     def post(self,request,*args,**kwargs):
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.template.user import render_for_platform
