@@ -16,6 +16,7 @@ function add_item_in_list(_this, url, old_class, new_class) {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     list = parent.querySelector(old_class);
+    console.log(_this)
     console.log(list)
     list.style.paddingLeft = "14px";
     list.classList.add(new_class);
