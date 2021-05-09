@@ -44,7 +44,7 @@ class CommunityCreatePhotosInMainList(View):
             check_can_get_lists(request.user, community)
             list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHO")
+                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHO")
                 photos += [photo,]
             community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
@@ -63,7 +63,7 @@ class CommunityCreatePhotosInPhotoList(View):
             uploaded_file = request.FILES['file']
             check_can_get_lists(request.user, community)
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHLIS")
+                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS")
                 photos += [photo,]
             community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})

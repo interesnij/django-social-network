@@ -78,9 +78,9 @@ class UserCreatePhotosInPhotoList(View):
         uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHLIS")
+                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS")
                 photos += [photo,]
-            self.user.plus_photos(len(photos))
+            user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
         else:
             raise Http404
@@ -90,17 +90,17 @@ class PhotoAttachUserCreate(View):
     мульти сохранение изображений с моментальным выводом в превью
     """
     def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         photos = []
-        if request.is_ajax() and self.user == request.user:
+        if request.is_ajax() and user == request.user:
             try:
                 list = PhotoList.objects.get(creator=request.user, community__isnull=True, type=PhotoList.WALL)
             except:
                 list = PhotoList.objects.create(creator=request.user, type=PhotoList.WALL, name="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHWAL")
+                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHWAL")
                 photos += [photo,]
-            self.user.plus_photos(len(photos))
+            user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
