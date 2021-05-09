@@ -19,7 +19,7 @@ class UserPostView(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(UserPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["user"], c["next"], c["prev"], c["post"] = self.post, self.list, self.user, \
+        c["object"], c["list"], c["user"], c["next"], c["prev"], c["posts"] = self.post, self.list, self.user, \
         self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
         self.posts.filter(pk__lt=self.post.pk).order_by('pk').first(), self.posts
         return c
