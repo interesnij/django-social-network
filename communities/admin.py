@@ -23,6 +23,8 @@ class CommunityPrivateVideoInline(admin.TabularInline):
 
 class CommunitySectionsOpenInline(admin.TabularInline):
     model = CommunitySectionsOpen
+class CommunityInfoInline(admin.TabularInline):
+    model = CommunityInfo
 
 
 class CommunityCategoryAdmin(admin.ModelAdmin):
@@ -45,6 +47,7 @@ class CommunityAdmin(admin.ModelAdmin):
         CommunityPrivateVideoInline,
 
         CommunitySectionsOpenInline,
+        CommunityInfoInline,
     ]
 
     search_fields = ('name',)
