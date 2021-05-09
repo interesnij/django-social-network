@@ -40,6 +40,9 @@
                         </div>
                     </li>
             </div>
+
+            {% include 'desctop/communities/detail_sections/stat.html' %}
+
             {% if community.is_good_open %}
               {% include 'desctop/communities/detail_sections/admin_goods.html' %}
             {% endif %}
