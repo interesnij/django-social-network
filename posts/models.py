@@ -430,7 +430,7 @@ class Post(models.Model):
         private = 0
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
+        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
         if community:
             community.plus_posts(1)
         else:

@@ -37,7 +37,7 @@ def user_send_wall(id, action_community_id, socket_name):
     payload = {
         'type': 'receive',
         'key': 'notification',
-        'community_id': action_community_id,
+        'community_id': str(action_community_id),
         'id': str(id),
         'name': socket_name,
     }
@@ -49,8 +49,8 @@ def community_send_wall(id, creator_id, community, action_community_id, socket_n
     payload = {
         'type': 'receive',
         'key': 'notification',
-        'community_id': community.pk,
-        'action_community_id': action_community_id,
+        'community_id': str(community.pk),
+        'action_community_id': str(action_community_id),
         'id': str(id),
         'name': socket_name,
     }
