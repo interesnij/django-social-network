@@ -55,7 +55,7 @@ class PostList(models.Model):
 
     def get_staff_items(self):
         query = Q(status="PUB")|Q(status="PRI")
-        return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,query)
+        return self.post_list.select_related('creator').only('creator__id', 'created').filter(query, list=self)
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,status="PUB")
     def get_fix_items(self):
