@@ -50,12 +50,33 @@ class CommunityDetail(TemplateView):
 
         self.c, user_agent = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT']
 
-        if self.c.is_suspended():
-            self.template_name = "communities/detail/community_suspended.html"
-        elif self.c.is_closed():
-            self.template_name = "communities/detail/community_blocked.html"
-        elif request.user.is_authenticated:
-            if request.user.is_member_of_community(self.c.pk):
+        if request.user.is_authenticated:
+            if request.user.type[0] == "_":
+                if request.user.is_no_phone_verified():
+                    template_name = "main/phone_verification.html"
+                elif request.user.is_deleted():
+                    template_name = "generic/u_template/you_deleted.html"
+                elif request.user.is_closed():
+                    template_name = "generic/u_template/you_closed.html"
+                elif request.user.is_suspended():
+                    template_name = "generic/u_template/you_suspended.html"
+            elif self.c.type[0] == "_":
+                if self.c.is_suspended():
+                    if request_user.is_administrator_of_community(community.pk):
+                        template_name = "generic/c_template/admin_community_suspended.html"
+                    else:
+                        template_name = "generic/c_template/community_suspended.html"
+                elif self.c.is_deleted():
+                    if request_user.is_administrator_of_community(community.pk):
+                        template_name = "generic/c_template/admin_community_deleted.html"
+                    else:
+                        template_name = "generic/c_template/community_deleted.html"
+                elif self.c.is_closed():
+                    if request_user.is_administrator_of_community(community.pk):
+                        template_name = "generic/c_template/admin_community_closed.html"
+                    else:
+                        template_name = "generic/c_template/community_closed.html"
+            elif request.user.is_member_of_community(self.c.pk):
                 if request.user.is_administrator_of_community(self.c.pk):
                     self.template_name = "communities/detail/admin_community.html"
                 elif request.user.is_moderator_of_community(self.c.pk):
@@ -92,7 +113,14 @@ class CommunityDetail(TemplateView):
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
         elif request.user.is_anonymous:
-            if self.c.is_public():
+            if self.c.type[0] == "_":
+                if self.c.is_suspended():
+                    template_name = "generic/c_template/anon_community_suspended.html"
+                elif self.c.is_deleted():
+                    template_name = "generic/c_template/anon_community_deleted.html"
+                elif self.c.is_closed():
+                    template_name = "generic/c_template/anon_community_closed.html"
+            elif self.c.is_public():
                 if not self.c.is_verified():
                     self.template_name = "communities/detail/anon_no_child_safety.html"
                 else:

@@ -269,12 +269,12 @@ class Community(models.Model):
 
     def get_draft_posts(self):
         from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        list = PostList.objects.get(community_id=self.pk, type="_DRA")
         return list.get_items()
     def get_count_draft_posts(self):
         from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="DRA")
-        return list.get_items().values("pk").count()
+        list = PostList.objects.get(community_id=self.pk, type="_DRA")
+        return list.count_items()
 
     def get_count_articles(self):
         return self.community_info.articles
@@ -284,7 +284,7 @@ class Community(models.Model):
 
     def get_draft_posts_for_user(self, user_pk):
         from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="DRA")
+        list = PostList.objects.get(community_id=self.pk, type="_DRA")
         posts_query = list.get_items()
         return list.get_items().filter(creator_id=user_pk)
     def get_count_draft_posts_for_user(self, user_pk):
@@ -350,29 +350,25 @@ class Community(models.Model):
         except:
             return None
 
-    def get_music(self):
-        return self.get_playlist().get_items()
-
     def get_music_count(self):
         return self.community_info.tracks
+    def get_docs_count(self):
+        return self.community_info.docs
+    def get_photos_count(self):
+        return self.community_info.photos
+    def get_videos_count(self):
+        return self.community_info.videos
+    def get_posts_count(self):
+        return self.community_info.posts
 
     def get_last_music(self):
         return self.get_playlist().get_items()[0:5]
 
-    def get_docs(self):
-        return self.get_doc_list().get_items()
-
     def get_last_docs(self):
         return self.get_doc_list().get_items()[0:5]
 
-    def get_docs_count(self):
-        return self.community_info.docs
-
     def get_last_video(self):
         return self.get_video_list().get_items()[0:2]
-
-    def get_video_count(self):
-        return self.community_info.videos
 
     @classmethod
     def get_trending_communities(cls, category_name=None):
@@ -688,6 +684,7 @@ class CommunityMembership(models.Model):
     @classmethod
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
         community.add_news_subscriber(user.pk)
+        community.plus_members(1)
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:
