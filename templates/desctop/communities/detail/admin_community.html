@@ -97,9 +97,9 @@
               {% include 'desctop/communities/detail_sections/frends_member.html' %}
             {% endif %}
 
-
+            {% if community.is_contacts_open %}
               {% include 'desctop/communities/detail_sections/membersheeps.html' %}
-            
+            {% endif %}
 
             {% if community.is_music_open %}
               {% include 'desctop/communities/detail_sections/admin_music.html' %}
