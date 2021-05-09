@@ -155,7 +155,7 @@ class CommunityGallery(TemplateView):
         from common.template.photo import get_template_community_photo
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = self.c.get_or_create_photo_list()
+        self.list = self.c.get_photo_list()
         self.template_name = get_template_community_photo(self.list, "communities/gallery/", "gallery.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
