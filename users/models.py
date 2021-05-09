@@ -55,7 +55,7 @@ class User(AbstractUser):
         from posts.models import PostList
         try:
             list = PostList.objects.get(creator_id=self.pk, type=PostList.THIS_FIXED)
-            return list.count__fix_items() < 10
+            return list.count_fix_items() < 10
         except:
             return None
 

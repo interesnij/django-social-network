@@ -596,6 +596,14 @@ class Community(models.Model):
     def is_comment_video_send_all(self):
         return try_except(self.community_private_video.comment == "CNM")
 
+    def is_can_fixed_post(self):
+        from posts.models import PostList
+        try:
+            list = PostList.objects.get(community_id=self.pk, type=PostList.THIS_FIXED)
+            return list.count_fix_items() < 10
+        except:
+            return None
+
     def add_administrator(self, user):
         user_membership = self.memberships.get(user=user)
         user_membership.is_moderator = False
