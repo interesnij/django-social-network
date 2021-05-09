@@ -17,6 +17,16 @@ on('#ajax', 'click', '#c_ucm_music_list_repost_btn', function() {
                      "Репост плейлиста в сообщения сделан")
 });
 
+on('#ajax', 'click', '#c_create_music_list_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+  post_and_load_object_page(form, "/music/community_progs/create_list/", "/communities/", "/music_list/")
+});
+
 on('#ajax', 'click', '.c_add_track_in_list', function() {
   _this = this;
   parent = _this.parentElement;
