@@ -215,7 +215,7 @@ class UserPostsListView(ListView):
 		from posts.models import PostList
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		elif user_pk == request.user.pk:
+		if user_pk == request.user.pk:
 			self.list = self.post_list.get_staff_items()
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
 		else:
