@@ -36,11 +36,11 @@ function remove_item_from_list(_this, url, old_class, new_class) {
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    list = parent.querySelector(old_class);
-    list.style.paddingLeft = "30px";
-    list.classList.add(new_class);
-    list.classList.remove(old_class);
-    list.querySelector("svg").remove();
+    //list = parent.querySelector(old_class);
+    _this.style.paddingLeft = "30px";
+    _this.classList.add(new_class);
+    _this.classList.remove(old_class);
+    _this.querySelector("svg").remove();
   }};
   link.send( null );
 }
