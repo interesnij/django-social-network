@@ -215,7 +215,7 @@ class CommunityMusic(ListView):
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_music_manager())
+			self.template_name = get_template_community(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
