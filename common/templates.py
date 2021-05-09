@@ -72,7 +72,7 @@ def get_template_community(list, folder, template, request_user, user_agent, sta
         template_name = "generic/c_template/block_community.html"
     elif community.is_public():
         if list.is_private():
-            template_name = folder + "private_" + template
+            template_name = "generic/c_template/private_list.html"
         elif request_user.is_child() and not community.is_verified():
             template_name = "generic/c_template/no_child_safety.html"
         else:
@@ -99,7 +99,7 @@ def get_template_anon_community(list, template, request_user, user_agent):
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
         elif list.is_private():
-            template_name = "generic/c_template/anon_private_list.html"
+            template_name = "generic/c_template/anon_list_private.html"
         else:
             template_name = template
     elif community.is_close():
@@ -152,7 +152,7 @@ def get_template_user(list, folder, template, request_user, user_agent, staff):
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
         elif list.is_private():
-            template_name = "generic/u_template/private_list.html"
+            template_name = "generic/u_template/list_private.html"
         elif user.is_closed_profile():
             if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                 template_name = folder + template
@@ -185,7 +185,7 @@ def get_template_anon_user(list, template, request_user, user_agent):
     elif not user.is_child_safety():
         template_name = "generic/u_template/anon_no_child_safety.html"
     elif list.is_private():
-        template_name = "generic/u_template/anon_private_list.html"
+        template_name = "generic/u_template/anon_list_private.html"
     else:
         template_name = template
     return get_folder(user_agent) + template_name

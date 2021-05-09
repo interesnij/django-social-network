@@ -1,12 +1,4 @@
-{% extends "base_anon.html" %}
-{% block title %}Список {{ list.name }} {{ user.get_full_name_genitive }} приватный{% endblock %}
-{% block meta %}
-<meta property="og:url" content="dvizhenie.tv" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
-{% endblock %}
-{% block content %}
+
 
 <div class="card mt-3 centered">
   <div class="card-body" style="margin-top: 10%;">
@@ -17,5 +9,3 @@
     закрыл список {{ list.name }} от всеобщего просмотра.
   </h6>
 </div>
-
-{% endblock %}

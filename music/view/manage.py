@@ -8,26 +8,6 @@ from django.http import Http404
 from common.template.user import render_for_platform
 
 
-class UserPlaylistCreate(View):
-    form_post = None
-
-    def get_context_data(self,**kwargs):
-        context = super(UserPlaylistCreate,self).get_context_data(**kwargs)
-        context["form_post"] = PlaylistForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        form_post = PlaylistForm(request.POST)
-
-        if request.is_ajax() and form_post.is_valid() and request.user.pk == int(self.kwargs["pk"]):
-            new_playlist = form_post.save(commit=False)
-            new_playlist.creator = request.user
-            new_playlist.save()
-            return render_for_platform(request, 'users/user_music/my_list.html',{'playlist': new_playlist, 'user': request.user})
-        else:
-            return HttpResponseBadRequest()
-
-
 class TempListOn(View):
     """
     Выставляем плейлист пользователя как активный.
