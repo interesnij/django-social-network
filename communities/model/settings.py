@@ -26,7 +26,7 @@ class CommunityInfo(models.Model):
     articles = models.PositiveIntegerField(default=0, verbose_name="Кол-во статей")
 
     def __str__(self):
-        return self.user.last_name
+        return self.community.name
 
     class Meta:
         verbose_name = 'Профиль пользователя'
