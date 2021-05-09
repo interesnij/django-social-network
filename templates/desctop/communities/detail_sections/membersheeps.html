@@ -26,7 +26,9 @@
                 </figure>
               </a>
               <div class="media-body">
-                {% include 'desctop/generic/user/user.html' %}
+                <h6 class="mb-0">
+                  <a href="{{ user.get_link }}" class="ajax">{{ user.get_full_name }}</a>
+                </h6>
               </div>
             </div>
         </div>
