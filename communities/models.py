@@ -138,7 +138,7 @@ class Community(models.Model):
     def is_suspended(self):
         return self.type[:4] != "_SUS"
     def is_closed(self):
-        return self.type[:4] != "_CLO"
+        return self.type[:4] != "_BLO"
     def is_have_warning_banner(self):
         return self.type[:4] != "_BAN"
     def is_private(self):

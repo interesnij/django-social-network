@@ -36,7 +36,7 @@ class CommunityInfo(models.Model):
     @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
-            UserProfile.objects.create(user=instance)
+            CommunityInfo.objects.create(user=instance)
 
 
 class CommunityNotificationsPost(models.Model):
