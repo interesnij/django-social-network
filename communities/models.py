@@ -321,6 +321,42 @@ class Community(models.Model):
         from docs.models import DocList
         return DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
 
+    def get_post_lists(self):
+        from posts.models import PostList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PostList.objects.filter(query)
+
+    def get_survey_lists(self):
+        from survey.models import SurveyList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return SurveyList.objects.filter(query)
+
+    def get_photo_lists(self):
+        from gallery.models import PhotoList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PhotoList.objects.filter(query)
+
+    def get_video_lists(self):
+        from video.models import VideoList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return VideoList.objects.filter(query)
+
+    def get_playlists(self):
+        from music.models import SoundList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return SoundList.objects.filter(query)
+
+    def get_good_lists(self):
+        from goods.models import GoodList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return GoodList.objects.filter(query)
+
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
         self.s_avatar = photo_input
