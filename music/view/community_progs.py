@@ -104,7 +104,7 @@ class CommunityCreatePlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.kwargs["pk"], request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
 class CommunityEditPlaylistWindow(TemplateView):
