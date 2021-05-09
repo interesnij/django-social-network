@@ -224,7 +224,7 @@ class CommunityMusic(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.playlist.get_items()
+		return self.list.get_items()
 
 class CommunityMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -252,7 +252,7 @@ class CommunityMusicList(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.playlist.get_items()
+		return self.list.get_items()
 
 
 class CommunityVideo(ListView):
