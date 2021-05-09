@@ -33,7 +33,7 @@ class CommunityCreate(TemplateView):
 			return render_for_platform(request, 'communities/detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
 		else:
 			from django.http import HttpResponseBadRequest
-			HttpResponseBadRequest()
+			return HttpResponseBadRequest()
 
 
 class CommunitiesCatsView(TemplateView):
