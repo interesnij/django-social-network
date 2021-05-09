@@ -262,7 +262,7 @@ class CommunityVideo(ListView):
 		from common.templates import get_template_anon_community, get_template_community
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_or_create_video_list()
+		self.list = self.c.get_video_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.video_list = self.list.get_staff_items()
 		else:
