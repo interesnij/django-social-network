@@ -664,7 +664,8 @@ class Community(models.Model):
     def get_longest_community_penalties(self):
         return self.community_penalties.filter(community=self)[0].expiration
     def get_moderated_description(self):
-        return self.moderated_community.filter(community=self)[0].description
+        from managers.models import Moderated
+        return Moderated.objects.filter(object_id=self.pk, type="COM")[0].description
 
     ''''' конец модерации '''''
 
