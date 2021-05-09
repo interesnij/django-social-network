@@ -41,6 +41,9 @@
                     </li>
                   </ul>
             </div>
+
+            {% include 'desctop/communities/detail_sections/stat.html' %}
+            
             {% if community.is_good_open %}
             {% if community.is_good_upload_member or community.is_good_upload_nomember %}
               {% include 'desctop/communities/detail_sections/admin_goods.html' %}

@@ -17,7 +17,7 @@
        <div class="media-body">
          <a href="{% url 'community_members' community.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ community.count_members }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_members|rupluralize:"друг,друга,друзей" }}</p>
+         <p class="content-color-secondary mb-0">{{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
          </a>
        </div>
      </div>
