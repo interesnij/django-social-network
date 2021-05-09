@@ -1,4 +1,7 @@
-
+<!-- Это шапка записи для владельца стены. Он может ее удалять: если она не имеет других списков, то ее
+  создали прямо на стене нашего пользователя и мы ее переводим в состояние удаленной. Если запись имеет
+  другие списки,отличные от наших, то запись мы просто открепляем от нашего списка. Так мы исключим простую диверсию - брать пост
+  у друга и ее удалять -->
 <div class="card-header">
     <div class="media">
       {% include 'desctop/generic/user/creator_figure.html' %}
@@ -14,8 +17,6 @@
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <span class="dropdown-item u_post_wall_remove">Удалить запись</span>
-                <span class="dropdown-item">Редактировать</span>
                 <span>
                   {% if object.is_fixed_in_user %}
                     <span class="dropdown-item u_post_unfixed">Открепить</span>
@@ -37,6 +38,15 @@
                     <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
                   {% endif %}
                 </span>
+
+              {% if request.user.pk == object.creator.pk %}
+                <span class="dropdown-item u_post_wall_remove">Удалить запись</span>
+                <span class="dropdown-item">Редактировать</span>
+              {% elif request.user.is_manager %}
+                <span class="dropdown-item u_post_close_window">Закрыть</span>
+              {% else %}
+                <span class="dropdown-item post_claim">Пожаловаться</span>
+              {% endif %}
                 <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
                   <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
                 </span>
