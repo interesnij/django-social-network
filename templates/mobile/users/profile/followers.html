@@ -6,7 +6,7 @@
     <div class="card-body py-2">
         <div class="media">
             <div class="media-body">
-              <h6 class="my-0 text-truncated">{{ user.count_connections }} {{ user.count_connections|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
+              <h6 class="my-0 text-truncated">{{ user.count_friends }} {{ user.count_friends|rupluralize:"подписчик,подписчика,подписчиков" }}</h6>
               <p class="small">{{ user.get_online_connection_count }} онлайн</p>
             </div>
             {% for object in user.get_pop_followers %}

@@ -823,6 +823,8 @@ class User(AbstractUser):
         return self.profile.tracks
     def count_videos(self):
         return self.profile.videos
+    def count_friends(self):
+        return self.profile.friends
 
     def plus_photos(self, count):
         self.profile.photos += count

@@ -13,13 +13,13 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_community %}
+   {% if user.count_communities %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_community }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_community|rupluralize:"группа,группы,групп" }}</p>
+         <h4 class="content-color-primary mb-0">{{ user.count_communities }}</h4>
+         <p class="content-color-secondary mb-0">{{ user.count_communities|rupluralize:"группа,группы,групп" }}</p>
          </a>
        </div>
      </div>

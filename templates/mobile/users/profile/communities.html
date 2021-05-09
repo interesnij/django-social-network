@@ -6,7 +6,7 @@
     <div class="card-body py-2">
         <div class="media">
             <div class="media-body">
-              <h6 class="my-0 text-truncated">{{ user.count_community }} {{ user.count_community|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
+              <h6 class="my-0 text-truncated">{{ user.count_communities }} {{ user.count_communities|rupluralize:"сообщество,сообщества,сообществ" }}</h6>
               <p class="small">нет осоьых</p>
             </div>
             {% for object in communities %}
