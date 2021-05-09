@@ -270,7 +270,7 @@ class CommunityVideo(ListView):
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community_list(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community_list(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager()
+			self.template_name = get_template_community_list(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
