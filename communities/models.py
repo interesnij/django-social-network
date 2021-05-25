@@ -118,11 +118,11 @@ class Community(models.Model):
     def minus_articles(self, count):
         self.community_info.articles -= count
         return self.community_info.save(update_fields=['articles'])
-    def plus_members(self, count):
-        self.community_info.members += count
+    def plus_member(self):
+        self.community_info.members += 1
         return self.community_info.save(update_fields=['members'])
-    def minus_members(self, count):
-        self.community_info.members -= count
+    def minus_member(self):
+        self.community_info.members -= 1
         return self.community_info.save(update_fields=['members'])
 
     def is_deleted(self):
@@ -659,12 +659,12 @@ class Community(models.Model):
     def add_member(self, user):
         CommunityMembership.create_membership(user=user, community=self)
         user.plus_communities(1)
-        self.plus_members(1)
+        self.plus_member()
         user.create_or_plus_populate_community(self.pk)
         self.add_news_subscriber(user.pk)
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user).delete()
-        self.minus_members(1)
+        self.minus_member()
         user.minus_communities(1)
         user.delete_populate_community(self.pk)
         self.delete_news_subscriber(user.pk)
@@ -731,7 +731,7 @@ class CommunityMembership(models.Model):
     @classmethod
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
         community.add_news_subscriber(user.pk)
-        community.plus_members(1)
+        community.plus_member()
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:
