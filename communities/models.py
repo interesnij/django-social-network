@@ -658,7 +658,6 @@ class Community(models.Model):
 
     def add_member(self, user):
         CommunityMembership.create_membership(user=user, community=self)
-        user.plus_communities(1)
         user.create_or_plus_populate_community(self.pk)
         self.add_news_subscriber(user.pk)
     def remove_member(self, user):
@@ -731,6 +730,7 @@ class CommunityMembership(models.Model):
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
         community.add_news_subscriber(user.pk)
         community.plus_member()
+        user.plus_communities(1)
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)
 
     class Meta:
