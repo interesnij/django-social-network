@@ -253,7 +253,7 @@ def check_is_following_user_with_id(user, user_id):
 
 
 def check_has_not_reached_max_connections(user):
-    if user.count_connections() > settings.USER_MAX_CONNECTIONS:
+    if user.count_friends() > settings.USER_MAX_CONNECTIONS: 
         raise ValidationError(
             _('Maximum number of connections reached.'),
         )

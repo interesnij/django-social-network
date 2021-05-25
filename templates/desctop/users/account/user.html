@@ -28,7 +28,7 @@
             {% include get_buttons_block %}
 
               <span class="centered">
-                <span class="btn btn-sm custom_color border ml-2 user_send_page_message" data-pk="{{ user.pk }}">Написать сообщение</span>
+                <span class="btn btn-sm custom_color border ml-2 user_send_page_message" style="width: -webkit-fill-available" data-pk="{{ user.pk }}">Написать сообщение</span>
               </span>
 
           </div>
@@ -68,12 +68,10 @@
             <div class="row" style="padding:10px">
               <div class="col-md-6">
               <span>Дата рождения: </span><br>
-              <span>Моб. телефон: </span><br>
               <span>Пол: </span><br>
               </div>
               <div class="col-md-6">
               <span>{{ user.birthday }}</span><br>
-              <span>{{ user.phone }}</span><br>
               <span>{{ user.get_gender_display }}</span><br>
               </div>
             </div>
