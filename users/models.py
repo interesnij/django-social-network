@@ -1260,25 +1260,25 @@ class User(AbstractUser):
 
     def get_post_views_for_year(self, year):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(creator_id=self.pk)
+        count, posts = 0, Post.objects.filter(creator_id=self.pk, created__year=year)
         for i in posts:
             count += i.view
         return count
     def get_post_views_for_month(self, month):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(creator_id=self.pk)
+        count, posts = 0, Post.objects.filter(creator_id=self.pk, created__month=month)
         for i in posts:
             count += i.view
         return count
     def get_post_views_for_week(self, week):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(creator_id=self.pk)
+        count, posts = 0, Post.objects.filter(creator_id=self.pk, created__day__in=week)
         for i in posts:
             count += i.view
         return count
     def get_post_views_for_day(self, day):
         from posts.models import Post
-        count, posts = 0, Post.objects.filter(creator_id=self.pk)
+        count, posts = 0, Post.objects.filter(creator_id=self.pk, created__day=day)
         for i in posts:
             count += i.view
         return count
