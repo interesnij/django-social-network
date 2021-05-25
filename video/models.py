@@ -320,7 +320,7 @@ class Video(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return self.title
+        return self.name
 
     def plus_likes(self, count):
         self.like += count
