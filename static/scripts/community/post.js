@@ -23,7 +23,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
             window.scrollTo(0,0);
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
-            window.history.pushState(null, "vfgffgfgf", "/communities/" + pk + "/");
+            window.history.pushState(null, "vfgffgfgf", "/public" + pk + "/");
         }
       }
       ajax_link.send(form_data);
