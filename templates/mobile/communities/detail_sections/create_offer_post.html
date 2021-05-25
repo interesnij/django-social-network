@@ -26,7 +26,7 @@
                     <a class="dropdown-item u_select_doc">Документ</a>
                     <a class="dropdown-item u_select_good">Товар</a>
                 </div>
-                  {% for object in user.get_my_all_post_lists %}
+                  {% for object in user.get_post_lists %}
                       {% if object.is_main_list %}
                         <input type="hidden" class="list" name="lists" value="{{ object.pk }}">
                       {% endif %}
