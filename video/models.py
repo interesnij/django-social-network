@@ -60,7 +60,7 @@ class VideoList(models.Model):
         ordering = ['order']
 
     def __str__(self):
-        return self.title
+        return self.name
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
@@ -320,7 +320,7 @@ class Video(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def plus_likes(self, count):
         self.like += count
