@@ -670,7 +670,9 @@ class Community(models.Model):
         self.delete_news_subscriber(user.pk)
 
     def count_members(self):
-        return self.community_info.members
+        from communities.model.settings import CommunityInfo
+        profile = CommunityInfo.objects.get(community=self)
+        return profile.members
 
     def count_members_ru(self):
         count = self.count_members()
