@@ -54,7 +54,7 @@ class CommunityMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		if request.is_ajax():
 			c = Community.objects.get(pk=self.kwargs["pk"])
-			request.user.join_community(c)
+			request.user.join_community(c) 
 			return HttpResponse()
 		else:
 			raise Http404

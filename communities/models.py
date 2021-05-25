@@ -119,7 +119,7 @@ class Community(models.Model):
         self.community_info.articles -= count
         return self.community_info.save(update_fields=['articles'])
     def plus_member(self):
-        self.community_info.members += 1
+        self.community_info.members = self.community_info.members + 1
         return self.community_info.save(update_fields=['members'])
     def minus_member(self):
         self.community_info.members -= 1
@@ -659,7 +659,6 @@ class Community(models.Model):
     def add_member(self, user):
         CommunityMembership.create_membership(user=user, community=self)
         user.plus_communities(1)
-        self.plus_member()
         user.create_or_plus_populate_community(self.pk)
         self.add_news_subscriber(user.pk)
     def remove_member(self, user):
