@@ -145,7 +145,7 @@ def get_template_user(list, folder, template, request_user, user_agent, staff):
                 template_name = "generic/u_template/user_suspended.html"
             elif user.is_deleted():
                 template_name = "generic/u_template/user_deleted.html"
-            elif user.is_blocked():
+            elif user.is_closed():
                 template_name = "generic/u_template/user_global_block.html"
         elif staff or request_user.is_superuser:
             template_name = folder + "staff_" + template

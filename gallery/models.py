@@ -56,11 +56,11 @@ class PhotoList(models.Model):
             PhotoList.objects.create(creator=instance, type=PhotoList.WALL, name="Фото со стены")
 
     def get_users_ids(self):
-        users = self.users.exclude(type="DE").exclude(type="BL").exclude(type="PV").values("pk")
+        users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
 
     def get_communities_ids(self):
-        communities = self.communities.exclude(perm="DE").exclude(perm="BL").values("pk")
+        communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
     def is_user_can_add_list(self, user_id):
