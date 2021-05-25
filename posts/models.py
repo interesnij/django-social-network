@@ -40,9 +40,9 @@ class PostList(models.Model):
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            PostList.objects.create(community=instance, type=PostList.MAIN, name="Основной список", creator=instance.creator)
-            PostList.objects.create(community=instance, type=PostList.THIS_FIXED, name="Закреплённый список", creator=instance.creator)
-            PostList.objects.create(community=instance, type=PostList.THIS_DRAFT, name="Предложка", creator=instance.creator)
+            PostList.objects.create(community=sender, type=PostList.MAIN, name="Основной список", creator=instance.creator)
+            PostList.objects.create(community=sender, type=PostList.THIS_FIXED, name="Закреплённый список", creator=instance.creator)
+            PostList.objects.create(community=sender, type=PostList.THIS_DRAFT, name="Предложка", creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:

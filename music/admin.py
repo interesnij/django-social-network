@@ -17,9 +17,13 @@ class SoundTagsAdmin(admin.ModelAdmin):
             model = SoundTags
 
 
+class SoundListAdmin(admin.ModelAdmin):
+    search_fields = ('creator',)
+    list_display = ['name','community','type','creator', 'order']
+
 admin.site.register(Music, MusicAdmin)
 admin.site.register(SoundGenres)
-admin.site.register(SoundList)
+admin.site.register(SoundList, SoundListAdmin)
 admin.site.register(SoundSymbol)
 admin.site.register(SoundTags, SoundTagsAdmin)
 admin.site.register(UserTempSoundList)

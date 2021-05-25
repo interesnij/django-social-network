@@ -3,7 +3,11 @@ from video.models import VideoCategory, VideoList, Video, VideoComment
 
 
 
-admin.site.register(VideoList)
+class VideoListAdmin(admin.ModelAdmin):
+    search_fields = ('creator',)
+    list_display = ['name','community','type','creator', 'order']
+
+admin.site.register(VideoList, VideoListAdmin)
 admin.site.register(VideoCategory)
 admin.site.register(Video)
 admin.site.register(VideoComment)
