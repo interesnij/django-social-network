@@ -9,13 +9,13 @@ class UserCoberturaYear(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.years, self.template_name, pk = [], UserNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
+		self.views, self.years, self.template_name = [], PostNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
 			view = request.user.get_post_views_for_year(i.year)
 			self.views += [view]
-		current_views = UserNumbers.objects.filter(created__year=self.years[0].year, target=pk).values('target').distinct()
-		user_ids = [use['target'] for use in current_views]
-		self.users = User.objects.filter(id__in=user_ids)
+		#current_views = UserNumbers.objects.filter(created__year=self.years[0].year, target=pk).values('target').distinct()
+		#user_ids = [use['target'] for use in current_views]
+		#self.users = User.objects.filter(id__in=user_ids)
 		return super(UserCoberturaYear,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -23,7 +23,7 @@ class UserCoberturaYear(TemplateView):
 		context["user"] = self.request.user
 		context["years"] = self.years
 		context["views"] = self.views
-		context["mf_ages"] = get_mf_ages(self.users)
+		#context["mf_ages"] = get_mf_ages(self.users)
 		return context
 
 
