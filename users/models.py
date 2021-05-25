@@ -1262,25 +1262,25 @@ class User(AbstractUser):
         from posts.models import Post
         count, posts = 0, Post.objects.filter(list__in=self.get_post_lists())
         for i in posts:
-            count += i.views
+            count += i.view
         return count
     def get_post_views_for_month(self, month):
         from posts.models import Post
         count, posts = 0, Post.objects.filter(list__in=self.get_post_lists())
         for i in posts:
-            count += i.views
+            count += i.view
         return count
     def get_post_views_for_week(self, week):
         from posts.models import Post
         count, posts = 0, Post.objects.filter(list__in=self.get_post_lists())
         for i in posts:
-            count += i.views
+            count += i.view
         return count
     def get_post_views_for_day(self, day):
         from posts.models import Post
         count, posts = 0, Post.objects.filter(list__in=self.get_post_lists())
         for i in posts:
-            count += i.views
+            count += i.view
         return count
 
     def get_longest_user_penalties(self):
