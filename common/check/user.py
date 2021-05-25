@@ -21,7 +21,7 @@ def check_can_block_user(user, user_id):
         raise ValidationError('Вы не можете блокировать себя')
     check_user_not_blocked(user=user, user_id=user_id)
 def check_has_not_reached_max_connections(user):
-    if user.count_connections() > settings.USER_MAX_CONNECTIONS:
+    if user.count_friends() > settings.USER_MAX_CONNECTIONS:
         raise ValidationError('Достигнуто максимальное количество друзей',)
 
 def check_can_unblock_user(user, user_id):
