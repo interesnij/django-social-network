@@ -155,7 +155,7 @@ class UserMusicList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.playlist.get_items()
+		return self.list.get_items()
 
 
 class UserDocsList(ListView):
