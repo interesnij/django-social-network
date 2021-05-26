@@ -6,3 +6,6 @@ def get_video_list_processing(list, status):
     list.type = status
     list.save(update_fields=['type'])
     return list
+def get_video_comment_processing(comment, status):
+    comment.status = "PUB"
+    comment.save(update_fields=['status'])

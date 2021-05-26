@@ -1,9 +1,11 @@
 
-def get_post_processing(doc, status):
-    doc.status = status
-    doc.save(update_fields=['status'])
-
-    return doc
+def get_post_processing(post, status):
+    post.status = status
+    post.save(update_fields=['status'])
+    return post
+def get_post_comment_processing(comment, status):
+    comment.status = "PUB"
+    comment.save(update_fields=['status'])
 def get_post_list_processing(list, status):
     list.type = status
     list.save(update_fields=['type'])

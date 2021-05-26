@@ -959,6 +959,7 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent, text, community):
+        from common.processing.post import get_post_comment_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
@@ -982,6 +983,7 @@ class PostComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+        get_post_comment_processing()
         return comment
 
     def count_replies_ru(self):

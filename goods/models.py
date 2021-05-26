@@ -741,6 +741,7 @@ class GoodComment(models.Model):
 	def create_comment(cls, commenter, attach, good, parent, text, community):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 		from django.utils import timezone
+		from common.processing.good import get_good_comment_processing
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
@@ -761,6 +762,7 @@ class GoodComment(models.Model):
 			else:
 				user_notify(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
+		get_good_comment_processing()
 		return comment
 
 	def get_created(self):

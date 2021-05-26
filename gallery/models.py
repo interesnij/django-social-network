@@ -702,6 +702,7 @@ class PhotoComment(models.Model):
     @classmethod
     def create_comment(cls, commenter, attach, photo, parent, text, community):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
+        from common.processing.photo import get_photo_comment_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
@@ -722,6 +723,7 @@ class PhotoComment(models.Model):
             else:
                 user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+        get_photo_comment_processing()
         return comment
 
     def get_u_attach(self, user):

@@ -638,6 +638,8 @@ class VideoComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, video, parent, text, community):
+        from common.processing.post import get_video_comment_processing
+
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text)
@@ -661,6 +663,7 @@ class VideoComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
+        get_video_comment_processing()
         return comment
 
     def count_replies_ru(self):
