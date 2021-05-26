@@ -4,7 +4,7 @@ from communities.models import Community
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from pilkit.processors import ResizeToFill, ResizeToFit
-from communities.helpers import upload_to_community_avatar_directory, upload_to_community_cover_directory
+from communities.helpers import upload_to_community_b_avatar_directory, upload_to_community_cover_directory
 from imagekit.models import ProcessedImageField
 from django.conf import settings
 
@@ -12,8 +12,8 @@ from django.conf import settings
 class CommunityInfo(models.Model):
     community = models.OneToOneField(Community, related_name="community_info", verbose_name="Сообщество", on_delete=models.CASCADE)
     description = models.TextField(max_length=settings.COMMUNITY_DESCRIPTION_MAX_LENGTH, blank=True, null=True, verbose_name="Описание" )
-    cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_avatar_directory,processors=[ResizeToFit(width=1024, upscale=False)])
-    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
+    cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 90},upload_to=upload_to_community_cover_directory,processors=[ResizeToFit(width=1024, upscale=False)])
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_b_avatar_directory)
 
     posts = models.PositiveIntegerField(default=0, verbose_name="Кол-во постов")
     views_post = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров постов")
