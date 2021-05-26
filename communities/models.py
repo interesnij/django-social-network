@@ -340,6 +340,12 @@ class Community(models.Model):
         query.add(~Q(type__contains="_"), Q.AND)
         return PhotoList.objects.filter(query)
 
+    def get_doc_lists(self):
+        from docs.models import DocList
+        query = Q(community_id=self.id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return DocList.objects.filter(query)
+
     def get_video_lists(self):
         from video.models import VideoList
         query = Q(community_id=self.id)

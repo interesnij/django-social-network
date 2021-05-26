@@ -1104,7 +1104,7 @@ class User(AbstractUser):
     def get_last_docs(self):
         return self.get_doc_list().get_items()[:6]
 
-    def get_docs_lists(self):
+    def get_doc_lists(self):
         from docs.models import DocList
         return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 

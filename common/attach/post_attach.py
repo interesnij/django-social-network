@@ -27,7 +27,7 @@ def get_u_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_audio_playlists():
+                    for list in user.get_playlists():
                         if list.is_item_in_list(music.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
@@ -65,7 +65,7 @@ def get_u_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_docs_lists():
+                    for list in user.get_doc_lists():
                         if list.is_item_in_list(doc.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_doc_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
@@ -221,7 +221,7 @@ def get_c_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_audio_playlists():
+                    for list in user.get_playlists():
                         if list.is_item_in_list(music.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
@@ -259,7 +259,7 @@ def get_c_post_attach(post, user):
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
-                    for list in user.get_docs_lists():
+                    for list in user.get_doc_lists():
                         if list.is_item_in_list(doc.pk):
                             lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item c_remove_doc_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
                         else:
