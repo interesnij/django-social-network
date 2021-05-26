@@ -171,7 +171,7 @@ on('#ajax', 'click', '.c_photo_comments', function() {
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/gallery/community/comment/" + uuid + "/" + pk + "/");
+    block.firstChild ? null : list_load(block, "/gallery/community/comment/" + pk + "/" + uuid + "/");
     block.classList.add("show")
   }
 });
