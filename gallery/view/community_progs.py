@@ -98,11 +98,10 @@ class CommunityAddAvatar(View):
         if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
             photo_input = request.FILES.get('file')
             _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
-            photo = Photo.create_photo(creator=self.user, image=photo_input, list=_list, type="PHAVA")
+            photo = Photo.create_photo(creator=request.user, image=photo_input, list=_list, type="PHAVA")
             photo.list.add(_list)
             community.create_s_avatar(photo_input)
             community.create_b_avatar(photo_input)
-            community.plus_photos(1)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

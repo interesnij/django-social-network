@@ -42,8 +42,6 @@ class UserAddAvatar(View):
             _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
             photo = Photo.create_photo(creator=user, image=photo_input, list=_list, type="PHAVA")
             photo.list.add(_list)
-            user.plus_photos(1)
-
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
             return HttpResponse()

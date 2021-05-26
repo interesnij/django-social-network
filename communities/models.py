@@ -367,16 +367,19 @@ class Community(models.Model):
         return self.s_avatar
     def create_b_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
-        self.b_avatar = photo_input
-        self.save(update_fields=['b_avatar'])
-        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
-        self.b_avatar = new_img
-        self.save(update_fields=['b_avatar'])
-        return self.b_avatar
+        from communities.model.settings import CommunityInfo
+
+        info = CommunityInfo.objects.get(community=self)
+        info.b_avatar = photo_input
+        info.save(update_fields=['b_avatar'])
+        new_img = get_thumbnailer(info.b_avatar)['avatar'].url.replace('media/', '')
+        info.b_avatar = new_img
+        info.save(update_fields=['b_avatar'])
+        return info.b_avatar
 
     def get_b_avatar(self):
         try:
-            return self.b_avatar.url
+            return self.community_info.b_avatar.url
         except:
             return None
 
