@@ -13,9 +13,7 @@ import django, json, requests
 django.setup()
 
 
-from goods.models import Good, GoodSubCategory
+from music.models import Music
 from users.models import User
 
-creator = User.objects.get(pk=1)
-sub_category = GoodSubCategory.objects.get(order=1)
-new_good = Good.create_good(title="Title", image=None, sub_category=sub_category, creator=creator, description="fdkgj ", community__isnull=True, price="1000", comments_enabled=True, votes_on=True, status="PG")
+Music.objects.all().update(creator_id=1)
