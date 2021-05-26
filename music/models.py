@@ -387,7 +387,7 @@ class Music(models.Model):
     status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_track', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_track', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Создатель")
 
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
