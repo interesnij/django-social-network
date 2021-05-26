@@ -762,7 +762,7 @@ class GoodComment(models.Model):
 			else:
 				user_notify(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
-		get_good_comment_processing()
+		get_good_comment_processing(comment)
 		return comment
 
 	def get_created(self):
