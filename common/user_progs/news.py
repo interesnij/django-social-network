@@ -13,8 +13,8 @@ def get_news(user):
         - прикрепленные элементы просто записаны в текстовое поле, например pho_19 - это фотка под номером 19. Так
             пользователь увидит все действия, как и в контакте.
     """
-    query = Q(creator_id__in=user.get_user_news_notify_ids())|\
-            Q(community_id__in=user.get_community_news_notify_ids())|\
+    query = Q(creator_id__in=user.get_user_news_notify_ids(),verb="ITE")|\
+            Q(community_id__in=user.get_community_news_notify_ids(),verb="ITE")|\
             Q(Q(creator_id=user.pk) & Q(verb="ITE"))
     query.add(Q(object_set__isnull=True), Q.AND)
     query.add(~Q(status="C"), Q.AND)
