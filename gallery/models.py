@@ -385,7 +385,7 @@ class Photo(models.Model):
                 community = list.community
                 community.plus_photos(1)
                 community_id = community.pk
-                Wall.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
+                Wall.objects.create(creator_id=creator.pk, community_id=community_id, type=type, object_id=photo.pk, verb="ITE")
                 community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
                 for user_id in list.community.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
