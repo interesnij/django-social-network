@@ -26,13 +26,6 @@ urlpatterns = [
     url(r'^u_good_load/$', login_required(UserLoadGood.as_view()), name="u_good_load"),
     url(r'^u_good_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadGoodList.as_view()), name="u_good_list_load"),
 
-    url(r'^c_img_load/$', login_required(CommunityLoadPhoto.as_view())),
-    url(r'^c_img_comment_load/$', login_required(CommunityLoadPhotoComment.as_view())),
-    url(r'^c_video_load/$', login_required(CommunityLoadVideo.as_view())),
-    url(r'^c_music_load/$', login_required(CommunityLoadMusic.as_view())),
-    url(r'^c_article_load/$', login_required(CommunityLoadArticle.as_view())),
-    url(r'^c_good_load/(?P<pk>\d+)/$', login_required(CommunityLoadGood.as_view())),
-
     url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())),
     url(r'^communities/$', login_required(CommunitiesLoad.as_view())),
     url(r'^friends/$', login_required(FriendsLoad.as_view())),

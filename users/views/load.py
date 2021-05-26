@@ -248,61 +248,6 @@ class UserLoadGoodList(ListView):
 		return self.list.get_items()
 
 
-class CommunityLoadPhoto(ListView):
-	template_name = 'users/load/c_photo_load.html'
-	paginate_by = 15
-
-	def get_queryset(self):
-		return self.request.user.get_photos().order_by('-created')
-
-class CommunityLoadPhotoComment(ListView):
-	template_name = 'users/load/c_photo_comments_load.html'
-	paginate_by = 15
-
-	def get_queryset(self):
-		return self.request.user.get_photos().order_by('-created')
-
-class CommunityLoadVideo(ListView):
-	template_name = 'users/load/c_video_load.html'
-	paginate_by = 15
-
-	def get_queryset(self):
-		return self.request.user.get_video().order_by('-created')
-
-class CommunityLoadMusic(ListView):
-	template_name = 'users/load/c_music_load.html'
-	paginate_by = 15
-
-	def get_queryset(self):
-		return self.request.user.get_music().order_by('-created')
-
-class CommunityLoadArticle(ListView):
-	template_name = 'users/load/c_article_load.html'
-	paginate_by = 15
-
-	def get_queryset(self):
-		return self.request.user.get_articles().order_by('-created')
-
-
-class CommunityLoadGood(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		from music.models import GoodList
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = GoodList.objects.get(type=GoodList.MAIN, community=self.community)
-		self.template_name = get_settings_template("users/load/c_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityLoadGood,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(CommunityLoadGood,self).get_context_data(**kwargs)
-		context["list"] = self.list
-		return context
-
-	def get_queryset(self):
-		return self.list.get_goods()
-
-
 class ChatItemsLoad(ListView):
 	template_name, paginate_by = None, 15
 
