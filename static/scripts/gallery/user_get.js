@@ -91,10 +91,9 @@ on('#ajax', 'click', '.u_WAL_photo', function() {
   open_fullscreen("/gallery/user/wall_photo/" + pk + "/" + photo_pk + "/", loader)
 });
 on('#ajax', 'click', '.u_AVA_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   photo_pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar_photo/" + pk + "/" + photo_pk + "/", loader)
+  open_fullscreen("/gallery/user/avatar_photo/" + photo_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_photos_add', function() {

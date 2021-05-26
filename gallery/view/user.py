@@ -201,7 +201,6 @@ class UserDetailAvatar(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator=self.user, community__isnull=True, type=PhotoList.AVATAR)
         self.photos = self.list.get_items()
         if request.is_ajax():
@@ -212,7 +211,7 @@ class UserDetailAvatar(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserDetailAvatar,self).get_context_data(**kwargs)
-        context["object"] = self.photo
+        context["object"] = self.photo.creator
         context["user"] = self.user
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
         context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
