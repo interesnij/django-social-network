@@ -382,8 +382,8 @@ class Photo(models.Model):
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
 
-                list.community.plus_photos(1)
-
+                community = list.community
+                community.plus_photos(1)
                 community_id = community.pk
                 Wall.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
                 community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
