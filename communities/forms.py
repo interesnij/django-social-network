@@ -21,7 +21,7 @@ class GeneralCommunityForm(forms.ModelForm):
 class CoverCommunityForm(forms.ModelForm):
 	class Meta:
 		model = CommunityInfo
-		fields = ['cover', ]
+		fields = ['description', ]
 
 
 class CatCommunityForm(forms.ModelForm):
