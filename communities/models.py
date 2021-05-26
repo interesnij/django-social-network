@@ -63,10 +63,11 @@ class Community(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=TYPE, default=THIS_PROCESSING, max_length=5)
-    s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_cover_directory)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
-    banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
+    s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
+    b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
+    cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_community_cover_directory,processors=[ResizeToFit(width=1024, upscale=False)])
 
     class Meta:
         verbose_name = 'сообщество'
@@ -367,19 +368,17 @@ class Community(models.Model):
         return self.s_avatar
     def create_b_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
-        from communities.model.settings import CommunityInfo
 
-        info = CommunityInfo.objects.get(community=self)
-        info.b_avatar = photo_input
-        info.save(update_fields=['b_avatar'])
-        new_img = get_thumbnailer(info.b_avatar)['avatar'].url.replace('media/', '')
-        info.b_avatar = new_img
-        info.save(update_fields=['b_avatar'])
-        return info.b_avatar
+        self.b_avatar = photo_input
+        self.save(update_fields=['b_avatar'])
+        new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
+        self.b_avatar = new_img
+        self.save(update_fields=['b_avatar'])
+        return self.b_avatar
 
     def get_b_avatar(self):
         try:
-            return self.community_info.b_avatar.url
+            return self.b_avatar.url
         except:
             return None
 
