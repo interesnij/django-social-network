@@ -42,7 +42,7 @@ def community_notify(creator, community, action_community_id, object_id, type, s
         if Notify.objects.filter(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, action_community_id=action_community_id, object_id=object_id, type=type, verb=verb).exists():
             pass
         elif Notify.objects.filter(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, action_community_id=action_community_id, created__gt=today, type=type, verb=verb).exists():
-            notify = Notify.objects.get(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, created__gt=today, action_community_id=action_community_id, object_id=object_id, type=type, verb=verb)
+            notify = Notify.objects.get(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, created__gt=today, action_community_id=action_community_id, type=type, verb=verb)
             Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, community_id=community.pk, action_community_id=action_community_id, object_id=object_id, type=type, verb=verb, user_set=notify)
         elif Notify.objects.filter(community_id=community.pk, recipient_id=user_id, object_id=object_id, type=type, created__gt=today, verb=verb).exists():
             notify = Notify.objects.get(community_id=community.pk, recipient_id=user_id, object_id=object_id, type=type, created__gt=today, verb=verb)
