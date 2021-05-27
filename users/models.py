@@ -904,6 +904,7 @@ class User(AbstractUser):
         query = []
         for frend_id in self.get_6_populate_friends_ids():
             query.append(User.objects.get(pk=frend_id))
+        return query
 
     def get_6_friends(self):
         try:
