@@ -24,7 +24,7 @@ def get_template_community_video(list, folder, template, request_user, user_agen
             elif request_user.is_video_manager():
                 template_name = folder + "staff_member_" + template
             else:
-                template_name = folder + "member_" + template
+                template_name = folder + template
         elif request_user.is_follow_from_community(community.pk):
             template_name = "generic/c_template/follow_community.html"
         elif request_user.is_video_manager():
