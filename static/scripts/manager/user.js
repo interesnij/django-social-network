@@ -70,7 +70,7 @@ on('#ajax', 'click', '.create_user_suspend_btn', function() {
     document.querySelector(".worker_fullscreen").style.display = "none";
     document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
-      this_page_reload('/users/' + pk + '/')
+      this_page_reload('/id' + pk + '/')
     }else if (li.querySelector(".btn_console")){
       li.remove();
     }
@@ -99,7 +99,7 @@ on('#ajax', 'click', '.create_user_blocker_btn', function() {
     document.querySelector(".worker_fullscreen").style.display = "none";
     document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
-      this_page_reload('/users/' + pk + '/')
+      this_page_reload('/id' + pk + '/')
     }else if (li.querySelector(".btn_console")){
       li.remove();
     }
@@ -128,7 +128,7 @@ on('#ajax', 'click', '.create_user_warning_banner_btn', function() {
     document.querySelector(".worker_fullscreen").style.display = "none";
     document.getElementById("worker_loader").innerHTML="";
     if (document.body.querySelector(".pk_saver")) {
-      this_page_reload('/users/' + pk + '/')
+      this_page_reload('/id' + pk + '/')
     }else if (li.querySelector(".btn_console")){
       li.remove();
     }

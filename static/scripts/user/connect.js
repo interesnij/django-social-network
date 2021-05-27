@@ -7,7 +7,7 @@ on('#ajax', 'click', '.follow_create', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
      : (a = document.createElement("a"), a.classList.add("small", "follow_delete", "pointer"), a.innerHTML = 'Отписаться', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
@@ -23,7 +23,7 @@ on('#ajax', 'click', '.follow_delete', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
           : (a = document.createElement("a"), a.classList.add("small", "follow_create", "pointer"), a.innerHTML = 'Подписаться', _this.parentElement.append(a), _this.remove())
   }};
   link_.ontimeout = function() {alert( 'Извините, запрос превысил максимальное время' )}
@@ -57,7 +57,7 @@ on('#ajax', 'click', '.connect_create', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     minus_new_followers();
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
         : (a = document.createElement("a"), a.classList.add("small", "connect_delete", "pointer"), a.innerHTML = 'Убрать из друзей', _this.parentElement.append(a), _this.remove())
   }}
   link_.send();
@@ -70,7 +70,7 @@ on('#ajax', 'click', '.connect_delete', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
       : (a = document.createElement("a"), a.classList.add("small", "connect_create", "pointer"), a.innerHTML = 'Добавить в друзья', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
@@ -83,7 +83,7 @@ on('#ajax', 'click', '.user_block', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
     : (a = document.createElement("a"), a.classList.add("small", "user_unblock", "pointer"), a.innerHTML = 'Разблокировать', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
@@ -96,7 +96,7 @@ on('#ajax', 'click', '.user_unblock', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    document.body.querySelector(".pk_saver") ? this_page_reload('/users/' + pk + '/')
+    document.body.querySelector(".pk_saver") ? this_page_reload('/id' + pk + '/')
     : (a = document.createElement("a"), a.classList.add("small", "user_block", "pointer"), a.innerHTML = 'Заблокировать', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
