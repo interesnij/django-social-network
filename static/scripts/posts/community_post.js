@@ -376,27 +376,6 @@ on('#ajax', 'click', '.c_post_wall_restore', function() {
   link.send();
 });
 
-on('#ajax', 'change', '#c_photo_post_attach', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_photos"));
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_attach_photo/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".c_photo_detail");
-
-    photo_post_upload_attach(response.querySelectorAll(".c_photo_detail"), document.body.querySelector(".attach_block"), photo_list.length);
-    }
-    close_create_window();
-  }
-  link_.send(form_data);
-});
-
 on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
