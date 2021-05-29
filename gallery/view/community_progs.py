@@ -46,7 +46,6 @@ class CommunityCreatePhotosInMainList(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHO", community=community)
                 photos += [photo,]
-            community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
         else:
             raise Http404
@@ -65,7 +64,6 @@ class CommunityCreatePhotosInPhotoList(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
                 photos += [photo,]
-            community.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/c_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'community': community})
         else:
             raise Http404
