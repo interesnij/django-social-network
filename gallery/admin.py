@@ -9,7 +9,7 @@ class PhotoListAdmin(admin.ModelAdmin):
         model = PhotoList
 
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ['creator', 'created']
+    list_display = ['creator','community', 'created', "list"]
     list_filter = ['creator', ]
 
     class Meta:
