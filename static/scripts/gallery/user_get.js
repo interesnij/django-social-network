@@ -5,13 +5,17 @@ on('#ajax', 'click', '.u_MAI_photo', function() {
   open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
 });
 
+on('#ajax', 'click', '.comment_photo', function() {
+  pk = this.getAttribute('photo-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/user/comment_photo/" + pk + "/", loader)
+});
 on('#ajax', 'click', '.u_post_photo', function() {
   pk = this.getAttribute('photo-pk');
   uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/post_photo/" + uuid + "/" + pk + "/", loader)
 });
-
 on('#ajax', 'click', '.u_photo_priview', function() {
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");

@@ -249,30 +249,23 @@ class UserPostPhoto(TemplateView):
 		return context
 
 class UserCommentPhoto(TemplateView):
-	"""
-	страница отдельного фото комментария к записи пользователя с разрещениями и без
-	"""
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostComment
-		from common.template.photo import get_permission_user_photo_2
+		from common.template.photo import get_permission_user_photo_2, get_permission_user_photo_2
 
-		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-		self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-		self.photos = self.comment.get_attach_items()
-		if request.is_ajax():
-			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		if self.photo.community:
+			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/c_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			raise Http404
+			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserCommentPhoto,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["user"] = self.request.user
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
 		return context
 
