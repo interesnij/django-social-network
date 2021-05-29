@@ -142,7 +142,7 @@ class UserPhotosListPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotosList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
