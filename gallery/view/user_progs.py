@@ -40,7 +40,7 @@ class UserAddAvatar(View):
         if request.is_ajax() and user == request.user:
             photo_input = request.FILES.get('file')
             _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
-            photo = Photo.create_photo(creator=user, image=photo_input, list=_list, type="PHAVA")
+            photo = Photo.create_photo(creator=user, image=photo_input, list=_list, type="PHAVA", community=None)
             photo.list.add(_list)
             request.user.create_s_avatar(photo_input)
             request.user.create_b_avatar(photo_input)
@@ -58,7 +58,7 @@ class UserCreatePhotosInMainList(View):
         if request.is_ajax() and self.user == request.user:
             list = PhotoList.objects.get(creator_id=self.user.id, community__isnull=True, type=PhotoList.MAIN)
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHO")
+                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHO", community=None)
                 photos += [photo,]
             self.user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
@@ -76,7 +76,7 @@ class UserCreatePhotosInPhotoList(View):
         uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS")
+                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS", community=None)
                 photos += [photo,]
             user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
@@ -96,7 +96,7 @@ class PhotoAttachUserCreate(View):
             except:
                 list = PhotoList.objects.create(creator=request.user, type=PhotoList.WALL, name="Фото со стены", description="Фото со стены")
             for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHWAL")
+                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHWAL", community=None)
                 photos += [photo,]
             user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})

@@ -370,18 +370,17 @@ class Photo(models.Model):
         return self.save(update_fields=['repost'])
 
     @classmethod
-    def create_photo(cls, creator, image, list, type):
+    def create_photo(cls, creator, image, list, type, community):
         from common.processing.photo import get_photo_processing
 
         photo = cls.objects.create(creator=creator,preview=image,file=image)
         list.photo_list.add(photo)
         if not list.is_private():
             get_photo_processing(photo, Photo.PUBLISHED)
-            if list.community:
+            if community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
 
-                community = list.community
                 community.plus_photos(1)
                 community_id = community.pk
                 Wall.objects.create(creator_id=creator.pk, community_id=community_id, type=type, object_id=photo.pk, verb="ITE")
