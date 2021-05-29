@@ -34,20 +34,20 @@ class VideoCategory(models.Model):
 
 
 class VideoList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     name = models.CharField(max_length=250, verbose_name="Название")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_creator', verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -72,16 +72,16 @@ class VideoList(models.Model):
             VideoList.objects.create(creator=instance, type=VideoList.MAIN, name="Основной список", order=0)
 
     def is_not_empty(self):
-        return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
+        return self.video_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
 
     def get_staff_items(self):
-        return self.video_list.filter(Q(status="PUB")|Q(status="PRI"))
+        return self.video_list.filter(Q(type="PUB")|Q(type="PRI"))
     def get_items(self):
-        return self.video_list.filter(status="PUB")
+        return self.video_list.filter(type="PUB")
     def get_manager_items(self):
-        return self.video_list.filter(status="MAN")
+        return self.video_list.filter(type="MAN")
     def count_items(self):
-        return self.video_list.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
+        return self.video_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
 
     def is_main(self):
         return self.type == self.MAIN
@@ -226,11 +226,11 @@ class VideoList(models.Model):
     def delete_list(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = VideoList.THIS_DELETED
+            self.type = VideoList.DELETED
         elif self.type == "PRI":
-            self.type = VideoList.THIS_DELETED_PRIVATE
+            self.type = VideoList.DELETED_PRIVATE
         elif self.type == "MAN":
-            self.type = VideoList.THIS_DELETED_MANAGER
+            self.type = VideoList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
@@ -253,13 +253,13 @@ class VideoList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = VideoList.THIS_CLOSED
+            self.type = VideoList.CLOSED
         elif self.type == "MAI":
-            self.type = VideoList.THIS_CLOSED_MAIN
+            self.type = VideoList.CLOSED_MAIN
         elif self.type == "PRI":
-            self.type = VideoList.THIS_CLOSED_PRIVATE
+            self.type = VideoList.CLOSED_PRIVATE
         elif self.type == "MAN":
-            self.type = VideoList.THIS_CLOSED_MANAGER
+            self.type = VideoList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
@@ -283,11 +283,11 @@ class VideoList(models.Model):
 
 
 class Video(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
-    STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    TYPE = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
@@ -303,7 +303,7 @@ class Video(models.Model):
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
     community = models.ForeignKey('communities.Community', related_name='video_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
@@ -478,16 +478,16 @@ class Video(models.Model):
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.status = Video.PRIVATE
-        self.save(update_fields=['status'])
+        self.type = Video.PRIVATE
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.status = Video.PUBLISHED
-        self.save(update_fields=['status'])
+        self.type = Video.PUBLISHED
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -495,13 +495,13 @@ class Video(models.Model):
 
     def delete_video(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Video.THIS_DELETED
-        elif self.status == "PRI":
-            self.status = Video.THIS_DELETED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Video.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Video.DELETED
+        elif self.type == "PRI":
+            self.type = Video.DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Video.DELETED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_videos(1)
         else:
@@ -512,13 +512,13 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def restore_video(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = Video.PUBLISHED
-        elif self.status == "_DELP":
-            self.status = Video.PRIVATE
-        elif self.status == "_DELM":
-            self.status = Video.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = Video.PUBLISHED
+        elif self.type == "_DELP":
+            self.type = Video.PRIVATE
+        elif self.type == "_DELM":
+            self.type = Video.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_videos(1)
         else:
@@ -530,13 +530,13 @@ class Video(models.Model):
 
     def close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Video.THIS_CLOSED
-        elif self.status == "PRI":
-            self.status = Video.THIS_CLOSED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Video.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Video.CLOSED
+        elif self.type == "PRI":
+            self.type = Video.CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Video.CLOSED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_videos(1)
         else:
@@ -547,13 +547,13 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = Video.PUBLISHED
-        elif self.status == "_CLOP":
-            self.status = Video.PRIVATE
-        elif self.status == "_CLOM":
-            self.status = Video.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = Video.PUBLISHED
+        elif self.type == "_CLOP":
+            self.type = Video.PRIVATE
+        elif self.type == "_CLOM":
+            self.type = Video.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_videos(1)
         else:
@@ -570,13 +570,13 @@ class Video(models.Model):
 
 
 class VideoComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
-    THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
-    THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
-    STATUS = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
-        (THIS_CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+    EDITED, PUBLISHED, PROCESSING = 'EDI', 'PUB', '_PRO'
+    DELETED, EDITED_DELETED = '_DEL', '_DELE'
+    CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
+    TYPE = (
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='video_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -584,7 +584,7 @@ class VideoComment(models.Model):
     text = models.TextField(blank=True)
     video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -607,10 +607,10 @@ class VideoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        return self.video_comment_replies.filter(Q(status=VideoComment.EDITED)|Q(status=VideoComment.PUBLISHED)).only("pk")
+        return self.video_comment_replies.filter(Q(type=VideoComment.EDITED)|Q(type=VideoComment.PUBLISHED)).only("pk")
 
     def count_replies(self):
-        return self.video_comment_replies.filter(Q(status=VideoComment.EDITED)|Q(status=VideoComment.PUBLISHED)).values("pk").count()
+        return self.video_comment_replies.filter(Q(type=VideoComment.EDITED)|Q(type=VideoComment.PUBLISHED)).values("pk").count()
 
     def likes(self):
         return VideoCommentVotes.objects.filter(item=self, vote__gt=0)
@@ -667,7 +667,7 @@ class VideoComment(models.Model):
         return comment
 
     def count_replies_ru(self):
-        count = self.video_comment_replies.filter(Q(status="PUB")|Q(status="EDI")).values("pk").count()
+        count = self.video_comment_replies.filter(Q(type="PUB")|Q(type="EDI")).values("pk").count()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):
@@ -768,11 +768,11 @@ class VideoComment(models.Model):
 
     def delete_comment(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = VideoComment.THIS_DELETED
-        elif self.status == "EDI":
-            self.status = VideoComment.THIS_EDITED_DELETED
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = VideoComment.DELETED
+        elif self.type == "EDI":
+            self.type = VideoComment.EDITED_DELETED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.video.comment -= 1
             self.parent.video.save(update_fields=["comment"])
@@ -787,11 +787,11 @@ class VideoComment(models.Model):
             Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
     def restore_comment(self):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = VideoComment.PUBLISHED
-        elif self.status == "_DELE":
-            self.status = VideoComment.EDITED
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = VideoComment.PUBLISHED
+        elif self.type == "_DELE":
+            self.type = VideoComment.EDITED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.video.comment += 1
             self.parent.video.save(update_fields=["comment"])
@@ -807,11 +807,11 @@ class VideoComment(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = VideoComment.THIS_CLOSED
-        elif self.status == "EDI":
-            self.status = VideoComment.THIS_EDITED_CLOSED
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = VideoComment.CLOSED
+        elif self.type == "EDI":
+            self.type = VideoComment.EDITED_CLOSED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.video.comment -= 1
             self.parent.video.save(update_fields=["comment"])
@@ -826,11 +826,11 @@ class VideoComment(models.Model):
             Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = VideoComment.PUBLISHED
-        elif self.status == "_CLOE":
-            self.status = VideoComment.EDITED
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = VideoComment.PUBLISHED
+        elif self.type == "_CLOE":
+            self.type = VideoComment.EDITED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.video.comment += 1
             self.parent.video.save(update_fields=["comment"])

@@ -32,7 +32,7 @@ class UserFixPostView(TemplateView):
         from posts.models import Post, PostList
 
         self.user, self.post = User.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.list = PostList.objects.get(creator_id=self.user.pk, type=PostList.THIS_FIXED)
+        self.list = PostList.objects.get(creator_id=self.user.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
         self.template_name = get_template_user_post(self.list, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserFixPostView,self).get(request,*args,**kwargs)

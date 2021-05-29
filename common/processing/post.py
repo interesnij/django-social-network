@@ -1,13 +1,13 @@
 
-def get_post_processing(post, status):
-    post.status = status
-    post.save(update_fields=['status'])
+def get_post_processing(post, type):
+    post.type = type
+    post.save(update_fields=['type'])
     return post
 def get_post_comment_processing(comment):
-    comment.status = "PUB"
-    comment.save(update_fields=['status'])
-def get_post_list_processing(list, status):
-    list.type = status
+    comment.type = "PUB"
+    comment.save(update_fields=['type'])
+def get_post_list_processing(list, type):
+    list.type = type
     list.save(update_fields=['type'])
     return list
 

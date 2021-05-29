@@ -59,18 +59,18 @@ class SoundSymbol(models.Model):
 
 
 class SoundList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
@@ -101,18 +101,18 @@ class SoundList(models.Model):
         return self.playlist.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.playlist.filter(Q(status="PUB")|Q(status="PRI")).values("pk").exists()
+        return self.playlist.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
 
     def get_staff_items(self):
-        return self.playlist.filter(Q(status="PUB")|Q(status="PRI"))
+        return self.playlist.filter(Q(type="PUB")|Q(type="PRI"))
     def get_items(self):
-        return self.playlist.filter(status="PUB")
+        return self.playlist.filter(type="PUB")
     def get_6_items(self):
-        return self.playlist.filter(status="PUB")[:6]
+        return self.playlist.filter(type="PUB")[:6]
     def get_manager_items(self):
-        return self.playlist.filter(status="MAN")
+        return self.playlist.filter(type="MAN")
     def count_items(self):
-        return self.playlist.filter(Q(status="PUB")|Q(status="PRI")).values("pk").count()
+        return self.playlist.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
@@ -217,11 +217,11 @@ class SoundList(models.Model):
     def delete_list(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SoundList.THIS_DELETED
+            self.type = SoundList.DELETED
         elif self.type == "PRI":
-            self.type = SoundList.THIS_DELETED_PRIVATE
+            self.type = SoundList.DELETED_PRIVATE
         elif self.type == "MAN":
-            self.type = SoundList.THIS_DELETED_MANAGER
+            self.type = SoundList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
@@ -244,13 +244,13 @@ class SoundList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SoundList.THIS_CLOSED
+            self.type = SoundList.CLOSED
         elif self.type == "MAI":
-            self.type = SoundList.THIS_CLOSED_MAIN
+            self.type = SoundList.CLOSED_MAIN
         elif self.type == "PRI":
-            self.type = SoundList.THIS_CLOSED_PRIVATE
+            self.type = SoundList.CLOSED_PRIVATE
         elif self.type == "MAN":
-            self.type = SoundList.THIS_CLOSED_MANAGER
+            self.type = SoundList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
@@ -369,11 +369,11 @@ class UserTempSoundList(models.Model):
 
 
 class Music(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
-    STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    TYPE = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -384,7 +384,7 @@ class Music(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
     list = models.ManyToManyField(SoundList, related_name='playlist', blank="True")
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_track', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Создатель")
@@ -484,13 +484,13 @@ class Music(models.Model):
 
     def delete_track(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Music.THIS_DELETED
-        elif self.status == "PRI":
-            self.status = Music.THIS_DELETED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Music.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Music.DELETED
+        elif self.type == "PRI":
+            self.type = MusicDELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Music.DELETED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_tracks(1)
         else:
@@ -501,13 +501,13 @@ class Music(models.Model):
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
     def restore_track(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = Music.PUBLISHED
-        elif self.status == "_DELP":
-            self.status = Music.PRIVATE
-        elif self.status == "_DELM":
-            self.status = Music.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = Music.PUBLISHED
+        elif self.type == "_DELP":
+            self.type = Music.PRIVATE
+        elif self.type == "_DELM":
+            self.type = Music.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_tracks(1)
         else:
@@ -519,13 +519,13 @@ class Music(models.Model):
 
     def close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Music.THIS_CLOSED
-        elif self.status == "PRI":
-            self.status = Music.THIS_CLOSED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Music.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Music.CLOSED
+        elif self.type == "PRI":
+            self.type = Music.CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Music.CLOSED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_tracks(1)
         else:
@@ -536,13 +536,13 @@ class Music(models.Model):
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = Music.PUBLISHED
-        elif self.status == "_CLOP":
-            self.status = Music.PRIVATE
-        elif self.status == "_CLOM":
-            self.status = Music.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = Music.PUBLISHED
+        elif self.type == "_CLOP":
+            self.type = Music.PRIVATE
+        elif self.type == "_CLOM":
+            self.type = Music.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_tracks(1)
         else:
@@ -554,16 +554,16 @@ class Music(models.Model):
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.status = Music.PRIVATE
-        self.save(update_fields=['status'])
+        self.type = Music.PRIVATE
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.status = Music.PUBLISHED
-        self.save(update_fields=['status'])
+        self.type = Music.PUBLISHED
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():

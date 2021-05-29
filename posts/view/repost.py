@@ -194,7 +194,7 @@ class UMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, attach=request.POST.getlist('attach_items'), category=None, lists=[], is_signature=False, text=post.text, comments_enabled=False, votes_on=False, parent=parent, status="PG",is_public=None,community=None)
+                new_post = post.create_post(creator=request.user, text=post.text, category=None, lists=[], attach=request.POST.getlist('attach_items'), parent=parent, is_signature=False, comments_enabled=False, votes_on=False, is_public=None,community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")

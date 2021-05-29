@@ -4,21 +4,21 @@ def get_u_comment_attach(comment, user):
         if item[:3] == "pho":
             try:
                 from gallery.models import Photo
-                photo = Photo.objects.get(pk=item[3:], status="PUB")
+                photo = Photo.objects.get(pk=item[3:], type="PUB")
                 block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_120 u_comment_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":
             try:
                 from video.models import Video
-                video = Video.objects.get(pk=item[3:], status="PUB")
+                video = Video.objects.get(pk=item[3:], type="PUB")
                 block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_comment_video" video-pk="', str(video.pk), '" data-uuid="', str(video.uuid), '" video-counter="0"></div></div>'])
             except:
                 pass
         elif item[:3] == "mus":
             try:
                 from music.models import Music
-                music = Music.objects.get(pk=item[3:], status="PUB")
+                music = Music.objects.get(pk=item[3:], type="PUB")
                 if music.image:
                     figure = ''.join(['<figure><a class="music_list_comment music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.image.url, '" alt="img" /></a></figure>'])
                 else:
@@ -38,7 +38,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "goo":
             try:
                 from goods.models import Good
-                good = Good.objects.get(pk=item[3:], status="PUB")
+                good = Good.objects.get(pk=item[3:], type="PUB")
                 if good.image:
                     figure = '<figure class="background-img shadow-dark"><img class="image_fit opacity-100" src="', good.image.url, '" alt="img"></figure>'
                 else:
@@ -49,7 +49,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "art":
             try:
                 from article.models import Article
-                article = Article.objects.get(pk=item[3:], status="PUB")
+                article = Article.objects.get(pk=item[3:], type="PUB")
                 if article.g_image:
                     figure = '<div class="align-items-center"><img class="image_fit" src="', article.g_image.url, '" alt="img"></div>'
                 else:
@@ -60,7 +60,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "doc":
             try:
                 from docs.models import Doc
-                doc = Doc.objects.get(pk=item[3:], status="PUB")
+                doc = Doc.objects.get(pk=item[3:], type="PUB")
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
@@ -76,7 +76,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "sur":
             try:
                 from survey.models import Survey
-                survey = Survey.objects.get(pk=item[3:], status="PUB")
+                survey = Survey.objects.get(pk=item[3:], type="PUB")
                 _class, voted, answers, creator = "", "", "", survey.creator
                 if survey.is_time_end():
                     time = "<p>Время голосования вышло</p>"
@@ -108,7 +108,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "lmu":
             try:
                 from music.models import SoundList
-                playlist = SoundList.objects.get(pk=item[3:], status="PUB")
+                playlist = SoundList.objects.get(pk=item[3:], type="PUB")
                 creator = playlist.creator
                 if playlist.image:
                     image = '<img src="' + playlist.image.url + '" style="width:120px;height:120px;" alt="image">'
@@ -128,7 +128,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "ldo":
             try:
                 from docs.models import DocList
-                list = DocList.objects.get(pk=item[3:], status="PUB")
+                list = DocList.objects.get(pk=item[3:], type="PUB")
                 creator = list.creator
                 image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
                 repost_svg, add_svg = '', ''
@@ -145,7 +145,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "lph":
             try:
                 from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:], status="PUB")
+                list = PhotoList.objects.get(pk=item[3:], type="PUB")
                 creator = list.creator
                 share, add = '', ''
                 if user.is_authenticated:
@@ -161,7 +161,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodList
-                list = GoodList.objects.get(pk=item[3:], status="PUB")
+                list = GoodList.objects.get(pk=item[3:], type="PUB")
                 creator, share, add = list.creator, '', ''
                 if user.is_authenticated:
                     if list.is_not_empty():
@@ -176,7 +176,7 @@ def get_u_comment_attach(comment, user):
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoList
-                list = VideoList.objects.get(pk=item[3:], status="PUB")
+                list = VideoList.objects.get(pk=item[3:], type="PUB")
                 creator = list.creator
                 image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
                 repost_svg, add_svg = '', ''
@@ -198,21 +198,21 @@ def get_c_comment_attach(comment, user):
         if item[:3] == "pho":
             try:
                 from gallery.models import Photo
-                photo = Photo.objects.get(pk=item[3:], status="PUB")
+                photo = Photo.objects.get(pk=item[3:], type="PUB")
                 block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_120 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":
             try:
                 from video.models import Video
-                video = Video.objects.get(pk=item[3:], status="PUB")
+                video = Video.objects.get(pk=item[3:], type="PUB")
                 block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 c_post_video" video-pk="', str(video.pk), '" data-uuid="', str(video.uuid), '" video-counter="0"></div></div>'])
             except:
                 pass
         elif item[:3] == "mus":
             #try:
             from music.models import Music
-            music = Music.objects.get(pk=item[3:], status="PUB")
+            music = Music.objects.get(pk=item[3:], type="PUB")
             if music.image:
                 figure = ''.join(['<figure><a class="music_list_post music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.image.url, '" alt="img" /></a></figure>'])
             else:
@@ -232,7 +232,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "goo":
             try:
                 from goods.models import Good
-                good = Good.objects.get(pk=item[3:], status="PUB")
+                good = Good.objects.get(pk=item[3:], type="PUB")
                 if good.image:
                     figure = '<figure class="background-img shadow-dark"><img class="image_fit opacity-100" src="', good.image.url, '" alt="img"></figure>'
                 else:
@@ -243,7 +243,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "art":
             try:
                 from article.models import Article
-                article = Article.objects.get(pk=item[3:], status="PUB")
+                article = Article.objects.get(pk=item[3:], type="PUB")
                 if article.g_image:
                     figure = '<div class="align-items-center"><img class="image_fit" src="', article.g_image.url, '" alt="img"></div>'
                 else:
@@ -254,7 +254,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "doc":
             try:
                 from docs.models import Doc
-                doc = Doc.objects.get(pk=item[3:], status="PUB")
+                doc = Doc.objects.get(pk=item[3:], type="PUB")
                 span_btn = ''
                 if user.is_authenticated:
                     lists = ''
@@ -270,7 +270,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "sur":
             try:
                 from survey.models import Survey
-                survey = Survey.objects.get(pk=item[3:], status="PUB")
+                survey = Survey.objects.get(pk=item[3:], type="PUB")
                 _class, voted, answers, community = "", "", "", survey.community
                 if survey.is_time_end():
                     time = "<p>Время голосования вышло</p>"
@@ -302,7 +302,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "lmu":
             try:
                 from music.models import SoundList
-                playlist = SoundList.objects.get(pk=item[3:], status="PUB")
+                playlist = SoundList.objects.get(pk=item[3:], type="PUB")
                 community = playlist.community
                 if playlist.image:
                     image = '<img src="' + playlist.image.url + '" style="width:120px;height:120px;" alt="image">'
@@ -322,7 +322,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "ldo":
             try:
                 from docs.models import DocList
-                list = DocList.objects.get(pk=item[3:], status="PUB")
+                list = DocList.objects.get(pk=item[3:], type="PUB")
                 if list.community:
                     item, name = list.community, list.community.name
                 else:
@@ -342,7 +342,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "lph":
             try:
                 from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:], status="PUB")
+                list = PhotoList.objects.get(pk=item[3:], type="PUB")
                 if list.community:
                     item, name = list.community, list.community.name
                 else:
@@ -361,7 +361,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodList
-                list = GoodList.objects.get(pk=item[3:], status="PUB")
+                list = GoodList.objects.get(pk=item[3:], type="PUB")
                 share, add = '', ''
                 if list.community:
                     item, name = list.community, list.community.name
@@ -380,7 +380,7 @@ def get_c_comment_attach(comment, user):
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoList
-                list = VideoList.objects.get(pk=item[3:], status="PUB")
+                list = VideoList.objects.get(pk=item[3:], type="PUB")
                 if list.community:
                     item, name = list.community, list.community.name
                 else:

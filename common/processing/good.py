@@ -1,11 +1,11 @@
-def get_good_processing(video, status):
-    video.status = status
-    video.save(update_fields=['status'])
+def get_good_processing(video, type):
+    video.type = type
+    video.save(update_fields=['type'])
     return video
-def get_good_list_processing(list, status):
-    list.type = status
+def get_good_list_processing(list, type):
+    list.type = type
     list.save(update_fields=['type'])
     return list
 def get_good_comment_processing(comment):
-    comment.status = "PUB"
-    comment.save(update_fields=['status'])
+    comment.type = "PUB"
+    comment.save(update_fields=['type'])

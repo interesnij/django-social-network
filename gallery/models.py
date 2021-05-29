@@ -12,13 +12,13 @@ from communities.models import Community
 
 
 class PhotoList(models.Model):
-    MAIN, LIST, WALL, AVATAR, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_WALL, THIS_CLOSED_AVATAR = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
+    MAIN, LIST, WALL, AVATAR, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO', 'PRI'
+    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_WALL, 'Закрытый со стены'),(THIS_CLOSED_AVATAR, 'Закрытый со страницы'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
     community = models.ForeignKey('communities.Community', related_name='photo_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -26,7 +26,7 @@ class PhotoList(models.Model):
     name = models.CharField(max_length=250, verbose_name="Название")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
@@ -90,22 +90,22 @@ class PhotoList(models.Model):
         if self.cover_photo:
             return self.cover_photo
         else:
-            return self.photo_list.filter(status="PUB").first()
+            return self.photo_list.filter(type="PUB").first()
 
     def get_first_photo(self):
-        return self.photo_list.exclude(status__contains="_").first()
+        return self.photo_list.exclude(type__contains="_").first()
 
     def get_items(self):
-        return self.photo_list.filter(status="PUB")
+        return self.photo_list.filter(type="PUB")
     def get_staff_items(self):
-        return self.photo_list.exclude(status__contains="_")
+        return self.photo_list.exclude(type__contains="_")
     def get_6_items(self):
-        return self.photo_list.filter(status="PUB")[:6]
+        return self.photo_list.filter(type="PUB")[:6]
     def get_6_staff_items(self):
-        return self.photo_list.exclude(status__contains="_")[:6]
+        return self.photo_list.exclude(type__contains="_")[:6]
     def count_items(self):
         try:
-            return self.photo_list.filter(status="PUB").values("pk").count()
+            return self.photo_list.filter(type="PUB").values("pk").count()
         except:
             return 0
     def count_items_ru(self):
@@ -120,7 +120,7 @@ class PhotoList(models.Model):
             return str(count) + " фотографий"
 
     def is_not_empty(self):
-        return self.photo_list.filter(status="PUB").values("pk").exists()
+        return self.photo_list.filter(type="PUB").values("pk").exists()
 
     def is_item_in_list(self, item_id):
         return self.photo_list.filter(pk=item_id).values("pk").exists()
@@ -239,11 +239,11 @@ class PhotoList(models.Model):
     def delete_list(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = PhotoList.THIS_DELETED
+            self.type = PhotoList.DELETED
         elif self.type == "PRI":
-            self.type = PhotoList.THIS_DELETED_PRIVATE
+            self.type = PhotoList.DELETED_PRIVATE
         elif self.type == "MAN":
-            self.type = PhotoList.THIS_DELETED_MANAGER
+            self.type = PhotoList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
@@ -266,17 +266,17 @@ class PhotoList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = PhotoList.THIS_CLOSED
+            self.type = PhotoList.CLOSED
         elif self.type == "MAI":
-            self.type = PhotoList.THIS_CLOSED_MAIN
+            self.type = PhotoList.CLOSED_MAIN
         elif self.type == "PRI":
-            self.type = PhotoList.THIS_CLOSED_PRIVATE
+            self.type = PhotoList.CLOSED_PRIVATE
         elif self.type == "MAN":
-            self.type = PhotoList.THIS_CLOSED_MANAGER
+            self.type = PhotoList.CLOSED_MANAGER
         elif self.type == "AVA":
-            self.type = PhotoList.THIS_CLOSED_AVATAR
+            self.type = PhotoList.CLOSED_AVATAR
         elif self.type == "WAL":
-            self.type = PhotoList.THIS_CLOSED_WALL
+            self.type = PhotoList.CLOSED_WALL
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
@@ -304,11 +304,11 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
     STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -320,7 +320,7 @@ class Photo(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     community = models.ForeignKey('communities.Community', related_name='photo_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
@@ -462,16 +462,16 @@ class Photo(models.Model):
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.status = Photo.PRIVATE
-        self.save(update_fields=['status'])
+        self.type = Photo.PRIVATE
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.status = Photo.PUBLISHED
-        self.save(update_fields=['status'])
+        self.type = Photo.PUBLISHED
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
@@ -479,13 +479,13 @@ class Photo(models.Model):
 
     def delete_photo(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Photo.THIS_DELETED
-        elif self.status == "PRI":
-            self.status = Photo.THIS_DELETED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Photo.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Photo.DELETED
+        elif self.type == "PRI":
+            self.type = Photo.DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Photo.DELETED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_photos(1)
         else:
@@ -496,13 +496,13 @@ class Photo(models.Model):
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
     def restore_photo(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = Photo.PUBLISHED
-        elif self.status == "_DELP":
-            self.status = Photo.PRIVATE
-        elif self.status == "_DELM":
-            self.status = Photo.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = Photo.PUBLISHED
+        elif self.type == "_DELP":
+            self.type = Photo.PRIVATE
+        elif self.type == "_DELM":
+            self.type = Photo.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_photos(1)
         else:
@@ -514,13 +514,13 @@ class Photo(models.Model):
 
     def close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Photo.THIS_CLOSED
-        elif self.status == "PRI":
-            self.status = Photo.THIS_CLOSED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Photo.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Photo.CLOSED
+        elif self.type == "PRI":
+            self.type = Photo.CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Photo.CLOSED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_photos(1)
         else:
@@ -531,13 +531,13 @@ class Photo(models.Model):
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = Photo.PUBLISHED
-        elif self.status == "_CLOP":
-            self.status = Photo.PRIVATE
-        elif self.status == "_CLOM":
-            self.status = Photo.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = Photo.PUBLISHED
+        elif self.type == "_CLOP":
+            self.type = Photo.PRIVATE
+        elif self.type == "_CLOM":
+            self.type = Photo.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_photos(1)
         else:
@@ -616,13 +616,13 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
-    THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
-    THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
-    STATUS = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
-        (THIS_CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+    EDITED, PUBLISHED, PROCESSING = 'EDI', 'PUB', '_PRO'
+    DELETED, EDITED_DELETED = '_DEL', '_DELE'
+    CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
+    TYPE = (
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
+        (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='photo_comment_replies', null=True, blank=True,verbose_name="Родительский комментарий")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -630,7 +630,7 @@ class PhotoComment(models.Model):
     text = models.TextField(blank=True,null=True)
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -652,7 +652,7 @@ class PhotoComment(models.Model):
         return PhotoComment.objects.filter(parent=self).all()
 
     def count_replies(self):
-        return self.photo_comment_replies.filter(Q(status=PhotoComment.EDITED)|Q(status=PhotoComment.PUBLISHED)).values("pk").count()
+        return self.photo_comment_replies.filter(Q(type=PhotoComment.EDITED)|Q(type=PhotoComment.PUBLISHED)).values("pk").count()
 
     def count_replies_ru(self):
         count = self.count_replies()
@@ -736,11 +736,11 @@ class PhotoComment(models.Model):
 
     def delete_comment(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = PhotoComment.THIS_DELETED
-        elif self.status == "EDI":
-            self.status = PhotoComment.THIS_EDITED_DELETED
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = PhotoComment.DELETED
+        elif self.type == "EDI":
+            self.type = PhotoComment.EDITED_DELETED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.photo.comment -= 1
             self.parent.photo.save(update_fields=["comment"])
@@ -755,11 +755,11 @@ class PhotoComment(models.Model):
             Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="C")
     def restore_comment(self):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = PhotoComment.PUBLISHED
-        elif self.status == "_DELE":
-            self.status = PhotoComment.EDITED
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = PhotoComment.PUBLISHED
+        elif self.type == "_DELE":
+            self.type = PhotoComment.EDITED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.photo.comment += 1
             self.parent.photo.save(update_fields=["comment"])
@@ -775,11 +775,11 @@ class PhotoComment(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = PhotoComment.THIS_CLOSED
-        elif self.status == "EDI":
-            self.status = PhotoComment.THIS_EDITED_CLOSED
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = PhotoComment.CLOSED
+        elif self.type == "EDI":
+            self.type = PhotoComment.EDITED_CLOSED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.photo.comment -= 1
             self.parent.photo.save(update_fields=["comment"])
@@ -794,11 +794,11 @@ class PhotoComment(models.Model):
             Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = PhotoComment.PUBLISHED
-        elif self.status == "_CLOE":
-            self.status = PhotoComment.EDITED
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = PhotoComment.PUBLISHED
+        elif self.type == "_CLOE":
+            self.type = PhotoComment.EDITED
+        self.save(update_fields=['type'])
         if self.parent:
             self.parent.photo.comment += 1
             self.parent.photo.save(update_fields=["comment"])

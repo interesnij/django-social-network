@@ -296,7 +296,7 @@ class UserFirstAvatar(TemplateView):
 		context = super(UserFirstAvatar,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		try:
-			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, status="PUB").order_by('-pk').first()
+			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, type="PUB").order_by('-pk').first()
 		except:
 			pass
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)

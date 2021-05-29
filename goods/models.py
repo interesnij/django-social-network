@@ -41,18 +41,18 @@ class GoodSubCategory(models.Model):
 
 
 class GoodList(models.Model):
-	MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-	THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-	THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+	MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+	DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+	CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
 	TYPE = (
-		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-		(THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-		(THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+		(DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+		(CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
 	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
-	type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип альбома")
+	type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	order = models.PositiveIntegerField(default=0)
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
@@ -88,12 +88,12 @@ class GoodList(models.Model):
 		return self.type[0] != "_"
 
 	def get_items(self):
-		return self.good_list.filter(status="PUB")
+		return self.good_list.filter(type="PUB")
 	def get_staff_items(self):
-		return self.good_list.filter(Q(status="PUB")|Q(status="PRI"))
+		return self.good_list.filter(Q(type="PUB")|Q(type="PRI"))
 	def count_items(self):
 		try:
-			return self.good_list.filter(status="PUB").values("pk").count()
+			return self.good_list.filter(type="PUB").values("pk").count()
 		except:
 			return 0
 	def count_items_ru(self):
@@ -107,7 +107,7 @@ class GoodList(models.Model):
 			return str(count) + " товаров"
 
 	def is_not_empty(self):
-		 return self.good_list.filter(status="PUB").values("pk").exists()
+		 return self.good_list.filter(type="PUB").values("pk").exists()
 	def get_users_ids(self):
 		users = self.users.exclude(type__contains="_").values("pk")
 		return [i['pk'] for i in users]
@@ -245,11 +245,11 @@ class GoodList(models.Model):
 	def delete_list(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
-			self.type = GoodList.THIS_DELETED
+			self.type = GoodList.DELETED
 		elif self.type == "PRI":
-			self.type = GoodList.THIS_DELETED_PRIVATE
+			self.type = GoodList.DELETED_PRIVATE
 		elif self.type == "MAN":
-			self.type = GoodList.THIS_DELETED_MANAGER
+			self.type = GoodList.DELETED_MANAGER
 		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
@@ -272,13 +272,13 @@ class GoodList(models.Model):
 	def close_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
-			self.type = GoodList.THIS_CLOSED
+			self.type = GoodList.CLOSED
 		elif self.type == "MAI":
-			self.type = GoodList.THIS_CLOSED_MAIN
+			self.type = GoodList.CLOSED_MAIN
 		elif self.type == "PRI":
-			self.type = GoodList.THIS_CLOSED_PRIVATE
+			self.type = GoodList.CLOSED_PRIVATE
 		elif self.type == "MAN":
-			self.type = GoodList.THIS_CLOSED_MANAGER
+			self.type = GoodList.CLOSED_MANAGER
 		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
@@ -302,11 +302,11 @@ class GoodList(models.Model):
 
 
 class Good(models.Model):
-	THIS_PROCESSING, THIS_DRAFT, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO', '_DRA','PUB','PRI','MAN','_DEL','_CLO'
-	THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
-	STATUS = (
-		(THIS_PROCESSING, 'Обработка'),(THIS_DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-		(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+	PROCESSING, DRAFT, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO', '_DRA','PUB','PRI','MAN','_DEL','_CLO'
+	DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+	TYPE = (
+		(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+		(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
 	)
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
@@ -315,7 +315,7 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
-	status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=6, verbose_name="Статус")
+	type = models.CharField(choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Статус")
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
@@ -365,7 +365,7 @@ class Good(models.Model):
 		return GoodVotes.objects.filter(parent=self, vote__gt=0)
 
 	def is_draft(self):
-		if self.status == Good.DRAFT:
+		if self.type == Good.DRAFT:
 			return True
 		else:
 			return False
@@ -507,16 +507,16 @@ class Good(models.Model):
 
 	def make_private(self):
 		from notify.models import Notify, Wall
-		self.status = Good.PRIVATE
-		self.save(update_fields=['status'])
+		self.type = Good.PRIVATE
+		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def make_publish(self):
 		from notify.models import Notify, Wall
-		self.status = Good.PUBLISHED
-		self.save(update_fields=['status'])
+		self.type = Good.PUBLISHED
+		self.save(update_fields=['type'])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -524,13 +524,13 @@ class Good(models.Model):
 
 	def delete_good(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "PUB":
-			self.status = Good.THIS_DELETED
-		elif self.status == "PRI":
-			self.status = Good.THIS_DELETED_PRIVATE
-		elif self.status == "MAN":
-			self.status = Good.THIS_DELETED_MANAGER
-		self.save(update_fields=['status'])
+		if self.type == "PUB":
+			self.type = Good.DELETED
+		elif self.type == "PRI":
+			self.type = Good.DELETED_PRIVATE
+		elif self.type == "MAN":
+			self.type = Good.DELETED_MANAGER
+		self.save(update_fields=['type'])
 		if community:
 			community.minus_goods(1)
 		else:
@@ -541,13 +541,13 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def restore_good(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "_DEL":
-			self.status = Good.PUBLISHED
-		elif self.status == "_DELP":
-			self.status = Good.PRIVATE
-		elif self.status == "_DELM":
-			self.status = Good.MANAGER
-		self.save(update_fields=['status'])
+		if self.type == "_DEL":
+			self.type = Good.PUBLISHED
+		elif self.type == "_DELP":
+			self.type = Good.PRIVATE
+		elif self.type == "_DELM":
+			self.type = Good.MANAGER
+		self.save(update_fields=['type'])
 		if community:
 			community.plus_goods(1)
 		else:
@@ -559,13 +559,13 @@ class Good(models.Model):
 
 	def close_item(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "PUB":
-			self.status = Good.THIS_CLOSED
-		elif self.status == "PRI":
-			self.status = Good.THIS_CLOSED_PRIVATE
-		elif self.status == "MAN":
-			self.status = Good.THIS_CLOSED_MANAGER
-		self.save(update_fields=['status'])
+		if self.type == "PUB":
+			self.type = Good.CLOSED
+		elif self.type == "PRI":
+			self.type = Good.CLOSED_PRIVATE
+		elif self.type == "MAN":
+			self.type = Good.CLOSED_MANAGER
+		self.save(update_fields=['type'])
 		if community:
 			community.minus_goods(1)
 		else:
@@ -576,13 +576,13 @@ class Good(models.Model):
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 	def abort_close_item(self, community):
 		from notify.models import Notify, Wall
-		if self.status == "_CLO":
-			self.status = Good.PUBLISHED
-		elif self.status == "_CLOP":
-			self.status = Good.PRIVATE
-		elif self.status == "_CLOM":
-			self.status = Good.MANAGER
-		self.save(update_fields=['status'])
+		if self.type == "_CLO":
+			self.type = Good.PUBLISHED
+		elif self.type == "_CLOP":
+			self.type = Good.PRIVATE
+		elif self.type == "_CLOM":
+			self.type = Good.MANAGER
+		self.save(update_fields=['type'])
 		if community:
 			community.plus_goods(1)
 		else:
@@ -669,13 +669,13 @@ class GoodImage(models.Model):
 
 
 class GoodComment(models.Model):
-	EDITED, PUBLISHED, THIS_PROCESSING = 'EDI', 'PUB', '_PRO'
-	THIS_DELETED, THIS_EDITED_DELETED = '_DEL', '_DELE'
-	THIS_CLOSED, THIS_EDITED_CLOSED = '_CLO', '_CLOE'
-	STATUS = (
-	(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(THIS_PROCESSING, 'Обработка'),
-		(THIS_DELETED, 'Удалённый'), (THIS_EDITED_DELETED, 'Удалённый изменённый'),
-		(THIS_CLOSED, 'Закрытый менеджером'), (THIS_EDITED_CLOSED, 'Закрытый изменённый'),
+	EDITED, PUBLISHED, PROCESSING = 'EDI', 'PUB', '_PRO'
+	DELETED, EDITED_DELETED = '_DEL', '_DELE'
+	CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
+	TYPE = (
+	(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+		(DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
+		(CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
 	)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -683,7 +683,7 @@ class GoodComment(models.Model):
 	text = models.TextField(blank=True,null=True)
 	comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-	status = models.CharField(max_length=5, choices=STATUS, default=THIS_PROCESSING, verbose_name="Тип альбома")
+	type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 
 	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
 	dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -698,7 +698,7 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def get_replies(self):
-		return self.good_comment_replies.filter(Q(status=GoodComment.EDITED)|Q(status=GoodComment.PUBLISHED)).all()
+		return self.good_comment_replies.filter(Q(type=GoodComment.EDITED)|Q(type=GoodComment.PUBLISHED)).all()
 
 	def count_replies(self):
 		return self.get_replies().values("pk").count()
@@ -871,11 +871,11 @@ class GoodComment(models.Model):
 
 	def delete_comment(self):
 		from notify.models import Notify, Wall
-		if self.status == "PUB":
-			self.status = GoodComment.THIS_DELETED
-		elif self.status == "EDI":
-			self.status = GoodComment.THIS_EDITED_DELETED
-		self.save(update_fields=['status'])
+		if self.type == "PUB":
+			self.type = GoodComment.DELETED
+		elif self.type == "EDI":
+			self.type = GoodComment.EDITED_DELETED
+		self.save(update_fields=['type'])
 		if self.parent:
 			self.parent.good.comment -= 1
 			self.parent.good.save(update_fields=["comment"])
@@ -890,11 +890,11 @@ class GoodComment(models.Model):
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
 	def restore_comment(self):
 		from notify.models import Notify, Wall
-		if self.status == "_DEL":
-			self.status = GoodComment.PUBLISHED
-		elif self.status == "_DELE":
-			self.status = GoodComment.EDITED
-		self.save(update_fields=['status'])
+		if self.type == "_DEL":
+			self.type = GoodComment.PUBLISHED
+		elif self.type == "_DELE":
+			self.type = GoodComment.EDITED
+		self.save(update_fields=['type'])
 		if self.parent:
 			self.parent.good.comment += 1
 			self.parent.good.save(update_fields=["comment"])
@@ -910,11 +910,11 @@ class GoodComment(models.Model):
 
 	def close_item(self):
 		from notify.models import Notify, Wall
-		if self.status == "PUB":
-			self.status = GoodComment.THIS_CLOSED
-		elif self.status == "EDI":
-			self.status = GoodComment.THIS_EDITED_CLOSED
-		self.save(update_fields=['status'])
+		if self.type == "PUB":
+			self.type = GoodComment.CLOSED
+		elif self.type == "EDI":
+			self.type = GoodComment.EDITED_CLOSED
+		self.save(update_fields=['type'])
 		if self.parent:
 			self.parent.good.comment -= 1
 			self.parent.good.save(update_fields=["comment"])
@@ -929,11 +929,11 @@ class GoodComment(models.Model):
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
 	def abort_close_item(self):
 		from notify.models import Notify, Wall
-		if self.status == "_CLO":
-			self.status = GoodComment.PUBLISHED
-		elif self.status == "_CLOE":
-			self.status = GoodComment.EDITED
-		self.save(update_fields=['status'])
+		if self.type == "_CLO":
+			self.type = GoodComment.PUBLISHED
+		elif self.type == "_CLOE":
+			self.type = GoodComment.EDITED
+		self.save(update_fields=['type'])
 		if self.parent:
 			self.parent.good.comment += 1
 			self.parent.good.save(update_fields=["comment"])

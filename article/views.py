@@ -64,7 +64,7 @@ class ArticleUserCreate(View):
         self.form, self.user = ArticleForm(request.POST,request.FILES), User.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user == self.user:
             article = self.form.save(commit=False)
-            new_article = article.create_article(creator=request.user, content=article.content, community__isnull=True, g_image=article.g_image, status=article.status, title=article.title,)
+            new_article = article.create_article(creator=request.user, content=article.content, community__isnull=True, g_image=article.g_image, title=article.title,)
             return render_for_platform(request, 'posts/post_user/my_article.html',{'object': new_article, 'user': request.user})
         else:
             from django.http import HttpResponseBadRequest
@@ -93,7 +93,7 @@ class ArticleCommunityCreate(View):
         self.form, self.community = ArticleForm(request.POST,request.FILES), Community.objects.get(pk=self.kwargs["pk"])
         if self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
             article = self.form.save(commit=False)
-            new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, status=article.status, title=article.title,)
+            new_article = article.create_article(creator=request.user, content=article.content, community=self.community, g_image=article.g_image, title=article.title,)
             return render_for_platform(request, 'posts/post_community/admin_article.html',{'object': new_article, 'user': request.user})
         else:
             from django.http import HttpResponseBadRequest

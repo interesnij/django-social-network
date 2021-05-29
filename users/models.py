@@ -9,17 +9,17 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    THIS_PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = '_PV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
-    THIS_CLOSED_CHILD, THIS_CLOSED_STANDART, THIS_CLOSED_VERIFIED_SEND, THIS_CLOSED_VERIFIED, THIS_CLOSED_IDENTIFIED_SEND, THIS_CLOSED_IDENTIFIED, THIS_CLOSED_MANAGER = '_CLOC', '_CLOS', '_CLOVS', '_CLOV', '_CLOIS', '_CLOI', '_CLOM'
-    THIS_DELETED_CHILD, THIS_DELETED_STANDART, THIS_DELETED_VERIFIED_SEND, THIS_DELETED_VERIFIED, THIS_DELETED_IDENTIFIED_SEND, THIS_DELETED_IDENTIFIED, THIS_DELETED_MANAGER = '_DELC', '_DELS', '_DELVS', '_DELV', '_DELIS', '_DELI', '_DELM'
-    THIS_SUSPENDED_CHILD, THIS_SUSPENDED_STANDART, THIS_SUSPENDED_VERIFIED_SEND, THIS_SUSPENDED_VERIFIED, THIS_SUSPENDED_IDENTIFIED_SEND, THIS_SUSPENDED_IDENTIFIED, THIS_SUSPENDED_MANAGER = '_SUSC', '_SUSS', '_SUSVS', '_SUSV', '_SUSIS', '_SUSI', '_SUSM'
-    THIS_BANNER_CHILD, THIS_BANNER_STANDART, THIS_BANNER_VERIFIED_SEND, THIS_BANNER_VERIFIED, THIS_BANNER_IDENTIFIED_SEND, THIS_BANNER_IDENTIFIED, THIS_BANNER_MANAGER = '_BANC', '_BANS', '_BANVS', '_BANV', '_BANIS', '_BANI', '_BANM'
+    PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = '_PV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
+    CLOSED_CHILD, CLOSED_STANDART, CLOSED_VERIFIED_SEND, CLOSED_VERIFIED, CLOSED_IDENTIFIED_SEND, CLOSED_IDENTIFIED, CLOSED_MANAGER = '_CLOC', '_CLOS', '_CLOVS', '_CLOV', '_CLOIS', '_CLOI', '_CLOM'
+    DELETED_CHILD, DELETED_STANDART, DELETED_VERIFIED_SEND, DELETED_VERIFIED, DELETED_IDENTIFIED_SEND, DELETED_IDENTIFIED, DELETED_MANAGER = '_DELC', '_DELS', '_DELVS', '_DELV', '_DELIS', '_DELI', '_DELM'
+    SUSPENDED_CHILD, SUSPENDED_STANDART, SUSPENDED_VERIFIED_SEND, SUSPENDED_VERIFIED, SUSPENDED_IDENTIFIED_SEND, SUSPENDED_IDENTIFIED, SUSPENDED_MANAGER = '_SUSC', '_SUSS', '_SUSVS', '_SUSV', '_SUSIS', '_SUSI', '_SUSM'
+    BANNER_CHILD, BANNER_STANDART, BANNER_VERIFIED_SEND, BANNER_VERIFIED, BANNER_IDENTIFIED_SEND, BANNER_IDENTIFIED, BANNER_MANAGER = '_BANC', '_BANS', '_BANVS', '_BANV', '_BANIS', '_BANI', '_BANM'
     TYPE = (
-        (CHILD, 'Ребенок'),(THIS_PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
-        (THIS_DELETED_CHILD, 'Удален ребенок'),(THIS_DELETED_STANDART, 'Удален'),(THIS_DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_DELETED_VERIFIED, 'Удален верифицированный'),(THIS_DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(THIS_DELETED_IDENTIFIED, 'Удален идентифиированный'),(THIS_DELETED_MANAGER, 'Удален менеджер'),
-        (THIS_CLOSED_CHILD, 'Закрыт ребенок'),(THIS_CLOSED_STANDART, 'Закрыт'),(THIS_CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(THIS_CLOSED_VERIFIED, 'Закрыт верифицированный'),(THIS_CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(THIS_CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(THIS_CLOSED_MANAGER, 'Закрыт менеджер'),
-        (THIS_SUSPENDED_CHILD, 'Заморожен ребенок'),(THIS_SUSPENDED_STANDART, 'Заморожен'),(THIS_SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(THIS_SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(THIS_SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(THIS_SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(THIS_SUSPENDED_MANAGER, 'Заморожен менеджер'),
-        (THIS_BANNER_CHILD, 'Баннер ребенок'),(THIS_BANNER_STANDART, 'Баннер'),(THIS_BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(THIS_BANNER_VERIFIED, 'Баннер верифицированный'),(THIS_BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(THIS_BANNER_IDENTIFIED, 'Баннер идентифиированный'),(THIS_BANNER_MANAGER, 'Баннер менеджер'),
+        (CHILD, 'Ребенок'),(PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
+        (DELETED_CHILD, 'Удален ребенок'),(DELETED_STANDART, 'Удален'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_MANAGER, 'Удален менеджер'),
+        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_MANAGER, 'Закрыт менеджер'),
+        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_MANAGER, 'Заморожен менеджер'),
+        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_STANDART, 'Баннер'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_MANAGER, 'Баннер менеджер'),
     )
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
@@ -27,7 +27,7 @@ class User(AbstractUser):
 
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    type = models.CharField(max_length=6, choices=TYPE, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
@@ -54,7 +54,7 @@ class User(AbstractUser):
     def is_can_fixed_post(self):
         from posts.models import PostList
         try:
-            list = PostList.objects.get(creator_id=self.pk, type=PostList.THIS_FIXED)
+            list = PostList.objects.get(creator_id=self.pk, type=PostList.FIXED)
             return list.count_fix_items() < 10
         except:
             return None
@@ -132,7 +132,7 @@ class User(AbstractUser):
     def is_child(self):
         return self.type == User.CHILD
     def is_no_phone_verified(self):
-        return self.type == User.THIS_PHONE_NO_VERIFIED
+        return self.type == User.PHONE_NO_VERIFIED
     def is_child_safety(self):
         if self.type == User.MANAGER or self.type == User.SUPERMANAGER or self.type == User.VERIFIED:
             return True
@@ -993,11 +993,11 @@ class User(AbstractUser):
 
     def get_draft_posts(self):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, status=Post.THIS_DRAFT, community__isnull=True)
+        return Post.objects.filter(creator_id=self.id, type=Post.DRAFT, community__isnull=True)
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, community_id=community_pk, status=Post.THIS_DRAFT)
+        return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT)
 
     def get_post_lists(self):
         from posts.models import PostList
@@ -1059,7 +1059,7 @@ class User(AbstractUser):
         return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
     def get_fix_list(self):
         from posts.models import PostList
-        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.THIS_FIXED)
+        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIXED)
     def get_survey_list(self):
         from survey.models import SurveyList
         return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)

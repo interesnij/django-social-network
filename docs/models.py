@@ -10,18 +10,18 @@ from django.db.models import Q
 
 
 class DocList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
+    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='doc_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='doc_lists_creator', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -50,16 +50,16 @@ class DocList(models.Model):
         return self.doc_list.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.doc_list.exclude(status__contains="_").values("pk").exists()
+        return self.doc_list.exclude(type__contains="_").values("pk").exists()
 
     def get_staff_items(self):
-        return self.doc_list.exclude(status__contains="_")
+        return self.doc_list.exclude(type__contains="_")
     def get_items(self):
-        return self.doc_list.filter(status="PUB")
+        return self.doc_list.filter(type="PUB")
     def get_manager_items(self):
-        return self.doc_list.filter(status="MAN")
+        return self.doc_list.filter(type="MAN")
     def count_items(self):
-        return self.doc_list.exclude(status__contains="_").values("pk").count()
+        return self.doc_list.exclude(type__contains="_").values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
@@ -204,11 +204,11 @@ class DocList(models.Model):
     def delete_list(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = DocList.THIS_DELETED
+            self.type = DocList.DELETED
         elif self.type == "PRI":
-            self.type = DocList.THIS_DELETED_PRIVATE
+            self.type = DocList.DELETED_PRIVATE
         elif self.type == "MAN":
-            self.type = DocList.THIS_DELETED_MANAGER
+            self.type = DocList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
@@ -231,13 +231,13 @@ class DocList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = DocList.THIS_CLOSED
+            self.type = DocList.CLOSED
         elif self.type == "MAI":
-            self.type = DocList.THIS_CLOSED_MAIN
+            self.type = DocList.CLOSED_MAIN
         elif self.type == "PRI":
-            self.type = DocList.THIS_CLOSED_PRIVATE
+            self.type = DocList.CLOSED_PRIVATE
         elif self.type == "MAN":
-            self.type = DocList.THIS_CLOSED_MANAGER
+            self.type = DocList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
@@ -261,17 +261,17 @@ class DocList(models.Model):
 
 
 class Doc(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
-    STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    TYPE = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     list = models.ManyToManyField(DocList, related_name='doc_list', blank=True)
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
@@ -357,16 +357,16 @@ class Doc(models.Model):
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.status = Doc.PRIVATE
-        self.save(update_fields=['status'])
+        self.type = Doc.PRIVATE
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.status = Doc.PUBLISHED
-        self.save(update_fields=['status'])
+        self.type = Doc.PUBLISHED
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -374,13 +374,13 @@ class Doc(models.Model):
 
     def delete_doc(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Doc.THIS_DELETED
-        elif self.status == "PRI":
-            self.status = Doc.THIS_DELETED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Doc.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Doc.DELETED
+        elif self.type == "PRI":
+            self.type = Doc.DELETED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Doc.DELETED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_docs(1)
         else:
@@ -391,13 +391,13 @@ class Doc(models.Model):
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
     def restore_doc(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_DEL":
-            self.status = Doc.PUBLISHED
-        elif self.status == "_DELP":
-            self.status = Doc.PRIVATE
-        elif self.status == "_DELM":
-            self.status = Doc.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_DEL":
+            self.type = Doc.PUBLISHED
+        elif self.type == "_DELP":
+            self.type = Doc.PRIVATE
+        elif self.type == "_DELM":
+            self.type = Doc.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_docs(1)
         else:
@@ -409,13 +409,13 @@ class Doc(models.Model):
 
     def close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Doc.THIS_CLOSED
-        elif self.status == "PRI":
-            self.status = Doc.THIS_CLOSED_PRIVATE
-        elif self.status == "MAN":
-            self.status = Doc.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Doc.CLOSED
+        elif self.type == "PRI":
+            self.type = Doc.CLOSED_PRIVATE
+        elif self.type == "MAN":
+            self.type = Doc.CLOSED_MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.minus_docs(1)
         else:
@@ -426,13 +426,13 @@ class Doc(models.Model):
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self, community):
         from notify.models import Notify, Wall
-        if self.status == "_CLO":
-            self.status = Doc.PUBLISHED
-        elif self.status == "_CLOP":
-            self.status = Doc.PRIVATE
-        elif self.status == "_CLOM":
-            self.status = Doc.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "_CLO":
+            self.type = Doc.PUBLISHED
+        elif self.type == "_CLOP":
+            self.type = Doc.PRIVATE
+        elif self.type == "_CLOM":
+            self.type = Doc.MANAGER
+        self.save(update_fields=['type'])
         if community:
             community.plus_docs(1)
         else:

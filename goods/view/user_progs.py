@@ -93,8 +93,8 @@ class UserUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.status = Good.STATUS_PUBLISHED
-            good.save(update_fields=['status'])
+            good.type = Good.PUBLISHED
+            good.save(update_fields=['type'])
             return HttpResponse()
         else:
             raise Http404
@@ -103,8 +103,8 @@ class UserHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.status = Good.STATUS_DRAFT
-            good.save(update_fields=['status'])
+            good.type = Good.DRAFT
+            good.save(update_fields=['type'])
             return HttpResponse()
         else:
             raise Http404

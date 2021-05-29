@@ -11,18 +11,18 @@ from communities.models import Community
 
 
 class SurveyList(models.Model):
-    MAIN, LIST, MANAGER, THIS_PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
-    THIS_DELETED, THIS_DELETED_MANAGER = '_DEL', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_PRIVATE = '_CLO', '_CLOM', '_CLOMA', '_CLOP'
+    MAIN, LIST, MANAGER, PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
+    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_PRIVATE = '_CLO', '_CLOM', '_CLOMA', '_CLOP'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=THIS_PROCESSING, verbose_name="Тип списка")
+    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -51,14 +51,14 @@ class SurveyList(models.Model):
         return self.survey_list.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.survey_list.exclude(status__contains="_").values("pk").exists()
+        return self.survey_list.exclude(type__contains="_").values("pk").exists()
 
     def get_items(self):
-        return self.survey_list.filter(status="PUB")
+        return self.survey_list.filter(type="PUB")
     def get_manager_items(self):
-        return self.survey_list.filter(status="MAN")
+        return self.survey_list.filter(type="MAN")
     def count_items(self):
-        return self.survey_list.exclude(status__contains="_").values("pk").count()
+        return self.survey_list.exclude(type__contains="_").values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
@@ -166,9 +166,9 @@ class SurveyList(models.Model):
     def delete_list(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SurveyList.THIS_DELETED
+            self.type = SurveyList.DELETED
         elif self.type == "MAN":
-            self.type = SurveyList.THIS_DELETED_MANAGER
+            self.type = SurveyList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
@@ -189,11 +189,11 @@ class SurveyList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SurveyList.THIS_CLOSED
+            self.type = SurveyList.CLOSED
         elif self.type == "MAI":
-            self.type = SurveyList.THIS_CLOSED_MAIN
+            self.type = SurveyList.CLOSED_MAIN
         elif self.type == "MAN":
-            self.type = SurveyList.THIS_CLOSED_MANAGER
+            self.type = SurveyList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
@@ -215,13 +215,13 @@ class SurveyList(models.Model):
 
 
 class Survey(models.Model):
-    THIS_PROCESSING, MANAGER, PUBLISHED = '_PRO', 'PUB', 'MAN'
-    THIS_DELETED, THIS_DELETED_MANAGER = '_DEL', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_MANAGER = '_CLO', '_CLOM'
-    STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
-        (THIS_DELETED, 'Удалено'),(THIS_DELETED_MANAGER, 'Удален менеджерский'),
-        (THIS_CLOSED, 'Закрыто модератором'),(THIS_CLOSED_MANAGER, 'Закрыт менеджерский'),
+    PROCESSING, MANAGER, PUBLISHED = '_PRO', 'PUB', 'MAN'
+    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
+    CLOSED, CLOSED_MANAGER = '_CLO', '_CLOM'
+    TYPE = (
+        (PROCESSING, 'Обработка'),(MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
+        (DELETED, 'Удалено'),(DELETED_MANAGER, 'Удален менеджерский'),
+        (CLOSED, 'Закрыто модератором'),(CLOSED_MANAGER, 'Закрыт менеджерский'),
     )
     title = models.CharField(max_length=250, verbose_name="Название")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -231,7 +231,7 @@ class Survey(models.Model):
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     survey = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
     community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -354,22 +354,22 @@ class Survey(models.Model):
 
     def delete_survey(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Survey.THIS_DELETED
-        elif self.status == "MAN":
-            self.status = Survey.THIS_DELETED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Survey.DELETED
+        elif self.type == "MAN":
+            self.type = Survey.DELETED_MANAGER
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
     def restore_survey(self):
         from notify.models import Notify, Wall
-        if self.status == "TDEL":
-            self.status = Survey.PUBLISHED
-        elif self.status == "TDELM":
-            self.status = Survey.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "TDEL":
+            self.type = Survey.PUBLISHED
+        elif self.type == "TDELM":
+            self.type = Survey.MANAGER
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -377,22 +377,22 @@ class Survey(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "PUB":
-            self.status = Survey.THIS_CLOSED
-        elif self.status == "MAN":
-            self.status = Survey.THIS_CLOSED_MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "PUB":
+            self.type = Survey.CLOSED
+        elif self.type == "MAN":
+            self.type = Survey.CLOSED_MANAGER
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.status == "TCLO":
-            self.status = Survey.PUBLISHED
-        elif self.status == "TCLOM":
-            self.status = Survey.MANAGER
-        self.save(update_fields=['status'])
+        if self.type == "TCLO":
+            self.type = Survey.PUBLISHED
+        elif self.type == "TCLOM":
+            self.type = Survey.MANAGER
+        self.save(update_fields=['type'])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():

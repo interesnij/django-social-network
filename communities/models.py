@@ -39,17 +39,17 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    PRIVATE, CLOSED, MANAGER, THIS_PROCESSING, PUBLIC = 'PRI', 'CLO', 'MAN', '_PRO', 'PUB'
-    THIS_DELETED, THIS_PRIVATE_DELETED, THIS_CLOSED_DELETED, THIS_MANAGER_DELETED = '_DELO', '_DELP', '_DELC', '_DELM'
-    THIS_BANNER_OPEN, THIS_BANNER_PRIVATE, THIS_BANNER_CLOSED, THIS_BANNER_MANAGER = '_BANO', '_BANP', '_BANC', '_BANM'
-    THIS_SUSPENDED_OPEN, THIS_SUSPENDED_PRIVATE, THIS_SUSPENDED_CLOSED, THIS_SUSPENDED_MANAGER = '_SUSO', '_SUSP', '_SUSC', '_SUSM'
-    THIS_BLOCKED_OPEN, THIS_BLOCKED_PRIVATE, THIS_BLOCKED_CLOSED, THIS_BLOCKED_MANAGER = '_BLOO', '_BLOP', '_BLOC', '_BLOM'
+    PRIVATE, CLOSED, MANAGER, PROCESSING, PUBLIC = 'PRI', 'CLO', 'MAN', '_PRO', 'PUB'
+    DELETED, PRIVATE_DELETED, CLOSED_DELETED, MANAGER_DELETED = '_DELO', '_DELP', '_DELC', '_DELM'
+    BANNER_OPEN, BANNER_PRIVATE, BANNER_CLOSED, BANNER_MANAGER = '_BANO', '_BANP', '_BANC', '_BANM'
+    SUSPENDED_OPEN, SUSPENDED_PRIVATE, SUSPENDED_CLOSED, SUSPENDED_MANAGER = '_SUSO', '_SUSP', '_SUSC', '_SUSM'
+    BLOCKED_OPEN, BLOCKED_PRIVATE, BLOCKED_CLOSED, BLOCKED_MANAGER = '_BLOO', '_BLOP', '_BLOC', '_BLOM'
     TYPE = (
-        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'), (THIS_PROCESSING, 'Обработка'),
-        (THIS_DELETED, 'Открытый удалённый'),(THIS_PRIVATE_DELETED, 'Приватный удалённый'),(THIS_CLOSED_DELETED, 'Закрытый удалённый'),(THIS_MANAGER_DELETED, 'Менеджерский удалённый'),
-        (THIS_BANNER_OPEN, 'Открытый баннер'),(THIS_BANNER_PRIVATE, 'Приватный баннер'),(THIS_BANNER_CLOSED, 'Закрытый баннер'),(THIS_BANNER_MANAGER, 'Менеджерский баннер'),
-        (THIS_SUSPENDED_OPEN, 'Открытый замороженный'),(THIS_SUSPENDED_PRIVATE, 'Приватный замороженный'), (THIS_SUSPENDED_CLOSED, 'Закрытый замороженный'),(THIS_SUSPENDED_MANAGER, 'Менеджерский замороженный'),
-        (THIS_BLOCKED_OPEN, 'Открытый блокнутый'),(THIS_BLOCKED_PRIVATE, 'Приватный блокнутый'), (THIS_BLOCKED_CLOSED, 'Закрытый блокнутый'),(THIS_BLOCKED_MANAGER, 'Менеджерский блокнутый'),
+        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'), (PROCESSING, 'Обработка'),
+        (DELETED, 'Открытый удалённый'),(PRIVATE_DELETED, 'Приватный удалённый'),(CLOSED_DELETED, 'Закрытый удалённый'),(MANAGER_DELETED, 'Менеджерский удалённый'),
+        (BANNER_OPEN, 'Открытый баннер'),(BANNER_PRIVATE, 'Приватный баннер'),(BANNER_CLOSED, 'Закрытый баннер'),(BANNER_MANAGER, 'Менеджерский баннер'),
+        (SUSPENDED_OPEN, 'Открытый замороженный'),(SUSPENDED_PRIVATE, 'Приватный замороженный'), (SUSPENDED_CLOSED, 'Закрытый замороженный'),(SUSPENDED_MANAGER, 'Менеджерский замороженный'),
+        (BLOCKED_OPEN, 'Открытый блокнутый'),(BLOCKED_PRIVATE, 'Приватный блокнутый'), (BLOCKED_CLOSED, 'Закрытый блокнутый'),(BLOCKED_MANAGER, 'Менеджерский блокнутый'),
     )
 
     CHILD, STANDART, VERIFIED_SEND, VERIFIED = 'CH', 'ST', 'VS', 'VE'
@@ -62,7 +62,7 @@ class Community(models.Model):
     name = models.CharField(max_length=settings.COMMUNITY_NAME_MAX_LENGTH, blank=False, null=False, verbose_name="Название" )
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    type = models.CharField(choices=TYPE, default=THIS_PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
@@ -127,7 +127,7 @@ class Community(models.Model):
         return self.community_info.save(update_fields=['members'])
 
     def is_deleted(self):
-        return self.type == Community.THIS_DELETED
+        return self.type == Community.DELETED
     def is_standart(self):
         return self.perm == Community.STANDART
     def is_verified_send(self):
@@ -266,7 +266,7 @@ class Community(models.Model):
 
     def get_fix_list(self):
         from posts.models import PostList
-        return PostList.objects.get(community_id=self.pk, type=PostList.THIS_FIXED)
+        return PostList.objects.get(community_id=self.pk, type=PostList.FIXED)
 
     def get_draft_posts(self):
         from posts.models import PostList
@@ -607,7 +607,7 @@ class Community(models.Model):
     def is_can_fixed_post(self):
         from posts.models import PostList
         try:
-            list = PostList.objects.get(community_id=self.pk, type=PostList.THIS_FIXED)
+            list = PostList.objects.get(community_id=self.pk, type=PostList.FIXED)
             return list.count_fix_items() < 10
         except:
             return None

@@ -27,7 +27,7 @@ class CommunityFixPostView(TemplateView):
         from posts.models import Post, PostList
 
         self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.list = PostList.objects.get(community_id=self.community.pk, type=PostList.THIS_FIXED)
+        self.list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
         self.template_name = get_template_community_post(self.list, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityFixPostView,self).get(request,*args,**kwargs)

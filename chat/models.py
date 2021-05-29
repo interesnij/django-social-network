@@ -10,16 +10,16 @@ from django.db.models import Q
 
 
 class Chat(models.Model):
-    LIST, MANAGER, THIS_PROCESSING, PRIVATE, THIS_FIXED = 'LIS', 'MAN', '_PRO', 'PRI', '_FIX'
-    THIS_DELETED, THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    THIS_CLOSED, THIS_CLOSED_PRIVATE, THIS_CLOSED_MAIN, THIS_CLOSED_MANAGER, THIS_CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
+    LIST, MANAGER, PROCESSING, PRIVATE, FIXED = 'LIS', 'MAN', '_PRO', 'PRI', '_FIX'
+    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
+    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
     TYPE = (
-        (LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(THIS_PROCESSING, 'Обработка'),(THIS_FIXED, 'Закреплённый'),
-        (THIS_DELETED, 'Удалённый'),(THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),
-        (THIS_CLOSED, 'Закрытый менеджером'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MAIN, 'Закрытый основной'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),(THIS_CLOSED_FIXED, 'Закрытый закреплённый'),
+        (LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),
+        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
     )
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
-    type = models.CharField(blank=False, null=False, choices=TYPE, default=THIS_PROCESSING, max_length=6, verbose_name="Тип чата")
+    type = models.CharField(blank=False, null=False, choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Тип чата")
     image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -57,13 +57,13 @@ class Chat(models.Model):
         return self.get_members().values('id').count()
 
     def get_first_message(self):
-        return self.chat_message.exclude(status__contains="_").last()
+        return self.chat_message.exclude(type__contains="_").last()
 
     def get_messages(self):
-        return self.chat_message.exclude(status__contains="_")
+        return self.chat_message.exclude(type__contains="_")
 
     def get_messages_uuids(self):
-        messages = self.chat_message.exclude(status__contains="_").values('uuid')
+        messages = self.chat_message.exclude(type__contains="_").values('uuid')
         return [i['uuid'] for i in messages]
 
     def get_attach_photos(self):
@@ -71,14 +71,14 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        count = self.chat_message.filter(unread=True).exclude(status__contains="_", creator__user_id=user_id).values("pk").count()
+        count = self.chat_message.filter(unread=True).exclude(type__contains="_", creator__user_id=user_id).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, status__contains="_")
+        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, type__contains="_")
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -198,7 +198,7 @@ class Chat(models.Model):
             return ''.join([figure, media_body])
 
     def is_not_empty(self):
-        return self.chat_message.exclude(status__contains="_").values("pk").exists()
+        return self.chat_message.exclude(type__contains="_").values("pk").exists()
 
     def add_administrator(self, user):
         member = self.chat_relation.get(user=user)
@@ -243,11 +243,11 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    THIS_PROCESSING, PUBLISHED, PRIVATE, MANAGER, THIS_DELETED, THIS_CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    THIS_DELETED_PRIVATE, THIS_DELETED_MANAGER, THIS_CLOSED_PRIVATE, THIS_CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
-    STATUS = (
-        (THIS_PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(THIS_DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(THIS_CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (THIS_DELETED_PRIVATE, 'Удалённый приватный'),(THIS_DELETED_MANAGER, 'Удалённый менеджерский'),(THIS_CLOSED_PRIVATE, 'Закрытый приватный'),(THIS_CLOSED_MANAGER, 'Закрытый менеджерский'),
+    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
+    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    TYPE = (
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -257,7 +257,7 @@ class Message(models.Model):
     unread = models.BooleanField(default=True, db_index=True)
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
-    status = models.CharField(choices=STATUS, default=THIS_PROCESSING, max_length=5, verbose_name="Статус сообщения")
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
@@ -316,12 +316,12 @@ class Message(models.Model):
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
         if voice:
-            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, voice=voice, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
             _attach = str(attach)
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, attach=_attach, status=Message.STATUS_PROCESSING)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
+        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, type=Message.PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
@@ -335,11 +335,11 @@ class Message(models.Model):
         for user_id in users_ids:
             ChatUsers.objects.create(user_id=user_id, chat=chat)
         if voice:
-            new_message = Message.objects.create(chat=chat, creator=sender, voice=voice, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=chat, creator=sender, voice=voice, type=Message.PROCESSING)
         else:
             _attach = str(attach)
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=chat, creator=sender, attach=_attach, text=text, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=chat, creator=sender, attach=_attach, text=text, type=Message.PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
@@ -350,11 +350,11 @@ class Message(models.Model):
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
         if voice:
-            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, voice=voice, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, voice=voice, type=Message.PROCESSING)
         else:
             _attach = str(attach)
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, attach=_attach, status=Message.STATUS_PROCESSING)
+            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, attach=_attach, type=Message.PROCESSING)
         get_message_processing(new_message)
         new_message.create_socket()
         return new_message
@@ -376,22 +376,22 @@ class Message(models.Model):
 
     def is_photo_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.PHOTO_REPOST)
+        return try_except(self.repost.type == Post.PHOTO_REPOST)
     def get_photo_repost(self):
         photo = self.repost.parent.item_photo.filter(is_deleted=False)[0]
         return photo
     def is_photo_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.PHOTO_LIST_REPOST)
+        return try_except(self.repost.type == Post.PHOTO_LIST_REPOST)
     def get_photo_list_repost(self):
         return self.repost.parent.post_list.filter(is_deleted=False)[0]
 
     def is_music_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.MUSIC_REPOST)
+        return try_except(self.repost.type == Post.MUSIC_REPOST)
     def is_music_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.MUSIC_LIST_REPOST)
+        return try_except(self.repost.type == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
         playlist = self.repost.parent.post_soundlist.exclude(type__contains="_")[0]
         return playlist
@@ -401,10 +401,10 @@ class Message(models.Model):
 
     def is_good_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.GOOD_REPOST)
+        return try_except(self.repost.type == Post.GOOD_REPOST)
     def is_good_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.GOOD_LIST_REPOST)
+        return try_except(self.repost.type == Post.GOOD_LIST_REPOST)
     def get_good_repost(self):
         return self.repost.item_good.exclude(type__contains="_")[0]
     def get_good_list_repost(self):
@@ -412,10 +412,10 @@ class Message(models.Model):
 
     def is_doc_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.DOC_REPOST)
+        return try_except(self.repost.type == Post.DOC_REPOST)
     def is_doc_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.DOC_LIST_REPOST)
+        return try_except(self.repost.type == Post.DOC_LIST_REPOST)
     def get_doc_list_repost(self):
         return self.repost.parent.post_doclist.exclude(type__contains="_")[0]
     def get_doc_repost(self):
@@ -423,10 +423,10 @@ class Message(models.Model):
 
     def is_video_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.VIDEO_REPOST)
+        return try_except(self.repost.type == Post.VIDEO_REPOST)
     def is_video_list_repost(self):
         from posts.models import Post
-        return try_except(self.repost.status == Post.VIDEO_LIST_REPOST)
+        return try_except(self.repost.type == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
         return self.repost.parent.post_video_list.exclude(type__contains="_")[0]
 
