@@ -170,10 +170,7 @@ class UserWallPhoto(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        try:
-            self.list = PhotosList.objects.get(creator=self.user, type=PhotosList.WALL, community__isnull=True)
-        except:
-            self.list = PhotosList.objects.create(creator=self.user, type=PhotosList.WALL, title="Фото со стены", description="Фото со стены")
+        self.list = PhotosList.objects.get(creator=self.user, type=PhotosList.WALL)
         self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.list, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
