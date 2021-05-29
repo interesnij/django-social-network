@@ -9,7 +9,7 @@
         {% if comment.attach %}
           {% load comment %}
           {{ comment|get_user_attach:request.user|safe }}
-        {% endif %} 
+        {% endif %}
 
         <div class="">
             <div class="row">
@@ -87,7 +87,7 @@
                             <div class="row img_block"></div>
 
                             <div class="row no-gutters" style="margin-top: 15px;">
-                                {% include 'mobile/posts/u_post_comment/form_dropdown.html' %}
+                                {% include 'desctop/base_block/comment_dropdown.html' %}
 
                                 <div class="col">
                                     <div class="input-group input-group-sm">
