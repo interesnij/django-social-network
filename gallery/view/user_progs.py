@@ -72,7 +72,6 @@ class UserCreatePhotosInPhotoList(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         photos = []
-        uploaded_file = request.FILES['file']
         if request.is_ajax() and user == request.user:
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS", community=None)
@@ -89,7 +88,7 @@ class PhotoAttachUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHWAL", community=None)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': list})
         else:
             raise Http404
 
