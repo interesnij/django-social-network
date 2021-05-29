@@ -37,7 +37,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     new_post.innerHTML = elem;
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
                                        toast_info('Запись опубликована'),
-                                       lenta_load.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null)
+                                       lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null)
                                      : toast_info('Запись опубликована');
   }};
 

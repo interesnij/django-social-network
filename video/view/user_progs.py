@@ -251,7 +251,6 @@ class UserVideoListCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("video/user_create/create_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoListCreate,self).get(request,*args,**kwargs)
 
@@ -262,9 +261,8 @@ class UserVideoListCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form_post = VideoListForm(request.POST)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
+        if request.is_ajax() and self.form_post.is_valid():
             list = self.form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/video/list/my_list.html',{'list': new_list, 'user': request.user})
@@ -279,28 +277,26 @@ class UserVideolistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("video/user_create/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserVideolistEdit,self).get_context_data(**kwargs)
-        context["user"] = self.user
         context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        list = VideoListForm(request.POST,instance=self.list)
-        new_list = list.create_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
+        if request.is_ajax() and self.form_post.is_valid():
+            list = VideoListForm(request.POST,instance=self.list)
+            new_list = list.create_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
         return HttpResponse()
 
         return super(UserVideolistEdit,self).get(request,*args,**kwargs)
 
 class UserVideolistDelete(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == VideoList.LIST:
+        if request.is_ajax() and list.type == VideoList.LIST:
             list.delete_list()
             return HttpResponse()
         else:
@@ -308,7 +304,6 @@ class UserVideolistDelete(View):
 
 class UserVideolistRecover(View):
     def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
             list.restore_list()
@@ -321,7 +316,6 @@ class AddVideoInUserList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-
         if request.is_ajax() and not list.is_item_in_list(video.pk):
             list.video_list.add(video)
             return HttpResponse()

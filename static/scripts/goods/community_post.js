@@ -225,7 +225,7 @@ on('#ajax', 'click', '#c_add_good_btn', function() {
       if (span1.classList.contains(uuid)){
         container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', new_good.innerHTML);
-        container.querySelector(".goods_empty") ? container.querySelector(".goods_empty").style.display = "none" : null;
+        container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
         toast_info("Товар создан!")
       } else{
         toast_info("Товар создан!")

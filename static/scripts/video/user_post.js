@@ -24,18 +24,6 @@ on('#ajax', 'click', '.u_video_create_window', function(e) {
   open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
 });
 
-on('#ajax', 'click', '.user_video_create_attach', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/create_video_attach/" + pk + "/", loader);
-  var list = loader.querySelectorAll('select');
-  var count = list.length;
-  for(i=0; i<count; i++) {
-    list[i].classList.add("form-control")
-  }
-});
-
 on('#video_loader', 'click', '.u_videoComment', function() {
   form = this.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/post-comment/');
@@ -186,7 +174,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     if (span1.classList.contains(uuid)){
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
-      container.querySelector(".video_none") ? container.querySelector(".video_none").style.display = "none" : null;
+      container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
       toast_info("Видео создано!")
     } else{
       toast_info("Видео создано!")

@@ -3,10 +3,10 @@ from video.view.community_progs import *
 
 
 urlpatterns = [
-    url(r'^create_video/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoCreate.as_view()),
-    url(r'^edit/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoEdit.as_view()),
-    url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoDelete.as_view()),
-    url(r'^restore/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoRecover.as_view()),
+    url(r'^create_video/(?P<pk>\d+)/$', CommunityVideoCreate.as_view()),
+    url(r'^edit/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoEdit.as_view()),
+    url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoDelete.as_view()),
+    url(r'^restore/(?P<uuid>[0-9a-f-]+)/$', CommunityVideoRecover.as_view()),
     url(r'^on_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityOpenCommentVideo.as_view()),
     url(r'^off_comment/(?P<uuid>[0-9a-f-]+)/$', CommunityCloseCommentVideo.as_view()),
     url(r'^on_private/(?P<uuid>[0-9a-f-]+)/$', CommunityOnPrivateVideo.as_view()),
