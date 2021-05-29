@@ -47,7 +47,6 @@ class PhotoList(models.Model):
         if created:
             PhotoList.objects.create(community=instance, type=PhotoList.MAIN, name="Основной альбом", creator=instance.creator)
             PhotoList.objects.create(community=instance, type=PhotoList.AVATAR, name="Фото со страницы", creator=instance.creator)
-            PhotoList.objects.create(community=instance, type=PhotoList.WALL, name="Фото со стены", creator=instance.creator)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:

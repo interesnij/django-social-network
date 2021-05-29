@@ -17,6 +17,7 @@ from users.models import User
 from music.models import SoundList
 from video.models import VideoList
 from docs.models import Doc
-from chat.models import Message,
+from chat.models import Message
+from gallery.models import PhotoList
 
-Doc.objects.all().delete()
+PhotoList.objects.filter(type=PhotoList.WALL,community__isnull=False).delete()
