@@ -343,6 +343,7 @@ class User(AbstractUser):
         self.frend_user_with_id(user.pk)
         user.plus_friends(1)
         self.plus_friends(1)
+        self.minus_follows(1)
         try:
             for frend in user.get_6_friends():
                 self.get_or_create_possible_friend(frend)
@@ -417,6 +418,7 @@ class User(AbstractUser):
         self.unfrend_user_with_id(user.pk)
         user.minus_friends(1)
         self.minus_friends(1)
+        self.plus_follows(1)
         return self.get_or_create_possible_friend(user)
 
     def unfrend_user_with_id(self, user_id):

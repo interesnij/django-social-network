@@ -390,7 +390,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
       photo_post_upload_attach(photo_list, block);
     } else if (document.body.querySelector(".message_attach_block")){
       block = document.body.querySelector(".message_attach_block");
-      photo_message_upload_attach(photo_list, block); 
+      photo_message_upload_attach(photo_list, block);
     }
     }
     close_create_window();
@@ -399,7 +399,6 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
 });
 
 on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form = document.body.querySelector("#add_comment_photos");
   form_data = new FormData(form);
   input = form.querySelector("#u_photo_post_comment_attach")
@@ -408,7 +407,7 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
       return;
   }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -416,7 +415,7 @@ on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".col-md-4");
+    photo_list = response.querySelectorAll(".pag");
     photo_comment_upload_attach(photo_list, document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
     }
     close_create_window();
