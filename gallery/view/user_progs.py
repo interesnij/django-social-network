@@ -82,15 +82,13 @@ class UserCreatePhotosInPhotoList(View):
             raise Http404
 
 class PhotoAttachUserCreate(View):
-    """
-    мульти сохранение изображений с моментальным выводом в превью
-    """
     def post(self, request, *args, **kwargs):
         photos = []
         if request.is_ajax():
             list = PhotoList.objects.get(creator=request.user, type="WAL")
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHWAL", community=None)
+                photos += [photo,]
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
