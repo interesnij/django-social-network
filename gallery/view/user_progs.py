@@ -91,7 +91,6 @@ class PhotoAttachUserCreate(View):
             list = PhotoList.objects.get(creator=request.user, type="WAL")
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHWAL", community=None)
-            request.user.plus_photos(len(photos))
             return render_for_platform(request, 'gallery/u_photo/new_photos.html',{'object_list': photos, 'user': request.user})
         else:
             raise Http404
