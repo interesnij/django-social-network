@@ -373,7 +373,7 @@ class Photo(models.Model):
     def create_photo(cls, creator, image, list, type, community):
         from common.processing.photo import get_photo_processing
 
-        photo = cls.objects.create(creator=creator,preview=image,file=image)
+        photo = cls.objects.create(creator=creator,preview=image,file=image,community=community)
         list.photo_list.add(photo)
         if not list.is_private():
             get_photo_processing(photo, Photo.PUBLISHED)
