@@ -54,10 +54,11 @@ function photo_post_attach(block, photo_pk, user_pk, src) {
 
 function photo_post_upload_attach(photo_list, block){
   is_full_attach();
-  console.log("photo_post_upload_attach!")
   for (var i = 0; i < photo_list.length; i++){
     parent = photo_list[i];
     div = create_preview_photo(parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
+    console.log(photo_list[i]);
+    console.log(div);
     add_file_attach();
     block.append(div);
     is_full_attach();

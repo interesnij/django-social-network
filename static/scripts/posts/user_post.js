@@ -390,7 +390,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
       photo_post_upload_attach(photo_list, block);
     } else if (document.body.querySelector(".message_attach_block")){
       block = document.body.querySelector(".message_attach_block");
-      photo_message_upload_attach(photo_list, block, photo_list.length);
+      photo_message_upload_attach(photo_list, block); 
     }
     }
     close_create_window();
