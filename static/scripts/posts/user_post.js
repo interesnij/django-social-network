@@ -367,7 +367,7 @@ on('#ajax', 'click', '.u_post_wall_comment_restore', function() {
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {
-  form = document.body.querySelector("#add_photos");
+  form = this.parentElement;
   form_data = new FormData(form);
   input = form.querySelector(".upload_for_post_attach")
   if (input.files.length > 10) {
@@ -383,8 +383,7 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".col-md-4");
-
+    photo_list = response.querySelectorAll(".pag");
     if (document.body.querySelector(".attach_block")){
       console.log("attach_block!")
       block = document.body.querySelector(".attach_block");
@@ -399,12 +398,6 @@ on('#ajax', 'change', '#u_photo_post_attach', function() {
   link_.send(form_data);
 });
 
-function onSelect(e) {
-    if (e.files.length > 5) {
-        alert("Only 5 files accepted.");
-        e.preventDefault();
-    }
-}
 on('#ajax', 'change', '#u_photo_post_comment_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form = document.body.querySelector("#add_comment_photos");
