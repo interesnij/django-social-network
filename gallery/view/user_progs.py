@@ -168,7 +168,7 @@ class UserPhotoDelete(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.delete_photo(None)
+            photo.delete_item(None)
             return HttpResponse()
         else:
             raise Http404
@@ -178,7 +178,7 @@ class UserPhotoRecover(View):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.restore_photo(None)
+            photo.restore_item(None)
             return HttpResponse()
         else:
             raise Http404
@@ -252,7 +252,7 @@ class PhotoWallCommentUserDelete(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -262,7 +262,7 @@ class PhotoWallCommentUserRecover(View):
         comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -340,7 +340,7 @@ class PhotoListUserDelete(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -350,7 +350,7 @@ class PhotoListUserRecover(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404

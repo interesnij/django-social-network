@@ -203,7 +203,7 @@ class PostList(models.Model):
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_list(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = PostList.DELETED
@@ -216,7 +216,7 @@ class PostList(models.Model):
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_list(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PostList.LIST
@@ -506,7 +506,7 @@ class Post(models.Model):
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_post(self, community):
+    def delete_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Post.DELETED
@@ -523,7 +523,7 @@ class Post(models.Model):
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_post(self, community):
+    def restore_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Post.PUBLISHED
@@ -1004,7 +1004,7 @@ class PostComment(models.Model):
         from common.attach.comment_attach import get_c_comment_attach
         return get_c_comment_attach(self, user)
 
-    def delete_comment(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = PostComment.DELETED
@@ -1023,7 +1023,7 @@ class PostComment(models.Model):
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="C")
-    def restore_comment(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PostComment.PUBLISHED

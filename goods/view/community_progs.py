@@ -94,7 +94,7 @@ class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
-            good.delete_good(c)
+            good.delete_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -103,7 +103,7 @@ class CommunityGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            good.restore_good(c)
+            good.restore_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -246,7 +246,7 @@ class CommunityGoodListDelete(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == GoodList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -255,7 +255,7 @@ class CommunityGoodListRecover(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -315,7 +315,7 @@ class GoodCommentCommunityDelete(View):
         except:
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -328,7 +328,7 @@ class GoodCommentCommunityRecover(View):
         except:
             community = comment.parent.good.community
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404

@@ -88,7 +88,7 @@ class SurveyCommunityDelete(View):
     def get(self, request, *args, **kwargs):
         survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            survey.delete_survey()
+            survey.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -97,7 +97,7 @@ class SurveyCommunityRecover(View):
     def get(self, request, *args, **kwargs):
         survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            survey.restore_survey()
+            survey.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -198,7 +198,7 @@ class CommunitySurveyListDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -207,7 +207,7 @@ class CommunitySurveyListRecover(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404

@@ -242,7 +242,7 @@ class GoodList(models.Model):
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
-	def delete_list(self):
+	def delete_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
 			self.type = GoodList.DELETED
@@ -255,7 +255,7 @@ class GoodList(models.Model):
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
-	def restore_list(self):
+	def restore_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = GoodList.LIST
@@ -522,7 +522,7 @@ class Good(models.Model):
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 
-	def delete_good(self, community):
+	def delete_item(self, community):
 		from notify.models import Notify, Wall
 		if self.type == "PUB":
 			self.type = Good.DELETED
@@ -539,7 +539,7 @@ class Good(models.Model):
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def restore_good(self, community):
+	def restore_item(self, community):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = Good.PUBLISHED
@@ -869,7 +869,7 @@ class GoodComment(models.Model):
 					user_wall(user, None, self.pk, "GOOC", "u_good_comment_notify", "DCO")
 		return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
-	def delete_comment(self):
+	def delete_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "PUB":
 			self.type = GoodComment.DELETED
@@ -888,7 +888,7 @@ class GoodComment(models.Model):
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="C")
-	def restore_comment(self):
+	def restore_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = GoodComment.PUBLISHED

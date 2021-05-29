@@ -35,7 +35,7 @@ class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.delete_good(None)
+            good.delete_item(None)
             return HttpResponse()
         else:
             raise Http404
@@ -44,7 +44,7 @@ class UserGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.restore_good()
+            good.restore_item()
             return HttpResponse(None)
         else:
             raise Http404
@@ -241,7 +241,7 @@ class UserGoodListDelete(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user and list.type == GoodList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -250,7 +250,7 @@ class UserGoodListRecover(View):
     def get(self,request,*args,**kwargs):
         user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -296,7 +296,7 @@ class GoodCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -305,7 +305,7 @@ class GoodCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404

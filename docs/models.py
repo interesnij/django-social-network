@@ -201,7 +201,7 @@ class DocList(models.Model):
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_list(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = DocList.DELETED
@@ -214,7 +214,7 @@ class DocList(models.Model):
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_list(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = DocList.LIST
@@ -372,7 +372,7 @@ class Doc(models.Model):
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_doc(self, community):
+    def delete_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Doc.DELETED
@@ -389,7 +389,7 @@ class Doc(models.Model):
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_doc(self, community):
+    def restore_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Doc.PUBLISHED

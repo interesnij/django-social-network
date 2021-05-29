@@ -163,7 +163,7 @@ class SurveyList(models.Model):
             self.make_private()
         return self
 
-    def delete_list(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = SurveyList.DELETED
@@ -174,7 +174,7 @@ class SurveyList(models.Model):
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_list(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "TDEL":
             self.type = SurveyList.LIST
@@ -352,7 +352,7 @@ class Survey(models.Model):
     def is_have_votes(self):
         return SurveyVote.objects.filter(answer__survey_id=self.pk).values("id").exists()
 
-    def delete_survey(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Survey.DELETED
@@ -363,7 +363,7 @@ class Survey(models.Model):
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_survey(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "TDEL":
             self.type = Survey.PUBLISHED

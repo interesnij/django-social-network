@@ -259,7 +259,7 @@ on('body', 'click', '#c_edit_track_btn', function() {
   link_.send(form_data);
 });
 
-on('body', 'click', '.u_track_remove', function() {
+on('body', 'click', '.c_track_remove', function() {
   saver = this.parentElement.parentElement.parentElement;
   pk = saver.getAttribute("data-pk")
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -272,7 +272,7 @@ on('body', 'click', '.u_track_remove', function() {
     div.classList.add("col-md-6", "col-sm-12");
     div.style.padding = "20px";
     div.style.display =  "block";
-    div.innerHTML = "Аудиозапись удалена. <span class='c_track_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
+    div.innerHTML = "Аудиозапись удалена. <span class='u_track_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
     item = saver.parentElement.parentElement.parentElement;
     item.style.display = "none"; item.parentElement.insertBefore(div, item)
   }};

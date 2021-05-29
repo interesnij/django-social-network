@@ -214,7 +214,7 @@ class SoundList(models.Model):
         if Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_list(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = SoundList.DELETED
@@ -227,7 +227,7 @@ class SoundList(models.Model):
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_list(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = SoundList.LIST
@@ -482,7 +482,7 @@ class Music(models.Model):
             self.make_private()
         return self.save()
 
-    def delete_track(self, community):
+    def delete_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Music.DELETED
@@ -499,7 +499,7 @@ class Music(models.Model):
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_track(self, community):
+    def restore_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Music.PUBLISHED

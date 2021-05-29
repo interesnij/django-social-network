@@ -136,7 +136,7 @@ on('body', 'click', '.u_track_remove', function() {
   pk = saver.getAttribute("data-pk")
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/music/user_progs/delete_track/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {

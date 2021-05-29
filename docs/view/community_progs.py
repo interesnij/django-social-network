@@ -147,7 +147,7 @@ class CommunityDocListDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -156,7 +156,7 @@ class CommunityDocListRecover(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -166,7 +166,7 @@ class CommunityDocRemove(View):
     def get(self, request, *args, **kwargs):
         doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            doc.delete_doc(c)
+            doc.delete_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -175,7 +175,7 @@ class CommunityDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
         doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            doc.restore_doc(c)
+            doc.restore_item(c)
             return HttpResponse()
         else:
             raise Http404

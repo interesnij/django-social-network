@@ -172,7 +172,7 @@ class CommunityPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == SoundList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -181,7 +181,7 @@ class CommunityPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -190,7 +190,7 @@ class CommunityTrackRemove(View):
     def get(self, request, *args, **kwargs):
         track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            track.delete_track(c)
+            track.delete_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -198,7 +198,7 @@ class CommunityTrackAbortRemove(View):
     def get(self,request,*args,**kwargs):
         track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            track.restore_track(c)
+            track.restore_item(c)
             return HttpResponse()
         else:
             raise Http404

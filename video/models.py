@@ -223,7 +223,7 @@ class VideoList(models.Model):
         if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_list(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = VideoList.DELETED
@@ -236,7 +236,7 @@ class VideoList(models.Model):
             Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_list(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = VideoList.LIST
@@ -493,7 +493,7 @@ class Video(models.Model):
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_video(self, community):
+    def delete_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.DELETED
@@ -510,7 +510,7 @@ class Video(models.Model):
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_video(self, community):
+    def restore_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Video.PUBLISHED
@@ -766,7 +766,7 @@ class VideoComment(models.Model):
                     user_wall(user, None, self.pk, "VIDC", "u_video_comment_notify", "DCO")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
-    def delete_comment(self):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = VideoComment.DELETED
@@ -785,7 +785,7 @@ class VideoComment(models.Model):
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="C")
-    def restore_comment(self):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = VideoComment.PUBLISHED

@@ -158,7 +158,7 @@ class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -167,7 +167,7 @@ class PostCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -176,7 +176,7 @@ class PostWallCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -185,7 +185,7 @@ class PostWallCommentCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -232,7 +232,7 @@ class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.delete_post(c)
+            post.delete_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -241,7 +241,7 @@ class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.delete_post(c)
+            post.delete_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -250,7 +250,7 @@ class PostWallCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.restore_post(c)
+            post.restore_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -259,7 +259,7 @@ class PostCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.restore_post(c)
+            post.restore_item(c)
             return HttpResponse()
         else:
             raise Http404
@@ -352,7 +352,7 @@ class CommunityPostListDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.type == PostList.LIST and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -361,7 +361,7 @@ class CommunityPostListRecover(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404

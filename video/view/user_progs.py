@@ -76,7 +76,7 @@ class VideoCommentUserDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -85,7 +85,7 @@ class VideoCommentUserRecover(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.restore_comment()
+            comment.restore_item()
             return HttpResponse()
         else:
             raise Http404
@@ -94,7 +94,7 @@ class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
-            video.delete_video(None)
+            video.delete_item(None)
             return HttpResponse()
         else:
             raise Http404
@@ -103,7 +103,7 @@ class UserVideoRecover(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and video.creator == request.user:
-            video.restore_video(None)
+            video.restore_item(None)
             return HttpResponse()
         else:
             raise Http404
@@ -171,7 +171,7 @@ class VideoWallCommentUserDelete(View):
         comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == user.pk:
-            comment.delete_comment()
+            comment.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -297,7 +297,7 @@ class UserVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.type == VideoList.LIST:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -306,7 +306,7 @@ class UserVideolistRecover(View):
     def get(self,request,*args,**kwargs):
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and user == request.user:
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
