@@ -21,9 +21,8 @@ urlpatterns=[
     url(r'^delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentCommunityDelete.as_view())),
 	url(r'^restore_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', login_required(PhotoWallCommentCommunityRecover.as_view())),
 
-    url(r'^add_photos_in_main_list/(?P<pk>\d+)/$', CommunityCreatePhotosInMainList.as_view()), 
+    url(r'^add_photos_in_main_list/(?P<pk>\d+)/$', CommunityCreatePhotosInMainList.as_view()),
     url(r'^add_photos_in_photo_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityCreatePhotosInPhotoList.as_view()),
-	url(r'^add_attach_photo/(?P<pk>\d+)/$', PhotoAttachCommunityCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
     url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPhotoInCommunityList.as_view()),
     url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoFromCommunityList.as_view()),

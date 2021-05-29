@@ -70,25 +70,6 @@ class CommunityCreatePhotosInPhotoList(View):
         else:
             raise Http404
 
-class PhotoAttachCommunityCreate(View):
-    """
-    мульти сохранение изображений с моментальным выводом в превью
-    """
-    def post(self, request, *args, **kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            photos = []
-            check_can_get_lists(request.user, community)
-            list = PhotoList.objects.filter(type=PhotoList.WALL, community=community)[0]
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHWAL")
-                photos += [photo,]
-            community.plus_photos(len(photos))
-            return render_for_platform(request, 'communities/photos/list/my_photo_list.html',{'object_list': photos, 'community': community})
-        else:
-            raise Http404
-
-
 class CommunityAddAvatar(View):
     """
     загрузка аватара сообщества

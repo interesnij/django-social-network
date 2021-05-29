@@ -176,30 +176,26 @@ class CommunityFirstAvatar(TemplateView):
 
 
 class CommunityPhoto(TemplateView):
-    """
-    страница фото, не имеющего альбома для сообщества с разрещениями и без
-    """
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_items()
-        if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(CommunityPhoto,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		self.community = self.photo.community
+		self.list = self.community.get_photo_list()
+		if request.user.is_administrator_of_community(self.community.pk):
+			self.photos = self.list.get_items()
+		else:
+			self.photos = self.list.get_staff_items()
+		if request.is_ajax():
+			self.template_name = get_permission_community_photo(self.list, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(CommunityPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["community"] = self.list.community
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["list"] = self.list
-        return context
+        c = super(CommunityPhoto,self).get_context_data(**kwargs)
+        c["object"], c["community"], c["next"], c["prev"], c["avatar"] = self.photo, self.community, self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first(), self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first(), self.photo.is_avatar(self.request.user), c["list"] = self.list
+		return c
 
 
 class CommunityPhotoListPhoto(TemplateView):
