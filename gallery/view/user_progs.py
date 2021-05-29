@@ -76,7 +76,7 @@ class UserCreatePhotosInPhotoList(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS", community=None)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
+            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'list': _list, 'user': request.user})
         else:
             raise Http404
 
@@ -88,7 +88,7 @@ class PhotoAttachUserCreate(View):
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHWAL", community=None)
                 photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_list_photos.html',{'object_list': photos, 'list': list})
+            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'list': list})
         else:
             raise Http404
 
