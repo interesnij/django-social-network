@@ -194,7 +194,7 @@ class CommunityPhoto(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityPhoto,self).get_context_data(**kwargs)
-		c["object"], c["community"], c["next"], c["prev"], c["avatar"] c["list"] = self.photo, self.community, self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first(), self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first(), self.photo.is_avatar(self.request.user), self.list
+		c["object"], c["community"], c["next"], c["prev"], c["avatar"], c["list"] = self.photo, self.community, self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first(), self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first(), self.photo.is_avatar(self.request.user), self.list
 		return c
 
 
