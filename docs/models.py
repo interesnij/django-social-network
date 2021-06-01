@@ -111,7 +111,7 @@ class DocList(models.Model):
     def get_community_staff_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
         query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
+        query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
         return cls.objects.filter(query)
     @classmethod
     def get_community_lists(cls, community_pk):
