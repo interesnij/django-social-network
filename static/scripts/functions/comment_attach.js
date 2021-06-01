@@ -49,12 +49,13 @@ function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
   is_full_dropdown();
 }
 
-function photo_comment_upload_attach(photo_list, dropdown, block_divs_length){
+function photo_comment_upload_attach(photo_list, dropdown){
   is_full_dropdown();
 
   img_block = dropdown.parentElement.previousElementSibling;
-  for (var i = 0; i < block_divs_length; i++){
-    div = create_preview_photo(parent.getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
+  for (var i = 0; i < photo_list.length; i++){
+    parent = photo_list[i];
+    div = create_preview_photo(parent.querySelector(".progressive").getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
     block.append(div);
     img_block.append(div);
     add_file_dropdown()
