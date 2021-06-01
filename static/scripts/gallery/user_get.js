@@ -185,6 +185,11 @@ on('#ajax', 'click', '.u_photo_comments', function() {
   pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/user/comment/" + pk + "/" + uuid + "/";
-  list_load(data.querySelector(".u_load_comments"), url);
-  this.classList.toggle("comments_open");
+  block = parent.querySelector(".u_load_comments");
+  if (block.classList.contains("show")){
+    block.classList.remove("show")
+  } else {
+    block.firstChild ? null : list_load(block, "/posts/user/comment/" + uuid + "/" + pk + "/");
+    block.classList.add("show")
+  }
 });
