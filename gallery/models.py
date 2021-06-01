@@ -155,7 +155,7 @@ class PhotoList(models.Model):
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)
-        query.add(Q(type="LIS"), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
