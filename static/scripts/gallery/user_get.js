@@ -7,7 +7,7 @@ on('body', 'click', '.u_uncopy_photo_list', function() {
 
 on('body', 'click', '.u_load_profile_photo_list', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  profile_list_block_load(this, ".load_block", "/users/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
+  profile_list_block_load(this, ".load_block", "/gallery/user/list_photos/" + pk + "/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
 });
 
 on('body', 'click', '.u_load_attach_photo_list', function() {
