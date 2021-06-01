@@ -64,14 +64,7 @@ on('#ajax', 'click', '.c_avatar_detail', function() {
   open_fullscreen("/gallery/community/avatar/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.c_AV_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  photo_pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/avatar_photo/" + pk + "/" + photo_pk + "/", loader)
-});
-
-on('#ajax', 'click', '.c_AL_photo', function() {
+on('#ajax', 'click', '.c_LIS_photo', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
