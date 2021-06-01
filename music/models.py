@@ -275,23 +275,14 @@ class SoundList(models.Model):
     @classmethod
     def get_user_staff_lists(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
-        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
+        query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
         return cls.objects.filter(query)
-    @classmethod
-    def is_have_user_staff_lists(cls, user_pk):
-        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
-        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_user_lists(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
         query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_user_lists(cls, user_pk):
-        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
-        query.add(Q(type="LIS"), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_user_lists_count(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
@@ -301,23 +292,14 @@ class SoundList(models.Model):
     @classmethod
     def get_community_staff_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
+        query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
         return cls.objects.filter(query)
-    @classmethod
-    def is_have_community_staff_lists(cls, community_pk):
-        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(~Q(Q(type__contains="_")|Q(type="MAI")), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
         query.add(Q(type="LIS"), Q.AND)
         return cls.objects.filter(query).order_by("order")
-    @classmethod
-    def is_have_community_lists(cls, community_pk):
-        query = Q(community_id=user_pk)|Q(communities__id=community_pk)
-        query.add(Q(type="LIS"), Q.AND)
-        return cls.objects.filter(query).exists()
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=user_pk)|Q(communities__id=community_pk)
