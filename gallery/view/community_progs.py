@@ -163,7 +163,7 @@ class CommunityPhotoDescription(View):
 
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        community = photo.community
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and request.user.is_administrator_of_community(community.pk):
             form_image.save()

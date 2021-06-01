@@ -154,7 +154,6 @@ class UserPhotoDescription(View):
 
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()

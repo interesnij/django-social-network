@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns=[
-    url(r'^description/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoDescription.as_view()),
+    url(r'^description/(?P<uuid>[0-9a-f-]+)/$', UserPhotoDescription.as_view()),
     url(r'^delete/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserPhotoRecover.as_view()),
     url(r'^on_comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', UserOpenCommentPhoto.as_view()),
