@@ -37,12 +37,11 @@ on('#ajax', 'click', '.c_remove_photo_list', function(e) {
 on('#ajax', 'click', '#c_create_photo_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/community_progs/add_list/" + pk + "/", "/communities/", "/list/");
+  post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/");
 });
 
 on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
