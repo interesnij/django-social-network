@@ -149,7 +149,7 @@ class CommunityGallery(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.photo import get_template_community_photo
+        from common.templates import get_template_anon_community, get_template_community
         from gallery.models import PhotoList
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
