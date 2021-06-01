@@ -140,11 +140,9 @@ on('#ajax', 'click', '.u_photo_list_remove', function() {
   link_.send();
 });
 on('#ajax', 'click', '.u_photo_list_restore', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute('data-pk');
-  uuid = block.getAttribute('data-uuid');
+  uuid = this.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/restore_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'GET', "/gallery/user_progs/restore_list/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -188,7 +186,7 @@ on('#ajax', 'click', '.u_photo_comments', function() {
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/gallery/user/comment/" + pk + "/" + uuid + "/"); 
+    block.firstChild ? null : list_load(block, "/gallery/user/comment/" + pk + "/" + uuid + "/");
     block.classList.add("show")
   }
 });

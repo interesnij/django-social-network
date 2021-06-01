@@ -8,19 +8,17 @@
   {% include 'desctop/users/photos/main_list/lists.html' %}
 </div>
 
-<div class="container-fluid" style="margin-top:30px">
-    <div class="row">
-        <div class="col-12">
-            <h5 class="mt-1">Фотографии
-                {% include 'desctop/generic/user/user_gen.html' %}
-            </h5>
-            Фото: {{ list.count_items }}
-        </div>
-    </div>
+<span class="load_block">
+<div class="media mt-3" style="padding-left: 7px;">
+  <h5 class="mt-1">
+    {{ list.name }} ({{ list.count_items }})
+    <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+  </h5>
 </div>
 
 <div class="container mt-4 main-container">
   <div class="row is_block_paginate no-gutters" data-link="/gallery/user/photos/{{ user.pk }}/"></div>
 </div>
+</span>
 </div>
 {% endblock %}
