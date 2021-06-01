@@ -224,7 +224,7 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
-on('#ajax', 'change', '#u_gallery_photo_add', function() {
+on('#ajax', 'change', '#u_gallery_photo_add', function() { 
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

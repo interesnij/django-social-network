@@ -162,15 +162,12 @@ class UserPhotosListPhoto(TemplateView):
 
 
 class UserWallPhoto(TemplateView):
-    """
-    страница отдельного фото альбома пользователя "Фото со стены"
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.WALL)
+        self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.WALL, community__isnull=True)
         self.photos = self.list.get_items()
         if request.is_ajax():
             self.template_name = get_permission_user_photo_detail(self.list, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -191,9 +188,6 @@ class UserWallPhoto(TemplateView):
 
 
 class UserDetailAvatar(TemplateView):
-    """
-    страница отдельного фото аватаров (альбом "Фото со страницы") пользователя с разрещениями и без
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
