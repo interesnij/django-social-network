@@ -148,7 +148,7 @@ on('#ajax', 'click', '.u_photo_description', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/description/" + uuid + "/", true ); 
+  link_.open( 'POST', "/gallery/user_progs/description/" + uuid + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -244,7 +244,7 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
 
 on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
+  uuid = document.body.querySelector(".uuid_saver").getAttribute("data-uuid");
   form_data = new FormData(document.body.querySelector("#add_photos"));
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/gallery/user_progs/add_photos_in_photo_list/" + pk + "/" + uuid + "/", true );
