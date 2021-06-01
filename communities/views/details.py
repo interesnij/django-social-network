@@ -158,6 +158,7 @@ class CommunityGallery(TemplateView):
             self.get_lists = PhotoList.get_community_staff_lists(self.c.pk)
         else:
             self.get_lists = PhotoList.get_community_lists(self.c.pk)
+        self.count_lists = PhotoList.get_community_lists_count(self.c.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
