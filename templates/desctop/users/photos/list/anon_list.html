@@ -3,22 +3,16 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row mb-3">
-      <div class="col-12 col-md-8">
-        <h5 class="mt-1">{{ list.name }} - <a class="ajax underline" href="{% url 'user_gallery' pk=user.pk %}">галерея </a>
-          {% include 'desctop/generic/user/user_gen.html' %}
-        </h5>
-        Фото: {{ list.count_items }}
-      </div>
-      <div class="col-12 col-md-4">
-          <button class="btn btn-outline-success copy_link" type="button">
-              Копировать ссылку
-          </button>
-      </div>
-    </div>
+  <span class="load_block">
+  <div class="media mt-3" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      {{ list.name }} ({{ list.count_items }})
+      <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+    </h5>
+  </div>
 
   <div class="row is_block_paginate no-gutters" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
-
+  </span>
 </div>
 
 {% endblock %}
