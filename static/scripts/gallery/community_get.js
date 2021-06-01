@@ -2,7 +2,7 @@ on('#ajax', 'click', '.c_MAI_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.parentElement.parentElement.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".uuid_saver").getAttribute('data-uuid')
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader) 
 });
 
 on('#ajax', 'click', '.c_post_photo', function() {

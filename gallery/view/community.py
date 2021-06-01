@@ -180,6 +180,7 @@ class CommunityPhoto(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		self.community = self.photo.community
 		self.list = self.community.get_photo_list()
 		if request.user.is_administrator_of_community(self.community.pk):
