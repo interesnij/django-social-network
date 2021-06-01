@@ -1,8 +1,17 @@
+on('body', 'click', '.c_load_profile_photo_list', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  profile_list_block_load(this, ".load_block", "/communities/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
+});
+
+on('body', 'click', '.c_load_attach_photo_list', function() {
+  profile_list_block_load(this, ".load_block", "/users/load/u_photo_list_load/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_attach_photo_list");
+});
+
 on('#ajax', 'click', '.c_MAI_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.parentElement.parentElement.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".uuid_saver").getAttribute('data-uuid')
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader) 
+  open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_post_photo', function() {
