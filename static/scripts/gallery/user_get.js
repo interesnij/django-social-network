@@ -185,7 +185,7 @@ on('#ajax', 'click', '.u_photo_comments', function() {
   pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   url = "/gallery/user/comment/" + pk + "/" + uuid + "/";
-  block = parent.querySelector(".u_load_comments");
+  block = data.querySelector(".u_load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
