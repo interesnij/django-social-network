@@ -134,7 +134,7 @@ class UserPhoto(TemplateView):
         return context
 
 
-class UserPhotosListPhoto(TemplateView):
+class UserPhotoAlbumList(TemplateView):
     """
     страница отдельного фото в альбоме для пользователя с разрещениями и без
     """
@@ -148,10 +148,10 @@ class UserPhotosListPhoto(TemplateView):
             self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(UserPhotosListPhoto,self).get(request,*args,**kwargs)
+        return super(UserPhotoAlbumList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserPhotosListPhoto,self).get_context_data(**kwargs)
+        context = super(UserPhotoAlbumList,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["list"] = self.list
         context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
