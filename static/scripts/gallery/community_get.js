@@ -1,12 +1,13 @@
 on('#ajax', 'click', '.c_load_profile_photo_list', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   profile_list_block_load(this, ".load_block", "/communities/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "c_load_profile_photo_list");
 });
 
 on('#ajax', 'click', '.c_AVA_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/avatar_photo/" + photo_pk + "/", loader)
+  open_fullscreen("/gallery/community/avatar_photo/" + pk + "/" + photo_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_load_attach_photo_list', function() {

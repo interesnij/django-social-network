@@ -123,8 +123,8 @@ class CommunityDetailAvatar(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.community = self.photo.community
-        self.list = PhotoList.objects.get(community=self.community, type=PhotoList.AVATAR)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.AVATAR)
         self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
         self.photos = self.list.get_items()
         if request.is_ajax():
