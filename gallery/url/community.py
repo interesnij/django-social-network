@@ -5,7 +5,7 @@ urlpatterns=[
 	url(r'^photos/(?P<pk>\d+)/$', CommunityPhotosList.as_view()),
 	url(r'^list_photos/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumPhotoList.as_view(), name="community_photos"),
 
-	url(r'^avatar_photo/(?P<photo_pk>\d+)/$', CommunityDetailAvatar.as_view(), name="community_avatar"),
+	url(r'^avatar_photo/(?P<photo_pk>\d+)/$', CommunityDetailAvatar.as_view(), name="community_avatar"), 
     url(r'^photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityPhoto.as_view(), name="community_photo"),
     url(r'^list_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityAlbumPhotoList.as_view(), name="community_list_photo"),
 	url(r'^post_photo/(?P<uuid>[0-9a-f-]+)/(?P<photo_pk>\d+)/$', CommunityPostPhoto.as_view(), name="community_post_photo"),
