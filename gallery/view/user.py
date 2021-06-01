@@ -51,7 +51,7 @@ class UserPhotosList(ListView):
 
     def get_context_data(self,**kwargs):
         context = super(UserPhotosList,self).get_context_data(**kwargs)
-        context['user'] = self.user
+        context['user'], context['list'] = self.user, self.list
         return context
 
     def get_queryset(self):
