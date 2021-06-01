@@ -3,24 +3,7 @@
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
-  <span class="load_block">
-  <div class="media mt-3" style="padding-left: 7px;">
-    <form id="add_photos" data-uuid="{{ list.uuid }}">
-      {% csrf_token %}
-    <h5 class="mt-1">
-      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
-        <input type="file" id="u_photo_add" name="file" style="display:none" multiple="multiple">
-        <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
-        {% if request.user.pk == list.creator.pk and not list.is_main %}
-        <span class="pointer badge badge-light-secondary u_photo_list_edit">Изменить список</span>
-        <span class="pointer badge badge-light-danger u_photo_list_remove">Удалить список</span>
-        {% endif %}
-    </h5>
-    </form>
-  </div>
-
   <div class="row is_block_paginate no-gutters"id="u_list_photos_container"  data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
-</span>
 </div>
 
 {% endblock %}
