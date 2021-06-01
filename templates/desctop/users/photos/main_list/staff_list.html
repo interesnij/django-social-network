@@ -2,23 +2,10 @@
 {% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <h5 class="mt-1">Альбомы
-              {% include 'desctop/generic/user/user_gen.html' %}  ({{ count_lists }})
-            </h5>
-        </div>
-        <div class="col-12 col-md-4">
-          <button class="btn btn-sm custom_color border u_close_photo_list" type="button">
-            Закрыть альбом
-          </button>
-        </div>
-    </div>
-</div>
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
+
 <div class="container mt-4">
-  {% include 'desctop/users/photos/main_list/photo_lists.html' %}
+  {% include 'desctop/users/photos/main_list/lists.html' %}
 </div>
 
   <div class="container-fluid mt-3">
