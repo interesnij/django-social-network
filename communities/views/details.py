@@ -146,22 +146,27 @@ class CommunityDetail(TemplateView):
 
 
 class CommunityGallery(TemplateView):
-    """
-    галерея сообщества с правами доступа
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
         from common.template.photo import get_template_community_photo
+        from gallery.models import PhotoList
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.list = self.c.get_photo_list()
-        self.template_name = get_template_community_photo(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.pk == self.user.pk:
+            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
+        else:
+            self.get_lists = PhotoList.get_user_lists(self.user.pk)
+        if request.user.is_anonymous:
+            self.template_name = get_template_anon_community(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_community(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CommunityGallery,self).get_context_data(**kwargs)
-        c['community'], c['list'] = self.c, self.list
+        c['community'], c['list'], c['get_lists'], c['count_lists'] = self.c, self.list, self.get_lists, self.count_lists
         return c
 
 class CommunityPhotoList(TemplateView):
