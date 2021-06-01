@@ -3,7 +3,7 @@ on('#ajax', 'click', '.c_load_profile_photo_list', function() {
   profile_list_block_load(this, ".load_block", "/communities/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "c_load_profile_photo_list");
 });
 
-on('#ajax', 'click', '.u_AVA_photo', function() {
+on('#ajax', 'click', '.c_AVA_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/avatar_photo/" + photo_pk + "/", loader)
