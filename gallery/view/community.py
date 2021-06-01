@@ -196,7 +196,7 @@ class CommunityPhoto(TemplateView):
 		return c
 
 
-class CommunityPhotoListPhoto(TemplateView):
+class CommunityAlbumPhotoList(TemplateView):
     """
     страница отдельного фото в альбоме для пользователя с разрещениями и без
     """
@@ -213,10 +213,10 @@ class CommunityPhotoListPhoto(TemplateView):
             self.photos = self.list.get_staff_items()
         else:
             self.photos = self.list.get_items()
-        return super(CommunityPhotoListPhoto,self).get(request,*args,**kwargs)
+        return super(CommunityAlbumPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityPhotoListPhoto,self).get_context_data(**kwargs)
+        context = super(CommunityAlbumPhotoList,self).get_context_data(**kwargs)
         context["object"] = self.photo
         context["community"] = self.list.community
         context["list"] = self.list
