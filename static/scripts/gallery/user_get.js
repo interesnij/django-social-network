@@ -8,6 +8,10 @@ on('body', 'click', '.u_uncopy_photo_list', function() {
 on('body', 'click', '.u_load_profile_photo_list', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   profile_list_block_load(this, ".load_block", "/users/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
+  lenta = block.querySelector('.is_block_paginate');
+  link = lenta.getAttribute("data-link");
+  list_load(block.querySelector(".is_block_paginate"), link);
+  scrolled(link, '.list_pk', target = 0)
 });
 
 on('body', 'click', '.u_load_attach_photo_list', function() {
