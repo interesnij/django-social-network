@@ -15,6 +15,12 @@ function profile_list_block_load(_this, block, link, actions_class) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
+       if elem_.querySelector(".is_block_paginate") {
+         lenta = elem_.querySelector('.is_block_paginate');
+         link = lenta.getAttribute("data-link");
+         list_load(document.body.querySelector(".is_block_paginate"), link);
+         scrolled(link, '.list_pk', target = 0)
+       };
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
          class_to_add[i].classList.add(actions_class, "pointer");
