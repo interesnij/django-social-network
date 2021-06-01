@@ -472,9 +472,10 @@ text-decoration:underline;
   display: flex;
 }
 .centered{
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 ul{
   list-style-type: none
