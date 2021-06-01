@@ -154,10 +154,10 @@ class CommunityGallery(TemplateView):
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.list = self.c.get_photo_list()
-        if request.user.pk == self.user.pk:
-            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
+        if request.user.is_administrator_of_community(self.c.pk):
+            self.get_lists = PhotoList.get_community_staff_lists(self.c.pk)
         else:
-            self.get_lists = PhotoList.get_user_lists(self.user.pk)
+            self.get_lists = PhotoList.get_community_lists(self.c.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
