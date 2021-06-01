@@ -1,6 +1,59 @@
+.list_item {
+    float: left;
+    line-height: 1em;
+    text-align: center;
+    border-radius: 4px;
+    width: 200px;
+}
+.file-manager-item {
+    border: 1px solid #EBE9F1;
+    margin-bottom: 1.6rem;
+    box-shadow: none;
+    margin-right: 1rem;
+    -webkit-transition: none;
+    transition: none;
+}
+.file-logo-wrapper {
+    padding: 2.6rem;
+    height: 7.5rem;
+}
+
 .u_load_comments,
 .c_load_comments {
   display:none
+}
+.file-manager-item .content-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: auto;
+    margin-bottom: 0rem;
+}
+.file-name {
+    width: calc(100% - 26rem);
+    min-height: 1rem;
+    font-weight: 600;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .avatar_figure:hover .change_avatar{
