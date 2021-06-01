@@ -188,16 +188,3 @@ on('#ajax', 'click', '.u_photo_comments', function() {
   list_load(data.querySelector(".u_load_comments"), url);
   this.classList.toggle("comments_open");
 });
-on('#ajax', 'click', '.u_photo_comments', function() {
-  clear_comment_dropdown();
-  data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk");
-  uuid = data.getAttribute("data-uuid");
-  block = data.querySelector(".u_load_comments");
-  if (block.classList.contains("show")){
-    block.classList.remove("show")
-  } else {
-    block.firstChild ? null : list_load(block, "/gallery/user/comment/" + uuid + "/" + pk + "/");
-    block.classList.add("show")
-  }
-});
