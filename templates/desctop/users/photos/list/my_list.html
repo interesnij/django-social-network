@@ -3,7 +3,7 @@
 {% block content %}
 <span class="load_block">
 <div class="media mt-3" style="padding-left: 7px;">
-  <form id="add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
+  <form id="add_photos" data-uuid="{{ list.uuid }}">
     {% csrf_token %}
   <h5 class="mt-1">
     <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})

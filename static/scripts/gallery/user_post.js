@@ -244,10 +244,10 @@ on('#ajax', 'change', '#u_gallery_photo_add', function() {
 
 on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".uuid_saver").getAttribute("data-uuid");
-  form_data = new FormData(document.body.querySelector("#add_photos"));
+  form = document.body.querySelector("#add_photos");
+  form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_photos_in_photo_list/" + pk + "/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_photos_in_photo_list/" + pk + "/" + form.getAttribute("data-uuid") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
