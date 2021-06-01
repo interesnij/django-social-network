@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ list.name }} - мой альбом{% endblock %}
+{% block title %}{{ list.name }} - {{ community.name }}{% endblock %}
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
@@ -19,14 +19,7 @@
     </form>
   </div>
 
-  <div class="row is_block_paginate no-gutters" data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/">
-    <div class="card mb-3 centered items_empty" style="width: 100%;">
-      <div class="card-body">
-      <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-      </div>
-      <h6 style="margin: 20px;text-align: center;"> Фотографий пока нет...</h6>
-    </div>
-  </div>
+  <div class="row is_block_paginate no-gutters" id="c_list_photos_container"  data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/"></div>
 </span>
 </div>
 

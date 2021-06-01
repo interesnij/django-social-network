@@ -1,37 +1,72 @@
 
-<div class="row" style="margin-left: 0;margin-right: 0;">
-    {% for object in get_lists %}
-    <div class="col-md-6 col-lg-4 cover_block" data-pk="{{ community.pk }}" data-uuid="{{ object.uuid }}">
-        <div class="card rounded-0 border-0 mb-3">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
-                        <h6 class="mb-0">{{ object.title }}</h6>
+<div class="media mt-3" style="padding-left: 7px;">
+    <h5 class="mt-1" style="flex: 1;">Фотоальбомы
+      <a class="underline ajax" href="{% url 'community_detail' pk=community.pk %}">
+        {{ community.name }}
+      </a>
+      ({{ count_lists }})
+    </h5>
+</div>
+<div class="row no-gutters" style="overflow-x: auto;">
+    <div class="col-12">
+        <ul style="width:max-content;list-style: none;">
+          <li class="list_item">
+              <div class="card file-manager-item folder cover_block active_border" data-uuid="{{ list.uuid }}">
+                  <div class="card-img-top file-logo-wrapper">
+                    <div class="d-flex align-items-center justify-content-center w-100">
+                        <svg class="list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     </div>
-                    {% if object.is_user_list %}
-                    <div class="dropdown d-inline-block">
-                        <a style="cursor:pointer;width:20px;display:inline-block">
-                          <svg class="svg_default" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <span class="dropdown-item pointer c_photo_list_edit">Изменить</span>
-                          <span class="dropdown-item pointer c_photo_list_remove">Удалить</span>
+                  </div>
+                  <div class="card-body pt-0">
+                      <div class="content-wrapper">
+                          <p class="card-text file-name mb-0 list_name list_toggle" style="text-align: left;">{{ list.name }}</p>
+                          <p class="card-text file-size mb-0">{{ list.count_items }}</p>
+                      </div>
+                      <small class="file-accessed">
+                          {{ community.name }}
+                      </small>
+                  </div>
+              </div>
+          </li>
+            {% for object in get_lists %}
+            <li class="list_item">
+                <div class="card file-manager-item folder cover_block border" data-uuid="{{ object.uuid }}">
+                    <div class="card-img-top file-logo-wrapper">
+                      <div class="d-flex align-items-center justify-content-center w-100">
+                        <svg class="list_toggle list_svg c_load_profile_photo_list pointer" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="content-wrapper">
+                            <p class="card-text file-name mb-0 list_name c_load_profile_photo_list pointer list_toggle" style="text-align: left;" data-name="{{ object.name }}">{{ object.name }}</p>
+                            <p class="card-text file-size mb-0">{{ object.count_items }}</p>
+                        </div>
+                        <small class="file-accessed">
+                          <a class="ajax underline" href="{% url 'community_detail' pk=community.pk %}">
+                            {{ object.creator.get_full_name }}
+                          </a>
+                        </small>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            <li class="list_item">
+                <div class="card file-manager-item folder border c_photo_list_add pointer">
+                    <div class="card-img-top file-logo-wrapper">
+                        <div class="d-flex align-items-center justify-content-center w-100">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         </div>
                     </div>
-                    {% endif %}
+                    <div class="card-body pt-0">
+                        <div class="content-wrapper">
+                            <p class="card-text file-name mb-0" style="text-align: left;">Создать список</p>
+                        </div>
+                        <small class="file-accessed">
+                          текст
+                        </small>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-              <a href="{% url 'community_photo_list' pk=community.pk uuid=object.uuid %}" class="ajax">
-                {% if object.get_cover_photo %}
-                  <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
-                {% else %}
-                  <img class="image_fit_200" src="/static/images/no_img/list.jpg" />
-                {% endif %}
-                <p class="mb-0 f-sm albom_description" style="color:black !important">{{ object.description }}</p>
-              </a>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
-    {% endfor %}
 </div>

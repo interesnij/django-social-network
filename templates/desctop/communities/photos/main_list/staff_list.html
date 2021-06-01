@@ -1,50 +1,32 @@
 {% extends "base.html" %}
-{% block title %}{{ community.name }} :: Фотографии{% endblock %}
+{% block title %}Фотографии {{ community.name }}{% endblock %}
+{% load get_key %}
 {% block content %}
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
 
-    <div class="container-fluid mt-3">
-        <div class="row">
-            <div class="col-12 col-md-8">
-              <h5 class="mt-1">
-                {% include 'desctop/generic/community/community.html' %} - альбомы
-              </h5>
-            </div>
-            <div class="col-12 col-md-4">
-              <button class="btn btn-sm custom_color border u_close_photo_list" type="button">
-                Закрыть альбом
-              </button>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-4">
-      {% include 'desctop/communities/photos/main_list/lists.html' %}
-    </div>
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
 
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <h5 class="mt-1">
-              {% include 'desctop/generic/community/community.html' %} - фотографии
-            </h5>
-            Фото: {{ list.count_items }}
-        </div>
-        {% if community.is_photo_upload_nomember %}
-        <div class="col-12 col-md-4">
-          <form id="c_add_photos">
-              {% csrf_token %}
-                <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-                <button class="btn btn-outline-success previous_lists" style="margin-bottom:15px;width:100%" type="button">
-                  Добавить фотографии
-                </button>
-          </form>
-        </div>
-        {% endif %}
-    </div>
+<div class="container mt-4">
+  {% include 'desctop/communities/photos/main_list/lists.html' %}
 </div>
 
-<div class="container mt-4 main-container">
+<span class="load_block">
+<div class="media mt-3" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+  <h5 class="mt-1">
+    {{ list.name }} ({{ list.count_items }})
+
+    {% if list|is_user_can_add_list:request.user.pk %}
+      <span class="pointer badge badge-light-success c_copy_photo_list">Добавить список в коллекцию</span>
+    {% elif request.user.pk in list.get_users_ids %}
+      <span class="pointer badge badge-light-danger c_uncopy_photo_list">Удалить список из коллекции</span>
+    {% endif %}
+    <span class="pointer badge badge-light-warning c_close_photo_list">Закрыть список</span>
+    <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+  </h5>
+</div>
+
+  <div class="container mt-4">
       <div class="row is_block_paginate no-gutters" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
   </div>
+</span>
 </div>
 {% endblock %}

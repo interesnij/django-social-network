@@ -1,6 +1,6 @@
 
 <div class="col-md-8 col-lg-6 col-xl-5 mx-auto">
-    <form id="c_edit_photo_list_form" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+    <form id="c_edit_list_form" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="form-group ">
                   <label>Название</label>
-                  <input type="text" value="{{ list.name }}" name="name" class="form-control" id="id_name">
+                  <input data-error="Это поле обязательно" type="text" value="{{ list.name }}" name="name" class="form-control" id="id_name">
                 </div>
                 <div class="form-group ">
                   <label>Описание</label>

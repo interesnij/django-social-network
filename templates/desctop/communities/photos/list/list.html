@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}{{ list.name }} - альбом {{ user.get_full_name_genitive }}{% endblock %}
+{% block title %}{{ list.name }} - альбом {{ community.name }}{% endblock %}
 {% load get_key %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
   <span class="load_block">
   <div class="media mt-3" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
@@ -14,12 +14,11 @@
       {% elif request.user.pk in list.get_users_ids %}
         <span class="pointer badge badge-light-danger u_uncopy_photo_list">Удалить список из коллекции</span>
       {% endif %}
-      <span class="pointer badge badge-light-warning u_close_photo_list">Закрыть список</span>
-      <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+      <span class="pointer badge badge-light-warning u_photo_list_claim">Пожаловаться</span>
     </h5>
   </div>
 
-  <div class="row is_block_paginate no-gutters" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
+  <div class="row is_block_paginate no-gutters" id="c_list_photos_container" data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/"></div>
   </span>
 </div>
 
