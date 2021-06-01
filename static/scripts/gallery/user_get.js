@@ -1,3 +1,19 @@
+on('body', 'click', '.u_copy_photo_list', function() {
+  on_off_list_in_collections(this, "/gallery/user_progs/add_list_in_collections/", "u_uncopy_photo_list", "u_copy_photo_list", "Удалить")
+});
+on('body', 'click', '.u_uncopy_photo_list', function() {
+  on_off_list_in_collections(this, "/gallery/user_progs/remove_list_from_collections/", "u_copy_photo_list", "u_uncopy_photo_list", "Добавить")
+});
+
+on('body', 'click', '.u_load_profile_photo_list', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  profile_list_block_load(this, ".load_block", "/users/" + pk + "/photo_list/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
+});
+
+on('body', 'click', '.u_load_attach_photo_list', function() {
+  profile_list_block_load(this, ".load_block", "/users/load/u_photo_list_load/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_attach_photo_list");
+});
+
 on('#ajax', 'click', '.u_MAI_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.parentElement.parentElement.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".uuid_saver").getAttribute('data-uuid')

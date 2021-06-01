@@ -5,6 +5,44 @@ function check_span1(span1, uuid, response) {
     document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response)
   }
 }
+function profile_list_block_load(_this, block, link, actions_class) {
+  // подгрузка списков в профиле пользователя
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  request.open( 'GET', link, true );
+  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  request.onreadystatechange = function () {
+    if ( request.readyState == 4 && request.status == 200 ){
+        elem_ = document.createElement('span');
+        elem_.innerHTML = request.responseText;
+       document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
+       init_music(document.body.querySelector(block));
+       class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
+       for (var i = 0; i < class_to_add.length; i++) {
+         class_to_add[i].classList.add(actions_class, "pointer");
+         class_to_add[i].parentElement.parentElement.parentElement.classList.replace("active_border", "border");
+       };
+       parent = _this.parentElement.parentElement.parentElement;
+       parent.querySelector(".list_svg")? parent.querySelector(".list_svg").classList.remove(actions_class, "pointer") : null;
+       parent.querySelector(".list_name").classList.remove(actions_class, "pointer");
+       parent.classList.replace("border", "active_border");
+    }};
+    request.send( null );
+}
+
+function on_off_list_in_collections(_this, url, new_class, old_class, text) {
+  pk = _this.parentElement.parentElement.getAttribute("data-uuid");
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      _this.innerHTML = "";
+      _this.classList.add(new_class);
+      _this.classList.remove(old_class)
+      _this.innerHTML = text
+}}
+link.send( null );
+};
 
 function add_item_in_list(_this, url, old_class, new_class) {
   parent = _this.parentElement;
