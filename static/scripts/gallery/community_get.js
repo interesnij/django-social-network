@@ -67,7 +67,7 @@ on('#ajax', 'click', '.c_avatar_detail', function() {
 on('#ajax', 'click', '.c_LIS_photo', function() {
   this.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
   pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
+  loader = document.getElementById("photo_loader"); 
   open_fullscreen("/gallery/community/list_photo/" + pk + "/" + uuid + "/", loader)
 });
 

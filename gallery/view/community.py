@@ -63,7 +63,7 @@ class CommunityPhotosList(ListView):
         photo_list = self.photo_list
         return photo_list
 
-class CommunityAlbumPhotoList(ListView):
+class CommunityAlbumPhotosList(ListView):
     template_name = None
     paginate_by = 15
 
@@ -78,10 +78,10 @@ class CommunityAlbumPhotoList(ListView):
             self.photo_list = self.list.get_staff_items()
         else:
             self.photo_list = self.list.get_items()
-        return super(CommunityAlbumPhotoList,self).get(request,*args,**kwargs)
+        return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityAlbumPhotoList,self).get_context_data(**kwargs)
+        context = super(CommunityAlbumPhotosList,self).get_context_data(**kwargs)
         context['community'] = self.community
         context['list'] = self.list
         return context
