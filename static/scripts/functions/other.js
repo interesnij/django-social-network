@@ -15,7 +15,7 @@ function profile_list_block_load(_this, block, link, actions_class) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
-       if elem_.querySelector(".is_block_paginate") {
+       if (elem_.querySelector(".is_block_paginate")) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
          list_load(document.body.querySelector(".is_block_paginate"), link);
