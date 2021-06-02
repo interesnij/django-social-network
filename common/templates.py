@@ -58,7 +58,7 @@ def get_template_community(list, folder, template, request_user, user_agent, sta
         elif list.is_private():
             template_name = folder + "private_" + template
         else:
-            template_name = folder + "member_" + template
+            template_name = folder + template
     elif staff:
         template_name = folder + "staff_" + template
     elif community.is_close():
