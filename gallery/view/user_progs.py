@@ -324,7 +324,7 @@ class PhotoListUserEdit(TemplateView):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PhotoListForm(request.POST,instance=self.list)
         self.user = self.list.creator
-        if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and self.list.type == PhotoList.LIST:
+        if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and self.list.is_have_edit():
             list = self.form.save(commit=False)
             if request.POST.get("is_public"):
                 status = 1
