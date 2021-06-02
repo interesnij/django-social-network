@@ -8,6 +8,18 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
                      "Репост записи в сообщения сделан")
 });
 
+on('body', 'click', '.photo_attach_list_remove', function() {
+  block = this.parentElement.parentElement;
+  if (block.parentElement.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("comment_attach_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  } else if (block.classList.contains("message_attach_block")){
+    remove_file_message_attach(); is_full_message_attach()
+  }
+  block.remove();
+});
+
 on('#ajax', 'click', '#u_add_article', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
