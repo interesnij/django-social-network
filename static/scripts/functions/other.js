@@ -34,9 +34,9 @@ function media_list_delete(_this, url, old_class, new_class) {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.previousElementSibling.style.display = "none";
     _this.previousElementSibling.previousElementSibling.style.display = "none";
-    _this.parentElement.querySelector(".second_list_name").innerHTML = "Плейлист удален";
+    _this.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
-    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Плейлист удален" : null;
+    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace(old_class, new_class);
     _this.innerHTML = "Восстановить список";
   }}
