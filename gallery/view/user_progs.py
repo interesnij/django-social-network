@@ -333,7 +333,7 @@ class PhotoListUserEdit(TemplateView):
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, status=status)
             return HttpResponse()
         else:
-            return HttpResponse()
+            return HttpResponseBadRequest()
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
 class PhotoListUserDelete(View):
@@ -341,7 +341,7 @@ class PhotoListUserDelete(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.is_have_edit():
             list.delete_item()
-            return HttpResponseBadRequest()
+            return HttpResponse()
         else:
             raise Http404
 
@@ -359,7 +359,6 @@ class AddPhotoInUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-
         if request.is_ajax() and not list.is_item_in_list(photo.pk):
             list.photo_list.add(photo)
             return HttpResponse()
