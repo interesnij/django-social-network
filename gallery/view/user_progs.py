@@ -326,7 +326,11 @@ class PhotoListUserEdit(TemplateView):
         self.user = self.list.creator
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and self.list.type == PhotoList.LIST:
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
+            if request.POST.get("is_public"):
+                status = 1
+            else:
+                status = 0
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=status)
             return HttpResponse()
         else:
             return HttpResponse()
