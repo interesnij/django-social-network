@@ -67,20 +67,20 @@
 <span class="load_block">
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_img_load/">
-{% for object in object_list %}
-<div class="load_pag u_load_photo_detail {% if forloop.last %}load_last{% endif %}" style="position: relative;">
-  <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
-      <img class="image_fit_small photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
+  {% for object in object_list %}
+  <div class="col-md-4 mb-3 pointer load_pag {% if forloop.last %}load_last{% endif %}">
+    <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
+        <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
+    </div>
+      <span class="item_attach_circle photo_load_several"
+           tooltip="Выбрать несколько"
+           flow="up">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
+          </svg>
+      </span>
   </div>
-    <span class="item_attach_circle photo_load_several"
-         tooltip="Выбрать несколько"
-         flow="up">
-        <svg fill="currentColor" viewBox="0 0 24 24">
-          <path d="M24 24H0V0h24v24z" fill="none"/><circle cx="12" cy="12" r="8"/>
-        </svg>
-    </span>
-</div>
-  {% endfor %}
+    {% endfor %}
 </div>
 {% else %}
 <div class="card mb-3 centered item_empty">
