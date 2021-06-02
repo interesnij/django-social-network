@@ -1,22 +1,29 @@
-{% if photo_list %}
+{% extends "base_mobile.html" %}
+{% block title %}{{ community.name }} :: Фотографии{% endblock %}
+{% load get_key %}
+{% block content %}
 
-{% for object in photo_list %}
-  <div class="c_MAI_photo pointer pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" style="cursor:pointer;flex: 0 0 50%;max-width:50%;padding:5px">
-    <div class="progressive replace" data-href="{{ object.file.url }}">
-      {% if object.preview %}
-        <img class="preview image_fit_160" src="{{ object.preview.url }}" alt="img">
-      {% else %}
-        <svg class="svg_default image_fit_160" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}">
+
+{% include 'mobile/communities/photos/main_list/lists.html' %}
+
+<span class="load_block">
+  <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      {{ list.name }} ({{ list.count_items }})
+
+      {% if list|is_user_can_add_list:request.user.pk %}
+        <span class="pointer badge badge-light-success u_copy_photo_list">Добавить список в коллекцию</span>
+      {% elif request.user.pk in list.get_users_ids %}
+        <span class="pointer badge badge-light-danger u_uncopy_photo_list">Удалить список из коллекции</span>
       {% endif %}
-    </div>
+      <span class="pointer badge badge-light-warning c_photo_list_claim">Пожаловаться</span>
+      <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+    </h5>
   </div>
-  {% endfor %}
 
-{% else %}
-<div class="card mb-3 centered" style="width:100%;">
-  <div class="card-body">
-  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-  </div>
-  <h6 style="margin: 20px;text-align: center;"> В основном альбоме нет фотографий</h6>
+<div class="row is_block_paginate no-gutters" id="c_photos_container" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+</span>
 </div>
-{% endif %}
+
+{% endblock %}

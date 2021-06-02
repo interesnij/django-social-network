@@ -2,30 +2,26 @@
 {% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="card-header p-0">
-    <div class="row no-gutters">
-      <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-        <a class="btn btn-sm custom_color border ajax" href="{% url 'community_gallery' pk=community.pk %}" style="width: -webkit-fill-available;">
-          <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-        </a>
-      </div>
-      <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-        <form id="add_photos">
-          {% csrf_token %}
-          <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
-          <a class="btn btn-sm custom_color border pointer" id="c_add_multi_photos" style="width: -webkit-fill-available;">Добавить фото</a>
-        </form>
-      </div>
-    </div>
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ community.pk }}">
+  <span class="load_block">
+  <div class="media mt-3" style="padding-left: 7px;">
+    <form id="c_add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
+      {% csrf_token %}
+    <h5 class="mt-1">
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+        <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
+        {% if list.is_main or list.is_have_edit %}
+        <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
+        {% endif %}
+        {% if community.pk == list.community.pk and list.is_have_edit %}
+        <span class="pointer badge badge-light-secondary c_photo_list_edit">Изменить список</span>
+        <span class="pointer badge badge-light-danger c_photo_list_remove">Удалить список</span>
+        {% endif %}
+    </h5>
+    </form>
   </div>
 
-  <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">{{ list.name }}</h5>
-    <span>Фото: {{ list.count_items }}</span>
-  </div>
-
-<div class="row is_block_paginate no-gutters" data-uuid="{{ list.uuid }}" id="c_list_photos_container" data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/"></div>
-</div>
+  <div class="row is_block_paginate no-gutters" id="c_list_photos_container" data-uuid="{{ list.uuid }}" data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/"></div>
+</span>
 
 {% endblock %}

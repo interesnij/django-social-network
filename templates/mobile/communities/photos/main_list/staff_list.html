@@ -1,5 +1,6 @@
 {% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} :: Фотографии{% endblock %}
+{% load get_key %}
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
@@ -12,7 +13,7 @@
   </div>
 {% include 'mobile/communities/gallery/phoh_lists.html' %}
 
-<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
+<div class="media mt-3" style="padding-left: 7px;">
   <h5 class="mt-1" style="flex: 1;">Фото</h5>
   <span>{{ list.count_items }}</span>
 </div>
