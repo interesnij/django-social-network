@@ -146,7 +146,7 @@ def get_u_post_attach(post, user):
         elif item[:3] == "lph":
             #try:
             from gallery.models import PhotoList
-            list = PhotoList.objects.get(pk=item[3:], type="PUB")
+            list = PhotoList.objects.get(pk=item[3:]).exclude(type__contains="_")
             creator = list.creator
             share, add = '', ''
             if user.is_authenticated:
@@ -343,7 +343,7 @@ def get_c_post_attach(post, user):
         elif item[:3] == "lph":
             try:
                 from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:], type="PUB")
+                list = PhotoList.objects.get(pk=item[3:]).exclude(type__contains="_")
                 if list.community:
                     item, name = list.community, list.community.name
                 else:
