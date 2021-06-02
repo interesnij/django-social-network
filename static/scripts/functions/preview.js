@@ -123,6 +123,47 @@ function create_preview_photo(img_src, photo_pk, user_pk){
   $div.append($img);
   return $div
 }
+function create_preview_photo_list(src, title, pk, count){
+  $div = document.createElement("div");
+  $div.classList.add("col-sm-6", "col-md-4", "bg-dark", "position-relative", "text-center", "big_mobile_element", "col-md-6");
+  $div.setAttribute("photolist-pk", pk);
+
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="lph' + pk + '">';
+
+  $img = document.createElement("img");
+  $img.setAttribute("src", src);
+
+  $figure = document.createElement("figure");
+  $figure.classList.add("background-img");
+  $figure.append($img);
+
+  $h6 = document.createElement("h6");
+  $h6.innerHTML = title;
+  $h6.classList.add("u_load_photo_list", "text-white", "pointer", "mb-2", "nowrap");
+
+  $span = document.createElement("span");
+  $span.classList.add("photo_attach_list_remove", "underline", "pointer", "text-white");
+  $span.innerHTML = "Открепить";
+
+  $hr = document.createElement("hr");
+  $hr.classList.add("my-3");
+
+  $a = document.createElement("a");
+  $a.classList.add("u_load_photo_list", "pointer", "text-white");
+  $a.innerHTML = count;
+
+  $container = document.createElement("div");
+  $container.classList.add("container", "p-3");
+
+  $container.append($h6);
+  $container.append($span);
+  $container.append($hr);
+  $container.append($a);
+
+  $div.append($figure); $div.append($container); $div.append($input);
+  return $div
+}
 
 function create_preview_video(img_src, pk, counter){
   $div = document.createElement("div");
@@ -483,3 +524,18 @@ function dislike_reload(like_block, dislike_block, _class){
   console.log("удаляем пользователя из дизлайков")
   }
 }
+
+on('body', 'click', '.photo_attach_list', function() {
+  _this = this;
+  src = _this.parentElement.previousElementSibling.querySelector("img").getAttribute("src");
+  title = _this.parentElement.querySelector(".nowrap").innerHTML;
+  pk = _this.getAttribute('data-pk');
+  count = _this.parentElement.querySelector(".count").innerHTML;
+  if (document.body.querySelector(".current_file_dropdown")){
+    check_photo_list_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (photo_list_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, src, title, pk, count), close_create_window())
+  } else if (document.body.querySelector(".attach_block")){
+    check_photo_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_list_post_attach(document.body.querySelector(".attach_block"), src, title, pk, count), close_create_window())
+  } else if (document.body.querySelector(".message_attach_block")){
+    check_photo_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_list_message_attach(document.body.querySelector(".message_attach_block"), src, title, pk, count), close_create_window())
+  }
+});

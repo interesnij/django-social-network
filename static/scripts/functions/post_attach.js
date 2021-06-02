@@ -44,6 +44,28 @@ function remove_file_attach(){
   else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
 }
 
+function photo_list_post_attach(block, src, title, pk, count) {
+  is_full_attach();
+  div = create_preview_photo_list(src, title, pk, count);
+  block.append(div);
+  add_file_attach()
+  is_full_attach();
+}
+function doc_list_post_attach(block, title, pk, count) {
+  is_full_attach();
+  div = create_preview_doc_list(title, pk, count);
+  block.append(div);
+  add_file_attach()
+  is_full_attach();
+}
+function playlist_post_attach(block, title, pk, count) {
+  is_full_attach();
+  div = create_preview_playlist(title, pk, count);
+  block.append(div);
+  add_file_attach()
+  is_full_attach();
+}
+
 function photo_post_attach(block, photo_pk, user_pk, src) {
   is_full_attach();
   div = create_preview_photo(src, photo_pk, user_pk)

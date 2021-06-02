@@ -233,6 +233,14 @@ function check_photo_in_block(block, _this, pk) {
         return false
     }
 }
+function check_photo_list_in_block(block, _this, pk) {
+    if (block.querySelector('[photolist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Альбом уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
 function check_video_in_block(block, _this, pk) {
     if (block.querySelector('[video-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
