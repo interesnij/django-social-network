@@ -6,7 +6,7 @@ def get_u_post_attach(post, user):
             try:
                 from gallery.models import Photo
                 photo = Photo.objects.get(pk=item[3:], type="PUB")
-                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), ' " data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":
@@ -200,7 +200,7 @@ def get_c_post_attach(post, user):
             try:
                 from gallery.models import Photo
                 photo = Photo.objects.get(pk=item[3:], type="PUB")
-                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                block = ''.join([block, '<div class="photo"><div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-pk="', str(photo.creator.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":
