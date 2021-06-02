@@ -4,24 +4,21 @@
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="card-header p-0">
-    <div class="row no-gutters">
-      <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-          <a class="btn btn-sm custom_color border ajax" href="{% url 'user_gallery' pk=user.pk %}" style="width: -webkit-fill-available;">
-            <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-          </a>
-      </div>
-      <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-        <span class="btn btn-sm custom_color border" style="width: -webkit-fill-available;">Альбом {{ user.get_name_genitive }}</span>
-      </div>
-    </div>
-  </div>
+  <span class="load_block">
+  <div class="media mt-3" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      {{ list.name }} ({{ list.count_items }})
 
-  <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">Альбом {{ list.name }}</h5>
-    <span>Фото: {{ list.count_items }}</span>
+      {% if list|is_user_can_add_list:request.user.pk %}
+        <span class="pointer badge badge-light-success u_copy_photo_list">Добавить список в коллекцию</span>
+      {% elif request.user.pk in list.get_users_ids %}
+        <span class="pointer badge badge-light-danger u_uncopy_photo_list">Удалить список из коллекции</span>
+      {% endif %}
+      <span class="pointer badge badge-light-warning u_photo_list_claim">Пожаловаться</span>
+    </h5>
   </div>
 
 <div class="row is_block_paginate no-gutters" data-uuid="{{ list.uuid }}" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
+</span>
 </div>
 {% endblock %}
