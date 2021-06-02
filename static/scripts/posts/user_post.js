@@ -576,38 +576,8 @@ on('#ajax', 'click', '.attach_good_list', function() {
   attach_item_for_post(this, "/goods/user_progs/get_list_preview/")
 });
 
-on('#ajax', 'click', '.music_attach_playlist_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.remove();
-  remove_file_attach();
-})
 on('#ajax', 'click', '.survey_attach_remove', function() {
   block = this.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.remove();
-  remove_file_attach();
-})
-on('#ajax', 'click', '.doc_attach_list_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.remove();
-  remove_file_attach();
-})
-on('#ajax', 'click', '.video_attach_list_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.remove();
-  remove_file_attach();
-})
-on('#ajax', 'click', '.good_attach_list_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
-  block.remove();
-  remove_file_attach();
-})
-on('#ajax', 'click', '.photo_attach_list_remove', function() {
-  block = this.parentElement.parentElement.parentElement;
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
   remove_file_attach();
