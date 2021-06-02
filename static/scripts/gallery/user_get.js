@@ -94,7 +94,7 @@ on('#ajax', 'click', '.u_avatar_detail', function() {
 });
 
 on('#ajax', 'click', '.u_LIS_photo', function() {
-  this.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.getAttribute('data-uuid') : uuid = this.getAttribute('data-uuid');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   pk = this.getAttribute('photo-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/user/list_photo/" + pk + "/" + uuid + "/", loader)
