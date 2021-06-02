@@ -126,14 +126,8 @@ on('#ajax', 'click', '.u_photo_list_add', function() {
   open_fullscreen("/gallery/user_progs/add_list/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_photo_list_edit', function() {
-  list = document.body.querySelectorAll('.cover_block');
-  for (var i = 0; i < list.length; i++) {
-    list[i].classList.remove("list_active")
-  }
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  block.classList.add("list_active");
-  uuid = block.getAttribute('data-uuid');
-  loader = document.getElementById("create_loader");
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
+  loader = document.body.getElementById("create_loader");
   open_fullscreen("/gallery/user_progs/edit_list/" + uuid + "/", loader)
 });
 
