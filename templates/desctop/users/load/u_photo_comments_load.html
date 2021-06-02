@@ -27,13 +27,13 @@
                 <figure class="background-img">
                   <img src="{{ list.get_cover_photo }}">
                 </figure>
-                <div class="container p-3">
+                <div class="container p-3" style="margin-bottom: 1rem !important">
                   <h6 class="text-white">
                     <span class="nowrap list_toggle">{{ list.name }}</span>
                   </h6>
                   <span class="text-white count">{{ list.count_items_ru }}</span>
 
-                  <hr class="my-3">
+                  <hr style="margin-bottom: 3rem !important">
                   <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ list.pk }}">
                     Прикрепить альбом
                   </span>
@@ -52,7 +52,7 @@
                   </h6>
                   <span class="text-white count">{{ list.count_items_ru }}</span>
 
-                  <hr class="my-3">
+                  <hr style="margin-bottom: 3rem !important">
                   <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ object.pk }}">
                     Прикрепить альбом
                   </span>

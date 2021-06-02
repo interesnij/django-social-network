@@ -27,13 +27,13 @@
                 <figure class="background-img">
                   <img clsdd="image_fit_200" src="{{ list.get_cover_photo }}">
                 </figure>
-                <div class="container p-4">
+                <div class="container p-3">
                   <h6 class="text-white pointer">
                     <span class="nowrap list_toggle">{{ list.name }}</span>
                   </h6>
                   <span class="text-white count">{{ list.count_items_ru }}</span>
 
-                  <hr class="my-3">
+                  <hr style="margin-bottom: 3rem !important">
                   <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ list.pk }}">
                     Прикрепить альбом
                   </span>
@@ -46,13 +46,13 @@
                 <figure class="background-img">
                   <img clsdd="image_fit_200" src="{{ object.get_cover_photo }}">
                 </figure>
-                <div class="container p-4">
+                <div class="container p-3">
                   <h6 class="text-white pointer">
                     <span class="pointer nowrap list_toggle load_attach_photo_list">{{ object.name }}</span>
                   </h6>
                   <span class="text-white count">{{ list.count_items_ru }}</span>
 
-                  <hr class="my-3">
+                  <hr style="margin-bottom: 3rem !important">
                   <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ object.pk }}">
                     Прикрепить альбом
                   </span>
