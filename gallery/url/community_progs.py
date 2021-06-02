@@ -28,9 +28,9 @@ urlpatterns=[
     url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoFromCommunityList.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListCommunityCreate.as_view()),
-    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityEdit.as_view(), name="photo_list_edit_community"),
-    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityRecover.as_view()),
+    url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityEdit.as_view(), name="photo_list_edit_community"),
+    url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityDelete.as_view()),
+    url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPhotoListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoListFromCommunityCollections.as_view()),
 ]

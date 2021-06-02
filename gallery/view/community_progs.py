@@ -318,7 +318,8 @@ class PhotoListCommunityEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.community = self.list.community
         self.template_name = get_community_manage_template("communities/photos/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
@@ -332,7 +333,7 @@ class PhotoListCommunityEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PhotoListForm(request.POST,instance=self.list)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.community = self.list.community
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
