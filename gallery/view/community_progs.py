@@ -345,7 +345,7 @@ class PhotoListCommunityEdit(TemplateView):
 class PhotoListCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk) and list.type == PhotoList.LIST:
+        if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk) and list.is_have_edit():
             list.delete_item()
             return HttpResponse()
         else:

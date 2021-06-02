@@ -339,7 +339,7 @@ class PhotoListUserEdit(TemplateView):
 class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
+        if request.is_ajax() and list.creator.pk == request.user.pk and list.is_have_edit():
             list.delete_item()
             return HttpResponseBadRequest()
         else:
