@@ -3,7 +3,7 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 function profile_list_block_attach(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-  request.open( 'GET', "/users/load/" + url + _this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", true );
+  request.open( 'GET', "/users/load" + url + _this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {
     if ( request.readyState == 4 && request.status == 200 ){
