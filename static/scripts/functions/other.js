@@ -71,7 +71,7 @@ function check_span1(span1, uuid, response) {
 function profile_list_block_load(_this, block, url, actions_class) {
   // подгрузка списков в профиле пользователя
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  saver = this.parentElement.parentElement.parentElement;
+  saver = _this.parentElement.parentElement.parentElement;
   saver.classList.contains("community") ?
   link = "/communities/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/" :
   link = "/users/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/";
