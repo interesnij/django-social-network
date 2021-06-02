@@ -337,7 +337,7 @@ class PhotoListUserDelete(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
             list.delete_item()
-            return HttpResponse()
+            return HttpResponseBadRequest()
         else:
             raise Http404
 
