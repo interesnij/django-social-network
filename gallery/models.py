@@ -199,7 +199,7 @@ class PhotoList(models.Model):
             self.make_publish()
         else:
             get_photo_list_processing(self, PhotoList.PRIVATE)
-            self.make_private()
+            #self.make_private()
         return self
 
     def make_private(self):
