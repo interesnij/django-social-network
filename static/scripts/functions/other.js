@@ -1,5 +1,27 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function profile_list_block_attach(_this, block, url, actions_class) {
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+
+  request.open( 'GET', "/users/load/" + url + _this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", true );
+  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  request.onreadystatechange = function () {
+    if ( request.readyState == 4 && request.status == 200 ){
+        elem_ = document.createElement('span');
+        elem_.innerHTML = request.responseText;
+       document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
+       class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
+       for (var i = 0; i < class_to_add.length; i++) {
+         class_to_add[i].classList.add(actions_class, "pointer");
+         class_to_add[i].parentElement.parentElement.parentElement.classList.replace("active_border", "border");
+       };
+       parent = _this.parentElement.parentElement.parentElement;
+       parent.querySelector(".list_svg")? parent.querySelector(".list_svg").classList.remove(actions_class, "pointer") : null;
+       parent.querySelector(".list_name").classList.remove(actions_class, "pointer");
+       parent.classList.replace("border", "active_border");
+    }};
+    request.send( null );
+}
 function media_list_edit(_this, url) {
   form = _this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
