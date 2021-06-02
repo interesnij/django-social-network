@@ -142,7 +142,7 @@ function create_preview_photo_list(src, title, pk, count){
   $h6.innerHTML = title;
   $h6.classList.add("u_load_photo_list", "text-white", "pointer", "mb-2", "nowrap");
 
-  $span = document.createElement("span");
+  $span = document.createElement("p");
   $span.classList.add("photo_attach_list_remove", "underline", "pointer", "text-white");
   $span.innerHTML = "Открепить";
 
