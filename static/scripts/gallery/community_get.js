@@ -94,10 +94,9 @@ on('#ajax', 'click', '.c_photo_list_edit', function() {
   }
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   block.classList.add("list_active");
-  pk = block.getAttribute('data-pk');
   uuid = block.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/community_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_photo_edit', function() {
