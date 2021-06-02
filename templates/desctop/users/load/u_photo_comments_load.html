@@ -1,57 +1,76 @@
-<style>
-  #add_multi_comments_photos {
-    border: 1px dashed green;
-    padding: 5px;
-    text-align: center;}
-  #add_multi_comments_photos:hover {cursor: pointer}
-</style>
 
 <div class="card mb-4">
-  <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">Прикрепление фотографий</h5>
-  </div>
-  <div class="card-body border-bottom">
-    <form id="add_comment_photos">
+  <div class="row">
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+      <form class="btn btn-sm border" style="width: -webkit-fill-available;">
         {% csrf_token %}
-          <input type="file" id="u_photo_post_comment_attach" name="file" style="display:none" multiple="multiple">
-          <div class="border centered previous_click" style="cursor:pointer">
-              <h4>загрузить и прикрепить (до 2х)</h4>
-          </div>
-    </form>
-<br>
+        <input type="file" id="u_photo_comment_attach" name="file" style="display:none" multiple="multiple">
+        <h5 class="mb-0 previous_click">загрузить (до 2)</h5>
+      </form>
+    </div>
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+      <a class="btn btn-sm border create_fullscreen_hide_2" style="width: -webkit-fill-available;">
+        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+      </a>
+    </div>
+  </div>
 
-<div class="row" style="margin-left: 0;margin-right: 0;">
-    {% for object in get_lists %}
-    <div class="col-md-6 mb-3 col-lg-4 cover_block">
-        <div class="card rounded-0 border mb-3">
-            <div class="card-header">
-                <div class="media">
-                    <div class="media-body" style="white-space:nowrap;overflow:hidden;">
-                        <h6 class="mb-0">{{ object.name }}</h6>
-                    </div>
+  <div class="card-body">
+    <div style="padding-left: 7px;">
+        <h5>Фотоальбомы</h5>
+    </div>
+    <div class="row no-gutters mb-2" style="overflow-x: auto;">
+        <div class="col-12 mb-1">
+            <ul class="gallery_ul" style="width:max-content;list-style: none;">
+              <li class="list_item">
+              <div class="text-center bg-dark position-relative active_border" data-uuid="{{ list.uuid }}">
+                <figure class="background-img">
+                  <img src="{{ list.get_cover_photo }}">
+                </figure>
+                <div class="container p-3">
+                  <h6 class="text-white">
+                    <span class="nowrap list_toggle">{{ list.name }}</span>
+                  </h6>
+                  <span class="text-white count">{{ list.count_items_ru }}</span>
+
+                  <hr class="my-3">
+                  <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ list.pk }}">
+                    Прикрепить альбом
+                  </span>
                 </div>
-            </div>
-            <div class="card-body">
-              <a data-href="{% url 'u_photo_list_comment_load' uuid=object.uuid %}" class="pointer create_ajax">
-                  {% if object.get_cover_photo %}
-                    <img class="image_fit_200" src="{{ object.get_cover_photo.file.url }}" />
-                  {% else %}
-                    <img class="image_fit_200" src="/static/images/no_img/list.jpg" />
-                  {% endif %}
-                <p class="mb-0 content-color-secondary f-sm albom_description">{{ object.description }}</p>
-              </a>
-            </div>
+              </div>
+            </li>
+                {% for object in get_lists %}
+                <li class="list_item">
+              <div class="text-center bg-dark position-relative border" data-uuid="{{ object.uuid }}">
+                <figure class="background-img">
+                  <img src="{{ object.get_cover_photo }}">
+                </figure>
+                <div class="container p-3">
+                  <h6 class="text-white">
+                    <span class="pointer nowrap list_toggle u_load_attach_photo_list">{{ object.name }}</span>
+                  </h6>
+                  <span class="text-white count">{{ object.count_items }}</span>
+
+                  <hr class="my-3">
+                  <span class="photo_attach_list pointer text-white underline nowrap" data-pk="{{ object.pk }}">
+                    Прикрепить альбом
+                  </span>
+                </div>
+              </div>
+            </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
-    {% endfor %}
-</div>
 
+<span class="load_block">
 {% if object_list %}
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="img_load_container" data-link="/users/load/u_img_load/">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_img_load/">
 {% for object in object_list %}
-<div class="col-md-4 mb-3 load_pag pointer {% if forloop.last %}load_last{% endif %}">
+<div class="load_pag u_load_photo_detail {% if forloop.last %}load_last{% endif %}" style="position: relative;">
   <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
-      <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
+      <img class="image_fit_small photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
   </div>
     <span class="item_attach_circle photo_load_several"
          tooltip="Выбрать несколько"
@@ -62,15 +81,15 @@
     </span>
 </div>
   {% endfor %}
-
 </div>
 {% else %}
-<div class="card mb-3 centered">
+<div class="card mb-3 centered item_empty">
   <div class="card-body">
   <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
   </div>
-  <h6 style="text-align: center;margin: 20px;"> У Вас нет фотографий ...</h6>
+  <h6> Фотоальбом пока пустой...</h6>
 </div>
 {% endif %}
+</span>
 </div>
 </div>

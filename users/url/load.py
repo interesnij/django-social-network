@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^u_photo_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadPhotoList.as_view()), name="u_photo_list_load"),
 
     url(r'^u_img_comment_load/$', login_required(UserLoadPhotoComment.as_view()), name="u_photo_comment_load"),
-    url(r'^u_list_img_comment_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadPhotoListComment.as_view()), name="u_photo_list_comment_load"),
 
     url(r'^u_video_load/$', login_required(UserLoadVideo.as_view()), name="u_video_load"),
     url(r'^u_video_list_load/(?P<uuid>[0-9a-f-]+)/$', login_required(UserLoadVideoList.as_view()), name="u_video_list_load"),
