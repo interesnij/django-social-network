@@ -144,21 +144,21 @@ def get_u_post_attach(post, user):
             except:
                 pass
         elif item[:3] == "lph":
-            try:
-                from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:], type="PUB")
-                creator = list.creator
-                share, add = '', ''
-                if user.is_authenticated:
-                    if list.is_not_empty():
-                        share = '<a class="col pointer u_ucm_photo_list_repost ">Поделиться</a>'
-                    if list.is_user_can_add_list(user.pk):
-                        add = '<a class="col pointer u_add_photo_list">В коллекцию</a>'
-                    elif user.pk in list.get_users_ids():
-                        add = '<a class="col pointer u_remove_photo_list">Удалить</a>'
-                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="u_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', str(list.creator), '</a></p><hr class="my-3"><a class="u_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
-            except:
-                pass
+            #try:
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=item[3:], type="PUB")
+            creator = list.creator
+            share, add = '', ''
+            if user.is_authenticated:
+                if list.is_not_empty():
+                    share = '<a class="col pointer u_ucm_photo_list_repost ">Поделиться</a>'
+                if list.is_user_can_add_list(user.pk):
+                    add = '<a class="col pointer u_add_photo_list">В коллекцию</a>'
+                elif user.pk in list.get_users_ids():
+                    add = '<a class="col pointer u_remove_photo_list">Удалить</a>'
+            block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="u_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', str(list.creator), '</a></p><hr class="my-3"><a class="u_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
+            #except:
+            #    pass
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodList
@@ -356,7 +356,7 @@ def get_c_post_attach(post, user):
                         add = '<a class="col pointer c_add_photo_list">В коллекцию</a>'
                     elif user.pk in list.get_users_ids():
                         add = '<a class="col pointer c_remove_photo_list">Удалить</a>'
-                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo().file.url, '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', item.get_link(), '">', name, '</a></p><hr class="my-3"><a class="c_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
+                block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(item.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="c_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', item.get_link(), '">', name, '</a></p><hr class="my-3"><a class="c_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
             except:
                 pass
         elif item[:3] == "lgo":
