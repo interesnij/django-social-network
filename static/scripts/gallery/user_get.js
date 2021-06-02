@@ -127,7 +127,7 @@ on('#ajax', 'click', '.u_photo_list_add', function() {
 });
 on('#ajax', 'click', '.u_photo_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.body.getElementById("create_loader");
+  loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/user_progs/edit_list/" + uuid + "/", loader)
 });
 
