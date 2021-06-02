@@ -334,7 +334,7 @@ class PhotoListCommunityEdit(TemplateView):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PhotoListForm(request.POST,instance=self.list)
         self.community = self.list.community
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk) and list.type == PhotoList.LIST:
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk) and self.list.type == PhotoList.LIST:
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
