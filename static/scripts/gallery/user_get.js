@@ -5,14 +5,10 @@ on('#ajax', 'click', '.u_uncopy_photo_list', function() {
   on_off_list_in_collections(this, "/gallery/user_progs/remove_list_from_collections/", "u_copy_photo_list", "u_uncopy_photo_list", "Добавить")
 });
 
-on('#ajax', 'click', '.u_load_profile_photo_list', function() {
-  block = this.parentElement.parentElement.parentElement;
-  profile_list_block_load(this, ".load_block", "/users/" + block.getAttribute("data-pk") + "/photo_list/" + block.getAttribute("data-uuid") + "/", "u_load_profile_photo_list");
+on('#ajax', 'click', '.load_profile_photo_list', function() {
+  profile_list_block_load(this, ".load_block", "/photo_list/", "u_load_profile_photo_list");
 });
 
-on('#ajax', 'click', '.u_load_attach_photo_list', function() {
-  profile_list_block_load(this, ".load_block", "/users/load/u_photo_list_load/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", "u_load_attach_photo_list");
-});
 
 on('#ajax', 'click', '.u_MAI_photo', function() {
   pk = this.getAttribute('photo-pk');

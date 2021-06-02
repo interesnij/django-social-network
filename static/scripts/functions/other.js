@@ -68,9 +68,13 @@ function check_span1(span1, uuid, response) {
     document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response)
   }
 }
-function profile_list_block_load(_this, block, link, actions_class) {
+function profile_list_block_load(_this, block, url, actions_class) {
   // подгрузка списков в профиле пользователя
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  saver = this.parentElement.parentElement.parentElement;
+  saver.classList.contains("community") ?
+  link = "/communities/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/" :
+  link = "/users/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/";
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {
