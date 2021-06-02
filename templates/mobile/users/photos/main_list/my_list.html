@@ -2,34 +2,25 @@
 {% block title %}Мои фотографии{% endblock %}
 {% block content %}
 
-<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}"">
-  <div class="card-header p-0">
-    <div class="row no-gutters">
-      <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-        {% include 'mobile/generic/user/back.html' %}
-      </div>
-      <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
-        <a class="btn btn-sm custom_color border u_зрщещ_list_add" style="width: -webkit-fill-available;">+ альбом</a>
-      </div>
-      <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
-        <form id="add_photos">
-          {% csrf_token %}
-          <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
-          <a class="btn btn-sm custom_color border previous_click" style="width: -webkit-fill-available;">+ фото</a>
-        </form>
-      </div>
-    </div>
+<div class="container mt-3 pk_saver" data-pk="{{ user.pk }}">
+
+{% include 'mobile/users/photos/main_list/my_lists.html' %}
+
+<span class="load_block">
+  <div class="media mt-3" style="padding-left: 7px;">
+    <form id="add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
+      {% csrf_token %}
+    <h5 class="mt-1">
+      {{ list.name }} ({{ list.count_items }})
+
+        <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
+        <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
+    </h5>
+    </form>
   </div>
 
-{% include 'mobile/users/photos/main_list/my_photo_lists.html' %}
-
-<div class="media mt-3" style="display:flex;align-items: flex-start;padding-left: 7px;padding-right: 7px;">
-  <h5 class="mt-1" style="flex: 1;">Мои фото</h5>
-  <span>{{ list.count_items }}</span>
-</div>
-
 <div class="row is_block_paginate no-gutters" id="photos_container" data-link="/gallery/user/photos/{{ user.pk }}/"></div>
-
+</span>
 </div>
 
 {% endblock %}
