@@ -329,7 +329,7 @@ class PhotoListUserEdit(TemplateView):
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
-            return HttpResponseBadRequest()
+            return HttpResponse()
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
 class PhotoListUserDelete(View):
