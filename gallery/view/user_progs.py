@@ -330,7 +330,7 @@ class PhotoListUserEdit(TemplateView):
                 status = 1
             else:
                 status = 0
-            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=status)
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, status=status)
             return HttpResponse()
         else:
             return HttpResponse()

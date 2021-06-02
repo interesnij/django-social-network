@@ -186,7 +186,7 @@ class PhotoList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_photo_list_notify")
         get_photo_list_processing(list, PhotoList.LIST)
         return list
-    def edit_list(self, name, description, order, is_public):
+    def edit_list(self, name, description, order, status):
         from common.processing.photo import get_photo_list_processing
         if not order:
             order = 1
@@ -194,7 +194,7 @@ class PhotoList(models.Model):
         self.description = description
         self.order = order
         self.save()
-        if is_public:
+        if status:
             get_photo_list_processing(self, PhotoList.LIST)
             self.make_publish()
         else:
