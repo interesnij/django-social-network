@@ -1,5 +1,68 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function media_list_edit(_this, url) {
+  form = _this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { _this.disabled = true }
+  uuid = form.getAttribute("data-uuid")
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    close_create_window();
+    name = form.querySelector('#id_name').value;
+    list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
+    document.body.querySelector('.second_list_name').innerHTML = name;
+    toast_success("Список изменен")
+  }}
+  link_.send(form_data);
+}
+function media_list_delete(_this, url, old_class, new_class) {
+  uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', url + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    _this.previousElementSibling.style.display = "none";
+    _this.previousElementSibling.previousElementSibling.style.display = "none";
+    _this.parentElement.querySelector(".second_list_name").innerHTML = "Плейлист удален";
+    list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Плейлист удален" : null;
+    _this.classList.replace(old_class, new_class);
+    _this.innerHTML = "Восстановить список";
+  }}
+  link_.send();
+}
+function media_list_recover(_this, url, old_class, new_class) {
+  uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', url + uuid + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    _this.previousElementSibling.style.display = "unset";
+    _this.previousElementSibling.previousElementSibling.style.display = "unset";
+    second_list = document.body.querySelector('.second_list_name');
+    name = second_list.getAttribute("data-name");
+    second_list.innerHTML = name;
+    document.body.querySelector('.file-manager-item') ?
+      (list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
+       list.querySelector('.list_name').innerHTML = name) : null;
+    _this.classList.replace(old_class, new_class);
+    _this.innerHTML = "Удалить список";
+  }}
+  link_.send();
+}
+
 function check_span1(span1, uuid, response) {
   if (span1.classList.contains(uuid)){
     document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response)

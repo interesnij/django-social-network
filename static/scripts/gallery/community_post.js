@@ -17,21 +17,15 @@ on('#ajax', 'click', '.c_add_photo_list', function(e) {
   }};
   link.send( null );
 });
-on('#ajax', 'click', '.c_remove_photo_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/gallery/community_progs/remove_list/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_add_photo_list");
-      _this.classList.remove("c_remove_photo_list")
-      _this.innerHTML = 'В коллекцию'
-  }};
-  link.send( null );
+on('body', 'click', '.c_photo_list_remove', function() {
+  media_list_delete(this, "/gallery/community_progs/delete_list/", "c_photo_list_remove", "c_photo_list_abort_remove")
+});
+on('body', 'click', '.c_photo_list_abort_remove', function() {
+  media_list_recover(this, "/gallery/community_progs/restore/", "c_photo_list_abort_remove", "c_photo_list_remove")
+});
+
+on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
+  media_list_edit(this, "/gallery/community_progs/edit_list/")
 });
 
 on('#ajax', 'click', '#c_create_photo_list_btn', function() {
@@ -42,35 +36,6 @@ on('#ajax', 'click', '#c_create_photo_list_btn', function() {
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
   post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/");
-});
-
-on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  pk = form.getAttribute("data-pk");
-  uuid = form.getAttribute("data-uuid")
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/edit_list/" + pk + "/" + uuid + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    title = form.querySelector('#id_title').value;
-    description = form.querySelector('#id_description').value;
-
-    list = document.body.querySelector(".list_active");
-    list.querySelector("h6").innerHTML = title;
-    list.querySelector(".albom_description").innerHTML = description;
-    list.classList.remove("list_active");
-    close_create_window();
-    toast_success("Альбом изменен")
-  }}
-  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
