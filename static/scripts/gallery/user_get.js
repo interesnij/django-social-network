@@ -6,7 +6,7 @@ on('#ajax', 'click', '.u_uncopy_photo_list', function() {
 });
 
 on('#ajax', 'click', '.load_profile_photo_list', function() {
-  profile_list_block_load(this, ".load_block", "/photo_list/", "u_load_profile_photo_list");
+  profile_list_block_load(this, ".load_block", "/photo_list/", "load_profile_photo_list");
 });
 
 
