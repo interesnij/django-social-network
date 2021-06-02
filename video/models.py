@@ -91,6 +91,8 @@ class VideoList(models.Model):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
+    def is_have_edit(self):
+        return self.is_list() or self.is_private()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")

@@ -80,6 +80,8 @@ class PhotoList(models.Model):
         return self.type == self.MAIN
     def is_list(self):
         return self.type == self.LIST
+    def is_have_edit(self):
+        return self.is_list() or self.is_private()
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):

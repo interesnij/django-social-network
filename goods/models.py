@@ -86,6 +86,8 @@ class GoodList(models.Model):
 		return self.type == self.PRIVATE
 	def is_open(self):
 		return self.type[0] != "_"
+	def is_have_edit(self):
+        return self.is_list() or self.is_private()
 
 	def get_items(self):
 		return self.good_list.filter(type="PUB")
