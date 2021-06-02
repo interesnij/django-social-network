@@ -1,3 +1,7 @@
+.gallery_ul li {
+    margin-right: 10px;
+}
+
 .list_item {
     float: left;
     line-height: 1em;
