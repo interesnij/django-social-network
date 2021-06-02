@@ -3,7 +3,7 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_img_load/">
 {% for object in object_list %}
-<div class="load_pag u_load_photo_detail {% if forloop.last %}load_last{% endif %}" style="position: relative;">
+<div class="load_pag u_MAI_photo {% if forloop.last %}load_last{% endif %}" style="position: relative;">
   <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
       <img class="image_fit_small photo_load_one preview pointer" src="{{ object.preview.url }}" alt="img">
   </div>

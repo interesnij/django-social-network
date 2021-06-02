@@ -89,9 +89,11 @@ class PhotoList(models.Model):
 
     def get_cover_photo(self):
         if self.cover_photo:
-            return self.cover_photo
+            return self.cover_photo.file.url
+        elif self.photo_list.filter(type="PUB").exists():
+            return self.photo_list.filter(type="PUB").last().file.url
         else:
-            return self.photo_list.filter(type="PUB").first()
+            return "/static/images/no_img/list.jpg"
 
     def get_first_photo(self):
         return self.photo_list.exclude(type__contains="_").first()
