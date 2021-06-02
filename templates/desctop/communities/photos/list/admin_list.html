@@ -10,7 +10,7 @@
     <h5 class="mt-1">
       <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
         <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
-        {% if list.is_main or list.is_list %}
+        {% if list.is_main or list.is_list or list.is_private %}
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
         {% endif %}
         {% if community.pk == list.community.pk and list.is_have_edit %}
