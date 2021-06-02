@@ -203,7 +203,7 @@ class PhotoList(models.Model):
         return self
 
     def make_private(self):
-        from notify.models import Notify, Wall
+        #from notify.models import Notify, Wall
         self.type = PhotoList.PRIVATE
         self.save(update_fields=['type'])
         #if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
@@ -211,7 +211,7 @@ class PhotoList(models.Model):
         #if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
         #    Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
-        from notify.models import Notify, Wall
+        #from notify.models import Notify, Wall
         self.type = PhotoList.LIST
         self.save(update_fields=['type'])
         #if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
