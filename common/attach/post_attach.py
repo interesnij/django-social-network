@@ -146,7 +146,9 @@ def get_u_post_attach(post, user):
         elif item[:3] == "lph":
             #try:
             from gallery.models import PhotoList
-            list = PhotoList.objects.get(pk=item[3:]).exclude(type__contains="_")
+            list = PhotoList.objects.get(pk=item[3:])
+            if list.type[0] == "_":
+                pass
             creator = list.creator
             share, add = '', ''
             if user.is_authenticated:
