@@ -36,7 +36,7 @@ class UserLoadPhotoList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.list.get_item()
+		return self.list.get_items()
 
 class UserLoadPhotoComment(ListView):
 	template_name, paginate_by = None, 15
