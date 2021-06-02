@@ -334,7 +334,7 @@ class PhotoListCommunityEdit(TemplateView):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PhotoListForm(request.POST,instance=self.list)
         self.community = self.list.community
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk) and list.type == PhotoList.LIST:
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
@@ -344,9 +344,8 @@ class PhotoListCommunityEdit(TemplateView):
 
 class PhotoListCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_administrator_of_community(community.pk) and list.type == PhotoList.LIST:
+        if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk) and list.type == PhotoList.LIST:
             list.delete_item()
             return HttpResponse()
         else:
@@ -354,9 +353,8 @@ class PhotoListCommunityDelete(View):
 
 class PhotoListCommunityRecover(View):
     def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
+        if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk):
             list.restore_item()
             return HttpResponse()
         else:

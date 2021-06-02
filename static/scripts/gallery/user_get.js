@@ -137,38 +137,6 @@ on('#ajax', 'click', '.u_photo_list_edit', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/gallery/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
-on('#ajax', 'click', '.u_photo_list_remove', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute('data-pk');
-  uuid = block.getAttribute('data-uuid');
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/delete_list/" + pk + "/" + uuid + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    block.querySelector(".card").style.display = "none";
-    $block = document.createElement("div");
-    $block.classList.add("card", "delete_card", "rounded-0", "border-0", "mb-3");
-    $block.innerHTML = '<div class="card-header"><div class="media"><div class="media-body"><h6 class="mb-0 u_photo_list_restore pointer">Восстановить</h6></div></div></div><div class="card-body"><a><img class="image_fit_200" src="/static/images/no_img/list.jpg" /></a></div>'
-    block.append($block);
-  }}
-  link_.send();
-});
-on('#ajax', 'click', '.u_photo_list_restore', function() {
-  uuid = this.getAttribute('data-uuid');
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/gallery/user_progs/restore_list/" + uuid + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    block.querySelector(".delete_card").remove();
-    block.querySelector(".card").style.display = "block";
-  }}
-  link_.send();
-});
-
 
 on('#ajax', 'click', '.u_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";

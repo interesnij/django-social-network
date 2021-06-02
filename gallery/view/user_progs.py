@@ -311,22 +311,20 @@ class PhotoListUserEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_settings_template("users/photos/list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(PhotoListUserEdit,self).get_context_data(**kwargs)
         context["form"] = self.form
-        context["user"] = self.user
         context["list"] = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PhotoListForm(request.POST,instance=self.list)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        self.user = self.list.creator
+        if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
@@ -337,7 +335,6 @@ class PhotoListUserEdit(TemplateView):
 class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.type == PhotoList.LIST:
             list.delete_item()
             return HttpResponse()
@@ -347,7 +344,6 @@ class PhotoListUserDelete(View):
 class PhotoListUserRecover(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.restore_item()
             return HttpResponse()
