@@ -1,6 +1,7 @@
 
 on('#ajax', 'click', '.c_AVA_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/avatar_photo/" + pk + "/" + photo_pk + "/", loader)
