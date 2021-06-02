@@ -1,5 +1,6 @@
 from common.utils import update_activity, get_folder
 from rest_framework.exceptions import PermissionDenied
+from common.check.community import check_can_get_lists
 
 
 def get_template_community_photo(list, folder, template, request_user, user_agent):
