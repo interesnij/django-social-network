@@ -20,7 +20,7 @@ on('body', 'click', '.u_photo_list_remove', function() {
   media_list_delete(this, "/gallery/user_progs/delete_list/", "u_photo_list_remove", "u_photo_list_abort_remove")
 });
 on('body', 'click', '.u_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/user_progs/restore/", "u_photo_list_abort_remove", "u_photo_list_remove")
+  media_list_recover(this, "/gallery/user_progs/restore_list/", "u_photo_list_abort_remove", "u_photo_list_remove")
 });
 
 on('#ajax', 'click', '#u_edit_photo_list_btn', function() {

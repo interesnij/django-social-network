@@ -21,7 +21,7 @@ on('body', 'click', '.c_photo_list_remove', function() {
   media_list_delete(this, "/gallery/community_progs/delete_list/", "c_photo_list_remove", "c_photo_list_abort_remove")
 });
 on('body', 'click', '.c_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/community_progs/restore/", "c_photo_list_abort_remove", "c_photo_list_remove")
+  media_list_recover(this, "/gallery/community_progs/restore_list/", "c_photo_list_abort_remove", "c_photo_list_remove")
 });
 
 on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
