@@ -30,7 +30,7 @@ class CommunityCreate(TemplateView):
 		if self.form.is_valid() and request.is_ajax():
 			new_community, membersheeps = self.form.save(commit=False), [request.user,]
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
-			return render_for_platform(request, 'communities/detail/admin_community.html',{'community': community, 'membersheeps': membersheeps, 'user': request.user})
+			return render_for_platform(request, 'communities/detail/admin_community.html',{'community': community, 'post_list_pk': community.get_post_list().pk, 'membersheeps': membersheeps, 'user': request.user})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
@@ -54,7 +54,7 @@ class CommunityMemberCreate(View):
 	def get(self,request,*args,**kwargs):
 		if request.is_ajax():
 			c = Community.objects.get(pk=self.kwargs["pk"])
-			request.user.join_community(c) 
+			request.user.join_community(c)
 			return HttpResponse()
 		else:
 			raise Http404
