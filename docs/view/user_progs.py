@@ -100,7 +100,7 @@ class UserDocListEdit(TemplateView):
             return HttpResponseBadRequest()
         return super(UserDocListEdit,self).get(request,*args,**kwargs)
 
-class UserDocCreate(View):
+class UserDocCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):

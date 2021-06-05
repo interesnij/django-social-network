@@ -94,7 +94,7 @@ class CommunityDocEdit(TemplateView):
             return HttpResponseBadRequest()
 
 
-class CommunityDocListCreate(View):
+class CommunityDocListCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
