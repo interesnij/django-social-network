@@ -44,23 +44,12 @@ class UserLoadPhotoComment(ListView):
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = PhotoList.get_user_lists(request.user.pk)
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
-	def get_queryset(self):
-		return self.list.get_items()
-
-class UserLoadPhotoListComment(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		from gallery.models import PhotoList
-
-		self.list, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadPhotoListComment,self).get(request,*args,**kwargs)
-
 	def get_context_data(self,**kwargs):
-		context = super(UserLoadPhotoListComment,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context = super(UserLoadPhotoList,self).get_context_data(**kwargs)
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
@@ -74,11 +63,12 @@ class UserLoadVideo(ListView):
 		from video.models import VideoList
 
 		self.list, self.template_name = request.user.get_video_list(), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = VideoList.get_user_lists(request.user.pk)
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadVideo,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
@@ -107,13 +97,14 @@ class UserLoadMusic(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		self.playlist = request.user.get_playlist()
+		self.list = request.user.get_playlist()
 		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = SoundList.get_user_lists(request.user.pk)
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadMusic,self).get_context_data(**kwargs)
-		context["playlist"] = self.playlist
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
@@ -142,13 +133,15 @@ class UserLoadDoc(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
+
 		self.list = request.user.get_doc_list()
 		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = DocList.get_user_lists(request.user.pk)
 		return super(UserLoadDoc,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadDoc,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
@@ -182,14 +175,15 @@ class UserLoadSurvey(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
+		from survey.models import SurveyList
 		self.list = request.user.get_survey_list()
 		self.template_name = get_settings_template("users/load/u_survey_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = SurveyList.get_user_lists(request.user.pk)
 		return super(UserLoadSurvey,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadSurvey,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
@@ -218,13 +212,15 @@ class UserLoadGood(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodList
+
 		self.list = request.user.get_good_list()
 		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = GoodList.get_user_lists(request.user.pk)
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserLoadGood,self).get_context_data(**kwargs)
-		context["list"] = self.list
+		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
 	def get_queryset(self):
