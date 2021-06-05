@@ -4,7 +4,7 @@
             <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
             <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
             <span class='span_btn' data-pk="{{ doc.pk }}">
-                {% include 'desctop/users/user_docs/add_dropdown.html' %}
+                {% include 'desctop/users/docs/add_dropdown.html' %}
                 <div class="dropdown" style="position: inherit;">
                     <a class="btn_default drop pointer">
                         <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
@@ -12,10 +12,16 @@
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                         </svg>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                        <span class="dropdown-item c_ucm_doc_repost">Поделиться</span>
+                    <div class="dropdown-menu dropdown-menu-right" style="top: 42px;">
+                      {% if request.user.pk == doc.creator.pk %}
                         <span class="dropdown-item c_doc_edit">Изменить</span>
                         <span class="dropdown-item c_doc_remove">Удалить</span>
+                      {% elif request.user.is_manager %}
+                        <span class="dropdown-item c_close_doc">Закрыть</span>
+                      {% else %}
+                        <span class="dropdown-item c_doc_claim">Пожаловаться</span>
+                      {% endif %}
+                      <span class="dropdown-item copy_link">Копировать ссылку</span>
                     </div>
                 </div>
             </span>

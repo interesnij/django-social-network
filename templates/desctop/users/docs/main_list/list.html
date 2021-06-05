@@ -2,7 +2,7 @@
 {% block title %}Документы {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ user.pk }}">
+<div class="container main-container mt-3 pk_saver" data-pk="{{ user.pk }}">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
             <div class="input-group-append">
@@ -11,7 +11,7 @@
           </div>
 
           {% include 'desctop/users/docs/main_list/lists.html' %}
-          
+
           <div class="card mb-2">
               <div class="card-body">
                     <ul data-pk="{{ list.pk }}" class="is_paginate">

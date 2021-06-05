@@ -167,7 +167,7 @@ class CommunityGallery(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityGallery,self).get_context_data(**kwargs)
-        c['community'], c['list'], c['get_lists'], c['count_lists'] = self.c, self.list, self.get_lists, self.count_lists
+        c['community'], c['list'], c['get_lists'], c['count_lists'], c['is_admin'] = self.c, self.list, self.get_lists, self.count_lists, self.request.user.is_administrator_of_community(self.c.pk)
         return c
 
 class CommunityPhotoList(TemplateView):

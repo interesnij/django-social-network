@@ -2,7 +2,7 @@
 {% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ community.pk }}">
+<div class="container main-container mt-3 pk_saver" data-pk="{{ community.pk }}">
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Поиск документов">
         <div class="input-group-append">
@@ -17,7 +17,7 @@
             <ul data-pk="{{ list.pk }}" class="is_paginate">
                 {% if object_list %}
                 {% for doc in object_list %}
-                  {% include 'desctop/communities/docs/doc.html' %}
+                  {% include 'desctop/communities/docs/admin_doc.html' %}
                 {% endfor %}
                 {% else %}
                 <div class="card centered item_empty">

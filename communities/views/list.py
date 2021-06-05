@@ -104,7 +104,7 @@ class CommunityDocs(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityDocs,self).get_context_data(**kwargs)
-		c['community'],c['list'] = self.c, self.list
+		c['community'],c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -136,7 +136,7 @@ class CommunityDocsList(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityDocsList,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -163,7 +163,7 @@ class CommunityGoods(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityGoods,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -196,7 +196,7 @@ class CommunityGoodsList(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityGoodsList,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -220,7 +220,7 @@ class CommunityMusic(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusic,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -248,7 +248,7 @@ class CommunityMusicList(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusicList,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -275,7 +275,7 @@ class CommunityVideo(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideo,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.list, self.list
+		c['community'], c['list'], c['is_admin'] = self.list, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -308,7 +308,7 @@ class CommunityVideoList(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideoList,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
+		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):
@@ -334,7 +334,7 @@ class CommunityPostsListView(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityPostsListView,self).get_context_data(**kwargs)
-		c['community'], c['post_lists'], c['list'], c['fix_list'] = self.c, self.post_lists, self.list, self.c.get_fix_list()
+		c['community'], c['post_lists'], c['list'], c['fix_list'], c['is_admin'] = self.c, self.post_lists, self.list, self.c.get_fix_list(), self.request.user.is_administrator_of_community(self.c.pk)
 		return c
 
 	def get_queryset(self):

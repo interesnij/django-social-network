@@ -13,7 +13,10 @@
                         </svg>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" style="top: 42px;">
-                      {% if request.user.pk == doc.creator.pk and not doc.community %}
+                      {% if doc.community.pk == community.pk and is_admin %}
+                        <span class="dropdown-item c_doc_edit">Изменить</span>
+                        <span class="dropdown-item c_doc_remove">Удалить</span>
+                      {% elif request.user.pk == doc.creator.pk %}
                         <span class="dropdown-item u_doc_edit">Изменить</span>
                         <span class="dropdown-item u_doc_remove">Удалить</span>
                       {% elif request.user.is_manager %}
