@@ -75,14 +75,14 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.u_load_photo_photo_list', function() {
+on('#ajax', 'click', '.u_load_photo_list', function() {
   parent = this.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
   open_fullscreen("/gallery/user/load/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_ucm_photo_photo_list_repost', function() {
+on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
