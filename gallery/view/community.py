@@ -17,10 +17,10 @@ class CommunityLoadPhotoList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		if self.list.community:
-			self.template_name = get_permission_community_photo(self.list, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_permission_community_photo(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from common.template.photo import get_permission_user_photo
-			self.template_name = get_permission_user_photo(self.list, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_permission_user_photo(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.photo_list = self.list.get_staff_items()
 		else:
