@@ -25,7 +25,7 @@
                           <p class="card-text file-size mb-0">{{ list.count_items }}</p>
                       </div>
                       <small class="file-accessed">
-                        <a class="ajax underline" href="{% url 'user' pk=list.creator.pk %}">
+                        <a class="ajax underline" href="{% url 'community_detail' pk=list.community.pk %}">
                           {{ list.community.name }}
                         </a>
                       </small>
