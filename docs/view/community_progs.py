@@ -99,7 +99,7 @@ class CommunityDocListCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.template_name = get_community_manage_template("docs/doc_create/c_create_doc_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
-        return super(CommunityCreateDocListWindow,self).get(request,*args,**kwargs)
+        return super(CommunityDocListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDocListCreate,self).get_context_data(**kwargs)
