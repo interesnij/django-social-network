@@ -78,7 +78,7 @@ on('#ajax', 'click', '.c_remove_photo_from_list', function() {
   remove_item_from_list(this, '/docs/community_progs/remove_doc_from_list/', "c_remove_doc_from_list", "c_add_doc_in_list")
 })
 
-on('#ajax', 'click', '#c_add_doc_list_btn', function() {
+on('#ajax', 'click', '#c_create_doc_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
