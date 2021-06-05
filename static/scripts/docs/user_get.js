@@ -1,14 +1,13 @@
 
 on('#ajax', 'click', '.u_doc_list_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_list/" + pk + "/", loader)
+  open_fullscreen("/docs/user_progs/create_list/", loader)
 });
 
 on('#ajax', 'click', '.u_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_doc/" + pk + "/", loader);
+  open_fullscreen("/docs/user_progs/create_doc/", loader);
 });
 
 on('#ajax', 'click', '.u_doc_list_edit_window', function() {
