@@ -108,7 +108,7 @@ class UserLoadMusic(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.playlist.get_items().order_by('-created')
+		return self.list.get_items().order_by('-created')
 
 class UserLoadMusicList(ListView):
 	template_name, paginate_by = None, 15
