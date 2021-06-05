@@ -1,15 +1,14 @@
 
-on('#ajax', 'click', '.u_doc_list_create_window', function() {
+on('#ajax', 'click', '.u_doc_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_list_window/" + pk + "/", loader)
+  open_fullscreen("/docs/user_progs/create_list/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.u_doc_create_window', function(e) {
-  e.preventDefault();
+on('#ajax', 'click', '.u_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_doc_window/" + pk + "/", loader);
+  open_fullscreen("/docs/user_progs/create_doc/" + pk + "/", loader);
 });
 
 on('#ajax', 'click', '.u_doc_list_edit_window', function() {

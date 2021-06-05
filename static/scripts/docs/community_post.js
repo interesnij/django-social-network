@@ -50,19 +50,10 @@ on('#ajax', 'click', '.c_remove_doc_list', function(e) {
   link.send( null );
 });
 
-on('#ajax', 'click', '.c_doc_add', function(e) {
-  block = this.parentElement;
-  pk = block.parentElement.getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
-  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', "/docs/community_progs/c_add_doc/" + pk + "/" + uuid + "/", true );
-  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  _link.onreadystatechange = function () {
-    if ( _link.readyState == 4 && _link.status == 200 ) {
-      block.innerHTML = "";
-      block.innerHTML = "<span class='c_doc_remove btn_default pointer' title='Удалить'><svg fill='currentColor' style='width:22px;height:22px;' class='svg_default'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>"
-  }};
-  _link.send( null );
+on('#ajax', 'click', '.c_doc_add', function() {
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
 });
 
 on('#ajax', 'click', '.c_doc_remove', function(e) {
