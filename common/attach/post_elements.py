@@ -156,8 +156,8 @@ def get_post_attach(post, user):
             #try:
             from gallery.models import PhotoList
             list = PhotoList.objects.get(pk=item[3:])
-            #if list.type[0] == "_":
-            #    pass
+            if list.type[0] == "_":
+                pass
             if list.community:
                 creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
             else:
@@ -212,4 +212,4 @@ def get_post_attach(post, user):
                 block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
-        return ''.join(["<div class='attach_container'>", block, "</div>"])
+    return ''.join(["<div class='attach_container'>", block, "</div>"])
