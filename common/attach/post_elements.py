@@ -156,8 +156,8 @@ def get_post_attach(post, user):
             #try:
             from gallery.models import PhotoList
             list = PhotoList.objects.get(pk=item[3:])
-            if list.type[0] == "_":
-                pass
+            #if list.type[0] == "_":
+            #    pass
             if list.community:
                 creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
             else:
