@@ -162,14 +162,14 @@ def get_post_attach(post, user):
                 creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
             else:
                 creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
-            share, add = '', ''
+            share_svg, add_svg = '', ''
             if user.is_authenticated:
                 if list.is_not_empty():
-                    share = '<a class="col pointer ', repost, ' ">Поделиться</a>'
+                    share_svg = '<a class="col pointer ', repost, ' ">Поделиться</a>'
                 if list.is_user_can_add_list(user.pk):
-                    add = '<a class="col pointer ', add, '">В коллекцию</a>'
+                    add_svg = '<a class="col pointer ', add, '">В коллекцию</a>'
                 elif user.pk in list.get_users_ids():
-                    add = '<a class="col pointer ', remove, '">Удалить</a>'
+                    add_svg = '<a class="col pointer ', remove, '">Удалить</a>'
             block = ''.join([block, '<div class="custom_color text-center has-background-img position-relative box-shadow" data-pk="', str(creator.pk), '" data-uuid="', str(list.uuid), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="u_load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="u_load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share, add, '</div>', '</div></div>'])
             #except:
             #    pass
