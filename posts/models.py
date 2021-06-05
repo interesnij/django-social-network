@@ -127,7 +127,7 @@ class PostList(models.Model):
     @classmethod
     def get_user_lists_count(cls, user_pk):
         query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
-        query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
+        query.add(~Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod

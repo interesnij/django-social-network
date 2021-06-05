@@ -290,7 +290,6 @@ class SoundList(models.Model):
     def get_user_lists_count(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
         query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
