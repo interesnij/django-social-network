@@ -3,76 +3,20 @@
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  {% if user.is_doc_list_exists %}
-  <div class="row no-gutters">
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      {% include 'mobile/generic/user/back.html' %}
-    </div>
-    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Списки
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 40px;">
-              {% for object in user.get_docs_lists %}
-                <a class="dropdown-item ajax" href="{% url 'user_docs_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
-    </div>
-  </div>
-  {% else %}
-  <div class="row no-gutters">
-    <div style="flex: 0 0 100%;max-width:100%;padding:5px;">
-      {% include 'mobile/generic/user/back.html' %}
-    </div>
-  </div>
-  {% endif %}
+
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
             <div class="input-group-append">
               <button class="btn custom_color border" type="button">Искать</button>
             </div>
           </div>
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  {% if user.s_avatar %}
-                    <img src="{{ user.s_avatar.url }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
-                  {% else %}
-                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-                  {% endif %}
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">Основной список ({{ list.count_items }})</h6>
-                    <p class="">Документы {{ user.get_full_name_genitive }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {% include 'mobile/users/docs/main_list/lists.html' %}
           <div class="card mb-2">
               <div class="card-body">
                     <ul data-pk="{{ list.pk }}" class="is_paginate">
                       {% if object_list %}
                       {% for doc in object_list %}
-
-                      <li class="list-group-item pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
-                          <div class="media" style="align-items: unset;position: relative;">
-                              <div class="media-body doc_media_body">
-                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
-                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-                                    <span class='span_btn' data-pk="{{ doc.pk }}">
-                                      {% include 'mobile/users/user_docs/add_dropdown.html' %}
-                                      <div class="dropdown" style="position: inherit;">
-                                        <a class="btn_default drop pointer">
-                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                        </a>
-                                          <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                                              <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
-                                          </div>
-                                      </div>
-                                    </span>
-                              </div>
-                          </div>
-                      </li>
+                        {% include 'mobile/users/docs/anon_doc.html' %}
                       {% endfor %}
                       {% else %}
                       <div class="card centered">
