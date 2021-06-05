@@ -35,7 +35,7 @@
    <div class="form-group">
      <label>Список</label>
      <select name="list" multiple="" id="id_list" style="height:100%">
-       {% for object in get_lists %}
+       {% for object in get_good_lists %}
          <option value="{{ object.pk }}">{{ object.name }}</option>
        {% endfor %}
      </select>
