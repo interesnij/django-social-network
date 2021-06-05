@@ -127,7 +127,6 @@ class DocList(models.Model):
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)
         query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
