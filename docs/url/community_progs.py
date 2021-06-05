@@ -3,7 +3,7 @@ from docs.view.community_progs import *
 
 
 urlpatterns = [
-    url(r'^create_list/(?P<pk>\d+)/$', CommunityDocListCreate.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', CommunityDocListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListDelete.as_view()),
     url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListRecover.as_view()),
