@@ -1,7 +1,7 @@
 
 on('#ajax', 'click', '.u_doc_list_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+  open_fullscreen("/docs/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
 });
 
 on('#ajax', 'click', '.u_doc_add', function() {
