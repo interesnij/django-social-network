@@ -58,15 +58,15 @@ class UUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.template.user import get_detect_platform_template
 
-        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMPhotoListWindow,self).get_context_data(**kwargs)
+        c = super(UUCMPhotoListWindow,self).get_context_data(**kwargs)
         c["form"], c["object"], c["user"] = PostForm(), self.list, self.user
-        return context
+        return c
 
 class CUCMPhotoListWindow(TemplateView):
     """
