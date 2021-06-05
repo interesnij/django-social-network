@@ -78,7 +78,7 @@ class CUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.template.user import get_detect_platform_template
 
-        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMPhotoListWindow,self).get(request,*args,**kwargs)
 
