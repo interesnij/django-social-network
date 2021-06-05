@@ -48,7 +48,7 @@ class UserLoadPhotoComment(ListView):
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserLoadPhotoList,self).get_context_data(**kwargs)
+		context = super(UserLoadPhotoComment,self).get_context_data(**kwargs)
 		context["list"], context["get_lists"] = self.list, self.get_lists
 		return context
 
