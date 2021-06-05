@@ -1,5 +1,6 @@
 {% extends "base_mobile.html" %}
 {% block title %}{{ community.name }} | Товары - {{ list.name }}{% endblock %}
+{% load get_key %}
 {% block content %}
 
 <div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">

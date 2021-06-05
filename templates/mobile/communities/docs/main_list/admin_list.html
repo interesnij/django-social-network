@@ -1,5 +1,6 @@
 {% extends "base_mobile.html" %}
 {% block title %}Документы {{ community.name }} - {{ list.name }}{% endblock %}
+{% load get_key %}
 {% block content %}
 
 <div class="container mt-3 pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
@@ -10,7 +11,13 @@
     </div>
   </div>
   {% include 'mobile/communities/docs/main_list/admin_lists.html' %}
+  <span class="load_block">
 
+  <div class="media mt-3" style="padding-left: 7px;">
+    <h5 class="mt-1">{{ list.name }} ({{ list.count_items }})
+      <span class="pointer badge badge-light-success c_doc_add">Добавить документ</span>
+    </h5>
+  </div>
             <div class="card mb-2">
                 <div class="card-body">
                     <ul data-pk="{{ list.pk }}" class="is_paginate">
@@ -32,5 +39,6 @@
                     </ul>
                 </div>
             </div>
+        </span>
 </div>
 {% endblock %}
