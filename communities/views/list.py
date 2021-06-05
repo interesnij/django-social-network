@@ -94,8 +94,11 @@ class CommunityDocs(ListView):
 		self.list = DocList.objects.get(community_id=self.c.pk, type=DocList.MAIN)
 		if user.is_authenticated and user.is_staff_of_community(self.c.pk):
 			self.doc_list = self.list.get_staff_items()
+			self.get_lists = DocList.get_community_staff_lists(self.c.pk)
 		else:
 			self.doc_list = self.list.get_items()
+			self.get_lists = DocList.get_community_lists(self.c.pk)
+		self.count_lists = DocList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -104,7 +107,7 @@ class CommunityDocs(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityDocs,self).get_context_data(**kwargs)
-		c['community'],c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
+		c['community'],c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
 		return c
 
 	def get_queryset(self):
@@ -148,13 +151,17 @@ class CommunityGoods(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_anon_community, get_template_community
+		from goods.models import GoodList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_good_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.goods_list = self.list.get_staff_items()
+			self.get_lists = GoodList.get_community_staff_lists(self.c.pk)
 		else:
 			self.goods_list = self.list.get_items()
+			self.get_lists = GoodList.get_community_staff_lists(self.c.pk)
+		self.count_lists = DocList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -163,7 +170,7 @@ class CommunityGoods(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityGoods,self).get_context_data(**kwargs)
-		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
+		c['community'], c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
 		return c
 
 	def get_queryset(self):
@@ -212,6 +219,13 @@ class CommunityMusic(ListView):
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_playlist()
+		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
+			self.get_items = self.list.get_staff_items()
+			self.get_lists = SoundList.get_community_staff_lists(self.c.pk)
+		else:
+			self.get_items = self.list.get_items()
+			self.get_lists = SoundList.get_community_staff_lists(self.c.pk)
+		self.count_lists = SoundList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -220,11 +234,11 @@ class CommunityMusic(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityMusic,self).get_context_data(**kwargs)
-		c['community'], c['list'], c['is_admin'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk)
+		c['community'], c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
 		return c
 
 	def get_queryset(self):
-		return self.list.get_items()
+		return self.get_items
 
 class CommunityMusicList(ListView):
 	template_name, paginate_by = None, 15
@@ -260,13 +274,17 @@ class CommunityVideo(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_anon_community, get_template_community
+		from video.models import VideoList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_video_list()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.video_list = self.list.get_staff_items()
+			self.get_lists = VideoList.get_community_staff_lists(self.c.pk)
 		else:
 			self.video_list = self.list.get_items()
+			self.get_lists = VideoList.get_community_lists(self.c.pk)
+		self.count_lists = VideoList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -275,7 +293,7 @@ class CommunityVideo(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideo,self).get_context_data(**kwargs)
-		c['community'], c['list'], c['is_admin'] = self.list, self.list, self.request.user.is_administrator_of_community(self.c.pk)
+		c['community'], c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.list, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
 		return c
 
 	def get_queryset(self):

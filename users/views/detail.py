@@ -149,7 +149,7 @@ class UserMusic(ListView):
 
     def get_context_data(self,**kwargs):
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'], c['is_lists_exists'], c['get_lists'] = self.user, self.list, self.count_lists, self.lists_exists, self.get_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'] = self.user, self.list, self.count_lists, self.lists_exists, self.get_lists
         return c
 
     def get_queryset(self):
@@ -180,7 +180,7 @@ class UserDocs(ListView):
 
     def get_context_data(self,**kwargs):
         c = super(UserDocs,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'] = self.user, self.list, self.count_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'] = self.user, self.list, self.count_lists, self.get_lists
         return c
 
     def get_queryset(self):
