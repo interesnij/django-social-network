@@ -161,7 +161,7 @@ class CommunityGoods(ListView):
 		else:
 			self.goods_list = self.list.get_items()
 			self.get_lists = GoodList.get_community_staff_lists(self.c.pk)
-		self.count_lists = DocList.get_community_lists_count(self.c.pk)
+		self.count_lists = GoodList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
