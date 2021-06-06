@@ -3,67 +3,20 @@
 {% load get_key %}
 {% block content %}
 
-<div class="container main-container pk_saver" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container main-container mt-3 pk_saver" data-pk="{{ community.pk }}">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск музыки">
             <div class="input-group-append">
               <button class="btn custom_color border" type="button">Искать</button>
             </div>
           </div>
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  {% if community.s_avatar %}
-                    <img src="{{ community.s_avatar.url }}" style="width: 50px;height: 50px;border-radius:50px" alt="image">
-                  {% else %}
-                    <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-                  {% endif %}
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">Основной плейлист ({{ list.count_items }})</h6>
-                    <p class="">
-                      {% include 'desctop/generic/community/community.html' %}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {% include 'desctop/communities/music/main_list/lists.html' %}
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
                     <ul id="community_tracks_container" data-pk="{{ list.pk }}" class="community_block_paginate">
                       {% for object in object_list %}
-                      <li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
-                          <div class="media" music-counter="{{ forloop.counter0|add:page_obj.start_index }}" style="align-items: unset;position: relative;">
-                              <figure>
-                                <a class="pointer music_list_item">
-                                  {% if object.image %}
-                                    <img style="width:40px;heigth:auto" src="{{ object.image.url }}" />
-                                  {% else %}
-                                    <svg fill="currentColor" style="width:40px;heigth:40px" class='svg_default' viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-                                  {% endif %}
-                                </a>
-                              </figure>
-                              <div class="media-body" style="line-height: 0.4;">
-                                  <h6 class="music_list_item pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
-                                  {% if object.genre %}
-                                  <a class="ajax" href="{% url 'genre_music' pk=object.genre.pk %}">{{ object.genre }}</a>
-                                  {% endif %}
-                                    <span class='span_btn' style="float:right;margin-top: -25px;display:flex" data-pk="{{ object.pk }}">
-                                      {% include 'desctop/generic/music/add_drop.html' %}
-                                      <div class="dropdown" style="position: inherit;">
-                                        <a class="btn_default drop pointer">
-                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                        </a>
-                                          <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
-                                              <span class="dropdown-item copy_link">Копировать ссылку</span>
-                                          </div>
-                                      </div>
-                                    </span>
-                              </div>
-                          </div>
-                      </li>
+                        {% include 'desctop/communities/music/anon_track.html' %}
                       {% endfor %}
                     </ul>
 
@@ -81,11 +34,6 @@
                 {% endif %}
               </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4">
-          {% include 'desctop/communities/music/main_list/sidebar.html' %}
-        </div>
-    </div>
 </div>
 
 <script>

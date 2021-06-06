@@ -2,37 +2,8 @@
 {% block title %}Музыка {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row no-gutters">
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      {% include 'mobile/generic/user/back.html' %}
-    </div>
-    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Плейлисты
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in user.get_playlists %}
-                <a class="dropdown-item ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
-    </div>
-  </div>
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  {% if user.s_avatar %}
-                    <img src="{{ user.s_avatar.url }}" style="width: 40px; height: 40px; border-radius:50px" alt="image">
-                  {% else %}
-                    <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
-                  {% endif %}
-                  <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
-                    <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_items }})</h6>
-                    <p class="">Музыка {{ list.creator.get_full_name_genitive }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
+  {% include 'mobile/users/music/main_list/lists.html' %}
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}

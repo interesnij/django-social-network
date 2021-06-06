@@ -3,9 +3,7 @@
 {% block title %}Товары {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-      <div class="col-md-8 mt-3">
+<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
@@ -33,7 +31,7 @@
               {% if object_list %}
 
               {% for object in object_list %}
-                {% include 'desctop/users/user_goods/good.html' %}
+                {% include 'desctop/users/goods/main_list/good.html' %}
               {% endfor %}
 
               {% else %}
@@ -46,10 +44,6 @@
               {% endif %}
               </div>
             </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-          {% include 'desctop/users/goods/main_list/sidebar.html' %}
         </div>
 </div>
 

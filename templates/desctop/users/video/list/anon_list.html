@@ -2,9 +2,7 @@
 {% block title %}{{ list.name }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-    <div class="row">
-        <div class="col-md-8 mt-3">
+<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -18,7 +16,9 @@
                   <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_items }})</h6>
-                    <p class="">Мои видеоролики</p>
+                    <p class="">Видеоролики
+                    {% include 'desctop/generic/user/user_gen.html' %}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -46,11 +46,6 @@
                 </div>
               </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          {% include 'desctop/users/video/main_list/sidebar.html' %}
-        </div>
-    </div>
 </div>
 
 
