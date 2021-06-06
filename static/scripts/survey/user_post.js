@@ -45,3 +45,14 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
   }};
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '#u_edit_survey_list_btn', function() {
+  media_list_edit(this, "/survey/user_progs/edit_list/")
+});
+
+on('body', 'click', '.u_survey_list_remove', function() {
+  media_list_delete(this, "/survey/user_progs/delete_list/", "u_survey_list_remove", "u_survey_list_abort_remove")
+});
+on('body', 'click', '.u_survey_list_abort_remove', function() {
+  media_list_recover(this, "/survey/user_progs/restore_list/", "u_survey_list_abort_remove", "u_survey_list_remove")
+});

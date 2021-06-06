@@ -36,13 +36,13 @@ on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.с_video_list_create_window', function() {
+on('#ajax', 'click', '.с_video_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/video/community_progs/create_list/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.c_video_list_edit_window', function() {
+on('#ajax', 'click', '.c_video_list_edit', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
@@ -50,10 +50,10 @@ on('#ajax', 'click', '.c_video_list_edit_window', function() {
   open_fullscreen("/video/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.c_video_list_create_window', function() {
+on('#ajax', 'click', '.c_video_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community/create_list_window/" + pk + "/", loader)
+  open_fullscreen("/video/community/create_list/" + pk + "/", loader)
 });
 
 on('#video_loader', 'click', '.c_all_video_likes', function() {

@@ -116,61 +116,14 @@ on('#ajax', 'click', '#c_create_music_list_btn', function() {
 });
 
 on('#ajax', 'click', '#c_edit_playlist_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-
-  pk = form.getAttribute("data-pk");
-  uuid = form.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/community_progs/edit_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        name = form.querySelector('#id_name').value;
-        document.body.querySelector(".playlist_name").innerHTML = name;
-        close_create_window();
-        toast_success("Плейлист изменен")
-      }
-    }
-    ajax_link.send(form_data);
+  media_list_edit(this, "/music/community_progs/edit_list/")
 });
 
-on('#ajax', 'click', '.c_music_list_delete', function() {
-  saver = document.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/music/community_progs/delete_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communities/" + pk + "/music_list/" + uuid + "/")
-      }
-    }
-    ajax_link.send();
+on('body', 'click', '.c_playlist_remove', function() {
+  media_list_delete(this, "/music/community_progs/delete_list/", "c_playlist_remove", "c_playlist_abort_remove")
 });
-
-on('#ajax', 'click', '.c_music_list_recover', function() {
-  _this = this;
-  saver = document.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/music/community_progs/restore_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/communities/" + pk + "/music_list/" + uuid + "/")
-      }
-    }
-    ajax_link.send();
+on('body', 'click', '.c_playlist_abort_remove', function() {
+  media_list_recover(this, "/music/community_progs/restore_list/", "c_playlist_abort_remove", "c_playlist_remove")
 });
 
 on('body', 'click', '#c_create_track_btn', function() {

@@ -38,7 +38,7 @@ on('#ajax', 'click', '.u_ucm_good_list_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.u_good_list_edit_window', function() {
+on('#ajax', 'click', '.u_good_list_edit', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
@@ -46,7 +46,7 @@ on('#ajax', 'click', '.u_good_list_edit_window', function() {
   open_fullscreen("/goods/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_goods_list_create_window', function() {
+on('#ajax', 'click', '.u_goods_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/goods/user_progs/add_list/" + pk + "/", loader)

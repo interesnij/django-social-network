@@ -18,7 +18,7 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
   } else {this.disabled = true}
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/goods/community_progs/add/" + pk + "/", true );
+  link_.open( 'POST', "/survey/community_progs/add/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -42,4 +42,15 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
   toast_info("Товар создан!")
   }};
   link_.send(form_data);
+});
+
+on('#ajax', 'click', '#c_edit_survey_list_btn', function() {
+  media_list_edit(this, "/gallery/community_progs/edit_list/")
+});
+
+on('body', 'click', '.c_survey_list_remove', function() {
+  media_list_delete(this, "/survey/community_progs/delete_list/", "c_survey_list_remove", "c_survey_list_abort_remove")
+});
+on('body', 'click', '.c_survey_list_abort_remove', function() {
+  media_list_recover(this, "/survey/community_progs/restore_list/", "c_survey_list_abort_remove", "c_survey_list_remove")
 });

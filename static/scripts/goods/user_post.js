@@ -330,39 +330,12 @@ on('#ajax', 'click', '#u_edit_good_list_btn', function() {
     ajax_link.send(form_data);
 });
 
-on('#ajax', 'click', '.u_good_list_delete', function() {
-  saver = document.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/goods/user_progs/delete_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/users/" + pk + "/goods_list/" + uuid + "/")
-      }
-    }
-    ajax_link.send();
+on('body', 'click', '.u_good_list_remove', function() {
+  media_list_delete(this, "/goods/user_progs/delete_list/", "u_good_list_remove", "u_good_list_abort_remove")
 });
-
-on('#ajax', 'click', '.u_good_list_recover', function() {
-  saver = document.querySelector(".pk_saver");
-  pk = saver.getAttribute("data-pk");
-  uuid = saver.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/goods/user_progs/restore_list/" + pk + "/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload("/users/" + pk + "/goods_list/" + uuid + "/")
-      }
-    }
-    ajax_link.send();
+on('body', 'click', '.u_good_list_abort_remove', function() {
+  media_list_recover(this, "/goods/user_progs/restore_list/", "u_good_list_abort_remove", "u_good_list_remove")
 });
-
-
 
 on('#ajax', 'click', '.mob_u_good_off_comment', function() {
   send_mob_good_change(this, "/goods/user_progs/off_comment/", "mob_u_good_on_comment", "Вкл. комментарии");

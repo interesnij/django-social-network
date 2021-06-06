@@ -12,14 +12,14 @@ on('#ajax', 'click', '.c_doc_list_add', function() {
   open_fullscreen("/docs/community_progs/add_list/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.c_doc_create_window', function(e) {
+on('#ajax', 'click', '.c_doc_create', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/create_doc_window/" + pk + "/", loader);
+  open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
 });
 
-on('#ajax', 'click', '.c_doc_list_edit_window', function() {
+on('#ajax', 'click', '.c_doc_list_edit', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");

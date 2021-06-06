@@ -19,13 +19,13 @@ on('#ajax', 'click', '.c_all_good_dislikes', function() {
   loader = document.getElementById("votes_loader");
   open_fullscreen("/goods/window/all_community_dislike/" + pk + "/" + good_pk + "/", loader)
 });
-on('#ajax', 'click', '.c_goods_list_create_window', function() {
+on('#ajax', 'click', '.c_goods_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
   open_fullscreen("/goods/community_progs/add_list/" + pk + "/", loader)
 });
 
-on('#ajax', 'click', '.c_good_list_edit_window', function() {
+on('#ajax', 'click', '.c_good_list_edit', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");

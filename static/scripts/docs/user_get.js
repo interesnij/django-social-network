@@ -24,7 +24,7 @@ on('#ajax', 'click', '.u_doc_add', function() {
   open_fullscreen("/docs/user_progs/create_doc/", loader);
 });
 
-on('#ajax', 'click', '.u_doc_list_edit_window', function() {
+on('#ajax', 'click', '.u_doc_list_edit', function() {
   body = document.body.querySelector(".pk_saver");
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
