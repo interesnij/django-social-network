@@ -327,8 +327,8 @@ class CommunityPostListEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
 
-        self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
+        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -339,7 +339,7 @@ class CommunityPostListEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
         self.form = PostListForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid():
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.c.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
@@ -351,7 +351,7 @@ class CommunityPostListEdit(TemplateView):
 class CommunityPostListDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.type != PostList.MAIN and request.user.is_staff_of_community(self.kwargs["pk"]):
+        if request.is_ajax() and list.type != PostList.MAIN and request.user.is_administrator_of_community(list.c.pk):
             list.delete_item()
             return HttpResponse()
         else:

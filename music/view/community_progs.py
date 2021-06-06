@@ -147,20 +147,19 @@ class CommunityPlaylistEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("music/music_create/c_edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = get_community_manage_template("music/music_create/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistEdit,self).get_context_data(**kwargs)
-        context["community"] = self.community
         context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PlaylistForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.kwargs["pk"]):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()

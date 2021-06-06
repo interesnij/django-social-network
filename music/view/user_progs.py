@@ -152,13 +152,11 @@ class UserPlaylistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.user = request.user
         self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserPlaylistEdit,self).get_context_data(**kwargs)
-        context["user"] = self.user
         context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
         return context
 

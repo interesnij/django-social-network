@@ -217,21 +217,21 @@ class UserGoodListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("goods/good_base/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("goods/good_base/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserGoodListEdit,self).get_context_data(**kwargs)
-        context["user"] = self.user
+        context["user"] = self.request.user
         context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         self.form = GoodListForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and self.user == request.user:
+        if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, order=list.order, lists=request.POST.get("list"),is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

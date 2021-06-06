@@ -278,21 +278,19 @@ class CommunityVideolistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'])
+        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityVideolistEdit,self).get_context_data(**kwargs)
-        context["community"] = self.community
-        context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = self.list
         return context
 
     def post(self,request,*args,**kwargs):
         self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         self.form = VideoListForm(request.POST,instance=self.list)
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.community.pk):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
             self.form.save()
             return HttpResponse()
