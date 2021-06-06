@@ -43,11 +43,9 @@ on('#ajax', 'click', '.с_video_list_create', function() {
 });
 
 on('#ajax', 'click', '.c_video_list_edit', function() {
-  body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/video/community_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_video_list_create', function() {

@@ -20,11 +20,9 @@ on('#ajax', 'click', '.c_doc_create', function(e) {
 });
 
 on('#ajax', 'click', '.c_doc_list_edit', function() {
-  body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/docs/community_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_load_doc_list', function() {

@@ -37,12 +37,10 @@ on('#ajax', 'click', '.u_ucm_video_list_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.u_video_list_edit_window', function() {
-  body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+on('#ajax', 'click', '.u_video_list_edit', function() {
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/video/user_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#video_loader', 'click', '.u_all_video_likes', function() {

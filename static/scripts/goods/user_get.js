@@ -39,11 +39,9 @@ on('#ajax', 'click', '.u_ucm_good_list_repost', function() {
 })
 
 on('#ajax', 'click', '.u_good_list_edit', function() {
-  body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/goods/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/goods/user_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_goods_list_create', function() {
