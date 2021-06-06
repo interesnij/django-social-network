@@ -137,7 +137,7 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#u_edit_doc_list_btn', function() {
+on('#ajax', 'click', '#c_edit_doc_list_btn', function() {
   media_list_edit(this, "/docs/community_progs/edit_list/")
 });
 
