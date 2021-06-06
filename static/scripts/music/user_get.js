@@ -5,6 +5,14 @@ on('#ajax', 'click', '.u_uncopy_playlist', function() {
   on_off_list_in_collections(this, "/music/user_progs/remove_list_from_collections/", "u_copy_playlist", "u_uncopy_playlist", "Добавить")
 });
 
+on('#ajax', 'click', '.load_profile_playlist', function() {
+  profile_list_block_load(this, ".load_block", "/music_list/", "load_profile_playlist");
+});
+
+on('#ajax', 'click', '.load_attach_playlist', function() {
+  profile_list_block_attach(this, ".load_block", "/u_music_list_load/", "load_attach_playlist");
+});
+
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/souncloud_create_list_window/", loader)

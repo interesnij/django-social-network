@@ -5,6 +5,14 @@ on('#ajax', 'click', '.u_uncopy_good_list', function() {
   on_off_list_in_collections(this, "/goods/user_progs/remove_list_from_collections/", "u_copy_good_list", "u_uncopy_good_list", "Добавить")
 });
 
+on('#ajax', 'click', '.load_profile_good_list', function() {
+  profile_list_block_load(this, ".load_block", "/good_list/", "load_profile_good_list");
+});
+
+on('#ajax', 'click', '.load_attach_good_list', function() {
+  profile_list_block_attach(this, ".load_block", "/u_good_list_load/", "load_attach_good_list");
+});
+
 on('#ajax', 'click', '.u_good_detail', function() {
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.getAttribute('data-uuid')
   pk = this.getAttribute('good-pk');

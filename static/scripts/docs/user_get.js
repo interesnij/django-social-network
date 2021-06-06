@@ -5,6 +5,14 @@ on('#ajax', 'click', '.u_uncopy_doc_list', function() {
   on_off_list_in_collections(this, "/docs/user_progs/remove_list_from_collections/", "u_copy_doc_list", "u_uncopy_doc_list", "Добавить")
 });
 
+on('#ajax', 'click', '.load_profile_doc_list', function() {
+  profile_list_block_load(this, ".load_block", "/doc_list/", "load_profile_doc_list");
+});
+
+on('#ajax', 'click', '.load_attach_doc_list', function() {
+  profile_list_block_attach(this, ".load_block", "/u_doc_list_load/", "load_attach_doc_list");
+});
+
 on('#ajax', 'click', '.u_doc_list_add', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
