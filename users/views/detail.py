@@ -132,14 +132,10 @@ class UserMusic(ListView):
         self.list, self.get_lists = self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
             self.get_items = self.list.get_staff_items()
-            self.lists_exists = SoundList.is_have_user_staff_lists(self.user.pk)
-            if self.lists_exists:
-                self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
+            self.get_lists = SoundList.get_user_staff_lists(self.user.pk)
         else:
             self.get_items = self.list.get_items()
-            self.lists_exists = SoundList.is_have_user_lists(self.user.pk)
-            if self.lists_exists:
-                self.get_lists = SoundList.get_user_lists(self.user.pk)
+            self.get_lists = SoundList.get_user_lists(self.user.pk)
         self.count_lists = SoundList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
