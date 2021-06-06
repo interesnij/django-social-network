@@ -94,7 +94,7 @@ class UserDocListEdit(TemplateView):
         self.form = DoclistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.list.creator.pk:
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
