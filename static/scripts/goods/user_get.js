@@ -1,3 +1,10 @@
+on('#ajax', 'click', '.u_copy_good_list', function() {
+  on_off_list_in_collections(this, "/goods/user_progs/add_list_in_collections/", "u_uncopy_good_list", "u_copy_good_list", "Удалить")
+});
+on('#ajax', 'click', '.u_uncopy_good_list', function() {
+  on_off_list_in_collections(this, "/goods/user_progs/remove_list_from_collections/", "u_copy_good_list", "u_uncopy_good_list", "Добавить")
+});
+
 on('#ajax', 'click', '.u_good_detail', function() {
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.getAttribute('data-uuid')
   pk = this.getAttribute('good-pk');

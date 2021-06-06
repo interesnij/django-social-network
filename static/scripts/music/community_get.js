@@ -1,3 +1,10 @@
+on('#ajax', 'click', '.c_copy_playlist', function() {
+  on_off_list_in_collections(this, "/music/community_progs/add_list_in_collections/", "c_uncopy_playlist", "c_copy_playlist", "Удалить")
+});
+on('#ajax', 'click', '.c_uncopy_playlist', function() {
+  on_off_list_in_collections(this, "/music/community_progs/remove_list_from_collections/", "c_copy_playlist", "c_uncopy_playlist", "Добавить")
+});
+
 on('#ajax', 'click', '.c_ucm_music_repost', function() {
   parent = this.parentElement;
   track_pk = parent.getAttribute("data-pk");

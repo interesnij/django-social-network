@@ -1,3 +1,10 @@
+on('#ajax', 'click', '.u_copy_playlist', function() {
+  on_off_list_in_collections(this, "/music/user_progs/add_list_in_collections/", "u_uncopy_playlist", "u_copy_playlist", "Удалить")
+});
+on('#ajax', 'click', '.u_uncopy_playlist', function() {
+  on_off_list_in_collections(this, "/music/user_progs/remove_list_from_collections/", "u_copy_playlist", "u_uncopy_playlist", "Добавить")
+});
+
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/souncloud_create_list_window/", loader)
