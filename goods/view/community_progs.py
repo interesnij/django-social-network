@@ -245,7 +245,7 @@ class CommunityGoodListEdit(TemplateView):
 class CommunityGoodListDelete(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == GoodList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != GoodList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:

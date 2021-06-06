@@ -351,7 +351,7 @@ class CommunityPostListEdit(TemplateView):
 class CommunityPostListDelete(View):
     def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.type == PostList.LIST and request.user.is_staff_of_community(self.kwargs["pk"]):
+        if request.is_ajax() and list.type != PostList.MAIN and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.delete_item()
             return HttpResponse()
         else:

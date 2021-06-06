@@ -239,8 +239,8 @@ class UserGoodListEdit(TemplateView):
 
 class UserGoodListDelete(View):
     def get(self,request,*args,**kwargs):
-        user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user and list.type == GoodList.LIST:
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.pk == list.creator.pk and list.type != GoodList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -248,8 +248,8 @@ class UserGoodListDelete(View):
 
 class UserGoodListRecover(View):
     def get(self,request,*args,**kwargs):
-        user, list = User.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and user == request.user:
+        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()
         else:

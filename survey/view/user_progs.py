@@ -199,7 +199,7 @@ class UserSurveyListEdit(TemplateView):
 class UserSurveyListDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == self.list.creator.pk and list.type == DocList.LIST:
+        if request.is_ajax() and request.user.pk == list.creator.pk and list.type != SurveyList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -208,7 +208,7 @@ class UserSurveyListDelete(View):
 class UserSurveyListRecover(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == self.list.creator.pk:
+        if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()
         else:

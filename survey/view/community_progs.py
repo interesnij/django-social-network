@@ -197,7 +197,7 @@ class CommunitySurveyListEdit(TemplateView):
 class CommunitySurveyListDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != SurveyList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:

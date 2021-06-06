@@ -171,7 +171,7 @@ class CommunityPlaylistEdit(TemplateView):
 class CommunityPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == SoundList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != SoundList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:

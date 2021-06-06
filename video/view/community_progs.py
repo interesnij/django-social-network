@@ -304,7 +304,7 @@ class CommunityVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
         list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type == VideoList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type != VideoList.MAIN:
             list.delete_list()
             return HttpResponse()
         else:

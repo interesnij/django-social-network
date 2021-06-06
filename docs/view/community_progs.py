@@ -146,7 +146,7 @@ class CommunityDocListEdit(TemplateView):
 class CommunityDocListDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type == DocList.LIST:
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != DocList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
