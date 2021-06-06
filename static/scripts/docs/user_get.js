@@ -29,7 +29,7 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
   pk = body.getAttribute("data-pk");
   uuid = body.getAttribute("data-uuid");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/edit_list/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/docs/user_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_load_doc_list', function() {
