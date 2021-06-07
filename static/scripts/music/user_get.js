@@ -15,7 +15,8 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
 
 on('#ajax', 'click', '.u_playlist_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/add_list/", loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  open_fullscreen("/music/user_progs/add_list/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {

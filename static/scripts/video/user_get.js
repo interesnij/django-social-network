@@ -1,6 +1,7 @@
 on('#ajax', 'click', '.u_video_list_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/add_list/", loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
+  open_fullscreen("/video/user_progs/add_list/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.u_video_add', function() {
   loader = document.getElementById("create_loader");
