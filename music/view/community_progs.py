@@ -100,22 +100,13 @@ class RemoveTrackFromCommunityList(View):
         else:
             raise Http404
 
-class CommunityCreatePlaylistWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
-        return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
-
-
 class CommunityPlaylistCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
-        return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
+        return super(CommunityPlaylistCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistCreate,self).get_context_data(**kwargs)

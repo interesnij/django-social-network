@@ -5,8 +5,6 @@ from music.view.user_progs import *
 urlpatterns = [
     url(r'^souncloud_create_list_window/$', UserSoundcloudSetPlaylistWindow.as_view()),
     url(r'^souncloud_list_window/$', UserSoundcloudSetWindow.as_view()),
-    url(r'^create_list_window/$', UserCreatePlaylistWindow.as_view()),
-    url(r'^edit_list_window/(?P<uuid>[0-9a-f-]+)/$', UserEditPlaylistWindow.as_view()),
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', UserSoundcloudSetCreate.as_view()),
     url(r'^soundcloud_set/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSet.as_view()),
