@@ -22,9 +22,9 @@ urlpatterns = [
 	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentCommunityRecover.as_view()),
 
     url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
-    url(r'^edit_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
-    url(r'^delete_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistRecover.as_view()),
+    url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
+    url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
+    url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddVideoListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoListFromCommunityCollections.as_view()),
 ]
