@@ -23,8 +23,8 @@ def validate_file_extension(value):
     from django.conf import settings
 
     ext = os.path.splitext(value.name)[1]
-    valid_extensions = ['.pdf','.doc','.docx']
+    valid_extensions = ['.pdf','.doc','.docx','.txt']
     if not ext in valid_extensions:
-        raise ValidationError('Допустимы форматы: pdf, doc, docx!')
+        raise ValidationError('Допустимы форматы: pdf, doc, docx, txt!')
     if value.size > settings.DOC_FILE_MAX_SIZE:
         raise ValidationError('Размер не более 5 МБ!')
