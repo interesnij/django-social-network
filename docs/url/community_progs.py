@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^add_list/(?P<pk>\d+)/$', CommunityDocListCreate.as_view()),
     url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListEdit.as_view()),
     url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListRecover.as_view()),
+    url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunityDocListRecover.as_view()),
 
     url(r'^create_doc/(?P<pk>\d+)/$', CommunityDocCreate.as_view()),
     url(r'^edit_doc/(?P<doc_pk>\d+)/$', CommunityDocEdit.as_view()),
