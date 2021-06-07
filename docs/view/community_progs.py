@@ -54,12 +54,14 @@ class CommunityDocCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityDocCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDocCreate,self).get_context_data(**kwargs)
         context["form_post"] = DocForm()
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
@@ -76,13 +78,15 @@ class CommunityDocEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityDocEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityDocEdit,self).get_context_data(**kwargs)
         context["form_post"] = DocForm(instance=self.doc)
         context["doc"] = self.doc
+        context["community"] = self.community
         return context
 
     def post(self,request,*args,**kwargs):
