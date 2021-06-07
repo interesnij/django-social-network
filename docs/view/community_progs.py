@@ -78,8 +78,9 @@ class CommunityDocEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        self.community = self.doc.community
+        self.template_name = get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityDocEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -90,8 +91,10 @@ class CommunityDocEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
+        self.doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        self.community = self.doc.community
         form_post, DocForm(request.POST, request.FILES)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             doc = form_post.save(commit=False)
             new_doc = _doc.edit_doc(title=_doc.title,file=_doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"), type_2=_doc.type_2)
             return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
