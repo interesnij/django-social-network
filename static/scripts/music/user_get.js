@@ -13,6 +13,11 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
   profile_list_block_attach(this, ".load_block", "/u_music_list_load/", "load_attach_playlist");
 });
 
+on('#ajax', 'click', '.u_playlist_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+});
+
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/souncloud_create_list_window/", loader)

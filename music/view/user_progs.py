@@ -211,7 +211,7 @@ class UserTrackCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music_create/u_create_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_create_track.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserTrackCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -225,7 +225,7 @@ class UserTrackCreate(TemplateView):
         if request.is_ajax() and form_post.is_valid():
             track = form_post.save(commit=False)
             new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, lists=request.POST.getlist("list"), is_public=request.POST.get("is_public"), community=None)
-            return render_for_platform(request, 'music_create/u_new_track.html',{'object': new_track})
+            return render_for_platform(request, 'music/music_create/u_new_track.html',{'object': new_track})
         else:
             return HttpResponseBadRequest()
 
@@ -234,7 +234,7 @@ class UserTrackEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music_create/u_edit_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_edit_track.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserTrackEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -250,6 +250,6 @@ class UserTrackEdit(TemplateView):
         if request.is_ajax() and form_post.is_valid():
             _track = form_post.save(commit=False)
             new_doc = self.track.edit_track(title=_track.title, file=_track.file, lists=request.POST.getlist("list"), is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'music_create/u_new_track.html',{'object': self.track})
+            return render_for_platform(request, 'music/music_create/u_new_track.html',{'object': self.track})
         else:
             return HttpResponseBadRequest()

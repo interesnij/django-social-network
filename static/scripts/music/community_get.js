@@ -56,3 +56,9 @@ on('#ajax', 'click', '.c_music_list_edit_window', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/community_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
 });
+
+
+on('#ajax', 'click', '.c_playlist_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/community_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+});

@@ -219,22 +219,6 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
   post_and_load_object_page(form, "/music/user_progs/create_list/", "/users/", "/music_list/")
 });
 
-on('#ajax', 'click', '.u_add_music_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/music/user_progs/add_list/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_remove_music_list");
-      _this.classList.remove("u_add_music_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
-  }};
-  link.send( null );
-});
 on('#ajax', 'click', '.u_remove_music_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
