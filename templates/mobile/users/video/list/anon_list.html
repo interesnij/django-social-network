@@ -2,22 +2,7 @@
 {% block title %}{{ list.name }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row no-gutters">
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      {% include 'mobile/generic/user/back.html' %}
-    </div>
-    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Видеоальбомы
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in get_lists %}
-                <a class="dropdown-item ajax" href="{% url 'user_video_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
-    </div>
-  </div>
+<div class="container mt-3 main-container pk_saver" data-pk="{{ user.pk }}">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск видео">
             <div class="input-group-append">
@@ -40,6 +25,14 @@
                   {% endif %}
                 </div>
               </div>
+            </div>
+            <span class="load_block">
+
+            <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+              <h5 class="mt-1">
+                {{ list.name }} ({{ list.count_items }})
+                <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+              </h5>
             </div>
 
           <div class="card mb-2">
@@ -64,6 +57,7 @@
                 </div>
               </div>
           </div>
+      </span>
 </div>
 
 

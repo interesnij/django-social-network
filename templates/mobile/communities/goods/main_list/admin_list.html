@@ -10,6 +10,13 @@
             </div>
         </div>
         {% include 'mobile/communities/goods/main_list/admin_lists.html' %}
+        <span class="load_block">
+
+        <div class="media mt-3" style="padding-left: 7px;">
+          <h5 class="mt-1">{{ list.name }} ({{ list.count_items }})
+            <span class="pointer badge badge-light-success c_good_add">Добавить товар</span>
+          </h5>
+        </div>
         <div class="card mb-2">
             <div class="card-body">
             <div class="row is_paginate">
@@ -30,6 +37,7 @@
               </div>
             </div>
         </div>
+      </span>
 </div>
 
 {% endblock %}

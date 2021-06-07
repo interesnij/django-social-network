@@ -27,6 +27,20 @@
               </div>
             </div>
           </div>
+          <span class="load_block">
+
+          <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px">
+            <h5 class="mt-1">
+              {{ list.name }} ({{ list.count_items }})
+
+              {% if list|is_user_can_add_list:request.user.pk %}
+                <span class="pointer badge badge-light-success u_copy_video_list">Добавить список в коллекцию</span>
+              {% elif request.user.pk in list.get_users_ids %}
+                <span class="pointer badge badge-light-danger u_uncopy_video_list">Удалить список из коллекции</span>
+              {% endif %}
+              <span class="pointer badge badge-light-warning u_video_list_claim">Пожаловаться</span>
+            </h5>
+          </div>
 
         <div class="card mb-2">
             <div class="card-body">
@@ -48,6 +62,7 @@
               </div>
             </div>
         </div>
+      </span>
 </div>
 
 {% endblock %}

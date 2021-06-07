@@ -4,6 +4,14 @@
 
 <div class="container pk_saver mt-3" data-pk="{{ community.pk }}">
           {% include 'mobile/communities/music/main_list/lists.html' %}
+          <span class="load_block">
+
+          <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+            <h5 class="mt-1">
+              {{ list.name }} ({{ list.count_items }})
+              <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
+            </h5>
+          </div>
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
@@ -23,5 +31,6 @@
                 {% endif %}
               </div>
           </div>
+        </span>
     </div>
 {% endblock %}

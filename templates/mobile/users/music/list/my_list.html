@@ -3,35 +3,7 @@
 {% load get_key %}
 {% block content %}
 
-<div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row no-gutters">
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      <a class="btn btn-sm custom_color border ajax" href="{% url 'user_music' pk=user.pk %}" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-      </a>
-    </div>
-    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Плейлисты
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in user.get_playlists %}
-                <a class="dropdown-item ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
-    </div>
-    <div style="flex: 0 0 40%;max-width:40%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Опции
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              <a class="dropdown-item u_soundcloud_set_list pointer">Добавить список в плейлист</a>
-              <a class="dropdown-item u_music_list_create_window pointer">Создать новый список</a>
-              <a class="dropdown-item u_soundcloud_set_create pointer">Закачать новый список</a>
-              <a class="dropdown-item pointer">Добавить трек в список</a>
-            </div>
-    </div>
-  </div>
+<div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
 
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
@@ -43,20 +15,21 @@
                   {% endif %}
                   <div class="media-body" style="margin-left: 10px;margin-top: -5px;">
                     <h6 class="my-0 mt-1"><span class="playlist_name">{{ list.name }}</span>&nbsp; ({{ list.count_items }})</h6>
-                    <p class="">
-                      <span class="u_music_list_edit_window pointer">изменить</span>
-                        &nbsp;
-                      <span class="u_music_list_delete pointer">удалить</span>
-                    </p>
                   </div>
-                  {% if list.is_not_empty %}
-                    <span title="Поделиться" class="u_ucm_music_list_repost btn_default pointer" style="margin-top: 4px;width:25px">
-                      <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                    </span>
-                  {% endif %}
                 </div>
               </div>
             </div>
+            <span class="load_block">
+              <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+                <h5 class="mt-1">
+                  <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+                  <span class="pointer badge badge-light-success u_track_add">Добавить аудиозапись</span>
+                  {% if request.user.pk == list.creator.pk and not list.is_main %}
+                    <span class="pointer badge badge-light-secondary u_playlist_edit">Изменить список</span>
+                    <span class="pointer badge badge-light-danger u_playlist_remove">Удалить список</span>
+                  {% endif %}
+                </h5>
+              </div>
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
@@ -101,6 +74,7 @@
                 {% endif %}
               </div>
           </div>
+      </span>
           <script>
             {% if user|is_user_list:list.pk %}
               document.querySelector("body").classList.add('list_' + {{ list.pk }});

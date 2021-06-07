@@ -3,24 +3,7 @@
 {% load get_key %}
 {% block content %}
 
-<div class="container pk_saver mt-3" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row no-gutters">
-    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
-      <a class="btn btn-sm custom_color border ajax" href="{% url 'user_music' pk=user.pk %}" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-      </a>
-    </div>
-    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
-            <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
-                Плейлисты
-            </button>
-            <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
-              {% for object in user.get_playlists %}
-                <a class="dropdown-item ajax" href="{% url 'user_music_list' pk=user.pk uuid=object.uuid %}">{{ object.name }}</a>
-              {% endfor %}
-            </div>
-    </div>
-  </div>
+<div class="container pk_saver mt-3" data-pk="{{ user.pk }}">
 
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
@@ -41,6 +24,20 @@
                   {% endif %}
                 </div>
               </div>
+            </div>
+            <span class="load_block">
+
+            <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+              <h5 class="mt-1">
+                {{ list.name }} ({{ list.count_items }})
+
+                {% if list|is_user_can_add_list:request.user.pk %}
+                  <span class="pointer badge badge-light-success u_copy_playlist">Добавить список в коллекцию</span>
+                {% elif request.user.pk in list.get_users_ids %}
+                  <span class="pointer badge badge-light-danger u_uncopy_playlist">Удалить список из коллекции</span>
+                {% endif %}
+                <span class="pointer badge badge-light-warning u_close_playlist">Закрыть список</span>
+              </h5>
             </div>
           <div class="card mb-2">
               <div class="card-body">
@@ -86,6 +83,7 @@
                 {% endif %}
               </div>
           </div>
+        </span>
           <script>
             {% if user|is_user_list:list.pk %}
               document.querySelector("body").classList.add('list_' + {{ list.pk }});
