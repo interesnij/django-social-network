@@ -175,7 +175,7 @@ class UserPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.type != SoundList.MAIN:
-            list.delete_list()
+            list.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -184,7 +184,7 @@ class UserPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            list.restore_list()
+            list.restore_item()
             return HttpResponse()
         else:
             raise Http404
