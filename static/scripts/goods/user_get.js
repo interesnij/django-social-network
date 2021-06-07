@@ -6,7 +6,7 @@ on('#ajax', 'click', '.u_uncopy_good_list', function() {
 });
 
 on('#ajax', 'click', '.load_profile_good_list', function() {
-  profile_list_block_load(this, ".load_block", "/good_list/", "load_profile_good_list");
+  profile_list_block_load(this, ".load_block", "/goods_list/", "load_profile_good_list");
 });
 
 on('#ajax', 'click', '.load_attach_good_list', function() {
