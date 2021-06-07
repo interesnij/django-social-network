@@ -275,15 +275,14 @@ on('#ajax', 'click', '#c_edit_good_list_btn', function() {
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
 
-  pk = form.getAttribute("data-pk");
   uuid = form.getAttribute("data-uuid");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/goods/community_progs/edit_list/" + pk + "/" + uuid + "/", true );
+    ajax_link.open( 'POST', "/goods/community_progs/edit_list/" + uuid + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        name = form.querySelector('#id_title').value;
+        name = form.querySelector('#id_name').value;
         document.body.querySelector(".list_name").innerHTML = name;
         close_create_window();
         document.getElementById("create_loader").innerHTML="";
