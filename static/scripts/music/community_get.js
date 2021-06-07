@@ -49,12 +49,11 @@ on('#ajax', 'click', '.c_music_list_create_window', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/community_progs/create_list_window/" + pk + "/", loader)
 });
-on('#ajax', 'click', '.c_music_list_edit_window', function() {
-  body = document.body.querySelector(".pk_saver");
-  pk = body.getAttribute("data-pk");
-  uuid = body.getAttribute("data-uuid");
+
+on('#ajax', 'click', '.c_playlist_edit', function() {
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/community_progs/edit_list_window/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/music/community_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.c_track_add', function() {

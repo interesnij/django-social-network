@@ -34,11 +34,10 @@ on('#ajax', 'click', '.u_music_list_create_window', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/create_list_window/", loader)
 });
-on('#ajax', 'click', '.u_music_list_edit_window', function() {
-  body = document.body.querySelector(".pk_saver");
-  uuid = body.getAttribute("data-uuid");
+on('#ajax', 'click', '.u_playlist_edit', function() {
+  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/edit_list_window/" + uuid + "/", loader)
+  open_fullscreen("/music/user_progs/edit_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_load_music_list', function() {
