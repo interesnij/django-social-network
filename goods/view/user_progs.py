@@ -204,7 +204,7 @@ class GoodListUserCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=None,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'users/user_goods_list/my_list.html',{'list': new_list})
+            return render_for_platform(request, 'users/goods/main_list/my_list.html',{'list': new_list})
         else:
             return HttpResponseBadRequest()
         return super(GoodListUserCreate,self).get(request,*args,**kwargs)

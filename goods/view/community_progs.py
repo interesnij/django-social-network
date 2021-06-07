@@ -92,7 +92,8 @@ class CommunityUnHideGood(View):
 
 class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
-        good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
+        c = good.community
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
             good.delete_item(c)
             return HttpResponse()
@@ -101,7 +102,8 @@ class CommunityGoodDelete(View):
 
 class CommunityGoodRecover(View):
     def get(self,request,*args,**kwargs):
-        good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        good = Good.objects.get(pk=self.kwargs["good_pk"])
+        c = good.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             good.restore_item(c)
             return HttpResponse()
@@ -115,7 +117,7 @@ class GoodCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.template.community import get_community_manage_template
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -151,7 +153,9 @@ class GoodCommunityEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("goods/c_good/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.good = Good.objects.get(pk=self.kwargs["pk"])
+        self.community = self.good.community
+        self.template_name = get_community_manage_template("goods/c_good/edit.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -159,7 +163,8 @@ class GoodCommunityEdit(TemplateView):
         context["form"] = GoodForm()
         context["sub_categories"] = GoodSubCategory.objects.only("id")
         context["categories"] = GoodCategory.objects.only("id")
-        context["good"] = Good.objects.get(pk=self.kwargs["pk"])
+        context["good"] = self.good
+        context["community"] = self.good.community
         return context
 
     def post(self,request,*args,**kwargs):
@@ -207,7 +212,7 @@ class GoodListCommunityCreate(TemplateView):
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=self.c,is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'goods/goods_list/admin_list.html',{'list': new_list, 'community': self.c})
+            return render_for_platform(request, 'communities/goods/main_list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
         return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
@@ -224,7 +229,7 @@ class CommunityGoodListEdit(TemplateView):
         from common.template.community import get_community_manage_template
 
         self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -246,7 +251,8 @@ class CommunityGoodListEdit(TemplateView):
 class CommunityGoodListDelete(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != GoodList.MAIN:
+        c = list.community
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != GoodList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -255,7 +261,8 @@ class CommunityGoodListDelete(View):
 class CommunityGoodListRecover(View):
     def get(self,request,*args,**kwargs):
         list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+        c = list.community
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             list.restore_item()
             return HttpResponse()
         else:
