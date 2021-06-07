@@ -167,7 +167,7 @@ class UserDocListRecover(View):
 class UserDocRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
-        if request.is_ajax() and request.user.pk == self.doc.creator.pk:
+        if request.is_ajax() and request.user.pk == doc.creator.pk:
             doc.delete_item(None)
             return HttpResponse()
         else:
@@ -176,7 +176,7 @@ class UserDocRemove(View):
 class UserDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
-        if request.is_ajax() and request.user.pk == self.doc.creator.pk:
+        if request.is_ajax() and request.user.pk == doc.creator.pk:
             doc.restore_item(None)
             return HttpResponse()
         else:
