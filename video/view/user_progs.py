@@ -181,7 +181,6 @@ class UserVideoCreate(TemplateView):
 	form_post = None
 
 	def get(self,request,*args,**kwargs):
-		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("video/user_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
@@ -193,9 +192,7 @@ class UserVideoCreate(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.form_post = VideoForm(request.POST, request.FILES)
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-
-		if request.is_ajax() and self.form_post.is_valid() and request.user == self.user:
+		if request.is_ajax() and self.form_post.is_valid():
 			video = self.form_post.save(commit=False)
 			new_video = video.create_video(
                                             creator=request.user,
