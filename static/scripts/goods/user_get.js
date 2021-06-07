@@ -38,6 +38,10 @@ on('#ajax', 'click', '.u_ucm_good_list_repost', function() {
   clear_attach_block();
 })
 
+on('#ajax', 'click', '.u_good_list_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/goods/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+});
 on('#ajax', 'click', '.u_good_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");

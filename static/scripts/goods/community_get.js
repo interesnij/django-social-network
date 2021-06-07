@@ -25,6 +25,10 @@ on('#ajax', 'click', '.c_goods_list_create', function() {
   open_fullscreen("/goods/community_progs/add_list/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '.c_good_list_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/goods/community_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+});
 on('#ajax', 'click', '.c_good_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
