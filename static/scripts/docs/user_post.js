@@ -44,7 +44,7 @@ on('body', 'click', '.u_doc_remove', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     div = document.createElement("div");
-    div.classList.add("col-md-6", "col-sm-12");
+    div.classList.add("col-sm-12");
     div.style.padding = "20px";
     div.style.display =  "block";
     div.innerHTML = "Документ удален. <span class='u_doc_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
