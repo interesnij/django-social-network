@@ -206,7 +206,7 @@ class UserGoods(ListView):
 
     def get_context_data(self,**kwargs):
         c = super(UserGoods,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'] = self.user, self.list, self.count_lists
+        c['user'], c['list'], c['get_lists'], c['count_lists'] = self.user, self.list, self.get_lists, self.count_lists
         return c
 
     def get_queryset(self):
