@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(r'^add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddTrackInCommunityList.as_view()),
     url(r'^remove_track_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveTrackFromCommunityList.as_view()),
-    url(r'^create_track/(?P<pk>\d+)/$', CommunityTrackCreate.as_view()),
+    url(r'^add_track/(?P<pk>\d+)/$', CommunityTrackCreate.as_view()),
     url(r'^edit_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackEdit.as_view()),
     url(r'^delete_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackRemove.as_view()),
     url(r'^restore_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackAbortRemove.as_view()),
