@@ -131,7 +131,7 @@ class UserDocEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserDocEdit,self).get_context_data(**kwargs)
-        context["form_post"] = DocForm(request.POST,instance=self.doc)
+        context["form_post"] = DocForm(instance=self.doc)
         context["doc"] = self.doc
         return context
 
