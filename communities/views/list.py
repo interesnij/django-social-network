@@ -293,7 +293,7 @@ class CommunityVideo(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityVideo,self).get_context_data(**kwargs)
-		c['community'], c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.list, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
+		c['community'], c['list'], c['is_admin'], c['count_lists'], c['get_lists'] = self.c, self.list, self.request.user.is_administrator_of_community(self.c.pk), self.count_lists, self.get_lists
 		return c
 
 	def get_queryset(self):
