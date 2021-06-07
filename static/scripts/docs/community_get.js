@@ -18,7 +18,7 @@ on('#ajax', 'click', '.c_doc_create', function(e) {
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
 });
-on('body', 'click', '.c_docs_edit', function() {
+on('body', 'click', '.c_doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_doc")}
