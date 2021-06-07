@@ -79,10 +79,8 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     form.querySelector("#id_file").style.border = "1px #FF0000 solid";
     toast_error("Загрузите документ!")
   } else { this.disabled = true }
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/docs/user_progs/create_doc/" + pk + "/", true );
+  link_.open( 'POST', "/docs/user_progs/create_doc/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -91,10 +89,10 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1')
-    if (span1.classList.contains(uuid)){
+    if (span1.classList.contains(document.body.querySelector(".pk_saver").getAttribute("data-uuid"))){
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
-      container.querySelector(".doc_empty") ? container.querySelector(".doc_empty").style.display = "none" : null;
+      container.querySelector(".item_empty") ? container.querySelector(".item_empty").style.display = "none" : null;
       toast_info("Документ создан!")
     } else{
       toast_info("Документ создан!")
