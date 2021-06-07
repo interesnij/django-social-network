@@ -130,19 +130,21 @@ class CommunityDocListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.c = self.list.community
         self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityDocListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDocListEdit,self).get_context_data(**kwargs)
-        c["community"], c["list"] = self.c, DocList.objects.get(uuid=self.kwargs["uuid"])
+        c["community"], c["list"] = self.c, self.list
         return c
 
     def post(self,request,*args,**kwargs):
         self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.c = self.list.community
         self.form = PlaylistForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
             list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
             return HttpResponse()
