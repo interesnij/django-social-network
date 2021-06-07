@@ -104,29 +104,13 @@ class RemoveTrackFromUserList(View):
         else:
             raise Http404
 
-class UserCreatePlaylistWindow(TemplateView):
+
+class UserPlaylistCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.template_name = get_settings_template("music/music_create/u_create_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserCreatePlaylistWindow,self).get(request,*args,**kwargs)
-
-class UserEditPlaylistWindow(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserEditPlaylistWindow,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserEditPlaylistWindow,self).get_context_data(**kwargs)
-        context["playlist"] = self.playlist
-        return context
-
-
-class UserPlaylistCreate(View):
-    form_post = None
+        return super(UserPlaylistCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserPlaylistCreate,self).get_context_data(**kwargs)

@@ -108,22 +108,15 @@ class CommunityCreatePlaylistWindow(TemplateView):
         self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
-class CommunityEditPlaylistWindow(TemplateView):
+
+class CommunityPlaylistCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community, self.playlist = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_community_manage_template("music/music_create/u_edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
-        return super(CommunityEditPlaylistWindow,self).get(request,*args,**kwargs)
+        self.community = Community.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_community_manage_template("music/music_create/c_create_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        return super(CommunityCreatePlaylistWindow,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityEditPlaylistWindow,self).get_context_data(**kwargs)
-        context["playlist"] = self.playlist
-        context["community"] = self.community
-        return context
-
-
-class CommunityPlaylistCreate(View):
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistCreate,self).get_context_data(**kwargs)
         context["form_post"] = PlaylistForm()
