@@ -60,7 +60,7 @@ on('body', 'click', '.c_doc_remove', function() {
   saver = this.parentElement.parentElement.parentElement;
   pk = saver.getAttribute("data-pk")
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/delete_track/" + pk + "/", true );
+  link.open( 'GET', "/docs/community_progs/delete_doc/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -79,7 +79,7 @@ on('body', 'click', '.c_doc_restore', function() {
   pk = this.getAttribute("data-pk");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/restore_track/" + pk + "/", true );
+  link.open( 'GET', "/docs/community_progs/restore_doc/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {

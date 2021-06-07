@@ -21,11 +21,11 @@ on('#ajax', 'click', '.c_doc_create', function(e) {
 on('body', 'click', '.c_docs_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');
-  for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_track")}
+  for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_doc")}
 
-  parent.parentElement.parentElement.parentElement.classList.add("edited_track")
+  parent.parentElement.parentElement.parentElement.classList.add("edited_doc")
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/edit_track/" + parent.getAttribute("data-pk") +"/", loader)
+  open_fullscreen("/docs/community_progs/edit_doc/" + parent.getAttribute("data-pk") +"/", loader)
 });
 
 on('#ajax', 'click', '.c_doc_list_edit', function() {
