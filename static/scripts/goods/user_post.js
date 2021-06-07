@@ -302,7 +302,7 @@ on('#ajax', 'click', '#u_create_good_list_btn', function() {
 on('#ajax', 'click', '#u_edit_good_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
-  if (!form.querySelector("#id_anme").value){
+  if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
