@@ -10,7 +10,7 @@ urlpatterns=[
     url(r'^vote/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', CommunitySurveyVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyCommunityDetail.as_view()),
 
-    url(r'^create_list/(?P<pk>\d+)/$', CommunitySurveyListCreate.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', CommunitySurveyListCreate.as_view()),
     url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListEdit.as_view()),
     url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListDelete.as_view()),
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListRecover.as_view()),

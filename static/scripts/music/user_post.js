@@ -198,7 +198,7 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/music/user_progs/create_list/", "/users/", "/music_list/")
+  post_and_load_object_page(form, "/music/user_progs/add_list/", "/users/", "/music_list/")
 });
 
 on('#ajax', 'click', '.u_remove_music_list', function(e) {

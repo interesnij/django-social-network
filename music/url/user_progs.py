@@ -10,7 +10,7 @@ urlpatterns = [
 
     url(r'^create_soundcloud_set/(?P<pk>\d+)/$', UserSoundcloudSetCreate.as_view()),
     url(r'^soundcloud_set/(?P<uuid>[0-9a-f-]+)/$', UserSoundcloudSet.as_view()),
-    url(r'^create_list/(?P<pk>\d+)/$', UserPlaylistCreate.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', UserPlaylistCreate.as_view()),
     url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistEdit.as_view()),
     url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistDelete.as_view()),
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistRecover.as_view()),

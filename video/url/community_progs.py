@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentCommunityRecover.as_view()),
 
-    url(r'^create_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
+    url(r'^add_list/(?P<pk>\d+)/$', CommunityVideoListCreate.as_view()),
     url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistEdit.as_view()),
     url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistDelete.as_view()),
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunityVideolistRecover.as_view()),
