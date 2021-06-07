@@ -67,7 +67,7 @@ class CommunityDocCreate(TemplateView):
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             doc = form_post.save(commit=False)
             new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"),community=Community.objects.get(pk=self.kwargs["pk"]))
-            return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
+            return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 
@@ -89,7 +89,7 @@ class CommunityDocEdit(TemplateView):
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             doc = form_post.save(commit=False)
             new_doc = doc.edit_doc(title=doc.title,file=doc.file,lists=request.POST.getlist("lists"),is_public=request.POST.get("is_public"))
-            return render_for_platform(request, 'docs/doc_create/new_user_doc.html',{'object': new_doc})
+            return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
 
