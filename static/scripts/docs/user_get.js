@@ -23,14 +23,14 @@ on('#ajax', 'click', '.u_doc_add', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/docs/user_progs/create_doc/", loader);
 });
-on('body', 'click', '.u_track_edit', function() {
+on('body', 'click', '.u_doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_track")}
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_track")
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/edit_track/" + parent.getAttribute("data-pk") +"/", loader)
+  open_fullscreen("/docs/user_progs/edit_track/" + parent.getAttribute("data-pk") +"/", loader)
 });
 
 on('#ajax', 'click', '.u_doc_list_edit', function() {

@@ -33,21 +33,39 @@ on('#ajax', 'click', '.u_add_doc_list', function(e) {
   }};
   link.send( null );
 });
-on('#ajax', 'click', '.u_remove_doc_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/user_progs/remove_list/" + uuid + "/", true );
+
+on('body', 'click', '.u_doc_remove', function() {
+  saver = this.parentElement.parentElement.parentElement;
+  pk = saver.getAttribute("data-pk")
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/user_progs/delete_track/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
   link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_add_doc_list");
-      _this.classList.remove("u_remove_doc_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  if ( link.readyState == 4 && link.status == 200 ) {
+    div = document.createElement("div");
+    div.classList.add("col-md-6", "col-sm-12");
+    div.style.padding = "20px";
+    div.style.display =  "block";
+    div.innerHTML = "Документ удален. <span class='u_doc_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
+    item = saver.parentElement.parentElement.parentElement;
+    item.style.display = "none"; item.parentElement.insertBefore(div, item)
   }};
-  link.send( null );
+  link.send( );
+});
+on('body', 'click', '.u_doc_restore', function() {
+  pk = this.getAttribute("data-pk");
+  block = this.parentElement; next = block.nextElementSibling;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/user_progs/restore_track/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    next.style.display = "block";
+  }};
+  link.send();
 });
 
 on('#ajax', 'click', '.u_add_doc_in_list', function() {

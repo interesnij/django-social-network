@@ -56,19 +56,38 @@ on('#ajax', 'click', '.c_doc_add', function() {
   open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
 });
 
-on('#ajax', 'click', '.c_doc_remove', function(e) {
-  block = this.parentElement;
-  pk = block.parentElement.getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
-  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', "/docs/community_progs/c_remove_doc/" + pk + "/" + uuid + "/", true );
-  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  _link.onreadystatechange = function () {
-    if ( _link.readyState == 4 && _link.status == 200 ) {
-      block.innerHTML = "";
-      block.innerHTML = "<span class='c_doc_add btn_default pointer' title='Добавить'><svg fill='currentColor' style='width:22px;height:22px;' class='svg_default'><path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg></span>"
+on('body', 'click', '.c_doc_remove', function() {
+  saver = this.parentElement.parentElement.parentElement;
+  pk = saver.getAttribute("data-pk")
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/community_progs/delete_track/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    div = document.createElement("div");
+    div.classList.add("col-md-6", "col-sm-12");
+    div.style.padding = "20px";
+    div.style.display =  "block";
+    div.innerHTML = "Документ удален. <span class='c_doc_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
+    item = saver.parentElement.parentElement.parentElement;
+    item.style.display = "none"; item.parentElement.insertBefore(div, item)
   }};
-  _link.send( null );
+  link.send( );
+});
+on('body', 'click', '.c_doc_restore', function() {
+  pk = this.getAttribute("data-pk");
+  block = this.parentElement; next = block.nextElementSibling;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/docs/community_progs/restore_track/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    next.style.display = "block";
+  }};
+  link.send();
 });
 
 on('#ajax', 'click', '.c_add_doc_in_list', function() {
