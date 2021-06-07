@@ -436,7 +436,7 @@ class Music(models.Model):
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
                 community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
                 for user_id in community.get_member_for_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
