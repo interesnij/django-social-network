@@ -217,14 +217,8 @@ on('#ajax', 'click', '#good_image5', function() {
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '.u_good_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user_progs/add/' + pk + '/', loader)
-});
-on('#ajax', 'click', '#u_good_add_attach', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user_progs/add_attach/' + pk + '/', loader);
+  open_fullscreen('/goods/user_progs/add/', loader)
 });
 
 on('#ajax', 'click', '#u_add_good_btn', function() {

@@ -17,24 +17,6 @@ on('#ajax', 'click', '#u_ucm_music_list_repost_btn', function() {
                      "Репост плейлиста в сообщения сделан")
 });
 
-on('#ajax', 'click', '.u_track_add', function(e) {
-  block = this.parentElement;
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
-  var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  _link.open( 'GET', "/music/user_progs/u_add_track/" + uuid + "/", true );
-  _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  _link.onreadystatechange = function () {
-    if ( _link.readyState == 4 && _link.status == 200 ) {
-      block.innerHTML = "";
-      block.innerHTML = "<span class='u_track_remove btn_default pointer' title='Удалить'><svg fill='currentColor' style='width:22px;height:22px;' class='svg_default'><path fill='none' d='M0 0h24v24H0z'/><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/></svg></span>"
-  }};
-  _link.send( null );
-});
-
-on('body', 'click', '.u_track_add', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/create_track/", loader)
-});
 on('body', 'click', '.u_track_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');

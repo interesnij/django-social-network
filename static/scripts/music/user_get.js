@@ -15,7 +15,7 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
 
 on('#ajax', 'click', '.u_playlist_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", loader)
+  open_fullscreen("/music/user_progs/add_list/", loader)
 });
 
 on('#ajax', 'click', '.u_soundcloud_set_create', function() {
@@ -64,3 +64,8 @@ on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
   open_fullscreen("/music/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
+
+on('#ajax', 'click', '.u_track_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/music/user_progs/add_track/", loader)
+});
