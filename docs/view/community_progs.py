@@ -64,9 +64,10 @@ class CommunityDocCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         form_post = DocForm(request.POST, request.FILES)
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
             doc = form_post.save(commit=False)
-            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"),community=Community.objects.get(pk=self.kwargs["pk"]))
+            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"),community=community, type_2=doc.type_2)
             return render_for_platform(request, 'docs/doc_create/c_new_doc.html',{'doc': new_doc})
         else:
             return HttpResponseBadRequest()
@@ -88,7 +89,7 @@ class CommunityDocEdit(TemplateView):
         form_post, DocForm(request.POST, request.FILES)
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.kwargs["pk"]):
             doc = form_post.save(commit=False)
-            new_doc = doc.edit_doc(title=doc.title,file=doc.file,lists=request.POST.getlist("lists"),is_public=request.POST.get("is_public"))
+            new_doc = _doc.edit_doc(title=_doc.title,file=_doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"), type_2=_doc.type_2)
             return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
@@ -146,7 +147,8 @@ class CommunityDocListEdit(TemplateView):
 class CommunityDocListDelete(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != DocList.MAIN:
+        c = list.community
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != DocList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -155,7 +157,8 @@ class CommunityDocListDelete(View):
 class CommunityDocListRecover(View):
     def get(self,request,*args,**kwargs):
         list = DocList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
+        c = list.community
+        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             list.restore_item()
             return HttpResponse()
         else:
@@ -164,7 +167,8 @@ class CommunityDocListRecover(View):
 
 class CommunityDocRemove(View):
     def get(self, request, *args, **kwargs):
-        doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        c = doc.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             doc.delete_item(c)
             return HttpResponse()
@@ -173,7 +177,8 @@ class CommunityDocRemove(View):
 
 class CommunityDocAbortRemove(View):
     def get(self, request, *args, **kwargs):
-        doc, c = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+        doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
+        c = doc.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             doc.restore_item(c)
             return HttpResponse()

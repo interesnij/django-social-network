@@ -291,14 +291,14 @@ class Doc(models.Model):
         return mime_type
 
     @classmethod
-    def create_doc(cls, creator, title, file, lists, is_public, community):
+    def create_doc(cls, creator, title, file, lists, is_public, community, type_2):
         from common.processing.doc import get_doc_processing
 
         if not lists:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Не выбран список для нового документа")
         private = 0
-        doc = cls.objects.create(creator=creator,title=title,file=file)
+        doc = cls.objects.create(creator=creator,title=title,file=file,community=community, type_2=type_2)
         if community:
             community.plus_docs(1)
         else:
