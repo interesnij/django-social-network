@@ -99,9 +99,9 @@ class UserGoodsList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
-			self.good_list = self.list.get_staff_items()
+			self.goods_list = self.list.get_staff_items()
 		else:
-			self.good_list = self.list.get_items()
+			self.goods_list = self.list.get_items()
 		if self.list.type == GoodList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
