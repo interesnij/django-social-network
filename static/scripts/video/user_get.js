@@ -1,6 +1,10 @@
 on('#ajax', 'click', '.u_video_list_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/add_list/", loader)
+  open_fullscreen("/video/user_progs/create_list/", loader)
+});
+on('#ajax', 'click', '.u_video_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/user_progs/create_video/", loader)
 });
 
 on('#ajax', 'click', '.u_copy_video_list', function() {
@@ -81,15 +85,6 @@ on('#video_loader', 'click', '.u_all_video_reposts', function() {
   open_fullscreen("/video/window/all_user_reposts/" + uuid + "/", loader)
 });
 
-on('#video_loader', 'click', '.u_video_comments', function() {
-  clear_comment_dropdown();
-  video_display = this.parentElement.parentElement.parentElement;
-  pk = video_display.getAttribute("data-pk");
-  uuid = video_display.getAttribute("data-uuid");
-  url = "/video/user/comment/" + uuid + "/" + pk + "/";
-  list_load(video_display.nextElementSibling, url);
-  this.classList.toggle("comments_open");
-});
 on('#video_loader', 'click', '.u_video_comments', function() {
   clear_comment_dropdown();
   video_display = this.parentElement.parentElement.parentElement;

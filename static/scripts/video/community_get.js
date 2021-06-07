@@ -1,8 +1,11 @@
 on('#ajax', 'click', '.c_video_list_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute('data-pk') + "/", loader)
+  open_fullscreen("/video/community_progs/create_list/" + document.body.querySelector(".pk_saver").getAttribute('data-pk') + "/", loader)
 });
-
+on('#ajax', 'click', '.c_video_add', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen("/video/community_progs/create_video/", loader)
+});
 on('#ajax', 'click', '.c_copy_video_list', function() {
   on_off_list_in_collections(this, "/video/community_progs/add_list_in_collections/", "c_uncopy_video_list", "c_copy_video_list", "Удалить")
 });
