@@ -429,6 +429,9 @@ class Post(models.Model):
         if not lists:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Не выбран список для новой записи")
+        elif not text or not attach:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Нет текста и вложений")
         private = 0
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
