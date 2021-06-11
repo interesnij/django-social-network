@@ -50,7 +50,7 @@
                     </span>
 
                       {% if request.user.pk == object.creator.pk %}
-                      <span class="u_post_wall_comment_delete btn_default" style="margin-right:7px" flow="up" tooltip="Удалить">
+                      <span class="u_post_owner_comment_delete btn_default" style="margin-right:7px" flow="up" tooltip="Удалить">
                         <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/></svg>
                       </span>
                       {% elif request.user.pk == comment.commenter.pk %}
@@ -76,7 +76,7 @@
                       {% endif %}
 
                       <span class="commenter_first_name" style="display:none">{{ comment.commenter.first_name }}</span>
-                      <span class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
+                      <span flow="up" tooltip="Ответить" class="content-color-secondary reply_comment" style="font-size:15px;cursor:pointer">
                         <svg class="svg_s_info" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
                       </span>
 

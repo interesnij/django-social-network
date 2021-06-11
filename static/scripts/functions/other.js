@@ -480,7 +480,7 @@ function comment_delete(_this, _link, _class) {
     link.send()
 }
 
-function comment_wall_delete(_this, _link, _class) {
+function comment_owner_delete(_this, _link, _class) {
     data = _this.parentElement.parentElement;
     comment_pk = data.getAttribute("data-pk");
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

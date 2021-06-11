@@ -12,8 +12,8 @@ urlpatterns = [
     url(r'^reply-comment/$', PostReplyUserCreate.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/$', PostCommentUserDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', PostCommentUserRecover.as_view()),
-	url(r'^delete_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserDelete.as_view()),
-	url(r'^restore_wall_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserRecover.as_view()),
+	url(r'^delete_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserDelete.as_view()),
+	url(r'^restore_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserRecover.as_view()),
 
 	url(r'^fixed/(?P<uuid>[0-9a-f-]+)/$', PostUserFixed.as_view()),
     url(r'^unfixed/(?P<uuid>[0-9a-f-]+)/$', PostUserUnFixed.as_view()),

@@ -370,12 +370,12 @@ on('#ajax', 'click', '.u_post_comment_restore', function() {
   comment_restore(this, "/posts/user_progs/restore_comment/")
 });
 
-on('#ajax', 'click', '.u_post_wall_comment_delete', function() {
-  comment_wall_delete(this, "/posts/user_progs/delete_wall_comment/", "u_post_comment_restore")
+on('#ajax', 'click', '.u_post_owner_comment_delete', function() {
+  comment_owner_delete(this, "/posts/user_progs/delete_owner_comment/", "u_post_owner_comment_restore")
 })
 
-on('#ajax', 'click', '.u_post_wall_comment_restore', function() {
-  comment_wall_restore(this, "/posts/user_progs/restore_wall_comment/")
+on('#ajax', 'click', '.u_post_owner_comment_restore', function() {
+  comment_owner_restore(this, "/posts/user_progs/restore_owner_comment/")
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {

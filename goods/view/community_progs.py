@@ -308,7 +308,7 @@ class GoodReplyCommunityCreate(View):
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
             elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=None, text=comment.text, community=c)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=parent.good, text=comment.text, community=c)
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/c_good_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': c})

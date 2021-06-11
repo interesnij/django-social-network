@@ -69,7 +69,7 @@ class VideoReplyCommunityCreate(View):
 
 			check_can_get_lists(request.user, community)
 			if request.POST.get('text') or request.POST.get('attach_items'):
-				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=None, text=comment.text, community=community)
+				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=parent.video, text=comment.text, community=community)
 			else:
 				return HttpResponseBadRequest()
 			return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})

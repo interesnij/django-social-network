@@ -212,12 +212,11 @@ on('#ajax', 'click', '.c_post_comment_delete', function() {
 on('#ajax', 'click', '.c_post_comment_restore', function() {
   comment_restore(this, "/posts/community_progs/restore_comment/")
 });
-on('#ajax', 'click', '.c_post_wall_comment_delete', function() {
-  comment_wall_delete(this, "/posts/community_progs/delete_wall_comment/", "c_post_comment_restore")
+on('#ajax', 'click', '.c_post_owner_comment_delete', function() {
+  comment_owner_delete(this, "/posts/community_progs/delete_owner_comment/", "c_post_owner_comment_restore")
 })
-
-on('#ajax', 'click', '.c_post_wall_comment_restore', function() {
-  comment_wall_restore(this, "/posts/community_progs/restore_wall_comment/")
+on('#ajax', 'click', '.c_post_owner_comment_restore', function() {
+  comment_owner_restore(this, "/posts/community_progs/restore_owner_comment/")
 });
 
 on('#ajax', 'click', '.c_like', function() {
