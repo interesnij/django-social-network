@@ -461,7 +461,7 @@ function post_with_pk_and_reload(parent, url) {
 }
 
 function comment_delete(_this, _link, _class) {
-    data = _this.parentElement.parentElement;
+    data = _this.parentElement;
     comment_pk = data.getAttribute("data-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + comment_pk + "/", true);
