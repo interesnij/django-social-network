@@ -157,7 +157,7 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('body', 'click', '.reply_comment', function() {
-  div = this.nextElementSibling.nextElementSibling;
+  div = this.nextElementSibling;
   input = div.querySelector(".text-comment");
   input.value = this.previousElementSibling.innerHTML + ', ';
   div.style.display = "block";
