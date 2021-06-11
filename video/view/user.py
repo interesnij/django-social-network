@@ -51,7 +51,7 @@ class UserVideoList(ListView):
 
 
 class VideoUserCommentList(ListView):
-	template_name, paginate_by = Noneб 15
+	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_comments
