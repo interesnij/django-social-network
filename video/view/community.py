@@ -58,11 +58,13 @@ class VideoCommunityCommentList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_comments
+
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.video.comments_enabled:
             raise Http404
-        self.template_name = get_permission_community_photo(self.video, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_comments(self.video, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

@@ -55,13 +55,13 @@ class GoodCommunityCommentList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.good import get_permission_community_good_2
+		from common.templates import get_template_user_comments
 
 		self.good, self.c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
 		check_can_get_lists(self.request.user, self.c)
 		if not request.is_ajax() or not self.good.comments_enabled:
 			raise Http404
-		self.template_name = get_permission_community_good_2(self.c, "goods/c_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_comments(self.good, "goods/c_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodCommunityCommentList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):

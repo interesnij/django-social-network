@@ -16,7 +16,7 @@ class PostCommunityCommentList(ListView):
         self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.post.comments_enabled:
             raise Http404
-        self.template_name = get_template_community_comments(self.post, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_template_user_comments(self.post, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentList,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

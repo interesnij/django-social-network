@@ -94,13 +94,13 @@ class PhotoCommunityCommentList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.photo import get_permission_community_photo_2
+		from common.templates import get_template_user_comments
 
 		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		if not request.is_ajax() or not self.photo.comments_enabled:
 			raise Http404
-		self.template_name = get_permission_community_photo_2(self.community, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_comments(self.photo, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
