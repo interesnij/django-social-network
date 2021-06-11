@@ -10,7 +10,7 @@ class PostUserCommentList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_permission_user_post_2
+        from common.templates import get_template_user_comments
         self.item, self.user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() or not self.item.comments_enabled:
             raise Http404
