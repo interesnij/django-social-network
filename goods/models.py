@@ -90,7 +90,7 @@ class GoodList(models.Model):
 		return self.is_list() or self.is_private()
 	def is_deleted(self):
 		return self.type[:4] == "_DEL"
-    def is_closed(self):
+	def is_closed(self):
 		return self.type[:4] == "_CLO"
 
 	def get_items(self):
@@ -651,7 +651,7 @@ class Good(models.Model):
 
 	def is_deleted(self):
 		return self.type[:4] == "_DEL"
-    def is_closed(self):
+	def is_closed(self):
 		return self.type[:4] == "_CLO"
 
 
