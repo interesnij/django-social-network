@@ -286,3 +286,44 @@ def get_template_community_comments(item, folder, template, request_user, user_a
         else:
             template_name = folder + "anon_" + template
     return get_folder(user_agent) + template_name
+
+
+def get_template_user_item(item, folder, template, request_user, user_agent):
+    user = item.creator
+    update_activity(request_user, user_agent)
+    if request_user.type[0] == "_":
+        template_name = get_fine_request_user(request_user)
+    elif item.type[0] == "_":
+        template_name = get_fine_user_item(request_user, item, folder, template)
+    elif user.type[0] == "_":
+        template_name = get_fine_user(user)
+    elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
+        template_name = "generic/u_template/block_user.html"
+    elif item.is_private():
+        template_name = "generic/u_template/list_private.html"
+    elif user.is_closed_profile():
+        if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
+            template_name = folder + template
+        else:
+            template_name = "generic/u_template/close_user.html"
+    elif request_user.is_child() and not user.is_child_safety():
+        template_name = "generic/u_template/no_child_safety.html"
+    else:
+        template_name = folder + template
+    return get_folder(user_agent) + template_name
+
+def get_template_anon_user_item(item, template, request_user, user_agent):
+    user = item.creator
+    if user.type[0] == "_":
+        template_name = get_anon_fine_user(user)
+    elif item.type[0] == "_":
+        template_name = get_anon_fine_user_list(item)
+    elif user.is_closed_profile():
+        template_name = "generic/u_template/anon_close_user.html"
+    elif not user.is_child_safety():
+        template_name = "generic/u_template/anon_no_child_safety.html"
+    elif item.is_private():
+        template_name = "generic/u_template/anon_item_private.html"
+    else:
+        template_name = template
+    return get_folder(user_agent) + template_name

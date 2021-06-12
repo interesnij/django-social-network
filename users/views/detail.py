@@ -9,12 +9,15 @@ class UserPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_template_user_post
+        from common.templates import get_template_user_item, get_template_anon_user_item
         from posts.models import Post, PostList
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.user, self.posts = self.list.creator, self.list.get_items()
-        self.template_name = get_template_user_post(self.list, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
