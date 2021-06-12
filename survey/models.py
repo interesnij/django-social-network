@@ -90,6 +90,10 @@ class SurveyList(models.Model):
         return self.type[0] != "_"
     def is_have_edit(self):
         return self.is_list() or self.is_private()
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
     @classmethod
     def get_user_lists(cls, user_pk):
@@ -394,6 +398,10 @@ class Survey(models.Model):
 
     def is_private(self):
         return self.type == self.PRIVATE
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
 
 class Answer(models.Model):

@@ -86,6 +86,10 @@ class PhotoList(models.Model):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type[0] != "_"
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
     def get_cover_photo(self):
         if self.cover_photo:
@@ -602,6 +606,11 @@ class Photo(models.Model):
                 user_notify(user, None, self.pk, "PHO", "u_photo_notify", "DIS")
                 user_wall(user, None, self.pk, "PHO", "u_photo_notify", "DIS")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
 
 class PhotoComment(models.Model):

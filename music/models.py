@@ -154,6 +154,10 @@ class SoundList(models.Model):
         return self.type[0] == "_"
     def is_have_edit(self):
         return self.is_list() or self.is_private()
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
     @classmethod
     def create_list(cls, creator, name, description, order, community, is_public):
@@ -559,3 +563,7 @@ class Music(models.Model):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"

@@ -21,5 +21,5 @@ class CommunityLoadDoclist(ListView):
 		return c
 
 	def get_queryset(self):
-		list = self.list.get_docs()
+		list = self.list.get_items()
 		return list

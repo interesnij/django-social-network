@@ -87,6 +87,10 @@ class DocList(models.Model):
         return self.type == self.LIST
     def is_private(self):
         return self.type == self.PRIVATE
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
@@ -279,6 +283,10 @@ class Doc(models.Model):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type[0] != "_"
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
     def get_mime_type(self):
         import magic

@@ -104,9 +104,9 @@ class PostList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_deleted(self):
-        return self.type == self.DELETED
+        return self.type[:4] == "_DEL"
     def is_closed(self):
-        return self.type == self.CLOSED
+        return self.type[:4] == "_CLO"
     def is_private(self):
         return self.type == self.PRIVATE
     def is_open(self):
@@ -355,6 +355,10 @@ class Post(models.Model):
         return self.type == self.PRIVATE
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
+    def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
     def send_like(self, user, community):
         import json

@@ -88,6 +88,10 @@ class GoodList(models.Model):
 		return self.type[0] != "_"
 	def is_have_edit(self):
 		return self.is_list() or self.is_private()
+	def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
 	def get_items(self):
 		return self.good_list.filter(type="PUB")
@@ -644,6 +648,11 @@ class Good(models.Model):
 				user_notify(user, None, self.pk, "GOO", "u_good_notify", "DIS")
 				user_wall(user, None, self.pk, "GOO", "u_good_notify", "DIS")
 		return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+
+	def is_deleted(self):
+        return self.type[:4] == "_DEL"
+    def is_closed(self):
+        return self.type[:4] == "_CLO"
 
 
 class GoodImage(models.Model):
