@@ -934,4 +934,4 @@ class GoodComment(models.Model):
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
 
 	def is_private(self):
-        return self.type == self.PRIVATE
+		return self.type == self.PRIVATE
