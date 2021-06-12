@@ -31,13 +31,16 @@ class UserFixPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_template_user_post
+        from common.templates import get_template_user_item, get_template_anon_user_item
         from posts.models import Post, PostList
 
         self.user, self.post = User.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = PostList.objects.get(creator_id=self.user.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
-        self.template_name = get_template_user_post(self.list, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserFixPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

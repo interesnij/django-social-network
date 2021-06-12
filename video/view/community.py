@@ -82,10 +82,14 @@ class CommunityVideoDetail(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import VideoNumbers
+		from common.templates import get_template_community_item, get_template_anon_community_item
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_video(self.video, "video/c_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_community_item(self.post, "video/c_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_community_item(self.post, "video/c_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
         if request.user.is_authenticated:
             try:
                 VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
@@ -138,6 +142,7 @@ class CommunityVideoInfo(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from stst.models import VideoNumbers
+		from common.templates import get_template_community_item, get_template_anon_community_item
 
         self.video = Video.objects.get(pk=self.kwargs["video_pk"])
         self.community = community.objects.get(pk=self.kwargs["pk"])
@@ -149,8 +154,10 @@ class CommunityVideoInfo(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-
-        self.template_name = get_template_community_video(self.video, "video/c_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_community_item(self.post, "video/c_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_community_item(self.post, "video/c_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoInfo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

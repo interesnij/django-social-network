@@ -327,3 +327,55 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
     else:
         template_name = template
     return get_folder(user_agent) + template_name
+
+
+def get_template_community_item(item, folder, template, request_user, user_agent, staff):
+    community = item.community
+    update_activity(request_user, user_agent)
+    if request_user.type[0] == "_":
+        template_name = get_fine_request_user(request_user)
+    elif community.type[0] == "_":
+        template_name = get_fine_community(community, request_user)
+    elif item.type[0] == "_":
+        template_name = get_fine_community_item(request_user, community, item, folder, template)
+    elif request_user.is_member_of_community(community.pk):
+        if item.is_private():
+            template_name = folder + "private_" + template
+        else:
+            template_name = folder + template
+    elif community.is_close():
+        if request_user.is_follow_from_community(community.pk):
+            template_name = "generic/c_template/follow_community.html"
+        else:
+            template_name = "generic/c_template/close_community.html"
+    elif community.is_private():
+        template_name = "generic/c_template/private_community.html"
+    elif request_user.is_banned_from_community(community.pk):
+        template_name = "generic/c_template/block_community.html"
+    elif community.is_public():
+        if item.is_private():
+            template_name = "generic/c_template/private_list.html"
+        elif request_user.is_child() and not community.is_verified():
+            template_name = "generic/c_template/no_child_safety.html"
+        else:
+            template_name = folder + "public_" + template
+    return get_folder(user_agent) + template_name
+
+def get_template_anon_community_item(item, template, request_user, user_agent):
+    community = item.community
+    if community.type[0] == "_":
+        template_name = get_anon_fine_community(community)
+    elif item.type[0] == "_":
+        template_name = get_anon_fine_community_item(community, item)
+    elif community.is_public():
+        if not community.is_verified():
+            template_name = "generic/c_template/anon_no_child_safety.html"
+        elif item.is_private():
+            template_name = "generic/c_template/anon_list_private.html"
+        else:
+            template_name = template
+    elif community.is_close():
+        template_name = "generic/c_template/anon_close_community.html"
+    elif community.is_private():
+        template_name = "generic/c_template/anon_private_community.html"
+    return get_folder(user_agent) + template_name

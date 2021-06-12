@@ -7,11 +7,15 @@ class PostCommunity(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_template_community_post
+        from common.templates import get_template_community_item, get_template_anon_community_item
         from posts.models import Post, PostList
 
         self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
-        self.posts, self.template_name = self.list.get_items(), get_template_community_post(self.list, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.posts = self.list.get_items()
+        if request.user.is_authenticated:
+            self.template_name = get_template_community_item(self.post, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_community_item(self.post, "communities/lenta/anon_post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunity,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -23,13 +27,16 @@ class CommunityFixPostView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_template_community_post
+        from common.templates import get_template_community_item, get_template_anon_community_item
         from posts.models import Post, PostList
 
         self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
-        self.template_name = get_template_community_post(self.list, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_community_item(self.post, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_community_item(self.post, "communities/lenta/anon_fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityFixPostView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

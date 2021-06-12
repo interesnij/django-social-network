@@ -114,13 +114,15 @@ class UserPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.list.get_items()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            raise Http404
+            self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -141,13 +143,15 @@ class UserPhotoAlbumList(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.photos = self.list.get_items()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/list_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPhotoAlbumList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -165,14 +169,16 @@ class UserWallPhoto(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.WALL, community__isnull=True)
         self.photos = self.list.get_items()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo_detail(self.list, self.photo, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "gallery/wall_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -191,13 +197,15 @@ class UserDetailAvatar(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.list = PhotoList.objects.get(creator=self.photo.creator, community__isnull=True, type=PhotoList.AVATAR)
         self.photos = self.list.get_items()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "gallery/avatar/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "gallery/avatar/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -218,15 +226,15 @@ class UserPostPhoto(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import Post
-		from common.template.photo import get_permission_user_photo_2
+		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
-		if request.is_ajax():
-			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			raise Http404
+			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -244,13 +252,13 @@ class UserCommentPhoto(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostComment
-		from common.template.photo import get_permission_user_photo_2, get_permission_user_photo_2
+		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		if self.photo.community:
-			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/c_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_permission_user_photo_2(self.photo.creator, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -266,14 +274,16 @@ class UserFirstAvatar(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
 		self.photos = self.list.get_items()
 		self.photo = self.list.get_first_photo()
-		if request.is_ajax():
-			self.template_name = get_permission_user_photo(self.list, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			raise Http404
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -318,14 +328,15 @@ class UserChatPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from chat.models import Chat
+		from common.templates import get_template_user_item, get_template_anon_user_item
 
         self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.chat = Chat.objects.get(pk=self.kwargs["pk"])
         self.photos = self.chat.get_attach_items()
-        if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.photo.creator, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            raise Http404
+            self.template_name = get_template_anon_user_item(self.post, "chat/attach/photo/anon_u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserChatPhoto,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

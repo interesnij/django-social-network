@@ -31,58 +31,18 @@ class UserGood(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+
         self.good, self.list = Good.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
         self.goods, self.user, user_agent = self.list.get_goods(), self.list.creator, request.META['HTTP_USER_AGENT']
-
-        if request.user.is_authenticated:
-            if request.user.is_no_phone_verified():
-                self.template_name = "main/phone_verification.html"
-            elif self.user.pk == request.user.pk:
-                if self.user.is_suspended():
-                    self.template_name = "generic/u_template/you_suspended.html"
-                elif self.user.is_blocked():
-                    self.template_name = "generic/u_template/you_global_block.html"
-                else:
-                    self.template_name = "goods/u_good/my_good.html"
-            elif request.user.pk != self.user.pk:
-                self.get_buttons_block = request.user.get_buttons_profile(self.user.pk)
-                if self.user.is_suspended():
-                    self.template_name = "generic/u_template/user_suspended.html"
-                elif self.user.is_blocked():
-                    self.template_name = "generic/u_template/user_global_block.html"
-                elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name, self.get_buttons_block = "goods/u_good/staff_good.html", request.user.get_staff_buttons_profile(self.user.pk)
-                elif request.user.is_blocked_with_user_with_id(user_id=self.user.pk):
-                    self.template_name = "generic/u_template/block_user.html"
-                elif self.user.is_closed_profile():
-                    if request.user.is_followers_user_with_id(user_id=self.user.pk) or request.user.is_connected_with_user_with_id(user_id=self.user.pk):
-                        self.template_name = "goods/u_good/good.html"
-                    else:
-                        self.template_name = "generic/u_template/close_user.html"
-                elif request.user.is_child() and not self.user.is_child_safety():
-                    self.template_name = "generic/u_template/no_child_safety.html"
-                else:
-                    self.template_name = "goods/u_good/good.html"
-            try:
-                GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
-            except:
-                GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, device=request.user.get_device())
-        elif request.user.is_anonymous:
-            if self.user.is_suspended():
-                template_name = "generic/u_template/anon_user_suspended.html"
-            elif self.user.is_blocked():
-                template_name = "generic/u_template/anon_user_global_block.html"
-            elif self.user.is_closed_profile():
-                template_name = "generic/u_template/anon_close_user.html"
-            elif not self.user.is_child_safety():
-                template_name = "generic/u_template/anon_no_child_safety.html"
-            else:
-                self.template_name = "goods/u_good/anon_good.html"
-
-        if MOBILE_AGENT_RE.match(user_agent):
-            self.template_name = "mobile/" + self.template_name
+        try:
+            GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
+        except:
+            GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, device=request.user.get_device())
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = "mobile/" + self.template_name
+            self.template_name = get_template_anon_user_item(self.post, "goods/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGood,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -122,8 +82,13 @@ class GoodUserDetail(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_item, get_template_anon_user_item
+		
         self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_permission_user_good(self.user, "goods/u_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "goods/u_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.post, "goods/u_good/anon_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

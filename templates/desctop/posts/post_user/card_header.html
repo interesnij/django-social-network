@@ -18,7 +18,6 @@
               {% if request.user.pk == object.creator.pk %}
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
-                <span class="dropdown-item">Редактировать</span>
                 <span>
                   {% if object.is_fixed_in_user %}
                     <span class="dropdown-item u_post_unfixed">Открепить</span>

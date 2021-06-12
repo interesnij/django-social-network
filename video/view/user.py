@@ -113,6 +113,7 @@ class UserVideoInfo(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from stst.models import VideoNumbers
+		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.video, self.user = Video.objects.get(pk=self.kwargs["video_pk"]), User.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
@@ -120,7 +121,10 @@ class UserVideoInfo(TemplateView):
 				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
 			except:
 				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, device=request.user.get_device())
-		self.template_name = get_template_user_video(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "video/u_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoInfo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -146,8 +150,10 @@ class UserVideoDetail(TemplateView):
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
                 else:
                     VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-        self.template_name = get_template_user_video(self.list, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserVideoDetail,self).get(request,*args,**kwargs)
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "video/u_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 
     def get_context_data(self,**kwargs):
         context = super(UserVideoDetail,self).get_context_data(**kwargs)
