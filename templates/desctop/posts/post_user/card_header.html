@@ -18,14 +18,34 @@
               {% if request.user.pk == object.creator.pk %}
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
+                <span class="dropdown-item">Редактировать</span>
+                <span>
+                  {% if object.is_fixed_in_user %}
+                    <span class="dropdown-item u_post_unfixed">Открепить</span>
+                  {% elif request.user.is_can_fixed_post %}
+                    <span class="dropdown-item u_post_fixed">Закрепить</span>
+                  {% endif %}
+                </span>
+                <span>
+                  {% if object.comments_enabled %}
+                    <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
+                  {% else %}
+                    <span class="dropdown-item u_post_on_comment">Вкл. комментарии</span>
+                  {% endif %}
+                </span>
+                <span>
+                  {% if object.votes_on %}
+                    <span class="dropdown-item u_post_off_votes">Выкл. реакции</span>
+                  {% else %}
+                    <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
+                  {% endif %}
+                </span>
               {% elif request.user.is_manager %}
-                <span class="dropdown-item u_post_close_window">Закрыть</span>
+                <span class="dropdown-item u_post_close">Закрыть</span>
               {% else %}
                 <span class="dropdown-item post_claim">Пожаловаться</span>
               {% endif %}
-                <span class="dropdown-item js-textareacopybtn">Скопировать ссылку
-                  <textarea style="opacity: 0;height:1px;width:1px" class="js-copytextarea">http://трезвый.рус{% url 'user_item_detail' uuid=object.uuid %}</textarea>
-                </span>
+                <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
             </div>
         </div>

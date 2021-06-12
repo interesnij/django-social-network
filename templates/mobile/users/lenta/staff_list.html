@@ -8,7 +8,7 @@
   <ul>
     {% for object in fix_list.get_fix_items %}
     <li class="scrollable">
-      {% include 'mobile/users/lenta/staff_fix_post.html' %}
+      {% include 'mobile/users/lenta/fix_post.html' %}
     </li>
     {% endfor %}
   </ul>
@@ -24,7 +24,7 @@
 {% elif fix_list.count_fix_items == 1 %}
 
 {% for object in fix_list.get_fix_items %}
-  {% include 'mobile/users/lenta/staff_fix_post.html' %}
+  {% include 'mobile/users/lenta/fix_post.html' %}
 {% endfor %}
 
 {% endif %}
@@ -67,7 +67,7 @@
         </span>
         <span class="post_stream is_post_paginate">
           {% for object in object_list %}
-            {% include 'mobile/posts/post_user/staff_post.html' %}
+            {% include 'mobile/posts/post_user/post.html' %}
           {% endfor %}
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">

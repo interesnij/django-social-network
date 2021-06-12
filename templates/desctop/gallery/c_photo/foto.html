@@ -10,11 +10,57 @@
         {% endif %}
     </div>
     <a href="{% url 'community_photo_list' pk=community.pk uuid=list.uuid %}" class="ajax">{{ list.name }}</a><br>
+<span class="btn_settings_photo">
+
+    {% if is_admin %}
     <span>
-        <span style="cursor:pointer" class="">Пожаловаться</span>
+      <span>
+        <a class="community_photo_remove">Удалить</a>
+      </span>
     </span>
-  </div>
-  <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
+    &nbsp;
+      <span id="btn_console">
+        <span>
+          {% if avatar %}
+            Это ваш аватар - <span class="c_unset_avatar">убрать аватар</span>
+          {% else %}
+            <a class="c_set_avatar">Сделать аватаром</a>
+          {% endif %}
+        </span>
+        &nbsp;
+          <span>
+            {% if object.is_public %}
+            <a class="c_photo_on_private">Вкл. приватность</a>
+            {% else %}
+            <a class="c_photo_off_private">Откл. приватность</a>
+            {% endif %}
+          </span>
+          &nbsp;
+          <span>
+            {% if object.comments_enabled %}
+              <a class="c_photo_off_comment">Выкл. комментарии</a>
+            {% else %}
+              <a class="c_photo_on_comment">Вкл. комментарии</a>
+            {% endif %}
+          </span>
+          &nbsp;
+          <span>
+            {% if object.votes_on %}
+              <a class="c_photo_off_votes">Выкл. реакции</a>
+            {% else %}
+              <a class="c_photo_on_votes">Вкл. реакции</a>
+            {% endif %}
+          </span>
+      </span>
+      {% elif request.user.is_manager %}
+        <span class="c_post_close_window">Закрыть</span>
+      {% else %}
+        <span class="c_post_claim">Пожаловаться</span>
+      {% endif %}
+      <span class="copy_link">Скопировать ссылку</span>
+</span>
+    </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
 
       <div class="card-header">
           <div class="media">
@@ -27,11 +73,32 @@
               </div>
           </div>
       </div>
+
+      <span>
         {% if object.description %}
-          {{ object.description }}
+        {{ object.description }}
+        <br><br>
+          <span style="cursor:pointer" class="c_photo_edit">Редактировать</span>
         {% else %}
-          Нет описания
+          <span style="cursor:pointer" class="c_photo_edit">Добавить описание</span>
         {% endif %}
+      </span>
+      <span id="block_description_form" style="display:none">
+        <br>
+        <form class="c_photo_description_form">
+            {% csrf_token %}
+                <div class="">
+                    <div class="input-group input-group-sm">
+                      <textarea name="description" class="form-control bg-light-secondary border-0" rows="4" placeholder="Добавьте описание"></textarea>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn c_photo_description" type="button">
+                      Добавить
+                    </button>
+                </div>
+        </form>
+      </span>
       <br><br>
       {% include 'desctop/gallery/c_photo/info.html' %}
     </div>
