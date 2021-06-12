@@ -432,3 +432,6 @@ class Doc(models.Model):
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
+
+    def is_private(self):
+        return self.type == self.PRIVATE

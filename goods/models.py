@@ -932,3 +932,6 @@ class GoodComment(models.Model):
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
 			Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").update(status="R")
+
+	def is_private(self):
+        return self.type == self.PRIVATE

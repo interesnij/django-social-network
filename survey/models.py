@@ -392,6 +392,9 @@ class Survey(models.Model):
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
 
+    def is_private(self):
+        return self.type == self.PRIVATE
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")

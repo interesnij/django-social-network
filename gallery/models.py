@@ -630,6 +630,9 @@ class PhotoComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
+    def is_private(self):
+        return self.type == self.PRIVATE
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)

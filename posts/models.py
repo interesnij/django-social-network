@@ -803,6 +803,8 @@ class Post(models.Model):
                 if item[:3] == "vid":
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
+    def is_private(self):
+        return self.type == self.PRIVATE
 
 
 class PostComment(models.Model):
