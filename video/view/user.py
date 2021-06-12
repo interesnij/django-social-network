@@ -135,28 +135,28 @@ class UserVideoInfo(TemplateView):
 
 
 class UserVideoDetail(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        from stst.models import VideoNumbers
+	def get(self,request,*args,**kwargs):
+		from stst.models import VideoNumbers
 
-        self.video = Video.objects.get(pk=self.kwargs["pk"])
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_authenticated:
-            try:
-                VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
-            except:
-                if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
-                else:
-                    VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
-        if request.user.is_authenticated:
+		self.video = Video.objects.get(pk=self.kwargs["pk"])
+		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+		if request.user.is_authenticated:
+			try:
+				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
+			except:
+				if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+					VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=1)
+				else:
+					VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
+		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.post, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "video/u_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 
-    def get_context_data(self,**kwargs):
-        context = super(UserVideoDetail,self).get_context_data(**kwargs)
-        context['user'] = self.list.creator
-        context['object'] = self.video
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserVideoDetail,self).get_context_data(**kwargs)
+		context['user'] = self.list.creator
+		context['object'] = self.video
+		return context
