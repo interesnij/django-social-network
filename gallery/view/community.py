@@ -284,26 +284,23 @@ class CommunityPostPhoto(TemplateView):
 
 
 class GetCommunityPhoto(TemplateView):
-    """
-    страница отдельного фото. Для уведомлений и тому подобное
-    """
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-		from common.templates import get_template_community_item, get_template_anon_community_item
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_detect_platform_template
 
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            self.template_name = get_detect_platform_template("gallery/c_photo/photo/admin_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(GetCommunityPhoto,self).get(request,*args,**kwargs)
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax():
+			self.template_name = get_detect_platform_template("gallery/c_photo/photo/admin_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(GetCommunityPhoto,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(GetCommunityPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(GetCommunityPhoto,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		return context
 
 class CommunityChatPhoto(TemplateView):
 	template_name = None
