@@ -1109,14 +1109,14 @@ canvas{
 .stat_city{
   margin: 10px;
 }
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu, .hide_block:hover .hide_block_menu {
   transform: scale(1);
 }
-.dropdown:hover .dropdown-menu{
+.dropdown:hover .dropdown-menu, .hide_block:hover .hide_block_menu{
 display: block;
 
 }
-.dropdown-menu{
+.dropdown-menu, .hide_block_menu{
 transform: scale(1)!important;
 font-size: 90%;
 line-height: 1;
