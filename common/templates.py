@@ -329,7 +329,7 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 
-def get_template_community_item(item, folder, template, request_user, user_agent, staff):
+def get_template_community_item(item, folder, template, request_user, user_agent):
     community = item.community
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
