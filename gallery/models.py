@@ -322,6 +322,9 @@ class Photo(models.Model):
         verbose_name_plural = 'Фото'
         ordering = ["-created"]
 
+    def is_private(self):
+        return self.type == self.PRIVATE
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
