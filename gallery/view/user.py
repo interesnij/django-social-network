@@ -108,120 +108,110 @@ class PhotoUserCommentList(ListView):
 
 
 class UserPhoto(TemplateView):
-    """
-    страница фото, не имеющего альбома для пользователя с разрещениями и без
-    """
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_items()
+		self.photo, self.list = Photo.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPhoto,self).get(request,*args,**kwargs)
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserPhoto,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["list"] = self.list
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserPhoto,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["list"] = self.list
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		context["avatar"] = self.photo.is_avatar(self.request.user)
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		return context
 
 
 class UserPhotoAlbumList(TemplateView):
-    """
-    страница отдельного фото в альбоме для пользователя с разрещениями и без
-    """
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.list.get_items()
-        if request.user.is_authenticated:
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = self.list.get_items()
+		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.post, "gallery/u_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/list_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPhotoAlbumList,self).get(request,*args,**kwargs)
+		return super(UserPhotoAlbumList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserPhotoAlbumList,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["list"] = self.list
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserPhotoAlbumList,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["list"] = self.list
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		context["avatar"] = self.photo.is_avatar(self.request.user)
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		return context
 
 
 class UserWallPhoto(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.WALL, community__isnull=True)
-        self.photos = self.list.get_items()
-        if request.user.is_authenticated:
+		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.WALL, community__isnull=True)
+		self.photos = self.list.get_items()
+		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.post, "gallery/u_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/wall_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserWallPhoto,self).get(request,*args,**kwargs)
+		return super(UserWallPhoto,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserWallPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        context["avatar"] = self.photo.is_avatar(self.request.user)
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["list"] = self.list
-        context["user"] = self.user
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserWallPhoto,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		context["avatar"] = self.photo.is_avatar(self.request.user)
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		context["list"] = self.list
+		context["user"] = self.user
+		return context
 
 
 class UserDetailAvatar(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.list = PhotoList.objects.get(creator=self.photo.creator, community__isnull=True, type=PhotoList.AVATAR)
-        self.photos = self.list.get_items()
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "gallery/avatar/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+		self.list = PhotoList.objects.get(creator=self.photo.creator, community__isnull=True, type=PhotoList.AVATAR)
+		self.photos = self.list.get_items()
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "gallery/avatar/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/avatar/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserDetailAvatar,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["user"] = self.photo.creator
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        context["list"] = self.list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserDetailAvatar,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["user"] = self.photo.creator
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+		context["list"] = self.list
+		return context
 
 class UserPostPhoto(TemplateView):
-	"""
-	страница отдельного фото записи пользователя с разрещениями и без
-	"""
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
@@ -232,7 +222,7 @@ class UserPostPhoto(TemplateView):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
 		if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostPhoto,self).get(request,*args,**kwargs)
@@ -242,8 +232,8 @@ class UserPostPhoto(TemplateView):
 		context["object"] = self.photo
 		context["post"] = self.post
 		context["user"] = self.request.user
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
 		return context
 
@@ -270,7 +260,6 @@ class UserCommentPhoto(TemplateView):
 
 
 class UserFirstAvatar(TemplateView):
-	"""страница аватара пользователя с разрещениями и без"""
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
