@@ -246,7 +246,7 @@ class UserCommentPhoto(TemplateView):
 
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserCommentPhoto,self).get(request,*args,**kwargs)
@@ -270,9 +270,9 @@ class UserFirstAvatar(TemplateView):
 		self.photos = self.list.get_items()
 		self.photo = self.list.get_first_photo()
 		if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "gallery/u_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
