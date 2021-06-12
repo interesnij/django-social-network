@@ -127,9 +127,9 @@ class CommunityDetailAvatar(TemplateView):
 		self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
 		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -156,9 +156,9 @@ class CommunityFirstAvatar(TemplateView):
 		self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
 		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -185,9 +185,9 @@ class CommunityPhoto(TemplateView):
 		else:
 			self.photos = self.list.get_staff_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -205,9 +205,9 @@ class CommunityAlbumPhotoList(TemplateView):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/list_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/list_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated and request.user.is_administrator_of_community(self.list.community.pk):
 			self.photos = self.list.get_staff_items()
 		else:
@@ -240,9 +240,9 @@ class CommunityWallPhoto(TemplateView):
 			self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.WALL, title="Фото со стены", description="Фото со стены")
 		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/wall_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/wall_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -267,9 +267,9 @@ class CommunityPostPhoto(TemplateView):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "gallery/c_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -313,9 +313,9 @@ class CommunityChatPhoto(TemplateView):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.photos = self.chat.get_attach_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "chat/attach/photo/", "c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "chat/attach/photo/", "c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.post, "chat/attach/photo/anon_c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "chat/attach/photo/anon_c_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityChatPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
