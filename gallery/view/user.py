@@ -199,7 +199,7 @@ class UserDetailAvatar(TemplateView):
 			self.template_name = get_template_user_item(self.post, "gallery/avatar/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "gallery/avatar/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserDetailAvatar,self).get(request,*args,**kwargs)
+		return super(UserDetailAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserDetailAvatar,self).get_context_data(**kwargs)
