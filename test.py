@@ -28,10 +28,11 @@ for list in post_lists:
     order = 0
     posts = list.get_staff_items().order_by("created")
     list.count = list.count_items()
+    list.save(update_fields=["count"])
     for post in posts:
         order += 1
         post.order = order
-        post.save(update_fields=["order", "count"])
+        post.save(update_fields=["order"])
 
 users = User.objects.all()
 for user in users:
