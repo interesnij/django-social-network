@@ -21,11 +21,17 @@ from gallery.models import PhotoList
 from survey.models import SurveyList
 from goods.models import GoodList
 
-
-SoundList.objects.all().update(count=SoundList.count_items())
-VideoList.objects.all().update(count=VideoList.count_items())
-PostList.objects.all().update(count=PostList.count_items())
-DocList.objects.all().update(count=DocList.count_items())
-PhotoList.objects.all().update(count=PhotoList.count_items())
-SurveyList.objects.all().update(count=SurveyList.count_items())
-GoodList.objects.all().update(count=GoodList.count_items())
+for list in SoundList.objects.all():
+    list.update(count=list.count_items())
+for list in VideoList.objects.all():
+    list.update(count=list.count_items())
+for list in PostList.objects.all():
+    list.update(count=list.count_items())
+for list in DocList.objects.all():
+    list.update(count=list.count_items())
+for list in PhotoList.objects.all():
+    list.update(count=list.count_items())
+for list in SurveyList.objects.all():
+    list.update(count=list.count_items())
+for list in GoodList.objects.all():
+    list.update(count=list.count_items())
