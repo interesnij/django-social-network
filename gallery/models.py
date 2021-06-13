@@ -401,8 +401,6 @@ class Photo(models.Model):
 
     def is_list_exists(self):
         return self.photo_list.filter(creator=self.creator).exists()
-    def get_lists(self):
-        return self.list.only("pk")
 
     def get_comments(self):
         return PhotoComment.objects.filter(photo_id=self.pk, parent__isnull=True)
@@ -487,9 +485,8 @@ class Photo(models.Model):
             community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
@@ -507,9 +504,8 @@ class Photo(models.Model):
             community.plus_photos(1)
         else:
             self.creator.plus_photos(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
@@ -528,9 +524,8 @@ class Photo(models.Model):
             community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
@@ -548,9 +543,8 @@ class Photo(models.Model):
             community.plus_photos(1)
         else:
             self.creator.plus_photos(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():

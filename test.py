@@ -20,7 +20,8 @@ from docs.models import DocList
 from gallery.models import PhotoList
 from survey.models import SurveyList
 from goods.models import GoodList
-
+from users.models import User
+from communities.models import Community
 
 post_lists = PostList.objects.all()
 for list in post_lists:
@@ -30,3 +31,13 @@ for list in post_lists:
         order += 1
         post.order = order
         post.save(update_fields=["order"])
+
+users = User.objects.all()
+for user in users:
+    user.s_avatar = ''
+    user.b_avatar = ''
+
+communities = Community.objects.all()
+for community in communities:
+    community.s_avatar = ''
+    community.b_avatar = ''
