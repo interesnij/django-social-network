@@ -55,8 +55,9 @@ class PostList(models.Model):
         return self.post_list.filter(pk=item_id).values("pk").exists()
 
     def get_staff_items(self):
-        query = Q(type="PUB")|Q(type="PRI")
-        return self.post_list.select_related('creator').only('creator__id', 'created').filter(query, list=self)
+        query = Q(list=self)
+        query.add(Q(Q(type="PUB")|Q(type="PRI")), Q.AND)
+        return self.post_list.select_related('creator', 'community').only('creator__id', 'community__id', 'created').filter(query)
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="PUB")
     def get_fix_items(self):
@@ -317,7 +318,7 @@ class Post(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
-        ordering = ["-created"]
+        ordering = ["order"]
 
     def __str__(self):
         return self.creator.get_full_name()
