@@ -318,7 +318,7 @@ class Post(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
         indexes = (BrinIndex(fields=['created']),)
-        ordering = ["order"]
+        ordering = ["-order"]
 
     def __str__(self):
         return self.creator.get_full_name()
