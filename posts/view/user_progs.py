@@ -30,14 +30,13 @@ class RemovePostListFromUserCollections(View):
 
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, lists, attach = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        form_post, user, list, attach = PostForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.get("lists"), request.POST.getlist('attach_items')
 
         if request.is_ajax() and form_post.is_valid():
-            post = form_post.save(commit=False)
-
-            if request.POST.get('text') or attach:
+            if post.text or attach:
                 from common.template.user import render_for_platform
-
+                
+                post = form_post.save(commit=False)
                 new_post = post.create_post(
                                             creator=request.user,
                                             text=post.text,
