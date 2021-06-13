@@ -38,18 +38,18 @@ users = User.objects.all()
 for user in users:
     user.s_avatar = ''
     user.b_avatar = ''
-    user.posts = 0
-    user.tracks = 0
-    user.photos = 0
-    user.docs = 0
+    user.profile.posts = 0
+    user.profile.tracks = 0
+    user.profile.photos = 0
+    user.profile.docs = 0
     user.save()
 
 communities = Community.objects.all()
 for community in communities:
     community.s_avatar = ''
     community.b_avatar = ''
-    community.posts = 0
-    community.tracks = 0
-    community.photos = 0
-    community.docs = 0
+    community.community_info.posts = 0
+    community.community_info.tracks = 0
+    community.community_info.photos = 0
+    community.community_info.docs = 0
     community.save()
