@@ -304,7 +304,11 @@ class Doc(models.Model):
     def create_doc(cls, creator, title, file, list, is_public, community, type_2):
         from common.processing.doc import get_doc_processing
 
-        doc = cls.objects.create(creator=creator,title=title,list=list,file=file,community=community, type_2=type_2)
+        _list = PostList.objects.get(pk=list)
+
+        _list.count += 1
+        _list.save(update_fields=["count"])
+        doc = cls.objects.create(creator=creator,order=_list.count,title=title,list=_list,file=file,community=community, type_2=type_2)
         if not list.is_private() and is_public:
             get_doc_processing(doc, Doc.PUBLISHED)
             if community:

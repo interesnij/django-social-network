@@ -405,7 +405,12 @@ class Video(models.Model):
     @classmethod
     def create_video(cls, creator, title, file, uri, description, list, comments_enabled, votes_on, is_public, community):
         from common.processing.video import get_video_processing
-        video = cls.objects.create(creator=creator,list=list, title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
+
+        _list = VideoList.objects.get(pk=list)
+
+        _list.count += 1
+        _list.save(update_fields=["count"])
+        video = cls.objects.create(creator=creator,order=_list.count,list=_list, title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
         if community:
             community.plus_videos(1)
         else:

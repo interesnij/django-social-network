@@ -439,7 +439,10 @@ class Good(models.Model):
 		from common.processing.good import get_good_processing
 		if not price:
 			price = 0
-		good = cls.objects.create(creator=creator,title=title,list=list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
+		_list = GoodList.objects.get(pk=list)
+		_list.count += 1
+		_list.save(update_fields=["count"])
+		good = cls.objects.create(creator=creator,order=_list.count,title=title,list=_list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
 		for img in images:
 			GoodImage.objects.create(good=good, image=img)
 		if not list.is_private() and is_public:
@@ -464,7 +467,11 @@ class Good(models.Model):
 					user_send_notify(good.pk, creator.pk, user_id, None, "create_u_good_notify")
 		else:
 			get_good_processing(good, Good.PRIVATE)
-			return good
+		if community:
+			community.plus_goods(1)
+		else:
+			creator.plus_goods(1)
+		return good
 
 	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, is_public):
 		from common.processing.good import get_good_processing
