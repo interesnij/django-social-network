@@ -430,13 +430,14 @@ class Post(models.Model):
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
-    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
+    def create_post(cls, creator, text, category, _list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
         from common.processing.post import get_post_processing
         #if not text or not attach:
         #    from rest_framework.exceptions import ValidationError
         #    raise ValidationError("Нет текста и вложений")
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        list = PostList.objects.get(pk=_list)
 
         post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
         list.count += 1
