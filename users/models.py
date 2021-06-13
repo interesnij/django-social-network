@@ -1005,7 +1005,7 @@ class User(AbstractUser):
         from posts.models import PostList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PostList.objects.filter(query)
+        return PostList.objects.filter(query).order_by("order")
 
     def get_survey_lists(self):
         from survey.models import SurveyList
