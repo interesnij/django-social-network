@@ -41,7 +41,10 @@ users = User.objects.all()
 for user in users:
     user.s_avatar = ''
     user.b_avatar = ''
-    profile = UserProfile.objects.get(user=user)
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except:
+        profile = UserProfile.objects.create(user=user)
     profile.posts = 0
     profile.tracks = 0
     profile.photos = 0
@@ -53,7 +56,10 @@ communities = Community.objects.all()
 for community in communities:
     community.s_avatar = ''
     community.b_avatar = ''
-    community_info = CommunityInfo.objects.get(community=community)
+    try:
+        community_info = CommunityInfo.objects.get(community=community)
+    except:
+        community_info = CommunityInfo.objects.create(community=community)
     community_info.posts = 0
     community_info.tracks = 0
     community_info.photos = 0
