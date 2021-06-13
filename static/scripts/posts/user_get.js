@@ -31,15 +31,18 @@ on('#ajax', 'click', '.u_post_list_change', function() {
   }
 });
 
-on('#ajax', 'click', '.post_list_select', function() {
+on('#ajax', 'click', '.list_select', function() {
   parent = this.parentElement;
+  lists = parent.parentElement.querySelectorAll(".list_select");
+  for (var i = 0; i < lists.length; i++){
+    lists[i].querySelector("svg") ? (lists[i].querySelector("svg").parentElement.remove(), lists[i].style.paddingLeft = "30px") : null;
+  }
   pk = parent.getAttribute("data-pk");
-  list = parent.querySelector(".post_list_select");
-  list.querySelector("svg") ? (list.querySelector("svg").parentElement.remove(), list.style.paddingLeft = "30px")
-  : (list.style.paddingLeft = "14px",
+  list = parent.querySelector(".list_select");
+  list.style.paddingLeft = "14px",
   span = document.createElement("span"),
   span.innerHTML = '<input type="hidden" class="list" name="lists" value="' + pk + '"><svg fill="currentColor" style="width:12px;height:12px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ',
-  list.prepend(span))
+  list.prepend(span)
 });
 
 on('#ajax', 'click', '#holder_article_image', function() {
