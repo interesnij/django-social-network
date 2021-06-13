@@ -200,7 +200,7 @@ class UserVideoCreate(TemplateView):
                                             file=new_video.file,
                                             uri=new_video.uri,
                                             description=new_video.description,
-                                            lists=request.POST.get("list"),
+                                            list=new_video.list,
                                             comments_enabled=new_video.comments_enabled,
                                             votes_on=new_video.votes_on,
                                             is_public=request.POST.get("is_public"),
@@ -234,7 +234,7 @@ class UserVideoEdit(TemplateView):
                                         file=new_video.file,
                                         uri=new_video.uri,
                                         description=new_video.description,
-                                        lists=request.POST.getlist('list'),
+                                        list=new_video.list,
                                         comments_enabled=new_video.comments_enabled,
                                         votes_on=new_video.votes_on,
                                         is_public=request.POST.get("is_public"))

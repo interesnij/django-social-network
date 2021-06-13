@@ -422,24 +422,15 @@ class Music(models.Model):
         self.save()
 
     @classmethod
-    def create_track(cls, creator, title, file, lists, is_public, community):
+    def create_track(cls, creator, title, file, list, is_public, community):
         from common.processing.music import get_music_processing
 
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для нового документа")
-        private = 0
-        track = cls.objects.create(creator=creator,title=title,file=file)
+        track = cls.objects.create(creator=creator,list=list,title=title,file=file)
         if community:
             community.plus_tracks(1)
         else:
             user.plus_tracks(1)
-        for list_id in lists:
-            track_list = SoundList.objects.get(pk=list_id)
-            track_list.playlist.add(track)
-            if track_list.is_private():
-                private = 1
-        if not private and is_public:
+        if not list.is_private() and is_public:
             get_music_processing(track, Track.PUBLISHED)
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
@@ -463,12 +454,17 @@ class Music(models.Model):
             get_music_processing(track, Music.PRIVATE)
         return track
 
-    def edit_track(self, title, file, lists, is_public):
+    def edit_track(self, title, file, list, is_public):
         from common.processing.music  import get_music_processing
 
         self.title = title
         self.file = file
-        self.lists = lists
+        if self.list.pk != list.pk:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
+        self.list = list
         if is_public:
             get_music_processing(self, Music.PUBLISHED)
             self.make_publish()
@@ -490,9 +486,8 @@ class Music(models.Model):
             community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -510,9 +505,8 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -531,9 +525,8 @@ class Music(models.Model):
             community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -551,9 +544,8 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():

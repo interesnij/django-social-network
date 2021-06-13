@@ -435,23 +435,14 @@ class Good(models.Model):
 		return GoodImage.objects.filter(good_id=self.pk)
 
 	@classmethod
-	def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, community, is_public):
+	def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, community, is_public):
 		from common.processing.good import get_good_processing
-		if not lists:
-			from rest_framework.exceptions import ValidationError
-			raise ValidationError("Не выбран список для нового Товара")
-		private = 0
 		if not price:
 			price = 0
-		good = cls.objects.create(creator=creator,title=title,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
+		good = cls.objects.create(creator=creator,title=title,list=list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
 		for img in images:
 			GoodImage.objects.create(good=good, image=img)
-		for list_id in lists:
-			good_list = GoodList.objects.get(pk=list_id)
-			good_list.good_list.add(good)
-			if good_list.is_private():
-				private = 1
-		if not private and is_public:
+		if not list.is_private() and is_public:
 			get_good_processing(good, Good.PUBLISHED)
 			if community:
 				from common.notify.progs import community_send_notify, community_send_wall
@@ -475,15 +466,20 @@ class Good(models.Model):
 			get_good_processing(good, Good.PRIVATE)
 			return good
 
-	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, lists, sub_category, is_public):
+	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, is_public):
 		from common.processing.good import get_good_processing
 		self.title = title
 		self.description = description
-		self.lists = lists
+		if self.list.pk != list.pk:
+			self.list.count -= 1
+			self.list.save(update_fields=["count"])
+			list.count += 1
+			list.save(update_fields=["count"])
 		self.votes_on = votes_on
 		self.comments_enabled = comments_enabled
 		self.image = image
 		self.price = price
+		self.list = list
 		self.sub_category = sub_category
 		self.community = community
 		if is_public:
@@ -527,9 +523,8 @@ class Good(models.Model):
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
-		for list in self.get_lists():
-			list.count -= 1
-			list.save(update_fields=["count"])
+		self.list.count -= 1
+		self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -547,9 +542,8 @@ class Good(models.Model):
 			community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
-		for list in self.get_lists():
-			list.count += 1
-			list.save(update_fields=["count"])
+		self.list.count += 1
+		self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -568,9 +562,8 @@ class Good(models.Model):
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
-		for list in self.get_lists():
-			list.count -= 1
-			list.save(update_fields=["count"])
+		self.list.count -= 1
+		self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -588,9 +581,8 @@ class Good(models.Model):
 			community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
-		for list in self.get_lists():
-			list.count += 1
-			list.save(update_fields=["count"])
+		self.list.count += 1
+		self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():

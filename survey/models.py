@@ -271,19 +271,12 @@ class Survey(models.Model):
         return self.list.only("pk")
 
     @classmethod
-    def create_survey(cls, title, image, lists, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
+    def create_survey(cls, title, image, list, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
         from common.processing.survey import get_survey_processing
 
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для нового документа")
-
-        survey = cls.objects.create(title=title,image=image,creator=creator,order=order,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
+        survey = cls.objects.create(title=title,list=list,image=image,creator=creator,order=order,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
         for answer in answers:
             Answer.objects.create(survey=survey, text=answer)
-        for list_id in lists:
-            list = SurveyList.objects.get(pk=list_id)
-            list.survey_list.add(survey)
         get_survey_processing(survey, Survey.PUBLISHED)
         if community:
             from common.notify.progs import community_send_notify, community_send_wall
@@ -305,13 +298,18 @@ class Survey(models.Model):
                 user_send_notify(survey.pk, creator.pk, user_id, None, "create_u_survey_notify")
         return survey
 
-    def edit_survey(self, title, image, lists, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+    def edit_survey(self, title, image, list, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
         from common.processing.survey  import get_survey_processing
 
         get_survey_processing(self, Survey.PUBLISHED)
         self.title = title
         self.image = image
-        self.lists = lists
+        if self.list.pk != list.pk:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
+        self.list = list
         self.order = order
         self.is_anonymous = is_anonymous
         self.is_multiple = is_multiple
@@ -362,9 +360,8 @@ class Survey(models.Model):
         elif self.type == "MAN":
             self.type = Survey.DELETED_MANAGER
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -376,9 +373,8 @@ class Survey(models.Model):
         elif self.type == "TDELM":
             self.type = Survey.MANAGER
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -391,9 +387,8 @@ class Survey(models.Model):
         elif self.type == "MAN":
             self.type = Survey.CLOSED_MANAGER
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -405,9 +400,8 @@ class Survey(models.Model):
         elif self.type == "TCLOM":
             self.type = Survey.MANAGER
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():

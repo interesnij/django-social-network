@@ -403,24 +403,14 @@ class Video(models.Model):
         return self.list.all()[0].uuid
 
     @classmethod
-    def create_video(cls, creator, title, file, uri, description, lists, comments_enabled, votes_on, is_public, community):
+    def create_video(cls, creator, title, file, uri, description, list, comments_enabled, votes_on, is_public, community):
         from common.processing.video import get_video_processing
-
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для нового документа")
-        private = 0
-        video = cls.objects.create(creator=creator,title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
+        video = cls.objects.create(creator=creator,list=list, title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
         if community:
             community.plus_videos(1)
         else:
             creator.plus_videos(1)
-        for list_id in lists:
-            video_list = VideoList.objects.get(pk=list_id)
-            video_list.video_list.add(video)
-            if video_list.is_private():
-                private = 1
-        if not private and is_public:
+        if not list.is_private() and is_public:
             get_video_processing(video, Video.PUBLISHED)
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
@@ -450,7 +440,12 @@ class Video(models.Model):
         self.title = title
         self.file = file
         self.uri = uri
-        self.lists = lists
+        if self.list.pk != list.pk:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
+        self.list = list
         self.description = description
         self.comments_enabled = comments_enabled
         self.votes_on = votes_on
@@ -498,6 +493,8 @@ class Video(models.Model):
             community.minus_videos(1)
         else:
             self.creator.minus_videos(1)
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -515,6 +512,8 @@ class Video(models.Model):
             community.plus_videos(1)
         else:
             self.creator.plus_videos(1)
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -529,6 +528,8 @@ class Video(models.Model):
         elif self.type == "MAN":
             self.type = Video.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        self.list.count -= 1
+        self.list.save(update_fields=["count"])
         if community:
             community.minus_videos(1)
         else:
@@ -546,6 +547,8 @@ class Video(models.Model):
         elif self.type == "_CLOM":
             self.type = Video.MANAGER
         self.save(update_fields=['type'])
+        self.list.count += 1
+        self.list.save(update_fields=["count"])
         if community:
             community.plus_videos(1)
         else:
