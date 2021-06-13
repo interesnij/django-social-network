@@ -258,8 +258,8 @@ function ajax_get_reload(url) {
             load_chart();
             page = 2;
             loaded = false;
-            create_pagination(rtr.querySelector("#post_container"));
-            dragula(rtr)
+            create_pagination(rtr);
+            dragula(rtr.querySelector("#post_container"))
         }
     }
     ajax_link.send()
