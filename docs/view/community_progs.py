@@ -69,7 +69,7 @@ class CommunityDocCreate(TemplateView):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
             doc = form_post.save(commit=False)
-            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,lists=request.POST.getlist("list"),is_public=request.POST.get("is_public"),community=community, type_2=doc.type_2)
+            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,list=doc.list,is_public=request.POST.get("is_public"),community=community, type_2=doc.type_2)
             return render_for_platform(request, 'docs/doc_create/c_new_doc.html',{'doc': new_doc})
         else:
             return HttpResponseBadRequest()
@@ -93,10 +93,10 @@ class CommunityDocEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
         self.community = self.doc.community
-        form_post, DocForm(request.POST, request.FILES)
+        form_post = DocForm(request.POST, request.FILES)
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             _doc = form_post.save(commit=False)
-            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list,file=_doc.file,is_public=request.POST.get("is_public"), type_2=_doc.type_2)
+            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list,list=_doc.list, file=_doc.file,is_public=request.POST.get("is_public"), type_2=_doc.type_2)
             return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()

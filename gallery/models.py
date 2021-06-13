@@ -304,7 +304,7 @@ class Photo(models.Model):
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    list = models.ManyToManyField(PhotoList, related_name="photo_list", blank=True)
+    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='photo_list', blank=True, null=True)
     file = ProcessedImageField(format='JPEG', options={'quality': 100}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=1024, upscale=False)])
     preview = ProcessedImageField(format='JPEG', options={'quality': 60}, upload_to=upload_to_photo_directory, processors=[Transpose(), ResizeToFit(width=102, upscale=False)])
     description = models.TextField(max_length=250, blank=True, null=True, verbose_name="Описание")
