@@ -439,9 +439,9 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         _list = PostList.objects.get(pk=list)
 
-        post = cls.objects.create(creator=creator,list=_list,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
         _list.count += 1
         _list.save(update_fields=["count"])
+        post = cls.objects.create(creator=creator,list=_list,order=_list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
 
         if not _list.is_private() and is_public:
             get_post_processing(post, Post.PUBLISHED)
