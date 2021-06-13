@@ -310,6 +310,7 @@ class Post(models.Model):
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Запись"
