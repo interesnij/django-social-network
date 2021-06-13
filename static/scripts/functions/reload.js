@@ -56,7 +56,7 @@ loaded = false;
 m_page = 2;
 m_loaded = false;
 
-function dragula(block) {
+function get_dragula(block) {
   dragula([document.querySelector(block)], {
     moves: function (el, container, handle) {
       return handle.classList.contains('handle');
@@ -236,7 +236,7 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        console.log(target_block);
-       dragula("#post_container");
+       get_dragula("#post_container");
     }};
     request.send( null );
 }
