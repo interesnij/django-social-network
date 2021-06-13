@@ -55,11 +55,14 @@ page = 2;
 loaded = false;
 m_page = 2;
 m_loaded = false;
-dragula([document.getElementById("#post_container")], {
-  moves: function (el, container, handle) {
-    return handle.classList.contains('handle');
-  }
-});
+
+function dragula(block) {
+  dragula([document.getElementById(block)], {
+    moves: function (el, container, handle) {
+      return handle.classList.contains('handle');
+    }
+  })
+}
 
 function top_paginate(link, block_id) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
@@ -255,7 +258,8 @@ function ajax_get_reload(url) {
             load_chart();
             page = 2;
             loaded = false;
-            create_pagination(rtr)
+            create_pagination(rtr);
+            dragula(rtr)
         }
     }
     ajax_link.send()
