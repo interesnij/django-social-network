@@ -425,7 +425,7 @@ class Good(models.Model):
 		from stst.models import GoodNumbers
 		return GoodNumbers.objects.filter(good=self.pk).values('pk').count()
 
-	def get_lists_for_good(self):
+	def get_lists(self):
 		return self.list.all()
 
 	def get_list_uuid(self):
@@ -527,6 +527,9 @@ class Good(models.Model):
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
+		for list in self.get_lists():
+			list.count -= 1
+			list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -544,6 +547,9 @@ class Good(models.Model):
 			community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
+		for list in self.get_lists():
+			list.count += 1
+			list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -562,6 +568,9 @@ class Good(models.Model):
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
+		for list in self.get_lists():
+			list.count -= 1
+			list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -579,6 +588,9 @@ class Good(models.Model):
 			community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
+		for list in self.get_lists():
+			list.count += 1
+			list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():

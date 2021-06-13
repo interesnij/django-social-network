@@ -395,6 +395,9 @@ class Music(models.Model):
     def __str__(self):
         return self.title
 
+    def get_lists(self):
+        return self.list.only("pk")
+
     def get_mp3(self):
         url = self.uri + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
         url.replace("\\?", "%3f")
@@ -487,6 +490,9 @@ class Music(models.Model):
             community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -504,6 +510,9 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -522,6 +531,9 @@ class Music(models.Model):
             community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
@@ -539,6 +551,9 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():

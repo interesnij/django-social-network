@@ -617,6 +617,9 @@ class VideoComment(models.Model):
         else:
             return ''
 
+    def get_lists(self):
+        return self.list.only("pk")
+
     def dislikes_count(self):
         if self.dislike > 0:
             return self.dislike
@@ -769,6 +772,9 @@ class VideoComment(models.Model):
         elif self.type == "EDI":
             self.type = VideoComment.EDITED_DELETED
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if self.parent:
             self.parent.video.comment -= 1
             self.parent.video.save(update_fields=["comment"])
@@ -788,6 +794,9 @@ class VideoComment(models.Model):
         elif self.type == "_DELE":
             self.type = VideoComment.EDITED
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if self.parent:
             self.parent.video.comment += 1
             self.parent.video.save(update_fields=["comment"])
@@ -808,6 +817,9 @@ class VideoComment(models.Model):
         elif self.type == "EDI":
             self.type = VideoComment.EDITED_CLOSED
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if self.parent:
             self.parent.video.comment -= 1
             self.parent.video.save(update_fields=["comment"])
@@ -827,6 +839,9 @@ class VideoComment(models.Model):
         elif self.type == "_CLOE":
             self.type = VideoComment.EDITED
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if self.parent:
             self.parent.video.comment += 1
             self.parent.video.save(update_fields=["comment"])

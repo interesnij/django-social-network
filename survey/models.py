@@ -267,6 +267,9 @@ class Survey(models.Model):
         self.voter -= count
         return self.save(update_fields=['voter'])
 
+    def get_lists(self):
+        return self.list.only("pk")
+
     @classmethod
     def create_survey(cls, title, image, lists, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
         from common.processing.survey import get_survey_processing
@@ -359,6 +362,9 @@ class Survey(models.Model):
         elif self.type == "MAN":
             self.type = Survey.DELETED_MANAGER
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -370,6 +376,9 @@ class Survey(models.Model):
         elif self.type == "TDELM":
             self.type = Survey.MANAGER
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -382,6 +391,9 @@ class Survey(models.Model):
         elif self.type == "MAN":
             self.type = Survey.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -393,6 +405,9 @@ class Survey(models.Model):
         elif self.type == "TCLOM":
             self.type = Survey.MANAGER
         self.save(update_fields=['type'])
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():

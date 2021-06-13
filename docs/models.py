@@ -278,7 +278,7 @@ class Doc(models.Model):
         verbose_name_plural = "Документы"
         indexes = (BrinIndex(fields=['created']),)
 
-    def get_lists_for_doc(self):
+    def get_lists(self):
         return self.list.only("pk")
 
     def is_private(self):
@@ -386,6 +386,9 @@ class Doc(models.Model):
             community.minus_docs(1)
         else:
             self.creator.minus_docs(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -403,6 +406,9 @@ class Doc(models.Model):
             community.plus_docs(1)
         else:
             self.creator.plus_docs(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -421,6 +427,9 @@ class Doc(models.Model):
             community.minus_docs(1)
         else:
             self.creator.minus_docs(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -438,6 +447,9 @@ class Doc(models.Model):
             community.plus_docs(1)
         else:
             self.creator.plus_docs(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():

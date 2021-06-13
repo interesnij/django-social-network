@@ -452,6 +452,8 @@ class Post(models.Model):
             if post_list.is_private():
                 private = 1
             post_list.post_list.add(post)
+            post_list.count += 1
+            post_list.save(update_fields=["count"])
 
         if not private and is_public:
             get_post_processing(post, Post.PUBLISHED)
@@ -530,6 +532,9 @@ class Post(models.Model):
             community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -547,6 +552,9 @@ class Post(models.Model):
             community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -565,6 +573,9 @@ class Post(models.Model):
             community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
+        for list in self.get_lists():
+            list.count -= 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -582,6 +593,9 @@ class Post(models.Model):
             community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
+        for list in self.get_lists():
+            list.count += 1
+            list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
