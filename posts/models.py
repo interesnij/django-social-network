@@ -432,9 +432,9 @@ class Post(models.Model):
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
         from common.processing.post import get_post_processing
-        if not text or not attach:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Нет текста и вложений")
+        #if not text or not attach:
+        #    from rest_framework.exceptions import ValidationError
+        #    raise ValidationError("Нет текста и вложений")
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
