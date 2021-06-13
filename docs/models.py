@@ -28,6 +28,7 @@ class DocList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -269,6 +270,7 @@ class Doc(models.Model):
     type_2 = models.CharField(choices=TYPE_2, default=PROCESSING, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["-created"]

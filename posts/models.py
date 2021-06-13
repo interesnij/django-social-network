@@ -28,6 +28,7 @@ class PostList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()

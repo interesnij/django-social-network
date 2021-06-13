@@ -53,6 +53,7 @@ class VideoList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    count = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -302,6 +303,7 @@ class Video(models.Model):
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = "Видео-ролики"

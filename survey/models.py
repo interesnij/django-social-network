@@ -29,6 +29,7 @@ class SurveyList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -237,6 +238,7 @@ class Survey(models.Model):
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    order = models.PositiveIntegerField(default=0)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
