@@ -1021,7 +1021,7 @@ class User(AbstractUser):
         from gallery.models import PhotoList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PhotoList.objects.filter(query)
+        return PhotoList.objects.filter(query).order_by("order")
 
     def get_video_lists(self):
         from video.models import VideoList
