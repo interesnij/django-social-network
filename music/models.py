@@ -374,7 +374,7 @@ class Music(models.Model):
     tag = models.ForeignKey(SoundTags, blank=True, null=True, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
-    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
+    list = models.ForeignKey(SoundList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")

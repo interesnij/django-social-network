@@ -290,7 +290,7 @@ class Video(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     uri = models.CharField(max_length=255, verbose_name="Ссылка на видео")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
-    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='video_list', blank=True, null=True)
+    list = models.ForeignKey(VideoList, on_delete=models.SET_NULL, related_name='video_list', blank=True, null=True)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
