@@ -238,7 +238,6 @@ class Survey(models.Model):
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
-    order = models.PositiveIntegerField(default=0)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -271,13 +270,13 @@ class Survey(models.Model):
         return self.list.only("pk")
 
     @classmethod
-    def create_survey(cls, title, image, list, creator, order, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
+    def create_survey(cls, title, image, list, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
         from common.processing.survey import get_survey_processing
 
         _list = SurveyList.objects.get(pk=list)
         _list.count += 1
         _list.save(update_fields=["count"])
-        survey = cls.objects.create(title=title,order=_list.count,list=_list,image=image,creator=creator,order=order,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
+        survey = cls.objects.create(title=title,order=_list.count,list=_list,image=image,creator=creator,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
         for answer in answers:
             Answer.objects.create(survey=survey, text=answer)
         get_survey_processing(survey, Survey.PUBLISHED)

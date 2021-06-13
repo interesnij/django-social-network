@@ -304,7 +304,7 @@ class Doc(models.Model):
     def create_doc(cls, creator, title, file, list, is_public, community, type_2):
         from common.processing.doc import get_doc_processing
 
-        _list = PostList.objects.get(pk=list)
+        _list = DocList.objects.get(pk=list)
 
         _list.count += 1
         _list.save(update_fields=["count"])
