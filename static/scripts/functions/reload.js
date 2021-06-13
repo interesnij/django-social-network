@@ -235,7 +235,7 @@ function list_block_load(target_block, response_block, link) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
-       dragula(rtr.querySelector(response_block));
+       dragula(target_block.querySelector(response_block));
     }};
     request.send( null );
 }
