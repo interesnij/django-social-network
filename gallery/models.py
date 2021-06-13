@@ -372,7 +372,7 @@ class Photo(models.Model):
 
         list.count += 1
         list.save(update_fields=["count"])
-        photo = cls.objects.create(creator=creator,order=list.count,preview=image,file=image,community=community)
+        photo = cls.objects.create(creator=creator,list=list, order=list.count,preview=image,file=image,community=community)
 
         if not list.is_private():
             get_photo_processing(photo, Photo.PUBLISHED)
