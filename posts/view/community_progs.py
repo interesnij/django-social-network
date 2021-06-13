@@ -48,13 +48,13 @@ class PostCommunityCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+                list, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(
                                             creator=request.user,
                                             attach=attach,
                                             text=post.text,
                                             category=post.category,
-                                            list=post.list,
+                                            list=list,
                                             parent=None,
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,

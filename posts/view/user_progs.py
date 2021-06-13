@@ -40,7 +40,7 @@ class PostUserCreate(View):
                                             creator=request.user,
                                             text=post.text,
                                             category=post.category,
-                                            list=post.list,
+                                            list=list,
                                             attach=attach,
                                             parent=None,
                                             comments_enabled=post.comments_enabled,
