@@ -293,7 +293,7 @@ class Post(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
-    list = models.ManyToManyField(PostList, related_name='post_list')
+    list = models.ForeignKey(PostList, blank=True, null=True, related_name='post_list')
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5, verbose_name="Статус статьи")
@@ -435,7 +435,7 @@ class Post(models.Model):
         if not lists:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Не выбран список для новой записи")
-        elif not text or not attach:
+        if not text or not attach:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Нет текста и вложений")
         private = 0
