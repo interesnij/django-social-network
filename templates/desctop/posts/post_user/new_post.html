@@ -1,6 +1,6 @@
 <div class="card mb-3 pag" data-uuid="{{ object.uuid }}">
-  <span class="span1 {% for list in object.get_lists %}{{ list.pk }} {% endfor %}"></span>
-  {% include 'desctop/posts/post_user/my_card_header.html' %} 
+  <span class="span1 {{ post.list.pk }}"></span>
+  {% include 'desctop/posts/post_user/card_header.html' %}
 
   <div class="fullscreen pointer">
     {{ object.text|linebreaks }}
