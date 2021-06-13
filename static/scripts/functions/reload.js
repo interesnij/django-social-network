@@ -55,7 +55,7 @@ page = 2;
 loaded = false;
 m_page = 2;
 m_loaded = false;
-dragula([document.querySelector('.is_post_paginate')]);
+dragula([document.querySelector('#ajax')]);
 
 function top_paginate(link, block_id) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
