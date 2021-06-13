@@ -265,7 +265,7 @@ class Doc(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='doc_list', blank=True)
+    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='doc_list', blank=True, null=True)
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     type_2 = models.CharField(choices=TYPE_2, default=PROCESSING, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
