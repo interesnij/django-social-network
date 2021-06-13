@@ -22,16 +22,23 @@ from survey.models import SurveyList
 from goods.models import GoodList
 
 for list in SoundList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in VideoList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in PostList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in DocList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in PhotoList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in SurveyList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
 for list in GoodList.objects.all():
-    list.update(count=list.count_items())
+    list.count=list.count_items()
+    list.save(update_fields=["count"])
