@@ -1,5 +1,4 @@
 <div class="card mb-3 pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-order="{{ object.order }}" data-pk="{{ object.pk }}">
-    {{ object.order }}
     {% include 'desctop/posts/post_user/card_header.html' %}
 
     {% if object.text %}
