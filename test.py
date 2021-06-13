@@ -36,8 +36,10 @@ users = User.objects.all()
 for user in users:
     user.s_avatar = ''
     user.b_avatar = ''
+    user.save(update_fields=["s_avatar","b_avatar"])
 
 communities = Community.objects.all()
 for community in communities:
     community.s_avatar = ''
     community.b_avatar = ''
+    community.save(update_fields=["s_avatar","b_avatar"])
