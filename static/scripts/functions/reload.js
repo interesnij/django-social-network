@@ -236,7 +236,7 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        console.log(target_block);
-       dragula(target_block.querySelector(response_block));
+       dragula("post_container");
     }};
     request.send( null );
 }
