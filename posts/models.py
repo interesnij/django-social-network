@@ -430,32 +430,19 @@ class Post(models.Model):
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
-    def create_post(cls, creator, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
+    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
         from common.processing.post import get_post_processing
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для новой записи")
         if not text or not attach:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Нет текста и вложений")
-        private = 0
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        post = cls.objects.create(creator=creator,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
-        if community:
-            community.plus_posts(1)
-        else:
-            creator.plus_posts(1)
 
-        for list_id in lists:
-            post_list = PostList.objects.get(pk=list_id)
-            if post_list.is_private():
-                private = 1
-            post_list.post_list.add(post)
-            post_list.count += 1
-            post_list.save(update_fields=["count"])
+        post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
+        list.count += 1
+        list.save(update_fields=["count"])
 
-        if not private and is_public:
+        if not post_list.is_private() and is_public:
             get_post_processing(post, Post.PUBLISHED)
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
@@ -476,20 +463,30 @@ class Post(models.Model):
                     user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
         else:
             get_post_processing(post, Post.PRIVATE)
+        if community:
+            community.plus_posts(1)
+        else:
+            creator.plus_posts(1)
         return post
 
-    def edit_post(self, text, category, lists, attach, parent, comments_enabled, is_signature, votes_on, is_public):
+    def edit_post(self, text, list, category, attach, parent, comments_enabled, is_signature, votes_on, is_public):
         from common.processing.post  import get_post_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
+        if self.list.pk != list.pk:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
+
         self.text = text
         self.category = category
-        self.lists = lists
         self.attach = _attach
         self.comments_enabled = comments_enabled
         self.is_signature = is_signature
+        self.list = list
         self.votes_on = votes_on
 
         if is_public and self.is_private():
@@ -532,9 +529,8 @@ class Post(models.Model):
             community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -552,9 +548,8 @@ class Post(models.Model):
             community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -573,9 +568,8 @@ class Post(models.Model):
             community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -593,9 +587,8 @@ class Post(models.Model):
             community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -788,10 +781,7 @@ class Post(models.Model):
             return count
 
     def get_list_pk(self):
-        return self.list.all()[0].pk
-
-    def get_lists(self):
-        return self.list.all()
+        return self.list.pk
 
     def is_have_private_lists(self):
         for list in self.list.all():

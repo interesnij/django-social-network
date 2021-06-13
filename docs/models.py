@@ -265,7 +265,7 @@ class Doc(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    list = models.ManyToManyField(DocList, related_name='doc_list', blank=True)
+    list = models.ForeignKey(DocList, on_delete=models.SET_NULL, related_name='doc_list', blank=True)
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
     type_2 = models.CharField(choices=TYPE_2, default=PROCESSING, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
@@ -301,24 +301,11 @@ class Doc(models.Model):
         return mime_type
 
     @classmethod
-    def create_doc(cls, creator, title, file, lists, is_public, community, type_2):
+    def create_doc(cls, creator, title, file, list, is_public, community, type_2):
         from common.processing.doc import get_doc_processing
 
-        if not lists:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Не выбран список для нового документа")
-        private = 0
-        doc = cls.objects.create(creator=creator,title=title,file=file,community=community, type_2=type_2)
-        if community:
-            community.plus_docs(1)
-        else:
-            creator.plus_docs(1)
-        for list_id in lists:
-            doc_list = DocList.objects.get(pk=list_id)
-            doc_list.doc_list.add(doc)
-            if doc_list.is_private():
-                private = 1
-        if not private and is_public:
+        doc = cls.objects.create(creator=creator,title=title,list=list,file=file,community=community, type_2=type_2)
+        if not list.is_private() and is_public:
             get_doc_processing(doc, Doc.PUBLISHED)
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
@@ -340,14 +327,23 @@ class Doc(models.Model):
                     user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
         else:
             get_doc_processing(doc, Doc.PRIVATE)
+        if community:
+            community.plus_docs(1)
+        else:
+            creator.plus_docs(1)
         return doc
 
-    def edit_doc(self, title, file, lists, is_public):
+    def edit_doc(self, title, list, file, is_public):
         from common.processing.doc  import get_doc_processing
 
+        if self.list.pk != list.pk:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
         self.title = title
+        self.list = list
         self.file = file
-        self.lists = lists
         if is_public:
             get_doc_processing(self, Doc.PUBLISHED)
             self.make_publish()
@@ -386,9 +382,8 @@ class Doc(models.Model):
             community.minus_docs(1)
         else:
             self.creator.minus_docs(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -406,9 +401,8 @@ class Doc(models.Model):
             community.plus_docs(1)
         else:
             self.creator.plus_docs(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -427,9 +421,8 @@ class Doc(models.Model):
             community.minus_docs(1)
         else:
             self.creator.minus_docs(1)
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+        self.list.count -= 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
@@ -447,9 +440,8 @@ class Doc(models.Model):
             community.plus_docs(1)
         else:
             self.creator.plus_docs(1)
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+        self.list.count += 1
+        list.save(update_fields=["count"])
         if Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():

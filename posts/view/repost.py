@@ -94,7 +94,7 @@ class UUPostRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, user, form_post, lists, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        parent, user, form_post, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -103,7 +103,7 @@ class UUPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -113,7 +113,7 @@ class CUPostRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, community, form_post, lists, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        parent, community, form_post, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -121,8 +121,8 @@ class CUPostRepost(View):
                 parent = parent.parent
             else:
                 parent = parent
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"), community=None)
-            return HttpResponse("")
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"), community=None)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
@@ -132,7 +132,7 @@ class UCPostRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, user, form_post, lists, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist("communities"), request.POST.getlist('attach_items')
+        parent, user, form_post, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -145,7 +145,7 @@ class UCPostRepost(View):
                 return HttpResponseBadRequest()
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -155,7 +155,7 @@ class CCPostRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, community, form_post, lists, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist("communities"), request.POST.getlist('attach_items')
+        parent, community, form_post, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -167,7 +167,7 @@ class CCPostRepost(View):
                 return HttpResponseBadRequest()
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -194,7 +194,7 @@ class UMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, text=post.text, category=None, lists=[], attach=request.POST.getlist('attach_items'), parent=parent, is_signature=False, comments_enabled=False, votes_on=False, is_public=None,community=None)
+                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, lists=[], attach=request.POST.getlist('attach_items'), parent=parent, is_signature=False, comments_enabled=False, votes_on=False, is_public=None,community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
@@ -229,7 +229,7 @@ class CMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, attach=request.POST.getlist('attach_items'), lists=[], is_signature=False, text=post.text, comments_enabled=False, votes_on=False, parent=parent, is_public=None,community=community)
+                new_post = post.create_post(creator=request.user, list=post.list, attach=request.POST.getlist('attach_items'), lists=[], is_signature=False, text=post.text, comments_enabled=False, votes_on=False, parent=parent, is_public=None,community=community)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
@@ -255,11 +255,11 @@ class UUPostListRepost(View):
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="lpo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=None, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=None, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -273,11 +273,11 @@ class CUPostListRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=None, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=None, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -293,7 +293,6 @@ class UCPostListRepost(View):
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
-        lists = request.POST.getlist("lists")
         attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
@@ -303,7 +302,7 @@ class UCPostListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category,  parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -316,7 +315,6 @@ class CCPostListRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
-        lists = request.POST.getlist("lists")
         attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
@@ -326,7 +324,7 @@ class CCPostListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lpo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

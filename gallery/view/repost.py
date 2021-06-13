@@ -95,15 +95,14 @@ class UUPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
-            user_notify(request.user, photo.creator.pk, None, "pho"+photo.pk, "u_photo_repost", "RE")
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -115,14 +114,13 @@ class CUPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
-            community_notify(request.user, community, None, "pho"+photo.pk, "c_photo_repost", "RE")
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -138,7 +136,7 @@ class UCPhotoRepost(View):
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
         form_post = PostForm(request.POST)
@@ -147,7 +145,7 @@ class UCPhotoRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, attach="pho"+str(photo.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -160,7 +158,7 @@ class CCPhotoRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
         form_post = PostForm(request.POST)
@@ -169,7 +167,7 @@ class CCPhotoRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -214,11 +212,11 @@ class UUPhotoListRepost(View):
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="lph"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -233,12 +231,12 @@ class CUPhotoListRepost(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lph"+str(list.pk))
-            new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -256,7 +254,7 @@ class UCPhotoListRepost(View):
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
         form_post = PostForm(request.POST)
@@ -265,7 +263,7 @@ class UCPhotoListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, attach="lph"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -280,7 +278,7 @@ class CCPhotoListRepost(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        attach = request.POST.getlist('attach_items')
         if not communities:
             return HttpResponseBadRequest()
         form_post = PostForm(request.POST)
@@ -289,7 +287,7 @@ class CCPhotoListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, attach="lph"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, attach=attach, text=post.text, category=post.category, lists=lists, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
