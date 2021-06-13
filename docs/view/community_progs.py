@@ -96,7 +96,7 @@ class CommunityDocEdit(TemplateView):
         form_post = DocForm(request.POST, request.FILES)
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             _doc = form_post.save(commit=False)
-            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list,list=_doc.list, file=_doc.file,is_public=request.POST.get("is_public"), type_2=_doc.type_2)
+            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list, file=_doc.file,is_public=request.POST.get("is_public"), type_2=_doc.type_2)
             return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
