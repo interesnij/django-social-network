@@ -28,7 +28,6 @@ class PhotoList(models.Model):
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    order = models.PositiveIntegerField(default=0)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
@@ -46,14 +45,21 @@ class PhotoList(models.Model):
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            PhotoList.objects.create(community=instance, type=PhotoList.MAIN, name="Основной альбом", creator=instance.creator)
-            PhotoList.objects.create(community=instance, type=PhotoList.AVATAR, name="Фото со страницы", creator=instance.creator)
+            list_1 = PhotoList.objects.create(community=instance, type=PhotoList.MAIN, name="Основной альбом", creator=instance.creator)
+            list_2 = PhotoList.objects.create(community=instance, type=PhotoList.AVATAR, name="Фото со страницы", creator=instance.creator)
+            from communities.model.list import CommunityPhotoListPosition
+            CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
+            CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_2.pk, position=2)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            PhotoList.objects.create(creator=instance, type=PhotoList.MAIN, name="Основной альбом")
-            PhotoList.objects.create(creator=instance, type=PhotoList.AVATAR, name="Фото со страницы")
-            PhotoList.objects.create(creator=instance, type=PhotoList.WALL, name="Фото со стены")
+            list_1 = PhotoList.objects.create(creator=instance, type=PhotoList.MAIN, name="Основной альбом")
+            list_2 = PhotoList.objects.create(creator=instance, type=PhotoList.AVATAR, name="Фото со страницы")
+            list_3 = PhotoList.objects.create(creator=instance, type=PhotoList.WALL, name="Фото со стены")
+            from users.model.list import UserPhotoListPosition
+            UserPhotoListPosition.objects.create(user=instance.pk, list=list_1.pk, position=1)
+            UserPhotoListPosition.objects.create(user=instance.pk, list=list_2.pk, position=2)
+            UserPhotoListPosition.objects.create(user=instance.pk, list=list_3.pk, position=3)
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
@@ -170,13 +176,14 @@ class PhotoList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
+    def create_list(cls, creator, name, description, community, is_public):
         from notify.models import Notify, Wall
         from common.processing.photo import get_photo_list_processing
-        if not order:
-            order = 1
+
+        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            from communities.model.list import CommunityPhotoListPosition
+            CommunityPhotoListPosition.objects.create(community=community.pk, list=list.pk, position=PhotoList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="PHL", object_id=list.pk, verb="ITE")
@@ -185,7 +192,8 @@ class PhotoList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_photo_list_notify")
         else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            from users.model.list import UserPhotoListPosition
+            UserPhotoListPosition.objects.create(user=creator.pk, list=list.pk, position=PhotoList.get_user_lists_count(user.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="PHL", object_id=list.pk, verb="ITE")
@@ -195,13 +203,11 @@ class PhotoList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_photo_list_notify")
         get_photo_list_processing(list, PhotoList.LIST)
         return list
-    def edit_list(self, name, description, order, is_public):
+    def edit_list(self, name, description, is_public):
         from common.processing.photo import get_photo_list_processing
-        if not order:
-            order = 1
+
         self.name = name
         self.description = description
-        self.order = order
         self.save()
         if is_public:
             get_photo_list_processing(self, PhotoList.LIST)

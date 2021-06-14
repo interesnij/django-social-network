@@ -23,7 +23,6 @@ class SurveyList(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
-    order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -37,16 +36,19 @@ class SurveyList(models.Model):
     class Meta:
         verbose_name = "список опросов"
         verbose_name_plural = "списки опросов"
-        ordering = ['order']
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            SurveyList.objects.create(community=instance, type=SurveyList.MAIN, name="Основной список", order=0, creator=instance.creator)
+            list = SurveyList.objects.create(community=instance, type=SurveyList.MAIN, name="Основной список", creator=instance.creator)
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            SurveyList.objects.create(creator=instance, type=SurveyList.MAIN, name="Основной список", order=0)
+            list = SurveyList.objects.create(creator=instance, type=SurveyList.MAIN, name="Основной список")
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.survey_list.filter(pk=item_id).values("pk").exists()
@@ -121,13 +123,14 @@ class SurveyList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
+    def create_list(cls, creator, name, description, community, is_public):
         from notify.models import Notify, Wall
         from common.processing.survey import get_survey_list_processing
-        if not order:
-            order = 1
+
+        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.create(community=community.pk, list=list.pk, position=SurveyList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="SUL", object_id=list.pk, verb="ITE")
@@ -136,7 +139,8 @@ class SurveyList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="SUL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_survey_list_notify")
         else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.create(user=creator.pk, list=list.pk, position=SurveyList.get_user_lists_count(user.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="SUL", object_id=list.pk, verb="ITE")
@@ -146,13 +150,11 @@ class SurveyList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_survey_list_notify")
         get_survey_list_processing(list, SurveyList.LIST)
         return list
-    def edit_list(self, name, description, order, is_public):
+    def edit_list(self, name, description, is_public):
         from common.processing.survey import get_survey_list_processing
-        if not order:
-            order = 1
+
         self.name = name
         self.description = description
-        self.order = order
         self.save()
         if is_public:
             get_survey_list_processing(self, SurveyList.LIST)

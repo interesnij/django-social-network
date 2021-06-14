@@ -22,7 +22,6 @@ class PostList(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
-    order = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -36,20 +35,25 @@ class PostList(models.Model):
     class Meta:
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
-        ordering = ['order']
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            PostList.objects.create(community=instance, type=PostList.MAIN, name="Основной список", creator=instance.creator)
+            list_1 = PostList.objects.create(community=instance, type=PostList.MAIN, name="Основной список", creator=instance.creator)
             PostList.objects.create(community=instance, type=PostList.FIXED, name="Закреплённый список", creator=instance.creator)
-            PostList.objects.create(community=instance, type=PostList.DRAFT, name="Предложка", creator=instance.creator)
+            list_2 = PostList.objects.create(community=instance, type=PostList.DRAFT, name="Предложка", creator=instance.creator)
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
+            CommunityPostListPosition.objects.create(community=instance.pk, list=list_2.pk, position=2)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
+            list_1 = PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
             PostList.objects.create(creator=instance, type=PostList.FIXED, name="Закреплённый список")
-            PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
+            list_2 = PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.create(user=instance.pk, list=list_1.pk, position=1)
+            UserPostListPosition.objects.create(user=instance.pk, list=list_2.pk, position=2)
 
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()
@@ -149,13 +153,14 @@ class PostList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
+    def create_list(cls, creator, name, description, community, is_public):
         from notify.models import Notify, Wall
         from common.processing.post import get_post_list_processing
-        if not order:
-            order = 1
+
+        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.create(community=community.pk, list=list.pk, position=PostList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POL", object_id=list.pk, verb="ITE")
@@ -164,7 +169,8 @@ class PostList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_post_list_notify")
         else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.create(user=creator.pk, list=list.pk, position=PostList.get_user_lists_count(user.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
@@ -174,13 +180,12 @@ class PostList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_post_list_notify")
         get_post_list_processing(list, PostList.LIST)
         return list
-    def edit_list(self, name, description, order, is_public):
+
+    def edit_list(self, name, description, is_public):
         from common.processing.post import get_post_list_processing
-        if not order:
-            order = 1
+
         self.name = name
         self.description = description
-        self.order = order
         self.save()
         if is_public:
             get_post_list_processing(self, PostList.LIST)

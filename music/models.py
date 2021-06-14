@@ -71,7 +71,6 @@ class SoundList(models.Model):
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
-    order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -87,16 +86,19 @@ class SoundList(models.Model):
     class Meta:
         verbose_name = "плейлист"
         verbose_name_plural = "плейлисты"
-        ordering = ['order']
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            SoundList.objects.create(community=instance, type=SoundList.MAIN, name="Основной список", order=0, creator=instance.creator)
+            list = SoundList.objects.create(community=instance, type=SoundList.MAIN, name="Основной список", creator=instance.creator)
+            from communities.model.list import CommunityPlayListPosition
+            CommunityPlayListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            SoundList.objects.create(creator=instance, type=SoundList.MAIN, name="Основной список", order=0)
+            list = SoundList.objects.create(creator=instance, type=SoundList.MAIN, name="Основной список")
+            from users.model.list import UserPlayListPosition
+            UserPlayListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.playlist.filter(pk=item_id).values("pk").exists()
@@ -161,13 +163,14 @@ class SoundList(models.Model):
         return self.type[:4] == "_CLO"
 
     @classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
+    def create_list(cls, creator, name, description, community, is_public):
         from notify.models import Notify, Wall
         from common.processing.music import get_playlist_processing
-        if not order:
-            order = 1
+
+        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            from communities.model.list import CommunityPlayListPosition
+            CommunityPlayListPosition.objects.create(community=community.pk, list=list.pk, position=SoundList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUL", object_id=list.pk, verb="ITE")
@@ -176,7 +179,8 @@ class SoundList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_music_list_notify")
         else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            from users.model.list import UserPlayListPosition
+            UserPlayListPosition.objects.create(user=creator.pk, list=list.pk, position=SoundList.get_user_lists_count(user.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="MUL", object_id=list.pk, verb="ITE")
@@ -187,14 +191,11 @@ class SoundList(models.Model):
         get_playlist_processing(list, SoundList.LIST)
         return list
 
-    def edit_list(self, name, description, order, is_public):
+    def edit_list(self, name, description, is_public):
         from common.processing.music import get_playlist_processing
 
-        if not order:
-            order = 1
         self.name = name
         self.description = description
-        self.order = order
         self.save()
         if is_public:
             get_playlist_processing(self, SoundList.LIST)

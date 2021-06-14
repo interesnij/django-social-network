@@ -18,7 +18,7 @@ class GoodSubCategoryAdmin(admin.ModelAdmin):
             model = GoodSubCategory
 
 class GoodListAdmin(admin.ModelAdmin):
-    list_display = ['name','community','type','creator', 'order']
+    list_display = ['name','community','type','creator',]
     search_fields = ['name']
     class Meta:
             model = GoodList

@@ -54,7 +54,6 @@ class GoodList(models.Model):
 	name = models.CharField(max_length=250, verbose_name="Название")
 	type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-	order = models.PositiveIntegerField(default=0)
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -73,11 +72,15 @@ class GoodList(models.Model):
 	@receiver(post_save, sender=Community)
 	def create_c_model(sender, instance, created, **kwargs):
 		if created:
-			GoodList.objects.create(community=instance, type=GoodList.MAIN, name="Основной список", order=0, creator=instance.creator)
+			list = GoodList.objects.create(community=instance, type=GoodList.MAIN, name="Основной список", creator=instance.creator)
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 	@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 	def create_u_model(sender, instance, created, **kwargs):
 		if created:
-			GoodList.objects.create(creator=instance, type=GoodList.MAIN, name="Основной список", order=0)
+			list = GoodList.objects.create(creator=instance, type=GoodList.MAIN, name="Основной список")
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
 	def is_main(self):
 		return self.type == self.MAIN
@@ -175,13 +178,15 @@ class GoodList(models.Model):
 		return cls.objects.filter(query).values("pk").count()
 
 	@classmethod
-	def create_list(cls, creator, name, description, order, community, is_public):
+	def create_list(cls, creator, name, description, community, is_public):
 		from notify.models import Notify, Wall
 		from common.processing.good import get_good_list_processing
-		if not order:
-			order = 1
+
+		list = cls.objects.create(creator=creator,name=name,description=description, community=community)
+
 		if community:
-			list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.create(community=community.pk, list=list.pk, position=GoodList.get_community_lists_count(community.pk))
 			get_good_list_processing(list, GoodList.LIST)
 			if is_public:
 				from common.notify.progs import community_send_notify, community_send_wall
@@ -191,7 +196,8 @@ class GoodList(models.Model):
 					Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
 					community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_good_list_notify")
 		else:
-			list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.create(user=creator.pk, list=list.pk, position=GoodList.get_user_lists_count(user.pk))
 			get_good_list_processing(list, GoodList.LIST)
 			if is_public:
 				from common.notify.progs import user_send_notify, user_send_wall
@@ -201,13 +207,11 @@ class GoodList(models.Model):
 					Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
 					user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
 		return list
-	def edit_list(self, name, description, order, is_public):
+	def edit_list(self, name, description, is_public):
 		from common.processing.good import get_good_list_processing
-		if not order:
-			order = 1
+
 		self.name = name
 		self.description = description
-		self.order = order
 		self.save()
 		if is_public:
 			get_good_list_processing(self, GoodList.LIST)

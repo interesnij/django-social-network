@@ -6,7 +6,7 @@ class PlaylistForm(forms.ModelForm):
 
 	class Meta:
 		model = SoundList
-		fields = ['name', 'order', 'description']
+		fields = ['name', 'description']
 
 class TrackForm(forms.ModelForm):
 

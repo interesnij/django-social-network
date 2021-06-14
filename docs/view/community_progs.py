@@ -118,7 +118,7 @@ class CommunityDocListCreate(TemplateView):
         form_post, community = DoclistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, order=list.order, community=community,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'communities/docs/list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
@@ -146,7 +146,7 @@ class CommunityDocListEdit(TemplateView):
         self.form = DoclistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

@@ -10,4 +10,4 @@ class SurveyForm(forms.ModelForm):
 class SurveyListForm(forms.ModelForm):
 	class Meta:
 		model = SurveyList
-		fields = ['name', 'order', 'description']
+		fields = ['name', 'description']

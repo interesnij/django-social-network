@@ -6,7 +6,7 @@ class PhotoListForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))
 	class Meta:
 		model = PhotoList
-		fields = ['name', 'description', 'order', ]
+		fields = ['name', 'description',]
 
 class PhotoDescriptionForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'style': 'height: auto;', 'rows': '4'}))

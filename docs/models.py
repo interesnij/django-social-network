@@ -22,7 +22,6 @@ class DocList(models.Model):
     community = models.ForeignKey('communities.Community', related_name='doc_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='doc_lists_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
-    order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -36,16 +35,19 @@ class DocList(models.Model):
     class Meta:
         verbose_name = "список документов"
         verbose_name_plural = "списки документов"
-        ordering = ['order']
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            DocList.objects.create(community=instance, type=DocList.MAIN, name="Основной список", order=0, creator=instance.creator)
+            list = DocList.objects.create(community=instance, type=DocList.MAIN, name="Основной список", creator=instance.creator)
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            DocList.objects.create(creator=instance, type=DocList.MAIN, name="Основной список", order=0)
+            list = DocList.objects.create(creator=instance, type=DocList.MAIN, name="Основной список")
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.doc_list.filter(pk=item_id).values("pk").exists()
@@ -108,7 +110,7 @@ class DocList(models.Model):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
         query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
         query.add(~Q(type__contains="_"), Q.AND)
-        return cls.objects.filter(query).order_by("order")
+        return cls.objects.filter(query)
     @classmethod
     def get_user_lists_count(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
@@ -126,7 +128,7 @@ class DocList(models.Model):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
-        return cls.objects.filter(query).order_by("order")
+        return cls.objects.filter(query)
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)
@@ -134,13 +136,14 @@ class DocList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, order, community, is_public):
+    def create_list(cls, creator, name, description, community, is_public):
         from notify.models import Notify, Wall
         from common.processing.doc import get_doc_list_processing
-        if not order:
-            order = 1
+
+        list = cls.objects.create(creator=creator,name=name,description=description,community=community)
         if community:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order, community=community)
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.create(community=community.pk, list=list.pk, position=DocList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="DOL", object_id=list.pk, verb="ITE")
@@ -149,7 +152,8 @@ class DocList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_doc_list_notify")
         else:
-            list = cls.objects.create(creator=creator,name=name,description=description, order=order)
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.create(user=creator.pk, list=list.pk, position=DocList.get_user_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
@@ -159,13 +163,11 @@ class DocList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_doc_list_notify")
         get_doc_list_processing(list, DocList.LIST)
         return list
-    def edit_list(self, name, description, order, is_public):
+    def edit_list(self, name, description, is_public):
         from common.processing.doc import get_doc_list_processing
-        if not order:
-            order = 1
+
         self.name = name
         self.description = description
-        self.order = order
         self.save()
         if is_public:
             get_doc_list_processing(self, DocList.LIST)
