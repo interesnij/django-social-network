@@ -61,10 +61,7 @@ function get_dragula(block) {
     moves: function (el, container, handle) {
       return handle.classList.contains('handle');
       console.log("moves!")
-    },
-    accepts: function (el, target, source, sibling) {
-      console.log("accepts!")
-  }})
+    }})
 }
 
 function top_paginate(link, block_id) {
