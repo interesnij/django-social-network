@@ -1010,9 +1010,11 @@ class User(AbstractUser):
     def get_post_lists(self):
         from users.model.list import UserPostListPosition
         from posts.models import PostList
-        _query = []
-        query = UserPostListPosition.objects.filter(user=self.pk).values("list")
-        return PostList.objects.filter(id__in=[i['list'] for i in query]).exclude(type__contains="_")
+        query = []
+        lists = UserPostListPosition.objects.filter(user=self.pk).values("list")
+        for list_id in [i['list'] for i in lists]:
+            query.append(PostList.objects.get(pk=list_id))
+        return query
 
     def get_survey_lists(self):
         from survey.models import SurveyList
