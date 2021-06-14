@@ -237,6 +237,7 @@ function list_block_load(target_block, response_block, link) {
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        console.log(target_block);
        get_dragula(".is_post_paginate");
+       get_dragula(".date-list");
     }};
     request.send( null );
 }
