@@ -80,8 +80,9 @@ function send_change_u_posts(el) {
   posts = el.parentElement.querySelectorAll(".u_post");
   post_array = []
   for (var i=0; i<posts.length; i++) {
-    post_array.push({key:posts[i].getAttribute("data-pk"),value: getNodeindex(posts[i])})
+    post_array.push({key:posts[i].getAttribute("data-pk"),value: getNodeindex(posts[i]) + 1})
   };
+  post_array.push({key:"csrfmiddlewaretoken",value: document.body.getAttribute("data-csrf")})
   var xmlhttp = new XMLHttpRequest();
   var theUrl = "/posts/user_progs/change_position/";
   xmlhttp.open("POST", theUrl);
