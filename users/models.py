@@ -1001,9 +1001,12 @@ class User(AbstractUser):
         from posts.models import Post
         return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT)
 
+    
+
     def get_post_lists(self):
         from users.model.list import UserPostListPosition
         from posts.models import PostList
+        _query = []
         query = UserPostListPosition.objects.filter(user=self.pk).values("list")
         return PostList.objects.filter(id__in=[i['community'] for i in query]).exclude(type__contains="_")
 
