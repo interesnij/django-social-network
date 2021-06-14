@@ -57,6 +57,7 @@ m_page = 2;
 m_loaded = false;
 
 function get_dragula(block) {
+  drop = false; over = false;
   dragula([document.querySelector(block)], {
     moves: function (el, container, handle) {
       return handle.classList.contains('handle');
