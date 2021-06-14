@@ -19,7 +19,7 @@ class PostCommentAdmin(admin.ModelAdmin):
 
 class PostListAdmin(admin.ModelAdmin):
     search_fields = ('creator',)
-    list_display = ['name','community','type','creator', 'order']
+    list_display = ['name','community','type','creator']
 
 
 admin.site.register(Post, PostAdmin)
