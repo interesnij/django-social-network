@@ -1001,14 +1001,18 @@ class User(AbstractUser):
         from posts.models import Post
         return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT)
 
-    
+    def get_6_populate_friends(self):
+        query = []
+        for frend_id in self.get_6_populate_friends_ids():
+            query.append(User.objects.get(pk=frend_id))
+        return query
 
     def get_post_lists(self):
         from users.model.list import UserPostListPosition
         from posts.models import PostList
         _query = []
         query = UserPostListPosition.objects.filter(user=self.pk).values("list")
-        return PostList.objects.filter(id__in=[i['community'] for i in query]).exclude(type__contains="_")
+        return PostList.objects.filter(id__in=[i['list'] for i in query]).exclude(type__contains="_")
 
     def get_survey_lists(self):
         from survey.models import SurveyList
