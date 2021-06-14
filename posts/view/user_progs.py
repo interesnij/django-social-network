@@ -292,7 +292,7 @@ class UserPostListCreate(TemplateView):
             from common.template.user import render_for_platform
 
             list = self.form.save(commit=False)
-            new_list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
