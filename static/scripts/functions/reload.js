@@ -62,6 +62,17 @@ function get_dragula(block) {
       return handle.classList.contains('handle');
       console.log("moves!")
     }})
+    .on('drag', function (el) {
+    console.log("drag!");
+    })
+    .on('drop', function (el) {
+    console.log("drop!");
+    }).on('over', function (el, container) {
+    console.log("over!");
+    })
+    .on('out', function (el, container) {
+    console.log("over!");;
+  });
 }
 
 function top_paginate(link, block_id) {
