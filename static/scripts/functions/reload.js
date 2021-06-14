@@ -72,8 +72,22 @@ function change_position(block, el) {
   if (el.classList.contains("u_post_list_change")) {
     console.log("Порядок списков постов изменен!")
   } else if (el.classList.contains("u_post")) {
-    console.log("Порядок постов изменен!")
+    console.log("Порядок постов изменен!");
+    send_change_u_posts(el)
   }
+}
+function send_change_u_posts(el) {
+  posts = el.parentElement.querySelectorAll(".u_post");
+  post_array = []
+  for (var i=0; i<posts.length; i++) {
+    post_array.push({key:posts[i].getAttribute("data-pk"),value: getNodeindex(posts[i])})
+  };
+  var xmlhttp = new XMLHttpRequest();
+  var theUrl = "/posts/user_progs/change_position/";
+  xmlhttp.open("POST", theUrl);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify(post_array));
+  console.log(post_array);
 }
 
 function top_paginate(link, block_id) {

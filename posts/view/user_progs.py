@@ -367,3 +367,9 @@ class RemovePostFromUserList(View):
             return HttpResponse()
         else:
             raise Http404
+
+class UserChangePosition(View):
+    def post(self, request):
+        for pk, position in self.request_json.items():
+            Post.objects.filter(pk=pk).update(order=order)
+        return HttpResponse(self.request_json.items())
