@@ -64,7 +64,7 @@ function get_dragula(block) {
       console.log("moves!")
     }})
     //.on('drag', function (el) {console.log("drag!");})
-    .on('drop', function (el) {console.log(container.className); change_position(_block)})
+    .on('drop', function (el) {console.log(el); change_position(_block)})
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 }
