@@ -140,7 +140,7 @@ class SurveyList(models.Model):
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_survey_list_notify")
         else:
             from users.model.list import UserSurveyListPosition
-            UserSurveyListPosition.objects.create(user=creator.pk, list=list.pk, position=SurveyList.get_user_lists_count(user.pk))
+            UserSurveyListPosition.objects.create(user=creator.pk, list=list.pk, position=SurveyList.get_user_lists_count(creator.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="SUL", object_id=list.pk, verb="ITE")

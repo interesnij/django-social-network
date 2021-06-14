@@ -173,7 +173,7 @@ class VideoList(models.Model):
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_video_list_notify")
         else:
             from users.model.list import UserVideoListPosition
-            UserVideoListPosition.objects.create(user=creator.pk, list=list.pk, position=VideoList.get_user_lists_count(user.pk))
+            UserVideoListPosition.objects.create(user=creator.pk, list=list.pk, position=VideoList.get_user_lists_count(creator.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="VIL", object_id=list.pk, verb="ITE")

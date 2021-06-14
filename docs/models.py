@@ -153,7 +153,7 @@ class DocList(models.Model):
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_doc_list_notify")
         else:
             from users.model.list import UserDocListPosition
-            UserDocListPosition.objects.create(user=creator.pk, list=list.pk, position=DocList.get_user_lists_count(community.pk))
+            UserDocListPosition.objects.create(user=creator.pk, list=list.pk, position=DocList.get_user_lists_count(creator.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")

@@ -197,7 +197,7 @@ class GoodList(models.Model):
 					community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_good_list_notify")
 		else:
 			from users.model.list import UserGoodListPosition
-			UserGoodListPosition.objects.create(user=creator.pk, list=list.pk, position=GoodList.get_user_lists_count(user.pk))
+			UserGoodListPosition.objects.create(user=creator.pk, list=list.pk, position=GoodList.get_user_lists_count(creator.pk))
 			get_good_list_processing(list, GoodList.LIST)
 			if is_public:
 				from common.notify.progs import user_send_notify, user_send_wall
