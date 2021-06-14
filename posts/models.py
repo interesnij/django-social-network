@@ -36,6 +36,10 @@ class PostList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    def get_order(self):
+        from users.model.list import UserPostListPosition
+        return UserPostListPosition.objects.get(list=self.pk).position
+
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
