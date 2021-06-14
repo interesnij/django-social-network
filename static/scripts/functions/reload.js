@@ -62,17 +62,17 @@ function get_dragula(block) {
       return handle.classList.contains('handle');
       console.log("moves!")
     }})
-    .on('drag', function (el) {
-    console.log("drag!");
-    })
+    .on('drag', function (el) {console.log("drag!");})
     .on('drop', function (el) {
-    console.log("drop!");
+    console.log("drop!"); drop = true
     }).on('over', function (el, container) {
-    console.log("over!");
+    console.log("over!"); over = true;
     })
-    .on('out', function (el, container) {
-    console.log("over!");;
+    .on('out', function (el, container) {console.log("over!");;
   });
+  if (drop && over) {
+    console.log("есть контакт!!!")
+  }
 }
 
 function top_paginate(link, block_id) {
