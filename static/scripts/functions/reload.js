@@ -64,7 +64,7 @@ function get_dragula(block) {
     },
     accepts: function (el, target, source, sibling) {
       console.log("accepts!")
-  })
+  }})
 }
 
 function top_paginate(link, block_id) {
