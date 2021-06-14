@@ -1,6 +1,5 @@
 <div class="card mb-3 u_post pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
     {% include 'desctop/posts/post_user/card_header.html' %}
-    {{ object.order }}
     {% if object.text %}
       <div class="fullscreen pointer">
         {{ object.text|linebreaks }}
