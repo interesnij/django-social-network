@@ -1015,7 +1015,7 @@ class User(AbstractUser):
         #for list_id in [i['list'] for i in lists]:
         #    query.append(PostList.objects.get(pk=list_id))
         #return query
-        return PostList.objects.filter(id__in=i['list'] for i in lists)
+        return PostList.objects.filter(id__in=[i['list'] for i in lists])
 
     def get_survey_lists(self):
         from survey.models import SurveyList
