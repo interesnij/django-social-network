@@ -1005,7 +1005,7 @@ class User(AbstractUser):
         from posts.models import PostList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PostList.objects.filter(query).order_by("order")
+        return PostList.objects.filter(query)
 
     def get_survey_lists(self):
         from survey.models import SurveyList
@@ -1021,7 +1021,7 @@ class User(AbstractUser):
         from gallery.models import PhotoList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PhotoList.objects.filter(query).order_by("order")
+        return PhotoList.objects.filter(query)
 
     def get_video_lists(self):
         from video.models import VideoList
