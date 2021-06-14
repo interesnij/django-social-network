@@ -64,14 +64,14 @@ function get_dragula(block) {
       console.log("moves!")
     }})
     //.on('drag', function (el) {console.log("drag!");})
-    .on('drop', function (el) {console.log(el); change_position(_block)})
+    .on('drop', function (el) {console.log(el); change_position(_block, el)})
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 }
-function change_position(block) {
-  if (block.querySelector(".u_post_list_change")) {
+function change_position(block, el) {
+  if (el.classList.contains("u_post_list_change")) {
     console.log("Порядок списков постов изменен!")
-  } else if (block.querySelector(".u_post")) {
+  } else if (el.classList.contains("u_post")) {
     console.log("Порядок постов изменен!")
   }
 }
