@@ -74,7 +74,7 @@ class UserPostListPosition(models.Model):
     class Meta:
         verbose_name = 'Порядок отображения списка записей'
         verbose_name_plural = 'Порядки отображения списков записей'
-        ordering = ['-position']
+        ordering = ['position']
 
     def __str__(self):
         return '{} - {} :{}'.format(self.user, self.list, self.position)
