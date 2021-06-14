@@ -373,5 +373,5 @@ class UserChangePosition(View):
         import json
 
         for pk, position in json.loads(request.body):
-            Post.objects.filter(pk=pk).update(order=order)
+            Post.objects.filter(pk=pk[key]).update(order=[position])
         return HttpResponse(json.loads(request.body))
