@@ -369,7 +369,7 @@ class RemovePostFromUserList(View):
             raise Http404
 
 class UserChangePosition(View):
-    def post(self, request):
+    def post(self,request,*args,**kwargs):
         import json
 
         for pk, position in json.loads(request.body):
