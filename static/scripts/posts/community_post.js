@@ -84,7 +84,6 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
   form_data = new FormData(form);
   pk = form.getAttribute("data-pk");
   if (!form.querySelector("#id_name").value){form.querySelector("#id_name").style.border = "1px #FF0000 solid";toast_error("Название - обязательное поле!"); return
-  } else if (!form.querySelector("#id_order").value){form.querySelector("#id_order").style.border = "1px #FF0000 solid";toast_error("Выберите порядковый номер!"); return
   } else { this.disabled = true }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/community_progs/add_list/" + pk + "/", true );
@@ -122,9 +121,6 @@ on('#ajax', 'click', '#c_edit_post_list_btn', function() {
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else if (!form.querySelector("#id_order").value){
-    form.querySelector("#id_order").style.border = "1px #FF0000 solid";
-    toast_error("Выберите порядковый номер!");
   } else { this.disabled = true }
   pk = form.getAttribute("data-pk");
   list_pk = form.getAttribute("list-pk");
