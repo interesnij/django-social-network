@@ -5,7 +5,7 @@ from django import forms
 class VideoListForm(forms.ModelForm):
 	class Meta:
 		model = VideoList
-		fields = ['name', 'description', 'order']
+		fields = ['name', 'description']
 
 
 class VideoForm(forms.ModelForm):
