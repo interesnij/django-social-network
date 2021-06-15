@@ -372,12 +372,8 @@ class RemovePostFromUserList(View):
 class UserChangePosition(View):
     def post(self,request,*args,**kwargs):
         import json
-
-        query = []
-
         for item in json.loads(request.body):
             post = Post.objects.get(pk=item['key'])
             post.order=item['value']
             post.save(update_fields=["order"])
-            query += ["Пост " + post.text + " получил номер " + str(post.order) + ";", ]
-        return HttpResponse(query)
+        return HttpResponse()

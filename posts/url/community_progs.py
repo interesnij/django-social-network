@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^restore_list/(?P<list_pk>\d+)/$', CommunityPostListRecover.as_view()),
 	url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPostListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePostListFromCommunityCollections.as_view()),
+
+	url(r'^change_position/(?P<pk>\d+)/$', CommunityChangePosition.as_view()),
 ]

@@ -57,11 +57,11 @@ m_page = 2;
 m_loaded = false;
 
 function get_dragula(block) {
+  // функция инициирует библиотеку dragula.js
   _block = document.querySelector(block)
   dragula([_block], {
     moves: function (el, container, handle) {
-      return handle.classList.contains('handle');
-      console.log("moves!")
+      return handle.classList.contains('handle')
     }})
     //.on('drag', function (el) {console.log("drag!");})
     .on('drop', function (el) {console.log(el); change_position(_block, el)})
@@ -70,31 +70,26 @@ function get_dragula(block) {
 }
 
 function change_position(block, el) {
+  // функция инициирует смену порядка элементов,учитывая их класс.
   if (el.classList.contains("u_post_list_change")) {
     console.log("Порядок списков постов изменен!")
   } else if (el.classList.contains("u_post")) {
     console.log("Порядок постов изменен!");
     send_change_u_posts(el)
+  } else if (el.classList.contains("c_post")) {
+    console.log("Порядок постов изменен!");
+    send_change_c_posts(el)
   }
 }
+
+/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function send_change_u_posts(el) {
   send_change_items(el.parentElement.querySelectorAll(".u_post"), "/posts/user_progs/change_position/")
 }
-
-function send_change_items(array, link) {
-  len = array.length + 1;
-  token = document.body.getAttribute("data-csrf");
-  post_array = []
-  for (var i=0; i<array.length; i++) {
-    count = len - 1;
-    post_array.push({key:array[i].getAttribute("data-pk"),value: count})
-  };
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("POST", link);
-  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xmlhttp.setRequestHeader('X-CSRFToken', token);
-  xmlhttp.send(JSON.stringify(post_array));
+function send_change_c_posts(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + document.body.querySelector("pk_saver").getAttribute("data-pk") + "/")
 }
+/// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 
 function top_paginate(link, block_id) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:

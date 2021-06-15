@@ -1,6 +1,20 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
-function getNodeindex(elm){var c = elm.parentNode.children, i = c.length;while(i--) if( c[i] == elm ) return i}
+function send_change_items(array, link) {
+  // функция передает новый порядок элементов, принимая их массив и ссылку, по которой нужно отправить изменения.
+  len = array.length + 1;
+  token = document.body.getAttribute("data-csrf");
+  post_array = []
+  for (var i=0; i<array.length; i++) {
+    count = len - 1;
+    post_array.push({key:array[i].getAttribute("data-pk"),value: count})
+  };
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST", link);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.setRequestHeader('X-CSRFToken', token);
+  xmlhttp.send(JSON.stringify(post_array));
+}
 
 function profile_list_block_attach(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

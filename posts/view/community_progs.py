@@ -48,7 +48,7 @@ class PostCommunityCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                list, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
+                list, attach = request.POST.get("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_post(
                                             creator=request.user,
                                             attach=attach,
@@ -387,3 +387,15 @@ class RemovePostFromCommunityList(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class CommunityChangePosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        community = Сommunity.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                post = Post.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
