@@ -230,50 +230,6 @@ on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'change', '#c_photo_attach', function() {
-  if (this.files.length > 10) {
-      toast_error("Не больше 10 фотографий");return
-  }
-  form_data = new FormData(this.parentElement);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_attach_photo/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".pag");
-    photo_post_upload_attach(photo_list, document.body.querySelector(".attach_block"));
-    }
-    close_create_window();
-  }
-  link_.send(form_data);
-});
-
-on('#ajax', 'change', '#c_photo_comment_attach', function() {
-  if (this.files.length > 2) {
-      toast_error("Не больше 2 фотографий");return
-  }
-  form_data = new FormData(this.parentElement);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/add_attach_photo/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".pag");
-    photo_comment_upload_attach(photo_list, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
-    }
-    close_create_window();
-  }
-  link_.send(form_data);
-});
-
 on('#ajax', 'click', '.c_add_photo_in_list', function() {
   add_item_in_list(this, '/gallery/community_progs/add_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
 })

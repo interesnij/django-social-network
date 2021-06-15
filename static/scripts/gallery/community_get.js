@@ -1,16 +1,8 @@
-
-on('#ajax', 'click', '.c_AVA_photo', function() {
+on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/avatar_photo/" + pk + "/" + photo_pk + "/", loader)
-});
-
-on('#ajax', 'click', '.c_MAI_photo', function() {
-  pk = this.getAttribute('photo-pk');
-  this.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".uuid_saver").getAttribute('data-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/photo/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_post_photo', function() {
@@ -54,20 +46,6 @@ on('#ajax', 'click', '.c_avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/avatar/" + pk + "/", loader)
-});
-
-on('#ajax', 'click', '.c_LIS_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/list_photo/" + pk + "/" + uuid + "/", loader)
-});
-
-on('#ajax', 'click', '.c_WA_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  photo_pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/wall_photo/" + pk + "/" + photo_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.c_photos_add', function() {

@@ -13,12 +13,17 @@ on('#ajax', 'click', '.load_attach_photo_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_photo_list_load/", "load_attach_photo_list");
 });
 
-
-on('#ajax', 'click', '.u_MAI_photo', function() {
-  pk = this.getAttribute('photo-pk');
-  this.parentElement.parentElement.parentElement.getAttribute('data-uuid') ? uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid') : uuid = document.body.querySelector(".uuid_saver").getAttribute('data-uuid');
+on('#ajax', 'click', '.detail_photo', function() {
+  photo_pk = this.getAttribute('photo-pk');
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/photo/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/gallery/photo/" + pk + "/", loader)
+});
+
+on('#ajax', 'click', '.u_avatar_detail', function() {
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  loader = document.getElementById("photo_loader");
+  open_fullscreen("/gallery/user/avatar/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.comment_photo', function() {
@@ -90,31 +95,6 @@ on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   open_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
-
-on('#ajax', 'click', '.u_avatar_detail', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/", loader)
-});
-
-on('#ajax', 'click', '.u_LIS_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/list_photo/" + pk + "/" + uuid + "/", loader)
-});
-
-on('#ajax', 'click', '.u_WAL_photo', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  photo_pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/wall_photo/" + pk + "/" + photo_pk + "/", loader)
-});
-on('#ajax', 'click', '.u_AVA_photo', function() {
-  photo_pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar_photo/" + photo_pk + "/", loader)
-});
 
 on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";

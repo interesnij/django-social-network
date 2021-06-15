@@ -115,32 +115,6 @@ class PhotoCommunityCommentList(ListView):
 		return comments
 
 
-class CommunityDetailAvatar(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_community_item, get_template_anon_community_item
-
-		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.AVATAR)
-		self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
-		self.photos = self.list.get_items()
-		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityDetailAvatar,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(CommunityDetailAvatar,self).get_context_data(**kwargs)
-		context["object"] = self.photo
-		context["community"] = self.community
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-		context["list"] = self.list
-		return context
-
 class CommunityFirstAvatar(TemplateView):
 	template_name = None
 
@@ -170,32 +144,6 @@ class CommunityFirstAvatar(TemplateView):
 		return context
 
 
-class CommunityPhoto(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_community_item, get_template_anon_community_item
-
-		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-		self.community = self.photo.community
-		self.list = self.community.get_photo_list()
-		if request.user.is_administrator_of_community(self.community.pk):
-			self.photos = self.list.get_items()
-		else:
-			self.photos = self.list.get_staff_items()
-		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityPhoto,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		c = super(CommunityPhoto,self).get_context_data(**kwargs)
-		c["object"], c["community"], c["next"], c["prev"], c["avatar"], c["list"] = self.photo, self.community, self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first(), self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first(), self.photo.is_avatar(self.request.user), self.list
-		return c
-
-
 class CommunityAlbumPhotoList(TemplateView):
 	template_name = None
 
@@ -223,37 +171,6 @@ class CommunityAlbumPhotoList(TemplateView):
 		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		return context
-
-
-class CommunityWallPhoto(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_community_item, get_template_anon_community_item
-
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-		try:
-			self.list = PhotoList.objects.get(community=self.community, type=PhotoList.WALL)
-		except:
-			self.list = PhotoList.objects.create(creator=self.community.creator, community=self.community, type=PhotoList.WALL, title="Фото со стены", description="Фото со стены")
-		self.photos = self.list.get_items()
-		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/wall_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/wall_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityWallPhoto,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(CommunityWallPhoto,self).get_context_data(**kwargs)
-		context["object"] = self.photo
-		context["community"] = self.community
-		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		context["avatar"] = self.photo.is_avatar(self.request.user)
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-		context["list"] = self.list
 		return context
 
 class CommunityPostPhoto(TemplateView):

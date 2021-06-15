@@ -1,7 +1,9 @@
 from django.conf.urls import url, include
-
+from gallery.views import PhotoDetail
 
 urlpatterns=[
+	url(r'^photo/(?P<pk>\d+)/$', PhotoDetail.as_view(), name="photo_detail"),
+
 	url(r'^user/', include('gallery.url.user')),
 	url(r'^community/', include('gallery.url.community')),
 
