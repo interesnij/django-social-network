@@ -29,31 +29,7 @@
 
 {% endif %}
 
-<div class="row overflow-x-auto no-gutters">
-  <div class="col-12">
-  <ul class="date-list" style="width:max-content">
-    {% for object in post_lists %}
-      {% if object.is_main %}
-      <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
-        <div class="media">
-          <div class="media-body">
-              <h6 class="mb-0">Записи ({{ object.count }})</h6>
-          </div>
-        </div>
-      </li>
-      {% else %}
-        <li class="date pointer c_post_list_change list" list-pk="{{ object.pk }}">
-          <div class="media">
-            <div class="media-body">
-              <h6 class="mb-0 list_name">{{ object.name }} ({{ object.count }})</h6>
-            </div>
-          </div>
-        </li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-  </div>
-</div>
+{% include 'desctop/communities/lenta/admin_lists.html' %}
 
 <span class="list_pk" list-pk="{{ fix_list.pk }}">
     <span class="post_stream is_post_paginate">

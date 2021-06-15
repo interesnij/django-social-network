@@ -8,7 +8,11 @@
   <ul>
     {% for object in fix_list.get_fix_items %}
     <li class="scrollable">
-      {% include 'desctop/users/lenta/fix_post.html' %}
+      {% if object.community %}
+        {% include 'desctop/communities/lenta/fix_post.html' %}
+      {% else %}
+        {% include 'desctop/users/lenta/fix_post.html' %}
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
@@ -24,46 +28,19 @@
 {% elif fix_list.count_fix_items == 1 %}
 
 {% for object in fix_list.get_fix_items %}
+{% if object.community %}
+  {% include 'desctop/communities/lenta/fix_post.html' %}
+{% else %}
   {% include 'desctop/users/lenta/fix_post.html' %}
+{% endif %}
 {% endfor %}
 
 {% endif %}
 
-<div class="row overflow-x-auto no-gutters">
-  <div class="col-12">
-  <ul class="date-list" style="width:max-content">
-    {% for object in post_lists %}
-      {% if object.is_main %}
-      <li class="date tab_active list is_main_post_list" list-pk="{{ object.pk }}">
-        <div class="media">
-          <div class="media-body">
-              <h6 class="mb-0">Записи (<span class="handle pointer">{{ object.count }}</span>) - {{ object.get_order }}</h6>
-          </div>
-        </div>
-      </li>
-      {% else %}
-        <li class="date pointer u_post_list_change list" list-pk="{{ object.pk }}">
-          <div class="media">
-            <div class="media-body">
-              <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle pointer">{{ object.count }}</span>) - {{ object.get_order }}</h6>
-            </div>
-          </div>
-        </li>
-      {% endif %}
-    {% endfor %}
-        <li class="date pointer u_add_post_list">
-          <div class="media">
-            <div class="media-body">
-              <h6 class="mb-0">Создать список</h6>
-            </div>
-          </div>
-        </li>
-  </ul>
-  </div>
-</div>
+    {% include 'desctop/users/lenta/my_lists.html' %}
 
       <span class="list_pk" list-pk="{{ fix_list.pk }}">
-        {% if list.is_list %}
+        {% if list.is_list and request.user.pk == object.creator.pk %}
         <span>
           <a class="u_edit_post_list pointer">изменить список</a>
             &nbsp;

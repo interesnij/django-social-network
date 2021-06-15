@@ -15,18 +15,18 @@ on('#ajax', 'click', '.u_edit_post_list', function() {
   open_fullscreen("/posts/user_progs/edit_list/" + list_pk + "/", loader)
 });
 
-on('#ajax', 'click', '.u_post_list_change', function() {
+on('#ajax', 'click', '.post_list_change', function() {
   if (!this.classList.contains("tab_active")){
+    this.classList.contains("community") ? url = "/communities/list/" : url = "/users/detail/list/";
     parent = this.parentElement.parentElement.parentElement;
     list = parent.querySelectorAll(".list");
     for (var i = 0; i < list.length; i++) {
       list[i].classList.remove("tab_active");
-      list[i].classList.add("pointer", "u_post_list_change");
+      list[i].classList.add("pointer", "post_list_change");
     };
-    current_list =
     block = parent.nextElementSibling;
-    list_block_load(block, ".list_pk", "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
-    this.classList.remove("pointer", "u_post_list_change");
+    list_block_load(block, ".list_pk", url + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    this.classList.remove("pointer", "post_list_change");
     this.classList.add("tab_active");
   }
 });
