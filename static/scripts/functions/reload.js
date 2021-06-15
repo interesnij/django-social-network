@@ -88,7 +88,7 @@ function send_change_u_posts(el) {
   posts = el.parentElement.querySelectorAll(".u_post");
 
   console.log(posts);
-  console.log(reverseArray(posts));
+  console.log([].slice.call(el.parentElement.querySelectorAll(".u_post"), 0).reverse());
   token = document.body.getAttribute("data-csrf");
   post_array = []
   for (var i=0; i<posts.length; i++) {
