@@ -1,7 +1,3 @@
-.post_list_change:first-child {
-  cursor: auto;
-  border-bottom: 3px solid #e625ea;
-}
 
 .handle {
   cursor: move;
