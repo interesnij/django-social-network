@@ -85,10 +85,9 @@ function change_position(block, el) {
   }
 }
 function send_change_u_posts(el) {
-  posts = el.parentElement.querySelectorAll(".u_post");
+  posts = [].slice.call(el.parentElement.querySelectorAll(".u_post"), 0).reverse();
 
   console.log(posts);
-  console.log([].slice.call(el.parentElement.querySelectorAll(".u_post"), 0).reverse());
   token = document.body.getAttribute("data-csrf");
   post_array = []
   for (var i=0; i<posts.length; i++) {
