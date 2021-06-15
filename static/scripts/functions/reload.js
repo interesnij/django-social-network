@@ -68,12 +68,13 @@ function get_dragula(block) {
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 }
-function reverseArr(input) {
-    var ret = new Array;
-    for(var i = input.length-1; i >= 0; i--) {
-        ret.push(input[i]);
-    }
-    return ret;
+function reverseArray(arr) {
+  for (var i = 0; i <= (arr.length / 2); i++) {
+      let el = arr[i];
+      arr[i] = arr[arr.length - 1 - i];
+      arr[arr.length - 1 - i] = el;
+  }
+  return arr;
 }
 function change_position(block, el) {
   if (el.classList.contains("u_post_list_change")) {
@@ -85,8 +86,9 @@ function change_position(block, el) {
 }
 function send_change_u_posts(el) {
   posts = el.parentElement.querySelectorAll(".u_post");
+
   console.log(posts);
-  console.log([].concat(posts).reverse());
+  console.log(reverseArray(posts));
   token = document.body.getAttribute("data-csrf");
   post_array = []
   for (var i=0; i<posts.length; i++) {
