@@ -45,4 +45,5 @@ class PhotoDetail(TemplateView):
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["is_admin"] = self.is_admin
+		context["community"] = self.community
 		return context
