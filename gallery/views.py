@@ -24,7 +24,7 @@ class PhotoDetail(TemplateView):
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from common.templates import get_template_user_item, get_template_anon_user_item
-			if request.user.pk == self.photo.pk:
+			if request.user.pk == self.photo.creator.pk:
 				from gallery.forms import PhotoDescriptionForm
 				self.photos = self.list.get_staff_items()
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
