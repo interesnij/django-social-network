@@ -93,7 +93,7 @@ function send_change_u_posts(el) {
   post_array = []
   for (var i=0; i<posts.length; i++) {
     count = len - 1;
-    post_array.push({key:posts[i].getAttribute("data-pk"),value: count)
+    post_array.push({key:posts[i].getAttribute("data-pk"),value: count})
   };
   var xmlhttp = new XMLHttpRequest();
   var theUrl = "/posts/user_progs/change_position/";
