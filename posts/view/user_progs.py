@@ -376,5 +376,5 @@ class UserChangePosition(View):
         for item in json.loads(request.body):
             post = Post.objects.get(pk=item['key'])
             post.order=item['value']
-            post.save(update_fields="order")
+            post.save(update_fields=["order"])
         return HttpResponse(json.loads(request.body))
