@@ -105,7 +105,7 @@ class PhotoUserCommentList(ListView):
 
 	def get_queryset(self):
 		return self.photo.get_comments()
-		
+
 
 class UserPostPhoto(TemplateView):
 	template_name = None
@@ -166,9 +166,9 @@ class UserFirstAvatar(TemplateView):
 		self.photos = self.list.get_items()
 		self.photo = self.list.get_first_photo()
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.photo, "gallery/u_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

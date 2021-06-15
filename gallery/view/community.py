@@ -130,9 +130,9 @@ class CommunityFirstAvatar(TemplateView):
 		self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
 		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/avatar/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/avatar/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
