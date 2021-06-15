@@ -46,7 +46,7 @@ class VideoCommentUserCreate(View):
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text, community=None)
-                return render_for_platform(request, 'video/u_video_comment/my_parent.html',{'comment': new_comment})
+                return render_for_platform(request, 'video/u_video_comment/parent.html',{'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -68,7 +68,7 @@ class VideoReplyUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=parent.video, text=comment.text, community=None)
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'video/u_video_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'video/u_video_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 

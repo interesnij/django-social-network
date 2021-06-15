@@ -101,7 +101,7 @@ class PhotoCommentCommunityCreate(View):
             check_can_get_lists(request.user, community)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text, community=community)
-                return render_for_platform(request, 'gallery/c_photo_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'gallery/c_photo_comment/parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -126,7 +126,7 @@ class PhotoReplyCommunityCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=parent.photo, text=comment.text, community=community)
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'gallery/c_photo_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+            return render_for_platform(request, 'gallery/c_photo_comment/reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
         else:
             return HttpResponseBadRequest()
 

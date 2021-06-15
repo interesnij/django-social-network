@@ -105,7 +105,7 @@ class PostCommentUserCreate(View):
                 from common.template.user import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=None)
-                return render_for_platform(request, 'posts/u_post_comment/my_parent.html', {'comment': new_comment})
+                return render_for_platform(request, 'posts/u_post_comment/parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -128,7 +128,7 @@ class PostReplyUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=parent.post, text=comment.text, community=None)
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'posts/u_post_comment/my_reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'posts/u_post_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 

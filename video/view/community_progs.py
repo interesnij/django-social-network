@@ -47,7 +47,7 @@ class VideoCommentCommunityCreate(View):
 			check_can_get_lists(request.user, community)
 			if request.POST.get('text') or request.POST.get('attach_items'):
 				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text, community=community)
-				return render_for_platform(request, 'video/c_video_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+				return render_for_platform(request, 'video/c_video_comment/parent.html',{'comment': new_comment, 'community': community})
 			else:
 				return HttpResponseBadRequest()
 		else:
@@ -72,7 +72,7 @@ class VideoReplyCommunityCreate(View):
 				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=parent.video, text=comment.text, community=community)
 			else:
 				return HttpResponseBadRequest()
-			return render_for_platform(request, 'video/c_video_comment/admin_reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
+			return render_for_platform(request, 'video/c_video_comment/reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
 		else:
 			return HttpResponseBadRequest()
 

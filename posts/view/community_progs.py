@@ -126,7 +126,7 @@ class PostCommunityCommentCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community)
-                return render_for_platform(request, 'posts/c_post_comment/admin_parent.html',{'comment': new_comment, 'community': community})
+                return render_for_platform(request, 'posts/c_post_comment/parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -147,7 +147,7 @@ class PostCommunityReplyCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=parent.post, community=community)
-                return render_for_platform(request, 'posts/c_post_comment/admin_reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
+                return render_for_platform(request, 'posts/c_post_comment/reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -392,7 +392,7 @@ class CommunityChangePosition(View):
     def post(self,request,*args,**kwargs):
         import json
         from communities.models import Community
-        
+
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
