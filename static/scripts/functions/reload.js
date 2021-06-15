@@ -68,14 +68,7 @@ function get_dragula(block) {
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 }
-function reverseArray(arr) {
-  for (var i = 0; i <= (arr.length / 2); i++) {
-      let el = arr[i];
-      arr[i] = arr[arr.length - 1 - i];
-      arr[arr.length - 1 - i] = el;
-  }
-  return arr;
-}
+
 function change_position(block, el) {
   if (el.classList.contains("u_post_list_change")) {
     console.log("Порядок списков постов изменен!")
@@ -274,7 +267,6 @@ function list_block_load(target_block, response_block, link) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
-       console.log(target_block);
        get_dragula(".is_post_paginate");
        get_dragula(".date-list");
     }};
