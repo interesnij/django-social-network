@@ -87,7 +87,7 @@ function send_change_u_posts(el) {
   send_change_items(el.parentElement.querySelectorAll(".u_post"), "/posts/user_progs/change_position/")
 }
 function send_change_c_posts(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + document.body.querySelector("pk_saver").getAttribute("data-pk") + "/")
+  send_change_items(el.parentElement.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
 }
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 
