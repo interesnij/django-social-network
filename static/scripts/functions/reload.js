@@ -77,7 +77,7 @@ function change_position(block, el) {
   }
 }
 function send_change_u_posts(el) {
-  posts = el.parentElement.querySelectorAll(".u_post").reverse();
+  posts = el.parentElement.querySelectorAll(".u_post");
   posts_reverse = posts.reverse();
   token = document.body.getAttribute("data-csrf");
   post_array = []
