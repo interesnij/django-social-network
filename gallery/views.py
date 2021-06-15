@@ -32,7 +32,7 @@ class PhotoDetail(TemplateView):
 		return super(PhotoDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-        from gallery.forms import PhotoDescriptionForm
+		from gallery.forms import PhotoDescriptionForm
 		context = super(PhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["list"] = self.list
