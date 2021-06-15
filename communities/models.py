@@ -327,6 +327,10 @@ class Community(models.Model):
         query = Q(community_id=self.id)
         query.add(~Q(type__contains="_"), Q.AND)
         return PostList.objects.filter(query)
+    def get_selected_post_list_pk(self):
+        from communities.model.list import CommunityPostListPosition
+        list = CommunityPostListPosition.objects.filter(user=self.pk).last()
+        return list.list
 
     def get_survey_lists(self):
         from survey.models import SurveyList

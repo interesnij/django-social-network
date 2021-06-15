@@ -148,7 +148,7 @@ class CommunityDetail(TemplateView):
         c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_list'], c['video_list'], \
         c['music_list'], c['docs_list'], c['good_list'], c['post_list_pk'] = self.c.get_members(self.c.pk)[0:6], self.c, \
         self.common_friends, self.common_friends_count, self.c.get_photo_list(), \
-        self.c.get_video_list(), self.c.get_playlist(), self.c.get_doc_list(), self.c.get_good_list(), self.c.get_post_list().pk
+        self.c.get_video_list(), self.c.get_playlist(), self.c.get_doc_list(), self.c.get_good_list(), self.get_selected_post_list_pk()
         return c
 
 

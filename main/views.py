@@ -66,6 +66,7 @@ class SwitchView(TemplateView):
 			self.user = self.custom_link.user
 			user_agent = request.META['HTTP_USER_AGENT']
 			r_user_pk = request.user.pk
+			self.post_list_pk = self.user.get_selected_post_list_pk()
 			user_pk = int(self.user.pk)
 			if request.user.is_authenticated:
 				if request.user.is_no_phone_verified():
@@ -122,6 +123,7 @@ class SwitchView(TemplateView):
 		elif self.custom_link.community:
 			self.c, user_agent, c_pk, u_pk = self.custom_link.community, request.META['HTTP_USER_AGENT'], int(self.kwargs["slug"]), request.user.pk
 			c_pk = self.c.pk
+			self.post_list_pk = self.c.get_selected_post_list_pk()
 			if self.c.is_suspended():
 				self.template_name = "communities/detail/community_suspended.html"
 			elif self.c.is_blocked():
@@ -182,9 +184,9 @@ class SwitchView(TemplateView):
 	def get_context_data(self, **kwargs):
 		c = super(SwitchView, self).get_context_data(**kwargs)
 		c['user'], c['custom_link'], c['community'], c['fix_list'], c['photo_list'], c['video_list'],c['playlist'], \
-		c['docs_list'], c['good_list'], c['get_buttons_block'], c['common_frends'], c['common_friends_count'] = self.user, \
+		c['docs_list'], c['good_list'], c['get_buttons_block'], c['common_frends'], c['common_friends_count'], c['post_list_pk'] = self.user, \
 		self.custom_link, self.c, self.fix_list, self.photo_list, self.video_list, self.playlist, self.doc_list, \
-		self.good_list, self.get_buttons_block, self.common_frends, self.common_friends_count
+		self.good_list, self.get_buttons_block, self.common_frends, self.common_friends_count, self.post_list_pk
 		return c
 
 

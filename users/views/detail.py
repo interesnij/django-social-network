@@ -321,5 +321,5 @@ class ProfileUserView(TemplateView):
         c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'], c['post_list_pk'] = \
         self.user, self.user.get_photo_list(), self.user.get_video_list(), \
         self.user.get_playlist(), self.user.get_doc_list(), self.user.get_good_list(), \
-        self.get_buttons_block, self.common_frends, self.user.get_post_list().pk
+        self.get_buttons_block, self.common_frends, self.user.get_selected_post_list_pk()
         return c
