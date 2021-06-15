@@ -373,8 +373,11 @@ class UserChangePosition(View):
     def post(self,request,*args,**kwargs):
         import json
 
+        query = []
+
         for item in json.loads(request.body):
             post = Post.objects.get(pk=item['key'])
             post.order=item['value']
             post.save(update_fields=["order"])
-        return HttpResponse(json.loads(request.body))
+            query += [post]
+        return HttpResponse(query)
