@@ -388,11 +388,12 @@ class RemovePostFromCommunityList(View):
         else:
             raise Http404
 
-
 class CommunityChangePosition(View):
     def post(self,request,*args,**kwargs):
         import json
-        community = Сommunity.objects.get(pk=self.kwargs["pk"])
+        from communities.models import Community
+        
+        community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
                 post = Post.objects.get(pk=item['key'])
