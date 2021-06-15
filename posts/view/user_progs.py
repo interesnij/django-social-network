@@ -379,5 +379,5 @@ class UserChangePosition(View):
             post = Post.objects.get(pk=item['key'])
             post.order=item['value']
             post.save(update_fields=["order"])
-            query += [post, ]
+            query += [post.pk, ]
         return HttpResponse(query)
