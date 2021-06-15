@@ -374,8 +374,7 @@ class UserChangePosition(View):
         import json
 
         for item in json.loads(request.body):
-            try:
-                Post.objects.filter(pk=item['key']).update(order=item['value'])
-            except:
-                raise Http404
+            post = Post.objects.get(pk=item['key'])
+            post.order=item['value']
+            post.save(update_fields="order")
         return HttpResponse(json.loads(request.body))
