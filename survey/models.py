@@ -103,7 +103,7 @@ class SurveyList(models.Model):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(Q(type="MAI")&Q(user_id=user_pk)), Q.AND)
-        return cls.objects.filter(query).order_by("order")
+        return cls.objects.filter(query)
     @classmethod
     def get_user_lists_count(cls, user_pk):
         query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
@@ -115,7 +115,7 @@ class SurveyList(models.Model):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
-        return cls.objects.filter(query).order_by("order")
+        return cls.objects.filter(query)
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(community_id=community_pk)|Q(communities__id=community_pk)

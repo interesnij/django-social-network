@@ -149,7 +149,7 @@ class PostList(models.Model):
     def get_community_lists(cls, community_pk):
         query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
         query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
-        return cls.objects.filter(query).order_by("order")
+        return cls.objects.filter(query)
     @classmethod
     def get_community_lists_count(cls, community_pk):
         query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
