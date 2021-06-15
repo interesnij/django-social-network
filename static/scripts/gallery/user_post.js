@@ -233,10 +233,12 @@ on('#ajax', 'change', '#user_avatar_upload', function() {
 })
 
 on('#ajax', 'change', '#u_photo_comment_attach', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_comment_photos"));
+  if (this.files.length > 2) {
+      toast_error("Не больше 2 фотографий");return
+  }
+  form_data = new FormData(this.parentElement);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_comment_photo/" + pk + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/add_attach_photo/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
