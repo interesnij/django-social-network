@@ -15,9 +15,8 @@ on('#ajax', 'click', '.load_attach_photo_list', function() {
 
 on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/photo/" + pk + "/", loader)
+  open_fullscreen("/gallery/photo/" + photo_pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_avatar_detail', function() {
