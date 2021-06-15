@@ -232,6 +232,28 @@ on('#ajax', 'change', '#user_avatar_upload', function() {
   post_with_pk_and_reload(parent, "/gallery/user_progs/add_avatar/")
 })
 
+on('#ajax', 'change', '#u_photo_attach', function() {
+  if (this.files.length > 10) {
+      toast_error("Не больше 10 фотографий");return
+  }
+  form_data = new FormData(this.parentElement);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/gallery/user_progs/add_attach_photo/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".pag");
+    photo_post_upload_attach(photo_list, document.body.querySelector(".attach_block"));
+    }
+    close_create_window();
+  }
+  link_.send(form_data);
+});
+
 on('#ajax', 'change', '#u_photo_comment_attach', function() {
   if (this.files.length > 2) {
       toast_error("Не больше 2 фотографий");return
@@ -247,9 +269,7 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     photo_list = response.querySelectorAll(".pag");
-
-    dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    photo_comment_upload_attach(photo_list, dropdown);
+    photo_comment_upload_attach(photo_list, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
     }
     close_create_window();
   }
