@@ -1,7 +1,11 @@
+.first_post_list:first-child {
+  cursor:none !important;
+  border-bottom: 3px solid #e625ea;
+}
+
 .handle {
   cursor: move;
 }
-
 .text-white {
   color: white !important
 }

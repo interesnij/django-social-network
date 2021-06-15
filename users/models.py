@@ -1020,7 +1020,7 @@ class User(AbstractUser):
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostListPosition
         list = UserPostListPosition.objects.filter(user=self.pk).last()
-        return list.list
+        return list.list 
 
     def get_survey_lists(self):
         from survey.models import SurveyList
