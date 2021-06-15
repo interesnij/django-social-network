@@ -85,23 +85,22 @@ function change_position(block, el) {
   }
 }
 function send_change_u_posts(el) {
-  posts = el.parentElement.querySelectorAll(".u_post");
-  len = posts.length + 1;
+  send_change_items(el.parentElement.querySelectorAll(".u_post"), "/posts/user_progs/change_position/")
+}
 
-  console.log(posts);
+function send_change_items(array, link) {
+  len = array.length + 1;
   token = document.body.getAttribute("data-csrf");
   post_array = []
-  for (var i=0; i<posts.length; i++) {
+  for (var i=0; i<array.length; i++) {
     count = len - 1;
-    post_array.push({key:posts[i].getAttribute("data-pk"),value: count})
+    post_array.push({key:array[i].getAttribute("data-pk"),value: count})
   };
   var xmlhttp = new XMLHttpRequest();
-  var theUrl = "/posts/user_progs/change_position/";
-  xmlhttp.open("POST", theUrl);
+  xmlhttp.open("POST", link);
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.setRequestHeader('X-CSRFToken', token);
   xmlhttp.send(JSON.stringify(post_array));
-  console.log(post_array);
 }
 
 function top_paginate(link, block_id) {
