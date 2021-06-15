@@ -1,4 +1,4 @@
-<div class="card mb-3 pag" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 pag u_post" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
   <span class="span1 {% for list in object.get_lists %}{{ list.pk }} {% endfor %}"></span>
     {% include 'mobile/posts/post_community/admin_card_header.html' %}
 
