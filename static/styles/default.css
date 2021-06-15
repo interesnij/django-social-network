@@ -1,4 +1,4 @@
-.first_post_list:first-child {
+.post_list_change:first-child {
   cursor:none !important;
   border-bottom: 3px solid #e625ea;
 }
