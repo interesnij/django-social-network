@@ -78,10 +78,10 @@ function change_position(block, el) {
 }
 function send_change_u_posts(el) {
   posts = el.parentElement.querySelectorAll(".u_post");
-  posts_reverse = posts.reverse();
+  console.log(posts);
   token = document.body.getAttribute("data-csrf");
   post_array = []
-  for (var i=0; i<posts_reverse.length; i++) {
+  for (var i=0; i<posts.length; i++) {
     post_array.push({key:posts[i].getAttribute("data-pk"),value: getNodeindex(posts[i]) + 1})
   };
   var xmlhttp = new XMLHttpRequest();
