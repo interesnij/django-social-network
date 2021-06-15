@@ -22,7 +22,7 @@ on('#ajax', 'click', '.detail_photo', function() {
 on('#ajax', 'click', '.u_avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
   loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/", loader)
+  open_fullscreen("/gallery/user/photo/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.comment_photo', function() {
