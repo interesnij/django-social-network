@@ -22,12 +22,56 @@
           <svg class="svg_default" style="width:100%;height:auto" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         {% endif %}
     </div>
+    <a href="{% url 'user_photo_list' pk=object.creator.pk uuid=list.uuid %}" class="ajax">{{ list.name }}</a><br>
+
+    {% if request.user.pk == object.creator.pk %}
     <span>
-        <span style="cursor:pointer" class="">Пожаловаться</span>
+      <span>
+        <a class="community_photo_remove">Удалить</a>
+      </span>
     </span>
+    &nbsp;
+      <span class="btn_settings_photo">
+        <span>
+          {% if avatar %}
+            Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
+          {% else %}
+            <a class="u_set_avatar">Сделать аватаром</a>
+          {% endif %}
+        </span>
+        &nbsp;
+          <span>
+            {% if object.is_public %}
+            <a class="u_photo_on_private">Вкл. приватность</a>
+            {% else %}
+            <a class="u_photo_off_private">Откл. приватность</a>
+            {% endif %}
+          </span>
+          &nbsp;
+          <span>
+            {% if object.comments_enabled %}
+              <a class="u_photo_off_comment">Выкл. комментарии</a>
+            {% else %}
+              <a class="u_photo_on_comment">Вкл. комментарии</a>
+            {% endif %}
+          </span>
+          &nbsp;
+          <span>
+            {% if object.votes_on %}
+              <a class="u_photo_off_votes">Выкл. реакции</a>
+            {% else %}
+              <a class="u_photo_on_votes">Вкл. реакции</a>
+            {% endif %}
+          </span>
+      </span>
+      {% elif request.user.is_photo_manager %}
+        <span class="u_post_close_window">Закрыть</span>
+      {% else %}
+        <span class="u_post_claim">Пожаловаться</span>
+      {% endif %}
+      <span class="js-textareacopybtn">Скопировать ссылку</span>
   </div>
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
-
       <div class="card-header">
           <div class="media">
             {% include 'desctop/generic/user/creator_figure.html' %}
@@ -39,11 +83,24 @@
               </div>
           </div>
       </div>
+      {% if request.user.pk == object.creator.pk %}
+      <span>
+        {% if object.description %}
+        {{ object.description }}
+        <br><br>
+          <span style="cursor:pointer" class="u_photo_edit">Редактировать</span>
+        {% else %}
+          <span style="cursor:pointer" class="u_photo_edit">Добавить описание</span>
+        {% endif %}
+
+      {% else %}
         {% if object.description %}
           {{ object.description }}
         {% else %}
-          Нет описания
+          <p>Нет описания</p>
         {% endif %}
+      </span>
+      {% endif %}
       <br><br>
       {% include 'desctop/gallery/u_photo/info.html' %}
     </div>
