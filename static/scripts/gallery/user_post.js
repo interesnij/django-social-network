@@ -246,11 +246,10 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".u_photo_detail");
-    block_divs_length = photo_list.length;
+    photo_list = response.querySelectorAll(".pag");
 
     dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
-    photo_comment_upload_attach(photo_list, dropdown, block_divs_length);
+    photo_comment_upload_attach(photo_list, dropdown);
     }
     close_create_window();
   }
