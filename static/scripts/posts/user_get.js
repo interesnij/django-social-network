@@ -16,7 +16,7 @@ on('#ajax', 'click', '.u_edit_post_list', function() {
 });
 
 on('#ajax', 'click', '.post_list_change', function() {
-  if (!this.classList.contains("tab_active")){
+  if (!this.classList.contains("tab_active") || !this.style.cursor == "auto" ){
     this.classList.contains("community") ? url = "/communities/list/" : url = "/users/detail/list/";
     parent = this.parentElement.parentElement.parentElement;
     list = parent.querySelectorAll(".list");
