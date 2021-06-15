@@ -29,7 +29,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     clear_attach_block();
     drops = form_post.querySelectorAll(".dropdown-menu");
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    list = form_post.parentElement.parentElement.querySelector(".tab_active");
+    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
     elem = link_.responseText;
