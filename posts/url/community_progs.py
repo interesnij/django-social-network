@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^edit_list/(?P<list_pk>\d+)/$', CommunityPostListEdit.as_view()),
     url(r'^delete_list/(?P<list_pk>\d+)/$', CommunityPostListDelete.as_view()),
     url(r'^restore_list/(?P<list_pk>\d+)/$', CommunityPostListRecover.as_view()),
-	url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPostListInCommunityCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePostListFromCommunityCollections.as_view()),
+	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostListInCommunityCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostListFromCommunityCollections.as_view()),
 
 	url(r'^change_position/(?P<pk>\d+)/$', CommunityChangePostPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangePostListPosition.as_view()),

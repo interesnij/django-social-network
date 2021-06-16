@@ -11,7 +11,8 @@ from django.views.generic.base import TemplateView
 
 class AddPostListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list, community = PostList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["pk"])
+        community = list.community
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
             list.communities.add(community)
@@ -21,7 +22,8 @@ class AddPostListInCommunityCollections(View):
 
 class RemovePostListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list, community = PostList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["pk"])
+        community = list.community
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
             list.communities.remove(community)

@@ -32,8 +32,8 @@ urlpatterns = [
     url(r'^edit_list/(?P<list_pk>\d+)/$', UserPostListEdit.as_view()),
     url(r'^delete_list/(?P<list_pk>\d+)/$', UserPostListDelete.as_view()),
     url(r'^restore_list/(?P<list_pk>\d+)/$', UserPostListRecover.as_view()),
-	url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddPostListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemovePostListFromUserCollections.as_view()),
+	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostListInUserCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostListFromUserCollections.as_view()),
 
 	url(r'^change_position/(?P<pk>\d+)/$', UserChangePostPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangePostListPosition.as_view()),
