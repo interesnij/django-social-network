@@ -25,7 +25,7 @@ on('#ajax', 'click', '.post_list_change', function() {
       list[i].classList.add("pointer", "post_list_change");
     };
     block = parent.nextElementSibling;
-    list_block_load(block, ".list_pk", url + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
+    list_block_load(block, ".span_list_pk", url + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "post_list_change");
     this.classList.add("tab_active");
   }
