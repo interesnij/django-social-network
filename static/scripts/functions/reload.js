@@ -71,8 +71,10 @@ function get_dragula(block) {
 
 function change_position(block, el) {
   // функция инициирует смену порядка элементов,учитывая их класс.
-  if (el.classList.contains("post_list_change")) {
-    console.log("Порядок списков постов изменен!")
+  if (el.classList.contains("u_list")) {
+    send_change_u_post_list(el)
+  } else if (el.classList.contains("c_list")) {
+    send_change_c_post_list(el)
   } else if (el.classList.contains("u_post")) {
     console.log("Порядок постов изменен!");
     send_change_u_posts(el)
