@@ -30,7 +30,7 @@
 {% endif %}
 
 {% include 'mobile/communities/lenta/admin_lists.html' %}
-
+  <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.pk }}">
         {% if list.is_list %}
         <span>
@@ -54,4 +54,5 @@
           {% endif %}
         </span>
     </span>
+  </span>
 </span>

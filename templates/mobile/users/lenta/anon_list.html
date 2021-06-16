@@ -30,8 +30,8 @@
 {% endif %}
 
 {% include 'mobile/users/lenta/lists.html' %}
-
-      <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.pk }}">
+  <span class="span_list_pk" list-pk="{{ list.pk }}">
+      <span class="list_pk" data-uuid="{{ list.pk }}">
         <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/anon_post.html' %}
@@ -46,4 +46,5 @@
           {% endif %}
         </span>
     </span>
+  </span>
 </span>

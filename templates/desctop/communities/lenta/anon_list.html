@@ -30,7 +30,7 @@
 {% endif %}
 
 {% include 'desctop/communities/lenta/admin_lists.html' %}
-
+<span class="span_list_pk" list-pk="{{ list.pk }}">
 <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.pk }}">
     <span class="post_stream is_post_paginate">
       {% for object in object_list %}
@@ -45,5 +45,6 @@
       </div>
       {% endif %}
     </span>
+</span>
 </span>
 </span>

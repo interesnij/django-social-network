@@ -46,7 +46,7 @@ class PostList(models.Model):
         self.communities.add(community)
     def remove_in_community_collections(self, community):
         from communities.model.list import CommunityPostListPosition
-        CommunityPostListPosition.objects.get(community=community.pk, list=self.pk).remove()
+        CommunityPostListPosition.objects.get(community=community.pk, list=self.pk).delete()
         self.communities.remove(user)
     def add_in_user_collections(self, user):
         from users.model.list import UserPostListPosition

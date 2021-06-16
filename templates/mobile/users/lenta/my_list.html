@@ -30,8 +30,8 @@
 {% endif %}
 
 {% include 'mobile/users/lenta/my_lists.html' %}
-
-      <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.pk }}">
+  <span class="span_list_pk" list-pk="{{ list.pk }}">
+      <span class="list_pk" data-uuid="{{ list.pk }}">
         {% if list.is_list %}
         <span>
           <a class="u_edit_post_list pointer">изменить список</a>
@@ -54,4 +54,5 @@
           {% endif %}
         </span>
     </span>
+  </span>
 </span>
