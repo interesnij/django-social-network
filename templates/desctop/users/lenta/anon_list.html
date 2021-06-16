@@ -31,7 +31,7 @@
 
 {% include 'desctop/users/lenta/lists.html' %}
 
-      <span class="list_pk" list-pk="{{ fix_list.pk }}">
+      <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}">
         <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/anon_post.html' %}

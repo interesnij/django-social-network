@@ -39,7 +39,7 @@
 
     {% include 'desctop/users/lenta/my_lists.html' %}
 
-      <span class="list_pk" list-pk="{{ fix_list.pk }}">
+      <span class="list_pk" list-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}">
         {% if list.is_list and request.user.pk == object.creator.pk %}
         <span>
           <a class="u_edit_post_list pointer">изменить список</a>
