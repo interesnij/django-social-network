@@ -214,7 +214,7 @@ class UserChatPhoto(TemplateView):
 
 		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.photos = self.chat.get_attach_items()
+		self.photos = self.chat.get_attach_photos() 
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.photo, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:

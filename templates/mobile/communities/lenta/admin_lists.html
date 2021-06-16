@@ -3,18 +3,18 @@
   <ul class="date-list first_post_list" style="width:max-content">
     {% for object in post_lists %}
         {% if object.community %}
-        <li class="date pointer post_list_change community list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}">
+        <li class="date pointer post_list_change community list c_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}">
           <div class="media">
             <div class="media-body">
-              <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle pointer">{{ object.count }}</span>)</h6>
+              <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
             </div>
           </div>
         </li>
         {% else %}
-          <li class="date pointer post_list_change list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}">
+          <li class="date pointer post_list_change list c_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}">
             <div class="media">
               <div class="media-body">
-                <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle pointer">{{ object.count }}</span>)</h6>
+                <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
               </div>
             </div>
           </li>

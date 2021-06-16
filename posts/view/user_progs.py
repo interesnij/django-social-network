@@ -369,11 +369,27 @@ class RemovePostFromUserList(View):
             raise Http404
 
 
-class UserChangePosition(View):
+class UserChangePostPosition(View):
     def post(self,request,*args,**kwargs):
         import json
-        for item in json.loads(request.body):
-            post = Post.objects.get(pk=item['key'])
-            post.order=item['value']
-            post.save(update_fields=["order"])
+
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == user.pk:
+            for item in json.loads(request.body):
+                post = Post.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
+
+class UserChangePostListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from users.model.list import UserPostListPosition
+
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == user.pk:
+            for item in json.loads(request.body):
+                list = UserPostListPosition.objects.get(list=item['key'])
+                list.position=item['value']
+                list.save(update_fields=["position"])
         return HttpResponse()

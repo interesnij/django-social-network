@@ -816,7 +816,7 @@ class Post(models.Model):
         return Photo.objects.filter(id__in=query)
 
     def get_attach_videos(self):
-        if "pho" in self.attach:
+        if "vid" in self.attach:
             query = []
             from video.models import Video
 

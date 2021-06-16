@@ -1,20 +1,48 @@
 <div class="data_display" data-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
   <div class="row" style="margin-right: -10px;margin-left: -10px;">
-
-    {% include 'mobile/gallery/add_photo.html' %}
     <div class="col" style="padding:5px;">
       <button type="button" class="btn btn-sm custom_color border menu_drop" style="width: -webkit-fill-available;">
           Опции
       </button>
       <div class="dropdown-menu">
+        {% if is_admin %}
           <span>
-            <a class="dropdown-item pointer">Пожаловаться</a>
+            <a class="dropdown-item mob_community_photo_remove pointer">Удалить</a>
           </span>
+          <span>
           {% if avatar %}
             <a class="dropdown-item mob_c_unset_avatar pointer">Убрать аватар</a>
           {% else %}
             <a class="dropdown-item mob_c_set_avatar pointer">Сделать аватаром</a>
           {% endif %}
+          </span>
+          <span>
+          {% if object.is_public %}
+            <a class="dropdown-item mob_c_photo_on_private pointer">Вкл. приватность</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_off_private pointer">Выкл. приватность</a>
+          {% endif %}
+          </span>
+          <span>
+          {% if object.comments_enabled %}
+            <a class="dropdown-item mob_c_photo_off_comment pointer">Выкл. комментарии</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_on_comment pointer">Вкл. комментарии</a>
+          {% endif %}
+          </span>
+          <span>
+          {% if object.votes_on %}
+            <a class="dropdown-item mob_c_photo_off_votes pointer">Выкл. реакции</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_on_votes pointer">Вкл. реакции</a>
+          {% endif %}
+          </span>
+          {% elif request.user.is_photo_manager %}
+            <span class="dropdown-item c_post_close_window">Закрыть</span>
+          {% else %}
+            <span class="dropdown-item c_photo_claim">Пожаловаться</span>
+          {% endif %}
+          <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
       </div>
     </div>
     <div class="col" style="padding:5px;">

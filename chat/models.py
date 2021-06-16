@@ -211,6 +211,25 @@ class Chat(models.Model):
         member.save(update_fields=["is_administrator"])
         return member
 
+    def get_attach_photos(self):
+        if "pho" in self.attach:
+            query = []
+            from gallery.models import Photo
+
+            for item in self.attach.split(","):
+                if item[:3] == "pho":
+                    query.append(item[3:])
+        return Photo.objects.filter(id__in=query)
+
+    def get_attach_videos(self):
+        if "pho" in self.attach:
+            query = []
+            from video.models import Video
+            for item in self.attach.split(","):
+                if item[:3] == "vid":
+                    query.append(item[3:])
+        return Video.objects.filter(id__in=query)
+
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
@@ -458,3 +477,22 @@ class Message(models.Model):
     def get_c_attach(self, user):
         from common.attach.message_attach import get_c_message_attach
         return get_c_message_attach(self, user)
+
+    def get_attach_photos(self):
+        if "pho" in self.attach:
+            query = []
+            from gallery.models import Photo
+
+            for item in self.attach.split(","):
+                if item[:3] == "pho":
+                    query.append(item[3:])
+        return Photo.objects.filter(id__in=query)
+
+    def get_attach_videos(self):
+        if "vid" in self.attach:
+            query = []
+            from video.models import Video
+            for item in self.attach.split(","):
+                if item[:3] == "vid":
+                    query.append(item[3:])
+        return Video.objects.filter(id__in=query)
