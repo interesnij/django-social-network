@@ -1011,11 +1011,11 @@ class User(AbstractUser):
         from users.model.list import UserPostListPosition
         from posts.models import PostList
         query = []
-        lists = UserPostListPosition.objects.filter(user=self.pk).order_by("-position").values("list")
-        #for list_id in [i['list'] for i in lists]:
-        #    query.append(PostList.objects.get(pk=list_id))
-        #return query
-        return PostList.objects.filter(id__in=[i['list'] for i in lists])
+        lists = UserPostListPosition.objects.filter(user=self.pk).values("list")
+        for list_id in [i['list'] for i in lists]:
+            query.append(PostList.objects.get(pk=list_id))
+        return query
+        #return PostList.objects.filter(id__in=[i['list'] for i in lists])
 
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostListPosition
