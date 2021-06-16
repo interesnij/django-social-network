@@ -90,10 +90,10 @@ function send_change_c_posts(el) {
   send_change_items(el.parentElement.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
 }
 function send_change_u_post_list(el) {
-  send_change_items(el.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+  send_change_items(el.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
 }
 function send_change_c_post_list(el) {
-  send_change_items(el.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+  send_change_items(el.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
 }
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 
