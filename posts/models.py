@@ -128,7 +128,7 @@ class PostList(models.Model):
     def get_user_staff_lists(cls, user_pk):
         from users.model.list import UserPostListPosition
         #try:
-        return cls.objects.filter(id__in=[i['list'] for i in UserPostListPosition.objects.filter(user=self.pk).values("list")])
+        return cls.objects.filter(id__in=[i['list'] for i in UserPostListPosition.objects.filter(user=user_pk).values("list")])
         #except:
         #    query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
         #    query.add(~Q(type__contains="_"), Q.AND)
