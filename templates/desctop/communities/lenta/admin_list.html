@@ -8,7 +8,11 @@
   <ul>
     {% for object in fix_list.get_fix_items %}
     <li class="scrollable">
-      {% include 'desctop/communities/lenta/fix_post.html' %}
+      {% if object.community %}
+        {% include 'desctop/communities/lenta/admin_fix_post.html' %}
+      {% else %}
+        {% include 'desctop/users/lenta/my_fix_post.html' %}
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
@@ -24,7 +28,11 @@
 {% elif fix_list.count_fix_items == 1 %}
 
 {% for object in fix_list.get_fix_items %}
-  {% include 'desctop/communities/lenta/fix_post.html' %}
+{% if object.community %}
+  {% include 'desctop/communities/lenta/admin_fix_post.html' %}
+{% else %}
+  {% include 'desctop/users/lenta/my_fix_post.html' %}
+{% endif %}
 {% endfor %}
 
 {% endif %}
@@ -42,7 +50,7 @@
 
         <span class="post_stream is_post_paginate" owner-pk="{{ community.pk }}">
           {% for object in object_list %}
-            {% include 'desctop/posts/post_community/post.html' %}
+            {% include 'desctop/posts/post_community/admin_post.html' %}
           {% endfor %}
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">

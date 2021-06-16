@@ -25,13 +25,6 @@
                 <span class="dropdown-item">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
                 <span>
-                  {% if object.is_fixed_in_user %}
-                    <span class="dropdown-item u_post_unfixed">Открепить</span>
-                  {% elif request.user.is_can_fixed_post %}
-                    <span class="dropdown-item u_post_fixed">Закрепить</span>
-                  {% endif %}
-                </span>
-                <span>
                   {% if object.comments_enabled %}
                     <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>
                   {% else %}

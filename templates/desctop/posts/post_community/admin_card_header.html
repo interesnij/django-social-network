@@ -6,17 +6,28 @@
             <h6 class="mb-0">
               {% include 'desctop/generic/community/object.html' %}
             </h6>
-            <p class="mb-0">{{ object.get_created }}</p>
+            <p class="mb-0 handle" style="cursor: move;">{{ object.get_created }}</p>
         </div>
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="icon-30 btn_default drop">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
+              <span>
+              {% if object.is_fixed_in_user %}
+                <span class="dropdown-item c_post_unfixed">Открепить</span>
+              {% elif community.is_can_fixed_post %}
+                <span class="dropdown-item c_post_fixed">Закрепить</span>
+              {% endif %}
+              </span>
               {% if object.community.pk == community.pk %}
-                <span class="dropdown-item u_post_remove">Удалить запись</span>
+                <span class="dropdown-item c_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
+                <span>
+                  <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
+                  <span class="dropdown-item">Редактировать</span>
+                </span>
                 <span>
                   {% if object.comments_enabled %}
                     <span class="dropdown-item c_post_off_comment">Выкл. комментарии</span>
@@ -37,10 +48,6 @@
                 <span class="dropdown-item c_post_claim">Пожаловаться</span>
               {% endif %}
               <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
-              <span>
-                <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
-                <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
-              </span>
             </div>
         </div>
     </div>

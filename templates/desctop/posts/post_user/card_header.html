@@ -7,7 +7,7 @@
             <h6 class="mb-0">
               {% include 'desctop/generic/user/creator.html' %}
             </h6>
-            <p class="mb-0 handle">{{ object.get_created }}</p>
+            <p class="mb-0">{{ object.get_created }}</p>
         </div>
 
         <div class="dropdown">
@@ -19,11 +19,6 @@
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
-                <span>
-                  {% if request.user.is_can_fixed_post %}
-                    <span class="dropdown-item u_post_fixed">Закрепить</span>
-                  {% endif %}
-                </span>
                 <span>
                   {% if object.comments_enabled %}
                     <span class="dropdown-item u_post_off_comment">Выкл. комментарии</span>

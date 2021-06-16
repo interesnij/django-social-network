@@ -9,9 +9,9 @@
     {% for object in fix_list.get_fix_items %}
     <li class="scrollable">
       {% if object.community %}
-        {% include 'desctop/communities/lenta/fix_post.html' %}
+        {% include 'desctop/communities/lenta/admin_fix_post.html' %}
       {% else %}
-        {% include 'desctop/users/lenta/fix_post.html' %}
+        {% include 'desctop/users/lenta/my_fix_post.html' %}
       {% endif %}
     </li>
     {% endfor %}
@@ -29,9 +29,9 @@
 
 {% for object in fix_list.get_fix_items %}
 {% if object.community %}
-  {% include 'desctop/communities/lenta/fix_post.html' %}
+  {% include 'desctop/communities/lenta/admin_fix_post.html' %}
 {% else %}
-  {% include 'desctop/users/lenta/fix_post.html' %}
+  {% include 'desctop/users/lenta/my_fix_post.html' %}
 {% endif %}
 {% endfor %}
 
@@ -50,7 +50,7 @@
 
         <span class="post_stream is_post_paginate" id="post_container" owner-pk="{{ user.pk }}">
           {% for object in object_list %}
-            {% include 'desctop/posts/post_user/post.html' %}
+            {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
