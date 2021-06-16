@@ -265,6 +265,7 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
 on('#ajax', 'click', '.u_post_restore', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/posts/user_progs/restore/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
