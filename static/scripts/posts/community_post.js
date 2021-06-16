@@ -296,7 +296,7 @@ on('#ajax', 'click', '.c_post_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.innerHTML = "Запись удалена. <span class='c_post_restore pointer' data-uuid='" + uuid + "'>Восстановить</span>";
+    p.innerHTML = "<span class='c_post_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
