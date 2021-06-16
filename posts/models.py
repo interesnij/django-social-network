@@ -600,7 +600,7 @@ class Post(models.Model):
         else:
             self.creator.minus_posts(1)
         self.list.count -= 1
-        list.save(update_fields=["count"])
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -619,7 +619,7 @@ class Post(models.Model):
         else:
             self.creator.plus_posts(1)
         self.list.count += 1
-        list.save(update_fields=["count"])
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -639,7 +639,7 @@ class Post(models.Model):
         else:
             self.creator.minus_posts(1)
         self.list.count -= 1
-        list.save(update_fields=["count"])
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -658,7 +658,7 @@ class Post(models.Model):
         else:
             self.creator.plus_posts(1)
         self.list.count += 1
-        list.save(update_fields=["count"])
+        self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
