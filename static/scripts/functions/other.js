@@ -7,7 +7,7 @@ function send_change_items(array, link) {
   token = document.body.getAttribute("data-csrf");
   post_array = []
   for (var i=0; i<array.length; i++) {
-    count = len - 1;
+    count = len =- 1;
     post_array.push({key:array[i].getAttribute("data-pk"),value: count});
     console.log(count)
   };
