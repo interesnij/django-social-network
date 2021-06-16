@@ -232,7 +232,8 @@ class PostCommunityOnComment(View):
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.delete_item(c)
             return HttpResponse()
@@ -241,7 +242,8 @@ class PostCommunityDelete(View):
 
 class PostWallCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.delete_item(c)
             return HttpResponse()
@@ -250,7 +252,8 @@ class PostWallCommunityDelete(View):
 
 class PostWallCommunityRecover(View):
     def get(self,request,*args,**kwargs):
-        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.restore_item(c)
             return HttpResponse()
@@ -259,7 +262,8 @@ class PostWallCommunityRecover(View):
 
 class PostCommunityRecover(View):
     def get(self,request,*args,**kwargs):
-        post, c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.restore_item(c)
             return HttpResponse()
