@@ -9,20 +9,24 @@ from django.views.generic.base import TemplateView
 
 class AddPostListInUserCollections(View):
     def get(self,request,*args,**kwargs):
+        from common.check.user import check_user_can_get_list
+        
         list = PostList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.users.add(request.user)
+            list.add_in_user_collections(user)
             return HttpResponse()
         else:
             return HttpResponse()
 
 class RemovePostListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
+        from common.check.user import check_user_can_get_list
+
         list = PostList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.users.remove(request.user)
+            list.remove_in_user_collections(user)
             return HttpResponse()
         else:
             return HttpResponse()
@@ -95,11 +99,11 @@ class PostCommentUserCreate(View):
         form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(uuid=request.POST.get('uuid'))
 
         if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
-            from common.check.user import check_user_can_get_list
-
             comment = form_post.save(commit=False)
 
             if request.user.pk != user.pk:
+                from common.check.user import check_user_can_get_list
+
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
@@ -117,10 +121,10 @@ class PostReplyUserCreate(View):
         form_post, user, parent = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
 
         if request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
-            from common.check.user import check_user_can_get_list
-
             comment=form_post.save(commit=False)
             if request.user != user:
+                from common.check.user import check_user_can_get_list
+
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
