@@ -10,11 +10,11 @@ from django.views.generic.base import TemplateView
 class AddPostListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         from common.check.user import check_user_can_get_list
-        
+
         list = PostList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(user)
+            list.add_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()
@@ -26,7 +26,7 @@ class RemovePostListFromUserCollections(View):
         list = PostList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(user)
+            list.remove_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()
