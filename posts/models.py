@@ -126,18 +126,19 @@ class PostList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        from users.model.list import UserPostListPosition
-        #try:
-        return cls.objects.filter(id__in=[i['list'] for i in UserPostListPosition.objects.filter(user=user_pk).values("list")]).exclude(type__contains="_")
-        #query = []
-        #lists = UserPostListPosition.objects.filter(user=user_pk).values("list")
-        #for list_id in [i['list'] for i in lists]:
-        #    query.append(PostList.objects.get(pk=list_id))
-        #return query
-        #except:
-        #    query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
-        #    query.add(~Q(type__contains="_"), Q.AND)
-        #    return cls.objects.filter(query)
+        try:
+            from users.model.list import UserPostListPosition
+            query = []
+            lists = UserPostListPosition.objects.filter(user=user_pk).values("list")
+            for list_id in [i['list'] for i in lists]:
+                list = cls.objects.get(pk=list_id)
+                if list.type[0] != "_":
+                    query.append(list)
+            return query
+        except:
+            query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
+            query.add(~Q(type__contains="_"), Q.AND)
+            return cls.objects.filter(query)
     @classmethod
     def get_user_lists(cls, user_pk):
         query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
