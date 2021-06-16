@@ -6,14 +6,14 @@
             <h6 class="mb-0">
               {% include 'desctop/generic/community/object.html' %}
             </h6>
-            <p class="mb-0 handle" style="cursor: move;">{{ object.get_created }}</p>
+            <p class="mb-0">{{ object.get_created }}</p>
         </div>
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="icon-30 btn_default drop">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              {% if is_admin %}
+              {% if object.community.pk == community.pk %}
                 <span class="dropdown-item c_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
