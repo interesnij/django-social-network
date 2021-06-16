@@ -38,7 +38,7 @@ class PostList(models.Model):
 
     def get_order(self):
         from users.model.list import UserPostListPosition
-        return UserPostListPosition.objects.get(list=self.pk) 
+        return UserPostListPosition.objects.get(list=self.pk)
 
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
