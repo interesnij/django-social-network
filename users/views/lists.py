@@ -222,9 +222,9 @@ class UserPostsListView(ListView):
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 		if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
