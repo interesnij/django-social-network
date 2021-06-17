@@ -4,25 +4,25 @@
     {% for object in post_lists %}
         {% if object.community %}
         <li class="date pointer post_list_change community list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
-          <div class="media small">
+          <div class="media">
             <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
-              <figure><img src="{{ object.community.get_avatar }}" style="border-radius:50px;width:50px;" alt="image"></figure>
+              <figure><img src="{{ object.community.get_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
             </a>
             <div class="media-body">
-              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax"><h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6></a>
-              <p>{{ object.community.name }}</p>
+              <h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
+              <p class="small">{{ object.community.name }}</p>
             </div>
           </div>
         </li>
         {% else %}
           <li class="date pointer post_list_change list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
-            <div class="media small">
+            <div class="media">
               <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-                <figure><img src="{{ object.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image"></figure>
+                <figure><img src="{{ object.creator.get_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
               </a>
               <div class="media-body">
-                <a href="{% url 'user' pk=object.creator.pk %}" class="ajax"><h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6></a>
-                <p>{{ object.creator.get_full_name }}</p>
+                <h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
+                <p class="small">{{ object.creator.get_full_name }}</p>
               </div>
             </div>
           </li>
