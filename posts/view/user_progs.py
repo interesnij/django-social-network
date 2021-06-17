@@ -376,7 +376,7 @@ class UserChangePostPosition(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             for item in json.loads(request.body):
-                post = Post.objects.get(pk=item['key'], user=user.pk)
+                post = Post.objects.get(pk=item['key'])
                 post.order=item['value']
                 post.save(update_fields=["order"])
         return HttpResponse()

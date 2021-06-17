@@ -398,7 +398,7 @@ class CommunityChangePostPosition(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
-                post = Post.objects.get(pk=item['key'], community=community.pk)
+                post = Post.objects.get(pk=item['key'])
                 post.order=item['value']
                 post.save(update_fields=["order"])
         return HttpResponse()
