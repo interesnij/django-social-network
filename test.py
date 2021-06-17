@@ -23,6 +23,7 @@ from users.models import User
 from users.model.list import *
 from communities.models import Community
 from communities.model.list import *
+from django.db.models import Q
 
 
 UserPhotoListPosition.objects.all().delete()
@@ -41,49 +42,51 @@ CommunityVideoListPosition.objects.all().delete()
 CommunitySurveyListPosition.objects.all().delete()
 CommunityDocListPosition.objects.all().delete()
 
-post_lists = PostList.objects.all()
+query = Q(Q(type="PUB")|Q(type="PRI")|Q(type="_DRA"))
+
+post_lists = PostList.objects.filter(query)
 for list in post_lists:
     if list.community:
         CommunityPostListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserPostListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-doc_lists = DocList.objects.all()
+doc_lists = DocList.objects.filter(query)
 for list in doc_lists:
     if list.community:
         CommunityDocListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserDocListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-photo_lists = PhotoList.objects.all()
+photo_lists = PhotoList.objects.filter(query)
 for list in photo_lists:
     if list.community:
         CommunityPhotoListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserPhotoListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-music_lists = SoundList.objects.all()
+music_lists = SoundList.objects.filter(query)
 for list in music_lists:
     if list.community:
         CommunityPlayListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserPlayListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-video_lists = VideoList.objects.all()
+video_lists = VideoList.objects.filter(query)
 for list in video_lists:
     if list.community:
         CommunityVideoListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserVideoListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-good_lists = GoodList.objects.all()
+good_lists = GoodList.objects.filter(query)
 for list in good_lists:
     if list.community:
         CommunityGoodListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
         UserGoodListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-survey_lists = SurveyList.objects.all()
+survey_lists = SurveyList.objects.filter(query) 
 for list in survey_lists:
     if list.community:
         CommunitySurveyListPosition.objects.create(list=list.pk, community=list.community.pk)
