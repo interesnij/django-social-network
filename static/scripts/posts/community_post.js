@@ -142,7 +142,7 @@ on('#ajax', 'click', '#c_edit_post_list_btn', function() {
 
 on('#ajax', 'click', '.c_delete_post_list', function() {
   _this = this;
-  list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
+  list_pk = _this.parentElement.parentElement.parentElement.getAttribute("list-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   block = _this.parentElement.nextElementSibling;
 
