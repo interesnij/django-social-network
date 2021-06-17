@@ -46,6 +46,8 @@ query = Q(Q(type="PUB")|Q(type="PRI"))
 
 post_lists = PostList.objects.exclude(type="_FIX").exclude(type="_DRA")
 for list in post_lists:
+    list.communities.clear()
+    list.users.clear()
     if list.community:
         CommunityPostListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
