@@ -6,11 +6,10 @@
         <li class="date pointer post_list_change community list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <div class="media">
             <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
-              <figure><img src="{{ object.community.get_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
+              <figure><img src="{{ object.community.get_s_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
             </a>
             <div class="media-body">
               <h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
-              <p class="small">{{ object.community.name }}</p>
             </div>
           </div>
         </li>
@@ -18,11 +17,10 @@
           <li class="date pointer post_list_change list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
             <div class="media">
               <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
-                <figure><img src="{{ object.creator.get_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
+                <figure><img src="{{ object.creator.get_s_avatar }}" style="border-radius:30px;width:30px;" alt="image"></figure>
               </a>
               <div class="media-body">
                 <h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
-                <p class="small">{{ object.creator.get_full_name }}</p>
               </div>
             </div>
           </li>
@@ -30,9 +28,7 @@
     {% endfor %}
         <li class="date pointer u_add_post_list">
           <div class="media">
-            <div class="media-body">
-              <h6 class="mb-0">Создать список</h6>
-            </div>
+            <svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
           </div>
         </li>
   </ul>
