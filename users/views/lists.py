@@ -212,7 +212,7 @@ class UserPostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
-		from common.templates import get_template_user, get_template_anon_user
+		from common.templates import get_owner_template_user, get_template_anon_user
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk == request.user.pk:
@@ -222,7 +222,7 @@ class UserPostsListView(ListView):
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 		if request.user.is_authenticated:
-			self.template_name = get_template_user(self.post_list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
+			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
