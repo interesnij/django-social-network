@@ -61,6 +61,23 @@ class VideoList(models.Model):
     def __str__(self):
         return self.name
 
+    def add_in_community_collections(self, community):
+        from communities.model.list import CommunityVideoListPosition
+        CommunityVideoListPosition.objects.create(community=community.pk, list=self.pk, position=VideoList.get_community_lists_count(community.pk))
+        self.communities.add(community)
+    def remove_in_community_collections(self, community):
+        from communities.model.list import CommunityVideoListPosition
+        CommunityVideoListPosition.objects.get(community=community.pk, list=self.pk).delete()
+        self.communities.remove(user)
+    def add_in_user_collections(self, user):
+        from users.model.list import UserVideoListPosition
+        UserVideoListPosition.objects.create(user=user.pk, list=self.pk, position=VideoList.get_user_lists_count(user.pk))
+        self.users.add(user)
+    def remove_in_user_collections(self, user):
+        from users.model.list import UserVideoListPosition
+        UserVideoListPosition.objects.get(user=user.pk, list=self.pk).delete()
+        self.users.remove(user)
+
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:

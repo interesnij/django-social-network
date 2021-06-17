@@ -380,7 +380,7 @@ class UserChangePostPosition(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             for item in json.loads(request.body):
-                post = Post.objects.get(pk=item['key'])
+                post = Post.objects.get(pk=item['key'], user=user.pk)
                 post.order=item['value']
                 post.save(update_fields=["order"])
         return HttpResponse()
@@ -393,7 +393,7 @@ class UserChangePostListPosition(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             for item in json.loads(request.body):
-                list = UserPostListPosition.objects.get(list=item['key'])
+                list = UserPostListPosition.objects.get(list=item['key'], user=user.pk)
                 list.position=item['value']
                 list.save(update_fields=["position"])
         return HttpResponse()

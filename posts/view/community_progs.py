@@ -402,7 +402,7 @@ class CommunityChangePostPosition(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
-                post = Post.objects.get(pk=item['key'])
+                post = Post.objects.get(pk=item['key'], community=community.pk)
                 post.order=item['value']
                 post.save(update_fields=["order"])
         return HttpResponse()
@@ -415,7 +415,7 @@ class CommunityChangePostListPosition(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
-                list = CommunityPostListPosition.objects.get(list=item['key'])
+                list = CommunityPostListPosition.objects.get(list=item['key'], community=community.pk)
                 list.position=item['value']
                 list.save(update_fields=["position"])
         return HttpResponse()

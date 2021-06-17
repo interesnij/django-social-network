@@ -37,6 +37,23 @@ class SurveyList(models.Model):
         verbose_name = "список опросов"
         verbose_name_plural = "списки опросов"
 
+    def add_in_community_collections(self, community):
+        from communities.model.list import CommunitySurveyListPosition
+        CommunitySurveyListPosition.objects.create(community=community.pk, list=self.pk, position=SurveyList.get_community_lists_count(community.pk))
+        self.communities.add(community)
+    def remove_in_community_collections(self, community):
+        from communities.model.list import CommunitySurveyListPosition
+        CommunitySurveyListPosition.objects.get(community=community.pk, list=self.pk).delete()
+        self.communities.remove(user)
+    def add_in_user_collections(self, user):
+        from users.model.list import UserSurveyListPosition
+        UserSurveyListPosition.objects.create(user=user.pk, list=self.pk, position=SurveyList.get_user_lists_count(user.pk))
+        self.users.add(user)
+    def remove_in_user_collections(self, user):
+        from users.model.list import UserSurveyListPosition
+        UserSurveyListPosition.objects.get(user=user.pk, list=self.pk).delete()
+        self.users.remove(user)
+
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
