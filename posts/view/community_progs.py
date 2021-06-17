@@ -16,9 +16,7 @@ class AddPostListInCommunityCollections(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
             list.add_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        return HttpResponse()
 
 class RemovePostListFromCommunityCollections(View):
     def get(self,request,*args,**kwargs):
@@ -27,9 +25,7 @@ class RemovePostListFromCommunityCollections(View):
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_delete_list(community.pk):
             list.remove_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
+        return HttpResponse()
 
 
 class PostCommunityCreate(View):
