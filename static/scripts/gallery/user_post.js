@@ -131,20 +131,20 @@ on('#ajax', 'click', '.u_photo_description', function() {
 
 on('#ajax', 'click', '.u_photo_off_votes', function() {
   send_photo_change(this, "/gallery/user_progs/off_votes/", "u_photo_on_votes", "Вкл. реакции");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
 })
 on('#ajax', 'click', '.u_photo_on_votes', function() {
   send_photo_change(this, "/gallery/user_progs/on_votes/", "u_photo_off_votes", "Выкл. реакции");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
 })
 
 on('#ajax', 'click', '.user_photo_remove', function() {
   send_photo_change(this, "/gallery/user_progs/delete/", "user_photo_restore", "Отмена");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "none";
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
@@ -152,7 +152,7 @@ on('#ajax', 'click', '.user_photo_remove', function() {
 })
 on('#ajax', 'click', '.user_photo_restore', function() {
   send_photo_change(this, "/gallery/user_progs/restore/", "user_photo_remove", "Удалить");
-  post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
