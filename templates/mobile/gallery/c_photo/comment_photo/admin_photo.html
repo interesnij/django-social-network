@@ -5,12 +5,40 @@
           Опции
       </button>
       <div class="dropdown-menu">
-          {% if request.user.is_photo_manager %}
-            <span class="dropdown-item c_post_close_window">Закрыть</span>
+        {% if object.community.pk == community.pk %}
+          <span>
+            <a class="dropdown-item mob_community_photo_remove pointer">Удалить</a>
+          </span>
+          <span>
+          {% if avatar %}
+            <a class="dropdown-item mob_c_unset_avatar pointer">Убрать аватар</a>
           {% else %}
-            <span class="dropdown-item c_photo_claim">Пожаловаться</span>
+            <a class="dropdown-item mob_c_set_avatar pointer">Сделать аватаром</a>
           {% endif %}
-          <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
+          </span>
+          <span>
+          {% if object.is_public %}
+            <a class="dropdown-item mob_c_photo_on_private pointer">Вкл. приватность</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_off_private pointer">Выкл. приватность</a>
+          {% endif %}
+          </span>
+          <span>
+          {% if object.comments_enabled %}
+            <a class="dropdown-item mob_c_photo_off_comment pointer">Выкл. комментарии</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_on_comment pointer">Вкл. комментарии</a>
+          {% endif %}
+          </span>
+          <span>
+          {% if object.votes_on %}
+            <a class="dropdown-item mob_c_photo_off_votes pointer">Выкл. реакции</a>
+          {% else %}
+            <a class="dropdown-item mob_c_photo_on_votes pointer">Вкл. реакции</a>
+          {% endif %}
+          </span>
+        {% endif %}
+        <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
       </div>
     </div>
     <div class="col" style="padding:5px;">
