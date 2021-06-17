@@ -60,7 +60,7 @@ class PostList(models.Model):
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            list_1 = PostList.objects.create(community=instance, type=PostList.MAIN, name="Основной список", creator=instance.creator)
+            list_1 = PostList.objects.create(community=instance, type=PostList.MAIN, name="Записи", creator=instance.creator)
             PostList.objects.create(community=instance, type=PostList.FIXED, name="Закреплённый список", creator=instance.creator)
             list_2 = PostList.objects.create(community=instance, type=PostList.DRAFT, name="Предложка", creator=instance.creator)
             from communities.model.list import CommunityPostListPosition
@@ -69,7 +69,7 @@ class PostList(models.Model):
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
-            list_1 = PostList.objects.create(creator=instance, type=PostList.MAIN, name="Основной список")
+            list_1 = PostList.objects.create(creator=instance, type=PostList.MAIN, name="Записи")
             PostList.objects.create(creator=instance, type=PostList.FIXED, name="Закреплённый список")
             list_2 = PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
             from users.model.list import UserPostListPosition
