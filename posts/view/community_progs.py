@@ -10,7 +10,7 @@ from django.views.generic.base import TemplateView
 
 
 class AddPostListInCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["pk"])
         community = list.community
         check_can_get_lists(request.user, community)
@@ -21,7 +21,7 @@ class AddPostListInCommunityCollections(View):
             return HttpResponseBadRequest()
 
 class RemovePostListFromCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         list = PostList.objects.get(pk=self.kwargs["pk"])
         community = list.community
         check_can_get_lists(request.user, community)
