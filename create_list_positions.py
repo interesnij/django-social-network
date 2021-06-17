@@ -29,7 +29,7 @@ from communities.model.settings import CommunityInfo
 post_lists = PostList.objects.all()
 for list in post_lists:
     if list.name == "Основной список":
-        list.name == "Записи"
+        list.name = "Записи"
         list.save(update_fields=["name"])
     list.count = list.count_items()
     list.save(update_fields=["count"])
