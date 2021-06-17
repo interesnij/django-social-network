@@ -1008,14 +1008,10 @@ class User(AbstractUser):
         return query
 
     def get_post_lists(self):
-        from users.model.list import UserPostListPosition
         from posts.models import PostList
-        query = []
-        lists = UserPostListPosition.objects.filter(user=self.pk).values("list")
-        for list_id in [i['list'] for i in lists]:
-            query.append(PostList.objects.get(pk=list_id))
-        return query
-        #return PostList.objects.filter(id__in=[i['list'] for i in lists])
+        query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PostList.objects.filter(query)
 
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostListPosition
