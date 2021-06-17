@@ -11,7 +11,7 @@ on('#ajax', 'click', '.c_add_post_list', function() {
   open_fullscreen("/posts/community_progs/add_list/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.c_edit_post_list', function() {
-  list_pk = this.parentElement.parentElement.getAttribute("list-pk");
+  list_pk = this.parentElement.parentElement.parentElement.getAttribute("list-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   loader = document.getElementById("create_loader");
   open_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", loader)

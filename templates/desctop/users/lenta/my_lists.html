@@ -5,16 +5,24 @@
         {% if object.community %}
         <li class="date pointer post_list_change community list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <div class="media">
+            <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
+              <figure><img src="{{ object.community.get_avatar }}" style="border-radius:50px;width:50px;" alt="image"></figure>
+            </a>
             <div class="media-body">
-              <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
+              <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax"><h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6></a>
+              <a href="" class="small">{{ object.community.name }}</a>
             </div>
           </div>
         </li>
         {% else %}
           <li class="date pointer post_list_change list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
             <div class="media">
+              <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
+                <figure><img src="{{ object.creator.get_avatar }}" style="border-radius:50px;width:50px;" alt="image"></figure>
+              </a>
               <div class="media-body">
-                <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
+                <a href="{% url 'community_detail' pk=object.creator.pk %}" class="ajax"><h6 class="my-0 mt-1">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6></a>
+                <a href="" class="small">{{ object.creator.get_full_name }}</a>
               </div>
             </div>
           </li>
