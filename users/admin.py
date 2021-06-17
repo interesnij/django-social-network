@@ -4,7 +4,6 @@ from users.model.profile import *
 from users.model.settings import *
 from users.model.list import *
 
-
 class UserNotificationsInline(admin.TabularInline):
     model = UserNotifications
 class UserNotificationsPostInline(admin.TabularInline):
@@ -69,3 +68,4 @@ admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(UserFeaturedFriend)
 admin.site.register(UserPopulateFriend)
 admin.site.register(UserPopulateCommunity)
+admin.site.register(UserPostListPosition)
