@@ -40,7 +40,7 @@
   {% include 'desctop/communities/lenta/admin_lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
-        {% if list.is_list %}
+        {% if list.is_have_edit and community.pk == object.community.pk %}
         <span>
           <a class="c_edit_post_list pointer">изменить список</a>
             &nbsp;

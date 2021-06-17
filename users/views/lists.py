@@ -211,8 +211,8 @@ class UserPostsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.post import get_permission_user_post
 		from posts.models import PostList
+		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk == request.user.pk:
@@ -221,7 +221,10 @@ class UserPostsListView(ListView):
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
-		self.template_name = get_permission_user_post(self.post_list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.post, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

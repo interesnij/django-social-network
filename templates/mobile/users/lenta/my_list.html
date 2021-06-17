@@ -32,7 +32,7 @@
 {% include 'mobile/users/lenta/my_lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
-        {% if list.is_list %}
+        {% if list.is_have_edit and request.user.pk == object.creator.pk %}
         <span>
           <a class="u_edit_post_list pointer">изменить список</a>
             &nbsp;
