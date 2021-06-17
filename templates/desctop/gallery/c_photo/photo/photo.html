@@ -46,14 +46,14 @@
                   <p class="mb-0">{{ object.get_created }}</p>
               </div>
           </div>
-      </div>    
+      </div>
         {% if object.description %}
           {{ object.description }}
         {% else %}
           <p>Нет описания</p>
         {% endif %}
       <br><br>
-      {% include 'desctop/gallery/c_photo.html' %}
+      {% include 'desctop/gallery/info.html' %}
     </div>
   </div>
 </div>
