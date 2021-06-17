@@ -40,11 +40,14 @@
     {% include 'desctop/users/lenta/my_lists.html' %}
     <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
-        {% if request.user.pk == object.creator.pk and list.is_have_edit %}
+        {% if request.user.pk == object.creator.pk %}
           <span>
+            {% if list.is_have_edit %}
             <a class="u_edit_post_list pointer">изменить список</a>
               &nbsp;
             <a class="u_delete_post_list pointer">удалить список</a>
+            {% endif %}
+
           </span>
         {% elif not user.is_post_manager %}
           <span>
