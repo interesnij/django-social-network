@@ -277,6 +277,7 @@ class PostList(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
+
         if self.type == "LIS":
             self.type = PostList.DELETED
         elif self.type == "PRI":
@@ -284,6 +285,12 @@ class PostList(models.Model):
         elif self.type == "MAN":
             self.type = PostList.DELETED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).delete()
+        else:
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).delete()
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -297,6 +304,12 @@ class PostList(models.Model):
         elif self.type == "_DELM":
             self.type = PostList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.create(community=self.community.pk, list=self.pk)
+        else:
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.create(user=self.creator.pk, list=self.pk)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
