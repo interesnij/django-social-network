@@ -42,7 +42,7 @@ CommunityVideoListPosition.objects.all().delete()
 CommunitySurveyListPosition.objects.all().delete()
 CommunityDocListPosition.objects.all().delete()
 
-query = Q(Q(type="PUB")|Q(type="PRI")|Q(type="_DRA"))
+query = Q(Q(type="PUB")|Q(type="PRI"))
 
 post_lists = PostList.objects.filter(query)
 for list in post_lists:
@@ -86,7 +86,7 @@ for list in good_lists:
     else:
         UserGoodListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-survey_lists = SurveyList.objects.filter(query) 
+survey_lists = SurveyList.objects.filter(query)
 for list in survey_lists:
     if list.community:
         CommunitySurveyListPosition.objects.create(list=list.pk, community=list.community.pk)
