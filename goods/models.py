@@ -73,15 +73,15 @@ class GoodList(models.Model):
 		from communities.model.list import CommunityGoodListPosition
 		CommunityGoodListPosition.objects.create(community=community.pk, list=self.pk, position=GoodList.get_community_lists_count(community.pk))
 		self.communities.add(community)
-    def remove_in_community_collections(self, community):
+	def remove_in_community_collections(self, community):
 		from communities.model.list import CommunityGoodListPosition
 		CommunityGoodListPosition.objects.get(community=community.pk, list=self.pk).delete()
 		self.communities.remove(user)
-    def add_in_user_collections(self, user):
+	def add_in_user_collections(self, user):
 		from users.model.list import UserGoodListPosition
 		UserGoodListPosition.objects.create(user=user.pk, list=self.pk, position=GoodList.get_user_lists_count(user.pk))
 		self.users.add(user)
-    def remove_in_user_collections(self, user):
+	def remove_in_user_collections(self, user):
 		from users.model.list import UserGoodListPosition
 		UserGoodListPosition.objects.get(user=user.pk, list=self.pk).delete()
 		self.users.remove(user)
