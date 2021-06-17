@@ -65,8 +65,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  this.parentElement.parentElement.parentElement.getAttribute('list-pk') ? pk = this.parentElement.parentElement.parentElement.getAttribute('list-pk') : pk = this.parentElement.getAttribute('list-pk');
-  open_fullscreen("/users/detail/post/" + pk + "/" + uuid + "/", document.getElementById("item_loader"))
+  open_fullscreen("/users/detail/post/" + uuid + "/", document.getElementById("item_loader"))
 })
 on('#ajax', 'click', '.fix_fullscreen', function() {
   container = this.parentElement;

@@ -12,7 +12,8 @@ class UserPostView(TemplateView):
         from common.templates import get_template_user_item, get_template_anon_user_item
         from posts.models import Post, PostList
 
-        self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.list = self.post.list
         self.user, self.posts = self.list.creator, self.list.get_items()
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.post, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -34,7 +35,7 @@ class UserFixPostView(TemplateView):
         from common.templates import get_template_user_item, get_template_anon_user_item
         from posts.models import Post, PostList
 
-        self.user, self.post = User.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.list = PostList.objects.get(creator_id=self.user.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
         if request.user.is_authenticated:

@@ -10,7 +10,8 @@ class PostCommunity(TemplateView):
         from common.templates import get_template_community_item, get_template_anon_community_item
         from posts.models import Post, PostList
 
-        self.list, self.post = PostList.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.list = self.post.list
         self.posts = self.list.get_items()
         if request.user.is_authenticated:
             self.template_name = get_template_community_item(self.post, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -20,7 +21,7 @@ class PostCommunity(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(PostCommunity,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.list.community, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
+        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.post.community, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
         return c
 
 class CommunityFixPostView(TemplateView):
@@ -30,7 +31,7 @@ class CommunityFixPostView(TemplateView):
         from common.templates import get_template_community_item, get_template_anon_community_item
         from posts.models import Post, PostList
 
-        self.community, self.post = Community.objects.get(pk=self.kwargs["pk"]), Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Community.objects.get(pk=self.kwargs["pk"])
         self.list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
         self.posts = self.list.get_fix_items()
         if request.user.is_authenticated:
@@ -41,7 +42,7 @@ class CommunityFixPostView(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityFixPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.community, \
+        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.post.community, \
         self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
         self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
         return c
