@@ -49,10 +49,14 @@
         {% elif not user.is_post_manager %}
           <span>
             <a class="u_uncopy_post_list pointer">Удалить список</a>
+            &nbsp;
+            <a class="claim_post_list pointer">Пожаловаться</a>
           </span>
-        {% else %}
+        {% elif user.is_post_manager %}
           <span>
             <a class="close_post_list pointer">Закрыть</a>
+            &nbsp;
+            <a class="claim_post_list pointer">Пожаловаться</a>
           </span>
         {% endif %}
 
