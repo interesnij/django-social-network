@@ -148,7 +148,7 @@ on('#ajax', 'click', '.u_delete_post_list', function() {
 });
 on('#ajax', 'click', '.u_restore_post_list', function() {
   _this = this;
-  list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
+  list_pk = _this.parentElement.parentElement.getAttribute("data-uuid");
   block = _this.parentElement.nextElementSibling;
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

@@ -162,7 +162,7 @@ on('#ajax', 'click', '.c_delete_post_list', function() {
 });
 on('#ajax', 'click', '.c_restore_post_list', function() {
   _this = this;
-  list_pk = _this.parentElement.parentElement.getAttribute("list-pk");
+  list_pk = _this.parentElement.parentElement.getAttribute("data-uuid");
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   block = _this.parentElement.nextElementSibling;
 
