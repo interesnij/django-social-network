@@ -1,4 +1,4 @@
-<li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px">
+<li class="pag {% if forloop.last %}last{% endif %}" style="padding-bottom:10px" data-pk="{{ object.pk }}">
     <div class="media" music-counter="{{ forloop.counter0|add:page_obj.start_index }}" style="align-items: unset;position: relative;">
         <figure>
           <a class="pointer music_list_item">
