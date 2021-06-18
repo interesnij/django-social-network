@@ -243,7 +243,8 @@ function if_list(block) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled(link, '.list_pk', target = 1)
+        scrolled(link, '.list_pk', target = 1);
+        get_dragula(".drag_container");
     }
 }
 
