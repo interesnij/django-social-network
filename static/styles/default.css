@@ -91,6 +91,13 @@
   top: 5px;
   background: black;
 }
+.hide_shower:hover .handle{
+  display: block !important;
+  position: absolute;
+  padding: 2px;
+  top: 5px;
+  background: black;
+}
 
 .progress2 {
 bottom:0;
