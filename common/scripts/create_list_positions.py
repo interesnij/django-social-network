@@ -25,7 +25,7 @@ from communities.models import Community
 from communities.model.list import *
 from django.db.models import Q
 
-
+""" стираем все таблицы порядков списков и пересохраняем заново, но не трогаем manytomany связи """
 UserPhotoListPosition.objects.all().delete()
 UserPostListPosition.objects.all().delete()
 UserPlayListPosition.objects.all().delete()

@@ -163,7 +163,7 @@ class GoodList(models.Model):
 		try:
 			from users.model.list import UserGoodListPosition
 			query = []
-			lists = UserGoodListPosition.objects.filter(user=user_pk).values("list")
+			lists = UserGoodListPosition.objects.filter(user=user_pk, type=1).values("list")
 			for list_id in [i['list'] for i in lists]:
 				list = cls.objects.get(pk=list_id)
 				if list.type[0] != "_":
@@ -178,7 +178,7 @@ class GoodList(models.Model):
 		try:
 			from users.model.list import UserGoodListPosition
 			query = []
-			lists = UserGoodListPosition.objects.filter(user=user_pk).values("list")
+			lists = UserGoodListPosition.objects.filter(user=user_pk, type=1).values("list")
 			for list_id in [i['list'] for i in lists]:
 				list = cls.objects.get(pk=list_id)
 				if list.is_have_get():
@@ -199,7 +199,7 @@ class GoodList(models.Model):
 		try:
 			from communities.model.list import CommunityGoodListPosition
 			query = []
-			lists = CommunityGoodListPosition.objects.filter(community=community_pk).values("list")
+			lists = CommunityGoodListPosition.objects.filter(community=community_pk, type=1).values("list")
 			for list_id in [i['list'] for i in lists]:
 				list = cls.objects.get(pk=list_id)
 				if list.type[0] != "_":
@@ -214,7 +214,7 @@ class GoodList(models.Model):
 		try:
 			from communities.model.list import CommunityGoodListPosition
 			query = []
-			lists = CommunityGoodListPosition.objects.filter(community=community_pk).values("list")
+			lists = CommunityGoodListPosition.objects.filter(community=community_pk, type=1).values("list")
 			for list_id in [i['list'] for i in lists]:
 				list = cls.objects.get(pk=list_id)
 				if list.is_have_get():
