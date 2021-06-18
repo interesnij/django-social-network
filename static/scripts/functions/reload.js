@@ -261,6 +261,7 @@ function list_load(block, link) {
         if (request.readyState == 4 && request.status == 200) {
             block.innerHTML = request.responseText;
             get_dragula(".drag_container");
+            console.log("drag")
         }
     };
     request.send(null);
