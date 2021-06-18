@@ -9,30 +9,10 @@
 </div>
 <div class="row no-gutters" style="overflow-x: auto;">
     <div class="col-12">
-        <ul style="width:max-content;list-style: none;">
-          <li class="list_item">
-              <div class="card file-manager-item folder community active_border" data-pk="{{ list.community.pk }}" data-uuid="{{ list.uuid }}">
-                  <div class="card-img-top file-logo-wrapper">
-                    <div class="d-flex align-items-center justify-content-center w-100">
-                      <svg class="list_toggle list_svg svg_default" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="card-body pt-0">
-                      <div class="content-wrapper">
-                          <p class="card-text file-name mb-0 list_name list_toggle" style="text-align: left;">{{ list.name }}</p>
-                          <p class="card-text file-size mb-0">{{ list.count_items }}</p>
-                      </div>
-                      <small class="file-accessed">
-                          {{ community.name }}
-                      </small>
-                  </div>
-              </div>
-          </li>
+        <ul class="drag_list" style="width:max-content;list-style: none;">
             {% for object in get_lists %}
             {% if object.community %}
-            <li class="list_item">
+            <li class="list_item c_doc_list">
                 <div class="card file-manager-item folder border community" data-pk="{{ object.community.pk }}" data-uuid="{{ object.uuid }}">
                     <div class="card-img-top file-logo-wrapper">
                       <div class="d-flex align-items-center justify-content-center w-100">

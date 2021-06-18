@@ -23,7 +23,7 @@
       </div>
     <div class="card mb-2">
         <div class="card-body">
-            <ul data-pk="{{ list.pk }}" class="is_paginate drag_container">
+            <ul owner-pk="{{ user.pk }}" class="is_paginate drag_container">
                 {% if object_list %}
                 {% for doc in object_list %}
                   {% include 'desctop/communities/docs/admin_doc.html' %}

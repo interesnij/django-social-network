@@ -37,7 +37,7 @@
             </div>
         <div class="card mb-2">
             <div class="card-body">
-            <div class="row is_paginate drag_container">
+            <div class="row is_paginate drag_container" owner-pk="{{ user.pk }}">
               {% if object_list %}
 
               {% for object in object_list %}
