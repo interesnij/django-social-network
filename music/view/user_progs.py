@@ -254,12 +254,12 @@ class UserChangeMusicPosition(View):
 class UserChangeMusicListPosition(View):
     def post(self,request,*args,**kwargs):
         import json
-        from users.model.list import UserMusicListPosition
+        from users.model.list import UserPlayListPosition
 
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             for item in json.loads(request.body):
-                list = UserMusicListPosition.objects.get(list=item['key'], user=user.pk)
+                list = UserPlayListPosition.objects.get(list=item['key'], user=user.pk)
                 list.position=item['value']
                 list.save(update_fields=["position"])
         return HttpResponse()

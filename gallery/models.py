@@ -48,7 +48,10 @@ class PhotoList(models.Model):
         self.communities.add(community)
     def remove_in_community_collections(self, community):
         from communities.model.list import CommunityPhotoListPosition
-        CommunityPhotoListPosition.objects.get(community=community.pk, list=self.pk).delete()
+        try:
+            CommunityPhotoListPosition.objects.get(community=community.pk, list=self.pk).delete()
+        except:
+            pass
         self.communities.remove(user)
     def add_in_user_collections(self, user):
         from users.model.list import UserPhotoListPosition
@@ -56,7 +59,10 @@ class PhotoList(models.Model):
         self.users.add(user)
     def remove_in_user_collections(self, user):
         from users.model.list import UserPhotoListPosition
-        UserPhotoListPosition.objects.get(user=user.pk, list=self.pk).delete()
+        try:
+            UserPhotoListPosition.objects.get(user=user.pk, list=self.pk).delete()
+        except:
+            pass
         self.users.remove(user)
 
     @receiver(post_save, sender=Community)
