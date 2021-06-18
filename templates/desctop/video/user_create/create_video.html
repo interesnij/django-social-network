@@ -49,7 +49,7 @@
                   </div>
                   <div class="form-group">
                     <label>Альбом</label>
-                    <select name="list" multiple="" id="id_list">
+                    <select name="list" id="id_list">
                       {% for object in user.get_video_lists %}
                         <option value="{{ object.pk }}">{{ object.name }}</option>
                       {% endfor %}
