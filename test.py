@@ -46,7 +46,10 @@ query = Q(Q(type="PUB")|Q(type="PRI"))
 
 post_lists = PostList.objects.filter(type="_DRA")
 for list in post_lists:
-    if list.community:
-        CommunityPostListPosition.objects.get(list=list.pk, community=list.community.pk).delete()
-    else:
-        UserPostListPosition.objects.get(list=list.pk, user=list.creator.pk).delete()
+    try:
+        if list.community:
+            CommunityPostListPosition.objects.get(list=list.pk, community=list.community.pk).delete()
+        else:
+            UserPostListPosition.objects.get(list=list.pk, user=list.creator.pk).delete()
+    except:
+        pass
