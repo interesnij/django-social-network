@@ -173,7 +173,7 @@ class GoodList(models.Model):
 			query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
 			query.add(~Q(type__contains="_"), Q.AND)
 			return cls.objects.filter(query)
-    @classmethod
+	@classmethod
 	def get_user_lists(cls, user_pk):
 		try:
 			from users.model.list import UserGoodListPosition
@@ -183,18 +183,18 @@ class GoodList(models.Model):
 				list = cls.objects.get(pk=list_id)
 				if list.is_have_get():
 					query.append(list)
-				return query
+			return query
 		except:
 			query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
 			query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
 			return cls.objects.filter(query)
-    @classmethod
+	@classmethod
 	def get_user_lists_count(cls, user_pk):
 		query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
 		query.add(~Q(type__contains="_"), Q.AND)
 		return cls.objects.filter(query).values("pk").count()
 
-    @classmethod
+	@classmethod
 	def get_community_staff_lists(cls, community_pk):
 		try:
 			from communities.model.list import CommunityGoodListPosition
@@ -208,6 +208,7 @@ class GoodList(models.Model):
 		except:
 			query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
 			query.add(~Q(type__contains="_"), Q.AND)
+			return cls.objects.filter(query)
 	@classmethod
 	def get_community_lists(cls, community_pk):
 		try:
