@@ -249,7 +249,9 @@ function if_list(block) {
 
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
-load_chart()
+load_chart();
+get_dragula(".drag_container");
+get_dragula(".date-list");
 
 function list_load(block, link) {
     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -298,6 +300,8 @@ function ajax_get_reload(url) {
             page = 2;
             loaded = false;
             create_pagination(rtr);
+            get_dragula(".drag_container");
+            get_dragula(".date-list");
         }
     }
     ajax_link.send()
