@@ -387,7 +387,7 @@ class Doc(models.Model):
 
         list.count += 1
         list.save(update_fields=["count"])
-        doc = cls.objects.create(creator=creator,order=_list.count,title=title,list=list,file=file,community=community, type_2=type_2)
+        doc = cls.objects.create(creator=creator,order=list.count,title=title,list=list,file=file,community=community, type_2=type_2)
         if not list.is_private() and is_public:
             get_doc_processing(doc, Doc.PUBLISHED)
             if community:
