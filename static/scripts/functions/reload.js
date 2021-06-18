@@ -69,6 +69,7 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 }
 
+/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function change_position(block, el) {
   // функция инициирует смену порядка элементов,учитывая их класс.
   if (el.classList.contains("u_list")) {
@@ -76,15 +77,12 @@ function change_position(block, el) {
   } else if (el.classList.contains("c_list")) {
     send_change_c_post_list(el)
   } else if (el.classList.contains("u_post")) {
-    console.log("Порядок постов изменен!");
     send_change_u_posts(el)
   } else if (el.classList.contains("c_post")) {
-    console.log("Порядок постов изменен!");
     send_change_c_posts(el)
   }
 }
 
-/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function send_change_u_posts(el) {
   parent = el.parentElement;
   send_change_items(parent.querySelectorAll(".u_post"), "/posts/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
