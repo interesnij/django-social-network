@@ -1,4 +1,4 @@
-
+<div class="drag_container">
 {% if object_list %}
 {% for object in object_list %}
   <div class="col-md-6 p-1 pointer hide_shower col-lg-4 detail_photo pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}">
@@ -22,3 +22,4 @@
   <h6 style="margin: 20px;text-align: center;"> Фотографий пока нет...</h6>
 </div>
 {% endif %}
+</div>
