@@ -244,8 +244,7 @@ function if_list(block) {
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
         scrolled(link, '.list_pk', target = 1);
-        get_dragula(".drag_container");
-        console.log("test")
+        get_dragula(".is_block_paginate"); 
     }
 }
 
