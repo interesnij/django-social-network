@@ -26,24 +26,6 @@ from communities.model.list import *
 from django.db.models import Q
 
 
-UserPhotoListPosition.objects.all().delete()
-UserPostListPosition.objects.all().delete()
-UserPlayListPosition.objects.all().delete()
-UserGoodListPosition.objects.all().delete()
-UserVideoListPosition.objects.all().delete()
-UserSurveyListPosition.objects.all().delete()
-UserDocListPosition.objects.all().delete()
-
-CommunityPhotoListPosition.objects.all().delete()
-CommunityPostListPosition.objects.all().delete()
-CommunityPlayListPosition.objects.all().delete()
-CommunityGoodListPosition.objects.all().delete()
-CommunityVideoListPosition.objects.all().delete()
-CommunitySurveyListPosition.objects.all().delete()
-CommunityDocListPosition.objects.all().delete()
-
-query = Q(Q(type="PUB")|Q(type="PRI"))
-
 post_lists = PostList.objects.filter(type="_DRA")
 for list in post_lists:
     try:
