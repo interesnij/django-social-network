@@ -68,7 +68,7 @@ class AddPlayListInUserCollections(View):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.users.add(request.user)
+            list.add_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()
@@ -78,7 +78,7 @@ class RemovePlayListFromUserCollections(View):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.users.remove(request.user)
+            list.remove_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()

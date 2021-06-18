@@ -6,7 +6,7 @@
             <h6 class="mb-0">
               {% include 'desctop/generic/community/object.html' %}
             </h6>
-            <p class="mb-0 {% if community.pk == list.community.pk %}handle{% endif %}">{{ object.get_created }}</p>
+            <p class="mb-0">{{ object.get_created }}</p>
         </div>
         <div class="dropdown d-inline-block">
             <a style="cursor:pointer" class="icon-30 btn_default drop">
@@ -21,13 +21,9 @@
               {% endif %}
               </span>
               {% if object.community.pk == community.pk %}
-                <span class="dropdown-item c_post_remove">Удалить запись</span>
+                <span class="dropdown-item u_post_remove">Удалить запись</span>
                 <span class="dropdown-item">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
-                <span>
-                  <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
-                  <span class="dropdown-item">Редактировать</span>
-                </span>
                 <span>
                   {% if object.comments_enabled %}
                     <span class="dropdown-item c_post_off_comment">Выкл. комментарии</span>
@@ -48,6 +44,10 @@
                 <span class="dropdown-item c_post_claim">Пожаловаться</span>
               {% endif %}
               <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
+              <span>
+                <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
+                <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
+              </span>
             </div>
         </div>
     </div>

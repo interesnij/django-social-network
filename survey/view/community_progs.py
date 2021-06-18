@@ -132,7 +132,7 @@ class AddSurveyListInCommunityCollections(View):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_lists(request.user, list.community)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.communities.add(request.user)
+            list.add_in_community_collections(community)
         return HttpResponse()
 
 class RemoveSurveyListFromCommunityCollections(View):
@@ -140,7 +140,7 @@ class RemoveSurveyListFromCommunityCollections(View):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         check_can_get_lists(request.user, list.community)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.communties.remove(request.user)
+            list.remove_in_community_collections(community)
         return HttpResponse()
 
 

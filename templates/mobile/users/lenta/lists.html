@@ -6,7 +6,7 @@
         <li class="date pointer post_list_change community list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <div class="media">
             <div class="media-body">
-              <h6 class="mb-0 list_name">{{ object.name }} ({{ object.count }})</h6>
+              <h6 class="mb-0 list_name">{{ object.name }} (<span class="handle">{{ object.count }}</span>)</h6>
             </div>
           </div>
         </li>

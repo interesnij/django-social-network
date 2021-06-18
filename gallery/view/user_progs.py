@@ -15,7 +15,7 @@ class AddPhotoListInUserCollections(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.users.add(request.user)
+            list.add_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()
@@ -25,7 +25,7 @@ class RemovePhotoListFromUserCollections(View):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.users.remove(request.user)
+            list.remove_in_user_collections(request.user)
             return HttpResponse()
         else:
             return HttpResponse()

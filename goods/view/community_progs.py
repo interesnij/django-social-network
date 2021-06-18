@@ -14,7 +14,7 @@ class AddGoodListInCommunityCollections(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
-            list.communities.add(community)
+            list.add_in_community_collections(community)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -25,7 +25,7 @@ class RemoveGoodListFromCommunityCollections(View):
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
-            list.communities.remove(community)
+            list.remove_in_community_collections(community)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

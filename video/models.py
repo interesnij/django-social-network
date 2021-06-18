@@ -138,37 +138,73 @@ class VideoList(models.Model):
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
-        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
-        query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(creator_id=user_pk)), Q.AND)
-        return cls.objects.filter(query)
+        try:
+            from users.model.list import UserVideoListPosition
+            query = []
+            lists = UserVideoListPosition.objects.filter(user=user_pk).values("list")
+            for list_id in [i['list'] for i in lists]:
+                list = cls.objects.get(pk=list_id)
+                if list.type[0] != "_":
+                    query.append(list)
+            return query
+        except:
+            query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
+            query.add(~Q(type__contains="_"), Q.AND)
+            return cls.objects.filter(query)
     @classmethod
     def get_user_lists(cls, user_pk):
-        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
-        query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(user_id=user_pk)), Q.AND)
-        return cls.objects.filter(query)
+        try:
+            from users.model.list import UserVideoListPosition
+            query = []
+            lists = UserVideoListPosition.objects.filter(user=user_pk).values("list")
+            for list_id in [i['list'] for i in lists]:
+                list = cls.objects.get(pk=list_id)
+                if list.is_have_get():
+                    query.append(list)
+            return query
+        except:
+            query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
+            query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
+            return cls.objects.filter(query)
     @classmethod
     def get_user_lists_count(cls, user_pk):
-        query = Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk)
+        query = Q(Q(creator_id=user_pk, community__isnull=True)|Q(users__id=user_pk))
         query.add(~Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
     def get_community_staff_lists(cls, community_pk):
-        query = Q(community_id=community_pk)|Q(communities__id=community_pk)
-        query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
-        return cls.objects.filter(query)
+        try:
+            from communities.model.list import CommunityVideoListPosition
+            query = []
+            lists = CommunityVideoListPosition.objects.filter(community=community_pk).values("list")
+            for list_id in [i['list'] for i in lists]:
+                list = cls.objects.get(pk=list_id)
+                if list.type[0] != "_":
+                    query.append(list)
+            return query
+        except:
+            query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
+            query.add(~Q(type__contains="_"), Q.AND)
+            return cls.objects.filter(query)
     @classmethod
     def get_community_lists(cls, community_pk):
-        query = Q(community_id=community_pk)|Q(communities__id=community_pk)
-        query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(Q(type="MAI")&Q(community_id=community_pk)), Q.AND)
-        return cls.objects.filter(query)
+        try:
+            from communities.model.list import CommunityVideoListPosition
+            query = []
+            lists = CommunityVideoListPosition.objects.filter(community=community_pk).values("list")
+            for list_id in [i['list'] for i in lists]:
+                list = cls.objects.get(pk=list_id)
+                if list.is_have_get():
+                    query.append(list)
+            return query
+        except:
+            query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
+            query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
+            return cls.objects.filter(query)
     @classmethod
     def get_community_lists_count(cls, community_pk):
-        query = Q(community_id=community_pk)|Q(communities__id=community_pk)
+        query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
         query.add(~Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
 
