@@ -352,7 +352,7 @@ class Doc(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ["-order"]
         verbose_name = "Документ"
         verbose_name_plural = "Документы"
         indexes = (BrinIndex(fields=['created']),)

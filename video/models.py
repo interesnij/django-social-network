@@ -387,7 +387,7 @@ class Video(models.Model):
         verbose_name = "Видео-ролики"
         verbose_name_plural = "Видео-ролики"
         indexes = (BrinIndex(fields=['created']),)
-        ordering = ['-created']
+        ordering = ["-order"]
 
     def __str__(self):
         return self.title

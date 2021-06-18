@@ -409,7 +409,7 @@ class Photo(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
-        ordering = ["-created"]
+        ordering = ["-order"]
 
     def is_private(self):
         return self.type == self.PRIVATE

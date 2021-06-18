@@ -334,6 +334,7 @@ class Survey(models.Model):
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = 'Опрос'
         verbose_name_plural = 'Опросы'
+        ordering = ["-order"]
 
     def __str__(self):
         return self.title

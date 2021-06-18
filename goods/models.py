@@ -409,7 +409,7 @@ class Good(models.Model):
 		indexes = (BrinIndex(fields=['created']),)
 		verbose_name="Товар"
 		verbose_name_plural="Товары"
-		ordering = ["-created"]
+		ordering = ["-order"]
 
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
