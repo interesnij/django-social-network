@@ -12,10 +12,9 @@ import django, json, requests
 
 django.setup()
 
-
 from music.models import SoundList
 from video.models import VideoList
-from posts.models import PostList
+from posts.models import PostList, Post
 from docs.models import DocList
 from gallery.models import PhotoList
 from survey.models import SurveyList
@@ -24,94 +23,74 @@ from users.models import User
 from users.model.list import *
 from communities.models import Community
 from communities.model.list import *
+from django.db.models import Q
 
 
-users = User.objects.all()
-for user in users:
-    post_lists = user.get_post_lists()
-    for list in post_lists:
-        if UserPostListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserPostListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    doc_lists = user.get_doc_lists()
-    for list in doc_lists:
-        if UserDocListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserDocListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    playlists = user.get_playlists()
-    for list in playlists:
-        if UserPlayListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserPlayListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    survey_lists = user.get_survey_lists()
-    for list in survey_lists:
-        if UserSurveyListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserSurveyListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    photo_lists = user.get_photo_lists()
-    for list in photo_lists:
-        if UserPhotoListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserPhotoListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    good_lists = user.get_good_lists()
-    for list in good_lists:
-        if UserGoodListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserGoodListPosition.objects.create(user=user.pk, list=list.pk, position=0)
-    video_lists = user.get_video_lists()
-    for list in video_lists:
-        if UserVideoListPosition.objects.filter(user=user.pk, list=list.pk).exists():
-            pass
-        else:
-            UserVideoListPosition.objects.create(user=user.pk, list=list.pk, position=0)
+UserPhotoListPosition.objects.all().delete()
+UserPostListPosition.objects.all().delete()
+UserPlayListPosition.objects.all().delete()
+UserGoodListPosition.objects.all().delete()
+UserVideoListPosition.objects.all().delete()
+UserSurveyListPosition.objects.all().delete()
+UserDocListPosition.objects.all().delete()
 
-communities = Community.objects.all()
-for community in communities:
-    post_lists = community.get_post_lists()
-    for list in post_lists:
-        if CommunityPostListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityPostListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    doc_lists = community.get_doc_lists()
-    for list in doc_lists:
-        if CommunityDocListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityDocListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    playlists = community.get_playlists()
-    for list in playlists:
-        if CommunityPlayListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityPlayListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    survey_lists = community.get_survey_lists()
-    for list in survey_lists:
-        if CommunitySurveyListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunitySurveyListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    photo_lists = community.get_photo_lists()
-    for list in photo_lists:
-        if CommunityPhotoListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityPhotoListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    good_lists = community.get_good_lists()
-    for list in good_lists:
-        if CommunityGoodListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityGoodListPosition.objects.create(community=community.pk, list=list.pk, position=0)
-    video_lists = community.get_video_lists()
-    for list in video_lists:
-        if CommunityVideoListPosition.objects.filter(community=community.pk, list=list.pk).exists():
-            pass
-        else:
-            CommunityVideoListPosition.objects.create(community=community.pk, list=list.pk, position=0)
+CommunityPhotoListPosition.objects.all().delete()
+CommunityPostListPosition.objects.all().delete()
+CommunityPlayListPosition.objects.all().delete()
+CommunityGoodListPosition.objects.all().delete()
+CommunityVideoListPosition.objects.all().delete()
+CommunitySurveyListPosition.objects.all().delete()
+CommunityDocListPosition.objects.all().delete()
+
+query = Q(Q(type="PUB")|Q(type="PRI"))
+
+post_lists = PostList.objects.exclude(type="_FIX").exclude(type="_DRA")
+for list in post_lists:
+    list.communities.clear()
+    list.users.clear()
+    if list.community:
+        CommunityPostListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserPostListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+doc_lists = DocList.objects.all()
+for list in doc_lists:
+    if list.community:
+        CommunityDocListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserDocListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+photo_lists = PhotoList.objects.all()
+for list in photo_lists:
+    if list.community:
+        CommunityPhotoListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserPhotoListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+music_lists = SoundList.objects.all()
+for list in music_lists:
+    if list.community:
+        CommunityPlayListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserPlayListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+video_lists = VideoList.objects.all()
+for list in video_lists:
+    if list.community:
+        CommunityVideoListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserVideoListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+good_lists = GoodList.objects.all()
+for list in good_lists:
+    if list.community:
+        CommunityGoodListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserGoodListPosition.objects.create(list=list.pk, user=list.creator.pk)
+
+survey_lists = SurveyList.objects.all()
+for list in survey_lists:
+    if list.community:
+        CommunitySurveyListPosition.objects.create(list=list.pk, community=list.community.pk)
+    else:
+        UserSurveyListPosition.objects.create(list=list.pk, user=list.creator.pk)
