@@ -97,6 +97,7 @@
   padding: 2px;
   top: 5px;
   background: black;
+  z-index: 99;
 }
 
 .progress2 {
