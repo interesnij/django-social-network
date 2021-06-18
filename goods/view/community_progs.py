@@ -362,3 +362,30 @@ class RemoveGoodFromCommunityList(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class CommunityChangeGoodPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.models import Community
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                post = Good.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
+
+class CommunityChangeGoodListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.model.list import CommunityGoodListPosition
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                list = CommunityGoodListPosition.objects.get(list=item['key'], community=community.pk)
+                list.position=item['value']
+                list.save(update_fields=["position"])
+        return HttpResponse()

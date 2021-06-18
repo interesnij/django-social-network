@@ -33,4 +33,7 @@ urlpatterns=[
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', PhotoListCommunityRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPhotoListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoListFromCommunityCollections.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', CommunityChangePhotoPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangePhotoListPosition.as_view()),
 ]

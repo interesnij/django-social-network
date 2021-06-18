@@ -331,3 +331,29 @@ class RemoveGoodFromUserList(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class UserChangeGoodPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == user.pk:
+            for item in json.loads(request.body):
+                post = Good.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
+
+class UserChangeGoodListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from users.model.list import UserGoodListPosition
+
+        user = User.objects.get(pk=self.kwargs["pk"])
+        if request.user.pk == user.pk:
+            for item in json.loads(request.body):
+                list = UserGoodListPosition.objects.get(list=item['key'], user=user.pk)
+                list.position=item['value']
+                list.save(update_fields=["position"])
+        return HttpResponse()

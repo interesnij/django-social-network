@@ -16,4 +16,7 @@ urlpatterns = [
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveDocListFromCommunityCollections.as_view()),
     url(r'^add_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddDocInCommunityList.as_view()),
     url(r'^remove_doc_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveDocFromCommunityList.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', CommunityChangeDocPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangeDocListPosition.as_view()),
 ]

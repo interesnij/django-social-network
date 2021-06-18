@@ -236,6 +236,12 @@ class SurveyList(models.Model):
         elif self.type == "MAN":
             self.type = SurveyList.DELETED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
@@ -247,6 +253,12 @@ class SurveyList(models.Model):
         elif self.type == "TDELM":
             self.type = SurveyList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
@@ -261,6 +273,12 @@ class SurveyList(models.Model):
         elif self.type == "MAN":
             self.type = SurveyList.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
@@ -274,6 +292,12 @@ class SurveyList(models.Model):
         elif self.type == "TCLOM":
             self.type = SurveyList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():

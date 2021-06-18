@@ -29,4 +29,7 @@ urlpatterns=[
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunityGoodListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddGoodListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodListFromCommunityCollections.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', CommunityChangeGoodPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangeGoodListPosition.as_view()),
 ]

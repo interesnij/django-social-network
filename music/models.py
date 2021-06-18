@@ -248,6 +248,12 @@ class SoundList(models.Model):
         elif self.type == "MAN":
             self.type = SoundList.DELETED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+			from communities.model.list import CommunityPlayListPosition
+			CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+		else:
+			from users.model.list import UserPlayListPosition
+			UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
@@ -261,6 +267,12 @@ class SoundList(models.Model):
         elif self.type == "_DELM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+			from communities.model.list import CommunityPlayListPosition
+			CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+		else:
+			from users.model.list import UserPlayListPosition
+			UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
@@ -277,6 +289,12 @@ class SoundList(models.Model):
         elif self.type == "MAN":
             self.type = SoundList.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+			from communities.model.list import CommunityPlayListPosition
+			CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+		else:
+			from users.model.list import UserPlayListPosition
+			UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -292,6 +310,12 @@ class SoundList(models.Model):
         elif self.type == "_CLOM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+			from communities.model.list import CommunityPlayListPosition
+			CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+		else:
+			from users.model.list import UserPlayListPosition
+			UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():

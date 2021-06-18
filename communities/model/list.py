@@ -5,6 +5,7 @@ class CommunityPhotoListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения фотоальбома'
@@ -18,6 +19,7 @@ class CommunityPostListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка записей'
@@ -31,6 +33,7 @@ class CommunityPlayListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения плейлиста'
@@ -44,6 +47,7 @@ class CommunityGoodListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка товаров'
@@ -57,6 +61,7 @@ class CommunityVideoListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения видеольбома'
@@ -70,6 +75,7 @@ class CommunitySurveyListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка опросов'
@@ -83,6 +89,7 @@ class CommunityDocListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка документов'

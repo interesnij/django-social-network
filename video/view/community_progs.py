@@ -339,3 +339,30 @@ class RemoveVideoFromCommunityList(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class CommunityChangeVideoPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.models import Community
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                post = Video.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
+
+class CommunityChangeVideoListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.model.list import CommunityVideoListPosition
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                list = CommunityVideoListPosition.objects.get(list=item['key'], community=community.pk)
+                list.position=item['value']
+                list.save(update_fields=["position"])
+        return HttpResponse()

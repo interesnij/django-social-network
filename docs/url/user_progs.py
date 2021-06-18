@@ -16,4 +16,7 @@ urlpatterns = [
     url(r'^restore_doc/(?P<doc_pk>\d+)/$', UserDocAbortRemove.as_view()),
     url(r'^add_doc_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddDocInUserList.as_view()),
     url(r'^remove_doc_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveDocFromUserList.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', UserChangeDocPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeDocListPosition.as_view()),
 ]

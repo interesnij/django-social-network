@@ -34,4 +34,6 @@ urlpatterns=[
     url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoFromUserList.as_view()),
     url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddPhotoListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemovePhotoListFromUserCollections.as_view()),
+    url(r'^change_position/(?P<pk>\d+)/$', UserChangePhotoPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangePhotoListPosition.as_view()),
 ]

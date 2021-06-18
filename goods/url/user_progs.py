@@ -29,4 +29,6 @@ urlpatterns=[
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', UserGoodListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddGoodListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemoveGoodListFromUserCollections.as_view()),
+    url(r'^change_position/(?P<pk>\d+)/$', UserChangeGoodPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeGoodListPosition.as_view()),
 ]

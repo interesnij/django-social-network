@@ -193,3 +193,30 @@ class CommunityDocAbortRemove(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class CommunityChangeDocPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.models import Community
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                post = Doc.objects.get(pk=item['key'])
+                post.order=item['value']
+                post.save(update_fields=["order"])
+        return HttpResponse()
+
+class CommunityChangeDocListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+        from communities.model.list import CommunityDocListPosition
+
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if request.user.is_administrator_of_community(community.pk):
+            for item in json.loads(request.body):
+                list = CommunityDocListPosition.objects.get(list=item['key'], community=community.pk)
+                list.position=item['value']
+                list.save(update_fields=["position"])
+        return HttpResponse()

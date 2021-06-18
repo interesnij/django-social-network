@@ -62,19 +62,15 @@ class PostList(models.Model):
         if created:
             list_1 = PostList.objects.create(community=instance, type=PostList.MAIN, name="Записи", creator=instance.creator)
             PostList.objects.create(community=instance, type=PostList.FIXED, name="Закреплённый список", creator=instance.creator)
-            list_2 = PostList.objects.create(community=instance, type=PostList.DRAFT, name="Предложка", creator=instance.creator)
             from communities.model.list import CommunityPostListPosition
             CommunityPostListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
-            CommunityPostListPosition.objects.create(community=instance.pk, list=list_2.pk, position=2)
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_u_model(sender, instance, created, **kwargs):
         if created:
             list_1 = PostList.objects.create(creator=instance, type=PostList.MAIN, name="Записи")
             PostList.objects.create(creator=instance, type=PostList.FIXED, name="Закреплённый список")
-            list_2 = PostList.objects.create(creator=instance, type=PostList.DRAFT, name="Предложка")
             from users.model.list import UserPostListPosition
             UserPostListPosition.objects.create(user=instance.pk, list=list_1.pk, position=1)
-            UserPostListPosition.objects.create(user=instance.pk, list=list_2.pk, position=2)
 
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()
@@ -287,10 +283,10 @@ class PostList(models.Model):
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).delete()
+            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
         else:
             from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).delete()
+            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -306,10 +302,10 @@ class PostList(models.Model):
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.create(community=self.community.pk, list=self.pk)
+            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
         else:
             from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.create(user=self.creator.pk, list=self.pk)
+            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -328,6 +324,12 @@ class PostList(models.Model):
         elif self.type == "MAN":
             self.type = PostList.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -345,6 +347,12 @@ class PostList(models.Model):
         elif self.type == "_CLOM":
             self.type = PostList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostListPosition
+            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserPostListPosition
+            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():

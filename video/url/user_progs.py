@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^off_votes/(?P<uuid>[0-9a-f-]+)/$', UserOffVotesVideo.as_view()),
     url(r'^add_video_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddVideoInUserList.as_view()),
     url(r'^remove_video_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoFromUserList.as_view()),
+    url(r'^change_position/(?P<pk>\d+)/$', UserChangeVideoPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeVideoListPosition.as_view()),
 
     url(r'^post-comment/$', VideoCommentUserCreate.as_view()),
     url(r'^reply-comment/$', VideoReplyUserCreate.as_view()),

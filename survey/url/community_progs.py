@@ -16,4 +16,7 @@ urlpatterns=[
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddSurveyListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovSurveyListFromCommunityCollections.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', CommunityChangeSurveyPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangeSurveyListPosition.as_view()),
 ]

@@ -299,6 +299,12 @@ class GoodList(models.Model):
 		elif self.type == "MAN":
 			self.type = GoodList.DELETED_MANAGER
 		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
@@ -312,6 +318,12 @@ class GoodList(models.Model):
 		elif self.type == "_DELM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
@@ -328,6 +340,12 @@ class GoodList(models.Model):
 		elif self.type == "MAN":
 			self.type = GoodList.CLOSED_MANAGER
 		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
@@ -343,6 +361,12 @@ class GoodList(models.Model):
 		elif self.type == "_CLOM":
 			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
 		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():

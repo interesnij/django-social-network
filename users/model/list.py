@@ -70,6 +70,7 @@ class UserPostListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка записей'
@@ -83,6 +84,7 @@ class UserPlayListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения плейлиста'
@@ -96,6 +98,7 @@ class UserGoodListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка товаров'
@@ -109,6 +112,7 @@ class UserVideoListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения видеольбома'
@@ -122,6 +126,7 @@ class UserSurveyListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка опросов'
@@ -135,6 +140,7 @@ class UserDocListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")
+    type = models.PositiveSmallIntegerField(default=1, verbose_name="1 - открыт, 0 - недоступен")
 
     class Meta:
         verbose_name = 'Порядок отображения списка документов'

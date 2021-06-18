@@ -256,6 +256,12 @@ class DocList(models.Model):
         elif self.type == "MAN":
             self.type = DocList.DELETED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -269,6 +275,12 @@ class DocList(models.Model):
         elif self.type == "_DELM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -285,6 +297,12 @@ class DocList(models.Model):
         elif self.type == "MAN":
             self.type = DocList.CLOSED_MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
@@ -300,6 +318,12 @@ class DocList(models.Model):
         elif self.type == "_CLOM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityDocListPosition
+            CommunityDocListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserDocListPosition
+            UserDocListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():

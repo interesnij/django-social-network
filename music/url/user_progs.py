@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', UserPlaylistRecover.as_view()),
     url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddPlayListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemovePlayListFromUserCollections.as_view()),
+    url(r'^change_position/(?P<pk>\d+)/$', UserChangeMusicPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeMusicListPosition.as_view()),
 
     url(r'^add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddTrackInUserList.as_view()),
     url(r'^remove_track_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveTrackFromUserList.as_view()),
