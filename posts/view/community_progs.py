@@ -66,6 +66,47 @@ class PostCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class PostCommunityEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_admin_template
+        self.post, self.c = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        if post.community.pk == self.c.pk and request.user.is_administrator_of_community(self.c.pk):
+            self.template_name = get_admin_template(self.c, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(PostCommunityEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostCommunityEdit, self).get_context_data(**kwargs)
+        context['post'] = self.post
+        context['form'] = PostForm(instance=self.post)
+        return context
+
+    def post(self,request,*args,**kwargs):
+        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        form_post, attach = PostForm(request.POST, instance=post), request.POST.getlist('attach_items')
+
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if post.text or attach:
+                from common.template.user import render_for_platform
+                new_post = post.edit_post(
+                                            text=post.text,
+                                            category=post.category,
+                                            list=post.list,
+                                            attach=attach,
+                                            comments_enabled=post.comments_enabled,
+                                            is_signature=post.is_signature,
+                                            votes_on=post.votes_on,
+                                            is_public=request.POST.get("is_public")
+                                            )
+                return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
+            else:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
 
 class PostOfferCommunityCreate(View):
     def post(self,request,*args,**kwargs):

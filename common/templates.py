@@ -17,7 +17,7 @@ def get_folder(user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
-        return "desctop/" 
+        return "desctop/"
 
 """
     кончаются на item - шаблоны для списков и элементов в полную страницу
@@ -148,6 +148,30 @@ def get_anon_fine_user_list(list):
     elif list.is_suspended():
         template = "generic/u_template/anon_suspended.html"
     return template
+
+def get_my_template(template, request_user, user_agent):
+    if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
+        if request_user.type[0] == "_":
+            template_name = get_fine_request_user(request_user)
+        else:
+            template_name = template
+    elif request_user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
+    return get_folder(user_agent) + template_name
+
+def get_admin_template(community, template, request_user, user_agent):
+    if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
+        if request_user.type[0] == "_":
+            template_name = get_fine_request_user(request_user)
+        elif community.type[0] == "_":
+            template_name = get_fine_community(community, request_user)
+        else:
+            template_name = template
+    elif request_user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
+    return get_folder(user_agent) + template_name
 
 def get_template_community(list, folder, template, request_user, user_agent, staff):
     community = list.community

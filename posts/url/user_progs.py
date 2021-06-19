@@ -4,6 +4,7 @@ from posts.view.user_progs import *
 
 urlpatterns = [
 	url(r'^add_post/(?P<pk>\d+)/$', PostUserCreate.as_view()),
+	url(r'^edit_post/(?P<uuid>[0-9a-f-]+)/$', PostUserEdit.as_view()),
 	url(r'^post_view/(?P<uuid>[0-9a-f-]+)/$', UserPostView.as_view()),
 	url(r'^post_market_view/(?P<uuid>[0-9a-f-]+)/$', UserAdPostView.as_view()),
 	url(r'^update_votes/(?P<uuid>[0-9a-f-]+)/$', PostGetVotes.as_view()),

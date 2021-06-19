@@ -4,6 +4,7 @@ from posts.view.community_progs import *
 
 urlpatterns = [
 	url(r'^add_post/(?P<pk>\d+)/$', PostCommunityCreate.as_view()),
+	url(r'^edit_post/(?P<uuid>[0-9a-f-]+)/$', PostCommunityEdit.as_view()),
 	url(r'^add_offer_post/(?P<pk>\d+)/$', PostOfferCommunityCreate.as_view()),
 
 	url(r'^post-comment/$', PostCommunityCommentCreate.as_view()),

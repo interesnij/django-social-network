@@ -109,6 +109,11 @@ on('#ajax', 'click', '#repost_for_message', function() {
   list_load(block, "/users/load/chat_items/")
   }
 })
+
+on('#ajax', 'click', '.u_post_edit', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  list_load(block, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+})
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');

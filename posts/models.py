@@ -40,6 +40,10 @@ class PostList(models.Model):
         from users.model.list import UserPostListPosition
         return UserPostListPosition.objects.get(list=self.pk)
 
+    def get_edit_attach(self, user):
+        from common.attach.post_attach import get_post_edit
+        return get_elect_new_edit(self, user)
+
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityPostListPosition
         CommunityPostListPosition.objects.create(community=community.pk, list=self.pk, position=PostList.get_community_lists_count(community.pk))
@@ -522,9 +526,9 @@ class Post(models.Model):
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
         from common.processing.post import get_post_processing
-        #if not text or not attach:
-        #    from rest_framework.exceptions import ValidationError
-        #    raise ValidationError("Нет текста и вложений")
+        if not text or not attach:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Нет текста и вложений")
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         _list = PostList.objects.get(pk=list)
@@ -560,7 +564,7 @@ class Post(models.Model):
             creator.plus_posts(1)
         return post
 
-    def edit_post(self, text, list, category, attach, parent, comments_enabled, is_signature, votes_on, is_public):
+    def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on, is_public):
         from common.processing.post  import get_post_processing
 
         _attach = str(attach)
@@ -571,7 +575,6 @@ class Post(models.Model):
             self.list.save(update_fields=["count"])
             _list.count += 1
             _list.save(update_fields=["count"])
-
         self.text = text
         self.category = category
         self.attach = _attach
@@ -906,6 +909,16 @@ class Post(models.Model):
         return Video.objects.filter(id__in=query)
     def is_private(self):
         return self.type == self.PRIVATE
+
+    def get_edit_attach(self, user):
+        from common.attach.post_attach import get_post_edit
+        return get_elect_new_edit(self, user)
+
+    def get_count_attach(self):
+        if self.attach:
+            return "files_" + str(len(_attach))
+        else:
+            return "files_0"
 
 
 class PostComment(models.Model):
