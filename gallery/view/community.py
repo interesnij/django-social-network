@@ -180,7 +180,7 @@ class CommunityPostPhoto(TemplateView):
 		from posts.models import Post
 		from common.templates import get_template_community_item, get_template_anon_community_item
 
-		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
 		if request.user.is_authenticated:
