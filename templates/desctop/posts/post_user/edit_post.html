@@ -6,7 +6,9 @@
 
 <div class="card-footer border-top btn_default">
     <span class="{{ post.get_count_attach }} row attach_block">
-      {{ post|get_edit_attach:request.user|safe }}
+      {% if post.attach %}
+        {{ post|get_edit_attach:request.user|safe }}
+      {% endif %}
     </span>
 
     <div class="row">
