@@ -78,6 +78,8 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     new_post.innerHTML = elem;
     card_header = block.querySelector(".card-header");
     form_post.parentElement.remove();
+    block.querySelector(".fullscreen").remove();
+    block.querySelector(".attach_container").remove();
     if (new_post.querySelector(".fullscreen")) {
       new_post.append(new_post.querySelector(".fullscreen")); block.querySelector(".fullscreen").style.display = "block"
     }
