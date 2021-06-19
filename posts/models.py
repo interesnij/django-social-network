@@ -565,18 +565,17 @@ class Post(models.Model):
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _list = PostList.objects.get(pk=list)
         if self.list.pk != list:
             self.list.count -= 1
             self.list.save(update_fields=["count"])
-            _list.count += 1
-            _list.save(update_fields=["count"])
+            list.count += 1
+            list.save(update_fields=["count"])
         self.text = text
         self.category = category
         self.attach = _attach
         self.comments_enabled = comments_enabled
         self.is_signature = is_signature
-        self.list = _list
+        self.list = list
         self.votes_on = votes_on
 
         if is_public and self.is_private():
