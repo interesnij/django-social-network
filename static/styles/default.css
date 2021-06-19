@@ -1088,6 +1088,7 @@ html {
   height: 25px;
   width: 25px;
   border: 1px grey solid;
+  z-index: 2
 }
 .photo_preview_delete svg,
 .video_preview_delete svg,
