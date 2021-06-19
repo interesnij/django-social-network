@@ -586,7 +586,8 @@ class Post(models.Model):
             self.make_private()
         else:
             get_post_processing(self, self.type)
-        return self.save()
+        self.save()
+        return post
 
     def make_private(self):
         from notify.models import Notify, Wall
