@@ -116,6 +116,7 @@ on('#ajax', 'click', '.u_post_edit', function() {
     return
   } else {
     block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
+    block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
     div = document.createElement("div");
     block.append(div);
