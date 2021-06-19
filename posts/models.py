@@ -40,10 +40,6 @@ class PostList(models.Model):
         from users.model.list import UserPostListPosition
         return UserPostListPosition.objects.get(list=self.pk)
 
-    def get_edit_attach(self, user):
-        from common.attach.post_attach import get_post_edit
-        return get_elect_new_edit(self, user)
-
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityPostListPosition
         CommunityPostListPosition.objects.create(community=community.pk, list=self.pk, position=PostList.get_community_lists_count(community.pk))

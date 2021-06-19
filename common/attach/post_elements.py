@@ -219,17 +219,17 @@ def get_post_edit(new, user):
     block = ''
     for item in new.attach.split(","):
         if item[:3] == "pho":
-            try:
-                from gallery.models import Photo
-                photo = Photo.objects.get(query, pk=item[3:])
-                if photo.community:
-                    el = '<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'
-                else:
-                    el = '<div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'
-                input = '<span><input type="hidden" name="attach_items" value="pho', str(photo.pk), '"></span>'
-                block = ''.join([block, '<div class="photo"><span class="photo_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span>', el, input, '</div>'])
-            except:
-                pass
+            #try:
+            from gallery.models import Photo
+            photo = Photo.objects.get(query, pk=item[3:])
+            if photo.community:
+                el = '<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'
+            else:
+                el = '<div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'
+            input = '<span><input type="hidden" name="attach_items" value="pho', str(photo.pk), '"></span>'
+            block = ''.join([block, '<div class="photo"><span class="photo_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span>', el, input, '</div>'])
+            #except:
+            #    pass
         elif item[:3] == "vid":
             try:
                 from video.models import Video
