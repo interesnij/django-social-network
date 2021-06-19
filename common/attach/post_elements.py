@@ -221,7 +221,9 @@ def get_post_edit(new, user):
         if item[:3] == "pho":
             #try:
             from gallery.models import Photo
-            photo = Photo.objects.get(query, pk=item[3:])
+            photo = Photo.objects.get(pk=item[3:])
+            if photo.type[0] == "_":
+                pass
             if photo.community:
                 el = '<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'
             else:
