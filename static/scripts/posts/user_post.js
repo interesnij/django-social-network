@@ -76,17 +76,17 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    card_header = block.querySelector(".card-header");
     form_post.parentElement.remove();
     block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").remove() : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").remove() : null;
+    block.querySelector(".card-footer").remove()
     if (new_post.querySelector(".fullscreen")) {
       block.append(new_post.querySelector(".fullscreen"))
     }
     if (new_post.querySelector(".attach_container")) {
       block.append(new_post.querySelector(".attach_container"))
     };
-    block.querySelector(".card-footer").style.display = "block";
+    block.append(new_post.querySelector(".card-footer"))
 
   }};
 
