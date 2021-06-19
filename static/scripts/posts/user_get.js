@@ -115,6 +115,7 @@ on('#ajax', 'click', '.u_post_edit', function() {
   if (block.querySelector(".post_edit_form")) {
     return
   } else {
+    clear_attach_block();
     div = document.createElement("div");
     block.append(div);
     block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;

@@ -61,6 +61,31 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#u_edit_post_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement.parentElement;
+  form_data = new FormData(form_post);
+  block = form_post.parentElement.parentElement;
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    clear_attach_block();
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    card_header = block.querySelector(".card-header");
+    new_post.querySelector(".fullscreen") ? card_header.append(new_post.querySelector(".fullscreen"));
+    new_post.querySelector(".attach_container") ? card_header.append(new_post.querySelector(".attach_container"))
+    block.querySelector(".card-footer").style.display = "block";
+
+  }};
+
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.u_add_post_in_list', function() {
   add_item_in_list(this, '/posts/user_progs/add_post_in_list/', "u_add_post_in_list", "u_remove_post_from_list")
 })
