@@ -81,10 +81,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").remove() : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").remove() : null;
     if (new_post.querySelector(".fullscreen")) {
-      new_post.append(new_post.querySelector(".fullscreen"))
+      block.append(new_post.querySelector(".fullscreen"))
     }
     if (new_post.querySelector(".attach_container")) {
-      new_post.append(new_post.querySelector(".attach_container"))
+      block.append(new_post.querySelector(".attach_container"))
     };
     block.querySelector(".card-footer").style.display = "block";
 
