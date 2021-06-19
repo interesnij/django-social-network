@@ -916,7 +916,7 @@ class Post(models.Model):
 
     def get_count_attach(self):
         if self.attach:
-            return "files_" + str(len(_attach))
+            return "files_" + str(len(attach))
         else:
             return "files_0"
 
