@@ -79,10 +79,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     card_header = block.querySelector(".card-header");
     form_post.parentElement.remove();
     if (new_post.querySelector(".fullscreen")) {
-      new_post.append(new_post.querySelector(".fullscreen"))
+      new_post.append(new_post.querySelector(".fullscreen")); block.querySelector(".fullscreen").style.display = "block"
     }
     if (new_post.querySelector(".attach_container")) {
-      new_post.append(new_post.querySelector(".attach_container"))
+      new_post.append(new_post.querySelector(".attach_container")); block.querySelector(".attach_container").style.display = "block"
     };
     block.querySelector(".card-footer").style.display = "block";
 
