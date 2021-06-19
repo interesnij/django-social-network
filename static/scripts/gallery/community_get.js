@@ -1,7 +1,7 @@
 
 on('#ajax', 'click', '.c_post_photo', function() {
   pk = this.getAttribute('photo-pk');
-  uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+  this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("photo_loader");
   open_fullscreen("/gallery/community/post_photo/" + uuid + "/" + pk + "/", loader)
 });
