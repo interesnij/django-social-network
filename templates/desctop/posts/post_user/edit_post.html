@@ -1,8 +1,8 @@
 {% load post %}
 <form class="post_edit_form">
     {% csrf_token %}
-{{ post }}
-<textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" value="{{ post.text }}"></textarea>
+
+<textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" >{{ post.text }}</textarea>
 
 <div class="card-footer border-top btn_default">
     <span class="{{ post.get_count_attach }} row attach_block">
