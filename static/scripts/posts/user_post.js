@@ -77,8 +77,12 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     card_header = block.querySelector(".card-header");
-    new_post.querySelector(".fullscreen") ? card_header.append(new_post.querySelector(".fullscreen"));
-    new_post.querySelector(".attach_container") ? card_header.append(new_post.querySelector(".attach_container"))
+    if (new_post.querySelector(".fullscreen")) {
+      card_header.append(new_post.querySelector(".fullscreen"))
+    }
+    if (new_post.querySelector(".attach_container")) {
+      card_header.append(new_post.querySelector(".attach_container"))
+    };
     block.querySelector(".card-footer").style.display = "block";
 
   }};
