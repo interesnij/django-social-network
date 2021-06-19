@@ -911,8 +911,8 @@ class Post(models.Model):
         return self.type == self.PRIVATE
 
     def get_edit_attach(self, user):
-        from common.attach.post_attach import get_post_edit
-        return get_elect_new_edit(self, user)
+        from common.attach.post_elements import get_post_edit
+        return get_post_edit(self, user)
 
     def get_count_attach(self):
         if self.attach:

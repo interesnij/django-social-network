@@ -215,7 +215,7 @@ def get_post_attach(post, user):
     return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
-def get_blog_edit(new, user):
+def get_post_edit(new, user):
     block = ''
     for item in new.attach.split(","):
         if item[:3] == "pho":
