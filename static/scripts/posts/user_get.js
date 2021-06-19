@@ -112,7 +112,11 @@ on('#ajax', 'click', '#repost_for_message', function() {
 
 on('#ajax', 'click', '.u_post_edit', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  list_load(block, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+  block.querySelector(".fullscreen").style.display = "none";
+  block.querySelector(".card-footer").style.display = "none";
+  div = document.createElement("div");
+  block.append(div);
+  list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
 })
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
