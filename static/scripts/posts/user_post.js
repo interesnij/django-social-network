@@ -77,7 +77,7 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     card_header = block.querySelector(".card-header");
-    form_post.parentElement.revove();
+    form_post.parentElement.remove();
     if (new_post.querySelector(".fullscreen")) {
       card_header.append(new_post.querySelector(".fullscreen"))
     }
