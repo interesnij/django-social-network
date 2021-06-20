@@ -350,6 +350,8 @@ class User(AbstractUser):
         user.plus_friends(1)
         self.plus_friends(1)
         self.minus_follows(1)
+        self.create_or_plus_populate_friend(user.pk)
+        user.create_or_plus_populate_friend(self.pk)
         try:
             for frend in user.get_6_friends():
                 self.get_or_create_possible_friend(frend)
@@ -368,7 +370,6 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
         self.remove_possible_friend(user_id)
-        self.create_or_plus_populate_friend(user_id)
         self.add_news_subscriber(user_id)
         return frend
 
