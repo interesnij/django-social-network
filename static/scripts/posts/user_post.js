@@ -264,7 +264,7 @@ on('body', 'click', '.u_post_edit_comment_byn', function() {
           $p = document.createElement("p");
           $p.innerHTML = new_post.querySelector("p");
           block.append($p);
-          new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container"), block.append($div));
+          new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container"), block.append($div)) : null;
           $footer = document.createElement("div");
           $footer.innerHTML = new_post.querySelector(".card-footer");
           block.append($footer);
