@@ -262,11 +262,11 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           p.nextElementSibling.remove();
           p.remove();
           $p = document.createElement("p");
-          $p.innerHTML = new_post.querySelector("p");
+          $p.innerHTML = new_post.querySelector("p").innerHTML;
           block.append($p);
           new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container"), block.append($div)) : null;
           $footer = document.createElement("div");
-          $footer.innerHTML = new_post.querySelector(".card_footer");
+          $footer.innerHTML = new_post.querySelector(".card_footer").innerHTML;
           block.append($footer);
           toast_success(" Комментарий изменен");
       }
