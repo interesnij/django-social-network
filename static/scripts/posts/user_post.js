@@ -263,11 +263,11 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           p.remove();
           $p = document.createElement("p");
           $p.innerHTML = new_post.querySelector("p");
-          block.append($p);
+          block.append($p.innerHTML);
           new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container"), block.append($div)) : null;
           $footer = document.createElement("div");
-          $footer.innerHTML = new_post.querySelector(".card-footer");
-          block.append($footer);
+          $footer.innerHTML = new_post.querySelector(".card-footer").innerHTML;
+          block.append($footer.innerHTML);
           toast_success(" Комментарий изменен");
       }
   };
