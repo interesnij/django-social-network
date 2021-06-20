@@ -6,7 +6,7 @@ on('#ajax', 'click', '.c_post_edit', function() {
     clear_attach_block();
     div = document.createElement("div");
     block.append(div);
-    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
+    block.querySelector(".c_fullscreen") ? block.querySelector(".c_fullscreen").style.display = "none" : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
