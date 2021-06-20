@@ -11,7 +11,7 @@
           {{ comment|get_user_attach:request.user|safe }}
         {% endif %}
 
-        <div class="">
+        <div class="card_footer">
             <div class="row">
                 <div class="col" data-pk="{{ comment.pk }}">
                     <span class="like like2 u_like2 {% if comment.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">
