@@ -86,13 +86,12 @@ class PostCommunityEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.community = self.post.community
+        _post = Post.objects.get(uuid=self.kwargs["uuid"])
+        community_pk = _post.community.pk
         form_post, attach = PostForm(request.POST, instance=post), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community_pk):
             post = form_post.save(commit=False)
-            self.community = self.post.community
             if post.text or attach:
                 from common.template.user import render_for_platform
                 new_post = post.edit_post(
