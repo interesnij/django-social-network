@@ -222,7 +222,7 @@ on('body', 'click', '.u_post_comment_edit', function() {
   clear_comment_dropdown();
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/post/user_progs/edit_comment/" + _this.parentElement.getAttribute("data-pk") + "/", true );
+  link.open( 'GET', "/posts/user_progs/edit_comment/" + _this.parentElement.getAttribute("data-pk") + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
