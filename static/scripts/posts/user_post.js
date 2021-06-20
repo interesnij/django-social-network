@@ -239,6 +239,41 @@ on('body', 'click', '.u_post_comment_edit', function() {
   link.send( null );
 });
 
+on('body', 'click', '.u_post_edit_comment_byn', function() {
+  form = this.parentElement.parentElement
+  span_form = form.parentElement;
+  block = span_form.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('POST', "/blog/edit_blog_comment/" + this.getAttribute("data-pk") + "/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  if (!form.querySelector(".text-comment").value && !form.querySelector(".comment_attach_block").firstChild){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
+    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
+    return
+  };
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          p = block.querySelector("p");
+          p.previousElementSibling.delete()
+          p.delete();
+          $p = document.createElement("p");
+          $p.innerHTML = new_post.querySelector("p");
+          block.append($p);
+          new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container"), block.append($div));
+          $footer = document.createElement("div");
+          $footer.innerHTML = new_post.querySelector(".card-footer");
+          block.append($footer);
+          toast_success(" Комментарий изменен");
+      }
+  };
+  link_.send(form_comment)
+});
+
 /*!
    item post scripts for user
   */
