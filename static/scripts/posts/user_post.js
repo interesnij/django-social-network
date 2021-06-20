@@ -258,16 +258,7 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
-          p = block.querySelector("p");
-          p.nextElementSibling.remove();
-          p.remove();
-          $p = document.createElement("p");
-          $p.innerHTML = new_post.querySelector("p").innerHTML;
-          block.append($p);
-          new_post.querySelector(".attach_container") ? ($div = document.createElement("div"), $div.innerHTML = new_post.querySelector(".attach_container").innerHTML, block.append($div)) : null;
-          $footer = document.createElement("div");
-          $footer.innerHTML = new_post.querySelector(".card_footer").innerHTML;
-          block.append($footer);
+          block.parentElement.innerHTML = new_post.querySelector(".media").innerHTML
           toast_success(" Комментарий изменен");
       }
   };
