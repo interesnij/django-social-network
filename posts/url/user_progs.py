@@ -9,8 +9,9 @@ urlpatterns = [
 	url(r'^post_market_view/(?P<uuid>[0-9a-f-]+)/$', UserAdPostView.as_view()),
 	url(r'^update_votes/(?P<uuid>[0-9a-f-]+)/$', PostGetVotes.as_view()),
 
-	url(r'^post-comment/$', PostCommentUserCreate.as_view()),
-    url(r'^reply-comment/$', PostReplyUserCreate.as_view()),
+	url(r'^add_comment/$', PostCommentUserCreate.as_view()),
+    url(r'^reply_comment/$', PostReplyUserCreate.as_view()),
+	url(r'^edit_comment/(?P<pk>\d+)/$', PostCommentEdit.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/$', PostCommentUserDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', PostCommentUserRecover.as_view()),
 	url(r'^delete_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserDelete.as_view()),

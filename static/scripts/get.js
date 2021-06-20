@@ -3,7 +3,13 @@ on('#ajax', 'click', '.u_add_survey', function() {
   open_fullscreen('/survey/user_progs/add/', loader);
 });
 
-on('body', 'click', '.previous_click', function() {
+on('#ajax', 'click', '.hide_comment_form', function() {
+  parent = this.parentElement.parentElement.parentElement;
+  parent.style.display = "none";
+  parent.parentElement.querySelector(".col").style.display = "block";
+})
+
+on('#ajax', 'click', '.previous_click', function() {
   this.previousElementSibling.click();
 })
 on('body', 'click', '.menu_drop', function() {

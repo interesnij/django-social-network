@@ -90,13 +90,13 @@ function good_gallery(loader){
 
 on('#ajax', 'click', '.u_goodComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/');
 });
 
 on('#ajax', 'click', '.u_replyGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/goods/user_progs/reply-comment/')
+  send_comment(form, block, '/goods/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
@@ -104,7 +104,7 @@ on('#ajax', 'click', '.u_replyGoodComment', function() {
 on('#ajax', 'click', '.u_replyParentGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/goods/user_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/goods/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });

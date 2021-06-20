@@ -18,8 +18,8 @@ urlpatterns = [
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeVideoPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeVideoListPosition.as_view()),
 
-    url(r'^post-comment/$', VideoCommentUserCreate.as_view()),
-    url(r'^reply-comment/$', VideoReplyUserCreate.as_view()),
+    url(r'^add_comment/$', VideoCommentUserCreate.as_view()),
+    url(r'^reply_comment/$', VideoReplyUserCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentUserDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentUserRecover.as_view()),
 

@@ -59,13 +59,13 @@ on('#ajax', 'click', '#u_ucm_photo_list_repost_btn', function() {
 
 on('#ajax', 'click', '.u_photoComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/add_comment/');
 });
 
 on('#ajax', 'click', '.u_replyPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/gallery/user_progs/reply-comment/')
+  send_comment(form, block, '/gallery/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
@@ -73,7 +73,7 @@ on('#ajax', 'click', '.u_replyPhotoComment', function() {
 on('#ajax', 'click', '.u_replyParentPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/gallery/user_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/gallery/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });

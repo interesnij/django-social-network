@@ -39,13 +39,13 @@ on('#ajax', 'click', '.c_good_add_attach', function() {
 
 on('#ajax', 'click', '.c_goodComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/');
 });
 
 on('#ajax', 'click', '.c_replyGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/goods/community_progs/reply-comment/')
+  send_comment(form, block, '/goods/community_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
@@ -53,7 +53,7 @@ on('#ajax', 'click', '.c_replyGoodComment', function() {
 on('#ajax', 'click', '.c_replyParentGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/goods/community_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/goods/community_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });

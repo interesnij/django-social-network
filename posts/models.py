@@ -1101,8 +1101,22 @@ class PostComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-        get_post_comment_processing(comment)
+        get_post_comment_processing(comment, PostComment.EDITED)
         return comment
+
+    def edit_comment(self, attach, text):
+        from common.processing import get_post_comment_processing
+        if not text and not attach:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Нет текста или прикрепленных элементов")
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        self.attach = _attach
+        self.text = text
+        get_post_comment_processing(comment, PostComment.EDITED)
+        self.save()
+        return self
 
     def count_replies_ru(self):
         count = self.replies.filter(is_deleted=False).values("pk").count()

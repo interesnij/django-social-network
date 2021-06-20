@@ -7,8 +7,8 @@ urlpatterns = [
 	url(r'^edit_post/(?P<uuid>[0-9a-f-]+)/$', PostCommunityEdit.as_view()),
 	url(r'^add_offer_post/(?P<pk>\d+)/$', PostOfferCommunityCreate.as_view()),
 
-	url(r'^post-comment/$', PostCommunityCommentCreate.as_view()),
-    url(r'^reply-comment/$', PostCommunityReplyCreate.as_view()),
+	url(r'^add_comment/$', PostCommunityCommentCreate.as_view()),
+    url(r'^reply_comment/$', PostCommunityReplyCreate.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityRecover.as_view()),
 	url(r'^delete_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentCommunityDelete.as_view()),

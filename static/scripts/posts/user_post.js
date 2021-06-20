@@ -196,37 +196,15 @@ on('#ajax', 'click', '.u_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '#article_post', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.forms.new_post);
-  form_post = document.querySelector("#user_article_form");
-  CKEDITOR.instances.id_content.updateElement();
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/article/add_user/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    response = new_post.querySelector(".card");
-    document.querySelector(".post_stream").prepend(response)
-    document.querySelector(".post_empty") ? lenta_load.querySelector(".post_empty").style.display = "none" : null;
-  }};
-
-  link_.send(form_data);
-});
-
 on('#ajax', 'click', '.u_itemComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/');
 });
 
 on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/posts/user_progs/reply-comment/')
+  send_comment(form, block, '/posts/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
 });
@@ -234,9 +212,27 @@ on('#ajax', 'click', '.u_replyItemComment', function() {
 on('#ajax', 'click', '.u_replyParentItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/posts/user_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/posts/user_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open");
+});
+
+on('body', 'click', '.edit_post_comment', function() {
+  _this = this;
+  clear_comment_dropdown();
+  _this.parentElement.style.display = "none";
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/post/user_progs/edit_comment/" + _this.parentElement.parentElement.getAttribute("data-pk") + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    elem = link.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    _this.parentElement.parentElement.append(response);
+  }};
+  link.send( null );
 });
 
 /*!

@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^add_video_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddVideoInCommunityList.as_view()),
     url(r'^remove_video_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveVideoFromCommunityList.as_view()),
 
-    url(r'^post-comment/$', VideoCommentCommunityCreate.as_view()),
-    url(r'^reply-comment/$', VideoReplyCommunityCreate.as_view()),
+    url(r'^add_comment/$', VideoCommentCommunityCreate.as_view()),
+    url(r'^reply_comment/$', VideoReplyCommunityCreate.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentCommunityRecover.as_view()),
 

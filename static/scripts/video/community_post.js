@@ -19,13 +19,13 @@ on('#ajax', 'click', '#c_ucm_video_list_repost_btn', function() {
 
 on('#video_loader', 'click', '.c_videoComment', function() {
   form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/post-comment/');
+  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/add_comment/');
 });
 
 on('#video_loader', 'click', '.c_replyVideoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/video/community_progs/reply-comment/')
+  send_comment(form, block, '/video/community_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
@@ -33,7 +33,7 @@ on('#video_loader', 'click', '.c_replyVideoComment', function() {
 on('#video_loader', 'click', '.c_replyParentVideoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/video/community_progs/reply-comment/')
+  send_comment(form, block.parentElement, '/video/community_progs/reply_comment/')
   form.parentElement.style.display = "none";
   block.classList.add("replies_open")
 });
