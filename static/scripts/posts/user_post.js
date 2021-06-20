@@ -217,7 +217,7 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
   block.classList.add("replies_open");
 });
 
-on('body', 'click', '.edit_post_comment', function() {
+on('body', 'click', '.u_post_comment_edit', function() {
   _this = this;
   clear_comment_dropdown();
   _this.parentElement.style.display = "none";
