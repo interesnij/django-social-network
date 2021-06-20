@@ -1114,7 +1114,7 @@ class PostComment(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         self.attach = _attach
         self.text = text
-        get_post_comment_processing(comment, PostComment.EDITED)
+        get_post_comment_processing(self, PostComment.EDITED)
         self.save()
         return self
 
