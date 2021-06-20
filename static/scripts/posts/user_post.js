@@ -231,8 +231,8 @@ on('body', 'click', '.u_post_comment_edit', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     parent = _this.parentElement.parentElement.parentElement;
-    parent.querySelector("p").style.display = "none";
-    parent.querySelector(".attach_container") ? parent.querySelector(".attach_container").style.display = "none" : null;
+    parent.parentElement.querySelector("p").style.display = "none";
+    parent.parentElement.querySelector(".attach_container") ? parent.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
   }};
   link.send( null );
