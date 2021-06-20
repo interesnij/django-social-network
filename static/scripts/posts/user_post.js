@@ -239,7 +239,7 @@ on('body', 'click', '.u_post_comment_edit', function() {
   link.send( null );
 });
 
-on('body', 'click', '.u_post_edit_comment_byn', function() {
+on('body', 'click', '.u_post_edit_comment_btn', function() {
   form = this.parentElement.parentElement
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;

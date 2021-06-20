@@ -724,7 +724,7 @@ class Post(models.Model):
             return self.comment
 
     def get_comments(self):
-        return PostComment.objects.filter(post_id=self.pk, parent__isnull=True, type="PUB")
+        return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
     def is_fixed_in_community(self):
         list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
@@ -1101,11 +1101,11 @@ class PostComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-        get_post_comment_processing(comment, PostComment.EDITED)
+        get_post_comment_processing(comment, PostComment.PUBLISHED)
         return comment
 
     def edit_comment(self, attach, text):
-        from common.processing import get_post_comment_processing
+        from common.processing.post import get_post_comment_processing
         if not text and not attach:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Нет текста или прикрепленных элементов")
