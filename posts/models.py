@@ -1213,3 +1213,19 @@ class PostComment(models.Model):
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="POSC", object_id=self.pk, verb="COM").update(status="R")
+
+    def get_edit_attach(self, user):
+        from common.attach.comment_attach import get_comment_edit
+        return get_comment_edit(self, user)
+
+    def get_count_attach(self):
+        if self.attach:
+            _attach = self.attach.split(",")
+            if len(_attach) == 1:
+                return "files_one"
+            elif len(_attach) == 2:
+                return "files_two"
+            else:
+                return "files_null"
+        else:
+            return "files_null"
