@@ -259,8 +259,7 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           p = block.querySelector("p");
-          console.log(p);
-          p.previousElementSibling.delete()
+          p.nextElementSibling.delete()
           p.delete();
           $p = document.createElement("p");
           $p.innerHTML = new_post.querySelector("p");
