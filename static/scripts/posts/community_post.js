@@ -43,6 +43,37 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 
   link_.send(form_data);
 });
+on('#ajax', 'click', '#c_edit_post_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement.parentElement;
+  form_data = new FormData(form_post);
+  block = form_post.parentElement.parentElement;
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/posts/community_progs/edit_post/" + block.getAttribute("data-uuid") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    clear_attach_block();
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    form_post.parentElement.remove();
+    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").remove() : null;
+    block.querySelector(".attach_container") ? block.querySelector(".attach_container").remove() : null;
+    block.querySelector(".card-footer").remove()
+    if (new_post.querySelector(".fullscreen")) {
+      block.append(new_post.querySelector(".fullscreen"))
+    }
+    if (new_post.querySelector(".attach_container")) {
+      block.append(new_post.querySelector(".attach_container"))
+    };
+    block.append(new_post.querySelector(".card-footer"))
+
+  }};
+
+  link_.send(form_data);
+});
 
 on('#ajax', 'click', '#c_add_offer_post', function() {
   form_post = document.body.querySelector("#admin_offer_post");

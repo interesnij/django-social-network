@@ -1,3 +1,19 @@
+on('#ajax', 'click', '.u_post_edit', function() {
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (block.querySelector(".post_edit_form")) {
+    return
+  } else {
+    clear_attach_block();
+    div = document.createElement("div");
+    block.append(div);
+    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
+    block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
+    block.querySelector(".card-footer").style.display = "none";
+
+    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+  }
+})
+
 on('#ajax', 'click', '.c_copy_post_list', function() {
   on_off_list_in_collections(this, "/posts/community_progs/add_list_in_collections/", "c_uncopy_post_list", "c_copy_post_list", "Удалить")
 });
