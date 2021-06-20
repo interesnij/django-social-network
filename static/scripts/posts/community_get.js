@@ -1,4 +1,4 @@
-on('#ajax', 'click', '.u_post_edit', function() {
+on('#ajax', 'click', '.c_post_edit', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (block.querySelector(".post_edit_form")) {
     return
@@ -10,7 +10,7 @@ on('#ajax', 'click', '.u_post_edit', function() {
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
-    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+    list_load(div, "/posts/community_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
   }
 })
 
