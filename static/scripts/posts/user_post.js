@@ -230,7 +230,10 @@ on('body', 'click', '.u_post_comment_edit', function() {
     elem = link.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    _this.parentElement.parentElement.parentElement.append(response);
+    parent = _this.parentElement.parentElement.parentElement;
+    parent.querySelector("p").style.display = "none";
+    parent.querySelector(".attach_container") ? parent.querySelector(".attach_container").style.display = "none" : null;
+    parent.append(response);
   }};
   link.send( null );
 });

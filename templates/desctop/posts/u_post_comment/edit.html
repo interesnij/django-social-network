@@ -1,7 +1,7 @@
 {% load post %}
 <form class="form mt-1">
   {% csrf_token %}
-      <div class="row comment_attach_block no-gutters">
+      <div class="row img_block no-gutters">
         {{ comment|get_edit_attach:request.user|safe }}
       </div>
       <span style="display:flex">
