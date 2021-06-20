@@ -220,9 +220,10 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
 on('body', 'click', '.u_post_comment_edit', function() {
   _this = this;
   clear_comment_dropdown();
+  pk = _this.parentElement.getAttribute("data-pk");
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/edit_comment/" + _this.parentElement.getAttribute("data-pk") + "/", true );
+  link.open( 'GET', "/posts/user_progs/edit_comment/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -232,7 +233,7 @@ on('body', 'click', '.u_post_comment_edit', function() {
     response.innerHTML = elem;
     parent = _this.parentElement.parentElement.parentElement;
     parent.parentElement.querySelector("p").style.display = "none";
-    parent.parentElement.querySelector(".img_block") ? parent.querySelector(".img_block").style.display = "none" : null;
+    parent.parentElement.querySelector(".attach_container") ? parent.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
   }};
   link.send( null );
