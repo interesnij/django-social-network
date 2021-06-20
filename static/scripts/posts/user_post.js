@@ -262,6 +262,8 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           $media.classList.add("media");
           $media.innerHTML = new_post.querySelector(".media").innerHTML;
           block.append($media);
+          console.log(block);
+          console.log($media);
           toast_success(" Комментарий изменен");
       }
   };
