@@ -230,7 +230,7 @@ on('body', 'click', '.u_post_comment_edit', function() {
     elem = link.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    _this.parentElement.parentElement.append(response);
+    _this.parentElement.parentElement.parentElement.append(response);
   }};
   link.send( null );
 });
