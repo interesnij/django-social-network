@@ -72,8 +72,9 @@ class PostCommunityEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_admin_template
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_administrator_of_community(self.post.community.pk):
-            self.template_name = get_admin_template(self.c, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community = self.post.community
+        if request.user.is_administrator_of_community(self.community.pk):
+            self.template_name = get_admin_template(self.community, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(PostCommunityEdit,self).get(request,*args,**kwargs)
@@ -88,8 +89,9 @@ class PostCommunityEdit(TemplateView):
         post = Post.objects.get(uuid=self.kwargs["uuid"])
         form_post, attach = PostForm(request.POST, instance=post), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid():
+        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             post = form_post.save(commit=False)
+            self.community = self.post.community
             if post.text or attach:
                 from common.template.user import render_for_platform
                 new_post = post.edit_post(
