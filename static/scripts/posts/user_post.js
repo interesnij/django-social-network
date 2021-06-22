@@ -247,7 +247,7 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', "/posts/user_progs/edit_comment/" + this.getAttribute("data-pk") + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  if (!form.querySelector(".text-comment").value && !form.querySelector(".comment_attach_block").firstChild){
+  if (!form.querySelector(".text-comment").value && !form.querySelector(".img_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
     form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
     form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
