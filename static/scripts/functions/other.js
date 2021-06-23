@@ -1,5 +1,52 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function get_edit_comment_form(this, url){
+  clear_comment_dropdown();
+  pk = this.parentElement.getAttribute("data-pk");
+  this.parentElement.style.display = "none";
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    parent = this.parentElement.parentElement.parentElement;
+    parent.parentElement.querySelector("p").style.display = "none";
+    parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
+    parent.append(response);
+  }};
+  link.send( null );
+}
+
+function post_edit_comment_form(this, url) {
+  form = this.parentElement.parentElement
+  span_form = form.parentElement;
+  block = span_form.parentElement.parentElement.parentElement;
+  form_comment = new FormData(form);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('POST', url + this.getAttribute("data-pk") + "/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  if (!form.querySelector(".text-comment").value && !form.querySelector(".img_block").firstChild){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
+    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
+    return
+  };
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          block.querySelector(".media-body").innerHTML = new_post.querySelector(".media-body").innerHTML;
+          toast_success("Комментарий изменен");
+      }
+  };
+  link_.send(form_comment)
+}
+
 function send_change_items(array, link) {
   // функция передает новый порядок элементов, принимая их массив и ссылку, по которой нужно отправить изменения.
   len = array.length + 1;

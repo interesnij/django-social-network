@@ -218,53 +218,11 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
 });
 
 on('#ajax', 'click', '.u_post_comment_edit', function() {
-  _this = this;
-  console.log(_this)
-  clear_comment_dropdown();
-  pk = _this.parentElement.getAttribute("data-pk");
-  _this.parentElement.style.display = "none";
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/edit_comment/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    parent = _this.parentElement.parentElement.parentElement;
-    console.log(parent)
-    parent.parentElement.querySelector("p").style.display = "none";
-    parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
-    parent.append(response);
-  }};
-  link.send( null );
+  get_edit_comment_form(this, "/posts/user_progs/edit_comment/")
 });
 
 on('#ajax', 'click', '.u_post_edit_comment_btn', function() {
-  form = this.parentElement.parentElement
-  span_form = form.parentElement;
-  block = span_form.parentElement.parentElement.parentElement;
-  form_comment = new FormData(form);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('POST', "/posts/user_progs/edit_comment/" + this.getAttribute("data-pk") + "/", true);
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  if (!form.querySelector(".text-comment").value && !form.querySelector(".img_block").firstChild){
-    toast_error("Напишите или прикрепите что-нибудь");
-    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
-    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
-    return
-  };
-  link_.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          elem = link_.responseText;
-          new_post = document.createElement("span");
-          new_post.innerHTML = elem;
-          block.querySelector(".media-body").innerHTML = new_post.querySelector(".media-body").innerHTML;
-          toast_success(" Комментарий изменен");
-      }
-  };
-  link_.send(form_comment)
+  post_edit_comment_form(this, "/posts/user_progs/edit_comment/")
 });
 
 /*!
