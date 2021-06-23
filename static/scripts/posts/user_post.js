@@ -258,12 +258,7 @@ on('body', 'click', '.u_post_edit_comment_btn', function() {
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
-          $media = document.createElement("div");
-          $media.classList.add("media");
-          $media.innerHTML = new_post.querySelector(".media").innerHTML;
-          block.append($media);
-          console.log(block);
-          console.log($media);
+          block.querySelector(".media-body").innerHTML = new_post.querySelector(".media-body").innerHTML;
           toast_success(" Комментарий изменен");
       }
   };
