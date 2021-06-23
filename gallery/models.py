@@ -994,3 +994,7 @@ class PhotoComment(models.Model):
                     user_notify(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
                     user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+
+    def get_edit_attach(self, user):
+        from common.attach.comment_attach import get_comment_edit
+        return get_comment_edit(self, user)

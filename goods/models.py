@@ -1038,3 +1038,7 @@ class GoodComment(models.Model):
 
 	def is_private(self):
 		return self.type == self.PRIVATE
+
+	def get_edit_attach(self, user):
+		from common.attach.comment_attach import get_comment_edit
+		return get_comment_edit(self, user)

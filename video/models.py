@@ -940,3 +940,7 @@ class VideoComment(models.Model):
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
             Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").update(status="R")
+
+    def get_edit_attach(self, user):
+        from common.attach.comment_attach import get_comment_edit
+        return get_comment_edit(self, user)
