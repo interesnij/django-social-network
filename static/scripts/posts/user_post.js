@@ -217,8 +217,9 @@ on('#ajax', 'click', '.u_replyParentItemComment', function() {
   block.classList.add("replies_open");
 });
 
-on('body', 'click', '.u_post_comment_edit', function() {
+on('#ajax', 'click', '.u_post_comment_edit', function() {
   _this = this;
+  console.log(_this)
   clear_comment_dropdown();
   pk = _this.parentElement.getAttribute("data-pk");
   _this.parentElement.style.display = "none";
@@ -240,7 +241,7 @@ on('body', 'click', '.u_post_comment_edit', function() {
   link.send( null );
 });
 
-on('body', 'click', '.u_post_edit_comment_btn', function() {
+on('#ajax', 'click', '.u_post_edit_comment_btn', function() {
   form = this.parentElement.parentElement
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
