@@ -232,10 +232,10 @@ on('body', 'click', '.u_post_comment_edit', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     parent = _this.parentElement.parentElement.parentElement;
+    console.log(parent)
     parent.parentElement.querySelector("p").style.display = "none";
     parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
-    console.log(parent)
   }};
   link.send( null );
 });
