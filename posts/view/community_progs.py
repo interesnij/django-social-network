@@ -115,14 +115,10 @@ class PostCommunityCommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_admin_template
+        from common.templates import get_my_template
 
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if self.comment.parent:
-            community = self.comment.parent.post.community
-        else:
-            community = self.comment.post.community
-        self.template_name = get_admin_template(community, "posts/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("posts/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

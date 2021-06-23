@@ -80,13 +80,9 @@ class VideoCommunityCommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_admin_template
+        from common.templates import get_my_template
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        if self.comment.parent:
-            community = self.comment.parent.video.community
-        else:
-            community = self.comment.video.community
-        self.template_name = get_admin_template(community, "video/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("video/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

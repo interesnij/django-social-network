@@ -319,14 +319,10 @@ class GoodCommunityCommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_admin_template
+        from common.templates import get_my_template
 
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        if self.comment.parent:
-            community = self.comment.parent.good.community
-        else:
-            community = self.comment.good.community
-        self.template_name = get_admin_template(comunity, "goods/c_good_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("goods/c_good_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

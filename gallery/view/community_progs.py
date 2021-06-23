@@ -134,14 +134,10 @@ class PhotoCommunityCommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_admin_template
+        from common.templates import get_my_template
 
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if self.comment.parent:
-            community = self.comment.parent.photo.community
-        else:
-            community = self.comment.photo.community
-        self.template_name = get_admin_template(community, "gallery/c_photo_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("gallery/c_photo_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
