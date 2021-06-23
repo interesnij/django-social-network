@@ -3,10 +3,12 @@ on('#ajax', 'click', '.u_add_survey', function() {
   open_fullscreen('/survey/user_progs/add/', loader);
 });
 
-on('#ajax', 'click', '.hide_comment_form', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  parent.style.display = "none";
-  parent.parentElement.querySelector(".col").style.display = "block";
+on('#ajax', 'click', '.hide_comment_form', function() { 
+  block = this.parentElement.parentElement.parentElement.parentElement.parentElement
+  block.querySelector(".col").style.display = "block";
+  block.querySelector("p").style.display = "block";
+  block.querySelector(".attach_container") ?block.querySelector(".attach_container").style.display = "block";
+  this.parentElement.parentElement.parentElement.remove();
 })
 
 on('#ajax', 'click', '.previous_click', function() {
