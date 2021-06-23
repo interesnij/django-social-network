@@ -228,7 +228,7 @@ on('#ajax', 'click', '.u_post_comment_edit', function() {
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
+  if ( this.readyState == 4 && this.status == 200 ) {
     elem = link.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
