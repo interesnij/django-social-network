@@ -315,6 +315,40 @@ class GoodReplyCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class GoodCommunityCommentEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_admin_template
+
+        self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
+        if self.comment.parent:
+            community = self.comment.parent.photo.community
+        else:
+            community = self.comment.good.community
+        self.template_name = get_admin_template(comunity, "goods/c_good_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(GoodCommunityCommentEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(GoodCommunityCommentEdit,self).get_context_data(**kwargs)
+        context["comment"] = self.comment
+        context["form_post"] = CommentForm(instance=self.comment)
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
+        self.form = CommentForm(request.POST,instance=self.comment)
+        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
+            from common.template.user import render_for_platform
+            _comment = self.form.save(commit=False)
+            new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
+            if self.comment.parent:
+                return render_for_platform(request, 'goods/c_good_comment/reply.html',{'reply': new_comment})
+            else:
+                return render_for_platform(request, 'goods/c_good_comment/parent.html',{'comment': new_comment})
+        else:
+            return HttpResponseBadRequest()
+
 class GoodCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = GoodComment.objects.get(pk=self.kwargs["pk"])

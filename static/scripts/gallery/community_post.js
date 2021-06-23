@@ -79,6 +79,14 @@ on('#ajax', 'click', '.c_replyParentPhotoComment', function() {
   block.classList.add("replies_open")
 });
 
+on('#ajax', 'click', '.c_photo_comment_edit', function() {
+  get_edit_comment_form(this, "/gallery/community_progs/edit_comment/")
+});
+
+on('#ajax', 'click', '.c_photo_edit_comment_btn', function() {
+  post_edit_comment_form(this, "/gallery/community_progs/edit_comment/")
+});
+
 on('#ajax', 'click', '.c_photo_off_comment', function() {
   send_photo_change(this, "/gallery/community_progs/off_comment/", "c_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;

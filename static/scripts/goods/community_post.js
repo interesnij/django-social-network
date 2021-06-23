@@ -58,6 +58,14 @@ on('#ajax', 'click', '.c_replyParentGoodComment', function() {
   block.classList.add("replies_open")
 });
 
+on('#ajax', 'click', '.c_good_comment_edit', function() {
+  get_edit_comment_form(this, "/goods/community_progs/edit_comment/")
+});
+
+on('#ajax', 'click', '.c_good_edit_comment_btn', function() {
+  post_edit_comment_form(this, "/goods/community_progs/edit_comment/")
+});
+
 on('#ajax', 'click', '.c_good_off_comment', function() {
   send_good_change(this, "/goods/community_progs/off_comment/", "c_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

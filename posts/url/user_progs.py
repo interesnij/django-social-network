@@ -11,7 +11,7 @@ urlpatterns = [
 
 	url(r'^add_comment/$', PostCommentUserCreate.as_view()),
     url(r'^reply_comment/$', PostReplyUserCreate.as_view()),
-	url(r'^edit_comment/(?P<pk>\d+)/$', PostCommentEdit.as_view()),
+	url(r'^edit_comment/(?P<pk>\d+)/$', PostUserCommentEdit.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/$', PostCommentUserDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', PostCommentUserRecover.as_view()),
 	url(r'^delete_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentUserDelete.as_view()),

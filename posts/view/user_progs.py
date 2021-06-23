@@ -173,7 +173,7 @@ class PostReplyUserCreate(View):
         else:
             return HttpResponseBadRequest()
 
-class PostCommentEdit(TemplateView):
+class PostUserCommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -181,10 +181,10 @@ class PostCommentEdit(TemplateView):
 
         self.template_name = get_my_template("posts/u_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        return super(PostCommentEdit,self).get(request,*args,**kwargs)
+        return super(PostUserCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(PostCommentEdit,self).get_context_data(**kwargs)
+        context = super(PostUserCommentEdit,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         context["form_post"] = CommentForm(instance=self.comment)
         return context
@@ -192,9 +192,8 @@ class PostCommentEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
-        if request.is_ajax() and self.form.is_valid():
+        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
             from common.template.user import render_for_platform
-            
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

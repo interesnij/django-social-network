@@ -13,6 +13,7 @@ urlpatterns=[
 
     url(r'^add_comment/$', login_required(GoodCommentUserCreate.as_view())),
     url(r'^reply_comment/$', login_required(GoodReplyUserCreate.as_view())),
+    url(r'^edit_comment/(?P<pk>\d+)/$', GoodUserCommentEdit.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserRecover.as_view())),
 

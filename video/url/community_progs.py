@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^add_comment/$', VideoCommentCommunityCreate.as_view()),
     url(r'^reply_comment/$', VideoReplyCommunityCreate.as_view()),
+    url(r'^edit_comment/(?P<pk>\d+)/$', VideoCommunityCommentEdit.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentCommunityDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentCommunityRecover.as_view()),
 

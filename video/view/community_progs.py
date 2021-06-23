@@ -76,6 +76,39 @@ class VideoReplyCommunityCreate(View):
 		else:
 			return HttpResponseBadRequest()
 
+class VideoCommunityCommentEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_admin_template
+        self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
+        if self.comment.parent:
+            community = self.comment.parent.video.community
+        else:
+            community = self.comment.good.community
+        self.template_name = get_admin_template(community, "video/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(VideoCommunityCommentEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(VideoCommunityCommentEdit,self).get_context_data(**kwargs)
+        context["comment"] = self.comment
+        context["form_post"] = CommentForm(instance=self.comment)
+        return context
+
+    def post(self,request,*args,**kwargs):
+        self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
+        self.form = CommentForm(request.POST,instance=self.comment)
+        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
+            from common.template.user import render_for_platform
+            _comment = self.form.save(commit=False)
+            new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
+            if self.comment.parent:
+                return render_for_platform(request, 'video/c_video_comment/reply.html',{'reply': new_comment})
+            else:
+                return render_for_platform(request, 'video/c_video_comment/parent.html',{'comment': new_comment})
+        else:
+            return HttpResponseBadRequest()
+
 class VideoCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = VideoComment.objects.get(pk=self.kwargs["pk"])
