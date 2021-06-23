@@ -859,7 +859,7 @@ class GoodComment(models.Model):
 		return naturaltime(self.created)
 
 	def count_replies_ru(self):
-		count = self.good_comment_replies.filter(is_deleted=False).values("pk").count()
+		count = self.count_replies()
 		a = count % 10
 		b = count % 100
 		if (a == 1) and (b != 11):

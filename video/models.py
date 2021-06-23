@@ -752,7 +752,7 @@ class VideoComment(models.Model):
         return comment
 
     def count_replies_ru(self):
-        count = self.video_comment_replies.filter(Q(type="PUB")|Q(type="EDI")).values("pk").count()
+        count = self.count_replies()
         a = count % 10
         b = count % 100
         if (a == 1) and (b != 11):

@@ -1119,7 +1119,7 @@ class PostComment(models.Model):
         return self
 
     def count_replies_ru(self):
-        count = self.replies.filter(is_deleted=False).values("pk").count()
+        count = self.count_replies()
         a, b= count % 10, count % 100
         if (a == 1) and (b != 11):
             return ''.join([str(count), " ответ"])
