@@ -1,9 +1,9 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
-function get_edit_comment_form(this, url){
+function get_edit_comment_form(_this, url){
   clear_comment_dropdown();
-  pk = this.parentElement.getAttribute("data-pk");
-  this.parentElement.style.display = "none";
+  pk = _this.parentElement.getAttribute("data-pk");
+  _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', url + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -13,7 +13,7 @@ function get_edit_comment_form(this, url){
     elem = link.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    parent = this.parentElement.parentElement.parentElement;
+    parent = _this.parentElement.parentElement.parentElement;
     parent.parentElement.querySelector("p").style.display = "none";
     parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
@@ -21,13 +21,13 @@ function get_edit_comment_form(this, url){
   link.send( null );
 }
 
-function post_edit_comment_form(this, url) {
-  form = this.parentElement.parentElement
+function post_edit_comment_form(_this, url) {
+  form = _this.parentElement.parentElement
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('POST', url + this.getAttribute("data-pk") + "/", true);
+  link_.open('POST', url + _this.getAttribute("data-pk") + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   if (!form.querySelector(".text-comment").value && !form.querySelector(".img_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
