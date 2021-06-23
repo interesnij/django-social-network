@@ -85,7 +85,7 @@ class VideoCommunityCommentEdit(TemplateView):
         if self.comment.parent:
             community = self.comment.parent.video.community
         else:
-            community = self.comment.good.community
+            community = self.comment.video.community
         self.template_name = get_admin_template(community, "video/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentEdit,self).get(request,*args,**kwargs)
 

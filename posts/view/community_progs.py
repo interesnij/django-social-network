@@ -121,7 +121,7 @@ class PostCommunityCommentEdit(TemplateView):
         if self.comment.parent:
             community = self.comment.parent.post.community
         else:
-            community = self.comment.good.community
+            community = self.comment.post.community
         self.template_name = get_admin_template(community, "posts/c_post_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentEdit,self).get(request,*args,**kwargs)
 

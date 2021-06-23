@@ -323,7 +323,7 @@ class GoodCommunityCommentEdit(TemplateView):
 
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         if self.comment.parent:
-            community = self.comment.parent.photo.community
+            community = self.comment.parent.good.community
         else:
             community = self.comment.good.community
         self.template_name = get_admin_template(comunity, "goods/c_good_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
