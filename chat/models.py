@@ -59,7 +59,7 @@ class Chat(models.Model):
         return self.get_members().values('id').count()
 
     def get_first_message(self):
-        return self.chat_message.exclude(type__contains="_").last()
+        return self.chat_message.exclude(type__contains="_").first()
 
     def get_messages(self):
         return self.chat_message.exclude(type__contains="_")
