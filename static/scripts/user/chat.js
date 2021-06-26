@@ -8,6 +8,17 @@ on('#ajax', 'click', '.message', function() {
                                              btn_display.querySelector(".settings_btn").style.display = "block")
 });
 
+on('#ajax', 'change', '.message_text', function() {
+  btn_block = this.nextElementSibling.nextElementSibling;
+  if (this.value.trim() == ""){
+     btn_block.querySelector("#voice_start_btn").style.display = "block";
+     btn_block.querySelector("#message_post_btn").style.display = "none";
+  } else {
+    btn_block.querySelector("#voice_start_btn").style.display = "none";
+    btn_block.querySelector("#message_post_btn").style.display = "block";
+  }
+})
+
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
