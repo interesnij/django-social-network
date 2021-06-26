@@ -45,4 +45,4 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.chat.get_messages().order_by("-created")
+		return self.chat.get_messages()
