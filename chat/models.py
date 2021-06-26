@@ -108,7 +108,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = self.creator.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">',chat_name, '<span class="status bg-success"></span><small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(), '</p></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">',chat_name, ' <span class="status bg-success"></span><small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(), '</p></div>'])
             return ''.join(['<div class="media">', figure, media_body, '</div>'])
         elif count == 2:
             member = self.get_chat_member(user_id)
