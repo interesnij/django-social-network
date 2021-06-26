@@ -208,9 +208,17 @@ class SendMessage(View):
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		if request.POST.get('text') or request.POST.get('attach_items'):
 			message = form_post.save(commit=False)
-			message = Message.send_message(chat=chat, parent=None, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
+			message = Message.send_message(
+											chat=chat,
+											parent=None,
+											creator=request.user,
+											repost=None,
+											text=message.text,
+											voice=request.POST.get('voice'),
+											attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/message.html', {'object': message})
 		else:
+			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
 
 

@@ -341,7 +341,7 @@ class Message(models.Model):
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
             new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
         new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, type=Message.PROCESSING)
-        get_message_processing(new_message)
+        get_message_processing(new_message, 'PUB')
         new_message.create_socket()
         return new_message
 
@@ -359,7 +359,7 @@ class Message(models.Model):
             _attach = str(attach)
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
             new_message = Message.objects.create(chat=chat, creator=sender, attach=_attach, text=text, type=Message.PROCESSING)
-        get_message_processing(new_message)
+        get_message_processing(new_message, 'PUB')
         new_message.create_socket()
         return new_message
 
@@ -374,7 +374,7 @@ class Message(models.Model):
             _attach = str(attach)
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
             new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, attach=_attach, type=Message.PROCESSING)
-        get_message_processing(new_message)
+        get_message_processing(new_message, 'PUB')
         new_message.create_socket()
         return new_message
 
