@@ -14,6 +14,12 @@ on('#ajax', 'mouseover', '.message_dropdown', function() {
 on('#ajax', 'mouseout', '.message_dropdown', function() {
   this.nextElementSibling.style.display = "none"
 })
+on('#ajax', 'mouseover', '.message_dropdown_menu', function() {
+  this.style.display = "block"
+})
+on('#ajax', 'mouseout', '.message_dropdown_menu', function() {
+  this.style.display = "none"
+})
 on('#ajax', 'input', '.message_text', function() {
   btn_block = this.nextElementSibling.nextElementSibling;
   if (this.value.trim() == ""){
