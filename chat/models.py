@@ -30,7 +30,7 @@ class Chat(models.Model):
     class Meta:
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
-        indexes = (BrinIndex(fields=['created']),)
+        indexes = (BrinIndex(fields=['-created']),)
 
     def __str__(self):
         return self.creator.get_full_name()
