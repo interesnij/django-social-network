@@ -329,7 +329,7 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.LIST)
             sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
@@ -349,7 +349,7 @@ class Message(models.Model):
         # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
         from common.processing.message import get_message_processing
 
-        chat = Chat.objects.create(creator=creator, type=Chat.TYPE_PUBLIC)
+        chat = Chat.objects.create(creator=creator, type=Chat.LIST)
         sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
         for user_id in users_ids:
             ChatUsers.objects.create(user_id=user_id, chat=chat)
