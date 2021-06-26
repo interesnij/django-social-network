@@ -8,8 +8,7 @@ on('#ajax', 'click', '.message', function() {
                                              btn_display.querySelector(".settings_btn").style.display = "block")
 });
 
-on('#ajax', 'mouseover', '.message_dropdown', function() {this.querySelector(".message_dropdown_menu").style.display = "block"})
-on('#ajax', 'mouseout', '.message_dropdown', function() {this.querySelector(".message_dropdown_menu").style.display = "none"})
+on('#ajax', 'click', '.message_dropdown', function() {this.classList.toggle("show")})
 
 on('#ajax', 'input', '.message_text', function() {
   btn_block = this.nextElementSibling.nextElementSibling;
