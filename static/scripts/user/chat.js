@@ -8,7 +8,7 @@ on('#ajax', 'click', '.message', function() {
                                              btn_display.querySelector(".settings_btn").style.display = "block")
 });
 
-on('#ajax', 'change', '.message_text', function() {
+on('#ajax', 'input', '.message_text', function() {
   btn_block = this.nextElementSibling.nextElementSibling;
   if (this.value.trim() == ""){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
