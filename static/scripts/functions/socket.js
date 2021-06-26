@@ -131,7 +131,7 @@ tab_span = document.createElement("span");
 tab_span.classList.add("tab_badge", "badge-success");
 
 ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-ws_path = ws_scheme + '://' + "89.108.124.63:8001" + "/notify/";
+ws_path = ws_scheme + '://' + "151.248.120.138:8001" + "/notify/";
 webSocket = new channels.WebSocketBridge();
 webSocket.connect(ws_path);
 

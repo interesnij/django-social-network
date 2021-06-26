@@ -47,7 +47,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/chat/chat_progs/create_chat/' + pk + '/', true );
+      ajax_link.open( 'POST', '/chat/user_progs/create_chat/' + pk + '/', true );
       ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
