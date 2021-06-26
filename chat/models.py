@@ -280,7 +280,7 @@ class Message(models.Model):
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
-    #repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
+    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
