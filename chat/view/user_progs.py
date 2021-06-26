@@ -118,10 +118,10 @@ class LoadUserChatMessage(TemplateView):
 	"""
 	template_name = None
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_detect_platform_template
+		from common.templates import get_my_template
 		from chat.models import Message
 
-		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_detect_platform_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -137,10 +137,11 @@ class LoadUserMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
+		from common.templates import get_my_template
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
-		count, first_message, creator_figure, user_id, self.template_name = self.chat.get_members_count(), self.chat.get_first_message(), '', request.user.pk, get_detect_platform_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		count, first_message, creator_figure, user_id, self.template_name = self.chat.get_members_count(), self.chat.get_first_message(), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		if count == 1:
 			if self.chat.image:
 				figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'

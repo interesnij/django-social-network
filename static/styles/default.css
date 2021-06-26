@@ -357,7 +357,7 @@ top: 0;
 
 .tab_badge {
   display: inline-block;
-    padding: .25em .4em;
+    padding: 5px;
     font-size: 35%;
     font-weight: 700;
     line-height: 1;
