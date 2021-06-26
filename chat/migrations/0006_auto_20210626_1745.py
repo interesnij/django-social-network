@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name='chat',
-            index=django.contrib.postgres.indexes.BrinIndex(fields=['-created'], name='chat_chat_created_ab4521_brin'),
+            index=django.contrib.postgres.indexes.BrinIndex(fields=['created'], name='chat_chat_created_ab4521_brin'),
         ),
     ]
