@@ -8,7 +8,7 @@ on('#ajax', 'click', '.message', function() {
                                              btn_display.querySelector(".settings_btn").style.display = "block")
 });
 
-on('#ajax', 'click', '.message_dropdown', function() {this.classList.toggle("show")})
+on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 
 on('#ajax', 'input', '.message_text', function() {
   btn_block = this.nextElementSibling.nextElementSibling;
