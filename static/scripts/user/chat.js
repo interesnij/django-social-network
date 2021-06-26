@@ -11,7 +11,7 @@ on('#ajax', 'click', '.message', function() {
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
-  open_fullscreen("/chat/chat_progs/create_chat/" + pk + "/", loader)
+  open_fullscreen("/chat/user_progs/create_chat/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
   loader = document.getElementById("item_loader");
