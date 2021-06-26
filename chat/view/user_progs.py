@@ -2,7 +2,7 @@
 from django.views.generic import TemplateView
 
 
-class CreateChat(TemplateView):
+class CreateUserChat(TemplateView):
 	""" если у инициатора нет друзей, показываем форму пустого чата. Если есть, то с возможностью добавлять друзей в чат.
 	    Третий и четвертый варианты - пока не понятны, но зачем то я их задумал. Пока не ясно, что я хотел этим сказать
 	"""
@@ -24,12 +24,12 @@ class CreateChat(TemplateView):
 			self.template_name = get_my_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and request.user.get_6_friends():
 			self.template_name = get_my_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CreateChat,self).get(request,*args,**kwargs)
+		return super(CreateUserChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		from chat.forms import ChatForm
 
-		c = super(CreateChat,self).get_context_data(**kwargs)
+		c = super(CreateUserChat,self).get_context_data(**kwargs)
 		c["form"], c["member"] = ChatForm(), self.user
 		return c
 
