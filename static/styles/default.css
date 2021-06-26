@@ -1135,11 +1135,9 @@ canvas{
 }
 .dropdown:hover .dropdown-menu, .hide_block:hover .hide_block_menu {
   transform: scale(1);
+  display: block;
 }
-.dropdown:hover .dropdown-menu, .hide_block:hover .hide_block_menu{
-display: block;
 
-}
 .dropdown-menu, .hide_block_menu{
 transform: scale(1)!important;
 font-size: 90%;
