@@ -11,13 +11,13 @@ from django.db.models import Q
 
 
 class Chat(models.Model):
-    LIST, MANAGER, PROCESSING, PRIVATE, FIXED = 'LIS', 'MAN', '_PRO', 'PRI', '_FIX'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
+    PRIVATE, MANAGER, PROCESSING, GROUP, PRIVATE_FIXED, GROUP_FIXED = 'PRI', 'MAN', '_PRO', 'GRO', '_FIXT', '_FIXG'
+    DELETED_PRIVATE, DELETED_GROUP, DELETED_MANAGER, DELETED_PRIVATE_FIXED, DELETED_GROUP_FIXED = '_DEL', '_DELG', '_DELM', '_DELPF', '_DELGF'
+    CLOSED_PRIVATE, CLOSED_GROUP, CLOSED_MANAGER, CLOSED_PRIVATE_FIXED, CLOSED_GROUP_FIXED = '_CLO', '_CLOG', '_CLOM', '_CLOPF', '_CLOGF'
     TYPE = (
-        (LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
+        (PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
+        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_GROUP, 'Удалённый групповой'),(DELETED_MANAGER, 'Удалённый менеджерский'),(DELETED_PRIVATE_FIXED, 'Удалённый приватный закреплённый'),(DELETED_GROUP_FIXED, 'Удалённый групповой закреплённый'),
+        (CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_GROUP, 'Закрытый групповой'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_PRIVATE_FIXED, 'Закрытый закреплённый приватный'),(CLOSED_GROUP_FIXED, 'Закрытый групповой закреплённый'),
     )
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Тип чата")
@@ -39,8 +39,8 @@ class Chat(models.Model):
 
     def is_private(self):
         return self.type == Chat.PRIVATE
-    def is_public(self):
-        return self.type == Chat.LIST
+    def is_group(self):
+        return self.type == Chat.GROUP
     def is_manager(self):
         return self.type == Chat.MANAGER
     def is_open(self):
@@ -73,14 +73,14 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        count = self.chat_message.filter(unread=True).exclude(type__contains="_", creator__user_id=user_id).values("pk").count()
+        count = self.chat_message.filter(recipient_id=user_id, unread=True).exclude(type__contains="_").values("pk").count
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(unread=True).exclude(creator__user_id=user_id, type__contains="_")
+        return self.chat_message.filter(recipient_id=user_id, unread=True)
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -96,23 +96,9 @@ class Chat(models.Model):
         return members[0].user
 
     def get_preview_message(self, user_id):
-        count = self.get_members_count()
         first_message = self.get_first_message()
         creator_figure = ''
-        if count == 1:
-            if self.image:
-                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            elif self.creator.s_avatar:
-                figure = ''.join(['<figure><img src="', self.creator.s_avatar.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            else:
-                figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
-            if self.name:
-                 chat_name = self.name
-            else:
-                chat_name = self.creator.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">',chat_name, ' <span class="status bg-success"></span><small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(), '</p></div>'])
-            return ''.join(['<div class="media">', figure, media_body, '</div>'])
-        elif count == 2:
+        if self.is_ptivate():
             member = self.get_chat_member(user_id)
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
@@ -132,7 +118,7 @@ class Chat(models.Model):
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
-        elif count > 2:
+        elif self.is_group():
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
@@ -152,55 +138,42 @@ class Chat(models.Model):
             urls += [user.user.s_avatar.url]
         return urls
 
-    def get_header_chat(self, user_id):
-        count = self.get_members_count()
+    def get_header_ptivate_chat(self, user_id):
         buttons = '<span class="settings_btn" style="display:none"><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z"fill="none"/></svg></span>'
-        if count == 2:
-            member = self.get_chat_member(user_id)
-            if self.image:
-                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            elif member.s_avatar:
-                figure = ''.join(['<figure><a href="/users/', str(member.pk),'" class="ajax"><img src="', member.s_avatar.url,'" style="border-radius:50px;width:50px;" alt="image"></a></figure>'])
-            else:
-                figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
-            if self.name:
-                 chat_name = self.name
-            else:
-                chat_name = member.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
-            return ''.join([figure, media_body])
-        elif count > 2:
-            if self.image:
-                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            else:
-                avatars = ''
-                for figure in self.get_avatars():
-                    if figure:
-                        avatars = ''.join([avatars, '<figure><img src="', figure, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-                    else:
-                        avatars = ''.join([avatars, '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            if self.name:
-                 chat_name = self.name
-            else:
-                chat_name = "Групповой чат"
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, + '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
-            return ''.join([avatars, media_body])
-        elif count == 1:
-            if self.image:
-                figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            elif self.creator.get_avatar():
-                figure = ''.join(['<figure><img src="', self.creator.s_avatar.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
-            else:
-                figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
-            if self.name:
-                 chat_name = self.name
-            else:
-                chat_name = self.creator.get_full_name()
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
-            return ''.join([figure, media_body])
+        member = self.get_chat_member(user_id)
+        if self.image:
+            figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
+        elif member.s_avatar:
+            figure = ''.join(['<figure><a href="/users/', str(member.pk),'" class="ajax"><img src="', member.s_avatar.url,'" style="border-radius:50px;width:50px;" alt="image"></a></figure>'])
+        else:
+            figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
+        if self.name:
+             chat_name = self.name
+        else:
+            chat_name = member.get_full_name()
+        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
+        return ''.join([figure, media_body])
+
+    def get_header_group_chat(self, user_id):
+        buttons = '<span class="settings_btn" style="display:none"><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z"fill="none"/></svg></span>'
+        if self.image:
+            figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
+        else:
+            avatars = ''
+            for figure in self.get_avatars():
+                if figure:
+                    avatars = ''.join([avatars, '<figure><img src="', figure, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
+                else:
+                    avatars = ''.join([avatars, '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'])
+        if self.name:
+             chat_name = self.name
+        else:
+            chat_name = "Групповой чат"
+        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, + '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
+        return ''.join([avatars, media_body])
 
     def is_not_empty(self):
-        return self.chat_message.exclude(type__contains="_").values("pk").exists()
+        return self.chat_message.exclude(type__contains="_").exists()
 
     def add_administrator(self, user):
         member = self.chat_relation.get(user=user)
@@ -264,15 +237,16 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, PUBLISHED, EDITED, MANAGER, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','MAN','_DEL','_CLO','_FIX','_FIXE'
+    DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, DELETED_MANAGER, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED, CLOSED_MANAGER = '_DELF','_DELFI','_DELE','_DELM','_CLOFI','_CLOF','_CLOE','_CLOM'
     TYPE = (
         (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (DELETED_EDITED, 'Удалённый измененный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     creator = models.ForeignKey(ChatUsers, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
+    recipient = models.ForeignKey(ChatUsers, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
@@ -300,6 +274,8 @@ class Message(models.Model):
 
     def get_creator(self):
         return self.creator.user
+    def get_recipient(self):
+        return self.recipient.user
 
     def get_reseiver_ids(self):
         return self.chat.get_members_ids()
@@ -313,9 +289,9 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'message_id': str(self.uuid),
-            'creator_id': self.creator.user.pk,
+            'creator_id': str(self.creator.user.pk),
             'chat_id': self.chat.pk,
-            'reseiver_ids': self.get_reseiver_ids(),
+            'reseiver_id': str(self.reseiver.user.pk),
             'name': "u_message_create",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
@@ -323,7 +299,7 @@ class Message(models.Model):
 
     def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
-        # Если такого чата нет, создаем приватный чат, создаем сообщение и добавляем его в чат.
+        # Если такого чата нет, создаем приватный чат, создаем по сообщению на каждого участника чата.
         from common.processing.message import get_message_processing
 
         chat_list, current_chat = creator.get_all_chats(), None
@@ -331,54 +307,53 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids():
                 current_chat = chat
         if not current_chat:
-            current_chat = Chat.objects.create(creator=creator, type=Chat.LIST)
+            current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
             sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         else:
             sender = ChatUsers.objects.get(user=creator, chat=current_chat)
-        if voice:
-            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, voice=voice, type=Message.PROCESSING)
-        else:
-            _attach = str(attach)
-            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
-        new_message = Message.objects.create(chat=current_chat, creator=sender, repost=repost, text=text, type=Message.PROCESSING)
-        get_message_processing(new_message, 'PUB')
-        new_message.create_socket()
-        return new_message
+        for recipient_id in current_chat.get_members_ids()():
+            if voice:
+                new_message = Message.objects.create(chat=current_chat, creator=sender, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            else:
+                _attach = str(attach)
+                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+                new_message = Message.objects.create(chat=current_chat, creator=sender, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
+            get_message_processing(new_message, 'PUB')
+            new_message.create_socket()
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice):
-        # Создаем коллективный чат и добавляем туда всех пользователй из полученного списка
+        # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
         from common.processing.message import get_message_processing
 
-        chat = Chat.objects.create(creator=creator, type=Chat.LIST)
+        chat = Chat.objects.create(creator=creator, type=Chat.GROUP)
         sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
-        for user_id in users_ids:
-            ChatUsers.objects.create(user_id=user_id, chat=chat)
-        if voice:
-            new_message = Message.objects.create(chat=chat, creator=sender, voice=voice, type=Message.PROCESSING)
-        else:
-            _attach = str(attach)
-            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=chat, creator=sender, attach=_attach, text=text, type=Message.PROCESSING)
-        get_message_processing(new_message, 'PUB')
-        new_message.create_socket()
-        return new_message
+
+        for recipient_id in users_ids:
+            ChatUsers.objects.create(user_id=recipient_id, chat=chat)
+            if voice:
+                new_message = Message.objects.create(chat=chat, creator=sender, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            else:
+                _attach = str(attach)
+                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+                new_message = Message.objects.create(chat=chat, creator=sender, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
+            get_message_processing(new_message, 'PUB')
+            new_message.create_socket()
 
     def send_message(chat, creator, repost, parent, text, attach, voice):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
         sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
-        if voice:
-            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, voice=voice, type=Message.PROCESSING)
-        else:
-            _attach = str(attach)
-            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-            new_message = Message.objects.create(chat=chat, creator=sender, repost=repost, parent=parent, text=text, attach=_attach, type=Message.PROCESSING)
-        get_message_processing(new_message, 'PUB')
-        new_message.create_socket()
-        return new_message
+        for recipient_id in chat.get_members_ids():
+            if voice:
+                new_message = Message.objects.create(chat=chat, creator=sender, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            else:
+                _attach = str(attach)
+                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+                new_message = Message.objects.create(chat=chat, creator=sender, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
+            get_message_processing(new_message, 'PUB')
+            new_message.create_socket()
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -393,7 +368,7 @@ class Message(models.Model):
             return self.text[:60]
 
     def is_repost(self):
-        return try_except(self.repost)
+        return self.repost
 
     def is_photo_repost(self):
         from posts.models import Post
@@ -453,16 +428,25 @@ class Message(models.Model):
 
     def get_fixed_message_for_chat(self, chat_id):
         try:
-            message = Message.objects.get(chat_id=chat_id, is_fixed=True)
-            message.is_fixed = False
-            message.save(update_fields=['is_fixed'])
+            message = Message.objects.get(chat_id=chat_id, type__contains="_FIX")
+            if message.type = "_FIX"
+                message.type = "PUB"
+            else:
+                message.type = "EDI"
+            message.save(update_fields=['type'])
             new_fixed = Message.objects.get(pk=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
+            if new_fixed.type = "PUB"
+                new_fixed.type = "_FIX"
+            else:
+                new_fixed.type = "_FIXE"
+            new_fixed.save(update_fields=['type'])
         except:
             new_fixed = Message.objects.get(pk=self.pk)
-            new_fixed.is_fixed = True
-            new_fixed.save(update_fields=['is_fixed'])
+            if new_fixed.type = "PUB"
+                new_fixed.type = "_FIX"
+            else:
+                new_fixed.type = "_FIXE"
+            new_fixed.save(update_fields=['type'])
 
     def get_u_message_parent(self, user):
         from common.attach.message_attach import get_u_message_parent

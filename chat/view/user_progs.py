@@ -55,8 +55,8 @@ class CreateUserChat(TemplateView):
 
 			if new_chat.is_private():
 				template = 'chat/chat/private_chat.html'
-			elif new_chat.is_public():
-				template = 'chat/chat/public_chat.html'
+			elif new_chat.is_group():
+				template = 'chat/chat/group_chat.html'
 			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
 			from django.http import HttpResponseBadRequest
@@ -141,21 +141,8 @@ class LoadUserMessage(TemplateView):
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
-		count, first_message, creator_figure, user_id, self.template_name = self.chat.get_members_count(), self.chat.get_first_message(), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
-		if count == 1:
-			if self.chat.image:
-				figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-			elif self.chat.creator.get_avatar():
-				figure = '<figure><img src="' + self.chat.creator.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-			else:
-				figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
-			if self.chat.name:
-				chat_name = self.chat.name
-			else:
-				chat_name = self.chat.creator.get_full_name()
-			media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + ' <span class="status bg-success"></span><small class="float-right text-muted">' + first_message.get_created() + '</small></h5><p class="mb-0" style="white-space: nowrap;">' + first_message.get_preview_text() + '</p></div>'
-			self.block = '<div class="media">' + figure + media_body + '</div>'
-		elif count == 2:
+		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.chat.is_private():
 			member = self.chat.get_chat_member(user_id)
 			if self.chat.image:
 				figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
@@ -175,7 +162,7 @@ class LoadUserMessage(TemplateView):
 				creator_figure = '<span class="underline">Вы:</span> '
 			media_body = '<div class="media-body"><h5 class="time-title mb-0">{}{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, status, first_message.get_created(),creator_figure,first_message.get_preview_text())
 			self.block = '<div class="media">{}{}{}</div>'.format(figure, media_body, self.chat.get_unread_count_message(user_id))
-		elif count > 2:
+		elif self.chat.is_group():
 			if self.chat.image:
 				figure = '<figure><img src="' + self.chat.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
 			else:
