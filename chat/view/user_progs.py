@@ -44,6 +44,8 @@ class CreateUserChat(TemplateView):
 			new_chat = self.form.save(commit=False)
 			new_chat.creator = request.user
 			new_chat = self.form.save()
+			new_chat.type = "GRO"
+			new_chat.save(update_fields=["type"])
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
 			members = [request.user, ]
 

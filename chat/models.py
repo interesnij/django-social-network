@@ -141,7 +141,7 @@ class Chat(models.Model):
             urls += [user.user.s_avatar.url]
         return urls
 
-    def get_header_ptivate_chat(self, user_id):
+    def get_header_private_chat(self, user_id):
         buttons = '<span class="settings_btn" style="display:none"><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg><svg fill="currentColor" class="svg_default svg_default_25 mr-1 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z"fill="none"/></svg></span>'
         member = self.get_chat_member(user_id)
         if self.image:
