@@ -54,9 +54,9 @@ class CreateUserChat(TemplateView):
 				members += [user, ]
 
 			if new_chat.is_private():
-				template = 'chat/chat/private_chat.html'
+				template = 'chat/chat/detail/private_chat.html'
 			elif new_chat.is_group():
-				template = 'chat/chat/group_chat.html'
+				template = 'chat/chat/detail/group_chat.html'
 			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
 			from django.http import HttpResponseBadRequest
