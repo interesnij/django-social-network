@@ -36,7 +36,7 @@ class ChatDetailView(ListView):
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		unread_messages = self.chat.get_unread_message(request.user.pk)
 		unread_messages.update(unread=False)
-		get_messages = self.chat.get_messages(request.user.pk)
+		self.get_messages = self.chat.get_messages_for_recipient(request.user.pk)
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -45,4 +45,4 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.chat.get_messages()
+		return self.get_messages
