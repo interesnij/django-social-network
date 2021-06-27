@@ -313,7 +313,7 @@ class Message(models.Model):
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
             ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
-        for recipient_id in current_chat.get_members_ids()():
+        for recipient_id in current_chat.get_members_ids():
             if voice:
                 new_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
