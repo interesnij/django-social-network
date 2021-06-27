@@ -1317,7 +1317,7 @@ class User(AbstractUser):
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk).exclude(type__contains="_") 
+        return Chat.objects.filter(chat_relation__user_id=self.pk).exclude(type__contains="_")
 
     def get_chats_and_connections(self):
         from itertools import chain
@@ -1331,7 +1331,7 @@ class User(AbstractUser):
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0
         for chat in chats:
-            if chat.chat_message.filter(unread=True, type__contains="_").exclude(creator__user_id=self.pk).exists():
+            if chat.chat_message.filter(unread=True, type__contains="_").exclude(creator_id=self.pk).exists():
                 count += 1
         if count > 0:
             return count
