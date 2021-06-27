@@ -429,20 +429,20 @@ class Message(models.Model):
     def get_fixed_message_for_chat(self, chat_id):
         try:
             message = Message.objects.get(chat_id=chat_id, type__contains="_FIX")
-            if message.type = "_FIX"
+            if message.type == "_FIX"
                 message.type = "PUB"
             else:
                 message.type = "EDI"
             message.save(update_fields=['type'])
             new_fixed = Message.objects.get(pk=self.pk)
-            if new_fixed.type = "PUB"
+            if new_fixed.type == "PUB"
                 new_fixed.type = "_FIX"
             else:
                 new_fixed.type = "_FIXE"
             new_fixed.save(update_fields=['type'])
         except:
             new_fixed = Message.objects.get(pk=self.pk)
-            if new_fixed.type = "PUB"
+            if new_fixed.type == "PUB"
                 new_fixed.type = "_FIX"
             else:
                 new_fixed.type = "_FIXE"
