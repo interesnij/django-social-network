@@ -43,7 +43,7 @@ class CreateUserChat(TemplateView):
 		if self.form.is_valid() and request.is_ajax():
 			new_chat = self.form.save(commit=False)
 			new_chat.creator = request.user
-			self.form.save()
+			new_chat = self.form.save()
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
 			members = [request.user, ]
 
