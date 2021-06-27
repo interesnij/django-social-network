@@ -240,8 +240,8 @@ class Message(models.Model):
     PROCESSING, PUBLISHED, EDITED, MANAGER, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','MAN','_DEL','_CLO','_FIX','_FIXE'
     DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, DELETED_MANAGER, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED, CLOSED_MANAGER = '_DELF','_DELFI','_DELE','_DELM','_CLOFI','_CLOF','_CLOE','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_EDITED, 'Удалённый измененный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_FIXED, 'Удалённый закрепленный'),(DELETED_EDITED_FIXED, 'Удалённый измененный закрепленный'),(DELETED_EDITED, 'Удалённый измененный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_EDITED_FIXED, 'Закрытый измененный закрепленный'),(CLOSED_FIXED, 'Закрытый закрепленный'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
