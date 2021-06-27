@@ -355,6 +355,7 @@ class Message(models.Model):
                 new_message = Message.objects.create(chat=chat, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
             get_message_processing(new_message, 'PUB')
             new_message.create_socket()
+        return Message.objects.filter(chat=chat, creator=creator).first()
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
