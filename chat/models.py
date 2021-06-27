@@ -101,7 +101,7 @@ class Chat(models.Model):
     def get_preview_message(self, user_id):
         first_message = self.get_first_message()
         creator_figure = ''
-        if self.is_ptivate():
+        if self.is_private():
             member = self.get_chat_member(user_id)
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
