@@ -292,9 +292,9 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'message_id': str(self.uuid),
-            'creator_id': str(self.creator.user.pk),
+            'creator_id': str(self.creator.pk),
             'chat_id': self.chat.pk,
-            'reseiver_id': str(self.reseiver.user.pk),
+            'recipient_id': str(self.recipient.pk),
             'name': "u_message_create",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
