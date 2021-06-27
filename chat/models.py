@@ -252,7 +252,7 @@ class Message(models.Model):
     unread = models.BooleanField(default=True, db_index=True)
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
-    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5, verbose_name="Статус сообщения")
+    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
 
