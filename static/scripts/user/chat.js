@@ -156,9 +156,9 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     for (var i = 0; i < list.length; i++){
       if (list[i].classList.contains("custom_color")) {
         is_toggle = true
-      } else {
-        is_toggle ? null : (_console.style.display = "none", _console.previousElementSibling.style.display = "block")
       }
+    }
+    is_toggle ? null : (_console.style.display = "none", _console.previousElementSibling.style.display = "block")
     }
   } else {
     message.classList.add("custom_color");
