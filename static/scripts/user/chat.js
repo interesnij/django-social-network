@@ -146,9 +146,21 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     ajax_link.send();
 });
 
+function show_chat_console() {
+  _console = document.body.querySelector(".console_btn_other");
+  _console.style.display = "block";
+  _console.previousElementSibling.style.display = "none";
+  _console.parentElement.parentElement.querySelector("h5").style.display = "none"
+}
+function hide_chat_console() {
+  _console = document.body.querySelector(".console_btn_other");
+  _console.style.display = "none";
+  _console.previousElementSibling.style.display = "block";
+  _console.parentElement.parentElement.querySelector("h5").style.display = "block"
+}
+
 on('#ajax', 'click', '.toggle_message', function(e) {
   message = this.parentElement.parentElement;
-  _console = document.body.querySelector(".console_btn_other");
   is_toggle = false;
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color");
@@ -158,12 +170,10 @@ on('#ajax', 'click', '.toggle_message', function(e) {
         is_toggle = true
       }
     }
-    is_toggle ? null : (_console.style.display = "none", _console.previousElementSibling.style.display = "block",_console.parentElement.parentElement.querySelector("h5").style.display = "block")
+    is_toggle ? null : hide_chat_console()
   } else {
     message.classList.add("custom_color");
-    _console.style.display = "block";
-    _console.previousElementSibling.style.display = "none";
-    _console.parentElement.parentElement.querySelector("h5").style.display = "none"
+    show_chat_console()
   }
 
 })
