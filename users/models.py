@@ -252,6 +252,16 @@ class User(AbstractUser):
             else:
                 return '<i>Был ' + self.get_last_activity() + '</i>' + device
 
+    def get_online_status(self):
+        from datetime import datetime, timedelta
+        if datetime.now() < self.last_activity + timedelta(minutes=3):
+            return '<i>Онлайн</i>'
+        else:
+            if self.is_women():
+                return '<i>Была ' + self.get_last_activity() + '</i>'
+            else:
+                return '<i>Был ' + self.get_last_activity() + '</i>'
+
     def get_blocked_users(self):
         return User.objects.filter(blocked_by_users__blocker_id=self.pk).distinct()
 

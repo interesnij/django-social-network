@@ -154,7 +154,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = member.get_full_name()
-        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
+        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', member.get_online_status(), '</span>', buttons, '</p></div>'])
         return ''.join([figure, media_body])
 
     def get_header_group_chat(self, user_id):
@@ -172,7 +172,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = "Групповой чат"
-        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_type_display(), '</span>', buttons, '</p></div>'])
+        media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_members_count_ru(), '</span>', buttons, '</p></div>'])
         return ''.join([avatars, media_body])
 
     def is_not_empty(self):
