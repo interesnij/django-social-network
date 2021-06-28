@@ -4,7 +4,6 @@ from chat.view.user_progs import *
 
 urlpatterns = [
     url(r'^send_page_message/(?P<pk>\d+)/$', SendPageMessage.as_view()),
-    #url(r'^send_page_manager_message/$', SendPageManagerMessage.as_view()),
     url(r'^send_message/(?P<pk>\d+)/$', SendMessage.as_view()),
     url(r'^parent_message/(?P<uuid>[0-9a-f-]+)/$', MessageParent.as_view()),
     #url(r'^edit/(?P<uuid>[0-9a-f-]+)/$', MessageEdit.as_view()),

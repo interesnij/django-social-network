@@ -1,3 +1,34 @@
+function get_toggle_messages() {
+  list = document.body.parentElement.querySelectorAll(".message");
+  for (var i = 0; i < list.length; i++){
+    query = [];
+    if (list[i].classList.contains("custom_color")) {
+      query.push(list[i])
+    }
+  };
+  return query
+}
+function show_chat_console(is_favourite) {
+  _console = document.body.querySelector(".console_btn_other");
+  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
+  if (len(get_toggle_messages()) > 1) {
+    _console.querySelector(".one_message").style.display = "none"
+  } else {
+    _console.querySelector(".one_message").style.display = "block"
+  }
+  _console.style.display = "block";
+  _console.previousElementSibling.style.display = "none";
+  _console.parentElement.parentElement.querySelector("h5").style.display = "none"
+}
+function hide_chat_console(is_favourite) {
+  _console = document.body.querySelector(".console_btn_other");
+  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
+  _console.style.display = "none";
+  _console.previousElementSibling.style.display = "block";
+  _console.parentElement.parentElement.querySelector("h5").style.display = "block"
+}
+
+
 
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 
@@ -146,20 +177,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     ajax_link.send();
 });
 
-function show_chat_console(is_favourite) {
-  _console = document.body.querySelector(".console_btn_other");
-  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-  _console.style.display = "block";
-  _console.previousElementSibling.style.display = "none";
-  _console.parentElement.parentElement.querySelector("h5").style.display = "none"
-}
-function hide_chat_console() {
-  _console = document.body.querySelector(".console_btn_other");
-  _console.style.display = "none";
-  _console.previousElementSibling.style.display = "block";
-  _console.parentElement.parentElement.querySelector("h5").style.display = "block"
-}
-
 on('#ajax', 'click', '.toggle_message', function(e) {
   message = this.parentElement.parentElement;
   is_toggle = false, is_favourite = false;
@@ -174,10 +191,94 @@ on('#ajax', 'click', '.toggle_message', function(e) {
         is_favourite = true
       }
     }
-    is_toggle ? null : hide_chat_console()
+    is_toggle ? null : hide_chat_console(is_favourite)
   } else {
     message.classList.add("custom_color");
     show_chat_console(is_favourite)
   }
-
 })
+
+function get_toggle_messages() {
+  list = document.body.parentElement.querySelectorAll(".message");
+  for (var i = 0; i < list.length; i++){
+    query = [];
+    if (list[i].classList.contains("custom_color")) {
+      query.push(list[i])
+    }
+  };
+  return query
+}
+
+on('#ajax', 'click', '.toggle_message_favourite', function() {
+  is_favourite = false;
+  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite/" : "/chat/user_progs/favorite/";
+
+  list = get_toggle_messages();
+  for (var i = 0; i < list.length; i++){
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url + list[i].getAttribute("data-uuid") + "/", true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        console.log("ok")
+      }
+    }
+    ajax_link.send();
+  };
+  for (var i = 0; i < list.length; i++){
+    if (list[i].classList.contains("favourite")) {
+      is_favourite = true
+    }
+  }
+  hide_chat_console(is_favourite)
+});
+
+on('#ajax', 'click', '.u_message_delete', function() {
+  list = get_toggle_messages();
+  for (var i = 0; i < list.length; i++){
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/chat/user_progs/delete/" + list[i].getAttribute("data-uuid") + "/", true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        p = document.createElement("div");
+        p.classList.add("media", "p-1");
+        p.style.padding = "20px";
+        p.innerHTML = "<span class='u_message_restore pointer' data-uuid='" + uuid + "'>Сообщение удалено. <span class='underline'>Восстановить</span></span>";
+        list[i].parentElement.insertBefore(p, list[i]), list[i].style.display = "none"
+      }
+    }
+    ajax_link.send();
+  };
+});
+
+on('#ajax', 'click', '.u_message_restore', function() {
+  item = this.parentElement.nextElementSibling;
+  uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/restore/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    item.style.display = "block";
+  }};
+  link.send();
+});
+
+on('#ajax', 'click', '.u_message_fixed', function() {
+  item = this.parentElement.nextElementSibling;
+  uuid = this.getAttribute("data-uuid");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/fixed/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+
+  }};
+  link.send();
+});
