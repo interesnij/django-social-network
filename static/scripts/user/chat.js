@@ -159,7 +159,6 @@ on('#ajax', 'click', '.toggle_message', function(e) {
       }
     }
     is_toggle ? null : (_console.style.display = "none", _console.previousElementSibling.style.display = "block")
-    }
   } else {
     message.classList.add("custom_color");
     _console.style.display = "block";
