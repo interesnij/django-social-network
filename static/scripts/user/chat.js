@@ -146,8 +146,9 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     ajax_link.send();
 });
 
-function show_chat_console() {
+function show_chat_console(is_favourite) {
   _console = document.body.querySelector(".console_btn_other");
+  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
   _console.style.display = "block";
   _console.previousElementSibling.style.display = "none";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
@@ -161,19 +162,22 @@ function hide_chat_console() {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   message = this.parentElement.parentElement;
-  is_toggle = false;
+  is_toggle = false, is_favourite = false;
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color");
     list = message.parentElement.querySelectorAll(".message");
     for (var i = 0; i < list.length; i++){
       if (list[i].classList.contains("custom_color")) {
         is_toggle = true
+      };
+      if (list[i].classList.contains("favourite")) {
+        is_favourite = true
       }
     }
     is_toggle ? null : hide_chat_console()
   } else {
     message.classList.add("custom_color");
-    show_chat_console()
+    show_chat_console(is_favourite)
   }
 
 })
