@@ -55,9 +55,9 @@ def get_c_message_parent(parent, user):
         return get_c_post_attach(parent, user)
 
 
-def get_message_attach(post, user):
+def get_message_attach(message, user):
     block = ''
-    for item in post.attach.split(","):
+    for item in message.attach.split(","):
         if item[:3] == "pho":
             try:
                 from gallery.models import Photo
