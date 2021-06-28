@@ -247,16 +247,7 @@ class ChatUsers(models.Model):
             models.Index(fields=['chat', 'user', 'is_administrator'])
             ]
         verbose_name = 'участник беседы'
-        verbose_name_plural = 'участники бесед'
-
-class MessageFavourite(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
-    message = models.ForeignKey(Message, related_name='+', verbose_name="Сообщение", null=True, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (('user', 'message'),)
-        verbose_name = 'Избранное сообщение'
-        verbose_name_plural = 'Избранные сообщения'
+        verbose_name_plural = 'участники бесед"
 
 
 class Message(models.Model):
@@ -507,3 +498,13 @@ class Message(models.Model):
                 if item[:3] == "vid":
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
+
+
+class MessageFavourite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
+    message = models.ForeignKey(Message, related_name='+', verbose_name="Сообщение", null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('user', 'message'),)
+        verbose_name = 'Избранное сообщение'
+        verbose_name_plural = 'Избранные сообщения'
