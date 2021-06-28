@@ -154,3 +154,20 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     }
     ajax_link.send();
 });
+
+on('#ajax', 'click', '.toggle_message', function(e) {
+  message = this.parentElement.parentElement;
+  _console = document.body.querySelector(".console_btn_other");
+  if (message.classList.contains("custom_color")) {
+    message.classList.remove("custom_color");
+    list = message.parentElement.querySelectorAll(".message");
+    for (var i = 0; i < list.length; i++){
+      list[i].classList.contains("custom_color") ? null : (_console.style.display = "none", _console.previousElementSibling.style.display = "block")
+    }
+  } else {
+    message.classList.add("custom_color");
+    _console.style.display = "block";
+    _console.previousElementSibling.style.display = "none"
+  }
+
+})
