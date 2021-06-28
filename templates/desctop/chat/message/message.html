@@ -1,4 +1,6 @@
-<div class="message media p-1 pag {% if forloop.first %}first{% endif %}">
+{% load message %}
+
+<div class="message media p-1 pag {% if forloop.first %}first{% endif %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
         {% if object.creator.s_avatar %}
@@ -20,7 +22,6 @@
       {% endif %}
 
       {% if object.attach %}
-        {% load message %}
         {{ object|get_user_attach:request.user|safe }}
       {% endif %}
 

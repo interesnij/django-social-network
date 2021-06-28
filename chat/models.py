@@ -249,6 +249,15 @@ class ChatUsers(models.Model):
         verbose_name = 'участник беседы'
         verbose_name_plural = 'участники бесед'
 
+class MessageFavourite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
+    message = models.ForeignKey(Message, related_name='+', verbose_name="Сообщение", null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('user', 'message'),)
+        verbose_name = 'Избранное сообщение'
+        verbose_name_plural = 'Избранные сообщения'
+
 
 class Message(models.Model):
     PROCESSING, PUBLISHED, EDITED, MANAGER, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','MAN','_DEL','_CLO','_FIX','_FIXE'
@@ -280,6 +289,9 @@ class Message(models.Model):
 
     def __str__(self):
         return self.text
+
+    def is_message_in_favourite(self, user_id):
+        return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
 
     def mark_as_read(self):
         if self.unread:

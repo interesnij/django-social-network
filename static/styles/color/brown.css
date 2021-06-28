@@ -176,7 +176,7 @@ a.media:hover {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .btn_default .active{
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 1) !important;
 }
 .btn_default span{
   color: rgba(255, 255, 255, 0.9) !important;

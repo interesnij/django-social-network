@@ -185,7 +185,7 @@ a.media:hover {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 .btn_default .active{
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255, 255, 255, 1) !important;
 }
 .btn_success svg, .btn_success span{ color:#41cd52 !important;}
 .btn_danger svg, .btn_danger span{ color:#FF0000 !important}
