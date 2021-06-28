@@ -521,7 +521,7 @@ class Post(models.Model):
 
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
-        from common.processing.post import get_post_processing 
+        from common.processing.post import get_post_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         _list = PostList.objects.get(pk=list)
@@ -702,11 +702,7 @@ class Post(models.Model):
         from common.attach.post_attach import get_c_posts_parent
         return get_c_posts_parent(self.parent, user)
 
-    def get_u_attach(self, user):
-        from common.attach.post_elements import get_post_attach
-        return get_post_attach(self, user)
-
-    def get_c_attach(self, user):
+    def get_attach(self, user):
         from common.attach.post_elements import get_post_attach
         return get_post_attach(self, user)
 
@@ -1125,13 +1121,9 @@ class PostComment(models.Model):
         else:
             return ''.join([str(count), " ответов"])
 
-    def get_u_attach(self, user):
-        from common.attach.comment_attach import get_u_comment_attach
-        return get_u_comment_attach(self, user)
-
-    def get_c_attach(self, user):
-        from common.attach.comment_attach import get_c_comment_attach
-        return get_c_comment_attach(self, user)
+    def get_attach(self, user):
+        from common.attach.comment_attach import get_comment_attach
+        return get_comment_attach(self, user)
 
     def delete_item(self):
         from notify.models import Notify, Wall

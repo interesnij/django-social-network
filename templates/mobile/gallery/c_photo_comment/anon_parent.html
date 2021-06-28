@@ -7,7 +7,7 @@
 
         {% if comment.attach %}
           {% load comment %}
-          {{ comment|get_community_attach:request.user|safe }}
+          {{ comment|get_attach:request.user|safe }}
         {% endif %}
 
         <div class="">

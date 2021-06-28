@@ -251,11 +251,11 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    PROCESSING, PUBLISHED, EDITED, MANAGER, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','MAN','_DEL','_CLO','_FIX','_FIXE'
-    DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, DELETED_MANAGER, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED, CLOSED_MANAGER = '_DELF','_DELFI','_DELE','_DELM','_CLOFI','_CLOF','_CLOE','_CLOM'
+    PROCESSING, PUBLISHED, EDITED, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','_DEL','_CLO','_FIX','_FIXE'
+    DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED = '_DELF','_DELFI','_DELE','_CLOFI','_CLOF','_CLOE'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_FIXED, 'Удалённый закрепленный'),(DELETED_EDITED_FIXED, 'Удалённый измененный закрепленный'),(DELETED_EDITED, 'Удалённый измененный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_EDITED_FIXED, 'Закрытый измененный закрепленный'),(CLOSED_FIXED, 'Закрытый закрепленный'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),
+        (DELETED_FIXED, 'Удалённый закрепленный'),(DELETED_EDITED_FIXED, 'Удалённый измененный закрепленный'),(DELETED_EDITED, 'Удалённый измененный'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_EDITED_FIXED, 'Закрытый измененный закрепленный'),(CLOSED_FIXED, 'Закрытый закрепленный'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -464,6 +464,13 @@ class Message(models.Model):
                 new_fixed.type = "_FIXE"
             new_fixed.save(update_fields=['type'])
 
+    def get_unfixed_message_for_chat(self):
+        if new_fixed.type == "_FIX":
+            new_fixed.type = "PUB"
+        else:
+            new_fixed.type = "EDI"
+        new_fixed.save(update_fields=['type'])
+
     def get_u_message_parent(self, user):
         from common.attach.message_attach import get_u_message_parent
         return get_u_message_parent(self.parent, user)
@@ -472,13 +479,9 @@ class Message(models.Model):
         from common.attach.message_attach import get_c_message_parent
         return get_c_message_parent(self.parent, user)
 
-    def get_u_attach(self, user):
-        from common.attach.message_attach import get_u_message_attach
-        return get_u_message_attach(self, user)
-
-    def get_c_attach(self, user):
-        from common.attach.message_attach import get_c_message_attach
-        return get_c_message_attach(self, user)
+    def get_attach(self, user):
+        from common.attach.message_attach import get_message_attach
+        return get_message_attach(self, user)
 
     def get_attach_photos(self):
         if "pho" in self.attach:

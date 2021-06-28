@@ -869,13 +869,9 @@ class GoodComment(models.Model):
 		else:
 			return str(count) + " ответов"
 
-	def get_u_attach(self, user):
-		from common.attach.comment_attach import get_u_comment_attach
-		return get_u_comment_attach(self, user)
-
-	def get_c_attach(self, user):
-		from common.attach.comment_attach import get_c_comment_attach
-		return get_c_comment_attach(self, user)
+	def get_attach(self, user):
+		from common.attach.comment_attach import get_comment_attach
+		return get_comment_attach(self, user)
 
 	def send_like(self, user, community):
 		import json

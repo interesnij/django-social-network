@@ -22,7 +22,7 @@
       {% endif %}
 
       {% if object.attach %}
-        {{ object|get_user_attach:request.user|safe }}
+        {{ object|get_attach:request.user|safe }}
       {% endif %}
 
       {% if object.repost %}

@@ -24,7 +24,7 @@
 
         {% if object.attach %}
           {% load message %}
-          {{ object|get_user_attach:request.user|safe }}
+          {{ object|get_attach:request.user|safe }}
         {% endif %}
 
         {% if object.repost %}

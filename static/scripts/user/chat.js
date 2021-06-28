@@ -211,7 +211,7 @@ function get_toggle_messages() {
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
   is_favourite = false;
-  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite/" : "/chat/user_progs/favorite/";
+  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite_message/" : "/chat/user_progs/favorite/";
 
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
@@ -237,7 +237,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/chat/user_progs/delete/" + list[i].getAttribute("data-uuid") + "/", true );
+    ajax_link.open( 'GET', "/chat/user_progs/delete_message/" + list[i].getAttribute("data-uuid") + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -257,7 +257,7 @@ on('#ajax', 'click', '.u_message_restore', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/restore/" + uuid + "/", true );
+  link.open( 'GET', "/chat/user_progs/restore_message/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -273,7 +273,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/fixed/" + uuid + "/", true );
+  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {

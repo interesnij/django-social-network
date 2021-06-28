@@ -65,7 +65,7 @@ class CreateUserChat(TemplateView):
 			return HttpResponseBadRequest()
 
 
-class SendPageMessage(TemplateView):
+class UserSendPageMessage(TemplateView):
 	""" Пишем сообщения со страниц пользователей или разных списков. Если у пользователя есть друзья,
 	    то add_friend_message.html (возможность добавлять друзей), иначе add_message.html
 	"""
@@ -80,12 +80,12 @@ class SendPageMessage(TemplateView):
 		else:
 			self.template_name = get_settings_template("chat/message/add_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		return super(SendPageMessage,self).get(request,*args,**kwargs)
+		return super(UserSendPageMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		from chat.forms import MessageForm
 
-		context = super(SendPageMessage,self).get_context_data(**kwargs)
+		context = super(UserSendPageMessage,self).get_context_data(**kwargs)
 		context["form"] = MessageForm()
 		context["member"] = self.user
 		return context
@@ -189,7 +189,7 @@ class LoadUserMessage(TemplateView):
 """ View """
 from django.views import View
 
-class SendMessage(View):
+class UserSendMessage(View):
 	def post(self,request,*args,**kwargs):
 		from common.template.user import render_for_platform
 		from chat.models import Message, Chat
@@ -212,7 +212,7 @@ class SendMessage(View):
 			return HttpResponseBadRequest()
 
 
-class MessageParent(View):
+class UserMessageParent(View):
 	def post(self, request, *args, **kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message, Chat
@@ -230,7 +230,7 @@ class MessageParent(View):
 			return HttpResponseBadRequest()
 
 
-class MessageFixed(View):
+class UserMessageFixed(View):
 	def get(self,request,*args,**kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
@@ -244,7 +244,7 @@ class MessageFixed(View):
 		else:
 			raise Http404
 
-class MessageUnFixed(View):
+class UserMessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
@@ -253,23 +253,22 @@ class MessageUnFixed(View):
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
-			message.is_fixed = False
-			message.save(update_fields=['is_fixed'])
+			message.get_unfixed_message_for_chat()
 			return HttpResponse()
 		else:
 			raise Http404
 
 
-class MessageFavorite(View):
+class UserMessageFavorite(View):
 	def get(self,request,*args,**kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import MessageFavorite, Message
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax():
+		if request.is_ajax() and not MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
 			check_can_send_message(request.user, message.chat)
-			MessageFavorite.create_favorite(request.user.pk, message)
+			MessageFavorite.objects.create(user=request.user, message=message)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -281,8 +280,7 @@ class MessageUnFavorite(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
-			message.is_fixed = False
-			message.save(update_fields=['is_fixed'])
+			MessageFavorite.objects.get(user=request.user, message=message).delete()
 			return HttpResponse()
 		else:
 			raise Http404
@@ -294,7 +292,7 @@ class MessageDelete(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and message.creator == request.user:
+		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
 			message.delete_message()
 			return HttpResponse()
 		else:
@@ -306,7 +304,7 @@ class MessageRecover(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and message.creator == request.user:
+		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
 			message.restore_message()
 			return HttpResponse()
 		else:

@@ -8,7 +8,7 @@
 
         {% if comment.attach %}
           {% load comment %}
-          {{ comment|get_user_attach:request.user|safe }}
+          {{ comment|get_attach:request.user|safe }}
         {% endif %}
 
         <div class="card_footer">

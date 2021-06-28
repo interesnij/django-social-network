@@ -9,7 +9,7 @@
 
         {% if reply.attach %}
           {% load comment %}
-          {{ reply|get_user_attach:request.user|safe }}
+          {{ reply|get_attach:request.user|safe }}
         {% endif %}
 
         <div class="">

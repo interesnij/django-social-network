@@ -18,12 +18,8 @@ def get_header_group_chat(chat, user_id):
     return chat.get_header_group_chat(user_id)
 
 @register.filter
-def get_user_attach(message, request_user):
-    return message.get_u_attach(request_user)
-
-@register.filter
-def get_community_attach(message, request_user):
-    return message.get_c_attach(request_user)
+def get_attach(message, request_user):
+    return message.get_attach(request_user)
 
 @register.filter
 def is_favourite(message, user_id):
