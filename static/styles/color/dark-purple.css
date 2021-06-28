@@ -173,6 +173,9 @@ a.media:hover {
 .btn_default svg, .btn_default span{
   color: rgba(255, 255, 255, 0.6) !important;
 }
+.btn_default .active{
+  color: rgba(255, 255, 255, 0.8) !important;
+}
 .btn_default button{
   background-color: #492E58 !important;
 }
