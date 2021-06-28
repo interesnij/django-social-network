@@ -247,7 +247,7 @@ class ChatUsers(models.Model):
             models.Index(fields=['chat', 'user', 'is_administrator'])
             ]
         verbose_name = 'участник беседы'
-        verbose_name_plural = 'участники бесед"
+        verbose_name_plural = 'участники бесед'
 
 
 class Message(models.Model):
