@@ -58,6 +58,17 @@ class Chat(models.Model):
     def get_members_count(self):
         return self.get_members().values('id').count()
 
+    def get_members_count_ru(self):
+        count = self.get_members_count()
+
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " участник"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " участника"
+        else:
+            return str(count) + " участников"
+
     def get_first_message(self):
         return self.chat_message.exclude(type__contains="_").first()
 
