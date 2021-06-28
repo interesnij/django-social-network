@@ -1,4 +1,4 @@
-<div class="message media mt-3 pag {% if forloop.first %}first{% endif %}">
+<div class="message media p-1 pag {% if forloop.first %}first{% endif %}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
         {% if object.creator.s_avatar %}
@@ -14,7 +14,7 @@
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
       {% if object.text %}
-        <div class="toggle_message">
+        <div class="toggle_message pointer">
           {{ object.text|linebreaks }}
         </div>
       {% endif %}
