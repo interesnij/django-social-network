@@ -328,7 +328,7 @@ class UserMessageFavorite(View):
 		else:
 			raise Http404
 
-class MessageUnFavorite(View):
+class UserMessageUnFavorite(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import MessageFavorite, Message
 		from django.http import HttpResponse, Http404
