@@ -341,7 +341,7 @@ class UserMessageUnFavorite(View):
 			raise Http404
 
 
-class MessageDelete(View):
+class UserMessageDelete(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
 		from django.http import HttpResponse, Http404
@@ -353,7 +353,7 @@ class MessageDelete(View):
 		else:
 			raise Http404
 
-class MessageRecover(View):
+class UserMessageRecover(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
 		from django.http import HttpResponse, Http404
