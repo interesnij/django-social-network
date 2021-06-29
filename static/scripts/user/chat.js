@@ -242,7 +242,9 @@ on('#ajax', 'click', '.u_message_delete', function() {
         p.classList.add("media", "p-1");
         p.style.padding = "20px";
         p.innerHTML = "<span class='u_message_restore pointer' data-uuid='" + uuid + "'>Сообщение удалено. <span class='underline'>Восстановить</span></span>";
-        block.parentElement.insertBefore(p, block), block.style.display = "none"
+        block.parentElement.insertBefore(p, block), block.style.display = "none";
+        console.log(block);
+        console.log(p);
       }
     }
     ajax_link.send();
