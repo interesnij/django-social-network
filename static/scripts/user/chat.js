@@ -6,6 +6,7 @@ function get_toggle_messages() {
       query.push(list[i])
     }
   };
+  console.log(query);
   return query
 }
 function show_chat_console(is_favourite) {
@@ -16,6 +17,7 @@ function show_chat_console(is_favourite) {
   } else {
     _console.querySelector(".one_message").style.display = "block"
   }
+  console.log(get_toggle_messages().length);
   _console.style.display = "block";
   _console.previousElementSibling.style.display = "none";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
