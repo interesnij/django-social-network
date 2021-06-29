@@ -250,6 +250,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
     }
     ajax_link.send();
   };
+  hide_chat_console(null)
 });
 
 on('#ajax', 'click', '.u_message_restore', function() {
@@ -271,14 +272,39 @@ on('#ajax', 'click', '.u_message_restore', function() {
 on('#ajax', 'click', '.u_message_fixed', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
-  block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
+    hide_chat_console(null)
+  }};
+  link.send();
+});
+on('#ajax', 'click', '.u_message_unfixed', function() {
+  item = this.parentElement.nextElementSibling;
+  uuid = this.getAttribute("data-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/unfixed_message/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    hide_chat_console(null)
+  }};
+  link.send();
+});
+on('#ajax', 'click', '.u_message_reply', function() {
+  item = this.parentElement.nextElementSibling;
+  uuid = this.getAttribute("data-uuid");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/reply_message/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    hide_chat_console(null)
   }};
   link.send();
 });

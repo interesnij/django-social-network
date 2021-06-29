@@ -1,7 +1,9 @@
-def get_message_processing(doc, type):
-    doc.type = type
-    doc.save(update_fields=['type'])
-    return doc
+def get_message_processing(message, type):
+    message.type = type
+    message.save(update_fields=['type'])
+    return message
+def get_edit_message_processing(message, type):
+    return message
 def get_chat_processing(list, type):
     list.type = type
     list.save(update_fields=['type'])

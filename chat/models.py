@@ -95,6 +95,9 @@ class Chat(models.Model):
 
     def get_messages_for_recipient(self, user_id):
         return self.chat_message.filter(recipient_id=user_id).exclude(type__contains="_").order_by("-created")
+    def get_fix_message_for_recipient(self, user_id):
+        if self.chat_message.filter(recipient_id=user_id, type="_FIX").exixts():
+            return self.chat_message.filter(recipient_id=user_id, type="_FIX")[0]
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -359,7 +362,7 @@ class Message(models.Model):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
-        #sender = ChatUsers.objects.filter(user_id=creator.pk)[0]
+
         for recipient_id in chat.get_members_ids():
             if voice:
                 new_message = Message.objects.create(chat=chat, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
@@ -370,6 +373,21 @@ class Message(models.Model):
             get_message_processing(new_message, 'PUB')
             new_message.create_socket()
         return Message.objects.filter(chat=chat, creator=creator).first()
+
+    def edit_message(self, text, attach):
+        from common.processing.message import get_edit_message_processing
+
+        if self.type == Message.PUBLISHED:
+            self.type = Message.EDITED
+        elif self.type == Message.FIXED:
+            self.type = Message.FIXED_EDITED
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        self.attach = _attach
+        self.text = text
+        get_edit_message_processing(self)
+        return self
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime

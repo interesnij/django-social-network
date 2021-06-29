@@ -37,11 +37,13 @@ class ChatDetailView(ListView):
 		unread_messages = self.chat.get_unread_message(request.user.pk)
 		unread_messages.update(unread=False)
 		self.get_messages = self.chat.get_messages_for_recipient(request.user.pk)
+		self.get_fix_message = self.chat.get_fix_message_for_recipient(request.user.pk)
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatDetailView,self).get_context_data(**kwargs)
 		context['chat'] = self.chat
+		context['object'] = self.get_fix_message
 		return context
 
 	def get_queryset(self):
