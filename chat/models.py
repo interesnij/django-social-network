@@ -531,28 +531,28 @@ class Message(models.Model):
     def restore_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
-            self.type = Doc.PUBLISHED
+            self.type = Message.PUBLISHED
         elif self.type == "_DELE":
-            self.type = Doc.EDITED
+            self.type = Message.EDITED
         elif self.type == "_DELF":
-            self.type = Doc.FIXED
+            self.type = Message.FIXED
         self.save(update_fields=['type'])
 
     def close_item(self, community):
         if self.type == "PUB":
-            self.type = Doc.CLOSED
+            self.type = Message.CLOSED
         elif self.type == "EDI":
-            self.type = Doc.CLOSED_EDITED
+            self.type = Message.CLOSED_EDITED
         elif self.type == "_FIX":
-            self.type = Doc.CLOSED_FIXED
+            self.type = Message.CLOSED_FIXED
         self.save(update_fields=['type'])
     def abort_close_item(self, community):
         if self.type == "_CLO":
-            self.type = Doc.PUBLISHED
+            self.type = Message.PUBLISHED
         elif self.type == "_CLOE":
-            self.type = Doc.EDITED
+            self.type = Message.EDITED
         elif self.type == "_CLOF":
-            self.type = Doc.FIXED
+            self.type = Message.FIXED
         self.save(update_fields=['type'])
 
 class MessageFavourite(models.Model):
