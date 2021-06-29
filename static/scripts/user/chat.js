@@ -13,9 +13,20 @@ function get_toggle_messages() {
 function show_chat_console(is_favourite) {
   _console = document.body.querySelector(".console_btn_other");
   is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-  arr = get_toggle_messages();
-  console.log(arr);
-  if (arr.length > 1) {
+
+  list = document.body.querySelectorAll(".custom_color");
+  query = [];
+  console.log("begin");
+  console.log("list" + list);
+  for (var i = 0; i < list.length; i++){
+      query.push(list[i])
+      console.log(list[i]);
+  };
+  console.log(query);
+
+  //arr = get_toggle_messages();
+  console.log(query);
+  if (query.length > 1) {
     _console.querySelector(".one_message").style.display = "none"
   } else {
     _console.querySelector(".one_message").style.display = "unset"
