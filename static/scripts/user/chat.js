@@ -233,15 +233,16 @@ on('#ajax', 'click', '.toggle_message_favourite', function() {
 on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
+    uuid = list[i].getAttribute("data-uuid");
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', "/chat/user_progs/delete_message/" + list[i].getAttribute("data-uuid") + "/", true );
+    ajax_link.open( 'GET', "/chat/user_progs/delete_message/" + uuid + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         p = document.createElement("div");
         p.classList.add("media", "p-1");
         p.style.padding = "20px";
-        p.innerHTML = "<span class='u_message_restore pointer' data-uuid='" + list[i].getAttribute("data-uuid") + "'>Сообщение удалено. <span class='underline'>Восстановить</span></span>";
+        p.innerHTML = "<span class='u_message_restore pointer' data-uuid='" + uuid + "'>Сообщение удалено. <span class='underline'>Восстановить</span></span>";
         list[i].parentElement.insertBefore(p, list[i]), list[i].style.display = "none"
       }
     }
