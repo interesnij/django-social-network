@@ -1,5 +1,23 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function remove_item_and_show_restore_block(item, url, _class, title) {
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url + item.getAttribute("data-uuid") + "/", true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        p = document.createElement("div");
+        p.classList.add("media", "p-1");
+        p.style.padding = "20px";
+        p.innerHTML = "<span class='" + _class + " pointer' data-uuid='" + item.getAttribute("data-uuid") + "'>" + title + ". <span class='underline'>Восстановить</span></span>";
+        item.parentElement.insertBefore(p, item), item.style.display = "none";
+        console.log(item);
+        console.log(p);
+      }
+    }
+    ajax_link.send();
+}
+
 function get_edit_comment_form(_this, url){
   clear_comment_dropdown();
   pk = _this.parentElement.getAttribute("data-pk");
