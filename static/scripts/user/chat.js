@@ -230,6 +230,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
 
   for (var i = 0; i < list.length; i++){
+    block = null, p = null, ajax_link = null;
     block = list[i];
     uuid = block.getAttribute("data-uuid");
     console.log(block);
@@ -248,7 +249,6 @@ on('#ajax', 'click', '.u_message_delete', function() {
       }
     }
     ajax_link.send();
-    block = null, p = null, ajax_link = null;
   };
   hide_chat_console(null)
 });
