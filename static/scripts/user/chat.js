@@ -1,5 +1,5 @@
 function get_toggle_messages() {
-  list = document.body.parentElement.querySelectorAll(".message");
+  list = document.body.querySelectorAll(".message");
   for (var i = 0; i < list.length; i++){
     query = [];
     if (list[i].classList.contains("custom_color")) {
