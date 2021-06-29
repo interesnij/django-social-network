@@ -19,16 +19,12 @@ function show_chat_console(is_favourite) {
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
   };
-  if (query.length > 1) {
-    _console.querySelector(".one_message").style.display = "none"
-  } else {
-    _console.querySelector(".one_message").style.display = "unset"
-  }
-  
+
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
 }
+
 function hide_chat_console(is_favourite) {
   _console = document.body.querySelector(".console_btn_other");
   is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
@@ -36,8 +32,6 @@ function hide_chat_console(is_favourite) {
   _console.previousElementSibling.style.display = "unset";
   _console.parentElement.parentElement.querySelector("h5").style.display = "unset"
 }
-
-
 
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 
@@ -204,19 +198,13 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   } else {
     message.classList.add("custom_color");
     show_chat_console(is_favourite)
-  }
-})
-
-function get_toggle_messages() {
-  list = document.body.parentElement.querySelectorAll(".message");
-  for (var i = 0; i < list.length; i++){
-    query = [];
-    if (list[i].classList.contains("custom_color")) {
-      query.push(list[i])
-    }
   };
-  return query
-}
+  if (get_toggle_messages().length > 1) {
+    document.body.querySelector(".one_message").style.display = "none"
+  } else {
+    document.body.querySelector(".one_message").style.display = "unset"
+  };
+})
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
   is_favourite = false;
