@@ -1,6 +1,6 @@
 {% load message %}
 
-<div class="message media p-1 pag {% if forloop.first %}first{% endif %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+<div class="message media p-1 pag {% if forloop.first %}first{% endif %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
         {% if object.creator.s_avatar %}
