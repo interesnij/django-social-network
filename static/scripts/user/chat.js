@@ -228,10 +228,11 @@ on('#ajax', 'click', '.toggle_message_favourite', function() {
 
 on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
-  console.log(list)
+
   for (var i = 0; i < list.length; i++){
     block = list[i];
     uuid = block.getAttribute("data-uuid");
+    console.log(block);
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', "/chat/user_progs/delete_message/" + uuid + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
