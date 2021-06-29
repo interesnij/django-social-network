@@ -233,7 +233,8 @@ on('#ajax', 'click', '.toggle_message_favourite', function() {
 on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
-    uuid = list[i].getAttribute("data-uuid");
+    block = list[i];
+    uuid = block.getAttribute("data-uuid");
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', "/chat/user_progs/delete_message/" + uuid + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -243,7 +244,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
         p.classList.add("media", "p-1");
         p.style.padding = "20px";
         p.innerHTML = "<span class='u_message_restore pointer' data-uuid='" + uuid + "'>Сообщение удалено. <span class='underline'>Восстановить</span></span>";
-        list[i].parentElement.insertBefore(p, list[i]), list[i].style.display = "none"
+        list[i].parentElement.insertBefore(p, block), block.style.display = "none"
       }
     }
     ajax_link.send();
