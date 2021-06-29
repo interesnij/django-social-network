@@ -11,12 +11,13 @@ function get_toggle_messages() {
 function show_chat_console(is_favourite) {
   _console = document.body.querySelector(".console_btn_other");
   is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-  if (get_toggle_messages().length > 1) {
+  arr = get_toggle_messages();
+  console.log(arr);
+  if (arr.length > 1) {
     _console.querySelector(".one_message").style.display = "none"
   } else {
     _console.querySelector(".one_message").style.display = "unset"
   }
-  console.log(get_toggle_messages().length);
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
