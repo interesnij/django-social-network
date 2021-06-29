@@ -348,7 +348,7 @@ class UserMessageDelete(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
-			message.delete_message()
+			message.delete_item(None)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -360,7 +360,7 @@ class UserMessageRecover(View):
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
-			message.restore_message()
+			message.restore_item(None)
 			return HttpResponse()
 		else:
 			raise Http404

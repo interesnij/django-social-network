@@ -520,6 +520,40 @@ class Message(models.Model):
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
 
+    def delete_item(self, community):
+        if self.type == "PUB":
+            self.type = Message.DELETED
+        elif self.type == "EDI":
+            self.type = Message.DELETED_EDITED
+        elif self.type == "_FIX":
+            self.type = Message.DELETED_FIXED
+        self.save(update_fields=['type'])
+    def restore_item(self, community):
+        from notify.models import Notify, Wall
+        if self.type == "_DEL":
+            self.type = Doc.PUBLISHED
+        elif self.type == "_DELE":
+            self.type = Doc.EDITED
+        elif self.type == "_DELF":
+            self.type = Doc.FIXED
+        self.save(update_fields=['type'])
+
+    def close_item(self, community):
+        if self.type == "PUB":
+            self.type = Doc.CLOSED
+        elif self.type == "EDI":
+            self.type = Doc.CLOSED_EDITED
+        elif self.type == "_FIX":
+            self.type = Doc.CLOSED_FIXED
+        self.save(update_fields=['type'])
+    def abort_close_item(self, community):
+        if self.type == "_CLO":
+            self.type = Doc.PUBLISHED
+        elif self.type == "_CLOE":
+            self.type = Doc.EDITED
+        elif self.type == "_CLOF":
+            self.type = Doc.FIXED
+        self.save(update_fields=['type'])
 
 class MessageFavourite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
