@@ -263,7 +263,7 @@ on('#ajax', 'click', '.u_message_restore', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
-    item.style.display = "unset";
+    item.style.display = "flex";
   }};
   link.send();
 });
