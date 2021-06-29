@@ -248,6 +248,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
       }
     }
     ajax_link.send();
+    block = null, p = null, ajax_link = null;
   };
   hide_chat_console(null)
 });
