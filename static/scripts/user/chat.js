@@ -264,6 +264,7 @@ on('#ajax', 'click', '.u_message_restore', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
     item.style.display = "flex";
+    item.classList.remove("custom_color")
   }};
   link.send();
 });
