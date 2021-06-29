@@ -1,10 +1,8 @@
 function get_toggle_messages() {
-  list = document.body.querySelectorAll(".message");
+  list = document.body.querySelectorAll(".custom_color");
+  query = [];
   for (var i = 0; i < list.length; i++){
-    query = [];
-    if (list[i].classList.contains("custom_color")) {
       query.push(list[i])
-    }
   };
   console.log(query);
   return query
