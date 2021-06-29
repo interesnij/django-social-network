@@ -11,7 +11,7 @@ function get_toggle_messages() {
 function show_chat_console(is_favourite) {
   _console = document.body.querySelector(".console_btn_other");
   is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-  if (len(get_toggle_messages()) > 1) {
+  if (get_toggle_messages().length > 1) {
     _console.querySelector(".one_message").style.display = "none"
   } else {
     _console.querySelector(".one_message").style.display = "block"
