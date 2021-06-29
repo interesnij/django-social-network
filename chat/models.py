@@ -96,7 +96,7 @@ class Chat(models.Model):
     def get_messages_for_recipient(self, user_id):
         return self.chat_message.filter(recipient_id=user_id).exclude(type__contains="_").order_by("-created")
     def get_fix_message_for_recipient(self, user_id):
-        if self.chat_message.filter(recipient_id=user_id, type="_FIX").exixts():
+        if self.chat_message.filter(recipient_id=user_id, type="_FIX").exists():
             return self.chat_message.filter(recipient_id=user_id, type="_FIX")[0]
 
     def get_last_message_created(self):
