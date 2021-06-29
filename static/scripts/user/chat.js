@@ -1,13 +1,9 @@
 function get_toggle_messages() {
   list = document.body.querySelectorAll(".custom_color");
   query = [];
-  console.log("begin");
-  console.log("list" + list);
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
-      console.log(list[i]);
   };
-  console.log(query);
   return query
 }
 function show_chat_console(is_favourite) {
