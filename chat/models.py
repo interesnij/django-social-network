@@ -365,9 +365,9 @@ class Message(models.Model):
 
         for recipient_id in chat.get_members_ids():
             if creator.pk == recipient_id:
-                read = True
-            else:
                 read = False
+            else:
+                read = True
             if voice:
                 new_message = Message.objects.create(chat=chat, unread=read, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
