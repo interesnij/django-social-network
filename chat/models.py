@@ -362,7 +362,6 @@ class Message(models.Model):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
-
         for recipient_id in chat.get_members_ids():
             if creator.pk == recipient_id:
                 read = False
@@ -373,7 +372,7 @@ class Message(models.Model):
             else:
                 _attach = str(attach)
                 _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-                new_message = Message.objects.create(chat=chat, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
+                new_message = Message.objects.create(chat=chat, unread=read, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
             get_message_processing(new_message, 'PUB')
             new_message.create_socket()
         return Message.objects.filter(chat=chat, creator=creator).first()
