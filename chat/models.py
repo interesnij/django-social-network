@@ -354,7 +354,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
@@ -362,7 +362,7 @@ class Message(models.Model):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
 
@@ -375,7 +375,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
@@ -383,7 +383,7 @@ class Message(models.Model):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
 
@@ -394,7 +394,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
@@ -402,7 +402,7 @@ class Message(models.Model):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=self.get_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
         return Message.objects.filter(chat=chat, creator=creator).first()
