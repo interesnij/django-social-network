@@ -252,7 +252,8 @@ on('#ajax', 'click', '.u_message_restore', function() {
 });
 
 on('#ajax', 'click', '.u_message_fixed', function() {
-  item = this.parentElement.nextElementSibling;
+  item = document.body.querySelector(".custom_color");
+
   uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
@@ -260,7 +261,9 @@ on('#ajax', 'click', '.u_message_fixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console(null)
+    hide_chat_console(null);
+    item.classList.add("is_fixed");
+    item.style.display = "none"
   }};
   link.send();
 });
