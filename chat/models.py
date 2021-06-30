@@ -77,7 +77,7 @@ class Chat(models.Model):
             return str(count) + " участников"
 
     def get_first_message(self, user_id):
-        return self.chat_message.filter(recipient_id=user_id).exclude(type__contains="_").first()
+        return self.chat_message.filter(recipient_id=user_id).exclude(creator_id=user_id, type__contains="_").first()
 
     def get_messages(self):
         return self.chat_message.exclude(type__contains="_")
@@ -92,7 +92,7 @@ class Chat(models.Model):
 
     def get_unread_count_message(self, user_id):
         query = Q(unread=True, recipient_id=user_id)
-        query.add(~Q(copy__isnull=True, type__contains="_"), Q.AND)
+        query.add(~Q(creator_id=user_id, type__contains="_"), Q.AND)
         count = Message.objects.filter(query).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
