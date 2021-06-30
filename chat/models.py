@@ -48,11 +48,18 @@ class Chat(models.Model):
 
     def get_members(self):
         from users.models import User
-        members = User.objects.filter(chat_users__chat__pk=self.pk)
-        return members
+        return User.objects.filter(chat_users__chat__pk=self.pk)
+
+    def get_recipients(self):
+        from users.models import User
+        return User.objects.filter(Q(chat_users__chat__pk=self.pk)&(pk=self.creator.pk))
 
     def get_members_ids(self):
         users = self.get_members().values('id')
+        return [_user['id'] for _user in users]
+
+    def get_recipients_ids(self):
+        users = self.get_recipients().values('id')
         return [_user['id'] for _user in users]
 
     def get_members_count(self):
@@ -262,18 +269,20 @@ class Message(models.Model):
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
+    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
+    copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_copy")
+
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     unread = models.BooleanField(default=True, db_index=True)
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
-
-    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
 
     class Meta:
         verbose_name = "Сообщение"
@@ -283,6 +292,14 @@ class Message(models.Model):
 
     def __str__(self):
         return self.text
+
+    def is_copy_reed(self):
+        """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
+        Зачем это - при отрисовке первого сообщения правильно выводить кол-во непрочитанных. """
+        for copy in self.copy.all():
+            if not copy.unread:
+                return True
+        return False
 
     def is_message_in_favourite(self, user_id):
         return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
@@ -316,6 +333,10 @@ class Message(models.Model):
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
+    def get_attach(value):
+        _attach = str(value)
+        return _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
 
     def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
@@ -330,51 +351,60 @@ class Message(models.Model):
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
             ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
-        for recipient_id in current_chat.get_members_ids():
+        if voice:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+        else:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+        get_message_processing(creator_message, 'PUB')
+        creator_message.create_socket()
+
+        for recipient_id in chat.get_recipients_ids():
             if voice:
-                new_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                _attach = str(attach)
-                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-                new_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
-            get_message_processing(new_message, 'PUB')
-            new_message.create_socket()
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+                get_message_processing(recipient_message, 'PUB')
+                recipient_message.create_socket()
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
         from common.processing.message import get_message_processing
 
         chat = Chat.objects.create(creator=creator, type=Chat.GROUP)
-        #sender = ChatUsers.objects.create(user=creator, is_administrator=True, chat=chat)
 
-        for recipient_id in users_ids:
-            ChatUsers.objects.create(user_id=recipient_id, chat=chat)
+        if voice:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+        else:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+        get_message_processing(creator_message, 'PUB')
+        creator_message.create_socket()
+
+        for recipient_id in chat.get_recipients_ids():
             if voice:
-                new_message = Message.objects.create(chat=chat, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                _attach = str(attach)
-                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-                new_message = Message.objects.create(chat=chat, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
-            get_message_processing(new_message, 'PUB')
-            new_message.create_socket()
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+                get_message_processing(recipient_message, 'PUB')
+                recipient_message.create_socket()
 
     def send_message(chat, creator, repost, parent, text, attach, voice):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
-        for recipient_id in chat.get_members_ids():
-            if creator.pk == recipient_id:
-                read = False
-            else:
-                read = True
+        if voice:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+        else:
+            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+        get_message_processing(creator_message, 'PUB')
+        creator_message.create_socket()
+
+        for recipient_id in chat.get_recipients_ids():
             if voice:
-                new_message = Message.objects.create(chat=chat, unread=read, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                _attach = str(attach)
-                _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-                new_message = Message.objects.create(chat=chat, unread=read, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=_attach, type=Message.PROCESSING)
-            get_message_processing(new_message, 'PUB')
-            new_message.create_socket()
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=attach=self.get_attach(attach), type=Message.PROCESSING)
+                get_message_processing(recipient_message, 'PUB')
+                recipient_message.create_socket()
         return Message.objects.filter(chat=chat, creator=creator).first()
 
     def edit_message(self, text, attach):
@@ -385,9 +415,7 @@ class Message(models.Model):
         elif self.type == Message.FIXED:
             self.type = Message.FIXED_EDITED
 
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        self.attach = _attach
+        self.attach = self.get_attach(attach)
         self.text = text
         get_edit_message_processing(self)
         return self

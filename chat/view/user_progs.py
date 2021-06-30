@@ -160,7 +160,7 @@ class LoadUserMessage(TemplateView):
 				status = ' <span class="status bg-success"></span>'
 			else:
 				status = ''
-			if first_message.creator.user_id == user_id:
+			if first_message.creator.id == user_id:
 				creator_figure = '<span class="underline">Вы:</span> '
 			media_body = '<div class="media-body"><h5 class="time-title mb-0">{}{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, status, first_message.get_created(),creator_figure,first_message.get_preview_text())
 			self.block = '<div class="media">{}{}{}</div>'.format(figure, media_body, self.chat.get_unread_count_message(user_id))
@@ -173,7 +173,7 @@ class LoadUserMessage(TemplateView):
 				chat_name = self.chat.name
 			else:
 				chat_name = "Групповой чат"
-			if first_message.creator.user_id == user_id:
+			if first_message.creator.id == user_id:
 				creator_figure = '<span class="underline">Вы:</span> '
 			media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + '<small class="float-right text-muted">' + first_message.get_created() + '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + first_message.get_preview_text() + '</p></div>'
 			self.block = '<div class="media">' + figure + media_body + self.chat.get_unread_count_message(user_id) + '</div>'
