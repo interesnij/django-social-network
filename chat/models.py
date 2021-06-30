@@ -279,7 +279,7 @@ class Message(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
-    unread = models.BooleanField(default=True, db_index=True)
+    unread = models.BooleanField(default=True, db_index=True, verbose_name="Не прочитано")
     type = models.CharField(choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     voice = models.FileField(blank=True, upload_to=upload_to_chat_directory, verbose_name="Голосовое сообщение")
