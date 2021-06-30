@@ -52,7 +52,7 @@ class Chat(models.Model):
 
     def get_recipients(self):
         from users.models import User
-        return User.objects.filter(Q(chat_users__chat__pk=self.pk)&Q(pk=self.creator.pk))
+        return User.objects.filter(Q(chat_users__chat__pk=self.pk)&~Q(pk=self.creator.pk))
 
     def get_members_ids(self):
         users = self.get_members().values('id')
@@ -352,17 +352,16 @@ class Message(models.Model):
             ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         if voice:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=current_chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=current_chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
-
-        for recipient_id in chat.get_recipients_ids():
+        for recipient_id in current_chat.get_recipients_ids():
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
 
