@@ -52,7 +52,7 @@ class Chat(models.Model):
 
     def get_recipients(self):
         from users.models import User
-        return User.objects.filter(Q(chat_users__chat__pk=self.pk)&(pk=self.creator.pk))
+        return User.objects.filter(Q(chat_users__chat__pk=self.pk)&Q(pk=self.creator.pk))
 
     def get_members_ids(self):
         users = self.get_members().values('id')
