@@ -69,8 +69,8 @@ class Chat(models.Model):
         else:
             return str(count) + " участников"
 
-    def get_first_message(self):
-        return self.chat_message.exclude(type__contains="_").first()
+    def get_first_message(self, user_id):
+        return self.chat_message.filter(recipient_id=user_id).exclude(type__contains="_").first()
 
     def get_messages(self):
         return self.chat_message.exclude(type__contains="_")
@@ -113,7 +113,7 @@ class Chat(models.Model):
         return members[0].user
 
     def get_preview_message(self, user_id):
-        first_message = self.get_first_message()
+        first_message = self.get_first_message(user_id)
         creator_figure = ''
         if self.is_private():
             member = self.get_chat_member(user_id)

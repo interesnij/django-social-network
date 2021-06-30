@@ -143,7 +143,7 @@ class LoadUserMessage(TemplateView):
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
-		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(request.user.pk), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		if self.chat.is_private():
 			member = self.chat.get_chat_member(user_id)
 			if self.chat.image:
