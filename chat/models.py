@@ -91,8 +91,8 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        query = Q(unread=True, recipient_id=user_id)
-        query.add(~Q(creator_id=user_id, type__contains="_"), Q.AND)
+        query = ~Q(creator_id=user_id, type__contains="_")
+        query.add(Q(unread=True, recipient_id=user_id)), Q.AND)
         count = self.chat_message.filter(query).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
