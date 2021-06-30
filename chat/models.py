@@ -91,6 +91,7 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
+        query = Q()
         count = Message.objects.filter(unread=True, recipient_id=user_id).exclude(creator_id=user_id, type__contains="_").values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
@@ -293,11 +294,11 @@ class Message(models.Model):
     def __str__(self):
         return self.text
 
-    def is_copy_reed(self):
+    def is_copy_reed(self, user_id):
         """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
         Зачем это - при отрисовке первого сообщения правильно выводить кол-во непрочитанных. """
         for copy in self.message_copy.filter(copy=self).all():
-            if not copy.unread:
+            if not copy.unread and not copy.creator.pk == user_id:
                 return True
         return False
 
@@ -352,16 +353,16 @@ class Message(models.Model):
             ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
         if voice:
-            creator_message = Message.objects.create(chat=current_chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=current_chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
         for recipient_id in current_chat.get_recipients_ids():
             if voice:
-                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
 
@@ -372,9 +373,9 @@ class Message(models.Model):
         chat = Chat.objects.create(creator=creator, type=Chat.GROUP)
 
         if voice:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         else:
-            creator_message = Message.objects.create(chat=chat, unread=True, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
@@ -399,9 +400,9 @@ class Message(models.Model):
 
         for recipient_id in chat.get_recipients_ids():
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
         return creator_message
