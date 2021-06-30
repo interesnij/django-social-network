@@ -8,7 +8,7 @@ def get_unread_count(chat, user_id):
 
 @register.filter
 def is_read(message, user_id):
-    return chat.is_copy_reed(user_id)
+    return message.is_copy_reed(user_id)
 
 @register.filter
 def get_preview_message(chat, user_id):
