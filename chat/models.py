@@ -92,7 +92,6 @@ class Chat(models.Model):
 
     def get_unread_count_message(self, user_id):
         count = Message.objects.filter(unread=True, recipient_id=user_id).exclude(creator__id=user_id, type__contains="_").values("pk").count()
-        count = Message.objects.exclude(type__contains="_").filter(creator_id=user_id, unread=True, recipient_id=user_id).values("pk").count()
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
