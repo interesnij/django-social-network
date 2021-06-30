@@ -20,7 +20,9 @@
       {% if object.text %}
         <div class="">
           {{ object.text|linebreaks }}
+          ( {% if object.is_copy_reed %} не прочитано {% else %} прочитано {% endif %})
         </div>
+      {% endif %}
 
         {% if object.attach %}
           {% load message %}
@@ -36,8 +38,6 @@
             {% endif %}
           </span>
         {% endif %}
-
-      {% endif %}
 
     {% endif %}
     </div>
