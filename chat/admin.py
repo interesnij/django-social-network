@@ -7,7 +7,7 @@ class ChatAdmin(admin.ModelAdmin):
     list_filter = ("creator", )
 
 class ChatUsersAdmin(admin.ModelAdmin):
-    list_display = ("user", "chat", "is_administrator")
+    list_display = ("user", "text", "is_administrator")
     list_filter = ("user", )
 
 class MessageAdmin(admin.ModelAdmin):
