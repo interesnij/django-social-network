@@ -92,8 +92,8 @@ class Chat(models.Model):
 
     def get_unread_count_message(self, user_id):
         #query = Q(unread=True, recipient_id=user_id)
-        query = Q(unread=True, creator_id=user_id)
-        query.add(~Q(creator_id=user_id, type__contains="_"), Q.AND)
+        query = Q(recipient_id=user_id)
+        query.add(~Q(creator_id=user_id, type__contains="_", unread=False), Q.AND)
         #query.add(~Q(creator_id=user_id, type__contains="_"), Q.AND)
         count = Message.objects.filter(query).values("pk").count()
         if count:
