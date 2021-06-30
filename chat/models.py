@@ -404,7 +404,7 @@ class Message(models.Model):
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
-        return Message.objects.filter(chat=chat, creator=creator).first()
+        return creator_message
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
