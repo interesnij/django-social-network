@@ -38,9 +38,9 @@ class CommunityVideoList(ListView):
 		self.community = self.list.community
 		self.template_name = get_template_community_video(self.list, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_staff_of_community(self.community.pk):
-			self.video_list = self.list.get_my_queryset(
+			self.video_list = self.list.get_staff_items()
 		else:
-			self.video_list = self.list.get_queryset()
+			self.video_list = self.list.get_items()
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
