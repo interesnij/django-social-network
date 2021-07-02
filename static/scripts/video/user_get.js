@@ -103,8 +103,7 @@ on('#video_loader', 'click', '.u_video_comments', function() {
 on('#ajax', 'click', '.u_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  pk = this.getAttribute('data-pk');
-  play_video_list("/video/user/list/" + pk + "/", counter, video_pk)
+  play_video_list("/video/user/list/" + video_pk + "/", counter, video_pk)
 });
 
 on('#ajax', 'click', '.u_post_video', function() {
