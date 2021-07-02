@@ -481,12 +481,12 @@ class Video(models.Model):
         return self.list.all()[0].uuid
 
     @classmethod
-    def create_video(cls, creator, title, file, uri, description, list, comments_enabled, votes_on, is_public, community):
+    def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, is_public, community):
         from common.processing.video import get_video_processing
 
         list.count += 1
         list.save(update_fields=["count"])
-        video = cls.objects.create(creator=creator,order=list.count,list=list,title=title,file=file,uri=uri,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
+        video = cls.objects.create(creator=creator,image=image, order=list.count,list=list,title=title,file=file,uri=uri,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
         if community:
             community.plus_videos(1)
         else:
