@@ -211,7 +211,7 @@ class UserVideoCreate(TemplateView):
 	form_post = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("video/user_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -243,7 +243,7 @@ class UserVideoEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("video/user_create/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("video/user_create/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -297,9 +297,6 @@ class UserVideoListCreate(TemplateView):
             return HttpResponseBadRequest()
 
 class UserVideolistEdit(TemplateView):
-    """
-    изменение списка видео пользователя
-    """
     template_name = None
     form=None
 
