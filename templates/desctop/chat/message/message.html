@@ -17,7 +17,7 @@
       </h5>
       {% if object.text %}
         <div class="toggle_message pointer">
-          {{ object.text|linebreaks }} ({% if object|is_read:request.user.pk %} прочитано {% else %} не прочитано {% endif %})
+          {{ object.text|linebreaks }} ({% if request.user.pk == object.creator.pk and object|is_read:request.user.pk %} прочитано {% else %} не прочитано {% endif %})
         </div>
       {% endif %}
 
