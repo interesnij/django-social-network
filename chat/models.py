@@ -123,8 +123,9 @@ class Chat(models.Model):
         return members[0].user
 
     def get_preview_message(self, user_id):
-        first_message = self.get_first_message(user_id)
-        creator_figure = ''
+        first_message, is_read, creator_figure = self.get_first_message(user_id), '', ''
+        if user_id == first_message.creator.pk and not first_message.is_copy_reed():
+            is_read = '<span style="font-size: 80%;" class="tab_badge badge-info"></span>'
         if self.is_private():
             member = self.get_chat_member(user_id)
             if self.image:
@@ -144,7 +145,7 @@ class Chat(models.Model):
             if first_message.creator.id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
-            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
+            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), is_read, '</div>'])
         elif self.is_group():
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])

@@ -33,7 +33,7 @@ on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.cl
 
 on('#ajax', 'input', '.message_text', function() {
   check_message_form_btn()
-})
+}) 
 
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
