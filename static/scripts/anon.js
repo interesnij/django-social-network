@@ -383,7 +383,7 @@ on('body', 'click', '#logg', function() {
   link.send(form_data);
 });
 
-function play_video_list(url, counter, pk, video_pk){
+function play_video_list(url, counter, video_pk){
   loader = document.getElementById("video_loader");
   open_fullscreen(url, loader);
 
@@ -398,7 +398,7 @@ function play_video_list(url, counter, pk, video_pk){
 
     info_video = document.body.querySelector("#info_video");
     if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
-      list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
+      list_load(info_video, "/video/user/info/" + video_pk + "/");
       info_video.setAttribute("data-uuid", uuid);
       console.log("Воспроизводится ролик № : " + video_pk)
     }

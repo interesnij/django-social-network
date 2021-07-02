@@ -118,7 +118,7 @@ class UserVideoInfo(TemplateView):
 		from stst.models import VideoNumbers
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-		self.video, self.user = Video.objects.get(pk=self.kwargs["video_pk"]), User.objects.get(pk=self.kwargs["pk"])
+		self.video, Video.objects.get(pk=self.kwargs["video_pk"])
 		if request.user.is_authenticated:
 			try:
 				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
@@ -132,7 +132,6 @@ class UserVideoInfo(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(UserVideoInfo,self).get_context_data(**kwargs)
-		context['user'] = self.user
 		context['object'] = self.video
 		return context
 

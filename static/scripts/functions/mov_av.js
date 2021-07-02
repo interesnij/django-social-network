@@ -482,7 +482,7 @@ on('#ajax', 'click', '.music_list_item', function() {
         playlist_link.send( null );
         };
 
-        function play_video_list(url, counter, pk, video_pk){
+        function play_video_list(url, counter, video_pk){
           loader = document.getElementById("video_loader");
           open_fullscreen(url, loader);
           video_player_id = document.body.getAttribute('data-video');
@@ -496,7 +496,7 @@ on('#ajax', 'click', '.music_list_item', function() {
 
             info_video = document.body.querySelector("#info_video");
             if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
-              list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
+              list_load(info_video, "/video/user/info/" + video_pk + "/");
               info_video.setAttribute("data-uuid", uuid);
               console.log("Воспроизводится ролик № : " + video_pk)
             }
