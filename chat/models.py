@@ -92,7 +92,7 @@ class Chat(models.Model):
 
     def get_unread_count_message(self, user_id):
         count = 0
-        for message in Message.objects.filter(Q(recipient_id=user_id, unread=True):
+        for message in Message.objects.filter(recipient_id=user_id, unread=True):
             if message.creator.pk != user_id:
                 count += 1
         if count:
