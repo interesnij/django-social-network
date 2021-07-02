@@ -12,7 +12,7 @@ class VideoForm(forms.ModelForm):
 	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4', 'placeholder':'Описание'}))
 	class Meta:
 		model = Video
-		fields = ['title', 'description', 'image', 'list', 'comments_enabled', 'uri', 'category']
+		fields = ['title', 'description', 'image', 'list', 'comments_enabled', 'uri']
 
 class CommentForm(forms.ModelForm):
 	text = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
