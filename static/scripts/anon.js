@@ -386,9 +386,8 @@ on('body', 'click', '#logg', function() {
 function play_video_list(url, counter, pk, video_pk){
   loader = document.getElementById("video_loader");
   open_fullscreen(url, loader);
-  video_saver = document.body.querySelector("#video_id_saver");
-  video_player_id = video_saver.getAttribute('data-video');
-  video_saver.setAttribute('data-video', video_player_id + "a");
+
+  document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
   setTimeout(function() {
     load_video_playlist(video_player_id + "a", counter);
     video_player.addListener(FWDUVPlayer.READY, onReady);
