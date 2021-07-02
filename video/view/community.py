@@ -12,20 +12,20 @@ class CommunityLoadVideoList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.c, self.List = Community.objects.get(pk=self.kwargs["pk"]), VideoList.objects.get(uuid=self.kwargs["uuid"])
-		if self.List.community:
-			self.template_name = get_template_community_video(self.List, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), VideoList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.community:
+			self.template_name = get_template_community_video(self.list, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_user_video(self.List, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_video(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityLoadVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityLoadVideoList,self).get_context_data(**kwargs)
-		c['community'], c['List'] = self.c, self.List
+		c['community'], c['list'] = self.c, self.list
 		return c
 
 	def get_queryset(self):
-		list = self.List.get_queryset()
+		list = self.list.get_queryset()
 		return list
 
 
@@ -33,19 +33,20 @@ class CommunityVideoList(ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.List = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_video(self.List, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
+		self.list = self.video.list
+		self.community = self.list.community
+        self.template_name = get_template_community_video(self.list, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         if request.user.is_staff_of_community(self.community.pk):
-            self.video_list = self.List.get_my_queryset()
+            self.video_list = self.list.get_my_queryset()
         else:
-            self.video_list = self.List.get_queryset()
+            self.video_list = self.list.get_queryset()
         return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityVideoList,self).get_context_data(**kwargs)
         context['community'] = self.community
-        context['List'] = self.List
+        context['list'] = self.list
         return context
 
     def get_queryset(self):

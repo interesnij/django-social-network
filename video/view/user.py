@@ -30,12 +30,12 @@ class UserVideoList(ListView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
+		self.list = self.video.list
         if self.user == request.user:
-            self.video_list = self.list.get_my_queryset()
+            self.video_list = self.list.get_staff_items()
         else:
-            self.video_list = self.list.get_queryset()
+            self.video_list = self.list.get_items()
         self.template_name = get_template_user_video(self.list, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoList,self).get(request,*args,**kwargs)
 

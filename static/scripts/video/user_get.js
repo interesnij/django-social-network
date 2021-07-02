@@ -103,9 +103,8 @@ on('#video_loader', 'click', '.u_video_comments', function() {
 on('#ajax', 'click', '.u_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  this.getAttribute("data-uuid") ? uuid = this.getAttribute("data-uuid") : uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  play_video_list("/video/user/list/" + pk + "/" + uuid + "/", counter, pk, video_pk)
+  pk = this.getAttribute('data-pk');
+  play_video_list("/video/user/list/" + pk + "/", counter, pk, video_pk) 
 });
 
 on('#ajax', 'click', '.u_post_video', function() {
