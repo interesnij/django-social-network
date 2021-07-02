@@ -32,6 +32,8 @@
                             </div>
                             {% if object.is_not_empty %}
                             <small class="file-accessed pointer underline doc_attach_list" data-pk="{{ object.pk }}">Прикрепить список</small>
+                            {% else %}
+                              <p style="margin-bottom: 64px;"></p>
                             {% endif %}
                         </div>
                     </div>
