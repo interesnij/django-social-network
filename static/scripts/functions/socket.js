@@ -91,7 +91,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
-          lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.querySelector("li").innerHTML)
+          lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.innerHTML)
           : lenta.prepend(new_post);
           document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
   link_.send()
