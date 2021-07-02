@@ -33,7 +33,7 @@ on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.cl
 
 on('#ajax', 'input', '.message_text', function() {
   check_message_form_btn()
-}) 
+})
 
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
@@ -157,7 +157,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         m_page = 2;
         m_loaded = false;
         scrolled(window.location.href, '.chat_container', target = 0);
-        _this.querySelector(".tab_badge") ? (chats = document.body.querySelector(".new_unread_chats"),
+        chats = document.body.querySelector(".new_unread_chats");
+        chats.innerHTML ? (chats = document.body.querySelector(".new_unread_chats"),
                                              all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                              all_count = all_count*1,
                                              result = all_count - 1,

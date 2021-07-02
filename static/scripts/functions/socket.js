@@ -73,7 +73,7 @@ function case_u_post_create(uuid) {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           lenta.prepend(new_post);
-          document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null}}
+          document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
   link_.send()
 }}
 
@@ -87,13 +87,13 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
 
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          lenta = document.body.querySelector('.is_paginate');
+          lenta = document.body.querySelector('.is_chat_paginate');
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.querySelector("li").innerHTML)
           : lenta.prepend(new_post);
-          document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
+          document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
   link_.send()
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') == chat_id) {
@@ -109,7 +109,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
         new_post.innerHTML = elem;
         lenta.append(new_post);
         scrollToBottom("#scrolled");
-        document.body.querySelector(".message_empty") ? document.body.querySelector(".message_empty").style.display = "none" : null}}
+        document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
   link_.send()
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
