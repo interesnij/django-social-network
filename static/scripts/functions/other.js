@@ -1,5 +1,17 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function check_message_form_btn() {
+  input = document.body.querySelector(".message_text");
+  btn_block = input.nextElementSibling.nextElementSibling;
+  if (input.value.trim() == ""){
+     btn_block.querySelector("#voice_start_btn").style.display = "block";
+     btn_block.querySelector("#message_post_btn").style.display = "none";
+  } else {
+    btn_block.querySelector("#voice_start_btn").style.display = "none";
+    btn_block.querySelector("#message_post_btn").style.display = "block";
+  }
+}
+
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', url + item.getAttribute("data-uuid") + "/", true );

@@ -32,14 +32,7 @@ function hide_chat_console(is_favourite) {
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 
 on('#ajax', 'input', '.message_text', function() {
-  btn_block = this.nextElementSibling.nextElementSibling;
-  if (this.value.trim() == ""){
-     btn_block.querySelector("#voice_start_btn").style.display = "block";
-     btn_block.querySelector("#message_post_btn").style.display = "none";
-  } else {
-    btn_block.querySelector("#voice_start_btn").style.display = "none";
-    btn_block.querySelector("#message_post_btn").style.display = "block";
-  }
+  check_message_form_btn()
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {

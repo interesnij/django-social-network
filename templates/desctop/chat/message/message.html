@@ -19,7 +19,7 @@
         <div class="toggle_message pointer">
           {{ object.text|linebreaks }}
           {% if request.user.pk == object.creator.pk %}
-            {% if object|is_read:request.user.pk %}
+            {% if object.is_copy_reed %}
               (прочитано)
             {% else %}
               (не прочитано)
