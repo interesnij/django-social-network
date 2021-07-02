@@ -118,7 +118,7 @@ class UserVideoInfo(TemplateView):
 		from stst.models import VideoNumbers
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
-		self.video, Video.objects.get(pk=self.kwargs["video_pk"])
+		self.video = Video.objects.get(pk=self.kwargs["video_pk"])
 		if request.user.is_authenticated:
 			try:
 				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)
