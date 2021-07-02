@@ -98,6 +98,10 @@ class VideoList(models.Model):
         return self.video_list.filter(Q(type="PUB")|Q(type="PRI"))
     def get_items(self):
         return self.video_list.filter(type="PUB")
+    def get_2_items(self):
+        return self.video_list.filter(type="PUB")[:2]
+    def get_2_staff_items(self):
+        return self.video_list.filter(Q(type="PUB")|Q(type="PRI"))[:2]
     def get_manager_items(self):
         return self.video_list.filter(type="MAN")
     def count_items(self):
