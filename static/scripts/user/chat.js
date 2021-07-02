@@ -114,7 +114,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-  if (!form_post.querySelector(".message_text").value && !form.querySelector(".files_0")){
+  if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".files_0")){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").style.border = "1px #FF0000 solid";
     form_post.querySelector(".message_dropdown").style.border = "1px #FF0000 solid";
