@@ -207,7 +207,7 @@ class VideoWallCommentUserDelete(View):
 
 
 class UserVideoCreate(TemplateView):
-    new_video = None
+    new_video, template_name, form_post  = None, None, None
     def get(self,request,*args,**kwargs):
         self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
@@ -249,6 +249,7 @@ class UserVideoEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.form = VideoForm(request.POST,request.FILES, instance=self.video)
+
         if request.is_ajax() and self.form.is_valid() and request.user == self.user:
             video = self.form.save(commit=False)
             new_video = video.edit_video(
