@@ -13,9 +13,9 @@
 </ul>
 
 <ul id="my_playlist" style="display:none;" class="">
-	<li data-thumb-source="{{ object.image.url }}"
+	<li data-thumb-source="{{ object.get_image }}"
 			data-video-source="{{ object.uri }}"
-			data-poster-source="{{ object.image.url }}"
+			data-poster-source="{{ object.get_image }}"
 			data-video-uuid="{{ object.uuid }}" class="video_playlist_li">
 	<div data-video-short-description="">
 			<div style="width:100%">
