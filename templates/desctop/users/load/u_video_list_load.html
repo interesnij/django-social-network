@@ -4,17 +4,10 @@
 {% for object in object_list %}
 <div class="col-md-6 mb-3 load_pag {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}">
   <div>
-    {% if object.image %}
       <img class="image_fit_200 video_load_one pointer"
            video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
            video-pk="{{ object.pk }}"
-           src="{{ object.image.url }}" alt="img">
-    {% else %}
-    <img class="image_fit_200 video_load_one pointer"
-         video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
-         video-pk="{{ object.pk }}"
-         src="/static/images/no_img/list.jpg" alt="img">
-    {% endif %}
+           src="{{ object.get_image }}" alt="img">
   </div>
   <span class="item_attach_circle video_load_several"
        tooltip="Выбрать несколько"

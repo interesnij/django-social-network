@@ -392,6 +392,12 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def get_image(self, count):
+        if object.image:
+            return object.image.url
+        else:
+            return "/static/images/no_img/list.jpg"
+
     def plus_likes(self, count):
         self.like += count
         return self.save(update_fields=['like'])
