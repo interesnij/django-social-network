@@ -50,16 +50,16 @@ class Chat(models.Model):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk)
 
-    def get_recipients(self):
+    def get_recipients(self, exclude_creator_pk):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk).exclude(pk=self.creator.pk)
+        return User.objects.filter(chat_users__chat__pk=self.pk).exclude(pk=exclude_creator_pk)
 
     def get_members_ids(self):
         users = self.get_members().values('id')
         return [_user['id'] for _user in users]
 
-    def get_recipients_ids(self):
-        users = self.get_recipients().values('id')
+    def get_recipients_ids(self, exclude_creator_pk):
+        users = self.get_recipients(exclude_creator_pk).values('id')
         return [_user['id'] for _user in users]
 
     def get_members_count(self):
@@ -360,7 +360,7 @@ class Message(models.Model):
             creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
-        for recipient_id in current_chat.get_recipients_ids():
+        for recipient_id in current_chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
@@ -381,7 +381,7 @@ class Message(models.Model):
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
-        for recipient_id in chat.get_recipients_ids():
+        for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
@@ -400,7 +400,7 @@ class Message(models.Model):
         get_message_processing(creator_message, 'PUB')
         creator_message.create_socket()
 
-        for recipient_id in chat.get_recipients_ids():
+        for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
