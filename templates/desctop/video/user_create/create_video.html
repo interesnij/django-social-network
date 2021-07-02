@@ -27,7 +27,7 @@
                   <div class="form-group">
                     <label>Альбом</label>
                     <select name="list" id="id_list">
-                      {% for user_list in get_lists %}
+                      {% for user_list in video_lists %}
                         <option value="{{ user_list.pk }}" {% if user_list.pk == list.pk %}selected=""{% endif %}>Основной список</option>
                       {% endfor %}
                     </select>

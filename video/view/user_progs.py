@@ -217,7 +217,7 @@ class UserVideoCreate(TemplateView):
 
         context = super(UserVideoCreate,self).get_context_data(**kwargs)
         context["form_post"] = VideoForm()
-        context['get_lists'] = VideoList.get_user_staff_lists(self.request.user.pk)
+        context['video_lists'] = VideoList.get_user_staff_lists(self.request.user.pk)
         return context
 
     def post(self,request,*args,**kwargs):
