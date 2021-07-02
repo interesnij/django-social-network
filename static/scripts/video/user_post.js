@@ -143,7 +143,7 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 });
 
 on('#ajax', 'click', '#u_create_video_btn', function() {
-  form = document.querySelector("#u_create_video_form");
+  form = this.parentElement.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
 
   if (!form.querySelector("#id_title").value){
