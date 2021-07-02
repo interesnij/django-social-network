@@ -68,7 +68,7 @@ function get_normal_screen(){
   video_player.maxHeight = 659;
   video_player.hidePlaylist();
 }
-function load_video_playlist(video_saver_id, counter) {
+function load_video_playlist(video_saver_id) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
   style = styles[styles.length- 1];
@@ -390,7 +390,7 @@ function play_video_list(url, counter, video_pk){
   video_player_id = document.body.getAttribute('data-video');
   document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
   setTimeout(function() {
-    load_video_playlist(video_player_id + "a", counter);
+    load_video_playlist(video_player_id + "a");
     video_player.addListener(FWDUVPlayer.READY, onReady);
     function onReady(){
     console.log("video player ready");

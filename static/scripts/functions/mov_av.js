@@ -31,7 +31,7 @@ function get_audio_dop(){
   return settings.split(',')
 }
 
-function load_video_playlist(video_saver_id, counter) {
+function load_video_playlist(video_saver_id) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
   style = styles[styles.length- 1];
@@ -488,7 +488,7 @@ on('#ajax', 'click', '.music_list_item', function() {
           video_player_id = document.body.getAttribute('data-video');
           document.body.setAttribute('data-video', video_player_id + "a");
           setTimeout(function() {
-            load_video_playlist(video_player_id + "a", counter);
+            load_video_playlist(video_player_id + "a");
             video_player.addListener(FWDUVPlayer.READY, onReady);
             function onReady(){
             console.log("video player ready");
