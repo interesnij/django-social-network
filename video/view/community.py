@@ -30,28 +30,27 @@ class CommunityLoadVideoList(ListView):
 
 
 class CommunityVideoList(ListView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(pk=self.kwargs["pk"])
+	def get(self,request,*args,**kwargs):
+		self.video = Video.objects.get(pk=self.kwargs["pk"])
 		self.list = self.video.list
 		self.community = self.list.community
-        self.template_name = get_template_community_video(self.list, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        if request.user.is_staff_of_community(self.community.pk):
-            self.video_list = self.list.get_my_queryset()
-        else:
-            self.video_list = self.list.get_queryset()
-        return super(CommunityVideoList,self).get(request,*args,**kwargs)
+		self.template_name = get_template_community_video(self.list, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_staff_of_community(self.community.pk):
+			self.video_list = self.list.get_my_queryset(
+		else:
+			self.video_list = self.list.get_queryset()
+		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommunityVideoList,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['list'] = self.list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommunityVideoList,self).get_context_data(**kwargs)
+		context['community'] = self.community
+		context['list'] = self.list
+		return context
 
     def get_queryset(self):
-        video_list = self.video_list
-        return video_list
+		return self.video_list
 
 
 class VideoCommunityCommentList(ListView):

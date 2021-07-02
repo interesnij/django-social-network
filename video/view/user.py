@@ -27,27 +27,26 @@ class UserLoadVideoList(ListView):
 
 
 class UserVideoList(ListView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(pk=self.kwargs["pk"])
+	def get(self,request,*args,**kwargs):
+		self.video = Video.objects.get(pk=self.kwargs["pk"])
 		self.list = self.video.list
-        if self.user == request.user:
-            self.video_list = self.list.get_staff_items()
-        else:
-            self.video_list = self.list.get_items()
-        self.template_name = get_template_user_video(self.list, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserVideoList,self).get(request,*args,**kwargs)
+		if self.user == request.user:
+			self.video_list = self.list.get_staff_items()
+		else:
+			self.video_list = self.list.get_items()
+		self.template_name = get_template_user_video(self.list, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserVideoList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserVideoList,self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['list'] = self.list
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserVideoList,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['list'] = self.list
+		return context
 
-    def get_queryset(self):
-        video_list = self.video_list
-        return video_list
+	def get_queryset(self):
+		return self.video_list
 
 
 class VideoUserCommentList(ListView):
