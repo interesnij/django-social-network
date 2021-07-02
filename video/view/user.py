@@ -32,7 +32,7 @@ class UserVideoList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.video = Video.objects.get(pk=self.kwargs["pk"])
 		self.list = self.video.list
-		if self.user == request.user:
+		if self.video.creator.pk == request.user.pk:
 			self.video_list = self.list.get_staff_items()
 		else:
 			self.video_list = self.list.get_items()
