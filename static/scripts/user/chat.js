@@ -165,8 +165,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         m_loaded = false;
         scrolled(window.location.href, '.chat_container', target = 0);
         chats = document.body.querySelector(".new_unread_chats");
-        chats.innerHTML ? (chats = document.body.querySelector(".new_unread_chats"),
-                                             all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
+        chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                              all_count = all_count*1,
                                              result = all_count - 1,
                                              result > 0 ? chats.querySelector(".tab_badge").innerHTML = result : chats.innerHTML = '',
