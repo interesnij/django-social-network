@@ -170,7 +170,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1');
-    if (span1.classList.contains(document.body.querySelector(".pk_saver").getAttribute("data-uuid"))){
+    if (span1.classList.contains(document.body.querySelector(".uuid_saver").getAttribute("data-uuid"))){ 
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
