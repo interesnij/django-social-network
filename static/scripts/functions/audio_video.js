@@ -497,7 +497,7 @@ on('#ajax', 'click', '.music_list_item', function() {
             info_video = document.body.querySelector("#info_video");
             if (info_video.innerHTML == "" || info_video.getAttribute("video-pk") != video_pk){
               list_load(info_video, "/video/user/info/" + pk + "/" + video_pk + "/");
-              info_video.setAttribute("data-uuid", uuid);
+              info_video.setAttribute("data-pk", pk);
               console.log("Воспроизводится ролик № : " + video_pk)
             }
             }
