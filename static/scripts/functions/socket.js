@@ -189,10 +189,10 @@ webSocket.listen(function (event) {
         break;
 
     case "message":
-      //if (event.creator_id != request_user_id){
+      if (event.creator_id != request_user_id){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
         if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id);}
-      //}
+      }
       break;
 
     default:

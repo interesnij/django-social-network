@@ -114,6 +114,12 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
+  if (!form_post.querySelector(".message_text").value && !form.querySelector(".files_0")){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form.querySelector(".message_text").style.border = "1px #FF0000 solid";
+    form.querySelector(".message_dropdown").style.border = "1px #FF0000 solid";
+    return
+  };
   form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
@@ -130,9 +136,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    new_post.querySelector(".media") ? (message_load.append(new_post),
-                                       message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null)
-                                    :  toast_error("Нужно написать или прикрепить что-нибудь!");
+    message_load.append(new_post);
+    message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
   }};
 
   link_.send(form_data);
