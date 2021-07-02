@@ -116,8 +116,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".files_0").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
-    form_post.querySelector(".message_text").classList.add("red");
-    form_post.querySelector(".message_dropdown").classList.add("red");
+    form_post.querySelector(".message_text").classList.add("border_red");
+    form_post.querySelector(".message_dropdown").classList.add("border_red");
     return
   };
   form_data = new FormData(form_post);
@@ -138,8 +138,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
     new_post.innerHTML = elem;
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
-    form_post.querySelector(".message_text").classList.remove("red");
-    form_post.querySelector(".message_dropdown").classList.remove("red");
+    form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_dropdown").classList.remove("border_red");
   }};
 
   link_.send(form_data);

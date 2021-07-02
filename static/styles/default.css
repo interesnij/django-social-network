@@ -1,6 +1,9 @@
 #notification {
   position: relative;
 }
+.border_red {
+  border: 1px #FF0000 solid
+}
 
 .small_badge {
   width: 7px !important;
