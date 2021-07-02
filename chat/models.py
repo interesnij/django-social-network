@@ -125,7 +125,7 @@ class Chat(models.Model):
     def get_preview_message(self, user_id):
         first_message, is_read, creator_figure = self.get_first_message(user_id), '', ''
         if user_id == first_message.creator.pk and not first_message.is_copy_reed():
-            is_read = '<span style="font-size: 80%;" class="tab_badge badge-info"></span>'
+            is_read = '<span class="tab_badge badge-info small_badge"></span>'
         if self.is_private():
             member = self.get_chat_member(user_id)
             if self.image:

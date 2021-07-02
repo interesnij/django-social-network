@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.small_badge {
+  width: 7px !important;
+  height: 7px !important;
+  padding: 0 !important;
+}
 .custom-control {
   cursor: pointer;
 }
