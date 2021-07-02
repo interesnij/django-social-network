@@ -215,9 +215,9 @@ def get_comment_attach(comment, user):
     return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
-def get_post_edit(post, user):
+def get_comment_edit(comment, user):
     block = ''
-    for item in post.attach.split(","):
+    for item in comment.attach.split(","):
         if item[:3] == "pho":
             #try:
             from gallery.models import Photo

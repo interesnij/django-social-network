@@ -235,7 +235,11 @@ def get_post_edit(post, user):
             try:
                 from video.models import Video
                 video = Video.objects.get(query, pk=item[3:])
-                block = ''.join([block, '<div class="col-md-6"><span class="video_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="vid', str(video.pk), '"></span><img class="image_fit" src="', video.image.url, '"><span class="video_icon_play_v2 u_video_detail" video-pk="', str(video.pk), '"></span></div>'])
+                if photo.community:
+                    _class = "c_video_detail"
+                else:
+                    _class = "u_video_detail"
+                block = ''.join([block, '<div class="col-md-6"><span class="video_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="vid', str(video.pk), '"></span><img class="image_fit" src="', video.image.url, '"><span class="video_icon_play_v2 "', _class, '" video-pk="', str(video.pk), '"></span></div>'])
             except:
                 pass
         elif item[:3] == "mus":
@@ -257,18 +261,24 @@ def get_post_edit(post, user):
                 from survey.models import Survey
                 survey = Survey.objects.get(query, pk=item[3:])
                 _class, voted, answers, creator = "", "", "", survey.creator
+                if survey.commuity:
+                    survey_vote = "c_survey_vote "
+                    survey_detail = "c_survey_detail "
+                else:
+                    survey_vote = "u_survey_vote "
+                    survey_detail = "u_survey_detail "
                 if survey.is_time_end():
                     time = "<p>Время голосования вышло</p>"
                 else:
                     time = "<p>До " + str(survey.time_end) + "</p>"
                     if user.is_authenticated and not survey.is_user_voted(user.pk):
-                        _class = " pointer u_survey_vote " + str(survey.is_multiple)
+                        _class = " pointer " + survey_vote + str(survey.is_multiple)
                 if survey.image:
                     image = '<img src="' + survey.image.url + '" alt="user image">'
                 else:
                     image = ""
                 if survey.is_have_votes():
-                    voters = '<span class="u_survey_detail pointer">'
+                    voters = '<span class="' + survey_detail + ' pointer">'
                     for user in survey.get_6_users():
                         if user.s_avatar:
                             img = '<img src="' + user.s_avatar.url + '" style="width: 40px;border-radius:40px;" alt="image">'
@@ -281,37 +291,53 @@ def get_post_edit(post, user):
                     if answer.is_user_voted(user.pk):
                         voted = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
                     answers = ''.join([answers, '<div class="lite_color answer_style', _class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;">', voted, str(answer.get_procent()), '%</span></div>'])
-                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><a class="underline ajax" href="/users/', creator.pk, '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
+                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="', survey_detail, 'pointer">', survey.title, '</h4><a class="underline ajax" href="/users/', creator.pk, '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
             except:
                 pass
         elif item[:3] == "lmu":
             try:
                 from music.models import SoundList
                 playlist = SoundList.objects.get(list_query, pk=item[3:])
-                block = ''.join([block, '<div class="folder" playlist-pk="', str(playlist.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lmu', str(playlist.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_playlist pointer"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 u_load_playlist pointer"><a class="nowrap">', playlist.name, ' (', str(playlist.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])
+                if playlist.commuity:
+                    _class = "c_load_playlist "
+                else:
+                    _class = "u_load_playlist "
+                block = ''.join([block, '<div class="folder" playlist-pk="', str(playlist.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lmu', str(playlist.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_playlist pointer"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0', _class, ' pointer"><a class="nowrap">', playlist.name, ' (', str(playlist.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])
             except:
                 pass
         elif item[:3] == "ldo":
             try:
                 from docs.models import DocList
                 list = DocList.objects.get(list_query, pk=item[3:])
+                if list.commuity:
+                    _class = "c_load_doc_list "
+                else:
+                    _class = "u_load_doc_list "
                 image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
-                block = ''.join([block, '<div class="folder" doclist-pk="', str(list.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="ldo', str(list.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_doc_list pointer">', image, '</div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 u_load_doc_list pointer"><a class="nowrap">', list.name, ' (', str(list.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])
+                block = ''.join([block, '<div class="folder" doclist-pk="', str(list.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="ldo', str(list.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_doc_list pointer">', image, '</div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 ', _class, ' pointer"><a class="nowrap">', list.name, ' (', str(list.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])
             except:
                 pass
         elif item[:3] == "lph":
             try:
                 from gallery.models import PhotoList
                 list = PhotoList.objects.get(pk=item[3:])
-                block = ''.join([block, '<div class="col-sm-6 col-md-4 bg-dark position-relative text-center big_mobile_element col-md-6" photolist-pk="', str(list.pk), '"><figure class="background-img"><img src="',list.get_cover_photo(), '"></figure><div class="container p-3"><h6 class="u_load_photo_list text-white pointer mb-2 nowrap">',list.name, '</h6><span class="photo_attach_list_remove underline pointer text-white">Открепить</span><hr class="my-3"><a class="u_load_photo_list pointer text-white">', list.count_items_ru(), '</a></div><span><input type="hidden" name="attach_items" value="lph', str(list.pk), '"></span></div>'])
+                if list.commuity:
+                    _class = "c_load_photo_list "
+                else:
+                    _class = "u_load_photo_list "
+                block = ''.join([block, '<div class="col-sm-6 col-md-4 bg-dark position-relative text-center big_mobile_element col-md-6" photolist-pk="', str(list.pk), '"><figure class="background-img"><img src="',list.get_cover_photo(), '"></figure><div class="container p-3"><h6 class="u_load_photo_list text-white pointer mb-2 nowrap">',list.name, '</h6><span class="photo_attach_list_remove underline pointer text-white">Открепить</span><hr class="my-3"><a class="', _class, '  pointer text-white">', list.count_items_ru(), '</a></div><span><input type="hidden" name="attach_items" value="lph', str(list.pk), '"></span></div>'])
             except:
                 pass
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoList
                 list = VideoList.objects.get(list_query, pk=item[3:])
+                if list.commuity:
+                    _class = "c_load_video_list "
+                else:
+                    _class = "u_load_video_list "
                 image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
-                block = ''.join([block, '<div class="folder" videolist-pk="', str(list.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lvi', str(list.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_video_list pointer">', image, '</div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 u_load_video_list pointer"><a class="nowrap">', list.name, ' (', str(list.count_items()), ')</a></p></div><small class="file-accessed pointer video_attach_list_remove underline">Открепить</small></div></div>'])
+                block = ''.join([block, '<div class="folder" videolist-pk="', str(list.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lvi', str(list.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 u_load_video_list pointer">', image, '</div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 ', _class, ' pointer"><a class="nowrap">', list.name, ' (', str(list.count_items()), ')</a></p></div><small class="file-accessed pointer video_attach_list_remove underline">Открепить</small></div></div>'])
             except:
                 pass
     return block
