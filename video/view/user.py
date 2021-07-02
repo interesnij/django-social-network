@@ -121,9 +121,9 @@ class UserVideoInfo(TemplateView):
 			except:
 				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, device=request.user.get_device())
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user_item(self.post, "video/u_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.video, "video/u_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoInfo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -150,9 +150,9 @@ class UserVideoDetail(TemplateView):
 				else:
 					VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user_item(self.post, "video/u_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.video, "video/u_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 
 	def get_context_data(self,**kwargs):
 		context = super(UserVideoDetail,self).get_context_data(**kwargs)

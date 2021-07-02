@@ -392,9 +392,9 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
-    def get_image(self, count):
-        if object.image:
-            return object.image.url
+    def get_image(self):
+        if self.image:
+            return self.image.url
         else:
             return "/static/images/no_img/list.jpg"
 
