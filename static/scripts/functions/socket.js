@@ -82,6 +82,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
 
   if (document.body.querySelector(".chat_list_container")) {
     // если в момент получения нового сообщения получатель на странице списка чатов
+    console.log("Вы на странице сообщений");
   link_.open('GET', "/chat/user_progs/load_message/" + message_uuid + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -98,6 +99,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') == chat_id) {
     // если в момент получения нового сообщения получатель на странице чата, в котором ему написалм
+    console.log("Вы на странице чата");
     link_.open('GET', "/chat/user_progs/load_chat_message/" + message_uuid + "/", true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -113,6 +115,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_.send()
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
+  console.log("Вы на не в сообщениях");
       chats = document.body.querySelector(".new_unread_chats");
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
