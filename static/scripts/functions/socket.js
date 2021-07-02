@@ -79,6 +79,7 @@ function case_u_post_create(uuid) {
 
 function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  console.log(chat_id);
 
   if (document.body.querySelector(".chat_list_container")) {
     // если в момент получения нового сообщения получатель на странице списка чатов
@@ -115,7 +116,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_.send()
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
-  console.log("Вы на не в сообщениях");
+  console.log("Вы не в сообщениях");
       chats = document.body.querySelector(".new_unread_chats");
       chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       tab_span = document.createElement("span");
