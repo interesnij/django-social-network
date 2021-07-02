@@ -387,6 +387,7 @@ function play_video_list(url, counter, pk, video_pk){
   loader = document.getElementById("video_loader");
   open_fullscreen(url, loader);
 
+  video_player_id = document.body.getAttribute('data-video');
   document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
   setTimeout(function() {
     load_video_playlist(video_player_id + "a", counter);
