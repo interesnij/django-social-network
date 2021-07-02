@@ -488,7 +488,7 @@ class Video(models.Model):
 
         _list.count += 1
         _list.save(update_fields=["count"])
-        video = cls.objects.create(creator=creator,order=_list.count,list=_list, title=title,file=file,uri=uri,description=description, comments_enabled=comments_enabled, votes_on=votes_on)
+        video = cls.objects.create(creator=creator,order=_list.count,list=_list,title=title,file=file,uri=uri,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
         if community:
             community.plus_videos(1)
         else:
