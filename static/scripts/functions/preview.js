@@ -306,7 +306,7 @@ on('#ajax', 'click', '.photo_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
 });
@@ -318,7 +318,7 @@ on('#ajax', 'click', '.doc_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
@@ -331,7 +331,7 @@ on('#ajax', 'click', '.video_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
 });
@@ -343,7 +343,7 @@ on('#ajax', 'click', '.music_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
 });
@@ -363,7 +363,7 @@ on('#ajax', 'click', '.good_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
 });
@@ -375,7 +375,7 @@ on('#ajax', 'click', '.article_preview_delete', function() {
   } else if (block.classList.contains("img_block")){
     remove_file_dropdown(); is_full_dropdown()
   } else if (block.classList.contains("message_attach_block")){
-    remove_file_message_attach(); is_full_message_attach()
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
   }
   parent.remove();
 });

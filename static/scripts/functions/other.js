@@ -11,6 +11,14 @@ function check_message_form_btn() {
     btn_block.querySelector("#message_post_btn").style.display = "block";
   }
 }
+function show_message_form_send_btn() {
+  document.body.querySelector("#voice_start_btn").style.display = "none";
+  document.body.querySelector("#message_post_btn").style.display = "block";
+}
+function show_message_form_voice_btn() {
+  document.body.querySelector("#voice_start_btn").style.display = "block";
+  document.body.querySelector("#message_post_btn").style.display = "none";
+}
 
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
