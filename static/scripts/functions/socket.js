@@ -79,7 +79,6 @@ function case_u_post_create(uuid) {
 
 function case_u_message_create(request_user_id, chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  console.log(chat_id);
 
   if (document.body.querySelector(".chat_list_container")) {
     // если в момент получения нового сообщения получатель на странице списка чатов
@@ -98,7 +97,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
           document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
   link_.send()
 }
-  else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('data-pk') == chat_id) {
+  else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('chat-pk') == chat_id) {
     // если в момент получения нового сообщения получатель на странице чата, в котором ему написалм
     console.log("Вы на странице чата");
     link_.open('GET', "/chat/user_progs/load_chat_message/" + message_uuid + "/", true);
