@@ -2,7 +2,7 @@
 {% block title %}Сообщения{% endblock %}
 {% load message %}
 {% block content %}
- {{ chat.get_recipients_ids }} 
+ {% for user in chat.get_recipients}{{ user.get_full_name }}, {% endfor %}
 <div class="container main-container">
 <div class="row">
     <div class="col-md-8 mt-3">

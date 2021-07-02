@@ -54,7 +54,7 @@ class Chat(models.Model):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk).exclude(chat_users__chat__pk=self.creator.pk)
 
-    def get_members_ids(self):
+    def get_members_ids(self): 
         users = self.get_members().values('id')
         return [_user['id'] for _user in users]
 
