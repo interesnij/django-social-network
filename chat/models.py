@@ -300,7 +300,7 @@ class Message(models.Model):
         """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
         Зачем это - при отрисовке первого сообщения правильно выводить кол-во непрочитанных. """
         for copy in self.message_copy.filter(copy=self).all():
-            if not copy.unread and not copy.creator.pk == user_id:
+            if not copy.unread:
                 return True
         return False
 
