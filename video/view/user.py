@@ -36,7 +36,7 @@ class UserVideoList(ListView):
 			self.video_list = self.list.get_staff_items()
 		else:
 			self.video_list = self.list.get_items()
-		self.template_name = get_template_user_video(self.list, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user_video(self.list, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
