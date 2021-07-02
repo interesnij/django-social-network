@@ -360,7 +360,6 @@ class Message(models.Model):
         else:
             creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
-        creator_message.create_socket()
         for recipient_id in current_chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
@@ -380,7 +379,6 @@ class Message(models.Model):
         else:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
-        creator_message.create_socket()
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
@@ -399,7 +397,6 @@ class Message(models.Model):
         else:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
-        creator_message.create_socket()
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
