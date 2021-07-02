@@ -434,15 +434,19 @@ class Video(models.Model):
         return naturaltime(self.created)
 
     def likes(self):
+        from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__gt=0)
 
     def window_likes(self):
+        from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__gt=0)[0:6]
 
     def dislikes(self):
+        from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__lt=0)
 
     def window_dislikes(self):
+        from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__lt=0)[0:6]
 
     def visits_count_ru(self):
