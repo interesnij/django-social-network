@@ -125,7 +125,7 @@ class UserLoadMusicList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.playlist.get_items().order_by('-created')
+		return self.playlist.get_items()
 
 
 class UserLoadDoc(ListView):
@@ -169,7 +169,7 @@ class UserLoadArticle(ListView):
 	paginate_by = 15
 
 	def get_queryset(self):
-		return self.request.user.get_articles().order_by('-created')
+		return self.request.user.get_articles()
 
 class UserLoadSurvey(ListView):
 	template_name, paginate_by = None, 15
