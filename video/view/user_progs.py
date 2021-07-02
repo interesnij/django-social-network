@@ -207,7 +207,7 @@ class VideoWallCommentUserDelete(View):
 
 
 class UserVideoCreate(TemplateView):
-    new_video, template_name, form_post  = None, None, None
+    template_name, form_post  = None, None
     def get(self,request,*args,**kwargs):
         self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
@@ -226,8 +226,8 @@ class UserVideoCreate(TemplateView):
         self.form_post = VideoForm(request.POST, request.FILES)
         if request.is_ajax() and self.form_post.is_valid():
             video = self.form_post.save(commit=False)
-            self.new_video = video.create_video(creator=request.user,title=new_video.title,file=new_video.file,uri=new_video.uri,description=new_video.description,list=new_video.list,comments_enabled=new_video.comments_enabled,votes_on=new_video.votes_on,is_public=request.POST.get("is_public"),community=None)
-            return render_for_platform(request, 'video/video_new/video.html',{'object': self.new_video})
+            new_video = video.create_video(creator=request.user,title=video.title,file=video.file,uri=video.uri,description=video.description,list=video.list,comments_enabled=video.comments_enabled,votes_on=video.votes_on,is_public=request.POST.get("is_public"),community=None)
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
 
