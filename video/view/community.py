@@ -49,7 +49,7 @@ class CommunityVideoList(ListView):
 		context['list'] = self.list
 		return context
 
-    def get_queryset(self):
+	def get_queryset(self):
 		return self.video_list
 
 
