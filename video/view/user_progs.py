@@ -1,4 +1,3 @@
-
 from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import Video, VideoComment, VideoList
@@ -215,18 +214,24 @@ class UserVideoCreate(TemplateView):
 		return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+        from video.models import VideoList
+        from video.forms import VideoForm
+
 		context = super(UserVideoCreate,self).get_context_data(**kwargs)
 		context["form_post"] = VideoForm()
+        context['get_lists'] = VideoList.get_user_staff_lists(self.request.user.pk)
 		return context
 
 	def post(self,request,*args,**kwargs):
+        from video.forms import VideoForm
+
 		self.form_post = VideoForm(request.POST, request.FILES)
 		if request.is_ajax() and self.form_post.is_valid():
 			video = self.form_post.save(commit=False)
 			new_video = video.create_video(
                                             creator=request.user,
                                             title=new_video.title,
-                                            file=new_video.file,
+                                            #file=new_video.file,
                                             uri=new_video.uri,
                                             description=new_video.description,
                                             list=new_video.list,
