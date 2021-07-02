@@ -212,7 +212,7 @@ class UserVideoCreate(TemplateView):
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        from video.models import VideoLis
+        from video.models import VideoList
         from video.forms import VideoForm
 
         context = super(UserVideoCreate,self).get_context_data(**kwargs)
