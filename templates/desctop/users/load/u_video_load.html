@@ -1,24 +1,49 @@
 
-<style>
-  .user_video_create_attach {
-    border: 1px dashed green;
-    padding: 5px;
-    text-align: center;}
-  .user_video_create_attach:hover {cursor: pointer}
-</style>
-
 <div class="card mb-4">
-  <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">Прикрепление видеозаписей</h5>
+  <div class="row">
+    <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
+        <h5 class="btn btn-sm border u_video_add" style="width: -webkit-fill-available;">Добавить видеозапись</h5>
+    </div>
+    <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
+    </div>
   </div>
-  <div class="card-body border-bottom">
-<div class="row">
-  <div class="col-md-8">
-  <h4 class="user_video_create_attach mb-3 border centered">Создать видео</h4>
-{% if object_list %}
-  <h4 class="attach_video_list mb-3 border centered pointer" data-pk="{{ list.pk }}" style="padding:5px">Прикрепить альбом</h4>
 
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="video_load_container" data-link="/users/load/u_video_load/">
+  <div class="card-body">
+    <div class="media mt-3" style="padding-left: 7px;">
+        <h5 class="mt-1" style="flex: 1;">Видеоальбомы</h5>
+    </div>
+    <div class="row no-gutters mb-2" style="overflow-x: auto;">
+        <div class="col-12">
+            <ul style="width:max-content;list-style: none;">
+                {% for object in get_lists %}
+                <li class="list_item">
+                    <div class="card file-manager-item folder cover_block border" data-uuid="{{ object.uuid }}">
+                        <div class="card-img-top file-logo-wrapper">
+                          <span>
+                          <svg class="load_attach_video_list pointer list_toggle list_svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          </span>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="content-wrapper">
+                                <p class="card-text file-name mb-0 list_name load_attach_video_list pointer list_toggle" style="text-align: left;" data-name="{{ object.name }}">{{ object.name }}</p>
+                                <p class="card-text file-size mb-0 count">{{ object.count_items }}</p>
+                            </div>
+                            {% if object.is_not_empty %}
+                            <small class="file-accessed pointer underline video_attach_list" data-pk="{{ object.pk }}">Прикрепить список</small>
+                            {% endif %}
+                          </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<span class="load_block">
+{% if object_list %}
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_good_load/">
 {% for object in object_list %}
 <div class="col-md-6 mb-3 load_pag {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}">
   <div>
@@ -43,36 +68,14 @@
     <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
   </div>
 </div>
-{% endfor %}
-</div>
+  {% endfor %}
 
+</div>
 {% else %}
 <div class="card mb-3 centered">
-  <div class="card-body">
-  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-  </div>
-  <h6 style="text-align: center;margin: 20px;"> В основном списке нет видео.</h6>
+  <h5 style="text-align: center;margin: 20px;"> Список видеозаписей пустой.</h5>
 </div>
 {% endif %}
-
-</div>
-<div class="col-md-4">
-  {% if is_have_lists %}
-  <div class="card">
-      <div class="nav flex-column nav-pills faqnav">
-        <h6 style="margin-bottom:15px">Видеоальбомы</h6>
-        <a>Основной видеоальбом</a>
-        {% for object in get_lists %}
-          <a class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}">
-            {{ object.name }}
-          </a>
-        {% endfor %}
-      </div>
-  </div>
-  {% else %}
-    <p style="text-align: center;margin: 20px;"> Списков видео нет.</p>
-  {% endif %}
-</div>
-</div>
+</span>
 </div>
 </div>

@@ -1,28 +1,6 @@
-
-<style>
-  .user_video_create_attach {
-    border: 1px dashed green;
-    padding: 5px;
-    text-align: center;}
-  .user_video_create_attach:hover {cursor: pointer}
-</style>
-
-<div class="card mb-4">
-  <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">
-      <a data-href="{% url 'u_video_load' %}" class="pointer create_ajax underline">
-      Прикрепление видеозаписей
-    </a>
-      / {{ list.name }} </h5>
-  </div>
-  <div class="card-body border-bottom">
-<div class="row">
-  <div class="col-lg-8">
-<h4 class="user_video_create_attach mb-3 border centered">Создать видео</h4>
-
+<span class="load_block">
 {% if object_list %}
-<h4 class="attach_video_list mb-3 border centered pointer" data-pk="{{ list.pk }}" style="padding:5px">Прикрепить альбом</h4>
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="video_load_container" data-link="/users/load/u_video_list_load/{{ list.uuid }}/">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_video_load/">
 {% for object in object_list %}
 <div class="col-md-6 mb-3 load_pag {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}">
   <div>
@@ -47,34 +25,12 @@
     <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
   </div>
 </div>
-{% endfor %}
-</div>
+  {% endfor %}
 
+</div>
 {% else %}
 <div class="card mb-3 centered">
-  <div class="card-body">
-  <svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-  </div>
-  <h6 style="text-align: center;margin: 20px;"> В списке нет видео.</h6>
+  <h5 style="text-align: center;margin: 20px;"> Список видеозаписей пустой.</h5>
 </div>
 {% endif %}
-
-</div>
-<div class="col-md-4">
-  {% if is_have_lists %}
-  <div class="card">
-      <div class="nav flex-column nav-pills faqnav">
-        <h6 style="margin-bottom:15px">Видеоальбомы</h6>
-        <a class="create_ajax pointer" data-href="{% url 'u_video_load' %}">Основной видеоальбом</a>
-        {% for object in get_lists %}
-          <a {% if object.pk != list.pk %}class="create_ajax pointer" data-href="{% url 'u_video_list_load' uuid=object.uuid %}"{% endif %}>
-            {{ object.name }}
-          </a>
-        {% endfor %}
-      </div>
-  </div>
-  {% endif %}
-</div>
-</div>
-</div>
-</div>
+</span>
