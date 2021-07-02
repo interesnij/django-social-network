@@ -87,7 +87,7 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
 
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          lenta = document.body.querySelector('.is_chat_paginate');
+          lenta = document.body.querySelector('.is_paginate');
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
