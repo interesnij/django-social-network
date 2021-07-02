@@ -30,7 +30,11 @@
                   </div>
                   <div class="form-group">
                     <label>Альбом</label>
-                    {{ form_post.list }}
+                    <select name="list" id="id_list">
+                      {% for user_list in get_lists %}
+                        <option value="{{ user_list.pk }}" if {% user_list.pk == list.pk %}selected=""{% endif %}>Основной список</option>
+                      {% endfor %}
+                    </select>
                   </div>
                 </div>
               </div>
