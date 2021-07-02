@@ -104,23 +104,21 @@ on('#ajax', 'click', '.u_video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
   pk = this.getAttribute('data-pk');
-  play_video_list("/video/user/list/" + pk + "/", counter, pk, video_pk) 
+  play_video_list("/video/user/list/" + pk + "/", counter, pk, video_pk)
 });
 
 on('#ajax', 'click', '.u_post_video', function() {
-  uuid = this.getAttribute('data-uuid');
-  pk = this.getAttribute("data-pk");
   video_pk = this.getAttribute("video-pk");
+  uuid = this.parentElement.parentElement.parentElement.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_post/" + pk + "/" + uuid + "/", counter, pk, video_pk)
+  play_video_list("/video/user/list_post/" + uuid + "/", counter, pk, video_pk)
 });
 
 on('#ajax', 'click', '.u_play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
-  pk = this.getAttribute("data-pk");
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_post_comment/" + pk + "/" + comment_pk + "/", counter, pk, video_pk);
+  play_video_list("/video/user/list_post_comment/" + video_pk + "/", counter, pk, video_pk);
 });
 
 on('body', 'click', '.video_fullscreen_resize', function() {

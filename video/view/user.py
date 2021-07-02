@@ -80,13 +80,13 @@ class UserPostVideoList(TemplateView):
 		from posts.models import Post
 		from common.template.post import get_template_user_post
 
-		self.post, self.user = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.video_list = self.post.get_attach_videos(), self.template_name, get_template_user_post(self.post, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserPostVideoList,self).get_context_data(**kwargs)
-		context['user'], context['object_list'] = self.user, self.video_list
+		context['object_list'] = self.video_list
 		return context
 
 
@@ -97,13 +97,17 @@ class UserPostCommentVideoList(TemplateView):
 		from posts.models import PostComment
 		from common.template.post import get_template_user_post
 
-		self.comment, self.user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
-		self.video_list, self.template_name = self.comment.get_attach_videos(), get_template_user_post(self.comment.post, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
+		if self.comment.parent:
+			post = self.comment.parent.post
+		else:
+			post = self.comment.post
+		self.video_list, self.template_name = self.comment.get_attach_videos(), get_template_user_post(post, "video/u_list_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostCommentVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserPostCommentVideoList,self).get_context_data(**kwargs)
-		context['user'], context['object_list'] = self.user, self.video_list
+		context['object_list'] = self.video_list
 		return context
 
 

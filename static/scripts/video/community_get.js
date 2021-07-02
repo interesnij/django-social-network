@@ -115,3 +115,10 @@ on('#ajax', 'click', '.c_video_list_detail', function() {
   pk = this.getAttribute('data-pk');
   play_video_list("/video/community/list/" + pk + "/", counter, pk, video_pk)
 });
+
+on('#ajax', 'click', '.c_post_video', function() {
+  video_pk = this.getAttribute("video-pk");
+  uuid = this.parentElement.parentElement.parentElement.getAttribute("video-pk");
+  counter = this.getAttribute('video-counter') - 1;
+  play_video_list("/video/community/list_post/" + uuid + "/", counter, pk, video_pk)
+});
