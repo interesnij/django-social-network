@@ -145,12 +145,6 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = document.querySelector("#u_create_video_form");
   form_data = new FormData(form);
-  lists = form.querySelector("#id_list");
-  selectedOptions = lists.selectedOptions;
-  val = false;
-  for (var i = 0; i < selectedOptions.length; i++) {
-    if(selectedOptions[i].value) {val = true}
-  }
 
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
@@ -161,16 +155,13 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
   } else if (!form.querySelector("#id_image").value){
     form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
     toast_error("Фотография на обложку обязательна!")
-  } else if (!val){
+  } else if (!form.querySelector("#id_list").value){
     form.querySelector("#id_list").style.border = "1px #FF0000 solid";
-    toast_error("Выберите альбом!");
-    return
+    toast_error("Выберите список!")
   } else {this.disabled = true}
 
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
+  link_.open( 'POST', "/video/user_progs/create_video/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -178,8 +169,8 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    span1 = response.querySelector('.span1')
-    if (span1.classList.contains(uuid)){
+    span1 = response.querySelector('.span1');
+    if (span1.classList.contains(document.body.querySelector(".pk_saver").getAttribute("data-uuid"))){
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
@@ -188,8 +179,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
       toast_info("Видео создано!")
     }
     close_create_window();
-  }};
-
+  } else {this.disabled = false}};
   link_.send(form_data);
 });
 
