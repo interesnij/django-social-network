@@ -116,8 +116,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").value && !form.querySelector(".files_0")){
     toast_error("Напишите или прикрепите что-нибудь");
-    form.querySelector(".message_text").style.border = "1px #FF0000 solid";
-    form.querySelector(".message_dropdown").style.border = "1px #FF0000 solid";
+    form_post.querySelector(".message_text").style.border = "1px #FF0000 solid";
+    form_post.querySelector(".message_dropdown").style.border = "1px #FF0000 solid";
     return
   };
   form_data = new FormData(form_post);
