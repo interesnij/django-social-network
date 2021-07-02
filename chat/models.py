@@ -96,7 +96,7 @@ class Chat(models.Model):
         #query.add(~Q(creator_id=user_id, type__contains="_"), Q.AND)
         #count = Message.objects.filter(query).values("pk").count()
         messages = Message.objects.filter(query)
-        if count:
+        if messages:
             #return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
             return messages
         else:
