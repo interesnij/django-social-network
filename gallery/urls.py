@@ -3,6 +3,7 @@ from gallery.views import PhotoDetail
 
 urlpatterns=[
 	url(r'^photo/(?P<pk>\d+)/$', PhotoDetail.as_view(), name="photo_detail"),
+	url(r'^message_photo/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', MessagePhotoDetail.as_view(), name="message_photo_detail"), 
 
 	url(r'^user/', include('gallery.url.user')),
 	url(r'^community/', include('gallery.url.community')),
