@@ -146,6 +146,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
+  e.preventDefault();
   if (e.keyCode == 13) {
   form_post = this.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".files_0").firstChild){
