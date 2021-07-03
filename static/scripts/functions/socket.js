@@ -123,7 +123,9 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
       chats.classList.add("tab_badge", "badge-success");
       chats.innerHTML = "";tab_span.append(count);chats.append(count);
   }
-  new Audio('/static/audio/apple/message.mp3').play()
+  audio = new Audio('/static/audio/apple/message.mp3');
+  audio.volume = 0.5;
+  audio.play()
 }
 
 
