@@ -51,7 +51,7 @@ class MessagePhotoDetail(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
-		
+
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.message.get_attach_photos()
@@ -74,10 +74,10 @@ class MessagePhotoDetail(TemplateView):
 				self.template_name = get_template_user_item(self.photo, "chat/attach/photo/u/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/u/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PhotoDetail,self).get(request,*args,**kwargs)
+		return super(MessagePhotoDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(PhotoDetail,self).get_context_data(**kwargs)
+		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["message"] = self.message
 		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
