@@ -146,6 +146,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function() {
+  if (e.keyCode == 13) {
   form_post = this.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".files_0").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
@@ -176,7 +177,7 @@ on('#ajax', 'keydown', '.message_text', function() {
   }};
 
   link_.send(form_data);
-});
+}});
 
 on('#ajax', 'click', '.chat_ajax', function(e) {
   _this = this;
