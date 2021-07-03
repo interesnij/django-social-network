@@ -145,6 +145,39 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'keydown', '.message_text', function() {
+  form_post = this.parentElement.parentElement;
+  if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".files_0").firstChild){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form_post.querySelector(".message_text").classList.add("border_red");
+    form_post.querySelector(".message_dropdown").classList.add("border_red");
+    return
+  };
+  form_data = new FormData(form_post);
+  message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
+  pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector('.text').value = "";
+    clear_message_attach_block();
+
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    message_load.append(new_post);
+    message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
+    form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_dropdown").classList.remove("border_red");
+  }};
+
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.chat_ajax', function(e) {
   _this = this;
   e.preventDefault();
