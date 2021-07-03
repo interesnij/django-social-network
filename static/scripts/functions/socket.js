@@ -185,9 +185,9 @@ webSocket.listen(function (event) {
 
         }
         break;
-
+event.creator_id != request_user_id
       case "create_item":
-        if (event.recipient_ids.indexOf( request_user_id ) != -1){
+        if (event.creator_id != request_user_id){
           console.log("отрисовка созданных элементов для пользователей на странице");
           console.log(event.recipient_ids)
           if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
@@ -195,8 +195,9 @@ webSocket.listen(function (event) {
         break;
 
     case "message":
-      if (event.creator_id != request_user_id){
+      if (event.recipient_ids.indexOf( request_user_id ) != -1){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
+        console.log(event.recipient_ids)
         if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id);}
       }
       break;
