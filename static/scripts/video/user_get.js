@@ -113,6 +113,13 @@ on('#ajax', 'click', '.u_post_video', function() {
   play_video_list("/video/user/list_post/" + uuid + "/", counter, video_pk)
 });
 
+on('#ajax', 'click', '.u_message_video', function() {
+  video_pk = this.getAttribute("video-pk");
+  uuid = this.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  counter = this.getAttribute('video-counter') - 1;
+  play_video_list("/video/user/list_message/" + uuid + "/", counter, video_pk)
+});
+
 on('#ajax', 'click', '.u_play_comment_video', function() {
   comment_pk = this.getAttribute("comment-pk");
   video_pk = this.getAttribute("video-pk");
