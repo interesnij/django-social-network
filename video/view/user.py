@@ -97,7 +97,7 @@ class UserMessageVideoList(TemplateView):
 		from common.template.post import get_template_user_post
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-		self.video_list, self.template_name = self.message.get_attach_videos(), get_template_user_post(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list, self.template_name = self.message.get_attach_videos(), get_template_user_post(self.message, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMessageVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
