@@ -115,9 +115,9 @@ on('#ajax', 'click', '.u_post_video', function() {
 
 on('#ajax', 'click', '.u_message_video', function() {
   video_pk = this.getAttribute("video-pk");
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk");
+  uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
   counter = this.getAttribute('video-counter') - 1;
-  play_video_list("/video/user/list_chat/" + pk + "/", counter, video_pk)
+  play_video_list("/video/user/list_message/" + uuid + "/", counter, video_pk)
 });
 
 on('#ajax', 'click', '.u_play_comment_video', function() {

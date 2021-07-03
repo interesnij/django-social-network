@@ -89,19 +89,19 @@ class UserPostVideoList(TemplateView):
 		context['object_list'] = self.video_list
 		return context
 
-class UserChatVideoList(TemplateView):
+class UserMessageVideoList(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		from chat.models import Chat
+		from chat.models import Message
 		from common.template.post import get_template_user_post
 
-		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.video_list, self.template_name = self.chat.get_attach_videos(), get_template_user_post(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserChatVideoList,self).get(request,*args,**kwargs)
+		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
+		self.video_list, self.template_name = self.message.get_attach_videos(), get_template_user_post(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserMessageVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(UserChatVideoList,self).get_context_data(**kwargs)
+		context = super(UserMessageVideoList,self).get_context_data(**kwargs)
 		context['object_list'] = self.video_list
 		return context
 
