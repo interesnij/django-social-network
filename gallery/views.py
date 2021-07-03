@@ -50,8 +50,10 @@ class MessagePhotoDetail(TemplateView):
 	template_name, community, user_form = None, None, None
 
 	def get(self,request,*args,**kwargs):
+		from chat.models import Message
+		
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.message = Messge.objects.get(uuid=self.kwargs["uuid"])
+		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.message.get_attach_photos()
 		if self.photo.community:
 			from common.templates import get_template_community_item, get_template_anon_community_item
