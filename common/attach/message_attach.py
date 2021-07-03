@@ -64,10 +64,7 @@ def get_message_attach(message, user):
                 photo = Photo.objects.get(pk=item[3:])
                 if photo.type[0] == "_":
                     pass
-                if photo.community:
-                    block = ''.join([block, '<div class="photo"><div class="progressive replace c_message_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-                else:
-                    block = ''.join([block, '<div class="photo"><div class="progressive replace u_message_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                block = ''.join([block, '<div class="photo"><div class="progressive replace message_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":
