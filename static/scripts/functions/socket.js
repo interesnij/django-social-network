@@ -187,7 +187,7 @@ webSocket.listen(function (event) {
         break;
 
       case "create_item":
-        if (event.creator_id != request_user_id){
+        if (event.recipient_ids.indexOf( request_user_id ) != -1){
           console.log("отрисовка созданных элементов для пользователей на странице");
           if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
         }

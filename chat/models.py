@@ -330,9 +330,8 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'message_id': str(self.uuid),
-            'creator_id': str(self.creator.pk),
             'chat_id': self.chat.pk,
-            'recipient_id': str(self.recipient.pk),
+            'recipient_ids': str(self.get_recipient_ids()),
             'name': "u_message_create",
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
