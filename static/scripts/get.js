@@ -33,7 +33,7 @@ on('#ajax', 'click', '.comment_btn', function() {
 });
 
 on('#ajax', 'click', '.reply_comment_btn', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
+  form = this.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
   if (form.classList.contains("u_post_comment")) {
   send_comment(form, block, '/posts/user_progs/reply_comment/')
