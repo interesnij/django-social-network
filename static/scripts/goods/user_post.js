@@ -88,11 +88,6 @@ function good_gallery(loader){
   });
 }
 
-on('#ajax', 'click', '.u_goodComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/');
-});
-
 on('#ajax', 'click', '.u_replyGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");

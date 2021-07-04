@@ -24,11 +24,6 @@ on('#ajax', 'click', '.u_video_create_window', function(e) {
   open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
 });
 
-on('#video_loader', 'click', '.u_videoComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/add_comment/');
-});
-
 on('#video_loader', 'click', '.u_replyVideoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
@@ -170,7 +165,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     response = document.createElement("span");
     response.innerHTML = elem;
     span1 = response.querySelector('.span1');
-    if (span1.classList.contains(document.body.querySelector(".uuid_saver").getAttribute("data-uuid"))){ 
+    if (span1.classList.contains(document.body.querySelector(".uuid_saver").getAttribute("data-uuid"))){
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;

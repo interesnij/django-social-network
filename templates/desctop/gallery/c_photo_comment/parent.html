@@ -78,24 +78,11 @@
                   </span>
 
                     <div style="display:none">
-                        <form>
+                        <form class="c_photo_comment">
                             {% csrf_token %}
-                            <div class="row img_block" style="margin:10px"></div>
-                            <div class="row no-gutters">
-                              {% include 'base_block/comment_dropdown.html' %}
-
-                                <div class="col">
-                                    <div class="input-group input-group-sm">
-                                      <input type="hidden" name="pk" value="{{ community.pk }}">
-                                      <input type="hidden" name="photo_comment" value="{{ comment.pk }}">
-
-                                      <textarea name="text" class="form-control text-comment form-control-rounded"></textarea>
-                                      <button class="btn btn-outline-primary btn-rounded btn-sm ml-2 c_replyPhotoComment" type="button">
-                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                                      </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="hidden" name="pk" value="{{ community.pk }}">
+                            <input type="hidden" name="photo_comment" value="{{ comment.pk }}">
+                            {% include 'base_block/reply_comment_form.html' %}
                         </form>
                     </div>
 

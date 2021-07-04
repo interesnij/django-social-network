@@ -37,11 +37,6 @@ on('#ajax', 'click', '.c_good_add_attach', function() {
   open_fullscreen('/goods/community_progs/add_attach/' + pk + '/', loader);
 });
 
-on('#ajax', 'click', '.c_goodComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/');
-});
-
 on('#ajax', 'click', '.c_replyGoodComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");

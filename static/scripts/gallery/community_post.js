@@ -58,11 +58,6 @@ on('#ajax', 'click', '#c_ucm_photo_list_repost_btn', function() {
                      "Репост фотоальбома в сообщения сделан")
 });
 
-on('#ajax', 'click', '.c_photoComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/add_comment/');
-});
-
 on('#ajax', 'click', '.c_replyPhotoComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
