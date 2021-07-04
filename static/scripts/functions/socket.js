@@ -195,7 +195,7 @@ event.creator_id != request_user_id
         break;
 
     case "message":
-      if (event.recipient_ids.indexOf( request_user_id ) != -1){
+      if (event.recipient_ids.indexOf( request_user_id ) != -1){ 
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
         console.log(event.recipient_ids)
         if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id);}
