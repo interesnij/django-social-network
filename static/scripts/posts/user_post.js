@@ -196,10 +196,6 @@ on('#ajax', 'click', '.u_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.u_itemComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/');
-});
 
 on('#ajax', 'click', '.u_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;

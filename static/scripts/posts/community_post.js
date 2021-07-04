@@ -212,11 +212,6 @@ on('#ajax', 'click', '.c_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.c_itemComment', function() {
-  form = this.parentElement.parentElement.parentElement;
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/');
-});
-
 on('#ajax', 'click', '.c_replyItemComment', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.querySelector(".stream_reply_comments");

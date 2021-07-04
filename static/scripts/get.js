@@ -11,6 +11,15 @@ on('#ajax', 'click', '.hide_comment_form', function() {
   this.parentElement.parentElement.parentElement.remove();
 })
 
+on('#ajax', 'click', '.comment_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  if (form.classList.contains("u_post_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/')
+} else if (form.classList.contains("c_post_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/')
+}
+});
+
 on('#ajax', 'click', '.previous_click', function() {
   this.previousElementSibling.click();
 })
