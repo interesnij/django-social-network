@@ -37,22 +37,6 @@ on('#ajax', 'click', '.c_good_add_attach', function() {
   open_fullscreen('/goods/community_progs/add_attach/' + pk + '/', loader);
 });
 
-on('#ajax', 'click', '.c_replyGoodComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/goods/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#ajax', 'click', '.c_replyParentGoodComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/goods/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.c_good_comment_edit', function() {
   get_edit_comment_form(this, "/goods/community_progs/edit_comment/")
 });

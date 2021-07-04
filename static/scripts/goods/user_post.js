@@ -88,22 +88,6 @@ function good_gallery(loader){
   });
 }
 
-on('#ajax', 'click', '.u_replyGoodComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/goods/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#ajax', 'click', '.u_replyParentGoodComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/goods/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.u_good_comment_edit', function() {
   get_edit_comment_form(this, "/goods/user_progs/edit_comment/")
 });

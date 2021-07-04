@@ -24,22 +24,6 @@ on('#ajax', 'click', '.u_video_create_window', function(e) {
   open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
 });
 
-on('#video_loader', 'click', '.u_replyVideoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/video/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#video_loader', 'click', '.u_replyParentVideoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/video/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.u_video_comment_edit', function() {
   get_edit_comment_form(this, "/video/user_progs/edit_comment/")
 });

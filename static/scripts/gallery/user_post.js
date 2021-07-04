@@ -57,22 +57,6 @@ on('#ajax', 'click', '#u_ucm_photo_list_repost_btn', function() {
                      "Репост фотоальбома в сообщения сделан")
 });
 
-on('#ajax', 'click', '.u_replyPhotoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/gallery/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#ajax', 'click', '.u_replyParentPhotoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/gallery/user_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.u_photo_comment_edit', function() {
   get_edit_comment_form(this, "/gallery/user_progs/edit_comment/")
 });

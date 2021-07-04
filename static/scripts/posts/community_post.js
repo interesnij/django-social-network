@@ -212,22 +212,6 @@ on('#ajax', 'click', '.c_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.c_replyItemComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/posts/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#ajax', 'click', '.c_replyParentItemComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/posts/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.c_post_comment_edit', function() {
   get_edit_comment_form(this, "/posts/community_progs/edit_comment/")
 });

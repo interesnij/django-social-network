@@ -17,22 +17,6 @@ on('#ajax', 'click', '#c_ucm_video_list_repost_btn', function() {
                      "Репост видеоальбома в сообщения сделан")
 });
 
-on('#video_loader', 'click', '.c_replyVideoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.querySelector(".stream_reply_comments");
-  send_comment(form, block, '/video/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
-on('#video_loader', 'click', '.c_replyParentVideoComment', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  send_comment(form, block.parentElement, '/video/community_progs/reply_comment/')
-  form.parentElement.style.display = "none";
-  block.classList.add("replies_open")
-});
-
 on('#ajax', 'click', '.c_video_comment_edit', function() {
   get_edit_comment_form(this, "/video/community_progs/edit_comment/")
 });
