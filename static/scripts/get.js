@@ -17,6 +17,18 @@ on('#ajax', 'click', '.comment_btn', function() {
   send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/')
 } else if (form.classList.contains("c_post_comment")) {
   send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/')
+} else if (form.classList.contains("u_video_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/add_comment/')
+} else if (form.classList.contains("c_video_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/add_comment/')
+} else if (form.classList.contains("u_photo_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/add_comment/')
+} else if (form.classList.contains("c_photo_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/add_comment/')
+} else if (form.classList.contains("u_good_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/')
+} else if (form.classList.contains("c_good_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/')
 }
 });
 
