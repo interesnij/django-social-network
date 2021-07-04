@@ -14,7 +14,7 @@ def get_news(user):
             пользователь увидит все действия, как и в контакте.
     """
     query = Q(Q(creator_id__in=user.get_user_news_notify_ids(),verb="ITE")|Q(community_id__in=user.get_community_news_notify_ids(),verb="ITE")) \
-    %Q(verb="ITE")
+    &Q(verb="ITE")
     query.add(Q(object_set__isnull=True), Q.AND)
     query.add(~Q(status="C"), Q.AND)
     return Wall.objects.filter(query)
