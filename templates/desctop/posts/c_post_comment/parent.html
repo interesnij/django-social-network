@@ -78,7 +78,7 @@
                       </span>
 
                     <div style="display:none">
-                      <form class="c_good_comment">
+                      <form class="c_post_comment">
                           {% csrf_token %}
                           <input type="hidden" name="pk" value="{{ community.pk }}">
                           <input type="hidden" name="post_comment" value="{{ comment.pk }}">
