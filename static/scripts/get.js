@@ -56,6 +56,30 @@ form.parentElement.style.display = "none";
 block.classList.add("replies_open")
 });
 
+on('#ajax', 'click', '.reply_parent_btn', function() {
+  form = this.parentElement.parentElement.parentElement.parentElement;
+  block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (form.classList.contains("u_post_comment")) {
+  send_comment(form, block, '/posts/user_progs/reply_comment/')
+} else if (form.classList.contains("c_post_comment")) {
+  send_comment(form, block, '/posts/community_progs/reply_comment/')
+} else if (form.classList.contains("u_video_comment")) {
+  send_comment(form, block, '/video/user_progs/reply_comment/')
+} else if (form.classList.contains("c_video_comment")) {
+  send_comment(form, block, '/video/community_progs/reply_comment/')
+} else if (form.classList.contains("u_photo_comment")) {
+  send_comment(form, block, '/gallery/user_progs/reply_comment/')
+} else if (form.classList.contains("c_photo_comment")) {
+  send_comment(form, block, '/gallery/community_progs/reply_comment/')
+} else if (form.classList.contains("u_good_comment")) {
+  send_comment(form, block, '/goods/user_progs/reply_comment/')
+} else if (form.classList.contains("c_good_comment")) {
+  send_comment(form, block, '/goods/community_progs/reply_comment/')
+};
+form.parentElement.style.display = "none";
+block.classList.add("replies_open");
+});
+
 on('#ajax', 'click', '.previous_click', function() {
   this.previousElementSibling.click();
 })
