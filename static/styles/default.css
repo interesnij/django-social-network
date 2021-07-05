@@ -1,6 +1,9 @@
 .form_smilies.show {
   display: block !!important
 }
+.chat_list_container img {
+  width: auto !important;
+}
 .smile_supported {
   height: auto !important;
   overflow-y: auto;
