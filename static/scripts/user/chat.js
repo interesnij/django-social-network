@@ -129,7 +129,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").firstChild){
+  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
