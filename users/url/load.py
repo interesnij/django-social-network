@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^chat_items/$', login_required(ChatItemsLoad.as_view())),
     url(r'^communities/$', login_required(CommunitiesLoad.as_view())),
     url(r'^friends/$', login_required(FriendsLoad.as_view())),
+    url(r'^smiles/$', SmilesLoad.as_view()),
 ]

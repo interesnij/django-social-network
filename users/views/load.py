@@ -278,3 +278,19 @@ class FriendsLoad(ListView):
 
 	def get_queryset(self):
 		return self.list
+
+
+from django.views.generic.base import TemplateView
+
+class SmilesLoad(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/load/smiles.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(SmilesLoad,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		from common.model.other import SmileCategory
+		context = super(SmilesLoad,self).get_context_data(**kwargs)
+		context["list"] = SmileCategory.objects.only("pk")
+		return context
