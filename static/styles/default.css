@@ -2,7 +2,7 @@
   display: block !!important
 }
 .smile_supported {
-  height: auto;
+  height: auto !important;
 }
 #notification {
   position: relative;
