@@ -16,7 +16,7 @@
                       {% for stickers in stickers_category %}
                         <h4>{{ stickers.name }}</h4>
                         {% for sticker in stickers.get_stickers %}
-                          <img class="pointer classic_sticker_item" style="width: auto;" src="{{ sticker.image.url }}"  alt="{{ sticker.name }}">
+                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="{{ sticker.name }}">
                         {% endfor %}
                       {% endfor %}
                     <p>
