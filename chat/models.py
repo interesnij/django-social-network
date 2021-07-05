@@ -428,6 +428,8 @@ class Message(models.Model):
             return "Текст и вложения"
         elif self.attach and not self.text:
             return "Вложения"
+        elif "img" in self.text:
+            return self.text[:160]
         else:
             return self.text[:60]
 
