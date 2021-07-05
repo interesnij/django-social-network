@@ -80,6 +80,25 @@ form.parentElement.style.display = "none";
 block.classList.add("replies_open");
 });
 
+on('#ajax', 'click', '.tab_smiles', function() {
+  if (!this.classList.contains("active")) {
+    parent = this.parentElement.parentElement.parentElement;
+    parent.querySelector(".stickers_panel").classList.remove("active", "show");
+    parent.querySelector(".smiles_panel").classList.add("active", "show");
+    this.classList.add("active");
+    this.parentElement.querySelector(".tab_stickers").classList.remove("active");
+  }
+});
+on('#ajax', 'click', '.tab_stickers', function() {
+  if (!this.classList.contains("active")) {
+    parent = this.parentElement.parentElement.parentElement;
+    parent.querySelector(".smiles_panel").classList.remove("active", "show");
+    parent.querySelector(".stickers_panel").classList.add("active", "show");
+    this.classList.add("active");
+    this.parentElement.querySelector(".tab_smiles").classList.remove("active");
+  }
+});
+
 on('#ajax', 'click', '.previous_click', function() {
   this.previousElementSibling.click();
 })
