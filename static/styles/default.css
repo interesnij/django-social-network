@@ -1,7 +1,9 @@
 .form_smilies.show {
   display: block !!important
 }
-
+.smile_supported {
+  height: auto;
+}
 #notification {
   position: relative;
 }
