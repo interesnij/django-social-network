@@ -33,9 +33,9 @@ on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.cl
 on('#ajax', 'click', '.smile_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.firstChild) {
-    list_load(this.nextElementSibling, "/users/load/smiles/")
+    list_load(block, "/users/load/smiles/")
   };
-  this.nextElementSibling.classList.toggle("show");
+  block.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
   check_message_form_btn()
