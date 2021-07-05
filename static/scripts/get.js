@@ -319,7 +319,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
 });
 
 
-get_emoji = (function(){
+(function get_emoji(){
 var emoji = window.emoji = {};
 emoji.replace = Replace;
 
