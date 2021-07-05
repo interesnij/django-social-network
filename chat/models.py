@@ -163,7 +163,7 @@ class Chat(models.Model):
     def get_avatars(self):
         urls = []
         for user in self.chat_relation.all()[:10]:
-            urls += [user.user.s_avatar.url]
+            urls += [user.get_my_avatar()]
         return urls
 
     def get_header_private_chat(self, user_id):
@@ -189,10 +189,7 @@ class Chat(models.Model):
         else:
             avatars = ''
             for figure in self.get_avatars():
-                if figure:
-                    avatars = ''.join([avatars, '<figure><img src="', figure, '" style="border-radius:40px;width:40px;" alt="image"></figure>'])
-                else:
-                    avatars = ''.join([avatars, '<figure class="avatar-50 staked"><img src="/static/images/no_img/user.jpg" style="border-radius:40px;width:40px;" alt="image"></figure>'])
+                avatars + figure
         if self.name:
              chat_name = self.name
         else:
