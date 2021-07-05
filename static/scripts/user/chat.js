@@ -113,7 +113,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 on('#ajax', 'click', '#send_page_message_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   this.disabled = true;
-  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML;
+  form.querySelector(".type_hidden").value = form.querySelector(".message_text").innerHTML;
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
