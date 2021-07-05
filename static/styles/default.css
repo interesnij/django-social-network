@@ -1,3 +1,7 @@
+.form_smilies.show {
+  display: block !!important
+}
+
 #notification {
   position: relative;
 }
