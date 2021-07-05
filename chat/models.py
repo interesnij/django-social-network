@@ -195,7 +195,7 @@ class Chat(models.Model):
         else:
             chat_name = "Групповой чат"
         media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><p class="mb-0 target_display"><span class="type_display">', self.get_members_count_ru(), '</span>', buttons, '</p></div>'])
-        return ''.join([avatars, media_body])
+        return ''.join([media_body, avatars])
 
     def is_not_empty(self):
         return self.chat_message.exclude(type__contains="_").exists()
