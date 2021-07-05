@@ -127,8 +127,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.send(form_data);
 });
 
-on('#ajax', 'click', '#message_post_btn', function() {
-  form_post = this.parentElement.parentElement.parentElement;
+function send_message (form_post, url) {
   if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
@@ -141,12 +140,11 @@ on('#ajax', 'click', '#message_post_btn', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
+  link_.open( 'POST', url, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    form_post.querySelector('.text').value = "";
     clear_message_attach_block();
 
     elem = link_.responseText;
@@ -159,11 +157,15 @@ on('#ajax', 'click', '#message_post_btn', function() {
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = '';
-    objDiv = document.querySelector("#chatcontent");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
   }};
 
   link_.send(form_data);
+}
+
+on('#ajax', 'click', '#message_post_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement;
+  send_message (form_post, "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/")
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
@@ -173,41 +175,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
-  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
-    toast_error("Напишите или прикрепите что-нибудь");
-    form_post.querySelector(".message_text").classList.add("border_red");
-    form_post.querySelector(".message_dropdown").classList.add("border_red");
-    return
-  };
-  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML;
-  form_data = new FormData(form_post);
-  message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
-  pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    form_post.querySelector('.text').value = "";
-    clear_message_attach_block();
-
-    elem = link_.responseText;
-    new_post = document.createElement("span");
-    new_post.innerHTML = elem;
-    message_load.append(new_post);
-    message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
-    form_post.querySelector(".message_text").classList.remove("border_red");
-    form_post.querySelector(".hide_block_menu").classList.remove("show");
-    form_post.querySelector(".message_text").innerHTML = ""
-    form_post.querySelector(".message_dropdown").classList.remove("border_red");
-    form_post.querySelector(".type_hidden").value = '';
-    objDiv = document.querySelector("#chatcontent");
-    objDiv.scrollTop = objDiv.scrollHeight;
-  }};
-
-  link_.send(form_data);
+  send_message (form_post, "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/")
 }});
 
 on('#ajax', 'click', '.chat_ajax', function(e) {
