@@ -43,7 +43,7 @@ on('#ajax', 'input', '.message_text', function() {
 
 on('#ajax', 'click', '.classic_smile_item', function() {
   input = document.body.querySelector(".smile_supported");
-  input.innerHTML = input.innerHTML + this
+  input.value = input.value + this
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {
