@@ -163,7 +163,16 @@ on('#ajax', 'click', '#message_post_btn', function() {
 
   link_.send(form_data);
 });
-
+on('#ajax', 'click', '.message_text', function() {
+  if (this.innerHTML === "Напишите сообщение...") {
+    this.innerHTML = ""
+  }
+})
+on('#ajax', 'click', '.customize_form', function() {
+  if (this.querySector('.message_text').innerHTML === "") {
+    this.innerHTML = "Напишите сообщение..."
+  }
+})
 on('#ajax', 'keydown', '.message_text', function(e) {
 
   if (e.keyCode == 13) {
@@ -194,7 +203,9 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_text").innerHTML = "Напишите сообщение..."
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
+    form_post.querySelector(".type_hidden").value = ''
   }};
 
   link_.send(form_data);
