@@ -169,9 +169,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
-  if (e.shiftKey && e.keyCode === 13) {
-    this.innerHTML += "\n";
-  }
+  if (e.shiftKey && e.keyCode === 13) {this.innerHTML += "\n";}
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
@@ -199,6 +197,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         m_loaded = false;
         scrolled(window.location.href, '.chat_container', target = 0);
         chats = document.body.querySelector(".new_unread_chats");
+        document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
         chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
                                              all_count = all_count*1,
                                              result = all_count - 1,
