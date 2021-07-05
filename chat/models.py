@@ -189,7 +189,7 @@ class Chat(models.Model):
         else:
             avatars = ''
             for figure in self.get_avatars():
-                avatars + figure
+                avatars += figure
         if self.name:
              chat_name = self.name
         else:
