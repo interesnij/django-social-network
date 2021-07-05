@@ -159,7 +159,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = '';
-    scrollToBottom ("#scrolled");
+    window.scrollTo(0, window.outerHeight);
   }};
 
   link_.send(form_data);
@@ -202,7 +202,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = '';
-    scrollToBottom ("#scrolled");
+    window.scrollTo(0, window.outerHeight);
   }};
 
   link_.send(form_data);
