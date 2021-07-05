@@ -45,7 +45,7 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   input = document.body.querySelector(".smile_supported");
   $img = document.createElement("img");
   $img.style.width = "auto";
-  $img.src = this.getAttribute("img");
+  $img.src = this.getAttribute("src");
   if (input.innerHTML == "Напишите сообщение...") {input.innerHTML = ""}
   input.append($img);
 })
