@@ -48,6 +48,7 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img.src = this.getAttribute("src");
   if (input.innerHTML == "Напишите сообщение...") {input.innerHTML = ""}
   input.append($img);
+  check_message_form_btn()
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {
