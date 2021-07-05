@@ -125,14 +125,14 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML
-  if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".special_block").firstChild){ 
+  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
     return
   };
   form_data = new FormData(form_post);
+  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML;
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
