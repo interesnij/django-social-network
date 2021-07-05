@@ -163,7 +163,7 @@ class Chat(models.Model):
     def get_avatars(self):
         urls = []
         for user in self.chat_relation.all()[:10]:
-            urls += [user.get_my_avatar()]
+            urls += [user.user.get_my_avatar()]
         return urls
 
     def get_header_private_chat(self, user_id):
