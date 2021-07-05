@@ -155,7 +155,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
-    form_post.querySelector(".message_text").classList.remove("hide_block_menu");
+    form_post.querySelector(".hide_block_menu").classList.remove("show");
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = ''
@@ -171,7 +171,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
-  if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".special_block").firstChild){
+  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
@@ -197,7 +197,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
-    form_post.querySelector(".message_text").classList.remove("hide_block_menu");
+    form_post.querySelector(".hide_block_menu").classList.remove("show");
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = ''
