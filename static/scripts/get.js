@@ -319,7 +319,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
 });
 
 
-(function get_emoji(){
+function get_emoji(){
 var emoji = window.emoji = {};
 emoji.replace = Replace;
 
@@ -376,6 +376,6 @@ function GetHtmlCodeFromHex (hex)
   {
    return(['<span class="emojic"><span class="emoji emoji', hex, '"></span><span class="emojit">&#x', hex, ';</span></span>'].join(''));
   }
-})();
+};
 
 get_emoji()
