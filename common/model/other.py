@@ -49,8 +49,8 @@ class Stickers(models.Model):
     image = models.ImageField(upload_to="stickers/")
 
     class Meta:
-        verbose_name = 'Смайл'
-        verbose_name_plural = 'Смайлы'
+        verbose_name = 'Стикер'
+        verbose_name_plural = 'Стикеры'
 
     def __str__(self):
         return self.name
