@@ -224,7 +224,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
-        scrollToBottom ("#scrolled");
+        objDiv = document.querySelector("#chatcontent");
+        objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
         m_page = 2;
         m_loaded = false;
