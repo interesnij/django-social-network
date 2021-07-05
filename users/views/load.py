@@ -290,7 +290,8 @@ class SmilesLoad(TemplateView):
 		return super(SmilesLoad,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		from common.model.other import SmileCategory
+		from common.model.other import SmileCategory, StickerCategory
 		context = super(SmilesLoad,self).get_context_data(**kwargs)
-		context["lists"] = SmileCategory.objects.only("pk")
+		context["smiles_category"] = SmileCategory.objects.only("pk")
+		context["stickers_category"] = SmileCategory.objects.only("pk")
 		return context
