@@ -6,7 +6,6 @@ function check_message_form_btn() {
   if (input.innerHTML.trim() == ""){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
-     input.innerHTML = "Напишите сообщение..."
   } else {
     btn_block.querySelector("#voice_start_btn").style.display = "none";
     btn_block.querySelector("#message_post_btn").style.display = "block";
