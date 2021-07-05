@@ -173,7 +173,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
-  if (e.shiftKey && e.keyCode === 13) {this.append("\n"));}
+  if (e.shiftKey && e.keyCode === 13) {this.append("\n");}
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
