@@ -49,9 +49,9 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img.style.width = "auto";
   $img.src = this.getAttribute("src");
   input.append($img);
-  try {
+  if (document.body.querySelector("#chatlist")) {
   check_message_form_btn()
-} catch {null}
+  }
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {
@@ -173,7 +173,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
-  if (e.shiftKey && e.keyCode === 13) {this.innerHTML += "\n";}
+  if (e.shiftKey && e.keyCode === 13) {this.innerHTML = this.innerHTML + "\n";}
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
