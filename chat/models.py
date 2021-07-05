@@ -345,7 +345,7 @@ class Message(models.Model):
 
         chat_list, current_chat = creator.get_all_chats(), None
         for chat in chat_list:
-            if user.pk in chat.get_members_ids():
+            if user.pk in chat.get_members_ids() and chat.is_private():
                 current_chat = chat
         if not current_chat:
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
