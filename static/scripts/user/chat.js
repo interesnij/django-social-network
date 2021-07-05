@@ -46,7 +46,6 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img = document.createElement("img");
   $img.style.width = "auto";
   $img.src = this.getAttribute("src");
-  if (input.innerHTML == "Напишите сообщение...") {input.innerHTML = ""}
   input.append($img);
   check_message_form_btn()
 })
