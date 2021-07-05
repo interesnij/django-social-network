@@ -13,3 +13,6 @@ class PostVotesAdmin(admin.ModelAdmin):
 admin.site.register(PostVotes, PostVotesAdmin)
 admin.site.register(PhoneCodes)
 admin.site.register(CustomLink)
+
+admin.site.register(SmileCategory)
+admin.site.register(Smiles)
