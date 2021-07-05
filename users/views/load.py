@@ -292,5 +292,5 @@ class SmilesLoad(TemplateView):
 	def get_context_data(self,**kwargs):
 		from common.model.other import SmileCategory
 		context = super(SmilesLoad,self).get_context_data(**kwargs)
-		context["list"] = SmileCategory.objects.only("pk")
+		context["lists"] = SmileCategory.objects.only("pk")
 		return context
