@@ -47,7 +47,9 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img.style.width = "auto";
   $img.src = this.getAttribute("src");
   input.append($img);
+  try {
   check_message_form_btn()
+} catch {null}
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {
