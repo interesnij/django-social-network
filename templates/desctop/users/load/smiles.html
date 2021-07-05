@@ -6,7 +6,7 @@
                         {% for list in lists %}
                           <h4>{{ list.name }}</h4>
                           {% for smile in list.get_smiles %}
-                            <img class="pointer" src="{{ smile.image.url }}" width="19" height="16" alt="{{ smile.name }}">
+                            <img class="pointer" style="width: auto;" src="{{ smile.image.url }}"  alt="{{ smile.name }}">
                           {% endfor %}
                         {% endfor %}
                       <p>
