@@ -1,7 +1,7 @@
 .form_smilies.show {
   display: block !!important
 }
-.chat_list_container img {
+.chat_list_container p img {
   width: auto !important;
 }
 .smile_supported {
