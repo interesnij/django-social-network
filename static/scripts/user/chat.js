@@ -41,6 +41,11 @@ on('#ajax', 'input', '.message_text', function() {
   check_message_form_btn()
 })
 
+on('#ajax', 'click', '.classic_smile_item', function() {
+  input = document.body.querySelector(".smile_supported");
+  input.innerHTML = input.innerHTML + this
+})
+
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");
