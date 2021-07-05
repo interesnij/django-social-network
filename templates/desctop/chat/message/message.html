@@ -17,7 +17,7 @@
       </h5>
       {% if object.text %}
         <div class="toggle_message pointer">
-          {{ object.text|linebreaks }}
+          {{ object.text|safe }}
           {% if request.user.pk == object.creator.pk %}
             {% if object.is_copy_reed %}
               (прочитано)
