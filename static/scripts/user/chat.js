@@ -164,7 +164,10 @@ on('#ajax', 'click', '#message_post_btn', function() {
 });
 
 on('#ajax', 'keydown', '.message_text', function(e) {
-  if (e.keyCode == 13) {
+  if ((e.ctrlKey && (keyCode == 13)) || (keyCode == 10)) {
+    this.innerHTML += "\n";
+  }
+  else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".special_block").firstChild){
