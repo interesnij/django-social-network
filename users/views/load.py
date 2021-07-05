@@ -293,5 +293,5 @@ class SmilesLoad(TemplateView):
 		from common.model.other import SmileCategory, StickerCategory
 		context = super(SmilesLoad,self).get_context_data(**kwargs)
 		context["smiles_category"] = SmileCategory.objects.only("pk")
-		context["stickers_category"] = SmileCategory.objects.only("pk")
+		context["stickers_category"] = StickerCategory.objects.only("pk")
 		return context
