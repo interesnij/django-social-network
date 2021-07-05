@@ -1,10 +1,11 @@
 
 <div class="card mb-3 border">
+  <input class="type_hidden" type="hidden" name="text" />
         <div class="card-body p-0">
-            <textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" placeholder="Напишите что-нибудь"></textarea>
+          <div contenteditable="true" class="form-control text smile_supported page_message_text" style="height: 200px !important;"></div>
         </div>
         <div class="card-footer border-top btn_default">
-            <span class="files_0 row"></span>
+            <span class="files_0 row special_block"></span>
 
             <div class="row">
                 <div class="col attach_panel" style="display: flex;">
@@ -28,6 +29,8 @@
                       <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                     </svg>
                   </a>
+                  <svg viewBox="0 0 24 24" class="svg_info svg_default pointer smile_dropdown" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><circle cx="15.5" cy="9.5" r="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M12 16c-1.48 0-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.7 1.19-1.97 2-3.45 2zm-.01-14C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+                  <div class="hide_block_menu dropdown-menu" style="margin-top:-160px;display:none;"></div>
                 </div>
             </div>
         </div>

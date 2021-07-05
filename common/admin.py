@@ -16,3 +16,5 @@ admin.site.register(CustomLink)
 
 admin.site.register(SmileCategory)
 admin.site.register(Smiles)
+admin.site.register(StickerCategory)
+admin.site.register(Stickers)

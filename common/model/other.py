@@ -26,6 +26,35 @@ class CustomLink(models.Model):
     def get_user_pk(self):
         return self.user.pk
 
+class StickerCategory(models.Model):
+    name = models.CharField(max_length=32, unique=True, verbose_name="Название")
+    order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+
+    class Meta:
+        verbose_name = 'Категория стикеров'
+        verbose_name_plural = 'Категории стикеров'
+
+    def __str__(self):
+        return self.name
+
+    def get_stickers(self):
+        from common.model.other import Stickers
+        return Stickers.objects.filter(category_id=self.pk)
+
+class Stickers(models.Model):
+    name = models.CharField(max_length=32, unique=True, verbose_name="Название")
+    category = models.ForeignKey(StickerCategory, on_delete=models.CASCADE, related_name='+', verbose_name="Категория")
+    image = models.ImageField(upload_to="stickers/")
+
+    class Meta:
+        verbose_name = 'Смайл'
+        verbose_name_plural = 'Смайлы'
+
+    def __str__(self):
+        return self.name
+
 
 class SmileCategory(models.Model):
     name = models.CharField(max_length=32, unique=True, verbose_name="Название")
