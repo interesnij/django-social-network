@@ -3,9 +3,10 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
-  if (input.value.trim() == ""){
+  if (input.innerHTML.trim() == ""){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
+     input.innerHTML = "Напишите сообщение..."
   } else {
     btn_block.querySelector("#voice_start_btn").style.display = "none";
     btn_block.querySelector("#message_post_btn").style.display = "block";

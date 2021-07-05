@@ -125,6 +125,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
+  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML
   if (!form_post.querySelector(".message_text").value && !form_post.querySelector(".message_attach_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
@@ -150,7 +151,9 @@ on('#ajax', 'click', '#message_post_btn', function() {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_text").innerHTML = "Напишите сообщение..."
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
+
   }};
 
   link_.send(form_data);
