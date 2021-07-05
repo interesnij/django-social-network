@@ -115,7 +115,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 on('#ajax', 'click', '#send_page_message_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   this.disabled = true;
-  form.querySelector(".type_hidden").value = form.querySelector(".message_text").innerHTML;
+  form.querySelector(".type_hidden").value = form.querySelector(".page_message_text").innerHTML;
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -178,6 +178,11 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
   send_message (form_post, "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/")
+}});
+on('#ajax', 'keydown', '.page_message_text', function(e) {
+  if (e.shiftKey && e.keyCode === 13) {this.append("\n");}
+  else if (e.keyCode == 13) {
+    e.preventDefault();
 }});
 
 on('#ajax', 'click', '.chat_ajax', function(e) {
