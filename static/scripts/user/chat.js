@@ -182,7 +182,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
 on('#ajax', 'keydown', '.page_message_text', function(e) {
   if (e.shiftKey && e.keyCode === 13) {this.append("\n");}
   else if (e.keyCode == 13) {
-    e.preventDefault();
+    this.append("\n");
 }});
 
 on('#ajax', 'click', '.chat_ajax', function(e) {
