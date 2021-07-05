@@ -155,6 +155,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_text").classList.remove("hide_block_menu");
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = ''
@@ -176,6 +177,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     form_post.querySelector(".message_dropdown").classList.add("border_red");
     return
   };
+  form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML;
   form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
@@ -195,6 +197,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
     message_load.append(new_post);
     message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
+    form_post.querySelector(".message_text").classList.remove("hide_block_menu");
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
     form_post.querySelector(".type_hidden").value = ''
