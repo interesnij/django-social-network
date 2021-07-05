@@ -31,7 +31,10 @@ function hide_chat_console(is_favourite) {
 
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 on('#ajax', 'click', '.smile_dropdown', function() {
-  list_load(this.nextElementSibling, "/users/load/smiles/");
+  block = this.nextElementSibling;
+  if (!block.firstChild) {
+    list_load(this.nextElementSibling, "/users/load/smiles/")
+  };
   this.nextElementSibling.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
