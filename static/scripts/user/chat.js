@@ -164,12 +164,12 @@ on('#ajax', 'click', '#message_post_btn', function() {
   link_.send(form_data);
 });
 on('#ajax', 'click', '.message_text', function() {
-  if (this.innerHTML === "Напишите сообщение...") {
+  if (this.innerHTML == "Напишите сообщение...") {
     this.innerHTML = ""
   }
 })
 on('#ajax', 'click', '.customize_form', function() {
-  if (this.querySelector('.message_text').innerHTML === "") {
+  if (this.querySelector('.message_text').innerHTML == "") {
     this.querySelector('.message_text').innerHTML = "Напишите сообщение..."
   }
 })
