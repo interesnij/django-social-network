@@ -136,8 +136,8 @@ on('#ajax', 'click', '#message_post_btn', function() {
     form_post.querySelector(".message_dropdown").classList.add("border_red");
     return
   };
-  form_data = new FormData(form_post);
   form_post.querySelector(".type_hidden").value = form_post.querySelector(".message_text").innerHTML;
+  form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
