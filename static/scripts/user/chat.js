@@ -43,7 +43,11 @@ on('#ajax', 'input', '.message_text', function() {
 
 on('#ajax', 'click', '.classic_smile_item', function() {
   input = document.body.querySelector(".smile_supported");
-  input.innerHTML = input.innerHTML + this
+  $img = document.createElement("img");
+  $img.style.width = "auto";
+  $img.src = this.getAttribute("img");
+  if (input.innerHTML == "Напишите сообщение...") {input.innerHTML = ""}
+  input.append($img);
 })
 
 on('#ajax', 'click', '.user_create_chat', function() {
@@ -153,7 +157,7 @@ on('#ajax', 'click', '#message_post_btn', function() {
     form_post.querySelector(".message_text").classList.remove("border_red");
     form_post.querySelector(".message_text").innerHTML = "Напишите сообщение..."
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
-
+    form_post.querySelector(".type_hidden").value = ''
   }};
 
   link_.send(form_data);
