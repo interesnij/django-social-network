@@ -170,7 +170,7 @@ on('#ajax', 'click', '.message_text', function() {
 })
 on('#ajax', 'click', '.customize_form', function() {
   if (this.querySelector('.message_text').innerHTML === "") {
-    this.innerHTML = "Напишите сообщение..."
+    this.querySelector('.message_text').innerHTML = "Напишите сообщение..."
   }
 })
 on('#ajax', 'keydown', '.message_text', function(e) {
