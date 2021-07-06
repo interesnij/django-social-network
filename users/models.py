@@ -72,10 +72,12 @@ class User(AbstractUser):
         return query
 
     def get_populate_smiles(self):
-        from common.model.other import Smiles
+        from common.model.other import Smiles, UserPopulateSmiles
         query = []
-        for smile in Smiles.objects.filter(smile__user_id=self.pk)[:20]:
-            query.append(smile)
+        for smile in UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]:
+            query.append(Smiles.objects.get(id=smile.pk))
+        #for smile in Smiles.objects.filter(smile__user_id=self.pk)[:20]:
+        #    query.append(smile)
         return query
     def is_have_populate_smiles(self):
         from common.model.other import Smiles
