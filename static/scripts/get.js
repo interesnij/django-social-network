@@ -262,7 +262,7 @@ on('body', 'click', '.reply_comment', function() {
   range.collapse(false);
   sel = window.getSelection();
   sel.removeAllRanges();
-  sel.addRange(range);
+  sel.addRange(range + " ");
 })
 
 
