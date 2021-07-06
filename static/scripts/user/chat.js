@@ -77,10 +77,13 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 on('#ajax', 'click', '.classic_sticker_item', function() {
   if (document.body.querySelector(".chatlist")){
     url = "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/";
+    send_message_sticker(url, this.getAttribute("data-pk"))
   } else if (document.body.querySelector("#send_page_message_btn")){
     url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
-  };
-  send_message_sticker(url, this.getAttribute("data-pk"))
+    send_message_sticker(url, this.getAttribute("data-pk"))
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".img_block")){
+    console.log("это коммент, братан")
+  }
 })
 
 function send_message_sticker(url, value) {
