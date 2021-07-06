@@ -18,3 +18,6 @@ admin.site.register(SmileCategory)
 admin.site.register(Smiles)
 admin.site.register(StickerCategory)
 admin.site.register(Stickers)
+
+admin.site.register(UserPopulateSmiles)
+admin.site.register(UserPopulateStickers)
