@@ -18,8 +18,8 @@
       {% if object.voice %}
         <audio src="{{ object.voice.url }}"></audio>
       {% elif object.sticker %}
-      <div class="mesage_sticker mt-1" tooltip="{{ object.sticker.category.name }}" flow="up">
-        <img src="{{ object.sticker.image.url }}" style="width: 50px;">
+      <div class="mesage_sticker mt-1">
+        <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
       </div>
       {% else %}
 
