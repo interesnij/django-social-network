@@ -17,7 +17,7 @@
       </h5>
       {% if object.voice %}
         <audio src="{{ object.voice.url }}"></audio>
-      {% else if object.sticker %}
+      {% elif object.sticker %}
         <img src="{{ object.sticker.image.url }}" data-name="{{ object.sticker.category.name }}" style="width: 50px;">
       {% else %}
 
