@@ -7,6 +7,7 @@ from common.utils import try_except
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from common.model.other import Stickers
 
 
 class PostList(models.Model):
@@ -927,6 +928,7 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -1069,11 +1071,14 @@ class PostComment(models.Model):
         return self.commenter.get_full_name()
 
     @classmethod
-    def create_comment(cls, commenter, attach, post, parent, text, community):
+    def create_comment(cls, commenter, attach, post, parent, text, community, sticker):
         from common.processing.post import get_post_comment_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
+        if sticker:
+            comment = PostComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, post=post)
+        else:
+            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
         post.comment += 1
         post.save(update_fields=["comment"])
         if parent:

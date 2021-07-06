@@ -9,6 +9,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
 from common.model.other import Stickers
 
+
 class Chat(models.Model):
     PRIVATE, MANAGER, PROCESSING, GROUP, PRIVATE_FIXED, GROUP_FIXED = 'PRI', 'MAN', '_PRO', 'GRO', '_FIXT', '_FIXG'
     DELETED_PRIVATE, DELETED_GROUP, DELETED_MANAGER, DELETED_PRIVATE_FIXED, DELETED_GROUP_FIXED = '_DEL', '_DELG', '_DELM', '_DELPF', '_DELGF'

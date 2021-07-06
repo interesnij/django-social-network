@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from common.model.other import Stickers
 
 
 class VideoCategory(models.Model):
@@ -679,6 +680,7 @@ class VideoComment(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -734,12 +736,15 @@ class VideoComment(models.Model):
         return VideoCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
 
     @classmethod
-    def create_comment(cls, commenter, attach, video, parent, text, community):
+    def create_comment(cls, commenter, attach, video, parent, text, community, sticker):
         from common.processing.post import get_video_comment_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text)
+        if sticker:
+            comment = VideoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, video=video)
+        else:
+            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text, created=timezone.now())
         video.comment += 1
         video.save(update_fields=["comment"])
         if parent:

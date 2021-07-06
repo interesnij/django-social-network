@@ -142,10 +142,10 @@ class PostCommentUserCreate(View):
                 from common.check.user import check_user_can_get_list
 
                 check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items'):
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=None)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=None, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/u_post_comment/parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
@@ -163,10 +163,10 @@ class PostReplyUserCreate(View):
                 from common.check.user import check_user_can_get_list
 
                 check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items'):
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.template.user import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=parent.post, text=comment.text, community=None)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=parent.post, text=comment.text, community=None, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'posts/u_post_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})

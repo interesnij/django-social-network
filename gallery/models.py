@@ -9,6 +9,7 @@ from gallery.helpers import upload_to_photo_directory
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from common.model.other import Stickers
 
 
 class PhotoList(models.Model):
@@ -730,6 +731,7 @@ class PhotoComment(models.Model):
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -802,15 +804,18 @@ class PhotoComment(models.Model):
             return ''
 
     @classmethod
-    def create_comment(cls, commenter, attach, photo, parent, text, community):
+    def create_comment(cls, commenter, attach, photo, parent, text, community, sticker):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
         from common.processing.photo import get_photo_comment_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text)
         photo.comment += 1
         photo.save(update_fields=["comment"])
+        if sticker:
+            comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, photo=photo)
+        else:
+            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text, created=timezone.now())
         if comment.parent:
             if community:
                 community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")

@@ -195,9 +195,9 @@ class PostCommunityCommentCreate(View):
         elif request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('attach_items'):
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.template.user import render_for_platform
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/c_post_comment/parent.html',{'comment': new_comment, 'community': community})
             else:
                 return HttpResponseBadRequest()
@@ -216,9 +216,9 @@ class PostCommunityReplyCreate(View):
         elif request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('attach_items'):
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.template.user import render_for_platform
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=parent.post, community=community)
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=parent.post, community=community, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/c_post_comment/reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
                 return HttpResponseBadRequest()

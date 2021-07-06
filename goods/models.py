@@ -9,6 +9,7 @@ from goods.helpers import upload_to_good_directory
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from common.model.other import Stickers
 
 
 class GoodCategory(models.Model):
@@ -773,6 +774,7 @@ class GoodComment(models.Model):
 	comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 	type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+	sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
 	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
 	dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
@@ -827,14 +829,17 @@ class GoodComment(models.Model):
 			return ''
 
 	@classmethod
-	def create_comment(cls, commenter, attach, good, parent, text, community):
+	def create_comment(cls, commenter, attach, good, parent, text, community, sticker):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 		from django.utils import timezone
 		from common.processing.good import get_good_comment_processing
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-		comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
+		if sticker:
+			comment = GoodComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, good=good)
+		else:
+			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
 		good.comment += 1
 		good.save(update_fields=["comment"])
 		if comment.parent:

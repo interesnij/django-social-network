@@ -284,8 +284,8 @@ class GoodCommentCommunityCreate(View):
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, c)
-            if request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text, community=c)
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text, community=c, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'goods/c_good_comment/parent.html',{'comment': new_comment, 'community': c})
             else:
                 return HttpResponseBadRequest()
@@ -307,8 +307,8 @@ class GoodReplyCommunityCreate(View):
                 raise Http404
             elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
                 raise Http404
-            elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=parent.good, text=comment.text, community=c)
+            elif request.is_ajax() and request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
+                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=parent.good, text=comment.text, community=c, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'goods/c_good_comment/reply.html',{'reply': new_comment, 'comment': parent, 'community': c})
