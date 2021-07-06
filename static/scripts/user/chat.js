@@ -85,11 +85,12 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
 
 function send_message_sticker(url, value) {
   is_chat = false; is_page = false;
+  console.log(value);
   if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
   if (is_chat) {
     form_post = document.body.querySelector(".customize_form")
   } else {
-    form_post = document.body.querySelector(".page_message_form")  
+    form_post = document.body.querySelector(".page_message_form")
   }
   form_post.querySelector(".sticker").value = value;
   form_data = new FormData(form_post);
