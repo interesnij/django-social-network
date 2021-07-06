@@ -83,3 +83,46 @@ class Smiles(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserPopulateSmiles(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    smile = models.ForeignKey(Smiles, on_delete=models.CASCADE, related_name='+', verbose_name="Смайл")
+    count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
+
+    class Meta:
+        verbose_name = 'Популярность смайликов'
+        verbose_name_plural = 'Популярность смайликов'
+        ordering = ['-count']
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    def get_plus_or_create(self, user_pk, smile_pk):
+        if UserPopulateSmiles.objects.filter(user_id=user_pk, smile_id=smile_pk).exists():
+            md = UserPopulateSmiles.objects.get(user_id=user_pk, smile_id=smile_pk)
+            md.count += 1
+            md.save(update_fields=["count"])
+        else:
+            UserPopulateSmiles.objects.create(user_id=user_pk, smile_id=smile_pk)
+
+
+class UserPopulateStickers(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    sticker = models.ForeignKey(Stickers, on_delete=models.CASCADE, related_name='+', verbose_name="Стикер")
+    count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
+
+    class Meta:
+        verbose_name = 'Популярность стикеров'
+        verbose_name_plural = 'Популярность стикеров'
+        ordering = ['-count']
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    def get_plus_or_create(self, user_pk, sticker_pk):
+        if UserPopulateStickers.objects.filter(user_id=user_pk, sticker_id=sticker_pk).exists():
+            md = UserPopulateStickers.objects.get(user_id=user_pk, sticker_id=sticker_pk)
+            md.count += 1
+            md.save(update_fields=["count"])
+        else:
+            UserPopulateStickers.objects.create(user_id=user_pk, sticker_id=sticker_pk)

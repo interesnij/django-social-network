@@ -1,4 +1,4 @@
-def get_message_processing(message, type):
+def get_message_processing(message, type, creator):
     message.type = type
     message.save(update_fields=['type'])
     return message

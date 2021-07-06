@@ -7,8 +7,7 @@ from chat.helpers import upload_to_chat_directory, validate_file_extension
 from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
-
-
+from common.model.other import Stickers
 
 class Chat(models.Model):
     PRIVATE, MANAGER, PROCESSING, GROUP, PRIVATE_FIXED, GROUP_FIXED = 'PRI', 'MAN', '_PRO', 'GRO', '_FIXT', '_FIXG'
@@ -277,6 +276,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_copy")
+    sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
@@ -338,7 +338,7 @@ class Message(models.Model):
         return _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
 
-    def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice):
+    def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем по сообщению на каждого участника чата.
         from common.processing.message import get_message_processing
@@ -351,20 +351,25 @@ class Message(models.Model):
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
             ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
+
         if voice:
             creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+        elif sticker:
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
         else:
             creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
         for recipient_id in current_chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, sticker=sticker, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             else:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
 
-    def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice):
+    def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
         from common.processing.message import get_message_processing
 
@@ -372,6 +377,8 @@ class Message(models.Model):
 
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+        elif sticker:
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
         else:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
@@ -379,17 +386,20 @@ class Message(models.Model):
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, sticker=sticker, type=Message.PROCESSING)
             else:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
-                get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
-
-    def send_message(chat, creator, repost, parent, text, attach, voice):
+            get_message_processing(creator_message, 'PUB')
+    def send_message(chat, creator, repost, parent, text, attach, voice, sticker):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
+        elif sticker:
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
         else:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
@@ -397,6 +407,8 @@ class Message(models.Model):
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker=sticker, type=Message.PROCESSING)
             else:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')

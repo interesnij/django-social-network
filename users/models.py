@@ -65,6 +65,14 @@ class User(AbstractUser):
         else:
             return verb
 
+    def get_populate_smiles(self):
+        from common.model.other import UserPopulateSmiles
+        return UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]
+
+    def get_populate_stickers(self):
+        from common.model.other import UserPopulateStickers
+        return UserPopulateStickers.objects.filter(user_id=self.pk)[:20]
+
     def get_device(self):
         if self.device == User.DESCTOP:
             return "De"
