@@ -55,6 +55,69 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   }
 })
 
+on('#ajax', 'click', '#send_page_message_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  this.disabled = true;
+  form.querySelector(".type_hidden").value = form.querySelector(".page_message_text").innerHTML;
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/chat/user_progs/send_page_message/' + this.getAttribute("data-pk") + '/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            toast_success("Сообщение отправлено");
+            document.querySelector(".item_fullscreen").style.display = "none";
+            document.getElementById("item_loader").innerHTML="";
+        } else {this.disabled = false}
+      }
+      ajax_link.send(form_data);
+});
+
+on('#ajax', 'click', '.classic_sticker_item', function() {
+  form = this.parentElement.parentElement.parentElement;
+  if (document.body.querySelector(".chatlist")){
+    url = "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/";
+  } else if (document.body.querySelector("#send_page_message_btn")){
+    url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
+  };
+  send_message_sticker(form, url)
+})
+
+function send_message_sticker(form_post, url) {
+  is_chat = false; is_page = false;
+  form_post.querySelector(".sticker").value = this.getAttribute("data-pk");
+  form_data = new FormData(form_post);
+  if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    if (is_chat) {
+      elem = link_.responseText;
+      message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
+      new_post = document.createElement("span");
+      new_post.innerHTML = elem;
+      message_load.append(new_post);
+      message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
+      form_post.querySelector(".message_text").classList.remove("border_red");
+      form_post.querySelector(".hide_block_menu").classList.remove("show");
+      form_post.querySelector(".message_dropdown").classList.remove("border_red");
+      form_post.querySelector(".sticker").value = '';
+      objDiv = document.querySelector("#chatcontent");
+      objDiv.scrollTop = objDiv.scrollHeight
+    } else {
+      toast_success("Сообщение отправлено");
+      document.querySelector(".item_fullscreen").style.display = "none";
+      document.getElementById("item_loader").innerHTML="";
+    }
+  }};
+  link_.send(form_data);
+})
+
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
   pk = this.getAttribute("data-pk");

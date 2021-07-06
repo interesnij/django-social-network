@@ -355,7 +355,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         elif sticker:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, type=Message.PROCESSING)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=id)
         else:
@@ -380,7 +380,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, type=Message.PROCESSING)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=id)
         else:
@@ -403,7 +403,7 @@ class Message(models.Model):
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PROCESSING)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker=sticker, type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, type=Message.PROCESSING)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=id)
         else:
@@ -446,7 +446,11 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        if self.attach and self.text:
+        if self.sticker:
+            return "Стикер"
+        elif self.voice:
+            return "Голосовое сообщение"
+        elif self.attach and self.text:
             return "Текст и вложения"
         elif self.attach and not self.text:
             return "Вложения"
