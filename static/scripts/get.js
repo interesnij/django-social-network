@@ -255,14 +255,14 @@ on('#ajax', 'click', '.show_replies', function() {
 on('body', 'click', '.reply_comment', function() {
   div = this.nextElementSibling;
   input = div.querySelector(".comment_text");
-  input.innerHTML = this.previousElementSibling.innerHTML + ', ';
+  input.innerHTML = this.previousElementSibling.innerHTML + ',&nbsp;';
   div.style.display = "block";
   range = document.createRange();
   range.selectNodeContents(input);
   range.collapse(false);
   sel = window.getSelection();
   sel.removeAllRanges();
-  sel.addRange(range + " ");
+  sel.addRange(range);
 })
 
 
