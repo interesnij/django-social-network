@@ -38,7 +38,7 @@ on('#ajax', 'click', '.smile_dropdown', function() {
   block.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
-  if (document.body.querySelector("#chatlist")) {
+  if (document.body.querySelector(".chatlist")) {
   check_message_form_btn()
   }
 })
