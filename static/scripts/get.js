@@ -253,21 +253,16 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('body', 'click', '.reply_comment', function() {
-  var editable = this;
-  var range;
-  var sel;
   div = this.nextElementSibling;
   input = div.querySelector(".comment_text");
   input.innerHTML = this.previousElementSibling.innerHTML + ', ';
   div.style.display = "block";
-  editable.innerHTML = editable.innerHTML.substr(0, 20);
   range = document.createRange();
+  range.selectNodeContents(this);
+  range.collapse(false);
   sel = window.getSelection();
-  range.setStart(editable.firstChild, editable.innerHTML.length);
-  range.collapse(true);
   sel.removeAllRanges();
   sel.addRange(range);
-  editable.focus();
 })
 
 
