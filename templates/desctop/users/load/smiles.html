@@ -11,8 +11,8 @@
                         {% endif %}
 
                         {% for smiles in smiles_category %}
-                          <h4>{{ smiles.name }}</h4>
-                          {% for smile in smiles.get_stickers %}
+                          <h6>{{ smiles.name }}</h6>
+                          {% for smile in smiles.get_smiles %}
                             <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}"  alt="smile">
                           {% endfor %}
                         {% endfor %}
@@ -28,7 +28,7 @@
                       {% endif %}
 
                       {% for stickers in stickers_category %}
-                        <h4>{{ stickers.name }}</h4>
+                        <h6>{{ stickers.name }}</h6>
                         {% for sticker in stickers.get_stickers %}
                           <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
                         {% endfor %}
