@@ -259,6 +259,7 @@ on('body', 'click', '.reply_comment', function() {
   div = this.nextElementSibling;
   input = div.querySelector(".comment_text");
   input.innerHTML = this.previousElementSibling.innerHTML + ', ';
+  div.style.display = "block";
   editable.innerHTML = editable.innerHTML.substr(0, 20);
   range = document.createRange();
   sel = window.getSelection();
@@ -267,7 +268,6 @@ on('body', 'click', '.reply_comment', function() {
   sel.removeAllRanges();
   sel.addRange(range);
   editable.focus();
-  div.style.display = "block";
 })
 
 
