@@ -26,7 +26,7 @@ from communities.model.list import *
 from django.db.models import Q
 from chat.models import Message
 
-message = Message.objects.get(uuid="9edf1918-7661-442a-bdad-12bc59f08e17")
+message = Message.objects.get(uuid="1b6bb514-0e6f-47c0-9e33-41164ae9c171")
 import re
 
 ids = print(re.findall(r'(?P<pk>\d+)', message.text))
