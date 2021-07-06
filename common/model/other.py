@@ -97,7 +97,7 @@ class UserPopulateSmiles(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
-    def get_plus_or_create(self, user_pk, smile_pk):
+    def get_plus_or_create(user_pk, smile_pk):
         if UserPopulateSmiles.objects.filter(user_id=user_pk, smile_id=smile_pk).exists():
             md = UserPopulateSmiles.objects.get(user_id=user_pk, smile_id=smile_pk)
             md.count += 1
@@ -119,7 +119,7 @@ class UserPopulateStickers(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
-    def get_plus_or_create(self, user_pk, sticker_pk):
+    def get_plus_or_create(user_pk, sticker_pk):
         if UserPopulateStickers.objects.filter(user_id=user_pk, sticker_id=sticker_pk).exists():
             md = UserPopulateStickers.objects.get(user_id=user_pk, sticker_id=sticker_pk)
             md.count += 1
