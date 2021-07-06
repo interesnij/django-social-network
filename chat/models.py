@@ -456,6 +456,7 @@ class Message(models.Model):
             for s in _text:
                 if s == "<":
                     count += 50
+            return _text
         else:
             return self.text[:60]
 
