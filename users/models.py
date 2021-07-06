@@ -66,11 +66,13 @@ class User(AbstractUser):
             return verb
 
     def get_populate_smiles(self):
-        from common.model.other import UserPopulateSmiles
-        return UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]
+        from common.model.other import UserPopulateSmiles, Smiles
+        #return UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]
+        return Smiles.objects.filter(smile__user_id=self.pk)[:20]
     def is_have_populate_smiles(self):
-        from common.model.other import UserPopulateSmiles
-        return UserPopulateSmiles.objects.filter(user_id=self.pk).exists()
+        from common.model.other import UserPopulateSmiles, Smiles
+        #return UserPopulateSmiles.objects.filter(user_id=self.pk).exists()
+        return Smiles.objects.filter(smile__user_id=self.pk).exists()
 
     def get_populate_stickers(self):
         from common.model.other import UserPopulateStickers
