@@ -253,11 +253,20 @@ on('#ajax', 'click', '.show_replies', function() {
 });
 
 on('body', 'click', '.reply_comment', function() {
+  var editable = this;
+  var range;
+  var sel;
   div = this.nextElementSibling;
   input = div.querySelector(".comment_text");
   input.innerHTML = this.previousElementSibling.innerHTML + ', ';
+  range = document.createRange();
+  sel = window.getSelection();
+  range.setStart(editable.firstChild, editable.innerHTML.length);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  editable.focus();
   div.style.display = "block";
-  input.focus();
 })
 
 
