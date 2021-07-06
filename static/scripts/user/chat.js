@@ -116,7 +116,7 @@ function send_message_sticker(form_post, url) {
     }
   }};
   link_.send(form_data);
-})
+};
 
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
