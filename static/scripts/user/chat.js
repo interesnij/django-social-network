@@ -92,7 +92,12 @@ function send_message_sticker(url, value) {
   } else {
     form_post = document.body.querySelector(".page_message_form")
   }
-  form_post.querySelector(".sticker").value = value;
+  $sticker = document.createElement("input");
+  $sticker.setAttribute("name", "sticker");
+  $sticker.setAttribute("type", "text");
+  $sticker.classList.add("sticker");
+  $sticker.value = value;
+  form_post.append($sticker);
   form_data = new FormData(form_post);
   if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
 
@@ -112,7 +117,7 @@ function send_message_sticker(url, value) {
       form_post.querySelector(".message_text").classList.remove("border_red");
       form_post.querySelector(".hide_block_menu").classList.remove("show");
       form_post.querySelector(".message_dropdown").classList.remove("border_red");
-      form_post.querySelector(".sticker").value = '';
+      form_post.querySelector(".sticker").remove();
       objDiv = document.querySelector("#chatcontent");
       objDiv.scrollTop = objDiv.scrollHeight
     } else {
