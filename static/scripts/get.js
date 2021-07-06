@@ -259,6 +259,7 @@ on('body', 'click', '.reply_comment', function() {
   div = this.nextElementSibling;
   input = div.querySelector(".comment_text");
   input.innerHTML = this.previousElementSibling.innerHTML + ', ';
+  editable.innerHTML = editable.innerHTML.substr(0, 20);
   range = document.createRange();
   sel = window.getSelection();
   range.setStart(editable.firstChild, editable.innerHTML.length);
