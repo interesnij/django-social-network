@@ -451,12 +451,10 @@ class Message(models.Model):
         elif self.attach and not self.text:
             return "Вложения"
         elif self.text:
-            count = 60
-            _text = self.text[:count]
-            for s in _text:
-                if s == "<":
-                    count += 50
-            return _text
+            import re
+            images = re.findall(r'<img.*?>', self.text)
+            count = 60 + 50*len(images)
+            return self.text[:count]
         else:
             return self.text[:60]
 
