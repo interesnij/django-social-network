@@ -24,14 +24,4 @@ from users.model.list import *
 from communities.models import Community
 from communities.model.list import *
 from django.db.models import Q
-
-
-post_lists = PostList.objects.filter(type="_DRA")
-for list in post_lists:
-    try:
-        if list.community:
-            CommunityPostListPosition.objects.get(list=list.pk, community=list.community.pk).delete()
-        else:
-            UserPostListPosition.objects.get(list=list.pk, user=list.creator.pk).delete()
-    except:
-        pass
+from chat.models import Message

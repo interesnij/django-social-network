@@ -403,6 +403,9 @@ class Message(models.Model):
         else:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
+        if text:
+            import re
+            ids = print(re.findall(r'(pk=".+?" st)', text))
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:

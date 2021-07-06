@@ -48,6 +48,7 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img = document.createElement("img");
   $img.style.width = "auto";
   $img.src = this.getAttribute("src");
+  $img.setAttribute(data-pk, this.getAttribute("data-pk"))
   input.append($img);
   if (document.body.querySelector("#chatlist")) {
   check_message_form_btn()
