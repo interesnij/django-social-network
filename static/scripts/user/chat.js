@@ -81,12 +81,12 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
   } else if (document.body.querySelector("#send_page_message_btn")){
     url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
   };
-  send_message_sticker(form, url)
+  send_message_sticker(form, url, this.getAttribute("data-pk"))
 })
 
-function send_message_sticker(form_post, url) {
+function send_message_sticker(form_post, url, value) {
   is_chat = false; is_page = false;
-  form_post.querySelector(".sticker").value = this.getAttribute("data-pk");
+  form_post.querySelector(".sticker").value = value;
   form_data = new FormData(form_post);
   if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
 
