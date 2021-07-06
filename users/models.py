@@ -75,16 +75,18 @@ class User(AbstractUser):
         from common.model.other import Smiles, UserPopulateSmiles
         query = []
         for smile in UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]:
-            #query.append(Smiles.objects.get(id=smile.pk))
-            query.append(smile.pk)
-        return Smiles.objects.filter(id__in=query)
+            query.append(Smiles.objects.get(id=smile.pk))
+        return query
     def is_have_populate_smiles(self):
         from common.model.other import Smiles
         return Smiles.objects.filter(smile__user_id=self.pk).exists()
 
     def get_populate_stickers(self):
-        from common.model.other import UserPopulateStickers
-        return UserPopulateStickers.objects.filter(user_id=self.pk)[:20]
+        from common.model.other import UserPopulateStickers, Stickers
+        query = []
+        for sticker in UserPopulateStickers.objects.filter(user_id=self.pk)[:20]:
+            query.append(Stickers.objects.get(id=sticker.pk))
+        return query
     def is_have_populate_stickers(self):
         from common.model.other import UserPopulateStickers
         return UserPopulateStickers.objects.filter(user_id=self.pk).exists()
