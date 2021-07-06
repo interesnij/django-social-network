@@ -81,8 +81,15 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
   } else if (document.body.querySelector("#send_page_message_btn")){
     url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
     send_message_sticker(url, this.getAttribute("data-pk"))
-  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".img_block")){
-    console.log("это коммент, братан")
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".comment_form")){
+    form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    console.log("Коммент")
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".reply_form")){
+    form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    console.log("Ответ на коммент")
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".parent_form")){
+    form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    console.log("Ответ на ответ")
   }
 })
 
