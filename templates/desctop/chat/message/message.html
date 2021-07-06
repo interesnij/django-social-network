@@ -15,7 +15,12 @@
         <a href="{{ object.creator.get_link }}" class="ajax">{{ object.creator.first_name }}</a>
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
-      {% if object.text %}
+      {% if object.voice %}
+        <audio src="{{ object.voice.url }}"></audio>
+      {% else if object.sticker %}
+        <img src="{{ object.sticker.image.url }}" data-name="{{ object.sticker.category.name }}" style="width: 50px;">
+      {% else %}
+
         <div class="toggle_message pointer">
           {{ object.text|safe }}
           {% if request.user.pk == object.creator.pk %}
@@ -26,7 +31,6 @@
             {% endif %}
           {% endif %}
         </div>
-      {% endif %}
 
       {% if object.attach %}
         {{ object|get_attach:request.user|safe }}
@@ -40,6 +44,8 @@
             {% include object.get_u_repost_items_desctop %}
           {% endif %}
         </span>
+      {% endif %}
+
       {% endif %}
     </div>
 </div>
