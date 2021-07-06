@@ -30,3 +30,4 @@ message = Message.objects.get(uuid="9edf1918-7661-442a-bdad-12bc59f08e17")
 import re
 
 ids = print(re.findall(r'(pk="(?P<pk>\d+)" st)', message.text))
+return ids
