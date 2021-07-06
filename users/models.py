@@ -65,13 +65,20 @@ class User(AbstractUser):
         else:
             return verb
 
+    def get_6_populate_friends(self):
+        query = []
+        for frend_id in self.get_6_populate_friends_ids():
+            query.append(User.objects.get(pk=frend_id))
+        return query
+
     def get_populate_smiles(self):
-        from common.model.other import UserPopulateSmiles, Smiles
-        #return UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]
-        return Smiles.objects.filter(smile__user_id=self.pk)[:20]
+        from common.model.other import Smiles
+        query = []
+        for smile in Smiles.objects.filter(smile__user_id=self.pk)[:20]:
+            query.append(smile)
+        return query
     def is_have_populate_smiles(self):
-        from common.model.other import UserPopulateSmiles, Smiles
-        #return UserPopulateSmiles.objects.filter(user_id=self.pk).exists()
+        from common.model.other import Smiles
         return Smiles.objects.filter(smile__user_id=self.pk).exists()
 
     def get_populate_stickers(self):
