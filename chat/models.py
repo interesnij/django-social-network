@@ -452,8 +452,10 @@ class Message(models.Model):
             return "Вложения"
         elif self.text:
             import re
+            count = 60
             images = re.findall(r'<img.*?>', self.text)
-            count = 60 + 50*len(images)
+            for image in images:
+                count += (len(image) -1)
             return self.text[:count]
         else:
             return self.text[:60]
