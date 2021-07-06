@@ -450,8 +450,12 @@ class Message(models.Model):
             return "Текст и вложения"
         elif self.attach and not self.text:
             return "Вложения"
-        elif "img" in self.text:
-            return self.text[:160]
+        elif self.text:
+            count = 60
+            _text = self.text[:count]
+            for s in _text:
+                if s == "<":
+                    count += 50
         else:
             return self.text[:60]
 
