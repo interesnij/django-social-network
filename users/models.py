@@ -75,10 +75,9 @@ class User(AbstractUser):
         from common.model.other import Smiles, UserPopulateSmiles
         query = []
         for smile in UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]:
-            query.append(Smiles.objects.get(id=smile.pk))
-        #for smile in Smiles.objects.filter(smile__user_id=self.pk)[:20]:
-        #    query.append(smile)
-        return query
+            #query.append(Smiles.objects.get(id=smile.pk))
+            query.append(smile.pk)
+        return Smiles.objects.filter(id__in=query)
     def is_have_populate_smiles(self):
         from common.model.other import Smiles
         return Smiles.objects.filter(smile__user_id=self.pk).exists()
