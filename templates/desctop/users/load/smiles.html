@@ -23,14 +23,14 @@
                       {% if is_have_populate_stickers %}
                         <h6>Часто используемые</h6>
                         {% for sticker in request.user.get_populate_stickers %}
-                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
+                          <img class="pointer classic_sticker_item" data-pk="{{ smile.pk }}" style="width: auto" src="{{ sticker.image.url }}"  alt="sticker">
                         {% endfor %}
                       {% endif %}
 
                       {% for stickers in stickers_category %}
                         <h6 class="mt-1">{{ stickers.name }}</h6>
                         {% for sticker in stickers.get_stickers %}
-                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
+                          <img class="pointer classic_sticker_item" data-pk="{{ smile.pk }}" style="width: auto" src="{{ sticker.image.url }}"  alt="sticker">
                         {% endfor %}
                       {% endfor %}
                     <p>
