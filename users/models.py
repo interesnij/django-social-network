@@ -68,10 +68,16 @@ class User(AbstractUser):
     def get_populate_smiles(self):
         from common.model.other import UserPopulateSmiles
         return UserPopulateSmiles.objects.filter(user_id=self.pk)[:20]
+    def is_have_populate_smiles(self):
+        from common.model.other import UserPopulateSmiles
+        return UserPopulateSmiles.objects.filter(user_id=self.pk).exists()
 
     def get_populate_stickers(self):
         from common.model.other import UserPopulateStickers
         return UserPopulateStickers.objects.filter(user_id=self.pk)[:20]
+    def is_have_populate_stickers(self):
+        from common.model.other import UserPopulateStickers
+        return UserPopulateStickers.objects.filter(user_id=self.pk).exists()
 
     def get_device(self):
         if self.device == User.DESCTOP:

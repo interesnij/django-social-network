@@ -3,20 +3,32 @@
               <div class="tab-content">
                   <div class="tab-pane fade active show smiles_panel" style="height: 190px;width: 250px;">
                       <p class="mb-0 f-sm">
-                        {% for smiles in smiles_category %}
-                          <h4>{{ smiles.name }}</h4>
-                          {% for smile in smiles.get_smiles %}
-                            <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}"  alt="{{ smile.name }}">
+                        {% if is_have_populate_smiles %}
+                          <h6>Часто используемые</h6>
+                          {% for smile in request.user.get_populate_smiles %}
+                            <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}"  alt="smile">
                           {% endfor %}
+                        {% endif %}
+
+                        <h4>{{ smiles.name }}</h4>
+                        {% for smile in smiles.get_smiles %}
+                          <img class="pointer classic_smile_item" data-pk="{{ smile.pk }}" style="width: auto;" src="{{ smile.image.url }}"  alt="smile">
                         {% endfor %}
                       <p>
                   </div>
                   <div class="tab-pane fade stickers_panel" style="height: 190px;width: 250px;">
                     <p class="mb-0 f-sm">
+                      {% if is_have_populate_stickers %}
+                        <h6>Часто используемые</h6>
+                        {% for sticker in request.user.get_populate_stickers %}
+                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
+                        {% endfor %}
+                      {% endif %}
+
                       {% for stickers in stickers_category %}
                         <h4>{{ stickers.name }}</h4>
                         {% for sticker in stickers.get_stickers %}
-                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="{{ sticker.name }}">
+                          <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
                         {% endfor %}
                       {% endfor %}
                     <p>
