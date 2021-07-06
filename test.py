@@ -29,5 +29,6 @@ from chat.models import Message
 message = Message.objects.get(uuid="1b6bb514-0e6f-47c0-9e33-41164ae9c171")
 import re
 
-ids = print(re.findall(r'data-pk="(?P<pk>\d+)"', message.text))
-print(re.'data-pk="(?P<pk>\d+)"', message.text))
+#print(re.findall(r'data-pk="(?P<pk>\d+)"', message.text))
+ids = re.findall(r'data-pk="(?P<pk>\d+)"', message.text)
+print ids
