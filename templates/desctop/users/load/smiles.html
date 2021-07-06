@@ -28,7 +28,7 @@
                       {% endif %}
 
                       {% for stickers in stickers_category %}
-                        <h6>{{ stickers.name }}</h6>
+                        <h6 class="mt-1">{{ stickers.name }}</h6>
                         {% for sticker in stickers.get_stickers %}
                           <img class="pointer classic_sticker_item" style="width: 50px" src="{{ sticker.image.url }}"  alt="sticker">
                         {% endfor %}

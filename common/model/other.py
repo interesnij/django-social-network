@@ -86,7 +86,7 @@ class Smiles(models.Model):
 
 class UserPopulateSmiles(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
-    smile = models.ForeignKey(Smiles, on_delete=models.CASCADE, related_name='+', verbose_name="Смайл")
+    smile = models.ForeignKey(Smiles, on_delete=models.CASCADE, related_name='smile', verbose_name="Смайл")
     count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
 
     class Meta:
@@ -108,7 +108,7 @@ class UserPopulateSmiles(models.Model):
 
 class UserPopulateStickers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
-    sticker = models.ForeignKey(Stickers, on_delete=models.CASCADE, related_name='+', verbose_name="Стикер")
+    sticker = models.ForeignKey(Stickers, on_delete=models.CASCADE, related_name='sticker', verbose_name="Стикер")
     count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
 
     class Meta:
