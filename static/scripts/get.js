@@ -258,7 +258,7 @@ on('body', 'click', '.reply_comment', function() {
   input.innerHTML = this.previousElementSibling.innerHTML + ', ';
   div.style.display = "block";
   range = document.createRange();
-  range.selectNodeContents(this);
+  range.selectNodeContents(input);
   range.collapse(false);
   sel = window.getSelection();
   sel.removeAllRanges();
