@@ -408,7 +408,7 @@ class Message(models.Model):
                 if ids:
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
-                        UserPopulateSmiles.get_plus_or_create(creator.pk, id)
+                        UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id) 
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
 
