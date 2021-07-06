@@ -75,17 +75,22 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 });
 
 on('#ajax', 'click', '.classic_sticker_item', function() {
-  form = this.parentElement.parentElement.parentElement;
   if (document.body.querySelector(".chatlist")){
     url = "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/";
   } else if (document.body.querySelector("#send_page_message_btn")){
     url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
   };
-  send_message_sticker(form, url, this.getAttribute("data-pk"))
+  send_message_sticker(url, this.getAttribute("data-pk"))
 })
 
-function send_message_sticker(form_post, url, value) {
+function send_message_sticker(url, value) {
   is_chat = false; is_page = false;
+  if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
+  if (is_chat) {
+    form_post = document.body.querySelector(".customize_form")
+  } else {
+    form_post = document.body.querySelector(".page_message_form")  
+  }
   form_post.querySelector(".sticker").value = value;
   form_data = new FormData(form_post);
   if (document.body.querySelector(".chatlist")){is_chat = true} else {is_page = true};
