@@ -31,4 +31,5 @@ import re
 
 #print(re.findall(r'data-pk="(?P<pk>\d+)"', message.text))
 ids = re.findall(r'data-pk="(?P<pk>\d+)"', message.text)
+images = re.findall(r'(<img.+?>)', message.text)
 print(ids)
