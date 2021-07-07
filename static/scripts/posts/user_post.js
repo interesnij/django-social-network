@@ -36,6 +36,9 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   $input.value = form_post.querySelector(".smile_supported");
   form_post.append($input);
   form_data = new FormData(form_post);
+  if (!form_post.querySelector(".smile_supported").innerHTML && !form_post.querySelector(".attach_block").innerHTML) {
+    toast_error("Напишите или прикрепите что-нибудь")
+  }
 
   lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
