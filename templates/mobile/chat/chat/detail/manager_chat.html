@@ -3,6 +3,7 @@
 {% load message %}
 {% block content %}
 
+<div class="main-container container">
 <div class="card-header border-bottom" style="padding-bottom: 3px;">
     <div class="media w-100">
       {{ chat|get_header_manager_chat:request.user.pk|safe }}
@@ -41,5 +42,5 @@
       {% include 'mobile/chat/chat/form.html' %}
     </div>
 </div>
-<span id="scrolled"></span>
+</div>
 {% endblock %}

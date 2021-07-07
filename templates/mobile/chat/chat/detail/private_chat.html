@@ -2,7 +2,8 @@
 {% block title %}Публичный чат{% endblock %}
 {% load message %}
 {% block content %}
-{% for user in chat.get_recipients %}{{ user.get_full_name }}, {% endfor %}
+
+<div class="main-container container">
 <div class="card-header border-bottom" style="padding-bottom: 3px;">
     <div class="media w-100">
       {{ chat|get_header_private_chat:request.user.pk|safe }}
@@ -43,5 +44,5 @@
       {% include 'mobile/chat/chat/form.html' %}
     </div>
 </div>
-<span id="scrolled"></span>
+</div>
 {% endblock %}
