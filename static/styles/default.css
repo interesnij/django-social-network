@@ -1,3 +1,15 @@
+@keyframes show{
+  0%{
+    opacity:0,6;
+  }
+  100% {
+    opacity:1;
+  }
+}
+#ajax {
+  animation: show  0.3s ease-in-out;
+}
+
 .post_detail {
   display: block !important;
 }
@@ -5,7 +17,8 @@
 [contenteditable=true]:empty:before{
   content: attr(placeholder);
   pointer-events: none;
-  display: block; /* For Firefox */
+  display: block;
+  opacity: 0.6;
 }
 
 .form_smilies.show {
