@@ -30,7 +30,7 @@ function hide_chat_console(is_favourite) {
 }
 
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
-on('#ajax', 'click', '.smile_dropdown', function() {
+on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.querySelector(".card")) {
     list_load(block, "/users/load/smiles_stickers/")
