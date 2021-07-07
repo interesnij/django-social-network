@@ -33,7 +33,7 @@ on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.cl
 on('#ajax', 'click', '.smile_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.querySelector(".card")) {
-    list_load(block, "/users/load/smiles/")
+    list_load(block, "/users/load/smiles_stickers/")
   };
   block.classList.toggle("show");
 })

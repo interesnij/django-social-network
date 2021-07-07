@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^communities/$', login_required(CommunitiesLoad.as_view())),
     url(r'^friends/$', login_required(FriendsLoad.as_view())),
     url(r'^smiles/$', SmilesLoad.as_view()),
+    url(r'^smiles_stickers/$', SmilesStickersLoad.as_view()),
 ]
