@@ -2,7 +2,7 @@
 
     {% include 'desctop/posts/post_user/card_header.html' %}
 
-    {{ object.text|linebreaks }}
+    {{ object.text|safe }}
 
     {% include 'base_block/post.html' %}
 

@@ -2,7 +2,7 @@
 
 {% if object.parent.text %}
   <div class="fullscreen pointer">
-    {{ object.parent.text|linebreaks }}
+    {{ object.parent.text|safe }}
   </div>
 {% endif %}
 

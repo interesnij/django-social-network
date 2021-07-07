@@ -2,7 +2,7 @@
     {% include 'desctop/posts/post_user/card_header.html' %}
     {% if object.text %}
       <div class="fullscreen pointer">
-        {{ object.text|linebreaks }}
+        {{ object.text|safe }}
       </div>
     {% endif %}
 

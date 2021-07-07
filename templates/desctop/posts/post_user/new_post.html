@@ -3,7 +3,7 @@
   {% include 'desctop/posts/post_user/card_header.html' %}
 
   <div class="fullscreen pointer">
-    {{ object.text|linebreaks }}
+    {{ object.text|safe }}
   </div>
 
   {% include 'base_block/post.html' %}

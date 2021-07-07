@@ -4,7 +4,7 @@
 
     {% if object.text %}
       <div class="fullscreen pointer">
-        {{ object.text|linebreaks }}
+        {{ object.text|safe }}
       </div>
     {% endif %}
 

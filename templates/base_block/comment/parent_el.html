@@ -11,7 +11,7 @@
 </div>
 {% else %}
 
-{{ comment.text|linebreaks }}
+{{ comment.text|safe }}
 
 {% if comment.attach %}
   {% load comment %}

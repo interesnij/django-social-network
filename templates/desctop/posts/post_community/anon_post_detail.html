@@ -3,7 +3,7 @@
 <div class="card mb-3" data-uuid="{{ object.uuid }}">
     {% include 'desctop/posts/post_community/anon_card_header.html' %}
 
-    {{ object.text|linebreaks }}
+    {{ object.text|safe }}
 
     {% include 'base_block/post.html' %}
 

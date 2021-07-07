@@ -58,7 +58,7 @@
   </div>
 
   <div class="fix_fullscreen pointer">
-    {{ object.text|linebreaks }}
+    {{ object.text|safe }}
   </div>
 
   {% include 'base_block/post.html' %}
