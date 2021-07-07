@@ -352,7 +352,7 @@ class CommunityPostsListView(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityPostsListView,self).get_context_data(**kwargs)
-		c['community'], c['post_lists'], c['list'], c['fix_list'], c['is_admin'] = self.c, self.post_lists, self.list, self.c.get_fix_list(), self.request.user.is_administrator_of_community(self.c.pk)
+		c['community'], c['post_lists'], c['list'], c['fix_list'] = self.c, self.post_lists, self.list, self.c.get_fix_list()
 		return c
 
 	def get_queryset(self):
