@@ -2,7 +2,7 @@
 {% block title %}Подписчики сообщества "{{ community.name }}"{% endblock %}
 {% block content %}
 
-<div class="row">
+<div class="main-container row">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск подписчиков" aria-label="Recipient's username">
@@ -14,7 +14,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Подписчики сообщества 
+                        <h5 class="mt-1">Подписчики сообщества
                             {% include 'desctop/generic/community/community.html' %}
                         </h5>
                     </div>

@@ -2,14 +2,14 @@
 {% block title %}Приватность товаров - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
+<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
     <div class="row">
         <div class="col-md-8 order-1">
             <form id="community_private_good_form" class="contact-form">
                 {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Приватность товаров - 
+                        <h5 class="content-color-primary mb-0">Приватность товаров -
                           {% include 'desctop/generic/community/community.html' %}
                         </h5>
                     </div>

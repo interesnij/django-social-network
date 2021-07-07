@@ -3,14 +3,13 @@
 {% load get_key %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
+<div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по товарам">
             <div class="input-group-append">
                 <button class="btn custom_color border" type="button">Искать</button>
             </div>
         </div>
-
         <div class="card mb-2">
             <div class="card-body" style="padding: 10px;padding-bottom: 0;">
               <div style="display:flex">

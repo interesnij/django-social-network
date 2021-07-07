@@ -2,7 +2,7 @@
 {% block title %}Заявки в сообщество - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="container mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
+<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}">
 <div class="row">
     <div class="col-md-8 order-1">
         <div class="input-group mb-3">
@@ -15,7 +15,7 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Заявки в сообщество - 
+                        <h5 class="mt-1">Заявки в сообщество -
                             {% include 'desctop/generic/community/community.html' %}
                         </h5>
                     </div>
