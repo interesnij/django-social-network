@@ -34,7 +34,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = form_post.querySelector(".smile_supported");
-  form_post.append($sticker);
+  form_post.append($input);
   form_data = new FormData(form_post);
 
   lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
