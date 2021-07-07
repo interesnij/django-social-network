@@ -4,6 +4,13 @@
     {% include 'desctop/generic/user/comment_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
         {% include 'desctop/generic/user/comment_meta.html' %}
+
+        {% if comment.sticker %}
+        <div class="comment_sticker mt-1">
+          <img src="{{ object.sticker.image.url }}" style="width: 128px;">
+        </div>
+        {% else %}
+
         {{ comment.text|linebreaks }}
 
         {% if comment.attach %}
