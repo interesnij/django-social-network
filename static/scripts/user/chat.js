@@ -74,6 +74,34 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.send(form_data);
 });
 
+function send_comment_sticker(form, url, value) {
+  $sticker = document.createElement("input");
+  $sticker.setAttribute("name", "sticker");
+  $sticker.setAttribute("type", "text");
+  $sticker.classList.add("sticker");
+  $sticker.value = value;
+  form.append($sticker);
+  form = new FormData(form_post);
+
+  if (form.classList.contains("u_post_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/')
+} else if (form.classList.contains("c_post_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/')
+} else if (form.classList.contains("u_video_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/add_comment/')
+} else if (form.classList.contains("c_video_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/add_comment/')
+} else if (form.classList.contains("u_photo_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/add_comment/')
+} else if (form.classList.contains("c_photo_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/add_comment/')
+} else if (form.classList.contains("u_good_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/')
+} else if (form.classList.contains("c_good_comment")) {
+  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/')
+}
+}
+
 on('#ajax', 'click', '.classic_sticker_item', function() {
   if (document.body.querySelector(".chatlist")){
     url = "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/";
