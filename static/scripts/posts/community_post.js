@@ -14,7 +14,7 @@ on('#ajax', 'click', '#community_article_add', function() {
 });
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
-  form_post = document.querySelector("#form_post");
+  form_post = document.querySelector("#c_form_post");
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
