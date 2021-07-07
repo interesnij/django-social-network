@@ -74,32 +74,68 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.send(form_data);
 });
 
-function send_comment_sticker(form, url, value) {
+function send_comment_sticker(form_post) {
+  comment_form = false, reply_form = false, parent_form = false;
   $sticker = document.createElement("input");
   $sticker.setAttribute("name", "sticker");
   $sticker.setAttribute("type", "text");
   $sticker.classList.add("sticker");
   $sticker.value = value;
-  form.append($sticker);
+  form_post.append($sticker);
   form = new FormData(form_post);
+  if (form_post.querySelector(".comment_form")){
+    if (form_post.classList.contains("u_post_comment")) {url = '/posts/user_progs/add_comment/'}
+    else if (form_post.classList.contains("c_post_comment")) {url = '/posts/community_progs/add_comment/'}
+    else if (form_post.classList.contains("u_video_comment")) {url = '/video/user_progs/add_comment/'}
+    else if (form_post.classList.contains("c_video_comment")) {url = '/video/community_progs/add_comment/'}
+    else if (form_post.classList.contains("u_photo_comment")) {url = '/gallery/user_progs/add_comment/'}
+    else if (form_post.classList.contains("c_photo_comment")) {url = '/gallery/community_progs/add_comment/'}
+    else if (form_post.classList.contains("u_good_comment")) {url = '/goods/user_progs/add_comment/'}
+    else if (form_post.classList.contains("c_good_comment")) {url = '/goods/community_progs/add_comment/'};
+    comment_form = true
+  }
+  else if (form_post.querySelector(".reply_form") || form_post.querySelector(".parent_form")) {
+    if (form_post.classList.contains("u_post_comment")) {url = '/posts/user_progs/reply_comment/'}
+    else if (form_post.classList.contains("c_post_comment")) {url = '/posts/community_progs/reply_comment/'}
+    else if (form_post.classList.contains("u_video_comment")) {url = '/video/user_progs/reply_comment/'}
+    else if (form_post.classList.contains("c_video_comment")) {url = '/video/community_progs/reply_comment/'}
+    else if (form_post.classList.contains("u_photo_comment")) {url = '/gallery/user_progs/reply_comment/'}
+    else if (form_post.classList.contains("c_photo_comment")) {url = '/gallery/community_progs/reply_comment/'}
+    else if (form_post.classList.contains("u_good_comment")) {url = '/goods/user_progs/reply_comment/'}
+    else if (form_post.classList.contains("c_good_comment")) {url = '/goods/community_progs/reply_comment/'}
+  };
+  if (form_post.querySelector(".reply_form") {
+    reply_form = true
+  } else {parent_form = true};
 
-  if (form.classList.contains("u_post_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/')
-} else if (form.classList.contains("c_post_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/')
-} else if (form.classList.contains("u_video_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/add_comment/')
-} else if (form.classList.contains("c_video_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/add_comment/')
-} else if (form.classList.contains("u_photo_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/add_comment/')
-} else if (form.classList.contains("c_photo_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/add_comment/')
-} else if (form.classList.contains("u_good_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/')
-} else if (form.classList.contains("c_good_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/')
-}
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('POST', url, true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          form.querySelector(".text-comment").value = "";
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          if (comment_form) {
+            block = form_post.parentElement.previousElementSibling
+          } else if (reply_form) {
+            block = form_post.parentElement.parentElement.querySelector(".stream_reply_comments")
+          } else if (parent_form) {
+            block = form_post.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+          }
+
+          form_post.querySelector(".comment_text").classList.remove("border_red");
+          form_post.querySelector(".hide_block_menu").classList.remove("show");
+          form_post.querySelector(".dropdown").classList.remove("border_red");
+          form_post.querySelector(".sticker").remove();
+
+          block.append(new_post);
+          toast_success(" Комментарий опубликован");
+
+      }
+  };
+  link_.send(form_comment)
 }
 
 on('#ajax', 'click', '.classic_sticker_item', function() {
@@ -109,15 +145,9 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
   } else if (document.body.querySelector("#send_page_message_btn")){
     url = '/chat/user_progs/send_page_message/' + document.body.querySelector("#send_page_message_btn").getAttribute("data-pk") + '/'
     send_message_sticker(url, this.getAttribute("data-pk"))
-  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".comment_form")){
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".check_mesage_form")){
     form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    console.log("Коммент")
-  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".reply_form")){
-    form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    console.log("Ответ на коммент")
-  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".parent_form")){
-    form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    console.log("Ответ на ответ")
+    send_comment_sticker(form)
   }
 })
 

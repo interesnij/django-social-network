@@ -795,6 +795,12 @@ function elementInViewport(el) {
 }
 
 function send_comment(form, block, link) {
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "text");
+  $input.classList.add("type_hidden");
+  $input.value = value;
+  form.append($input);
     form_comment = new FormData(form);
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link_.open('POST', link, true);
@@ -802,13 +808,14 @@ function send_comment(form, block, link) {
     (form.querySelector(".text-comment").value || form.querySelector(".img_block").firstChild) ? null: toast_error("Напишите или прикрепите что-нибудь");
     link_.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            form.querySelector(".text-comment").value = "";
+            form.querySelector(".comment_text").innerHTML = "";
             elem = link_.responseText;
             new_post = document.createElement("span");
             new_post.innerHTML = elem;
             block.append(new_post);
             toast_success(" Комментарий опубликован");
             form.querySelector(".img_block").innerHTML = "";
+            post.querySelector(".type_hidden").remove();
             try {
                 form_dropdown = form.querySelector(".current_file_dropdown");
                 form_dropdown.classList.remove("current_file_dropdown");
