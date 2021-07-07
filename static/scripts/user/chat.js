@@ -74,7 +74,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.send(form_data);
 });
 
-function send_comment_sticker(form_post) {
+function send_comment_sticker(form_post,value) {
   comment_form = false, reply_form = false, parent_form = false;
   $sticker = document.createElement("input");
   $sticker.setAttribute("name", "sticker");
@@ -147,7 +147,7 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
     send_message_sticker(url, this.getAttribute("data-pk"))
   } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".check_mesage_form")){
     form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    send_comment_sticker(form)
+    send_comment_sticker(form, this.getAttribute("data-pk"))
   }
 })
 
