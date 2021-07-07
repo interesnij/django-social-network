@@ -104,7 +104,7 @@ function send_comment_sticker(form_post) {
     else if (form_post.classList.contains("u_good_comment")) {url = '/goods/user_progs/reply_comment/'}
     else if (form_post.classList.contains("c_good_comment")) {url = '/goods/community_progs/reply_comment/'}
   };
-  if (form_post.querySelector(".reply_form") {
+  if (form_post.querySelector(".reply_form")) {
     reply_form = true
   } else {parent_form = true};
 
