@@ -6,7 +6,7 @@
     opacity:1;
   }
 }
-#ajax {
+.main-container {
   animation: show  0.3s ease-in-out;
 }
 
