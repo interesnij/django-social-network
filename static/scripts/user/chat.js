@@ -113,7 +113,7 @@ function send_comment_sticker(form_post,value) {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          form.querySelector(".text-comment").value = "";
+          form_post.querySelector(".comment_text").innerHTML = "";
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
