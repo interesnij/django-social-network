@@ -9,7 +9,15 @@ on('#ajax', 'click', '.hide_comment_form', function() {
   block.querySelector("p").style.display = "block";
   block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "block" : null;
   this.parentElement.parentElement.parentElement.remove();
-})
+});
+
+on('#ajax', 'click', '.smile_dropdown', function() {
+  block = this.nextElementSibling;
+  if (!block.querySelector(".card")) {
+    list_load(block, "/users/load/smiles/")
+  };
+  block.classList.toggle("show");
+});
 
 on('#ajax', 'click', '.comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
