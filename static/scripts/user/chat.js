@@ -78,7 +78,7 @@ function send_comment_sticker(form_post,value) {
   comment_form = false, reply_form = false, parent_form = false;
   $sticker = document.createElement("input");
   $sticker.setAttribute("name", "sticker");
-  $sticker.setAttribute("type", "text");
+  $sticker.setAttribute("type", "hidden");
   $sticker.classList.add("sticker");
   $sticker.value = value;
   form_post.append($sticker);
@@ -135,7 +135,7 @@ function send_comment_sticker(form_post,value) {
 
       }
   };
-  link_.send(form_comment)
+  link_.send(form)
 }
 
 on('#ajax', 'click', '.classic_sticker_item', function() {
