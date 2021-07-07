@@ -744,7 +744,7 @@ class VideoComment(models.Model):
         if sticker:
             comment = VideoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, video=video)
         else:
-            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text, created=timezone.now())
+            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text)
         video.comment += 1
         video.save(update_fields=["comment"])
         if parent:

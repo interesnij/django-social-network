@@ -815,7 +815,7 @@ class PhotoComment(models.Model):
         if sticker:
             comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, photo=photo)
         else:
-            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text, created=timezone.now())
+            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text)
         if comment.parent:
             if community:
                 community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")

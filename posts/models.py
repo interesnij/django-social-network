@@ -1078,7 +1078,7 @@ class PostComment(models.Model):
         if sticker:
             comment = PostComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, post=post)
         else:
-            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text, created=timezone.now())
+            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
         post.comment += 1
         post.save(update_fields=["comment"])
         if parent:

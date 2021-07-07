@@ -839,7 +839,7 @@ class GoodComment(models.Model):
 		if sticker:
 			comment = GoodComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, good=good)
 		else:
-			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text, created=timezone.now())
+			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text)
 		good.comment += 1
 		good.save(update_fields=["comment"])
 		if comment.parent:
