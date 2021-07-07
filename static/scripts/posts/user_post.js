@@ -33,7 +33,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
-  $input.value = form_post.querySelector(".smile_supported");
+  $input.value = form_post.querySelector(".smile_supported").innerHTML;
   form_post.append($input);
   form_data = new FormData(form_post);
   if (!form_post.querySelector(".smile_supported").innerHTML && !form_post.querySelector(".attach_block").innerHTML) {
