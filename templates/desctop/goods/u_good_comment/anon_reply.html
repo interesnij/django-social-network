@@ -3,14 +3,7 @@
 <div class="media reply">
   {% include 'desctop/generic/user/reply_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        {% include 'desctop/generic/user/reply_meta.html' %}
-
-        {{ reply.text|linebreaks }}
-
-        {% if reply.attach %}
-          {% load comment %}
-          {{ reply|get_attach:request.user|safe }}
-        {% endif %}
+        {% include 'base_block/comment/reply_el.html' %}
 
         <div class="">
             <div class="row">

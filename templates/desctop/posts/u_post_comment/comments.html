@@ -23,10 +23,10 @@
 
 <div>
 
-  <form class="u_post_comment"> 
+  <form class="u_post_comment">
       {% csrf_token %}
       <input type="hidden" name="uuid" value="{{ parent.uuid }}">
       <input type="hidden" name="pk" value="{{ user.pk }}">
-      {% include 'base_block/comment_form.html' %}
+      {% include 'base_block/comment/comment_form.html' %}
   </form>
 </div>

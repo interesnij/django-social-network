@@ -3,13 +3,7 @@
 <div class="media comment">
   {% include 'mobile/generic/user/comment_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        {% include 'mobile/generic/user/comment_meta.html' %}
-        {{ comment.text|linebreaks }}
-
-        {% if comment.attach %}
-          {% load comment %}
-          {{ comment|get_attach:request.user|safe }}
-        {% endif %}
+        {% include 'base_block/comment/parent_el.html' %}
 
         <div class="">
             <div class="row">

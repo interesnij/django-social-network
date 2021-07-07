@@ -3,21 +3,7 @@
 <div class="media comment">
     {% include 'desctop/generic/user/comment_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        {% include 'desctop/generic/user/comment_meta.html' %}
-
-        {% if comment.sticker %}
-        <div class="comment_sticker mt-1">
-          <img src="{{ comment.sticker.image.url }}" style="width: 128px;">
-        </div>
-        {% else %}
-
-        {{ comment.text|linebreaks }}
-
-        {% if comment.attach %}
-          {% load comment %}
-          {{ comment|get_attach:request.user|safe }}
-        {% endif %}
-        {% endif %}
+        {% include 'base_block/comment/parent_el.html' %}
 
         <div class="card_footer">
             <div class="row">
@@ -90,7 +76,7 @@
                           {% csrf_token %}
                           <input type="hidden" name="pk" value="{{ user.pk }}">
                           <input type="hidden" name="post_comment" value="{{ comment.pk }}">
-                          {% include 'base_block/reply_comment_form.html' %}
+                          {% include 'base_block/comment/reply_comment_form.html' %}
                       </form>
                     </div>
 

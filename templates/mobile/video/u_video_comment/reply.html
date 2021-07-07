@@ -3,14 +3,7 @@
 <div class="media reply">
     {% include 'mobile/generic/user/reply_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
-        {% include 'mobile/generic/user/reply_meta.html' %}
-
-        {{ reply.text|linebreaks }}
-
-        {% if reply.attach %}
-          {% load comment %}
-          {{ reply|get_attach:request.user|safe }}
-        {% endif %}
+        {% include 'base_block/comment/reply_el.html' %}
 
         <div class="">
             <div class="row">
@@ -88,7 +81,7 @@
                           {% csrf_token %}
                           <input type="hidden" name="pk" value="{{ user.pk }}">
                           <input type="hidden" name="video_comment" value="{{ comment.pk }}">
-                          {% include 'base_block/reply_parent_form.html' %}
+                          {% include 'base_block/comment/reply_parent_form.html' %}
                       </form>
                     </div>
                 </div>
