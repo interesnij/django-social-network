@@ -799,13 +799,13 @@ function send_comment(form, block, link) {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "text");
   $input.classList.add("type_hidden");
-  $input.value = value;
+  $input.value = form.querySelector(".comment_text").innerHTML;
   form.append($input);
     form_comment = new FormData(form);
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link_.open('POST', link, true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    (form.querySelector(".text-comment").value || form.querySelector(".img_block").firstChild) ? null: toast_error("Напишите или прикрепите что-нибудь");
+    (form.querySelector(".comment_text").value || form.querySelector(".img_block").firstChild) ? null: toast_error("Напишите или прикрепите что-нибудь");
     link_.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             form.querySelector(".comment_text").innerHTML = "";
