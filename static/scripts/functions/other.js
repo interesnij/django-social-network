@@ -797,7 +797,7 @@ function elementInViewport(el) {
 function send_comment(form, block, link) {
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
-  $input.setAttribute("type", "text");
+  $input.setAttribute("type", "hidden");
   $input.classList.add("type_hidden");
   $input.value = form.querySelector(".comment_text").innerHTML;
   form.append($input);
@@ -815,7 +815,7 @@ function send_comment(form, block, link) {
             block.append(new_post);
             toast_success(" Комментарий опубликован");
             form.querySelector(".img_block").innerHTML = "";
-            post.querySelector(".type_hidden").remove();
+            form.querySelector(".type_hidden").remove();
             try {
                 form_dropdown = form.querySelector(".current_file_dropdown");
                 form_dropdown.classList.remove("current_file_dropdown");
