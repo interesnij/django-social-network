@@ -29,6 +29,12 @@ on('#ajax', 'click', '#u_add_article', function() {
 
 on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = document.querySelector("#form_post");
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = form_post.querySelector(".smile_supported");
+  form_post.append($sticker);
   form_data = new FormData(form_post);
 
   lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
@@ -51,6 +57,8 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     list_name = list.innerHTML;
     list_pk = list.getAttribute("list-pk");
     drops = form_post.querySelectorAll(".dropdown-menu");
+    form_post.querySelector(".input_text").remove();
+    form_post.querySelector(".smile_supported").innerHTML = "";
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
                                        toast_info('Запись опубликована'),
