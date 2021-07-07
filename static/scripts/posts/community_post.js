@@ -14,9 +14,19 @@ on('#ajax', 'click', '#community_article_add', function() {
 });
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
-  form_post = this.parentElement.parentElement.parentElement.parentElement;
+  form_post = document.querySelector("#form_post");
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = form_post.querySelector(".smile_supported").innerHTML;
+  form_post.append($input);
   form_data = new FormData(form_post);
-  lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream");
+  if (!form_post.querySelector(".smile_supported").innerHTML && !form_post.querySelector(".attach_block").innerHTML) {
+    toast_error("Напишите или прикрепите что-нибудь")
+  }
+
+  lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -25,24 +35,28 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    form_post.querySelector('.id_text').value = "";
+    if (!form_post.querySelector(".list").value) {toast_error("Выберите список для новой записи");return};
     clear_attach_block();
-    drops = form_post.querySelectorAll(".dropdown-menu");
-    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    list = form_post.parentElement.nextElementSibling.querySelector(".tab_active");
-    list_name = list.innerHTML;
-    list_pk = list.getAttribute("list-pk");
+
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
+    list = form_post.parentElement.parentElement.querySelector(".tab_active");
+    list_name = list.innerHTML;
+    list_pk = list.getAttribute("list-pk");
+    drops = form_post.querySelectorAll(".dropdown-menu");
+    form_post.querySelector(".input_text").remove();
+    form_post.querySelector(".smile_supported").innerHTML = "";
+    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
                                        toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null)
-                                     : toast_info('Запись опубликована');
+                                    :  toast_info('Запись опубликована');
   }};
 
   link_.send(form_data);
 });
+
 on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   form_data = new FormData(form_post);
