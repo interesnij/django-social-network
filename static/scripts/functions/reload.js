@@ -4,7 +4,7 @@ function get_post_view() {
         link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
-            if (!list[i].classList.contains("showed")) {
+            if (!list[i].classList.contains("showed") && list[i].classList.contains("post")) {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
