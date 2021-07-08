@@ -44,7 +44,7 @@
             </div>
 
             {% include 'desctop/communities/detail_sections/stat.html' %}
-            
+
             {% if community.is_good_open %}
             {% if community.is_good_upload_member or community.is_good_upload_nomember %}
               {% include 'desctop/communities/detail_sections/admin_goods.html' %}
@@ -76,7 +76,7 @@
               {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
             {% endif %}
 
-            <div class="is_community_post_paginate mt-3" list-pk="{{ post_list_pk }}"></div>
+            <div class="is_community_post_paginate mt-3 post_view_generator" list-pk="{{ post_list_pk }}"></div>
 
         </div>
         <div class="col-12 col-md-12 col-lg-4">

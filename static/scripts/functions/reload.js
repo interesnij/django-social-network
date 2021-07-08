@@ -1,6 +1,6 @@
 function get_post_view() {
-    if (document.body.querySelector(".is_profile_post_paginate")) {
-        container = document.body.querySelector(".is_profile_post_paginate");
+    if (document.body.querySelector(".post_view_generator")) {
+        container = document.body.querySelector(".post_view_generator");
         link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
