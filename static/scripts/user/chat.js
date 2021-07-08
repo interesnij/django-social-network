@@ -44,7 +44,7 @@ on('#ajax', 'input', '.message_text', function() {
 })
 
 on('#ajax', 'click', '.classic_smile_item', function() {
-  input = document.body.querySelector(".smile_supported");
+  input = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".smile_supported");
   $img = document.createElement("img");
   $img.style.width = "auto";
   $img.src = this.getAttribute("src");
