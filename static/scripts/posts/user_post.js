@@ -78,7 +78,7 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = form_post.querySelector(".smile_supported").innerHTML;
-  form_post.append($input);
+  form_post.append($input); 
   form_data = new FormData(form_post);
   block = form_post.parentElement.parentElement;
 

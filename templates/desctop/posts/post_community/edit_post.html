@@ -2,7 +2,7 @@
 <form class="post_edit_form">
     {% csrf_token %}
 
-<textarea name="text" class="id_text form-control bg-light-secondary border-0" rows="2" >{{ post.text }}</textarea>
+<div contenteditable="true" class="form-control new_element_text smile_supported">{{ post.text|safe }}</div>
 
 <div class="card-footer border-top btn_default">
     <span class="{{ post.get_count_attach }} row attach_block">

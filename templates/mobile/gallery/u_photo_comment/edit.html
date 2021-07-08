@@ -19,7 +19,7 @@
               <a class="dropdown-item u_load_music">Добавить аудиозапись</a>
             </div>
         </span>
-          <input name="text" value="{{ comment.text }}" placeholder="Напишите комментарий" class="form-control text-comment" style="margin-bottom:5px">
+          <div placeholder="Напишите комментарий" contenteditable="true" class="form-control text-comment smile_supported">{{ comment.text|safe }}</div>
       </span>
         <div class="col-12">
             <button type="button" class="btn btn-danger btn-sm hide_comment_form float-right" style="margin-left:5px">x</button>
