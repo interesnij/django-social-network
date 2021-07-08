@@ -25,11 +25,4 @@
             </button>
           </div>
       </div>
-      <span style="display:flex">
-        <div placeholder="Напишите комментарий" contenteditable="true" class="form-control text-comment smile_supported">{{ comment.text|safe }}</div>
-      </span>
-        <div class="col-12">
-            <button type="button" class="btn btn-danger btn-sm hide_comment_form float-right" style="margin-left:5px">x</button>
-            <button type="button" class="btn btn-primary btn-sm float-right u_post_edit_comment_btn" data-pk="{{ comment.pk }}">Изменить</button>
-        </div>
 </form>
