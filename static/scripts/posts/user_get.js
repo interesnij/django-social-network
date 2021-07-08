@@ -123,7 +123,6 @@ on('#ajax', 'click', '.u_post_edit', function() {
     block.querySelector(".card-footer").style.display = "none";
 
     list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/");
-    focus_block(div.querySelector(".smile_supported"));
   }
 })
 on('#ajax', 'click', '.u_article_detail', function() {
