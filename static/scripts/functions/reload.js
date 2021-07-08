@@ -8,6 +8,7 @@ function get_post_view() {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
+                      list[i].getAttribute('data-uuid') ? uuid = list[i].getAttribute('data-uuid') : uuid = list[i].querySelector(".post").getAttribute('data-uuid');
                         uuid = list[i].getAttribute('data-uuid');
                         if (list[i].querySelector(".reklama")) {
                             link.open('GET', '/posts/user_progs/post_market_view/' + uuid + "/", true)
