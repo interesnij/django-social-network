@@ -50,7 +50,8 @@ function get_edit_comment_form(_this, url){
     response = document.createElement("span");
     response.innerHTML = elem;
     parent = _this.parentElement.parentElement.parentElement;
-    parent.parentElement.querySelector(".comment_text").style.display = "none"; 
+
+    parent.parentElement.querySelector(".comment_text").style.display = "none";
     parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
   }};
@@ -61,6 +62,12 @@ function post_edit_comment_form(_this, url) {
   form = _this.parentElement.parentElement
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = form_post.querySelector(".smile_supported").innerHTML;
+  form_post.append($input); 
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', url + _this.getAttribute("data-pk") + "/", true);
