@@ -26,7 +26,7 @@
   <form class="u_photo_comment">
       {% csrf_token %}
       <input type="hidden" name="uuid" value="{{ parent.uuid }}">
-      <input type="hidden" name="pk" value="{{ community.pk }}">
+      <input type="hidden" name="pk" value="{{ user.pk }}">
       {% include 'base_block/comment/comment_form.html' %}
   </form>
 </div>
