@@ -11,7 +11,7 @@
 </div>
 {% else %}
 
-{{ reply.text|safe }}
+<span class="comment_text">{{ comment.text|safe }}</span>
 
 {% if reply.attach %}
   {% load comment %}

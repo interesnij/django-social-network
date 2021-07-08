@@ -50,7 +50,7 @@ function get_edit_comment_form(_this, url){
     response = document.createElement("span");
     response.innerHTML = elem;
     parent = _this.parentElement.parentElement.parentElement;
-    parent.parentElement.querySelector("p").style.display = "none";
+    parent.parentElement.querySelector(".comment_text").style.display = "none"; 
     parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
     parent.append(response);
   }};
