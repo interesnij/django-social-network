@@ -66,8 +66,8 @@ function post_edit_comment_form(_this, url) {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
-  $input.value = form_post.querySelector(".smile_supported").innerHTML;
-  form_post.append($input); 
+  $input.value = form.querySelector(".smile_supported").innerHTML;
+  form.append($input); 
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', url + _this.getAttribute("data-pk") + "/", true);
