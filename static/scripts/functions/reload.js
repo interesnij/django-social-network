@@ -364,6 +364,12 @@ function list_block_load(target_block, response_block, link) {
        get_dragula(".is_post_paginate");
        get_dragula(".date-list");
     }};
+    request.upload.onprogress = function(event) {
+      console.log( 'начало работы');
+    }ж
+    request.upload.onload = function() {
+      alert( 'конец работы!' );
+    }ж
     request.send( null );
 }
 
