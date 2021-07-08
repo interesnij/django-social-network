@@ -265,13 +265,16 @@ on('body', 'click', '.reply_comment', function() {
   input = div.querySelector(".comment_text");
   input.innerHTML = this.previousElementSibling.innerHTML + ',&nbsp;';
   div.style.display = "block";
+  focus_block(input)
+})
+function focus_block(value) {
   range = document.createRange();
-  range.selectNodeContents(input);
+  range.selectNodeContents(value);
   range.collapse(false);
   sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
-})
+}
 
 
 on('#ajax', 'click', '.tag_item', function() {

@@ -122,7 +122,8 @@ on('#ajax', 'click', '.u_post_edit', function() {
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
-    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/");
+    focus_block(div);
   }
 })
 on('#ajax', 'click', '.u_article_detail', function() {
