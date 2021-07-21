@@ -37,27 +37,43 @@ class UserNotifyMusicForm(forms.ModelForm):
 class UserPrivateForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivate
-		fields = ('community', 'friends', 'message',)
+		fields = (
+                'can_see_community',
+                'can_see_friends',
+                'can_see_message',
+                'can_see_post',
+                'can_see_photo',
+                'can_see_good',
+                'can_see_video',
+                'can_see_music',
+                'can_see_workspaces',
+                'can_see_boards',
+                )
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePost
-		fields = ('see', 'wall', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class UserPrivatePhotoForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePhoto
-		fields = ('see', 'photo', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class UserPrivateGoodForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateGood
-		fields = ('see', 'good', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class UserPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateVideo
-		fields = ('see', 'video', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class UserPrivateMusicForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivateMusic
-		fields = ('see', 'music',)
+		fields = ('add_item',)
+
+class UserPrivateMusicForm(forms.ModelForm):
+	class Meta:
+		model = UserPrivateMusic
+		fields = ('can_see_comments','add_comments','vote_on',)
 
 class UserNameForm(forms.ModelForm):
 	class Meta:
