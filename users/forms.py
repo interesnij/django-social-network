@@ -39,15 +39,15 @@ class UserPrivateForm(forms.ModelForm):
 		model = UserPrivate
 		fields = (
                 'can_see_community',
-                'can_see_friends',
-                'can_see_message',
+                'can_see_friend',
+                'can_receive_message',
                 'can_see_post',
                 'can_see_photo',
                 'can_see_good',
                 'can_see_video',
                 'can_see_music',
-                'can_see_workspaces',
-                'can_see_boards',
+                'can_see_workspace',
+                'can_see_board',
                 )
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
