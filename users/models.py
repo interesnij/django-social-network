@@ -1336,12 +1336,6 @@ class User(AbstractUser):
         else:
             return False
 
-    def get_6_photos(self):
-        from gallery.models import Photo
-        from users.model.settings import UserPrivate
-
-        private = UserPrivate.objects.get(user=self)
-
     def get_music_count(self):
         return self.profile.tracks
 
