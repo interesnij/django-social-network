@@ -37,7 +37,7 @@ class UserNotifyMusicForm(forms.ModelForm):
 class UserPrivateForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivate
-		fields = ('community', 'friends', 'message', 'is_private',)
+		fields = ('community', 'friends', 'message',)
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
 		model = UserPrivatePost

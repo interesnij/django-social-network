@@ -9,17 +9,17 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    PHONE_NO_VERIFIED, CHILD, STANDART, VERIFIED_SEND, VERIFIED, IDENTIFIED_SEND, IDENTIFIED, MANAGER, SUPERMANAGER = '_PV', 'CHI', 'STA', 'VES', 'VER', 'IDS', 'IDE', 'MAN', 'SUP'
-    CLOSED_CHILD, CLOSED_STANDART, CLOSED_VERIFIED_SEND, CLOSED_VERIFIED, CLOSED_IDENTIFIED_SEND, CLOSED_IDENTIFIED, CLOSED_MANAGER = '_CLOC', '_CLOS', '_CLOVS', '_CLOV', '_CLOIS', '_CLOI', '_CLOM'
-    DELETED_CHILD, DELETED_STANDART, DELETED_VERIFIED_SEND, DELETED_VERIFIED, DELETED_IDENTIFIED_SEND, DELETED_IDENTIFIED, DELETED_MANAGER = '_DELC', '_DELS', '_DELVS', '_DELV', '_DELIS', '_DELI', '_DELM'
-    SUSPENDED_CHILD, SUSPENDED_STANDART, SUSPENDED_VERIFIED_SEND, SUSPENDED_VERIFIED, SUSPENDED_IDENTIFIED_SEND, SUSPENDED_IDENTIFIED, SUSPENDED_MANAGER = '_SUSC', '_SUSS', '_SUSVS', '_SUSV', '_SUSIS', '_SUSI', '_SUSM'
-    BANNER_CHILD, BANNER_STANDART, BANNER_VERIFIED_SEND, BANNER_VERIFIED, BANNER_IDENTIFIED_SEND, BANNER_IDENTIFIED, BANNER_MANAGER = '_BANC', '_BANS', '_BANVS', '_BANV', '_BANIS', '_BANI', '_BANM'
+    PHONE_NO_VERIFIED,CHILD,PRIVATE_CHILD,STANDART,PRIVATE_STANDART,VERIFIED_SEND,PRIVATE_VERIFIED_SEND,VERIFIED,PRIVATE_VERIFIED,IDENTIFIED_SEND,PRIVATE_IDENTIFIED_SEND,IDENTIFIED,PRIVATE_IDENTIFIED,MANAGER,PRIVATE_MANAGER,SUPERMANAGER,PRIVATE_SUPERMANAGER = '_PV','CHI','CHIP','STA','STAP','VES','VESP','VER','VERP','IDS','IDSP','IDE','IDEP','MAN','MANP','SUPR','SUPRP'
+    CLOSED_CHILD,CLOSED_PRIVATE_CHILD,CLOSED_STANDART,CLOSED_PRIVATE_STANDART,CLOSED_VERIFIED_SEND,CLOSED_PRIVATE_VERIFIED_SEND,CLOSED_VERIFIED,CLOSED_PRIVATE_VERIFIED,CLOSED_IDENTIFIED_SEND,CLOSED_PRIVATE_IDENTIFIED_SEND,CLOSED_IDENTIFIED,CLOSED_PRIVATE_IDENTIFIED,CLOSED_MANAGER,CLOSED_PRIVATE_MANAGER = '_CLOC','_CLOCP','_CLOS','_CLOSP','_CLOVS','_CLOVSP','_CLOV','_CLOVP','_CLOIS','_CLOISP','_CLOI','_CLOIP','_CLOM','_CLOMP'
+    DELETED_CHILD,DELETED_PRIVATE_CHILD,DELETED_STANDART,DELETED_PRIVATE_STANDART,DELETED_VERIFIED_SEND,DELETED_PRIVATE_VERIFIED_SEND,DELETED_VERIFIED,DELETED_PRIVATE_VERIFIED,DELETED_IDENTIFIED_SEND,DELETED_PRIVATE_IDENTIFIED_SEND,DELETED_IDENTIFIED,DELETED_PRIVATE_IDENTIFIED,DELETED_MANAGER,DELETED_PRIVATE_MANAGER = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP', '_DELM','_DELMP'
+    SUSPENDED_CHILD,SUSPENDED_PRIVATE_CHILD,SUSPENDED_STANDART,SUSPENDED_PRIVATE_STANDART,SUSPENDED_VERIFIED_SEND,SUSPENDED_PRIVATE_VERIFIED_SEND, SUSPENDED_VERIFIED,SUSPENDED_PRIVATE_VERIFIED, SUSPENDED_IDENTIFIED_SEND,SUSPENDED_PRIVATE_IDENTIFIED_SEND,SUSPENDED_IDENTIFIED,SUSPENDED_PRIVATE_IDENTIFIED,SUSPENDED_MANAGER,SUSPENDED_PRIVATE_MANAGER = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP', '_SUSM','_SUSMP'
+    BANNER_CHILD,BANNER_PRIVATE_CHILD,BANNER_STANDART,BANNER_PRIVATE_STANDART,BANNER_VERIFIED_SEND,BANNER_PRIVATE_VERIFIED_SEND,BANNER_VERIFIED,BANNER_PRIVATE_VERIFIED,BANNER_IDENTIFIED_SEND,BANNER_PRIVATE_IDENTIFIED_SEND,BANNER_IDENTIFIED,BANNER_PRIVATE_IDENTIFIED,BANNER_MANAGER,BANNER_PRIVATE_MANAGER = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP', '_BANM','_BANMP'
     TYPE = (
-        (CHILD, 'Ребенок'),(PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Проверенный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(IDENTIFIED, 'Идентифицированный'),(MANAGER, 'Менеджер'),(SUPERMANAGER, 'Суперменеджер'),
-        (DELETED_CHILD, 'Удален ребенок'),(DELETED_STANDART, 'Удален'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_MANAGER, 'Удален менеджер'),
-        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_MANAGER, 'Закрыт менеджер'),
-        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_MANAGER, 'Заморожен менеджер'),
-        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_STANDART, 'Баннер'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_MANAGER, 'Баннер менеджер'),
+        (CHILD, 'Ребенок'),(PRIVATE_CHILD, 'Ребенок приватный'),(PHONE_NO_VERIFIED, 'Телефон не подтвержден'),(STANDART, 'Обычные права'),(PRIVATE_STANDART, 'Обычный приватный'),(VERIFIED_SEND, 'Запрос на проверку'),(PRIVATE_VERIFIED_SEND, 'Запрос на проверку приватный'),(VERIFIED, 'Проверенный'),(PRIVATE_VERIFIED, 'Проверенный приватный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(PRIVATE_IDENTIFIED_SEND, 'Запрос на идентификацию приватный'),(IDENTIFIED, 'Идентифицированный'),(PRIVATE_IDENTIFIED, 'Идентифицированный приватный'),(MANAGER, 'Менеджер'),(PRIVATE_MANAGER, 'Менеджер приватный'),(SUPERMANAGER, 'Суперменеджер'),(PRIVATE_SUPERMANAGER, 'Суперменеджер приватный'),
+        (DELETED_CHILD, 'Удален ребенок'),(DELETED_PRIVATE_CHILD, 'Удален ребенок приватный'),(DELETED_STANDART, 'Удален'),(DELETED_PRIVATE_STANDART, 'Удален приватный'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_PRIVATE_VERIFIED, 'Удален верифицированный приватный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_PRIVATE_IDENTIFIED_SEND, 'Удален подавший на идентификацию приватный'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_PRIVATE_IDENTIFIED, 'Удален идентифиированный приватный'),(DELETED_MANAGER, 'Удален менеджер'),(DELETED_PRIVATE_MANAGER, 'Удален менеджер приватный'),
+        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_PRIVATE_CHILD, 'Закрыт ребенок приватный'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_PRIVATE_STANDART, 'Закрыт приватный'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_PRIVATE_VERIFIED, 'Закрыт верифицированный приватный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_PRIVATE_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию приватный'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_PRIVATE_IDENTIFIED, 'Закрыт идентифиированный приватный'),(CLOSED_MANAGER, 'Закрыт менеджер'),(CLOSED_PRIVATE_MANAGER, 'Закрыт менеджер приватный'),
+        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_PRIVATE_CHILD, 'Заморожен ребенок приватный'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_PRIVATE_STANDART, 'Заморожен приватный'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_PRIVATE_VERIFIED_SEND, 'Заморожен подавший на верификацию приватный'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_PRIVATE_VERIFIED, 'Заморожен верифицированный приватный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_PRIVATE_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию приватный'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_PRIVATE_IDENTIFIED, 'Заморожен идентифиированный приватный'),(SUSPENDED_MANAGER, 'Заморожен менеджер'),(SUSPENDED_PRIVATE_MANAGER, 'Заморожен менеджер приватный'),
+        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_PRIVATE_CHILD, 'Баннер ребенок приватный'),(BANNER_STANDART, 'Баннер'),(BANNER_PRIVATE_STANDART, 'Баннер приватный'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_PRIVATE_VERIFIED_SEND, 'Баннер подавший на верификацию приватный'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_PRIVATE_VERIFIED, 'Баннер верифицированный приватный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),BANNER_PRIVATE_IDENTIFIED_SEND, 'Баннер подавший на идентификацию приватный'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_PRIVATE_IDENTIFIED, 'Баннер идентифиированный приватный'),(BANNER_MANAGER, 'Баннер менеджер'),(BANNER_PRIVATE_MANAGER, 'Баннер менеджер приватный'),
     )
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
@@ -27,7 +27,7 @@ class User(AbstractUser):
 
     last_activity = models.DateTimeField(default=timezone.now, blank=True, verbose_name='Активность')
     phone = models.CharField(max_length=17, unique=True, verbose_name='Телефон')
-    type = models.CharField(max_length=6, choices=TYPE, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
+    type = models.CharField(max_length=8, choices=TYPE, default=PHONE_NO_VERIFIED, verbose_name="Уровень доступа")
     gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     device = models.CharField(max_length=5, choices=DEVICE, blank=True, verbose_name="Оборудование")
     birthday = models.DateField(blank=True, null=True, verbose_name='День рождения')
@@ -46,6 +46,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.get_full_name()
+
+    def is_closed_profile(self):
+        return self.type[-1] == "P"
 
     def get_last_location(self):
         from users.model.profile import UserLocation
@@ -563,9 +566,6 @@ class User(AbstractUser):
 
     def is_follow_from_community(self, community_pk):
         return self.community_follows.filter(community__pk=community_pk).exists()
-
-    def is_closed_profile(self):
-        return self.user_private.is_private
 
     def is_creator_of_community(self, community_pk):
         return self.created_communities.filter(pk=community_pk).exists()

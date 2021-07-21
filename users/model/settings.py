@@ -143,7 +143,6 @@ class UserPrivate(models.Model):
     community = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
     friends = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
     message = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    is_private = models.BooleanField(default=False, verbose_name="Закрытый профиль")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -178,7 +177,7 @@ class UserPrivatePost(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_post', verbose_name="Пользователь")
     wall = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет записи")
     see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
-    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
+    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Кто пишет комментарии")
     votes = models.BooleanField(default=True, verbose_name="Реакции")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
