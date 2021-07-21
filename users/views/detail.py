@@ -276,7 +276,7 @@ class ProfileUserView(TemplateView):
                 self.user = User.objects.select_related('profile', 'user_private').get(pk=self.kwargs["pk"])
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
 
-                self.is_photos_open = self.user.is_photo_open(r_user_pk)
+                self.is_photo_open = self.user.is_photo_open(r_user_pk)
                 self.is_post_open = self.user.is_post_open(r_user_pk)
                 self.is_video_open = self.user.is_video_open(r_user_pk)
                 self.is_music_open = self.user.is_music_open(r_user_pk)
@@ -334,22 +334,5 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
-        c['user'],
-        c['photo_list'],
-        c['video_list'],
-        c['music_list'],
-        c['docs_list'],
-        c['good_list'],
-        c['get_buttons_block'],
-        c['common_frends'],
-        c['post_list_pk'] =
-        self.user,
-        self.user_photos,
-        self.user.get_video_list(),
-        self.user.get_playlist(),
-        self.user.get_doc_list(),
-        self.user.get_good_list(),
-        self.get_buttons_block,
-        self.common_frends,
-        self.user.get_selected_post_list_pk()
+        c['user'],c['get_buttons_block'],c['common_frends'],c['is_photo_open'],c['is_post_open'],c['is_community_open'],c['is_friend_open'],c['is_doc_open'],c['is_video_open'],c['is_music_openic'],c['is_good_open'],c['post_list_pk'] = self.user,self.get_buttons_block,self.common_frends,self.is_photo_open,self.is_post_open,self.is_community_open,self.is_friend_open,self.is_doc_open,self.is_video_open,self.is_music_openic,self.is_dood_open,self.user.get_selected_post_list_pk()
         return c
