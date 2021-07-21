@@ -1123,6 +1123,201 @@ class User(AbstractUser):
         from music.models import SoundList
         return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
+    def is_photo_open(self, user_pk):
+        from users.model.settings import UserPrivate
+
+        private = UserPrivate.objects.get(user=self)
+        if private.can_see_photo == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_photo == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_photo == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_photo == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_photo == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserPhotoCanSeeGalleryExcludes
+            return not UserPhotoCanSeeGalleryExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_photo == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserPhotoCanSeeGalleryIncludes
+            return UserPhotoCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_post_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_post == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_post == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_post == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_post == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_post == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserPostCanSeeGalleryExcludes
+            return not UserPostCanSeeGalleryExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_post == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserPostCanSeeGalleryIncludes
+            return UserPostCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_video_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_video == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_video == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_video == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_video == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_video == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserVideoCanSeeVideoExcludes
+            return not UserVideoCanSeeVideoExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_video == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserVideoCanSeeVideoIncludes
+            return UserVideoCanSeeVideoIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_music_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_music == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_music == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_music == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_music == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_music == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserMusicCanSeeMusicExcludes
+            return not UserMusicCanSeeMusicExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_music == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserMusicCanSeeMusicIncludes
+            return UserMusicCanSeeMusicIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_good_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_good == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_good == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_good == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_good == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_good == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserGoodCanSeeMarketExcludes
+            return not UserGoodCanSeeMarketExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_good == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserGoodCanSeeMarketIncludes
+            return UserGoodCanSeeMarketIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_community_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_community == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_community == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_community == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_community == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserCommunityCanSeeExcludes
+            return not UserCommunityCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_community == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserCommunityCanSeeIncludes
+            return UserCommunityCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_friend_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_see_friend == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_see_friend == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_friend == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_friend == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_see_friend == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserFriendCanSeeExcludes
+            return not UserFriendCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_see_friend == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserFriendCanSeeIncludes
+            return UserFriendCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_message_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_receive_message == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_receive_message == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_receive_message == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_receive_message == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_receive_message == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserMessageCanSeeExcludes
+            return not UserMessageCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_receive_message == UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserMessageCanSeeIncludes
+            return UserMessageCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def is_doc_open(self, user_pk):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+
+        if private.can_receive_doc == UserPrivate.ALL_CAN:
+            return True
+        elif private.can_receive_doc == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_receive_doc == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_receive_doc == UserPrivate.YOU and user_pk == self.pk:
+            return True
+        elif private.can_receive_doc == UserPrivate.FRIENDS_BUT:
+            from users.model.list import UserDocCanSeeExcludes
+            return not UserDocCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.can_receive_doc== UserPrivate.SOME_FRIENDS:
+            from users.model.list import UserDocCanSeeIncludes
+            return UserDocCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+
+    def get_6_photos(self):
+        from gallery.models import Photo
+        from users.model.settings import UserPrivate
+
+        private = UserPrivate.objects.get(user=self)
+
     def get_music_count(self):
         return self.profile.tracks
 

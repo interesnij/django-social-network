@@ -301,3 +301,37 @@ class UserPlannerCanSeeCommentsIncludes(models.Model):
 class UserPlannerCanSeeCommentsExcludes(models.Model):
     owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
     user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+
+class UserCommunityCanSeeIncludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserCommunityCanSeeExcludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+
+class UserFriendCanSeeIncludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserFriendCanSeeExcludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+
+class UserMessageCanSeeIncludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserMessageCanSeeExcludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+
+class UserDocCanSeeIncludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserDocCanSeeExcludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserDocAddIncludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
+class UserDocAddExcludes(models.Model):
+    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
+    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")

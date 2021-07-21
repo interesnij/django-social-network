@@ -141,8 +141,8 @@ class UserPrivate(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private', verbose_name="Пользователь")
     can_see_community = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
-    can_see_friends = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
-    can_see_message = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_friend = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
+    can_receive_message = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_post = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
     can_see_photo = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_good = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")

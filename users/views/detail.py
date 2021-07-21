@@ -251,14 +251,13 @@ class UserVideo(ListView):
 
 
 class ProfileUserView(TemplateView):
-    template_name, get_buttons_block, common_frends = None, None, None
+    is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,get_buttons_block,common_frends,user_photos,user_goods,user_musics,user_videos,user_docs,user_friends,user_communities,user_workspaces,user_boards = None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
         import re
 
         user_pk, r_user_pk = int(self.kwargs["pk"]), request.user.pk
-
         user_agent, MOBILE_AGENT_RE = request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
@@ -276,6 +275,16 @@ class ProfileUserView(TemplateView):
             elif r_user_pk != user_pk:
                 self.user = User.objects.select_related('profile', 'user_private').get(pk=self.kwargs["pk"])
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
+
+                self.is_photos_open = self.user.is_photo_open(r_user_pk)
+                self.is_post_open = self.user.is_post_open(r_user_pk)
+                self.is_video_open = self.user.is_video_open(r_user_pk)
+                self.is_music_open = self.user.is_music_open(r_user_pk)
+                self.is_doc_open = self.user.is_doc_open(r_user_pk)
+                self.is_community_open = self.user.is_community_open(r_user_pk)
+                self.is_friend_open = self.user.is_friend_open(r_user_pk)
+                self.is_good_open = self.user.is_good_open(r_user_pk)
+
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_closed():
@@ -315,6 +324,8 @@ class ProfileUserView(TemplateView):
             else:
                 self.template_name = "users/account/anon_user.html"
 
+        self.user_photos = self.user.get_user_photos(r_user_pk)
+
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:
@@ -323,9 +334,22 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
-        c['user'], c['photo_list'], c['video_list'], c['music_list'], \
-        c['docs_list'], c['good_list'],c['get_buttons_block'], c['common_frends'], c['post_list_pk'] = \
-        self.user, self.user.get_photo_list(), self.user.get_video_list(), \
-        self.user.get_playlist(), self.user.get_doc_list(), self.user.get_good_list(), \
-        self.get_buttons_block, self.common_frends, self.user.get_selected_post_list_pk()
+        c['user'],
+        c['photo_list'],
+        c['video_list'],
+        c['music_list'],
+        c['docs_list'],
+        c['good_list'],
+        c['get_buttons_block'],
+        c['common_frends'],
+        c['post_list_pk'] =
+        self.user,
+        self.user_photos,
+        self.user.get_video_list(),
+        self.user.get_playlist(),
+        self.user.get_doc_list(),
+        self.user.get_good_list(),
+        self.get_buttons_block,
+        self.common_frends,
+        self.user.get_selected_post_list_pk()
         return c
