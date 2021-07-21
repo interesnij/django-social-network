@@ -323,9 +323,6 @@ class ProfileUserView(TemplateView):
                 self.template_name = "users/account/anon_no_child_safety.html"
             else:
                 self.template_name = "users/account/anon_user.html"
-
-        self.user_photos = self.user.get_user_photos(r_user_pk)
-
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:
