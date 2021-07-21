@@ -274,7 +274,7 @@ class ProfileUserView(TemplateView):
                 else:
                     self.template_name = "users/account/my_user.html"
             elif r_user_pk != user_pk:
-                self.user = User.objects.select_related('profile').get(pk=self.kwargs["pk"])
+                self.user = User.objects.select_related('profile', 'user_private').get(pk=self.kwargs["pk"])
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
@@ -303,7 +303,7 @@ class ProfileUserView(TemplateView):
                 else:
                     UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.DESCTOP)
         elif request.user.is_anonymous:
-            self.user = User.objects.select_related('profile').get(pk=self.kwargs["pk"])
+            self.user = User.objects.select_related('profile', 'user_private').get(pk=self.kwargs["pk"])
             if self.user.is_suspended():
                 self.template_name = "generic/u_template/anon_user_suspended.html"
             elif self.user.is_closed():
