@@ -1295,18 +1295,18 @@ class User(AbstractUser):
         from users.model.settings import UserPrivate
         private = UserPrivate.objects.get(user=self)
 
-        if private.can_receive_doc == UserPrivate.ALL_CAN:
+        if private.can_see_doc == UserPrivate.ALL_CAN:
             return True
-        elif private.can_receive_doc == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_doc == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
             return True
-        elif private.can_receive_doc == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+        elif private.can_see_doc == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_receive_doc == UserPrivate.YOU and user_pk == self.pk:
+        elif private.can_see_doc == UserPrivate.YOU and user_pk == self.pk:
             return True
-        elif private.can_receive_doc == UserPrivate.FRIENDS_BUT:
+        elif private.can_see_doc == UserPrivate.FRIENDS_BUT:
             from users.model.list import UserDocCanSeeExcludes
             return not UserDocCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_receive_doc== UserPrivate.SOME_FRIENDS:
+        elif private.can_see_doc == UserPrivate.SOME_FRIENDS:
             from users.model.list import UserDocCanSeeIncludes
             return UserDocCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
