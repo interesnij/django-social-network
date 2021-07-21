@@ -29,6 +29,8 @@ class UserPrivateVideoInline(admin.TabularInline):
     model = UserPrivateVideo
 class UserPrivateMusicInline(admin.TabularInline):
     model = UserPrivateMusic
+class UserPrivatePlannerInline(admin.TabularInline):
+    model = UserPrivatePlanner
 
 class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings
@@ -49,6 +51,7 @@ class UserAdmin(admin.ModelAdmin):
         UserPrivateGoodInline,
         UserPrivateVideoInline,
         UserPrivateMusicInline,
+        UserPrivatePlannerInline,
 
         UserColorSettingsInline,
     ]

@@ -125,24 +125,31 @@ class UserColorSettings(models.Model):
 
 
 class UserPrivate(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
-    PERM = (
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
+    PERM_PLANNER = (
         (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
+        (MEMBERS, 'Участники пространства или доски'),
+        (FRIENDS, 'Друзья'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
+        (FRIENDS_BUT, 'Друзья, кроме'),
+        (SOME_FRIENDS, 'Некоторые друзья'),
+        (MEMBERS_BUT, 'Участники, кроме'),
+        (SOME_MEMBERS, 'Некоторые участники'),
     )
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private', verbose_name="Пользователь")
-    community = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
-    friends = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
-    message = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_community = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
+    can_see_friends = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
+    can_see_message = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_post = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
+    can_see_photo = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_good = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_video = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_music = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
+    can_see_workspaces = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел")
+    can_see_boards = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -150,35 +157,14 @@ class UserPrivate(models.Model):
             UserPrivate.objects.create(user=instance)
 
 class UserPrivatePost(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
-    COMMENT_YOU = 'CY'
-    COMMENT_FRIEND = 'CF'
-    COMMENT_ALL = 'CA'
-
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
-    )
-    COMMENT = (
-        (COMMENT_YOU, 'Комментарии пишете Вы'),
-        (COMMENT_FRIEND, 'Комментарии пишут друзья'),
-        (COMMENT_ALL, 'Комментарии пишут все'),
-    )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_post', verbose_name="Пользователь")
-    wall = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет записи")
-    see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
-    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Кто пишет комментарии")
-    votes = models.BooleanField(default=True, verbose_name="Реакции")
+    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
+    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет записи и потом с этими записями работает")
+    add_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -186,35 +172,14 @@ class UserPrivatePost(models.Model):
             UserPrivatePost.objects.create(user=instance)
 
 class UserPrivatePhoto(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
-    COMMENT_YOU = 'CY'
-    COMMENT_FRIEND = 'CF'
-    COMMENT_ALL = 'CA'
-
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
-    )
-    COMMENT = (
-        (COMMENT_YOU, 'Комментарии пишете Вы'),
-        (COMMENT_FRIEND, 'Комментарии пишут друзья'),
-        (COMMENT_ALL, 'Комментарии пишут все'),
-    )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_photo', verbose_name="Пользователь")
-    photo = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет фотографии")
-    see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит фотографии")
-    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
-    votes = models.BooleanField(default=True, verbose_name="Реакции")
+    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
+    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет фотографии и потом с этими фотографями работает")
+    add_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -222,35 +187,14 @@ class UserPrivatePhoto(models.Model):
             UserPrivatePhoto.objects.create(user=instance)
 
 class UserPrivateGood(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
-    COMMENT_YOU = 'CY'
-    COMMENT_FRIEND = 'CF'
-    COMMENT_ALL = 'CA'
-
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
-    )
-    COMMENT = (
-        (COMMENT_YOU, 'Комментарии пишете Вы'),
-        (COMMENT_FRIEND, 'Комментарии пишут друзья'),
-        (COMMENT_ALL, 'Комментарии пишут все'),
-    )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_good', verbose_name="Пользователь")
-    good = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет товары")
-    see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит товары")
-    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
-    votes = models.BooleanField(default=True, verbose_name="Реакции")
+    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
+    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    add_item = models.CharField(max_length=2, choices=PERM, default=YOU, verbose_name="Кто добавляет товары и потом с этими товарами работает")
+    add_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -258,35 +202,14 @@ class UserPrivateGood(models.Model):
             UserPrivateGood.objects.create(user=instance)
 
 class UserPrivateVideo(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
-    COMMENT_YOU = 'CY'
-    COMMENT_FRIEND = 'CF'
-    COMMENT_ALL = 'CA'
-
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
-    )
-    COMMENT = (
-        (COMMENT_YOU, 'Комментарии пишете Вы'),
-        (COMMENT_FRIEND, 'Комментарии пишут друзья'),
-        (COMMENT_ALL, 'Комментарии пишут все'),
-    )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_video', verbose_name="Пользователь")
-    video = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет видеозаписи")
-    see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")
-    comment = models.CharField(max_length=5, choices=COMMENT, default=COMMENT_ALL, verbose_name="Комментарии")
-    votes = models.BooleanField(default=True, verbose_name="Реакции")
+    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
+    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+    add_item = models.CharField(max_length=2, choices=PERM, default=YOU, verbose_name="Кто добавляет ролики и потом с этими роликами работает")
+    add_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -295,26 +218,37 @@ class UserPrivateVideo(models.Model):
 
 
 class UserPrivateMusic(models.Model):
-    ALL_CAN = 'AC'
-    FRIEND = 'F'
-    EACH_OTHER = 'EO'
-    YOU = 'Y'
-    ALL_BUT = 'AB'
-    SOME_FRIEND = 'SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (FRIEND, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (ALL_BUT, 'Все, кроме'),
-        (SOME_FRIEND, 'Некоторые друзья'),
-    )
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_music', verbose_name="Пользователь")
-    music = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет аудиозаписи")
-    see = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит видеозаписи")
+    add_item = models.CharField(max_length=2, choices=PERM, default=YOU, verbose_name="Кто добавляет записи и потом с этими аудиозаписями работает")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserPrivateMusic.objects.create(user=instance)
+
+class UserPrivatePlanner(models.Model):
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    PERM = (
+        (ALL_CAN, 'Все пользователи'),
+        (MEMBERS, 'Участники пространства или доски'),
+        (FRIENDS, 'Друзья'),
+        (EACH_OTHER, 'Друзья и друзья друзей'),
+        (YOU, 'Только я'),
+        (FRIENDS_BUT, 'Друзья, кроме'),
+        (SOME_FRIENDS, 'Некоторые друзья'),
+        (MEMBERS_BUT, 'Участники, кроме'),
+        (SOME_MEMBERS, 'Некоторые участники'),
+    )
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_planner', verbose_name="Пользователь")
+    can_see_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто видит комментарии")
+    add_comments = models.CharField(max_length=2, choices=PERM, default=FRIENDS, verbose_name="Кто добавляет комментарии")
+    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserPrivatePlanner.objects.create(user=instance)
