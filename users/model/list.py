@@ -301,22 +301,3 @@ class UserPlannerCanSeeCommentsIncludes(models.Model):
 class UserPlannerCanSeeCommentsExcludes(models.Model):
     owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
     user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-
-class UserVideoCanSeeCommentIncludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-class UserVideoCanSeeCommentExcludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-class UserVideoAddItemIncludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-class UserVideoAddItemExcludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-class UserVideoAddCommentIncludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
-class UserVideoAddCommentExcludes(models.Model):
-    owner = models.PositiveIntegerField(default=0, verbose_name="id назначателя")
-    user = models.PositiveIntegerField(default=0, verbose_name="id пользователя")
