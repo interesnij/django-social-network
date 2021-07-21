@@ -125,7 +125,7 @@ class UserColorSettings(models.Model):
 
 
 class UserPrivate(models.Model):
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','EO','Y','FB','MB','SF','SM'
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
     PERM_PLANNER = (
         (ALL_CAN, 'Все пользователи'),
@@ -230,7 +230,7 @@ class UserPrivateMusic(models.Model):
             UserPrivateMusic.objects.create(user=instance)
 
 class UserPrivatePlanner(models.Model):
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','EO','Y','FB','MB','SF','SM'
     PERM = (
         (ALL_CAN, 'Все пользователи'),
         (MEMBERS, 'Участники пространства или доски'),
