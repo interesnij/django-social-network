@@ -150,6 +150,7 @@ class UserPrivate(models.Model):
     can_see_music = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_workspaces = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел")
     can_see_boards = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски")
+    can_see_doc = models.CharField(max_length=2, choices=PERM_PLANNER, default=ALL_CAN, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):

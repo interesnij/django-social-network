@@ -51,11 +51,15 @@
     </div>
   </div>
 
-  {% include 'mobile/users/profile/frends.html' %}
+  {% if user.user_private.can_see_friends %}
+    {% include 'mobile/users/profile/frends.html' %}
+  {% endif %}
 
   {% include 'mobile/users/profile/profile_stat.html' %}
 
-  {% include 'mobile/users/profile/gallery.html' %}
+  {% if user.user_private.can_see_photo %}
+    {% include 'mobile/users/profile/gallery.html' %}
+  {% endif %}
 
   <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
 </div>

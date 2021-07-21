@@ -28,15 +28,30 @@
           </div>
       </div>
 
+      {% if user.user_private.can_see_friends %}
         {% include 'desctop/users/profile/online_frends.html' %}
-
         {% include 'desctop/users/profile/frends.html' %}
+      {% endif %}
 
+      {% if user.user_private.can_see_community %}
         {% include 'desctop/users/profile/communities.html' %}
+      {% endif %}
 
+      {% if user.user_private.can_see_music %}
+        {% include 'desctop/users/profile/music.html' %}
+      {% endif %}
+
+      {% if user.user_private.can_see_photo %}
         {% include 'desctop/users/profile/gallery.html' %}
+      {% endif %}
 
+      {% if user.user_private.can_see_video %}
+        {% include 'desctop/users/profile/video.html' %}
+      {% endif %}
+
+      {% if user.user_private.can_see_doc %}
         {% include 'desctop/users/profile/docs.html' %}
+      {% endif %}
 
     </div>
     <div class="col-lg-8 col-md-7 col-sm-12 order-2">
