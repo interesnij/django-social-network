@@ -70,9 +70,9 @@ class UserPrivateMusicForm(forms.ModelForm):
 		model = UserPrivateMusic
 		fields = ('add_item',)
 
-class UserPrivateMusicForm(forms.ModelForm):
+class UserPrivatePlannerForm(forms.ModelForm):
 	class Meta:
-		model = UserPrivateMusic
+		model = UserPrivatePlanner
 		fields = ('can_see_comments','add_comments','vote_on',)
 
 class UserNameForm(forms.ModelForm):
