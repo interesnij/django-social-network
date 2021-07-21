@@ -51,13 +51,13 @@
     </div>
   </div>
 
-  {% if user.user_private.can_see_friends %}
+  {% if is_friend_open %}
     {% include 'mobile/users/profile/frends.html' %}
   {% endif %}
 
   {% include 'mobile/users/profile/profile_stat.html' %}
 
-  {% if user.user_private.can_see_photo %}
+  {% if is_photo_open %}
     {% include 'mobile/users/profile/gallery.html' %}
   {% endif %}
 
