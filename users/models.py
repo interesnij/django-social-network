@@ -843,6 +843,14 @@ class User(AbstractUser):
         return self.profile.communities > 0
     def is_have_music(self):
         return self.profile.tracks > 0
+    def is_have_photo(self):
+        return self.profile.photos > 0
+    def is_have_video(self):
+        return self.profile.videos > 0
+    def is_have_doc(self):
+        return self.profile.docs > 0
+    def is_have_post(self):
+        return self.profile.posts > 0
 
     def count_no_view_followers(self):
         return self.followers.filter(view=False).values('pk').count()
@@ -1122,6 +1130,22 @@ class User(AbstractUser):
     def get_playlists(self):
         from music.models import SoundList
         return SoundList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
+
+    def get_6_photos(self):
+        from gallery.models import Photo
+        return Photo.objects.filter(creator_id=self.pk, community__isnull=True).exclude(type__contains="_")[:6]
+    def get_6_docs(self):
+        from docs.models import Doc
+        return Doc.objects.filter(creator_id=self.pk, community__isnull=True).exclude(type__contains="_")[:6]
+    def get_6_tracks(self):
+        from music.models import Music
+        return Music.objects.filter(creator_id=self.pk, community__isnull=True).exclude(type__contains="_")[:6]
+    def get_2_videos(self):
+        from video.models import Video
+        return Video.objects.filter(creator_id=self.pk, community__isnull=True).exclude(type__contains="_")[:2]
+    def get_3_goods(self):
+        from goods.models import Good
+        return Good.objects.filter(creator_id=self.pk, community__isnull=True).exclude(type__contains="_")[:3]
 
     def is_photo_open(self, user_pk):
         from users.model.settings import UserPrivate

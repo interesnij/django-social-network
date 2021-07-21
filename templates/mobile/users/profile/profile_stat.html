@@ -13,7 +13,7 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_communities %}
+   {% if user.count_communities and is_community_open %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
@@ -25,7 +25,7 @@
      </div>
    </div>
   {% endif %}
-  {% if user.count_goods %}
+  {% if user.count_goods and is_good_open %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
@@ -38,7 +38,7 @@
    </div>
    {% endif %}
 
-   {% if user.is_have_music %}
+   {% if user.is_have_music and is_music_open %}
     <div class="col text-center">
       <div class="media">
         <div class="media-body">
@@ -50,7 +50,7 @@
       </div>
     </div>
     {% endif %}
-    {% if user.get_video_count %}
+    {% if user.get_video_count and is_video_open %}
      <div class="col text-center">
        <div class="media">
          <div class="media-body">

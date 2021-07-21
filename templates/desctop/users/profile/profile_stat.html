@@ -1,30 +1,6 @@
 {% load liked_user %}
 
-<div class="row no-gutters mb-3">
-  {% if user.count_posts %}
-   <div class="col text-center">
-     <div class="media">
-       <div class="media-body">
-         <a>
-         <h4 class="content-color-primary mb-0">{{ user.count_posts }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_posts|rupluralize:"запись,записи,записей" }}</p>
-         </a>
-       </div>
-     </div>
-   </div>
-   {% endif %}
-  {% if user.count_friends %}
-   <div class="col text-center">
-     <div class="media">
-       <div class="media-body">
-         <a href="{% url 'frends' user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_friends }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_friends|rupluralize:"друг,друга,друзей" }}</p>
-         </a>
-       </div>
-     </div>
-   </div>
-   {% endif %}
+<div class="row mb-3">
    {% if user.count_followers %}
    <div class="col text-center">
      <div class="media">
@@ -37,19 +13,19 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_communities %}
+   {% if user.count_communities and is_community_open %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
          <a href="{% url 'communities' pk=user.pk %}" class="ajax">
          <h4 class="content-color-primary mb-0">{{ user.count_communities }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_communities|rupluralize:"сообщество,сообщества,сообществ" }}</p>
+         <p class="content-color-secondary mb-0">{{ user.count_communities|rupluralize:"группа,группы,групп" }}</p>
          </a>
        </div>
      </div>
    </div>
   {% endif %}
-  {% if user.count_goods %}
+  {% if user.count_goods and is_good_open %}
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
@@ -61,40 +37,30 @@
      </div>
    </div>
    {% endif %}
-   {% if user.count_photos %}
-   <div class="col text-center">
-     <div class="media">
-       <div class="media-body">
-         <a href="{% url 'user_gallery' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_photos }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
-         </a>
+
+   {% if user.is_have_music and is_music_open %}
+    <div class="col text-center">
+      <div class="media">
+        <div class="media-body">
+          <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+          <h4 class="content-color-primary mb-0">{{ user.get_music_count }}</h4>
+          <p class="content-color-secondary mb-0">{{ user.get_music_count|rupluralize:"трек,трека,треков" }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if user.get_video_count and is_video_open %}
+     <div class="col text-center">
+       <div class="media">
+         <div class="media-body">
+           <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+           <h4 class="content-color-primary mb-0">{{ user.get_video_count }}</h4>
+           <p class="content-color-secondary mb-0">{{ user.get_video_count|rupluralize:"ролик,ролика,роликов" }}</p>
+           </a>
+         </div>
        </div>
      </div>
-   </div>
-   {% endif %}
-   {% if user.count_tracks %}
-   <div class="col text-center">
-     <div class="media">
-       <div class="media-body">
-         <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_tracks }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_tracks|rupluralize:"трек,трека,треков" }}</p>
-         </a>
-       </div>
-     </div>
-   </div>
-   {% endif %}
-   {% if user.count_videos %}
-   <div class="col text-center">
-     <div class="media">
-       <div class="media-body">
-         <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_videos }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_videos|rupluralize:"ролик,ролика,роликов" }}</p>
-         </a>
-       </div>
-     </div>
-   </div>
-   {% endif %}
+     {% endif %}
+
  </div>
