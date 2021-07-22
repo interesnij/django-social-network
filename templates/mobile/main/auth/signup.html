@@ -5,7 +5,7 @@
 <div class="container align-items-center ">
             <div class="align-items-center">
                 <div class="text-center">
-                    <h2 class="font-weight-light mb-3 text-white mt-3">Регистрация</h2>
+                    <h2 class="font-weight-light mb-3 mt-3">Регистрация</h2>
                     <form id="signup">
                       <div class="card mb-3">
                         <div class="card-body p-0">
@@ -28,13 +28,13 @@
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
                             <label class="custom-control-label" for="register_">
-                                Я принимаю <a href="{% url 'terms' %}" class="ajax underline" style="color:white !important">Правила сайта</a>.
+                                Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a>.
                             </label>
                         </div>
                     </div>
                     <div class="text-center">
                         <button desabled id="register_ajax" class="btn btn-success success-gradient">Регистрация</button>
-                        <a href="/" class="btn btn-outline-light ajax">Вход</a>
+                        <a href="/" class="btn custom_color border ajax">Вход</a>
                     </div>
                 </div>
             </div>
