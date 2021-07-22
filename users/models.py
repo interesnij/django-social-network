@@ -1148,45 +1148,45 @@ class User(AbstractUser):
         return Good.objects.filter(creator_id=self.pk, community__isnull=True, type="PUB")[:3]
 
     def is_anon_photo_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_photo == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_photo == UserPrivate.ALL_CAN
     def is_anon_post_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_post == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_post == UserPrivate.ALL_CAN
     def is_anon_friend_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_friend == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_friend == UserPrivate.ALL_CAN
     def is_anon_community_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_community == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_community == UserPrivate.ALL_CAN
     def is_anon_good_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_good == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_good == UserPrivate.ALL_CAN
     def is_anon_video_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_video == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_video == UserPrivate.ALL_CAN
     def is_anon_music_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_music == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_music == UserPrivate.ALL_CAN
     def is_anon_workspace_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_workspace == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_workspace == UserPrivate.ALL_CAN
     def is_anon_board_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_board == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_board == UserPrivate.ALL_CAN
     def is_anon_doc_open(self):
-        from users.model.settings import UserSectionsOpen
-        private = UserSectionsOpen.objects.get(user=self)
-        return private.can_see_doc == UserSectionsOpen.ALL_CAN
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_doc == UserPrivate.ALL_CAN
 
     def is_photo_open(self, user_pk):
         from users.model.settings import UserPrivate
