@@ -374,6 +374,42 @@ class Community(models.Model):
         query.add(~Q(type__contains="_"), Q.AND)
         return GoodList.objects.filter(query)
 
+    def get_6_photos(self):
+        from gallery.models import Photo
+        return Photo.objects.filter(community_id=self.pk, type="PUB")[:6]
+    def get_6_docs(self):
+        from docs.models import Doc
+        return Doc.objects.filter(community_id=self.pk, type="PUB")[:6]
+    def get_6_tracks(self):
+        from music.models import Music
+        return Music.objects.filter(community_id=self.pk, type="PUB")[:6]
+    def get_2_videos(self):
+        from video.models import Video
+        return Video.objects.filter(community_id=self.pk, type="PUB")[:2]
+    def get_3_goods(self):
+        from goods.models import Good
+        return Good.objects.filter(community_id=self.pk, type="PUB")[:3]
+
+    def is_photo_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen 
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        """ Элемент YOU - касается владельца-создателя (меняется при передаче прав на сообщество) сообщества """
+        if private.can_see_photo == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_photo == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_photo == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_photo == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityPhotoCanSeeGalleryExcludes
+            return not CommunityPhotoCanSeeGalleryExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_photo == CommunitySectionsOpen.SOME_FRIENDS:
+            from communities.model.list import CommunityPhotoCanSeeGalleryIncludes
+            return CommunityPhotoCanSeeGalleryIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
         self.s_avatar = photo_input
@@ -522,6 +558,9 @@ class Community(models.Model):
         staff_members_query = Q(communities_memberships__community_id=self.pk)
         staff_members_query.add(Q(communities_memberships__is_administrator=True) | Q(communities_memberships__is_moderator=True) | Q(communities_memberships__is_editor=True), Q.AND)
         return User.objects.filter(staff_members_query)
+
+    def get_members_ids(self):
+        return [i['user_id'] for i in CommunityMembership.objects.filter(community_id=self.pk).values("user_id")]
 
     def get_staff_members_ids(self):
         staff_members = self.get_staff_members().values("pk")

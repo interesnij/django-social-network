@@ -150,7 +150,7 @@ class UserPrivate(models.Model):
     can_see_music = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_workspace = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел")
     can_see_board = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски")
-    can_see_doc = models.CharField(max_length=2, choices=PERM_PLANNER, default=ALL_CAN, verbose_name="Кто видит документы")
+    can_see_doc = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -246,7 +246,7 @@ class UserPrivatePlanner(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private_planner', verbose_name="Пользователь")
     can_see_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто видит комментарии")
-    add_comments = models.CharField(max_length=2, choices=PERM, default=FRIENDS, verbose_name="Кто добавляет комментарии")
+    add_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто добавляет комментарии")
     vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)

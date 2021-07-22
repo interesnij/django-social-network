@@ -1050,7 +1050,7 @@ class User(AbstractUser):
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT)
+        return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT) 
 
     def get_6_populate_friends(self):
         query = []

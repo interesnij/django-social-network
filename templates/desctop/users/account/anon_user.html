@@ -31,7 +31,7 @@
       {% if is_friend_open %}
         {% include 'desctop/users/profile/online_frends.html' %}
         {% include 'desctop/users/profile/frends.html' %}
-      {% endif %} 
+      {% endif %}
 
       {% if is_community_open %}
         {% include 'desctop/users/profile/communities.html' %}
@@ -82,10 +82,13 @@
 
           {% include 'desctop/users/profile/profile_stat.html' %}
 
-          {% include 'desctop/users/profile/goods.html' %}
+          {% if is_good_open %}
+            {% include 'desctop/users/profile/goods.html' %}
+          {% endif %}
 
-
-          <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
+          {% if is_post_open %}
+            <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
+          {% endif %}
 
         </div>
     </div>

@@ -54,25 +54,37 @@ class CommunityNotifyMusicForm(forms.ModelForm):
 class CommunityPrivatePostForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivatePost
-		fields = ('wall', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class CommunityPrivatePhotoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivatePhoto
-		fields = ('photo', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class CommunityPrivateGoodForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateGood
-		fields = ('good', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class CommunityPrivateVideoForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateVideo
-		fields = ('video', 'comment',)
+		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
 class CommunityPrivateMusicForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivateMusic
-		fields = ('music',)
+		fields = ('add_item',)
 
 class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:
 		model = CommunitySectionsOpen
-		fields = ['photo', 'good', 'video', 'doc', 'music', 'link', 'article', 'contacts', 'discussion', 'members',]
+		fields = (
+                'can_see_community',
+                'can_see_members',
+                'can_receive_message',
+                'can_see_post',
+                'can_see_photo',
+                'can_see_good',
+                'can_see_video',
+                'can_see_music',
+                'can_see_workspace',
+                'can_see_board',
+				'can_see_doc',
+                )

@@ -48,6 +48,7 @@ class UserPrivateForm(forms.ModelForm):
                 'can_see_music',
                 'can_see_workspace',
                 'can_see_board',
+                'can_see_doc',
                 )
 class UserPrivatePostForm(forms.ModelForm):
 	class Meta:
