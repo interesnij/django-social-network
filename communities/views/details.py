@@ -121,7 +121,7 @@ class CommunityDetail(TemplateView):
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
             self.is_photo_open = self.c.is_photo_open(request.user)
-            self.is_post_open = self.c.is_post_open(request.user) 
+            self.is_post_open = self.c.is_post_open(request.user)
             self.is_video_open = self.c.is_video_open(request.user)
             self.is_music_open = self.c.is_music_open(request.user)
             self.is_doc_open = self.c.is_doc_open(request.user)
@@ -144,6 +144,14 @@ class CommunityDetail(TemplateView):
                 self.template_name = "communities/detail/anon_close_community.html"
             elif self.c.is_private():
                 self.template_name = "communities/detail/anon_private_community.html"
+
+        self.is_photo_open = self.c.is_anon_photo_open(request.user)
+        self.is_post_open = self.c.is_anon_post_open(request.user)
+        self.is_video_open = self.c.is_anon_video_open(request.user)
+        self.is_music_open = self.c.is_anon_music_open(request.user)
+        self.is_doc_open = self.c.is_anon_doc_open(request.user)
+        self.is_member_open = self.c.is_anon_member_open(request.user)
+        self.is_good_open = self.c.is_anon_good_open(request.user)
 
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name

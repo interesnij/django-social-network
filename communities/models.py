@@ -371,6 +371,44 @@ class Community(models.Model):
         from goods.models import Good
         return Good.objects.filter(community_id=self.pk, type="PUB")[:3]
 
+    def is_anon_photo_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_photo == CommunitySectionsOpen.ALL_CAN
+    def is_anon_post_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_post == CommunitySectionsOpen.ALL_CAN
+    def is_anon_member_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_members == CommunitySectionsOpen.ALL_CAN
+    def is_anon_good_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_good == CommunitySectionsOpen.ALL_CAN
+    def is_anon_video_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_video == CommunitySectionsOpen.ALL_CAN
+    def is_anon_music_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_music == CommunitySectionsOpen.ALL_CAN
+
+    def is_anon_workspace_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_workspace == CommunitySectionsOpen.ALL_CAN
+    def is_anon_board_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_board == CommunitySectionsOpen.ALL_CAN
+    def is_anon_doc_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_doc == CommunitySectionsOpen.ALL_CAN
+
     def is_photo_open(self, user):
         from communities.model.settings import CommunitySectionsOpen
 
