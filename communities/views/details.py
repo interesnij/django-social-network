@@ -145,13 +145,13 @@ class CommunityDetail(TemplateView):
             elif self.c.is_private():
                 self.template_name = "communities/detail/anon_private_community.html"
 
-        self.is_photo_open = self.c.is_anon_photo_open(request.user)
-        self.is_post_open = self.c.is_anon_post_open(request.user)
-        self.is_video_open = self.c.is_anon_video_open(request.user)
-        self.is_music_open = self.c.is_anon_music_open(request.user)
-        self.is_doc_open = self.c.is_anon_doc_open(request.user)
-        self.is_member_open = self.c.is_anon_member_open(request.user)
-        self.is_good_open = self.c.is_anon_good_open(request.user)
+            self.is_photo_open = self.c.is_anon_photo_open()
+            self.is_post_open = self.c.is_anon_post_open()
+            self.is_video_open = self.c.is_anon_video_open()
+            self.is_music_open = self.c.is_anon_music_open()
+            self.is_doc_open = self.c.is_anon_doc_open()
+            self.is_member_open = self.c.is_anon_member_open()
+            self.is_good_open = self.c.is_anon_good_open()
 
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
