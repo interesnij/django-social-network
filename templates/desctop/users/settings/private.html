@@ -14,15 +14,48 @@
                     <div class="card-body">
                       <div class="form-group">
                           <label>Кто видит сообщества</label>
-                          {{ form.community }}
+                          {{ form.can_see_community }}
                       </div>
                       <div class="form-group">
                           <label>Кто видит друзей</label>
-                          {{ form.friends }}
+                          {{ form.can_see_friend }}
                       </div>
                       <div class="form-group">
                           <label>Кто пишет сообщения</label>
-                          {{ form.message }}
+                          {{ form.can_receive_message }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит стену и записи</label>
+                          {{ form.can_see_post }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит галерею и фотографии</label>
+                          {{ form.can_see_photo }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит товары</label>
+                          {{ form.can_see_good }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит видеозаписи</label>
+                          {{ form.can_see_video }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит аудиозаписи</label>
+                          {{ form.can_see_music }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит рабочие пространства</label>
+                          {{ form.can_see_workspace }}
+                      </div>
+
+                      <div class="form-group">
+                          <label>Кто видит доски-планировщики</label>
+                          {{ form.can_see_board }}
+                      </div>
+                      <div class="form-group">
+                          <label>Кто видит документы</label>
+                          {{ form.can_see_doc }}
                       </div>
                     </div>
                     <div class="card-footer">
