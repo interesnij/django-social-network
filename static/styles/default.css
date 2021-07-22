@@ -1,3 +1,10 @@
+.smile_dropdown_menu {
+  margin-top:-185px;
+  display:none;
+  width: 250px;
+  left: -120px;
+}
+
 @keyframes show{
   0%{
     opacity:0,8;
