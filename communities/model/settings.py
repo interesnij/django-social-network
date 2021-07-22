@@ -199,9 +199,9 @@ class CommunitySectionsOpen(models.Model):
         (SOME_MEMBERSHIPS, 'Некоторые подписчики'),
         (MEMBERS_BUT, 'Участники, кроме'),
         (SOME_MEMBERS, 'Некоторые участники'),
-    ) 
+    )
     community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_sections_open', verbose_name="Сообщество")
-    can_see_friend = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
+    can_see_members = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
     can_receive_message = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_post = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
     can_see_photo = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
