@@ -28,7 +28,7 @@ on('#ajax', 'click', '#u_add_article', function() {
 });
 
 on('#ajax', 'click', '#u_add_post_btn', function() {
-  form_post = document.querySelector("#form_post");
+  form_post = this.parentElement.parentElement.parentElement.parentElement;
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
@@ -40,7 +40,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     toast_error("Напишите или прикрепите что-нибудь")
   }
 
-  lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".post_stream");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -78,7 +78,7 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = form_post.querySelector(".smile_supported").innerHTML;
-  form_post.append($input); 
+  form_post.append($input);
   form_data = new FormData(form_post);
   block = form_post.parentElement.parentElement;
 

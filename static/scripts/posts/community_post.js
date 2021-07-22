@@ -14,7 +14,7 @@ on('#ajax', 'click', '#community_article_add', function() {
 });
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
-  form_post = document.querySelector("#c_form_post");
+  form_post = this.parentElement.parentElement.parentElement.parentElement;
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
@@ -26,7 +26,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     toast_error("Напишите или прикрепите что-нибудь")
   }
 
-  lenta_load = form_post.parentElement.nextElementSibling.querySelector(".post_stream ");
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".post_stream");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
