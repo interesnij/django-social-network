@@ -211,6 +211,7 @@ class CommunitySectionsOpen(models.Model):
     can_see_planner_workspace = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел планирования")
     can_see_planner_board = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски планирования")
     can_see_planner_column = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит колонки досок планирования")
+    can_see_doc = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
