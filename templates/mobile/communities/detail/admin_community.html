@@ -45,7 +45,9 @@
     {% include 'mobile/communities/detail_sections/description.html' %}
   </div>
 
-  {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% if is_member_open %}
+    {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% endif %}
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
@@ -70,10 +72,4 @@
 
 </div>
 
-{% load get_key %}
-<script>
-  {% if user|is_user_list:user.get_music_list_id %}
-    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
-  {% endif %}
-</script>
 {% endblock %}

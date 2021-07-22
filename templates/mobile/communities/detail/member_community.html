@@ -28,7 +28,9 @@
     {% include 'mobile/communities/detail_sections/description.html' %}
   </div>
 
-  {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% if is_member_open %}
+    {% include 'mobile/communities/detail_sections/membersheeps.html' %}
+  {% endif %}
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
@@ -49,20 +51,10 @@
   {% endif %}
   </span>
 
-  {% if community.is_member_post or community.is_all_can_post or community.is_member_post_all_can %}
+  {% if is_post_open %}
     {% include 'mobile/communities/detail_sections/create_post.html' %}
-  {% elif community.is_staff_post_member_can or community.is_staff_post_all_can %}
-    {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
+    <div class="is_community_post_paginate mt-3 post_view_generator" list-pk="{{ post_list_pk }}"></div>
   {% endif %}
-
-  <div class="is_community_post_paginate mt-3 post_view_generator" list-pk="{{ post_list_pk }}"></div>
 
 </div>
-
-{% load get_key %}
-<script>
-  {% if user|is_user_list:user.get_music_list_id %}
-    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
-  {% endif %}
-</script>
 {% endblock %}

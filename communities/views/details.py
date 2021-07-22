@@ -50,7 +50,7 @@ class CommunityFixPostView(TemplateView):
 
 
 class CommunityDetail(TemplateView):
-    template_name, common_friends, common_friends_count = None, None, None
+    template_name,common_friends,common_friends_count, is_photo_open,is_post_open,is_members_open,is_doc_open,is_video_open,is_music_open,is_good_open = None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         import re
@@ -120,6 +120,13 @@ class CommunityDetail(TemplateView):
             else:
                 CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
+            self.is_photo_open = self.c.is_photo_open(request.user)
+            self.is_post_open = self.c.is_post_open(request.user) 
+            self.is_video_open = self.c.is_video_open(request.user)
+            self.is_music_open = self.c.is_music_open(request.user)
+            self.is_doc_open = self.c.is_doc_open(request.user)
+            self.is_member_open = self.c.is_member_open(request.user)
+            self.is_good_open = self.c.is_good_open(request.user)
         elif request.user.is_anonymous:
             if self.c.type[0] == "_":
                 if self.c.is_suspended():
@@ -146,10 +153,7 @@ class CommunityDetail(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDetail,self).get_context_data(**kwargs)
-        c["membersheeps"], c["community"], c["common_friends"], c["common_friends_count"], c['photo_list'], c['video_list'], \
-        c['music_list'], c['docs_list'], c['good_list'], c['post_list_pk'] = self.c.get_members(self.c.pk)[0:6], self.c, \
-        self.common_friends, self.common_friends_count, self.c.get_photo_list(), \
-        self.c.get_video_list(), self.c.get_playlist(), self.c.get_doc_list(), self.c.get_good_list(), self.c.get_selected_post_list_pk()
+        c["membersheeps"],c["community"],c["common_friends"],c["common_friends_count"],c['post_list_pk'],c['is_photo_open'],c['is_post_open'],c['is_member_open'],c['is_doc_open'],c['is_video_open'],c['is_music_open'],c['is_good_open'] = self.c.get_members(self.c.pk)[0:6],self.c,self.common_friends,self.common_friends_count,self.c.get_selected_post_list_pk(),self.is_photo_open,self.is_post_open,self.is_member_open,self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open
         return c
 
 

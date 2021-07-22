@@ -43,9 +43,7 @@
 
             {% include 'desctop/communities/detail_sections/stat.html' %}
 
-            {% if community.is_good_open %}
-              {% include 'desctop/communities/detail_sections/admin_goods.html' %}
-            {% endif %}
+            {% include 'desctop/communities/detail_sections/admin_goods.html' %}
 
             {% if community.id_draft_posts_exists %}
             <div class="card mt-3 user_draft_list">
@@ -100,20 +98,20 @@
               {% include 'desctop/communities/detail_sections/frends_member.html' %}
             {% endif %}
 
-            {% if community.is_contacts_open %}
+            {% if is_member_open %}
               {% include 'desctop/communities/detail_sections/membersheeps.html' %}
             {% endif %}
 
-            {% if community.is_music_open %}
+            {% if is_music_open %}
               {% include 'desctop/communities/detail_sections/admin_music.html' %}
             {% endif %}
-            {% if community.is_photo_open %}
+            {% if is_photo_open %}
               {% include 'desctop/communities/detail_sections/admin_photo.html' %}
             {% endif %}
-            {% if community.is_video_open %}
+            {% if is_video_open %}
               {% include 'desctop/communities/detail_sections/admin_video.html' %}
             {% endif %}
-            {% if community.is_doc_open %}
+            {% if is_doc_open %}
               {% include 'desctop/communities/detail_sections/admin_docs.html' %}
             {% endif %}
         </div>

@@ -187,25 +187,6 @@ class Community(models.Model):
         else:
             return "/public" + str(self.pk) + "/"
 
-    def is_photo_open(self):
-        return try_except(self.community_sections_open.photo)
-    def is_good_open(self):
-        return try_except(self.community_sections_open.good)
-    def is_video_open(self):
-        return try_except(self.community_sections_open.video)
-    def is_music_open(self):
-        return try_except(self.community_sections_open.music)
-    def is_doc_open(self):
-        return try_except(self.community_sections_open.doc)
-    def is_link_open(self):
-        return try_except(self.community_sections_open.link)
-    def is_article_open(self):
-        return try_except(self.community_sections_open.article)
-    def is_contacts_open(self):
-        return try_except(self.community_sections_open.contacts)
-    def is_discussion_open(self):
-        return try_except(self.community_sections_open.discussion)
-
     @classmethod
     def create_community(cls, name, category, creator, type):
         community = cls.objects.create(name=name, creator=creator, type=type, category=category)
@@ -391,10 +372,16 @@ class Community(models.Model):
         return Good.objects.filter(community_id=self.pk, type="PUB")[:3]
 
     def is_photo_open(self, user):
-        from communities.model.settings import CommunitySectionsOpen 
+        from communities.model.settings import CommunitySectionsOpen
 
         private = CommunitySectionsOpen.objects.get(community=self)
-        """ Элемент YOU - касается владельца-создателя (меняется при передаче прав на сообщество) сообщества """
+        """
+        YOU - может видеть только владелец сообщества (он же создаетль, это поле перезаписывается при передаче прав)
+        ALL_CAN - все могут видеть
+        MEMBERS - могут видеть подписчики
+        MEMBERS_BUT - все подписчики, кроме... проверяем, есть ли пользователь в таблице исключения CommunityPhotoCanSeeGalleryExcludes. Eсли есть, то возвращаем False
+        SOME_MEMBERS - только некоторые подписчики - проверяем, есть ли пользователь в талблице CommunityPhotoCanSeeGalleryIncludes. Eсли есть, то True.
+        """
         if private.can_see_photo == CommunitySectionsOpen.ALL_CAN:
             return True
         elif private.can_see_photo == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
@@ -404,9 +391,142 @@ class Community(models.Model):
         elif private.can_see_photo == CommunitySectionsOpen.MEMBERS_BUT:
             from communities.model.list import CommunityPhotoCanSeeGalleryExcludes
             return not CommunityPhotoCanSeeGalleryExcludes.objects.filter(community=self.pk, user=user.pk).exists()
-        elif private.can_see_photo == CommunitySectionsOpen.SOME_FRIENDS:
+        elif private.can_see_photo == CommunitySectionsOpen.SOME_MEMBERS:
             from communities.model.list import CommunityPhotoCanSeeGalleryIncludes
             return CommunityPhotoCanSeeGalleryIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_post_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_post == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_post == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_post == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_post == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityPostCanSeeWallIncludes
+            return not CommunityPostCanSeeWallIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_post == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityPostCanSeeWallExcludes
+            return CommunityPostCanSeeWallExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_message_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_receive_message == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_receive_message == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_receive_message == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_receive_message == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityMessageCanSeeIncludes
+            return not CommunityMessageCanSeeIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_receive_message == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityMessageCanSeeExcludes
+            return CommunityMessageCanSeeExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_good_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_good == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_good == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_good == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_good == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityGoodCanSeeMarketIncludes
+            return not CommunityGoodCanSeeMarketIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_good == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityGoodCanSeeMarketExcludes
+            return CommunityGoodCanSeeMarketExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_video_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_video == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_video == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_video == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_video == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityVideoCanSeeVideoIncludes
+            return not CommunityVideoCanSeeVideoIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_video == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityVideoCanSeeVideoExcludes
+            return CommunityVideoCanSeeVideoExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_music_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_music == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_music == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_music == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_music == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityMusicCanSeeMusicIncludes
+            return not CommunityMusicCanSeeMusicIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_music == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityMusicCanSeeMusicExcludes
+            return CommunityMusicCanSeeMusicExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_doc_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_doc == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_doc == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_doc == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_doc == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityDocCanSeeIncludes
+            return not CommunityDocCanSeeIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_doc == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityDocCanSeeExcludes
+            return CommunityDocCanSeeExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+
+    def is_member_open(self, user):
+        from communities.model.settings import CommunitySectionsOpen
+
+        private = CommunitySectionsOpen.objects.get(community=self)
+        if private.can_see_members == CommunitySectionsOpen.ALL_CAN:
+            return True
+        elif private.can_see_members == CommunitySectionsOpen.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.can_see_members == CommunitySectionsOpen.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.can_see_members == CommunitySectionsOpen.MEMBERS_BUT:
+            from communities.model.list import CommunityMembersCanSeeIncludes
+            return not CommunityMembersCanSeeIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.can_see_members == CommunitySectionsOpen.SOME_MEMBERS:
+            from communities.model.list import CommunityMembersCanSeeExcludes
+            return CommunityMembersCanSeeExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
 
@@ -594,64 +714,6 @@ class Community(models.Model):
     def is_community_playlist(self):
         from music.models import UserTempSoundList
         return UserTempSoundList.objects.filter(tag=None, community=self, genre=None).exists()
-
-    def is_wall_close(self):
-        return try_except(self.community_private_post.wall == "SP")
-    def is_staff_post_member_can(self):
-        return try_except(self.community_private_post.wall == "SPMC")
-    def is_staff_post_all_can(self):
-        return try_except(self.community_private_post.wall == "SPAC")
-    def is_member_post(self):
-        return try_except(self.community_private_post.wall == "MP")
-    def is_member_post_all_can(self):
-        return try_except(self.community_private_post.wall == "MPAC")
-    def is_all_can_post(self):
-        return try_except(self.community_private_post.wall == "AC")
-    def is_comment_post_send_admin(self):
-        return try_except(self.community_private_post.comment == "CA")
-    def is_comment_post_send_member(self):
-        return try_except(self.community_private_post.comment == "CM")
-    def is_comment_post_send_all(self):
-        return try_except(self.community_private_post.comment == "CNM")
-
-    def is_photo_upload_admin(self):
-        return try_except(self.community_private_photo.photo == "PA")
-    def is_photo_upload_member(self):
-        return try_except(self.community_private_photo.photo == "PM")
-    def is_photo_upload_nomember(self):
-        return try_except(self.community_private_photo.photo == "PNM")
-    def is_comment_photo_send_admin(self):
-        return try_except(self.community_private_photo.comment == "CA")
-    def is_comment_photo_send_member(self):
-        return try_except(self.community_private_photo.comment == "CM")
-    def is_comment_photo_send_all(self):
-        return try_except(self.community_private_photo.comment == "CNM")
-
-    def is_good_upload_admin(self):
-        return try_except(self.community_private_good.good == "GA")
-    def is_good_upload_member(self):
-        return try_except(self.community_private_good.good == "GM")
-    def is_good_upload_nomember(self):
-        return try_except(self.community_private_good.good == "GNM")
-    def is_comment_good_send_admin(self):
-        return try_except(self.community_private_good.comment == "CA")
-    def is_comment_good_send_member(self):
-        return try_except(self.community_private_good.comment == "CM")
-    def is_comment_good_send_all(self):
-        return try_except(self.community_private_good.comment == "CNM")
-
-    def is_video_upload_admin(self):
-        return try_except(self.community_private_video.video == "VA")
-    def is_video_upload_member(self):
-        return try_except(self.community_private_video.video == "VM")
-    def is_video_upload_nomember(self):
-        return try_except(self.community_private_video.video == "VNM")
-    def is_comment_video_send_admin(self):
-        return try_except(self.community_private_video.comment == "CA")
-    def is_comment_video_send_member(self):
-        return try_except(self.community_private_video.comment == "CM")
-    def is_comment_video_send_all(self):
-        return try_except(self.community_private_video.comment == "CNM")
 
     def is_can_fixed_post(self):
         from posts.models import PostList
