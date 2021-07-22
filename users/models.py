@@ -1178,11 +1178,15 @@ class User(AbstractUser):
     def is_anon_workspace_open(self):
         from users.model.settings import UserPrivate
         private = UserPrivate.objects.get(user=self)
-        return private.can_see_workspace == UserPrivate.ALL_CAN
+        return private.can_see_planner_workspace == UserPrivate.ALL_CAN
     def is_anon_board_open(self):
         from users.model.settings import UserPrivate
         private = UserPrivate.objects.get(user=self)
-        return private.can_see_board == UserPrivate.ALL_CAN
+        return private.can_see_planner_board == UserPrivate.ALL_CAN
+    def is_anon_column_open(self):
+        from users.model.settings import UserPrivate
+        private = UserPrivate.objects.get(user=self)
+        return private.can_see_planner_column == UserPrivate.ALL_CAN
     def is_anon_doc_open(self):
         from users.model.settings import UserPrivate
         private = UserPrivate.objects.get(user=self)

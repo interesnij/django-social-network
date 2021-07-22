@@ -125,12 +125,13 @@ class UserColorSettings(models.Model):
 
 
 class UserPrivate(models.Model):
-    ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','EO','Y','FB','MB','SF','SM'
+    ALL_CAN, FRIENDS, MEMBERS, FRIENDS_MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','FM','EO','Y','FB','MB','SF','SM'
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
     PERM_PLANNER = (
         (ALL_CAN, 'Все пользователи'),
         (MEMBERS, 'Участники пространства или доски'),
         (FRIENDS, 'Друзья'),
+        (FRIENDS_MEMBERS, 'Друзья и участники'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (FRIENDS_BUT, 'Друзья, кроме'),
@@ -148,8 +149,9 @@ class UserPrivate(models.Model):
     can_see_good = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_video = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_music = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_see_workspace = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел")
-    can_see_board = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски")
+    can_see_planner_workspace = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит рабочие пространства и весь раздел планирования")
+    can_see_planner_board = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит доски планирования")
+    can_see_planner_column = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит колонки досок планирования")
     can_see_doc = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -231,11 +233,12 @@ class UserPrivateMusic(models.Model):
             UserPrivateMusic.objects.create(user=instance)
 
 class UserPrivatePlanner(models.Model):
-    ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','EO','Y','FB','MB','SF','SM'
+    ALL_CAN,FRIENDS,MEMBERS,FRIENDS_MEMBERS,EACH_OTHER,YOU,FRIENDS_BUT,MEMBERS_BUT,SOME_FRIENDS,SOME_MEMBERS = 'AC','F','M','FM','EO','Y','FB','MB','SF','SM'
     PERM = (
         (ALL_CAN, 'Все пользователи'),
         (MEMBERS, 'Участники пространства или доски'),
         (FRIENDS, 'Друзья'),
+        (FRIENDS_MEMBERS, 'Друзья и участники'),
         (EACH_OTHER, 'Друзья и друзья друзей'),
         (YOU, 'Только я'),
         (FRIENDS_BUT, 'Друзья, кроме'),

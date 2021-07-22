@@ -398,11 +398,15 @@ class Community(models.Model):
     def is_anon_workspace_open(self):
         from communities.model.settings import CommunitySectionsOpen
         private = CommunitySectionsOpen.objects.get(community=self)
-        return private.can_see_workspace == CommunitySectionsOpen.ALL_CAN
+        return private.can_see_planner_workspace == CommunitySectionsOpen.ALL_CAN
     def is_anon_board_open(self):
         from communities.model.settings import CommunitySectionsOpen
         private = CommunitySectionsOpen.objects.get(community=self)
-        return private.can_see_board == CommunitySectionsOpen.ALL_CAN
+        return private.can_see_planner_board == CommunitySectionsOpen.ALL_CAN
+    def is_anon_column_open(self):
+        from communities.model.settings import CommunitySectionsOpen
+        private = CommunitySectionsOpen.objects.get(community=self)
+        return private.can_see_planner_column == CommunitySectionsOpen.ALL_CAN
     def is_anon_doc_open(self):
         from communities.model.settings import CommunitySectionsOpen
         private = CommunitySectionsOpen.objects.get(community=self)

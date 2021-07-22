@@ -46,8 +46,9 @@ class UserPrivateForm(forms.ModelForm):
                 'can_see_good',
                 'can_see_video',
                 'can_see_music',
-                'can_see_workspace',
-                'can_see_board',
+                'can_see_planner_workspace',
+                'can_see_planner_board',
+                'can_see_planner_column',
                 'can_see_doc',
                 )
 class UserPrivatePostForm(forms.ModelForm):
