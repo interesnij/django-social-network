@@ -395,7 +395,6 @@ class Community(models.Model):
         from communities.model.settings import CommunitySectionsOpen
         private = CommunitySectionsOpen.objects.get(community=self)
         return private.can_see_music == CommunitySectionsOpen.ALL_CAN
-
     def is_anon_workspace_open(self):
         from communities.model.settings import CommunitySectionsOpen
         private = CommunitySectionsOpen.objects.get(community=self)
