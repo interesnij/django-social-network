@@ -251,7 +251,7 @@ class UserVideo(ListView):
 
 
 class ProfileUserView(TemplateView):
-    is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,common_friends_count,common_frends = None,None,None,None,None,None,None,None,None,None,None
+    is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,common_friends_count,common_frends,get_buttons_block = None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from stst.models import UserNumbers
