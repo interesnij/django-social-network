@@ -1050,7 +1050,7 @@ class User(AbstractUser):
 
     def get_draft_posts_of_community_with_pk(self, community_pk):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT) 
+        return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.DRAFT)
 
     def get_6_populate_friends(self):
         query = []
@@ -1167,6 +1167,26 @@ class User(AbstractUser):
             return UserPhotoCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
+    def is_user_can_work_photo(self, user_pk):
+        from users.model.settings import UserPrivatePhoto
+
+        private = UserPrivatePhoto.objects.get(user=self)
+        if private.add_item == UserPrivatePhoto.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivatePhoto.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivatePhoto.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivatePhoto.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivatePhoto.FRIENDS_BUT:
+            from users.model.list import UserPhotoAddItemExcludes
+            return not UserPhotoAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivatePhoto.SOME_FRIENDS:
+            from users.model.list import UserPhotoAddItemIncludes
+            return UserPhotoAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
 
     def is_post_open(self, user_pk):
         from users.model.settings import UserPrivate
@@ -1186,6 +1206,26 @@ class User(AbstractUser):
         elif private.can_see_post == UserPrivate.SOME_FRIENDS:
             from users.model.list import UserPostCanSeeGalleryIncludes
             return UserPostCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+    def is_user_can_work_post(self, user_pk):
+        from users.model.settings import UserPrivatePost
+
+        private = UserPrivatePost.objects.get(user=self)
+        if private.add_item == UserPrivatePost.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivatePost.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivatePost.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivatePost.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivatePost.FRIENDS_BUT:
+            from users.model.list import UserPostAddItemExcludes
+            return not UserPostAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivatePost.SOME_FRIENDS:
+            from users.model.list import UserPostAddItemIncludes
+            return UserPostAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
 
@@ -1209,6 +1249,26 @@ class User(AbstractUser):
             return UserVideoCanSeeVideoIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
+    def is_user_can_work_video(self, user_pk):
+        from users.model.settings import UserPrivateVideo
+
+        private = UserPrivateVideo.objects.get(user=self)
+        if private.add_item == UserPrivateVideo.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivateVideo.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivateVideo.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivateVideo.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivateVideo.FRIENDS_BUT:
+            from users.model.list import UserVideoAddItemExcludes
+            return not UserVideoAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivateVideo.SOME_FRIENDS:
+            from users.model.list import UserVideoAddItemIncludes
+            return UserVideoAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
 
     def is_music_open(self, user_pk):
         from users.model.settings import UserPrivate
@@ -1230,6 +1290,26 @@ class User(AbstractUser):
             return UserMusicCanSeeMusicIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
+    def is_user_can_work_music(self, user_pk):
+        from users.model.settings import UserPrivateMusic
+
+        private = UserPrivateMusic.objects.get(user=self)
+        if private.add_item == UserPrivateMusic.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivateMusic.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivateMusic.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivateMusic.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivateMusic.FRIENDS_BUT:
+            from users.model.list import UserMusicAddItemExcludes
+            return not UserMusicAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivateMusic.SOME_FRIENDS:
+            from users.model.list import UserMusicAddItemIncludes
+            return UserMusicAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
 
     def is_good_open(self, user_pk):
         from users.model.settings import UserPrivate
@@ -1249,6 +1329,26 @@ class User(AbstractUser):
         elif private.can_see_good == UserPrivate.SOME_FRIENDS:
             from users.model.list import UserGoodCanSeeMarketIncludes
             return UserGoodCanSeeMarketIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+    def is_user_can_work_good(self, user_pk):
+        from users.model.settings import UserPrivateGood
+
+        private = UserPrivateGood.objects.get(user=self)
+        if private.add_item == UserPrivateGood.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivateGood.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivateGood.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivateGood.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivateGood.FRIENDS_BUT:
+            from users.model.list import UserGoodAddItemExcludes
+            return not UserGoodAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivateGood.SOME_FRIENDS:
+            from users.model.list import UserGoodAddItemIncludes
+            return UserGoodAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
 
@@ -1333,6 +1433,26 @@ class User(AbstractUser):
         elif private.can_see_doc == UserPrivate.SOME_FRIENDS:
             from users.model.list import UserDocCanSeeIncludes
             return UserDocCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        else:
+            return False
+    def is_user_can_work_doc(self, user_pk):
+        from users.model.settings import UserPrivateDoc
+
+        private = UserPrivateDoc.objects.get(user=self)
+        if private.add_item == UserPrivateDoc.ALL_CAN:
+            return True
+        elif private.add_item == UserPrivateDoc.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.add_item == UserPrivateDoc.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.add_item == UserPrivateDoc.YOU and user_pk == self.pk:
+            return True
+        elif private.add_item == UserPrivateDoc.FRIENDS_BUT:
+            from users.model.list import UserDocAddItemExcludes
+            return not UserDocAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
+        elif private.add_item == UserPrivateDoc.SOME_FRIENDS:
+            from users.model.list import UserDocAddItemIncludes
+            return UserDocAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
         else:
             return False
 

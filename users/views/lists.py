@@ -208,7 +208,7 @@ class AllPossibleUsersList(ListView):
 		return self.request.user.get_possible_friends()
 
 class UserPostsListView(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_work_post = None, 15, None
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
@@ -218,18 +218,20 @@ class UserPostsListView(ListView):
 		if user_pk == request.user.pk:
 			self.list = self.post_list.get_staff_items()
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
+			self.is_user_can_work_post = True
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 		if request.user.is_authenticated:
 			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
+			self.is_user_can_work_post = self.user.is_user_can_work_post(request.user.pk)
 		else:
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPostsListView,self).get_context_data(**kwargs)
-		c['user'], c['post_lists'], c['fix_list'], c['list'] = self.user, self.post_lists, self.user.get_fix_list(), self.post_list
+		c['user'], c['post_lists'], c['fix_list'], c['list'], c['is_user_can_work_post'] = self.user, self.post_lists, self.user.get_fix_list(), self.post_list, self.is_user_can_work_post
 		return c
 
 	def get_queryset(self):

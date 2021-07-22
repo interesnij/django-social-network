@@ -334,16 +334,20 @@ class CommunityVideoList(ListView):
 
 
 class CommunityPostsListView(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_work_post = None, 15, None
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
 		from common.template.post import get_permission_community_post
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
-		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
-			self.posts_list = self.list.get_staff_items()
-			self.post_lists = PostList.get_community_staff_lists(self.kwargs["pk"])
+		if request.user.is_authenticated:
+			if request.user.is_staff_of_community(self.c.pk):
+				self.posts_list = self.list.get_staff_items()
+				self.post_lists = PostList.get_community_staff_lists(self.kwargs["pk"])
+				self.is_user_can_work_post = True
+			else:
+				self.is_user_can_work_post = self.c.is_user_can_work_post(request.user)
 		else:
 			self.posts_list = self.list.get_items()
 			self.post_lists = PostList.get_community_lists(self.kwargs["pk"])
@@ -352,7 +356,7 @@ class CommunityPostsListView(ListView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityPostsListView,self).get_context_data(**kwargs)
-		c['community'], c['post_lists'], c['list'], c['fix_list'] = self.c, self.post_lists, self.list, self.c.get_fix_list()
+		c['community'], c['post_lists'], c['list'], c['fix_list'], c['is_user_can_work_post'] = self.c, self.post_lists, self.list, self.c.get_fix_list(),self.is_user_can_work_post
 		return c
 
 	def get_queryset(self):

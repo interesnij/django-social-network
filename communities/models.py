@@ -396,6 +396,24 @@ class Community(models.Model):
             return CommunityPhotoCanSeeGalleryIncludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
+    def is_user_can_work_photo(self, user):
+        from communities.model.settings import CommunityPrivatePhoto
+
+        private = CommunityPrivatePhoto.objects.get(community=self)
+        if private.add_item == CommunityPrivatePhoto.ALL_CAN:
+            return True
+        elif private.add_item == CommunityPrivatePhoto.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivatePhoto.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivatePhoto.MEMBERS_BUT:
+            from communities.model.list import CommunityPhotoAddItemIncludes
+            return not CommunityPhotoAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.add_item == CommunityPrivatePhoto.SOME_MEMBERS:
+            from communities.model.list import CommunityPhotoAddItemExcludes
+            return CommunityPhotoAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
 
     def is_post_open(self, user):
         from communities.model.settings import CommunitySectionsOpen
@@ -413,6 +431,24 @@ class Community(models.Model):
         elif private.can_see_post == CommunitySectionsOpen.SOME_MEMBERS:
             from communities.model.list import CommunityPostCanSeeWallExcludes
             return CommunityPostCanSeeWallExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+    def is_user_can_work_post(self, user):
+        from communities.model.settings import CommunityPrivatePost
+
+        private = CommunityPrivatePost.objects.get(community=self)
+        if private.add_item == CommunityPrivatePost.ALL_CAN:
+            return True
+        elif private.add_item == CommunityPrivatePost.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivatePost.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivatePost.MEMBERS_BUT:
+            from communities.model.list import CommunityPostAddItemIncludes
+            return not CommunityPostAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.add_item == CommunityPrivatePost.SOME_MEMBERS:
+            from communities.model.list import CommunityPostAddItemExcludes
+            return CommunityPostAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
 
@@ -453,6 +489,24 @@ class Community(models.Model):
             return CommunityGoodCanSeeMarketExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
+        def is_user_can_work_good(self, user):
+            from communities.model.settings import CommunityPrivateGood
+
+            private = CommunityPrivateGood.objects.get(community=self)
+            if private.add_item == CommunityPrivateGood.ALL_CAN:
+                return True
+            elif private.add_item == CommunityPrivateGood.MEMBERS and user.is_member_of_community(self.pk):
+                return True
+            elif private.add_item == CommunityPrivateGood.YOU and user.is_creator_of_community(self.pk):
+                return True
+            elif private.add_item == CommunityPrivateGood.MEMBERS_BUT:
+                from communities.model.list import CommunityGoodAddItemIncludes
+                return not CommunityGoodAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+            elif private.add_item == CommunityPrivateGood.SOME_MEMBERS:
+                from communities.model.list import CommunityGoodAddItemExcludes
+                return CommunityGoodAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+            else:
+                return False
 
     def is_video_open(self, user):
         from communities.model.settings import CommunitySectionsOpen
@@ -470,6 +524,24 @@ class Community(models.Model):
         elif private.can_see_video == CommunitySectionsOpen.SOME_MEMBERS:
             from communities.model.list import CommunityVideoCanSeeVideoExcludes
             return CommunityVideoCanSeeVideoExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+    def is_user_can_work_video(self, user):
+        from communities.model.settings import CommunityPrivateVideo
+
+        private = CommunityPrivateVideo.objects.get(community=self)
+        if private.add_item == CommunityPrivateVideo.ALL_CAN:
+            return True
+        elif private.add_item == CommunityPrivateVideo.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateVideo.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateVideo.MEMBERS_BUT:
+            from communities.model.list import CommunityVideoAddItemIncludes
+            return not CommunityVideoAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.add_item == CommunityPrivateVideo.SOME_MEMBERS:
+            from communities.model.list import CommunityVideoAddItemExcludes
+            return CommunityVideoAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
 
@@ -491,6 +563,24 @@ class Community(models.Model):
             return CommunityMusicCanSeeMusicExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
+    def is_user_can_work_music(self, user):
+        from communities.model.settings import CommunityPrivateMusic
+
+        private = CommunityPrivateMusic.objects.get(community=self)
+        if private.add_item == CommunityPrivateMusic.ALL_CAN:
+            return True
+        elif private.add_item == CommunityPrivateMusic.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateMusic.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateMusic.MEMBERS_BUT:
+            from communities.model.list import CommunityMusicAddItemIncludes
+            return not CommunityMusicAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.add_item == CommunityPrivateMusic.SOME_MEMBERS:
+            from communities.model.list import CommunityMusicAddItemExcludes
+            return CommunityMusicAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
 
     def is_doc_open(self, user):
         from communities.model.settings import CommunitySectionsOpen
@@ -508,6 +598,24 @@ class Community(models.Model):
         elif private.can_see_doc == CommunitySectionsOpen.SOME_MEMBERS:
             from communities.model.list import CommunityDocCanSeeExcludes
             return CommunityDocCanSeeExcludes.objects.filter(community=self.pk, user=user.pk).exists()
+        else:
+            return False
+    def is_user_can_work_doc(self, user):
+        from communities.model.settings import CommunityPrivateDoc
+
+        private = CommunityPrivateDoc.objects.get(community=self)
+        if private.add_item == CommunityPrivateDoc.ALL_CAN:
+            return True
+        elif private.add_item == CommunityPrivateDoc.MEMBERS and user.is_member_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateDoc.YOU and user.is_creator_of_community(self.pk):
+            return True
+        elif private.add_item == CommunityPrivateDoc.MEMBERS_BUT:
+            from communities.model.list import CommunityDocAddItemIncludes
+            return not CommunityDocAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
+        elif private.add_item == CommunityPrivateDoc.SOME_MEMBERS:
+            from communities.model.list import CommunityDocAddItemExcludes
+            return CommunityDocAddItemExcludes.objects.filter(community=self.pk, user=user.pk).exists()
         else:
             return False
 
