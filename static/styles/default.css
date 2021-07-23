@@ -1,3 +1,8 @@
+.repost_style_btn {
+  top: 1px;
+  position: absolute;
+}
+
 .smile_dropdown_menu {
   margin-top:-185px !important;
   display:none;
