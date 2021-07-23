@@ -1,7 +1,5 @@
 <span class="post_container">
-  {% if is_user_can_work_post %}
-    {% include 'desctop/communities/detail_sections/create_post.html' %}
-  {% endif %}
+
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
@@ -46,6 +44,12 @@
             <a class="c_uncopy_post_list pointer">Удалить список</a>
           {% endif %}
         </span>
+        {% if is_user_can_work_post %}
+          {% include 'desctop/communities/detail_sections/create_post.html' %}
+        {% elif is_user_can_offer_post %}
+          {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
+        {% endif %}
+        <span></span>
         <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_community/post.html' %}
