@@ -4,10 +4,10 @@
 }
 
 .smile_dropdown_menu {
-  margin-top:-185px !important;
+  margin-top:-285px !important;
   display:none;
   width: 250px;
-  left: -120px;
+  left: 120px;
 }
 
 @keyframes show{
