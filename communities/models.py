@@ -484,7 +484,7 @@ class Community(models.Model):
             return True
         elif private.add_item == CommunityPrivatePost.YOU and user.is_creator_of_community(self.pk):
             return True
-        elif private.add_item == CommunityPrivatePost.MEMBERS_BUT:
+        elif private.add_item == CommunityPrivatePost.MEMBERS_BUT: 
             from communities.model.list import CommunityPostAddItemIncludes
             return not CommunityPostAddItemIncludes.objects.filter(community=self.pk, user=user.pk).exists()
         elif private.add_item == CommunityPrivatePost.SOME_MEMBERS:
