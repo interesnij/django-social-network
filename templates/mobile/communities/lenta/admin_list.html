@@ -40,6 +40,13 @@
           <a class="c_delete_post_list pointer">удалить список</a>
         </span>
         {% endif %}
+        {% if user.pk != request.user.pk %}
+          {% if is_user_can_work_post %}
+            {% include 'mobile/communities/detail_sections/create_post.html' %}
+          {% elif is_user_can_offer_post %}
+            {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
+          {% endif %}
+        {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ community.pk }}">
           {% for object in object_list %}

@@ -1,6 +1,6 @@
 <span class="post_container">
   {% include 'mobile/users/profile/new_post.html' %}
-  
+
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
@@ -40,6 +40,13 @@
             &nbsp;
           <a class="u_delete_post_list pointer">удалить список</a>
         </span>
+        {% endif %}
+        {% if user.pk != request.user.pk %}
+          {% if is_user_can_work_post %}
+            {% include 'mobile/users/profile/new_post.html' %}
+          {% elif is_user_can_offer_post %}
+            {% include 'mobile/users/profile/new_offer_post.html' %}
+          {% endif %}
         {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ user.pk }}">

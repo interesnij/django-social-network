@@ -66,11 +66,11 @@
         {% endif %}
 
         {% if user.pk != request.user.pk %}
-        {% if is_user_can_work_post %}
-          {% include 'desctop/users/profile/new_post.html' %}
-        {% elif is_user_can_offer_post %}
-          {% include 'desctop/users/profile/new_offer_post.html' %}
-        {% endif %}
+          {% if is_user_can_work_post %}
+            {% include 'desctop/users/profile/new_post.html' %}
+          {% elif is_user_can_offer_post %}
+            {% include 'desctop/users/profile/new_offer_post.html' %}
+          {% endif %}
         {% endif %}
         <span></span>
 

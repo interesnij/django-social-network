@@ -43,7 +43,7 @@
             <a class="u_uncopy_post_list pointer">Удалить список</a>
           {% endif %}
         </span>
-        {% if is_user_can_work_post %}
+        {% if is_user_can_work_post %} 
           {% include 'desctop/users/profile/new_post.html' %}
         {% elif is_user_can_offer_post %}
           {% include 'desctop/users/profile/new_offer_post.html' %}
