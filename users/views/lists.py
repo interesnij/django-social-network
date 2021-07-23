@@ -218,7 +218,7 @@ class UserPostsListView(ListView):
 		if user_pk == request.user.pk:
 			self.list = self.post_list.get_staff_items()
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
-			self.is_user_can_work_post = True
+			self.is_user_can_work_post = True 
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)

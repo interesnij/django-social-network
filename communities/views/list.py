@@ -349,6 +349,7 @@ class CommunityPostsListView(ListView):
 			else:
 				self.is_user_can_work_post = self.c.is_user_can_work_post(request.user)
 				self.posts_list = self.list.get_items()
+				self.post_lists = PostList.get_community_lists(self.c.pk)
 		else:
 			self.posts_list = self.list.get_items()
 			self.post_lists = PostList.get_community_lists(self.c.pk)
