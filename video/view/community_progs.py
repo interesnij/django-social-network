@@ -64,7 +64,7 @@ class VideoReplyCommunityCreate(View):
 			raise PermissionDenied("Ошибка доступа.")
 		elif community.is_comment_video_send_admin() and not request.user.is_staff_of_community(community.pk):
 			raise PermissionDenied("Ошибка доступа.")
-		elif request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
+		elif request.is_ajax() and form_post.is_valid() and parent.video.comments_enabled:
 			comment = form_post.save(commit=False)
 
 			check_can_get_lists(request.user, community)

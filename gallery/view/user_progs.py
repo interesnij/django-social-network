@@ -117,7 +117,7 @@ class PhotoReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
 
-        if request.is_ajax() and form_post.is_valid() and parent.photo_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.photo.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user != user:

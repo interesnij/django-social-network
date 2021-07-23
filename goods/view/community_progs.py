@@ -299,7 +299,7 @@ class GoodReplyCommunityCreate(View):
         c = Community.objects.get(pk=request.POST.get('pk'))
         parent = GoodComment.objects.get(pk=request.POST.get('good_comment'))
 
-        if form_post.is_valid() and parent.good_comment.comments_enabled:
+        if form_post.is_valid() and parent.good.comments_enabled:
             comment = form_post.save(commit=False)
             check_can_get_lists(request.user, c)
 

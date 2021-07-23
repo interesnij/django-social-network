@@ -812,7 +812,9 @@ function send_comment(form, block, link) {
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link_.open('POST', link, true);
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    (form.querySelector(".comment_text").value || form.querySelector(".img_block").firstChild) ? null: toast_error("Напишите или прикрепите что-нибудь");
+    if (form.querySelector(".comment_text").value || form.querySelector(".img_block").firstChild) {
+      toast_error("Напишите или прикрепите что-нибудь"); return
+    };
     link_.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             form.querySelector(".comment_text").innerHTML = "";

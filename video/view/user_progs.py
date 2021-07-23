@@ -58,7 +58,7 @@ class VideoReplyUserCreate(View):
         user = User.objects.get(pk=request.POST.get('pk'))
         parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
 
-        if request.is_ajax() and form_post.is_valid() and parent.video_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.video.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user != user:

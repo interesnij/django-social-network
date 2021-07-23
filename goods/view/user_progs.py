@@ -279,7 +279,7 @@ class GoodReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, user, parent = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), GoodComment.objects.get(pk=request.POST.get('good_comment'))
 
-        if request.is_ajax() and form_post.is_valid() and parent.good_comment.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.good.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.user != user:
