@@ -5084,7 +5084,7 @@ cursor: pointer;
 
 .like2:hover~.comment_like_window,
 .dislike2:hover~.comment_dislike_window{ z-index: 10; opacity: 1; visibility: visible;}
-.like, .dislike, .comment, .like2, .dislike2, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; margin-right: 7px;}
+.like, .dislike, .like2, .dislike2, .post_comment, .repost, .art_comment{ font-size:15px; cursor:pointer; margin-right: 7px;}
 
 .card-body img{
 width: 100%
