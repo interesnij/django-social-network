@@ -6,9 +6,15 @@
 .form_group_flex {
   display: flex;
 }
-
 .form_group_flex label{
   width: -webkit-fill-available;
+  margin-top: .5rem;
+}
+.form_group_flex select{
+  border: none;
+}
+.form_group_flex select option{
+  background-color: inherit;
 }
 
 .smile_dropdown_menu {
