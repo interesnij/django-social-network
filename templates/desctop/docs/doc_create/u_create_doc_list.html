@@ -1,23 +1,54 @@
 <div class="col-12">
     <form id="u_doc_list_create">
-      {% csrf_token %}
+        {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
                 <h5 class="content-color-primary mb-0">Создание списка документов</h5>
             </div>
             <div class="card-body">
-                  <div class="form-group">
+                <div class="form-group">
                     <label>Название</label>
                     <input type="text" name="name" class="form-control" id="id_name">
-                  </div>
-                  <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label>Описание</label>
                     <input name="description" class="form-control">
-                  </div>
-                  <div class="form-group form_group_flex">
+                </div>
+                <div class="form-group form_group_flex">
                     <label>Кто видит список</label>
                     {{ form.can_see_item }}
-                  </div>
+                </div>
+                <div class="can_see_item_collector"></div>
+
+                <div class="form-group form_group_flex">
+                    <label>Кто видит список</label>
+                    {{ form.can_see_comment }}
+                </div>
+                <div class="can_see_comment_collector"></div>
+
+                <div class="form-group form_group_flex">
+                    <label>Кто создает записи</label>
+                    {{ form.add_item }}
+                </div>
+                <div class="add_item_collector"></div>
+
+                <div class="form-group form_group_flex">
+                    <label>Кто пишет комментарии</label>
+                    {{ form.add_comment }}
+                </div>
+                <div class="add_comment_collector"></div>
+
+                <div class="form-group form_group_flex">
+                    <label>Кто копирует документы</label>
+                    {{ form.can_copy_item }}
+                </div>
+                <div class="can_copy_item_collector"></div>
+
+                <div class="form-group form_group_flex">
+                    <label>Кто копирует список</label>
+                    {{ form.can_copy_list }}
+                </div>
+                <div class="can_copy_list_collector"></div>
 
             </div>
             <div class="card-footer">
