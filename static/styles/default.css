@@ -12,6 +12,9 @@
 }
 .form_group_flex select{
   border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; appearance: none;
+  cursor: pointer
 }
 .form_group_flex select option{
   background-color: inherit;
