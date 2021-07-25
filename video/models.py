@@ -35,13 +35,13 @@ class VideoCategory(models.Model):
 
 
 class VideoList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
+    DELETED, DELETED_MANAGER = '_DEL','_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -113,7 +113,7 @@ class VideoList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
     def is_have_edit(self):
@@ -277,8 +277,6 @@ class VideoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = VideoList.DELETED
-        elif self.type == "PRI":
-            self.type = VideoList.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = VideoList.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -296,8 +294,6 @@ class VideoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = VideoList.LIST
-        elif self.type == "_DELP":
-            self.type = VideoList.PRIVATE
         elif self.type == "_DELM":
             self.type = VideoList.MANAGER
         self.save(update_fields=['type'])
@@ -318,8 +314,6 @@ class VideoList(models.Model):
             self.type = VideoList.CLOSED
         elif self.type == "MAI":
             self.type = VideoList.CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = VideoList.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = VideoList.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -339,8 +333,6 @@ class VideoList(models.Model):
             self.type = VideoList.LIST
         elif self.type == "_CLOM":
             self.type = VideoList.MAIN
-        elif self.type == "_CLOP":
-            self.type = VideoList.PRIVATE
         elif self.type == "_CLOM":
             self.type = VideoList.MANAGER
         self.save(update_fields=['type'])
@@ -357,11 +349,11 @@ class VideoList(models.Model):
 
 
 class Video(models.Model):
-    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED = '_PRO','PUB','MAN','_DEL','_CLO'
+    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
@@ -580,8 +572,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.DELETED
-        elif self.type == "PRI":
-            self.type = Video.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = Video.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -599,8 +589,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Video.PUBLISHED
-        elif self.type == "_DELP":
-            self.type = Video.PRIVATE
         elif self.type == "_DELM":
             self.type = Video.MANAGER
         self.save(update_fields=['type'])
@@ -619,8 +607,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.CLOSED
-        elif self.type == "PRI":
-            self.type = Video.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = Video.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -638,8 +624,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Video.PUBLISHED
-        elif self.type == "_CLOP":
-            self.type = Video.PRIVATE
         elif self.type == "_CLOM":
             self.type = Video.MANAGER
         self.save(update_fields=['type'])
@@ -655,7 +639,7 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
     def is_deleted(self):

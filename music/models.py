@@ -59,13 +59,13 @@ class SoundSymbol(models.Model):
 
 
 class SoundList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
+    DELETED, DELETED_MANAGER = '_DEL','_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_playlist', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -169,7 +169,7 @@ class SoundList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type[0] == "_"
     def is_have_edit(self):
@@ -243,8 +243,6 @@ class SoundList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = SoundList.DELETED
-        elif self.type == "PRI":
-            self.type = SoundList.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = SoundList.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -262,8 +260,6 @@ class SoundList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = SoundList.LIST
-        elif self.type == "_DELP":
-            self.type = SoundList.PRIVATE
         elif self.type == "_DELM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])
@@ -284,8 +280,6 @@ class SoundList(models.Model):
             self.type = SoundList.CLOSED
         elif self.type == "MAI":
             self.type = SoundList.CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = SoundList.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = SoundList.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -305,8 +299,6 @@ class SoundList(models.Model):
             self.type = SoundList.LIST
         elif self.type == "_CLOM":
             self.type = SoundList.MAIN
-        elif self.type == "_CLOP":
-            self.type = SoundList.PRIVATE
         elif self.type == "_CLOM":
             self.type = SoundList.MANAGER
         self.save(update_fields=['type'])

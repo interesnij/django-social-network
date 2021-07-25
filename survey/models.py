@@ -11,13 +11,13 @@ from communities.models import Community
 
 
 class SurveyList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
-    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_PRIVATE = '_CLO', '_CLOM', '_CLOMA', '_CLOP'
+    MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
+    DELETED, DELETED_MANAGER = '_DEL','_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -105,7 +105,7 @@ class SurveyList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
@@ -502,7 +502,7 @@ class Survey(models.Model):
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):

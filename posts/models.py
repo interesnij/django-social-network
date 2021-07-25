@@ -11,13 +11,13 @@ from common.model.other import Stickers
 
 
 class PostList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING, PRIVATE, FIXED, DRAFT = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI', '_FIX', '_DRA'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOF'
+    MAIN, LIST, MANAGER, PROCESSING, FIXED, DRAFT = 'MAI','LIS','MAN','_PRO','_FIX','_DRA'
+    DELETED, DELETED_MANAGER = '_DEL','_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
@@ -132,7 +132,7 @@ class PostList(models.Model):
     def is_closed(self):
         return self.type[:4] == "_CLO"
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type[0] == "_"
     def is_have_edit(self):
@@ -277,8 +277,6 @@ class PostList(models.Model):
 
         if self.type == "LIS":
             self.type = PostList.DELETED
-        elif self.type == "PRI":
-            self.type = PostList.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = PostList.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -296,8 +294,6 @@ class PostList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PostList.LIST
-        elif self.type == "_DELP":
-            self.type = PostList.PRIVATE
         elif self.type == "_DELM":
             self.type = PostList.MANAGER
         self.save(update_fields=['type'])
@@ -318,8 +314,6 @@ class PostList(models.Model):
             self.type = PostList.CLOSED
         elif self.type == "MAI":
             self.type = PostList.CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = PostList.CLOSED_PRIVATE
         elif self.type == "FIX":
             self.type = PostList.CLOSED_FIXED
         elif self.type == "MAN":
@@ -341,8 +335,6 @@ class PostList(models.Model):
             self.type = PostList.LIST
         elif self.type == "_CLOM":
             self.type = PostList.MAIN
-        elif self.type == "_CLOP":
-            self.type = PostList.PRIVATE
         elif self.type == "_CLOF":
             self.type = PostList.FIXED
         elif self.type == "_CLOM":
@@ -373,11 +365,11 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    PROCESSING, DRAFT, FIXED, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_DRA","_FIX", 'PUB','PRI','MAN','_DEL','_CLO', '_MES'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_DRA","_FIX",'PUB','MAN','_DEL','_CLO', '_MES'
+    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(MESSAGE, 'Репост в сообщения'),
+        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
@@ -445,7 +437,7 @@ class Post(models.Model):
         return self.save(update_fields=['repost'])
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
     def is_deleted(self):
@@ -608,8 +600,6 @@ class Post(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Post.DELETED
-        elif self.type == "PRI":
-            self.type = Post.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = Post.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -627,8 +617,6 @@ class Post(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Post.PUBLISHED
-        elif self.type == "_DELP":
-            self.type = Post.PRIVATE
         elif self.type == "_DELM":
             self.type = Post.MANAGER
         self.save(update_fields=['type'])
@@ -647,8 +635,6 @@ class Post(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Post.CLOSED
-        elif self.type == "PRI":
-            self.type = Post.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = Post.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -666,8 +652,6 @@ class Post(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Post.PUBLISHED
-        elif self.type == "_CLOP":
-            self.type = Post.PRIVATE
         elif self.type == "_CLOM":
             self.type = Post.MANAGER
         self.save(update_fields=['type'])

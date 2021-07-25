@@ -13,13 +13,13 @@ from common.model.other import Stickers
 
 
 class PhotoList(models.Model):
-    MAIN, LIST, WALL, AVATAR, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO', 'PRI'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOP', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
+    MAIN, LIST, WALL, AVATAR, MANAGER, PROCESSING = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO'
+    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'), (PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
     )
 
     community = models.ForeignKey('communities.Community', related_name='photo_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -114,7 +114,7 @@ class PhotoList(models.Model):
     def is_have_edit(self):
         return self.is_list() or self.is_private()
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
@@ -298,8 +298,6 @@ class PhotoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = PhotoList.DELETED
-        elif self.type == "PRI":
-            self.type = PhotoList.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = PhotoList.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -317,8 +315,6 @@ class PhotoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PhotoList.LIST
-        elif self.type == "_DELP":
-            self.type = PhotoList.PRIVATE
         elif self.type == "_DELM":
             self.type = PhotoList.MANAGER
         self.save(update_fields=['type'])
@@ -339,8 +335,6 @@ class PhotoList(models.Model):
             self.type = PhotoList.CLOSED
         elif self.type == "MAI":
             self.type = PhotoList.CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = PhotoList.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = PhotoList.CLOSED_MANAGER
         elif self.type == "AVA":
@@ -364,8 +358,6 @@ class PhotoList(models.Model):
             self.type = PhotoList.LIST
         elif self.type == "_CLOM":
             self.type = PhotoList.MAIN
-        elif self.type == "_CLOP":
-            self.type = PhotoList.PRIVATE
         elif self.type == "_CLOM":
             self.type = PhotoList.MANAGER
         elif self.type == "_CLOW":
@@ -386,11 +378,11 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED = '_PRO','PUB','MAN','_DEL','_CLO'
+    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -419,7 +411,7 @@ class Photo(models.Model):
         ordering = ["-order"]
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -568,8 +560,6 @@ class Photo(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Photo.DELETED
-        elif self.type == "PRI":
-            self.type = Photo.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = Photo.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -587,8 +577,6 @@ class Photo(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Photo.PUBLISHED
-        elif self.type == "_DELP":
-            self.type = Photo.PRIVATE
         elif self.type == "_DELM":
             self.type = Photo.MANAGER
         self.save(update_fields=['type'])
@@ -607,8 +595,6 @@ class Photo(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Photo.CLOSED
-        elif self.type == "PRI":
-            self.type = Photo.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = Photo.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -626,8 +612,6 @@ class Photo(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Photo.PUBLISHED
-        elif self.type == "_CLOP":
-            self.type = Photo.PRIVATE
         elif self.type == "_CLOM":
             self.type = Photo.MANAGER
         self.save(update_fields=['type'])
@@ -744,9 +728,6 @@ class PhotoComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
-
-    def is_private(self):
-        return self.type == self.PRIVATE
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime

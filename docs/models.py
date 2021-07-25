@@ -10,13 +10,13 @@ from django.db.models import Q
 
 
 class DocList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING, PRIVATE = 'MAI', 'LIS', 'MAN', '_PRO', 'PRI'
-    DELETED, DELETED_PRIVATE, DELETED_MANAGER = '_DEL', '_DELP', '_DELM'
-    CLOSED, CLOSED_PRIVATE, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOP', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
+    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOM', '_CLOMA'
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
-        (DELETED, 'Удалённый'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='doc_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -106,7 +106,7 @@ class DocList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
@@ -251,8 +251,6 @@ class DocList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = DocList.DELETED
-        elif self.type == "PRI":
-            self.type = DocList.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = DocList.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -270,8 +268,6 @@ class DocList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = DocList.LIST
-        elif self.type == "_DELP":
-            self.type = DocList.PRIVATE
         elif self.type == "_DELM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
@@ -292,8 +288,6 @@ class DocList(models.Model):
             self.type = DocList.CLOSED
         elif self.type == "MAI":
             self.type = DocList.CLOSED_MAIN
-        elif self.type == "PRI":
-            self.type = DocList.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = DocList.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -313,8 +307,6 @@ class DocList(models.Model):
             self.type = DocList.LIST
         elif self.type == "_CLOM":
             self.type = DocList.MAIN
-        elif self.type == "_CLOP":
-            self.type = DocList.PRIVATE
         elif self.type == "_CLOM":
             self.type = DocList.MANAGER
         self.save(update_fields=['type'])
@@ -331,12 +323,12 @@ class DocList(models.Model):
 
 
 class Doc(models.Model):
-    PROCESSING, PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = '_PRO','PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED = '_PRO','PUB','MAN','_DEL','_CLO'
+    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     BOOK, ARTICLE, PUBLIC, FILE, OTHER = 'BOO','ART','PU','FIL','OTH'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     TYPE_2 = (
         (BOOK, 'Книга'),(ARTICLE, 'Статья'),(PUBLIC, 'Заметка'),(FILE, 'Файл'),(OTHER, 'Другое'),
@@ -361,7 +353,7 @@ class Doc(models.Model):
         return self.list.only("pk")
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
@@ -454,8 +446,6 @@ class Doc(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Doc.DELETED
-        elif self.type == "PRI":
-            self.type = Doc.DELETED_PRIVATE
         elif self.type == "MAN":
             self.type = Doc.DELETED_MANAGER
         self.save(update_fields=['type'])
@@ -473,8 +463,6 @@ class Doc(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Doc.PUBLISHED
-        elif self.type == "_DELP":
-            self.type = Doc.PRIVATE
         elif self.type == "_DELM":
             self.type = Doc.MANAGER
         self.save(update_fields=['type'])
@@ -493,8 +481,6 @@ class Doc(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Doc.CLOSED
-        elif self.type == "PRI":
-            self.type = Doc.CLOSED_PRIVATE
         elif self.type == "MAN":
             self.type = Doc.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -512,8 +498,6 @@ class Doc(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Doc.PUBLISHED
-        elif self.type == "_CLOP":
-            self.type = Doc.PRIVATE
         elif self.type == "_CLOM":
             self.type = Doc.MANAGER
         self.save(update_fields=['type'])
@@ -529,4 +513,4 @@ class Doc(models.Model):
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_private(self):
-        return self.type == self.PRIVATE
+        return False
