@@ -1,4 +1,5 @@
-<form id="u_doc_list_create">
+<div class="col-12">
+    <form id="u_doc_list_create">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
@@ -13,12 +14,11 @@
                     <label>Описание</label>
                     <input name="description" class="form-control">
                   </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
-                      <label class="custom-control-label" for="id_is_public">Виден всем</label>
-                    </div>
+                  <div class="form-group form_group_flex">
+                    <label>Кто видит список</label>
+                    {{ form.can_see_item }}
                   </div>
+
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
@@ -26,3 +26,4 @@
             </div>
         </div>
     </form>
+</div>
