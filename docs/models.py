@@ -10,24 +10,32 @@ from django.db.models import Q
 
 
 class DocList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING = 'MAI', 'LIS', 'MAN', '_PRO'
-    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO', '_CLOM', '_CLOMA'
+    MAIN, LIST, MANAGER, PROCESSING, DELETED, DELETED_MANAGER, CLOSED, CLOSED_MAIN, CLOSED_MANAGER = 'MAI','LIS','MAN','_PRO','_DEL','_DELM','_CLO','_CLOM','_CLOMA'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
+
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='doc_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='doc_lists_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+    count = models.PositiveIntegerField(default=0)
+
+    can_see_item = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит записи")
+    can_see_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
+    add_item = models.CharField(max_length=2, choices=PERM, default=YOU, verbose_name="Кто создает записи и потом с этими записями работает")
+    add_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
+    can_copy_item = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто копирует записи")
+    can_copy_list = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто копирует список")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
-    count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
