@@ -3,6 +3,14 @@
   position: absolute;
 }
 
+.form_group_flex {
+  display: flex;
+}
+
+.form_group_flex label{
+  width: -webkit-fill-available;
+}
+
 .smile_dropdown_menu {
   margin-top:-285px !important;
   display:none;
