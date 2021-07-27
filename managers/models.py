@@ -1,14 +1,13 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import Q
 
 
 class UserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -18,12 +17,10 @@ class UserStaff(models.Model):
         verbose_name_plural = 'Полномочия в профиле'
 
 class CommunityStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_community_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -33,12 +30,10 @@ class CommunityStaff(models.Model):
         verbose_name_plural = 'Полномочия в сообществе'
 
 class PostUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -47,13 +42,37 @@ class PostUserStaff(models.Model):
         verbose_name = 'Полномочия в постах пользователей'
         verbose_name_plural = 'Полномочия в постах пользователей'
 
+class PlannerUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='planner_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в планировщике'
+        verbose_name_plural = 'Полномочия в планировщиках'
+
+class ForumUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='forum_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в форуме'
+        verbose_name_plural = 'Полномочия в форуме'
+
 class GoodUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -63,12 +82,10 @@ class GoodUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в товарах пользователей'
 
 class DocUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -78,12 +95,10 @@ class DocUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в документах'
 
 class PhotoUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -93,12 +108,10 @@ class PhotoUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в фотографиях'
 
 class VideoUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -108,12 +121,10 @@ class VideoUserStaff(models.Model):
         verbose_name_plural = 'Полномочия в видеозаписях'
 
 class AudioUserStaff(models.Model):
-    ADMINISTRATOR, MODERATOR, EDITOR, ADVERTISER = 'A', 'M', 'E', 'R'
-    LEVEL = (
-        (ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),
-    )
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='music_user_staff', verbose_name="Особый пользователь")
-    level = models.CharField(max_length=5, choices=LEVEL, blank=True, verbose_name="Уровень доступа")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
 
     def __str__(self):
         return self.user.get_full_name()
@@ -122,6 +133,70 @@ class AudioUserStaff(models.Model):
         verbose_name = 'Полномочия в аудиозаписях'
         verbose_name_plural = 'Полномочия в аудиозаписях'
 
+class SitesUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sites_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в сайтах'
+        verbose_name_plural = 'Полномочия в сайтах'
+
+class MailUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='mail_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в почте'
+        verbose_name_plural = 'Полномочия в почте'
+
+class WikiUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wiki_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в википедии'
+        verbose_name_plural = 'Полномочия в википедии'
+
+class ArticleUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='article_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в статьях'
+        verbose_name_plural = 'Полномочия в статьях'
+
+class SurveyUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='survey_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в опросах'
+        verbose_name_plural = 'Полномочия в опросах'
 
 class CanWorkStaffUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_user', verbose_name="Создатель персонала")
@@ -237,49 +312,137 @@ class CanWorkStaffAudioUser(models.Model):
         verbose_name = 'Создатель персонала аудиозаписей'
         verbose_name_plural = 'Создатели персонала аудиозаписей'
 
-
-class ModerationCategory(models.Model):
-    SEVERITY_CRITICAL, SEVERITY_HIGH, SEVERITY_MEDIUM, SEVERITY_LOW = 'C', 'H', 'M', 'L'
-    SEVERITIES = (
-        (SEVERITY_CRITICAL, 'Критический'),
-        (SEVERITY_HIGH, 'Высокий'),
-        (SEVERITY_MEDIUM, 'Средний'),
-        (SEVERITY_LOW, 'Низкий'),
-    )
-    name = models.CharField(max_length=32, blank=False, null=False, verbose_name="Название")
-    title = models.CharField(max_length=64, blank=False, null=False, verbose_name="Заголовок")
-    description = models.CharField(max_length=255, blank=False, null=False, verbose_name="Описание")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    severity = models.CharField(max_length=5, choices=SEVERITIES,verbose_name="Строгость")
+class CanWorkStaffPlannerUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_planner_user', verbose_name="Создатель персонала в планировщике")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в планировщике")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в планировщике")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в планировщике")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в планировщике")
 
     def __str__(self):
-        return self.name
+        return self.user.get_full_name()
 
     class Meta:
-        verbose_name = 'Категория модерации'
-        verbose_name_plural = 'Категории модерации'
+        verbose_name = 'Создатель персонала в планировщике'
+        verbose_name_plural = 'Создатели персонала в планировщике'
+
+class CanWorkStaffForumUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_forum_user', verbose_name="Создатель персонала в форуме")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в форуме")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в форуме")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в форуме")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в форуме")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в форуме'
+        verbose_name_plural = 'Создатели персонала в форуме'
+
+class CanWorkStaffMailUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_mail_user', verbose_name="Создатель персонала в почте")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в почте")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в почте")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в почте")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в почте")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в почте'
+        verbose_name_plural = 'Создатели персонала в почте'
+
+class CanWorkStaffSitesUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_sites_user', verbose_name="Создатель персонала в сайтах")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в сайтах")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в сайтах")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в сайтах")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в сайтах")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в сайтах'
+        verbose_name_plural = 'Создатели персонала в сайтах'
+
+class CanWorkStaffWikiUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_wiki_user', verbose_name="Создатель персонала в википедии")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в википедии")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в википедии")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в википедии")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в википедии")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в википедии'
+        verbose_name_plural = 'Создатели персонала в википедии'
+
+class CanWorkStaffArticleUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_article_user', verbose_name="Создатель персонала в статьях")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в статьях")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в статьях")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в статьях")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в статьях")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в статьях'
+        verbose_name_plural = 'Создатели персонала в статьях'
+
+class CanWorkStaffSurveyUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_survey_user', verbose_name="Создатель персонала в опросах")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в опросах")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в опросах")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в опросах")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в опросах")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в опросах'
+        verbose_name_plural = 'Создатели персонала в опросах'
 
 
-USER, COMMUNITY = 'USE', 'COM'
-POST_LIST, POST, POST_COMMENT = 'POL', 'POS', 'POSC'
-PHOTO_LIST, PHOTO, PHOTO_COMMENT = 'PHL', 'PHO', 'PHOC'
-DOC_LIST, DOC = 'DOL', 'DOC'
-MUSIC_LIST, MUSIC = 'MUL', 'MUS'
-VIDEO_LIST, VIDEO, VIDEO_COMMENT = 'VIL', 'VID', 'VIDC'
-GOOD_LIST, GOOD, GOOD_COMMENT = 'GOL', 'GOO', 'GOOC'
+USER, COMMUNITY, SITE, ARTICLE = 1,2,6,7
+POST_LIST, POST, POST_COMMENT = 8, 9, 10
+PHOTO_LIST, PHOTO, PHOTO_COMMENT = 12, 13, 14
+DOC_LIST, DOC = 17, 18
+SURVEY_LIST, SURVEY = 21, 22
+MUSIC_LIST, MUSIC = 25, 26
+VIDEO_LIST, VIDEO, VIDEO_COMMENT = 29, 30, 31
+GOOD_LIST, GOOD, GOOD_COMMENT = 33, 34, 35
+WORKSPACE, BOARD, COLUMN, CARD, CARD_COMMENT = 38, 39, 40, 41, 42
+FORUM_ITEM, FORUM_COMMENT = 45, 46
+WIKI_ITEM, WIKI_COMMENT = 49, 50
+MAIL = 54
+
 TYPE = (
-    (USER, 'Пользователь'), (COMMUNITY, 'Сообщество'),
-    (MUSIC_LIST, 'Плейлист'), (MUSIC, 'Трек'),
-    (POST_LIST, 'Список записей'), (POST, 'Запись'), (POST_COMMENT, 'Коммент к записи'),
-    (DOC_LIST, 'Список документов'), (DOC, 'документ'),
-    (PHOTO_LIST, 'Список фотографий'), (PHOTO, 'Фотография'), (PHOTO_COMMENT, 'Коммент к фотографии'),
-    (VIDEO_LIST, 'Список роликов'), (VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),
-    (GOOD_LIST, 'Список товаров'), (GOOD, 'Товар'), (GOOD_COMMENT, 'Коммент к товару'),
+    (USER, 'Пользователь'),(COMMUNITY, 'Сообщество'),(SITE, 'Сайт'),(ARTICLE, 'Статья'),
+    (MUSIC_LIST, 'Плейлист'),(MUSIC, 'Трек'),
+    (POST_LIST, 'Список записей'),(POST, 'Запись'),(POST_COMMENT, 'Коммент к записи'),
+    (DOC_LIST, 'Список документов'),(DOC, 'Документ'),
+    (SURVEY_LIST, 'Список опросов'),(SURVEY, 'Опрос'),
+    (PHOTO_LIST, 'Список фотографий'),(PHOTO, 'Фотография'),(PHOTO_COMMENT, 'Коммент к фотографии'),
+    (VIDEO_LIST, 'Список роликов'),(VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),
+    (GOOD_LIST, 'Список товаров'),(GOOD, 'Товар'),(GOOD_COMMENT, 'Коммент к товару'),
+    (WORKSPACE, 'Рабочее пространство'),(BOARD, 'Доска'),(COLUMN, 'Колонка'),(CARD, 'Карточка'),(CARD_COMMENT, 'Коммент к карточке'),
+    (FORUM_ITEM, 'Обсуждение'),(FORUM_COMMENT, 'Коммент к обсуждению'),
+    (WIKI_ITEM, 'Объект википедии'),(WIKI_COMMENT, 'Коммент к объекту википедии'),
+    (MAIL, 'Почта')
 )
+
 
 class Moderated(models.Model):
     # рассмотрение жалобы на объект, получаемфй по attach. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
-    PENDING, SUSPEND, CLOSE, BANNER_GET, REJECTED = 'P', 'S', 'C', 'BG', 'R'
+    PENDING, SUSPEND, CLOSE, BANNER_GET, REJECTED = 1, 2, 3, 4, 5
     STATUS = (
         (PENDING, 'На рассмотрении'),
         (SUSPEND, 'Объект заморожен'),
@@ -289,12 +452,12 @@ class Moderated(models.Model):
     )
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
-    status = models.CharField(max_length=5, choices=STATUS, default=PENDING, verbose_name="Статус")
-    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
+    status = models.PositiveSmallIntegerField(default=0, choices=STATUS, default=PENDING, verbose_name="Статус")
+    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.type
 
     class Meta:
         verbose_name = 'Проверяемый объект'
@@ -318,10 +481,20 @@ class Moderated(models.Model):
     def get_or_create_moderated_object(cls, type, object_id):
         return cls._get_or_create_moderated_object(type=type, object_id=object_id)
 
-    @property
     def reports_count(self):
         # кол-во жалоб на пользователя
         return self.reports.count()
+
+    def reports_count_ru(self):
+        count = self.reports_count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " жалоба"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " жалобы"
+        else:
+            return str(count) + " жалоб"
 
     def is_verified(self):
         # проверен ли пользователь
@@ -339,136 +512,269 @@ class Moderated(models.Model):
         # Объект блокирован
         return self.status == Moderated.BANNER_GET
 
-    def create_suspend(self, manager_id, severity_int):
-        from django.utils import timezone
-
+    def create_suspend(self, manager_id, duration_of_penalty):
         self.verified = True
-        severity = None
-        duration_of_penalty = None
-        if severity_int == '4':
-            duration_of_penalty = timezone.timedelta(days=30)
-            severity = "C"
-        elif severity_int == '3':
-            duration_of_penalty = timezone.timedelta(days=7)
-            severity = "H"
-        elif severity_int == '2':
-            duration_of_penalty = timezone.timedelta(days=3)
-            severity = "M"
-        elif severity_int == '1':
-            duration_of_penalty = timezone.timedelta(hours=6)
-            severity = "L"
-        moderation_expiration = timezone.now() + duration_of_penalty
-        ModerationPenalty.create_suspension_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id, expiration=moderation_expiration)
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=severity)
+        ModerationPenalty.create_suspension_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id, expiration=duration_of_penalty)
         self.save()
     def create_warning_banner(self, manager_id):
         self.verified = True
         self.save()
-        ModerationPenaltyUser.create_banner_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.WARNING_BANNER)
+        ModerationPenalty.create_banner_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
     def create_close(self, object, description, manager_id):
         self.status = Moderated.CLOSE
         self.description = description
         self.verified = True
         self.save()
         ModerationPenalty.create_close_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
-        if object.community:
+        if self.type < 5:
+            object.close_item()
+        elif object.community:
             object.close_item(object.community)
         else:
             object.close_item(None)
-        #AudioManageLog.objects.create(audio=audio_id, manager=manager_id, action_type=AudioManageLog.DELETED)
     def delete_close(self, object, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
-        if object.community:
+        if self.type < 5:
+            object.abort_close_item()
+        elif object.community:
             object.abort_close_item(object.community)
         else:
-            object.close_item(None)
+            object.abort_close_item(None)
         self.delete()
-        #AudioManageLog.objects.create(audio=audio_id, manager=manager_id, action_type=AudioManageLog.UNDELETED)
     def delete_suspend(self, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
         self.delete()
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.UNSUSPENDED)
     def delete_warning_banner(self, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
         self.delete()
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.NO_WARNING_BANNER)
 
-    def unverify_moderation(self, manager_id):
+    def unverify_moderation(self, object, manager_id):
         self.verified = False
         self.moderated_object.all().delete()
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.UNVERIFY)
+        if self.type == 1:
+            from users.models import User
+            user = User.objects.get(pk=self.object_id)
+            user.abort_close_item()
+            user.abort_suspend_item()
+        elif self.type == 2:
+            from communities.models import Community
+            community = Community.objects.get(pk=self.object_id)
+            community.abort_close_item()
+            community.abort_suspend_item()
+        elif self.type < 5:
+            object.abort_close_item(None)
+        elif object.community:
+            object.abort_close_item(object.community)
+        else:
+            object.abort_close_item(None)
         self.save()
 
     def reject_moderation(self, manager_id):
         self.verified = True
-        self.status = ModeratedUser.REJECTED
-        #UserManageLog.objects.create(user=user_id, manager=manager_id, action_type=UserManageLog.REJECT)
+        self.status = Moderated.REJECTED
         self.save()
+
+    def get_reports(self):
+        return self.reports.all()
+
+    def get_btn_console(self):
+        return '<div class="border-top btn_console"><a class="create_user_suspend pointer">Заморозить</a>| <a class="create_user_close pointer">Заблокировать</a>| <a class="create_user_warning_banner pointer">Повесить баннер</a>| <a class="create_user_rejected pointer">Отклонить</a></div>'
+
+    def get_user(self):
+        try:
+            from users.models import User
+            user = User.objects.get(pk=self.object_id)
+            return ''.join(['<div class="media"><a href="/users/', str(self.object_id), '" class="ajax"><figure><img src="', user.get_avatar(), \
+            '" style="width: 90px;" alt="image"></figure></a><div class="media-body pl-1"><h6 class="my-0 mt-1"><a href="/users/', \
+            str(self.object_id), '" class="ajax"><h6 class="mt-1">', user.get_full_name(), '</h6></a><span class="mt-1 pointer underline show_object_reports" obj-pk="', str(self.pk), '">', self.reports_count_ru(), \
+            '</span><div class="border mt-1 btn_console" data-pk="', str(self.object_id), '"><a class="create_user_suspend pointer">Заморозить</a> | <a class="create_user_close pointer">Заблокировать</a> | <a class="create_user_warning_banner pointer">Повесить баннер</a> | <a class="create_user_rejected pointer">Отклонить</a></div></div></div>'])
+        except:
+            return '<div class="media">Ошибка отображения данных</div>'
+
+    def get_blog(self, user):
+        #try:
+        from blog.models import Blog
+        blog = Blog.objects.get(pk=self.object_id)
+        creator = blog.creator
+        return ''.join(['<div class="d-flex justify-content-start align-items-center mb-1"><div class="avatar mr-1"><a href="/blog/', str(blog.slug), '/" class="ajax"><img src="', blog.get_image(), '" alt="avatar img" height="40" width="40"></a></div><div class="profile-user-info"><a href="/blog/', str(blog.slug), '/" class="ajax"><h4 class="mb-0">', blog.title, ' <span class="text-muted small">(', blog.get_created(), ')</span></h4></a><span class="small"><a href="/users/', str(creator.pk), '">', creator.get_full_name(),'</a></span></div></div><p class="card-text mb-50">', blog.description, '</p><span><span><span><span class="small" data-pk="', str(blog.pk), '"><span class="create_blog_close pointer underline">Заблокировать</span>&nbsp;&nbsp;<span class="create_blog_rejected pointer underline">Отклонить</span></span></span></span></span>'])
+        #except:
+        #    return ''
+    def get_blog_comment(self, user):
+        try:
+            from common.model.comments import BlogComment
+            comment = BlogComment.objects.get(pk=self.object_id)
+            creator = comment.commenter
+            if comment.attach:
+                _attach = comment.get_u_attach(user)
+            else:
+                _attach = ''
+            return ''.join(['<div class="card-body" style="padding: .5rem .5rem;"><div class="media"><div class="avatar mr-75"><a href="/users/', str(creator.pk), '/" class="ajax"><img src="', creator.get_avatar(), '" width="38" height="38" alt="Avatar"></a></div><div class="media-body"><h6 class="font-weight-bolder mb-25"><a href="/users/', str(creator.pk), '/" class="ajax">', creator.get_full_name(), '</a></h6><span class="text-muted small">', comment.get_created(), '</span><br></div></div><div class="comment_footer"><span class="card-text">', comment.text, '</span>', _attach, ' <span><div class="border mt-1 btn_console" data-pk="', str(comment.pk), '"><a " obj-pk="', str(self.pk), '" class="show_object_reports pointer">', self.reports_count_ru(), '</a> | <a class="create_blog_comment_close pointer">Закрыть</a> | <a class="create_blog_comment_rejected pointer">Отклонить</a></div></span></div></div>'])
+        except:
+            return ''
+
+    def get_photo(self):
+        try:
+            from gallery.models import Photo
+            photo = Photo.objects.get(pk=self.object_id)
+            return ''.join(['<div class="uuid_keeper" data-uuid="', str(photo.uuid), '"><div class="progressive replace image_fit_200 u_photo_moderated_detail pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+        except:
+            return ''
+    def get_video(self):
+        try:
+            from video.models import Video
+            video = Video.objects.get(pk=self.object_id)
+            return ''.join(['<div><img class="image_fit uuid_keeper" data-uuid="', str(video.uuid), '" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_video_moderated_detail" video-pk="', str(video.pk), '"></div></div>'])
+        except:
+            return ''
+    def get_doc(self):
+        try:
+            from docs.models import Doc
+            doc = Doc.objects.get(pk=self.object_id)
+            options = '<span class="dropdown-item create_doc_close">Заблокировать</span><span class="dropdown-item create_doc_rejected">Отклонить</span>'
+            opt_drop = '<div class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" style="padding-top: 3px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 33px;">' + options + '<span class="dropdown-item show_object_reports" obj-pk="' + str(self.pk) + '">' + self.reports_count_ru() + '</span></div></div>'
+            span_btn = ''.join(['<span class="span_btn">', opt_drop, '</span>'])
+            return ''.join(['<div style="flex-basis: 100%;"><div class="media border"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer" style="padding-top: 5px;width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small" style="position: absolute;">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
+        except:
+            return ''
+
+    def get_music(self):
+        try:
+            from music.models import Music
+            music = Music.objects.get(pk=self.object_id)
+            options = '<span class="dropdown-item create_track_close">Заблокировать</span><span class="dropdown-item create_track_rejected">Отклонить</span>'
+            opt_drop = '<div class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg style="width: 17px;padding-top:3px" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 55px;">' + options + '<span class="dropdown-item show_object_reports" obj-pk="' + str(self.pk) + '">' + self.reports_count_ru() + '</span></div></div>'
+            span_btn = ''.join(['<span class="span_btn">', opt_drop, '</span>'])
+            return ''.join(['<div class="col-md-12" style="flex-basis: 100%;"><div class="media border p-1"><div class="media-body music_media_body" style="line-height: 8px;"><span>', music.title, '</span><div class="audio_div"><audio id="player" class="audio_player"><source src="', music.get_uri(), '" type="audio/mp3" /></audio></div>', span_btn, '</div></div></div>'])
+        except:
+            return ''
+
+    def get_photo_list(self):
+        try:
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=self.object_id)
+            creator = list.creator
+            add = ''
+            return ''.join(['<div style="width: 100%;height: 100%;" class="text-center bg-dark position-relative uuid_keeper" data-uuid="', str(list.uuid), '"  photolist-pk="', str(self.object_id), '"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container pt-2"><h4 class="u_load_moderated_photo_list text-white pointer"><a class="nowrap">', list.name, '</a></h4><p class="show_object_reports">Жалоб: ', str(self.reports_count()), '</p><hr class="my-4"><a class="u_load_moderated_photo_list text-white pointer">', list.count_items_ru(), '</a><div class="row">', add, '</div>', '</div></div>'])
+        except:
+            return ''
+    def get_doc_list(self):
+        try:
+            from docs.models import DocList
+            list = DocList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;"><div class="card-body border uuid_keeper" data-uuid="', str(list.uuid), '"  doclist-pk="', str(list.pk), '" style="padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_moderated_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_moderated_doc_list pointer">', list.name, '</h6><p class="show_object_reports">Жалоб: ', str(self.reports_count()), '">', str(creator.get_full_name_genitive()), '</a><br><span class="show_object_reports pointer">Жалоб: ', str(self.reports_count()), '</span></p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_video_list(self):
+        try:
+            from video.models import VideoList
+            list = VideoList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="card border"><div class="card-body uuid_keeper" data-uuid="', str(list.uuid), '"  videolist-pk="', str(creator.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_moderated_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_moderated_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br><span class="show_object_reports pointer">Жалоб: ', str(self.reports_count()), '</span></p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_playlist(self):
+        try:
+            from music.models import SoundList
+            playlist = SoundList.objects.get(pk=self.object_id)
+            creator = playlist.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:70px;height:70px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="border"><div class="card-body uuid_keeper" data-uuid="', str(playlist.uuid), '" playlist-pk="', str(playlist.pk), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_moderated_playlist pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_moderated_playlist pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br><span class="show_object_reports pointer">Жалоб: ', str(self.reports_count()), '</span></p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_survey_list(self):
+        try:
+            from survey.models import SurveyList
+            list = SurveyList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg height="70px" viewBox="0 0 24 24" width="70px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M18 9l-1.41-1.42L10 14.17l-2.59-2.58L6 13l4 4zm1-6h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z"></path></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="border"><div class="card-body uuid_keeper" data-uuid="', str(list.uuid), '" surveylist-pk="', str(list.pk), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_moderated_survey_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_moderated_survey_list pointer">', list.name, '</h6><p>Список опросов <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br><span class="show_object_reports pointer">Жалоб: ', str(self.reports_count()), '</span></p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+
+    def get_doc_items(self):
+        if self.type == 17:
+            return self.get_doc_list()
+        elif self.type == 18:
+            return self.get_doc()
+    def get_survey_items(self):
+        if self.type == 21:
+            return self.get_survey_list()
+        elif self.type == 22:
+            return self.get_survey()
+    def get_photo_items(self):
+        if self.type == 12:
+            return self.get_photo_list()
+        elif self.type == 13:
+            return self.get_photo()
+    def get_video_items(self):
+        if self.type == 29:
+            return self.get_video_list()
+        elif self.type == 30:
+            return self.get_video()
+    def get_music_items(self):
+        if self.type == 25:
+            return self.get_playlist()
+        elif self.type == 26:
+            return self.get_music()
 
     @classmethod
     def get_moderation_users(cls):
-        return cls.objects.filter(type="USE", verified=False)
+        return cls.objects.filter(type=1, verified=False)
     @classmethod
     def get_moderation_communities(cls):
-        return cls.objects.filter(type="COM", verified=False)
-
-    @classmethod
-    def get_moderation_post_lists(cls):
-        return cls.objects.filter(verified=False, type="POL")
-    @classmethod
-    def get_moderation_posts(cls):
-        return cls.objects.filter(verified=False, type="POS")
-    @classmethod
-    def get_moderation_post_comments(cls):
-        return cls.objects.filter(verified=False, type="POSC")
-
-    @classmethod
-    def get_moderation_photo_lists(cls):
-        return cls.objects.filter(verified=False, type="PHL")
+        return cls.objects.filter(type=2, verified=False)
     @classmethod
     def get_moderation_photos(cls):
-        return cls.objects.filter(verified=False, type="PHO")
-    @classmethod
-    def get_moderation_photos_comments(cls):
-        return cls.objects.filter(verified=False, type="PHOC")
-
-    @classmethod
-    def get_moderation_good_lists(cls):
-        return cls.objects.filter(verified=False, type="GOL")
-    @classmethod
-    def get_moderation_goods(cls):
-        return cls.objects.filter(verified=False, type="GOO")
-    @classmethod
-    def get_moderation_goods_comments(cls):
-        return cls.objects.filter(verified=False, type="GOOC")
-
-    @classmethod
-    def get_moderation_video_lists(cls):
-        return cls.objects.filter(verified=False, type="VIL")
+        types = Q(verified=False,type__gt=11)&Q(type__lt=15)
+        return cls.objects.filter(types)
     @classmethod
     def get_moderation_videos(cls):
-        return cls.objects.filter(verified=False, type="VID")
-    @classmethod
-    def get_moderation_videos_comments(cls):
-        return cls.objects.filter(verified=False, type="VIDC")
-
-    @classmethod
-    def get_moderation_playlists(cls):
-        return cls.objects.filter(verified=False, type="MUL")
+        types = Q(verified=False,type__gt=28)&Q(type__lt=32)
+        return cls.objects.filter(types)
     @classmethod
     def get_moderation_audios(cls):
-        return cls.objects.filter(verified=False, type="MUS")
-
+        types = Q(verified=False,type__gt=24)&Q(type__lt=27)
+        return cls.objects.filter(types)
     @classmethod
-    def get_moderation_survey_lists(cls):
-        return cls.objects.filter(verified=False, type="SUL")
+    def get_moderation_survey(cls):
+        types = Q(verified=False,type__gt=20)&Q(type__lt=23)
+        return cls.objects.filter(types)
     @classmethod
-    def get_moderation_surveys(cls):
-        return cls.objects.filter(verified=False, type="SUR")
+    def get_moderation_docs(cls):
+        types = Q(verified=False,type__gt=16)&Q(type__lt=19)
+        return cls.objects.filter(types)
+    @classmethod
+    def get_moderation_sites(cls):
+        return cls.objects.filter(type=6,verified=False)
+    @classmethod
+    def get_moderation_articles(cls):
+        return cls.objects.filter(type=7,verified=False)
+    @classmethod
+    def get_moderation_goods(cls):
+        types = Q(verified=False,type__gt=32)&Q(type__lt=36)
+        return cls.objects.filter(types)
+    @classmethod
+    def get_moderation_planner(cls):
+        types = Q(verified=False,type__gt=37)&Q(type__lt=43)
+        return cls.objects.filter(types)
+    @classmethod
+    def get_moderation_forum(cls):
+        types = Q(verified=False,type__gt=44)&Q(type__lt=47)
+        return cls.objects.filter(types)
+    @classmethod
+    def get_moderation_wiki(cls):
+        types = Q(verified=False,type__gt=48)&Q(type__lt=51)
+        return cls.objects.filter(types)
 
 
 class ModerationReport(models.Model):
@@ -501,12 +807,7 @@ class ModerationReport(models.Model):
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(Moderated, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
-    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип нарушения")
-
-    @classmethod
-    def create_moderation_report(cls, reporter_id, _type, object_id, description, type):
-        moderated_object = Moderated.get_or_create_moderated_object(type=_type, object_id=object_id)
-        return cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
+    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Класс объекта")
 
     def __str__(self):
         return self.reporter.get_full_name()
@@ -515,23 +816,30 @@ class ModerationReport(models.Model):
         verbose_name = 'Жалоба на объект'
         verbose_name_plural = 'Жалобы на объект'
 
+    @classmethod
+    def create_moderation_report(cls, reporter_id, _type, object_id, description, type):
+        moderated_object = Moderated.get_or_create_moderated_object(type=_type, object_id=object_id)
+        return cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
+
+    @classmethod
+    def is_user_already_reported(cls, reporter_id, type, object_id):
+        return cls.objects.filter(reporter_id=reporter_id, type=type, moderated_object_id=object_id).exists()
+
 
 class ModerationPenalty(models.Model):
     # сами санкции против объекта.
-    SUSPENSION, CLOSE, BANNER = 'S', 'B', 'BA'
-    STATUSES = (
-        (SUSPENSION, 'Приостановлено'), (CLOSE, 'Закрыто'), (BANNER, 'Вывешен баннер'),
-    )
+    SUSPENSION, CLOSE, BANNER = 1,2,3
+    STATUS = ((SUSPENSION, 'Приостановлено'), (CLOSE, 'Закрыто'), (BANNER, 'Вывешен баннер'),)
 
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='manager_penalties', verbose_name="Менеджер")
-    expiration = models.DateTimeField(null=True, verbose_name="Окончание")
+    expiration = models.DateTimeField(null=True, blank=True, verbose_name="Окончание")
     moderated_object = models.ForeignKey(Moderated, on_delete=models.CASCADE, related_name='moderated_object', verbose_name="Объект")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
-    status = models.CharField(max_length=5, choices=STATUSES, verbose_name="Тип")
+    status = models.PositiveSmallIntegerField(default=0, choices=STATUS, verbose_name="Статус объекта")
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.type
 
     class Meta:
         verbose_name = 'Оштрафованный объект'
@@ -564,70 +872,212 @@ class ModerationPenalty(models.Model):
 
     def is_suspend(self):
         # Объект заморожен
-        return self.status == SUSPENSION
+        return self.status == ModerationPenalty.SUSPENSION
     def is_closed(self):
         # Объект блокирован
-        return self.status == CLOSE
+        return self.status == ModerationPenalty.CLOSE
     def is_banner(self):
         # Объект блокирован
-        return self.status == BANNER
+        return self.status == ModerationPenalty.BANNER
 
     @classmethod
-    def get_penalty_users(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="USE")
-    @classmethod
-    def get_penalty_communities(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="COM")
+    def get_penalty_blog(cls, user_id):
+        return cls.objects.filter(manager__id=user_id, type__contains="BL")
+
+    def get_user(self):
+        try:
+            from users.models import User
+            user = User.objects.get(pk=self.object_id)
+            if self.is_suspend():
+                span = '<span class="small">До ' + str(self.expiration) + '</span> (<a class="small remove_user_suspend pointer">Отменить заморозку</a> | <a class="small user_unverify pointer">Отменить проверку</a>)'
+            elif self.is_closed():
+                span = '<span class="small">Заблокирован</span> (<a class="small remove_user_close pointer">Отменить блокировку</a> | <a class="small user_unverify pointer">Отменить проверку</a>)'
+            elif self.is_banner():
+                span = '<span class="small">Баннер предупреждения</span> (<a class="small remove_user_warning_banner pointer">Убрать баннер</a> | <a class="small user_unverify pointer">Отменить проверку</a>)'
+            else:
+                span = '<span class="small">Санкции не применены</span>'
+            return ''.join(['<div class="media"><a href="/users/', str(self.object_id), '" class="ajax"><figure><img src="', user.get_avatar(), \
+            '" style="width: 90px;" alt="image"></figure></a><div class="media-body pl-1"><h6 class="my-0 mt-1"><a href="/users/', \
+            str(self.object_id), '" class="ajax"><h6 class="mt-1">', user.get_full_name(), \
+            '</h6></a></h6><div class=""></div><div class="border-top btn_console" user-pk="', str(self.object_id), '">', span, '</div></div></div>'])
+        except:
+            return '<div class="media">Ошибка отображения данных</div>'
+
+    def get_photo(self):
+        try:
+            from gallery.models import Photo
+            photo = Photo.objects.get(pk=self.object_id)
+            return ''.join(['<div class="uuid_keeper" data-uuid="', str(photo.uuid), '"><div class="progressive replace image_fit_200 penalty_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+        except:
+            return ''
+    def get_video(self):
+        try:
+            from video.models import Video
+            video = Video.objects.get(pk=self.object_id)
+            return ''.join(['<div class="video" data-uuid="', str(video.get_list_uuid()), '"><img class="image_fit uuid_keeper" data-uuid="', str(video.uuid), '" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_video_penalty_detail" video-pk="', str(video.pk), '"></div></div>'])
+        except:
+            return ''
+    def get_blog_comment(self, user):
+        try:
+            from common.model.comments import BlogComment
+            comment = BlogComment.objects.get(pk=self.object_id)
+            creator = comment.commenter
+            if comment.attach:
+                _attach = comment.get_u_attach(user)
+            else:
+                _attach = ''
+            return ''.join(['<div class="card-body" style="padding: .5rem .5rem;"><div class="media"><div class="avatar mr-75"><a href="/users/', str(creator.pk), '/" class="ajax"><img src="', creator.get_avatar(), '" width="38" height="38" alt="Avatar"></a></div><div class="media-body"><h6 class="font-weight-bolder mb-25"><a href="/users/', str(creator.pk), '/" class="ajax">', creator.get_full_name(), '</a></h6><span class="text-muted small">', comment.get_created(), '</span><br></div></div><div class="comment_footer"><span class="card-text">', comment.text, '</span>', _attach, ' <div class="border mt-1 btn_console" data-pk="', str(comment.pk), '"><a class="remove_blog_comment_close pointer">Восстановить</a> | <a class="blog_comment_unverify pointer">Отменить проверку</a></div></div></div>'])
+        except:
+            return ''
+    def get_doc(self):
+        try:
+            from docs.models import Doc
+            doc = Doc.objects.get(pk=self.object_id)
+            span_btn, status = '', ''
+            if doc.is_closed():
+                status = '<span class="small">Заблокировано</span>'
+                options = '<span class="dropdown-item remove_doc_close">Разблокировать</span><span class="dropdown-item doc_unverify">Отменить проверку</span>'
+            opt_drop = '<div class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" style="padding-top: 3px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 33px;">' + options + '</div></div>'
+            span_btn = ''.join([span_btn, '<span class="span_btn">', opt_drop, '</span>'])
+            return ''.join(['<div class="photo" style="flex-basis: 100%;"><div class="media border"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer" style="padding-top: 5px;width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, ' (', status, ')</a></h6><span class="small" style="position: absolute;">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
+        except:
+            return ''
+
+    def get_music(self):
+        try:
+            from music.models import Music
+            music = Music.objects.get(pk=self.object_id)
+            span_btn, status = '', ''
+            if music.is_closed():
+                status = '<span class="small">Заблокировано</span>'
+                options = '<span class="dropdown-item remove_track_close">Разблокировать</span><span class="dropdown-item track_unverify">Отменить проверку</span>'
+            opt_drop = '<div class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg style="width: 17px;padding-top:3px" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 55px;">' + options + '</div></div>'
+            span_btn = ''.join([span_btn, '<span class="span_btn">', opt_drop, '</span>'])
+            return ''.join(['<div class="col-md-12" style="flex-basis: 100%;"><div class="media border p-1"><div class="media-body music_media_body" style="line-height: 8px;"><span>', music.title, ' (', status, ')</span><div class="audio_div"><audio id="player" class="audio_player"><source src="', music.get_uri(), '" type="audio/mp3" /></audio></div>', span_btn, '</div></div></div>'])
+        except:
+            return ''
+
+    def get_photo_list(self):
+        try:
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=self.object_id)
+            creator = list.creator
+            add = ''
+            return ''.join(['<div style="width: 100%;height: 100%;" class="text-center bg-dark position-relative uuid_keeper" data-uuid="', str(list.uuid), '"  photolist-pk="', str(self.object_id), '"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container pt-2"><h4 class="u_load_penalty_photo_list text-white pointer"><a class="nowrap">', list.name, '</a></h4><p><a class="ajax underline text-white nowrap" href="/users/', str(creator.pk), '">', str(creator), '</a></p><hr class="my-4"><a class="u_load_penalty_photo_list text-white pointer">', list.count_items_ru(), '</a><div class="row">', add, '</div>', '</div></div>'])
+        except:
+            return ''
+    def get_doc_list(self):
+        try:
+            from docs.models import DocList
+            list = DocList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;"><div class="card-body border uuid_keeper" data-uuid="', str(list.uuid), '"  doclist-pk="', str(list.pk), '" style="padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_penalty_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_penalty_doc_list pointer">', list.name, '</h6><p>Список документов <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_video_list(self):
+        try:
+            from video.models import VideoList
+            list = VideoList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="card border"><div class="card-body uuid_keeper" data-uuid="', str(list.uuid), '"  videolist-pk="', str(creator.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_penalty_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_penalty_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_playlist(self):
+        try:
+            from music.models import SoundList
+            playlist = SoundList.objects.get(pk=self.object_id)
+            creator = playlist.creator
+            image = '<svg fill="currentColor" class="svg_default" style="width:70px;height:70px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="border"><div class="card-body uuid_keeper" data-uuid="', str(playlist.uuid), '" playlist-pk="', str(playlist.pk), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_penalty_playlist pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_penalty_playlist pointer">', playlist.name, '</h6><p>Плейлист <a class="ajax underline" href="/  users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+    def get_survey_list(self):
+        try:
+            from survey.models import SurveyList
+            list = SurveyList.objects.get(pk=self.object_id)
+            creator = list.creator
+            image = '<svg height="70px" viewBox="0 0 24 24" width="70px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M18 9l-1.41-1.42L10 14.17l-2.59-2.58L6 13l4 4zm1-6h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z"></path></svg>'
+            add_svg = ''
+            return ''.join(['<div style="flex-basis: 100%;" class="border"><div class="card-body uuid_keeper" data-uuid="', str(list.uuid), '" surveylist-pk="', str(list.pk), '"style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_penalty_survey_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_penalty_survey_list pointer">', list.name, '</h6><p>Список опросов <a class="ajax underline" href="/users/', str(creator.pk), '">', str(creator.get_full_name_genitive()), '</a><br>Треков: ', str(list.count_items()), '</p></div><span class="list_share">', add_svg, '</span></div></div></div>'])
+        except:
+            return ''
+
+    def get_doc_items(self):
+        if self.type == 17:
+            return self.get_doc_list()
+        elif self.type == 18:
+            return self.get_doc()
+    def get_survey_items(self):
+        if self.type == 21:
+            return self.get_survey_list()
+        elif self.type == 22:
+            return self.get_survey()
+    def get_photo_items(self):
+        if self.type == 12:
+            return self.get_photo_list()
+        elif self.type == 13:
+            return self.get_photo()
+    def get_video_items(self):
+        if self.type == 29:
+            return self.get_video_list()
+        elif self.type == 30:
+            return self.get_video()
+    def get_music_items(self):
+        if self.type == 25:
+            return self.get_playlist()
+        elif self.type == 26:
+            return self.get_music()
 
     @classmethod
-    def get_penalty_post_lists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="POL")
+    def get_penalty_users(cls):
+        return cls.objects.filter(type=1, verified=False)
     @classmethod
-    def get_penalty_posts(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="POS")
-    def get_penalty_post_comments(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="POSC")
-
+    def get_penalty_communities(cls):
+        return cls.objects.filter(type=2, verified=False)
     @classmethod
-    def get_penalty_photo_lists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="PHL")
+    def get_penalty_photos(cls):
+        types = Q(verified=False,type__gt=11)&Q(type__lt=15)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_photos(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="PHO")
+    def get_penalty_videos(cls):
+        types = Q(verified=False,type__gt=28)&Q(type__lt=32)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_photos_comments(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="PHOC")
-
+    def get_penalty_audios(cls):
+        types = Q(verified=False,type__gt=24)&Q(type__lt=27)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_good_lists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="GOL")
+    def get_penalty_survey(cls):
+        types = Q(verified=False,type__gt=20)&Q(type__lt=23)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_goods(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="GOO")
+    def get_penalty_docs(cls):
+        types = Q(verified=False,type__gt=16)&Q(type__lt=19)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_goods_comments(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="GOOC")
-
+    def get_penalty_sites(cls):
+        return cls.objects.filter(type=6,verified=False)
     @classmethod
-    def get_penalty_video_lists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="VIL")
+    def get_penalty_articles(cls):
+        return cls.objects.filter(type=7,verified=False)
     @classmethod
-    def get_penalty_videos(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="VID")
+    def get_penalty_goods(cls):
+        types = Q(verified=False,type__gt=32)&Q(type__lt=36)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_videos_comments(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="VIDC")
-
+    def get_penalty_planner(cls):
+        types = Q(verified=False,type__gt=37)&Q(type__lt=43)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_playlists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="MUL")
+    def get_penalty_forum(cls):
+        types = Q(verified=False,type__gt=44)&Q(type__lt=47)
+        return cls.objects.filter(types)
     @classmethod
-    def get_penalty_audios(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="MUS")
-
-    @classmethod
-    def get_penalty_survey_lists(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="SUL")
-    @classmethod
-    def get_penalty_surveys(cls, user_id):
-        return cls.objects.filter(manager__id=user_id, type="SUR")
+    def get_penalty_wiki(cls):
+        types = Q(verified=False,type__gt=48)&Q(type__lt=51)
+        return cls.objects.filter(types)

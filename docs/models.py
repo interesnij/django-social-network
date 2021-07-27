@@ -11,7 +11,7 @@ from django.db.models import Q
 
 class DocList(models.Model):
     MAIN, LIST, MANAGER, PROCESSING, DELETED, DELETED_MANAGER, CLOSED, CLOSED_MAIN, CLOSED_MANAGER = 'MAI','LIS','MAN','_PRO','_DEL','_DELM','_CLO','_CLOM','_CLOMA'
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 'AC','F','EO','Y','AB','SF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,2,3,4,5,6
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
@@ -27,12 +27,12 @@ class DocList(models.Model):
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     count = models.PositiveIntegerField(default=0)
 
-    can_see_item = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит записи")
-    can_see_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
-    add_item = models.CharField(max_length=2, choices=PERM, default=YOU, verbose_name="Кто создает записи и потом с этими записями работает")
-    add_comment = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
-    can_copy_item = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто копирует записи")
-    can_copy_list = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто копирует список")
+    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
+    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
+    add_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает документы и потом с этими документами работает")
+    add_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
+    can_copy_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
+    can_copy_list = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует список")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
