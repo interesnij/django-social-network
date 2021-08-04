@@ -1,8 +1,7 @@
 
-<form id="community_suspend_form">
+<form class="mt-5" data-uuid="{{ object.pk }}">
   {% csrf_token %}
 
-<div class="row justify-content-center">
   <div class="card">
     <div class="card-body">
       <div class="row">
@@ -33,5 +32,4 @@
         <button type="button" class="btn btn-success float-right create_community_suspend_btn">Применить заморозку</button>
     </div>
   </div>
-</div>
 </form>

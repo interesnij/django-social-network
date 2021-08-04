@@ -436,3 +436,23 @@ def get_template_anon_community_item(item, template, request_user, user_agent):
     elif community.is_private():
         template_name = "generic/c_template/anon_private_community.html"
     return get_folder(user_agent) + template_name
+
+def get_staff_template(template, request_user, user_agent):
+    update_activity(request_user, user_agent)
+
+    if request_user.type[0] == "_":
+        template_name = get_fine_request_user(request_user)
+    elif request_user.is_manager() or request_user.is_supermanager():
+        template_name = template
+    else:
+        raise PermissionDenied("Ошибка доступа")
+    return get_folder(user_agent) + template_name
+
+def get_detect_platform_template(template, request_user, user_agent):
+    update_activity(request_user, user_agent)
+
+    if request_user.type[0] == "_":
+        template_name = get_fine_request_user(request_user)
+    else:
+        template_name = template
+    return get_folder(user_agent) + template_name

@@ -19,13 +19,7 @@ urlpatterns = [
 
     url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', WikiCloseCreate.as_view()),
     url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', WikiCloseDelete.as_view()),
-    url(r'^create_rejected/(?P<uuid>[0-9a-f-]+)/$', WikiRejectedCreate.as_view()),
+    url(r'^create_rejected/(?P<pk>\d+)/$', WikiRejectedCreate.as_view()),
     url(r'^create_claim/(?P<uuid>[0-9a-f-]+)/$', WikiClaimCreate.as_view()),
     url(r'^unverify/(?P<uuid>[0-9a-f-]+)/$', WikiUnverify.as_view()),
-
-    url(r'^comment_create_close/(?P<pk>\d+)/$', CommentWikiCloseCreate.as_view()),
-    url(r'^comment_delete_close/(?P<pk>\d+)/$', CommentWikiCloseDelete.as_view()),
-    url(r'^comment_create_rejected/(?P<pk>\d+)/$', CommentWikiRejectedCreate.as_view()),
-    url(r'^comment_create_claim/(?P<pk>\d+)/$', CommentWikiClaimCreate.as_view()),
-    url(r'^comment_unverify/(?P<pk>\d+)/$', CommentWikiUnverify.as_view()),
 ]

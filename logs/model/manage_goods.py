@@ -4,49 +4,25 @@ from django.conf import settings
 
 
 class GoodManageLog(models.Model):
-    DELETED = 'R'
-    UNDELETED = 'UR'
-    REJECT = 'R'
-    UNVERIFY = 'UV'
+    LIST_CLOSED, ITEM_CLOSED, COMMENT_CLOSED = 1,2,3
+    LIST_CLOSED_HIDE, ITEM_CLOSED_HIDE, COMMENT_CLOSED_HIDE = 7,8,9
+    LIST_REJECT, ITEM_REJECT, COMMENT_REJECT = 14,15,16
+    LIST_UNVERIFY, ITEM_UNVERIFY, COMMENT_UNVERIFY = 20, 21,22
     ACTION_TYPES = (
-        (DELETED, 'Удален'),
-        (UNDELETED, 'Восстановлен'),
-        (REJECT, 'Жалоба отклонена'),
-        (UNVERIFY, 'Проверка убрана'),
+        (LIST_CLOSED, 'Список закрыт'),(ITEM_CLOSED, 'Элемент закрыт'),(COMMENT_CLOSED, 'Комментарий закрыт'),
+        (LIST_CLOSED_HIDE, 'Список восстановлен'),(ITEM_CLOSED_HIDE, 'Элемент восстановлен'),(COMMENT_CLOSED_HIDE, 'Комментарий восстановлен'),
+        (LIST_REJECT, 'Жалоба на список отклонена'),(ITEM_REJECT, 'Жалоба на элемент отклонена'),(COMMENT_REJECT, 'Жалоба на комментарий отклонена'),
+        (LIST_UNVERIFY, 'Проверка на список убрана'),(ITEM_UNVERIFY, 'Проверка на элемент убрана'),(COMMENT_UNVERIFY, 'Проверка на комментарий убрана'),
     )
-
-    post = models.PositiveIntegerField(default=0, verbose_name="Запись")
+    item = models.PositiveIntegerField(default=0, verbose_name="Элемент товаров")
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    action_type = models.PositiveSmallIntegerField(default=0, choices=ACTION_TYPES, verbose_name="Статус")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Лог менеджера товаров"
         verbose_name_plural = "Логи менеджеров товаров"
-        ordering=["-created"]
-
-class GoodCommentManageLog(models.Model):
-    DELETED = 'R'
-    UNDELETED = 'UR'
-    REJECT = 'R'
-    UNVERIFY = 'UV'
-    ACTION_TYPES = (
-        (DELETED, 'Удален'),
-        (UNDELETED, 'Восстановлен'),
-        (REJECT, 'Жалоба отклонена'),
-        (UNVERIFY, 'Проверка убрана'),
-    )
-
-    comment = models.PositiveIntegerField(default=0, verbose_name="Комментарий к товару")
-    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
-
-    class Meta:
-        indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "Лог менеджера комментария товаров"
-        verbose_name_plural = "Логи комментариев менеджеров товаров"
         ordering=["-created"]
 
 

@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^good/$', PenaltyGoodList.as_view()),
     url(r'^audio/$', PenaltyAudioList.as_view()),
     url(r'^video/$', PenaltyVideoList.as_view()),
-    url(r'^good/$', PenaltyGoodList.as_view()),
     url(r'^doc/$', PenaltyDocList.as_view()),
     url(r'^planner/$', PenaltyPlannerList.as_view()),
     url(r'^site/$', PenaltySiteList.as_view()),
@@ -18,4 +17,6 @@ urlpatterns = [
     url(r'^forum/$', PenaltyForumList.as_view()),
     url(r'^article/$', PenaltyArticleList.as_view()),
     url(r'^survey/$', PenaltySurveyList.as_view()),
+    url(r'^mail/$', PenaltyMailList.as_view()),
+    url(r'^message/$', PenaltyMessageList.as_view()),
 ]

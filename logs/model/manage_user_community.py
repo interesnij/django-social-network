@@ -4,19 +4,19 @@ from django.conf import settings
 
 
 class UserManageLog(models.Model):
-    DELETED = 'D'
-    UNDELETED = 'UD'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
-    SEVERITY_CRITICAL = 'C'
-    SEVERITY_HIGH = 'H'
-    SEVERITY_MEDIUM = 'M'
-    SEVERITY_LOW = 'L'
-    UNSUSPENDED = 'US'
-    WARNING_BANNER = 'WB'
-    NO_WARNING_BANNER = 'NWB'
-    REJECT = 'R'
-    UNVERIFY = 'UV'
+    DELETED = 1
+    UNDELETED = 2
+    BLOCK = 3
+    UNBLOCK = 4
+    SEVERITY_CRITICAL = 5
+    SEVERITY_HIGH = 6
+    SEVERITY_MEDIUM = 7
+    SEVERITY_LOW = 8
+    UNSUSPENDED = 9
+    WARNING_BANNER = 10
+    NO_WARNING_BANNER = 11
+    REJECT = 12
+    UNVERIFY = 13
     ACTION_TYPES = (
         (DELETED, 'Удален'),
         (UNDELETED, 'Восстановлен'),
@@ -36,7 +36,7 @@ class UserManageLog(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    action_type = models.PositiveSmallIntegerField(default=0, choices=ACTION_TYPES, verbose_name="Статус")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -45,19 +45,19 @@ class UserManageLog(models.Model):
         ordering=["-created"]
 
 class CommunityManageLog(models.Model):
-    DELETED = 'D'
-    UNDELETED = 'UD'
-    BLOCK = 'B'
-    UNBLOCK = 'UB'
-    SEVERITY_CRITICAL = 'C'
-    SEVERITY_HIGH = 'H'
-    SEVERITY_MEDIUM = 'M'
-    SEVERITY_LOW = 'L'
-    UNSUSPENDED = 'US'
-    WARNING_BANNER = 'WB'
-    NO_WARNING_BANNER = 'NWB'
-    REJECT = 'R'
-    UNVERIFY = 'UV'
+    DELETED = 1
+    UNDELETED = 2
+    BLOCK = 3
+    UNBLOCK = 4
+    SEVERITY_CRITICAL = 5
+    SEVERITY_HIGH = 6
+    SEVERITY_MEDIUM = 7
+    SEVERITY_LOW = 8
+    UNSUSPENDED = 9
+    WARNING_BANNER = 10
+    NO_WARNING_BANNER = 11
+    REJECT = 12
+    UNVERIFY = 13
     ACTION_TYPES = (
         (DELETED, 'Удалено'),
         (UNDELETED, 'Восстановлено'),
@@ -77,7 +77,7 @@ class CommunityManageLog(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    action_type = models.PositiveSmallIntegerField(default=0, choices=ACTION_TYPES, verbose_name="Статус")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -109,7 +109,7 @@ class UserWorkerManageLog(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    action_type = models.CharField(editable=False, blank=False, null=False, choices=ACTION_TYPES, max_length=5)
+    status = models.PositiveSmallIntegerField(default=0, choices=ACTION_TYPES, verbose_name="Статус")
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)

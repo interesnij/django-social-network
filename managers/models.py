@@ -198,6 +198,19 @@ class SurveyUserStaff(models.Model):
         verbose_name = 'Полномочия в опросах'
         verbose_name_plural = 'Полномочия в опросах'
 
+class MessageUserStaff(models.Model):
+    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
+    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_user_staff', verbose_name="Особый пользователь")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
+
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Полномочия в сообщениях'
+        verbose_name_plural = 'Полномочия в сообщениях'
+
 class CanWorkStaffUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_user', verbose_name="Создатель персонала")
     can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов")
@@ -410,22 +423,35 @@ class CanWorkStaffSurveyUser(models.Model):
         verbose_name = 'Создатель персонала в опросах'
         verbose_name_plural = 'Создатели персонала в опросах'
 
+class CanWorkStaffMessageUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_message_user', verbose_name="Создатель персонала в опросах")
+    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в сообщениях")
+    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в сообщениях")
+    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в сообщениях")
+    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в сообщениях")
 
-USER, COMMUNITY, SITE, ARTICLE = 1,2,6,7
+    def __str__(self):
+        return self.user.get_full_name()
+
+    class Meta:
+        verbose_name = 'Создатель персонала в сообщениях'
+        verbose_name_plural = 'Создатели персонала в сообщениях'
+
+USER, COMMUNITY, SITE = 1,2,6
 POST_LIST, POST, POST_COMMENT = 8, 9, 10
 PHOTO_LIST, PHOTO, PHOTO_COMMENT = 12, 13, 14
 DOC_LIST, DOC = 17, 18
 SURVEY_LIST, SURVEY = 21, 22
-MUSIC_LIST, MUSIC = 25, 26
+MUSIC_LIST, MUSIC = 25, 26 
 VIDEO_LIST, VIDEO, VIDEO_COMMENT = 29, 30, 31
 GOOD_LIST, GOOD, GOOD_COMMENT = 33, 34, 35
 WORKSPACE, BOARD, COLUMN, CARD, CARD_COMMENT = 38, 39, 40, 41, 42
 FORUM_ITEM, FORUM_COMMENT = 45, 46
-WIKI_ITEM, WIKI_COMMENT = 49, 50
-MAIL = 54
+MAIL, MESSAGE, WIKI = 54, 55, 56
+ARTICLE_LIST, ARTICLE = 58, 59
 
 TYPE = (
-    (USER, 'Пользователь'),(COMMUNITY, 'Сообщество'),(SITE, 'Сайт'),(ARTICLE, 'Статья'),
+    (USER, 'Пользователь'),(COMMUNITY, 'Сообщество'),(SITE, 'Сайт'),(ARTICLE, 'Статья'),(ARTICLE_LIST, 'Список статей'),
     (MUSIC_LIST, 'Плейлист'),(MUSIC, 'Трек'),
     (POST_LIST, 'Список записей'),(POST, 'Запись'),(POST_COMMENT, 'Коммент к записи'),
     (DOC_LIST, 'Список документов'),(DOC, 'Документ'),
@@ -435,8 +461,7 @@ TYPE = (
     (GOOD_LIST, 'Список товаров'),(GOOD, 'Товар'),(GOOD_COMMENT, 'Коммент к товару'),
     (WORKSPACE, 'Рабочее пространство'),(BOARD, 'Доска'),(COLUMN, 'Колонка'),(CARD, 'Карточка'),(CARD_COMMENT, 'Коммент к карточке'),
     (FORUM_ITEM, 'Обсуждение'),(FORUM_COMMENT, 'Коммент к обсуждению'),
-    (WIKI_ITEM, 'Объект википедии'),(WIKI_COMMENT, 'Коммент к объекту википедии'),
-    (MAIL, 'Почта')
+    (MAIL, 'Почта'),(MESSAGE, 'Сообщения'), (WIKI, 'Объект википедии')
 )
 
 

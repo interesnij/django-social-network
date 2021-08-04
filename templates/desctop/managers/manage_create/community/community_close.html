@@ -1,8 +1,7 @@
 
-<form id="community_blocker_form">
+<form class="mt-5" data-uuid="{{ object.pk }}">
   {% csrf_token %}
 
-<div class="row justify-content-center">
   <div class="card">
     <div class="card-body">
         <div class="row">
@@ -24,5 +23,4 @@
         <button type="button" class="btn btn-success float-right create_community_blocker_btn">Применить блокировку</button>
     </div>
   </div>
-</div>
 </form>

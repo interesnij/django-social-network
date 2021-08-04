@@ -1,21 +1,19 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.staff_progs.audio import *
 from music.models import Music, SoundList
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
-from django.http import Http404
-from common.templates import get_detect_platform_template
+from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_audio import AudioManageLog
-from managers.forms import ModeratedForm, ReportForm
 
 
 class AudioAdminCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_administrator()):
-            add_audio_administrator(user, request.user) 
+        if request.is_ajax() and request.user.is_work_audio_administrator():
+            add_audio_administrator(user, request.user)
             return HttpResponse()
         else:
             raise Http404
@@ -23,7 +21,7 @@ class AudioAdminCreate(View):
 class AudioAdminDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_administrator()):
+        if request.is_ajax() and request.user.is_work_audio_administrator():
             remove_audio_administrator(user, request.user)
             return HttpResponse()
         else:
@@ -33,7 +31,7 @@ class AudioAdminDelete(View):
 class AudioModerCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_moderator()):
+        if request.is_ajax() and request.user.is_work_audio_moderator():
             add_audio_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -42,7 +40,7 @@ class AudioModerCreate(View):
 class AudioModerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_moderator()):
+        if request.is_ajax() and request.user.is_work_audio_moderator():
             remove_audio_moderator(user, request.user)
             return HttpResponse()
         else:
@@ -52,7 +50,7 @@ class AudioModerDelete(View):
 class AudioEditorCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_editor()):
+        if request.is_ajax() and request.user.is_work_audio_editor():
             add_audio_editor(user, request.user)
             return HttpResponse()
         else:
@@ -61,7 +59,7 @@ class AudioEditorCreate(View):
 class AudioEditorDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.is_superuser or request.user.is_work_audio_editor()):
+        if request.is_ajax() and request.user.is_work_audio_editor():
             remove_audio_editor(user, request.user)
             return HttpResponse()
         else:
@@ -130,7 +128,7 @@ class AudioCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and request.user.is_audio_manager():
-            self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_close.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_staff_template("managers/manage_create/audio/audio_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(AudioCloseCreate,self).get(request,*args,**kwargs)
@@ -146,7 +144,7 @@ class AudioCloseCreate(TemplateView):
         audio, form = Music.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid() and request.user.is_audio_manager():
             mod = form.save(commit=False)
-            moderate_obj = Moderated.get_or_create_moderated_object(object_id=audio.pk, type="MUS")
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=audio.pk, type=26)
             moderate_obj.create_close(object=audio, description=mod.description, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=audio.pk, manager=request.user.pk, action_type=AudioManageLog.ITEM_CLOSED)
             return HttpResponse()
@@ -157,7 +155,7 @@ class AudioCloseDelete(View):
     def get(self,request,*args,**kwargs):
         audio = Music.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_audio_manager():
-            moderate_obj = Moderated.objects.get(object_id=audio.pk, type="MUS")
+            moderate_obj = Moderated.objects.get(object_id=audio.pk, type=26)
             moderate_obj.delete_close(object=audio, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=audio.pk, manager=request.user.pk, action_type=AudioManageLog.ITEM_CLOSED_HIDE)
             return HttpResponse()
@@ -172,8 +170,8 @@ class AudioClaimCreate(TemplateView):
         from managers.models import ModerationReport
 
         self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 'MUL', self.track.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/audio/audio_claim.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 26, self.track.pk)
+        self.template_name = get_staff_template("managers/manage_create/audio/audio_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AudioClaimCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -188,8 +186,8 @@ class AudioClaimCreate(TemplateView):
         from managers.models import ModerationReport
 
         music = Music.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 'MUS', music.pk):
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="MUS", object_id=music.pk, description=request.POST.get('description'), type=request.POST.get('type'))
+        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 26, music.pk):
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=26, object_id=music.pk, description=request.POST.get('description'), type=request.POST.get('type'))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -198,7 +196,7 @@ class AudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and request.user.is_audio_manager():
             music = Music.objects.get(pk=self.kwargs["pk"])
-            moderate_obj = Moderated.objects.get(object_id=music.pk, type="MUS")
+            moderate_obj = Moderated.objects.get(object_id=music.pk, type=26)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             AudioManageLog.objects.create(item=music.pk, manager=request.user.pk, action_type=AudioManageLog.ITEM_REJECT)
             return HttpResponse()
@@ -209,7 +207,7 @@ class AudioRejectedCreate(View):
 class AudioUnverify(View):
     def get(self,request,*args,**kwargs):
         music = Music.objects.get(pk=self.kwargs["pk"])
-        obj = Moderated.get_or_create_moderated_object(object_id=music.pk, type="MUS")
+        obj = Moderated.get_or_create_moderated_object(object_id=music.pk, type=26)
         if request.is_ajax() and request.user.is_audio_manager():
             obj.unverify_moderation(music, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=AudioManageLog.ITEM_UNVERIFY)
@@ -225,7 +223,7 @@ class ListAudioClaimCreate(TemplateView):
         from managers.models import ModerationReport
 
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 'ELEC', self.list.pk)
+        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 25, self.list.pk)
         self.template_name = get_detect_platform_template("managers/manage_create/audio/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ListAudioClaimCreate,self).get(request,*args,**kwargs)
 
@@ -239,19 +237,19 @@ class ListAudioClaimCreate(TemplateView):
         from managers.models import ModerationReport
 
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 'MUL', self.list.pk):
+        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 25, self.list.pk):
             description = request.POST.get('description')
             type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type="MUL", object_id=self.list.pk, description=description, type=type)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=25, object_id=self.list.pk, description=description, type=type)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class ListAudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = SoundList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_audio_manager():
-            moderate_obj = Moderated.objects.get(object_id=list.pk, type="MUL")
+            moderate_obj = Moderated.objects.get(object_id=list.pk, type=25)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             AudioManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=AudioManageLog.LIST_REJECT)
             return HttpResponse()
@@ -262,7 +260,7 @@ class ListAudioRejectedCreate(View):
 class ListAudioUnverify(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type="MUL")
+        obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=25)
         if request.is_ajax() and request.user.is_audio_manager():
             obj.unverify_moderation(list, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=AudioManageLog.LIST_UNVERIFY)
@@ -276,7 +274,7 @@ class ListAudioCloseCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_audio_manager():
-            self.template_name = get_detect_platform_template("managers/manage_create/audio/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_staff_template("managers/manage_create/audio/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ListAudioCloseCreate,self).get(request,*args,**kwargs)
@@ -291,7 +289,7 @@ class ListAudioCloseCreate(TemplateView):
         form = ModeratedForm(request.POST)
         if form.is_valid() and request.user.is_audio_manager():
             mod = form.save(commit=False)
-            moderate_obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type="MUL")
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=25)
             moderate_obj.create_close(object=list, description=mod.description, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=AudioManageLog.LIST_CLOSED)
             return HttpResponse()
@@ -302,7 +300,7 @@ class ListAudioCloseDelete(View):
     def get(self,request,*args,**kwargs):
         list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_audio_manager():
-            moderate_obj = Moderated.objects.get(object_id=list.pk, type="MUL")
+            moderate_obj = Moderated.objects.get(object_id=list.pk, type=25)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
             AudioManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=AudioManageLog.LIST_CLOSED_HIDE)
             return HttpResponse()

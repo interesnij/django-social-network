@@ -818,6 +818,17 @@ class User(AbstractUser):
             return self.is_superuser or self.mail_user_staff.level
         except:
             return False
+    def is_message_administrator(self):
+        return self.is_superuser or try_except(self.message_user_staff.level == "A")
+    def is_message_moderator(self):
+        return self.is_superuser or try_except(self.message_user_staff.level == "M")
+    def is_message_editor(self):
+        return self.is_superuser or try_except(self.message_user_staff.level == "E")
+    def is_message_manager(self):
+        try:
+            return self.is_superuser or self.message_user_staff.level
+        except:
+            return False
 
     def is_work_administrator(self):
         return self.is_superuser or try_except(self.can_work_staff_user.can_work_administrator)
@@ -943,6 +954,14 @@ class User(AbstractUser):
         return self.is_superuser or try_except(self.can_work_staff_mail_user.can_work_editor)
     def is_mail_supermanager(self):
         return self.is_superuser or self.is_work_mail_administrator() or self.is_forum_mail_moderator() or is_forum_mail_editor()
+    def is_work_message_administrator(self):
+        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_administrator)
+    def is_work_message_moderator(self):
+        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_moderator)
+    def is_work_message_editor(self):
+        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_editor)
+    def is_message_supermanager(self):
+        return self.is_superuser or self.is_work_message_administrator() or self.is_forum_message_moderator() or is_forum_message_editor()
 
     ''''' количества всякие  196-216 '''''
 
