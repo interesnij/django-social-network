@@ -1,5 +1,5 @@
 from managers.models import GoodUserStaff, CanWorkStaffGoodUser
-from logs.model.manage_goods import GoodWorkerManageLog, GoodCreateWorkerManageLog
+from logs.model.manage_good import GoodWorkerManageLog, GoodCreateWorkerManageLog
 from common.utils import check_manager_state, check_supermanager_state
 from users.models import User
 
