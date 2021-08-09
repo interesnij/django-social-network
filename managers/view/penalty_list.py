@@ -114,7 +114,7 @@ class PenaltyVideoList(ListView):
         return list
 
 
-class ModerationDocList(ListView):
+class PenaltyDocList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -123,12 +123,12 @@ class ModerationDocList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationDocList,self).get(request,*args,**kwargs)
+        return super(PenaltyDocList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
 
-class ModerationPlannerList(ListView):
+class PenaltyPlannerList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -137,12 +137,12 @@ class ModerationPlannerList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/planner_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationPlannerList,self).get(request,*args,**kwargs)
+        return super(PenaltyPlannerList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
 
-class ModerationSiteList(ListView):
+class PenaltySiteList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -151,12 +151,12 @@ class ModerationSiteList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/site_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationSiteList,self).get(request,*args,**kwargs)
+        return super(PenaltySiteList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
 
-class ModerationWikiList(ListView):
+class PenaltyWikiList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -165,12 +165,12 @@ class ModerationWikiList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/wiki_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationWikiList,self).get(request,*args,**kwargs)
+        return super(PenaltyWikiList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
 
-class ModerationForumList(ListView):
+class PenaltyForumList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -179,12 +179,12 @@ class ModerationForumList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/forum_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationForumList,self).get(request,*args,**kwargs)
+        return super(PenaltyForumList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
 
-class ModerationArticleList(ListView):
+class PenaltyArticleList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -193,7 +193,7 @@ class ModerationArticleList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/article_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationArticleList,self).get(request,*args,**kwargs)
+        return super(PenaltyArticleList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         return []
