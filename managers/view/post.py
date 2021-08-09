@@ -200,7 +200,7 @@ class PostRejectedCreate(View):
             raise Http404
 
 
-class PhotoUnverify(View):
+class PostUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type=9)
