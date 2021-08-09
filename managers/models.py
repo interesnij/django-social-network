@@ -477,7 +477,7 @@ class Moderated(models.Model):
     )
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
-    status = models.PositiveSmallIntegerField(default=0, choices=STATUS, default=PENDING, verbose_name="Статус")
+    status = models.PositiveSmallIntegerField(choices=STATUS, default=PENDING, verbose_name="Статус")
     type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
 
