@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from django.http import Http404
-from common.template.user import get_detect_platform_template
+from common.template.user import get_staff_template
 
 
 class ModerationUserList(ListView):
@@ -9,8 +9,8 @@ class ModerationUserList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_user_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/user_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_user_manager():
+            self.template_name = get_staff_template("managers/moderation_list/user_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationUserList,self).get(request,*args,**kwargs)
@@ -24,14 +24,14 @@ class ModerationCommunityList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_community_manager() or self.user.is_superuser:
+        if self.user.is_community_manager():
             self.template_name = get_detect_platform_template("managers/moderation_list/community_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationCommunityList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_moderation_communities()
+        list = self.user.get_staff_template()
         return list
 
 class ModerationPostList(ListView):
@@ -39,8 +39,8 @@ class ModerationPostList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_post_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/post_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_post_manager():
+            self.template_name = get_staff_template("managers/moderation_list/post_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationPostList,self).get(request,*args,**kwargs)
@@ -49,29 +49,13 @@ class ModerationPostList(ListView):
         list = self.user.get_moderation_posts()
         return list
 
-class ModerationPostCommentList(ListView):
-    template_name, paginate_by = None, 15
-
-    def get(self,request,*args,**kwargs):
-        self.user = request.user
-        if self.user.is_post_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/post_comment_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(ModerationPostCommentList,self).get(request,*args,**kwargs)
-
-    def get_queryset(self):
-        list = self.user.get_moderation_post_comments()
-        return list
-
-
 class ModerationPhotoList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_photo_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_photo_manager():
+            self.template_name = get_staff_template("managers/moderation_list/photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationPhotoList,self).get(request,*args,**kwargs)
@@ -80,29 +64,14 @@ class ModerationPhotoList(ListView):
         list = self.user.get_moderation_photos()
         return list
 
-class ModerationPhotoCommentList(ListView):
-    template_name, paginate_by = None, 15
-
-    def get(self,request,*args,**kwargs):
-        self.user = request.user
-        if self.user.is_photo_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/photo_comment_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(ModerationPhotoCommentList,self).get(request,*args,**kwargs)
-
-    def get_queryset(self):
-        list = self.user.get_moderation_photo_comments()
-        return list
-
 
 class ModerationGoodList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_good_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/good_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_good_manager():
+            self.template_name = get_staff_template("managers/moderation_list/good_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationGoodList,self).get(request,*args,**kwargs)
@@ -111,29 +80,14 @@ class ModerationGoodList(ListView):
         list = self.user.get_moderation_goods()
         return list
 
-class ModerationGoodCommentList(ListView):
-    template_name, paginate_by = None, 15
-
-    def get(self,request,*args,**kwargs):
-        self.user = request.user
-        if self.user.is_good_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/good_comment_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(ModerationGoodCommentList,self).get(request,*args,**kwargs)
-
-    def get_queryset(self):
-        list = self.user.get_moderation_good_comments()
-        return list
-
 
 class ModerationAudioList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_audio_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/audio_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_audio_manager():
+            self.template_name = get_staff_template("managers/moderation_list/audio_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationAudioList,self).get(request,*args,**kwargs)
@@ -148,8 +102,8 @@ class ModerationVideoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_video_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/video_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_video_manager():
+            self.template_name = get_staff_template("managers/moderation_list/video_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationVideoList,self).get(request,*args,**kwargs)
@@ -158,48 +112,128 @@ class ModerationVideoList(ListView):
         list = self.user.get_moderation_videos()
         return list
 
-class ModerationVideoCommentList(ListView):
+class ModerationDocList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_video_manager() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/video_comment_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_doc_manager():
+            self.template_name = get_staff_template("managers/moderation_list/doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationVideoCommentList,self).get(request,*args,**kwargs)
+        return super(ModerationDocList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_moderation_video_comments()
-        return list
+        return []
 
-
-class ModerationUserAdvertiserList(ListView):
+class ModerationPlannerList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_user_advertiser() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/user_advertiser_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_planner_manager():
+            self.template_name = get_staff_template("managers/moderation_list/planner_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationUserAdvertiserList,self).get(request,*args,**kwargs)
+        return super(ModerationPlannerList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = []
-        return list
+        return []
 
-class ModerationCommunityAdvertiserList(ListView):
+class ModerationSiteList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_community_advertiser() or self.user.is_superuser:
-            self.template_name = get_detect_platform_template("managers/moderation_list/community_advertiser_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.user.is_site_manager():
+            self.template_name = get_staff_template("managers/moderation_list/site_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(ModerationCommunityAdvertiserList,self).get(request,*args,**kwargs)
+        return super(ModerationSiteList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = []
-        return list
+        return []
+
+class ModerationWikiList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_wiki_manager():
+            self.template_name = get_staff_template("managers/moderation_list/wiki_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationWikiList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
+
+class ModerationForumList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_forum_manager():
+            self.template_name = get_staff_template("managers/moderation_list/forum_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationForumList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
+
+class ModerationArticleList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_article_manager():
+            self.template_name = get_staff_template("managers/moderation_list/article_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationArticleList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
+
+class ModerationSurveyList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_survey_manager():
+            self.template_name = get_staff_template("managers/moderation_list/survey_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationSurveyList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
+
+class ModerationMailList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_mail_manager():
+            self.template_name = get_staff_template("managers/moderation_list/mail_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationMailList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
+
+class ModerationMessageList(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        self.user = request.user
+        if self.user.is_message_manager():
+            self.template_name = get_staff_template("managers/moderation_list/message_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(ModerationMessageList,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return []
