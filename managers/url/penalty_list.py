@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^survey/$', PenaltySurveyList.as_view()),
     url(r'^mail/$', PenaltyMailList.as_view()),
     url(r'^message/$', PenaltyMessageList.as_view()),
+    url(r'^survey/$', PenaltySurveyList.as_view()),
 ]
