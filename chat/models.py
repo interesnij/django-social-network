@@ -390,11 +390,11 @@ class Message(models.Model):
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PROCESSING)
             elif sticker:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, type=Message.PROCESSING)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, unread=False, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 recipient_message.create_socket()
             get_message_processing(creator_message, 'PUB')
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker):
