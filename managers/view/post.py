@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.post import *
-from post.models import PostList, Post, PostComment
+from posts.models import PostList, Post, PostComment
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
