@@ -1,7 +1,7 @@
 from users.models import User
 from django.views.generic import ListView
 from django.http import Http404
-from common.template.user import get_staff_template
+from common.templates import get_staff_template
 
 
 class PenaltyUserList(ListView):
