@@ -16,6 +16,6 @@ urlpatterns = [
     url(r'^forum/$', ModerationForumList.as_view()),
     url(r'^article/$', ModerationArticleList.as_view()),
     url(r'^survey/$', ModerationSurveyList.as_view()),
-    url(r'^mail/$', PenaltyMailList.as_view()),
-    url(r'^message/$', PenaltyMessageList.as_view()),
+    url(r'^mail/$', ModerationMailList.as_view()),
+    url(r'^message/$', ModerationMessageList.as_view()),
 ]
