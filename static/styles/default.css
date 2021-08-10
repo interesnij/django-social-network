@@ -2,7 +2,9 @@
   top: 1px;
   position: absolute;
 }
-
+.interaction .comment, .user_photo_remove, .community_photo_remove {
+  cursor: pointer;
+}
 .form_group_flex {
   display: flex;
 }
