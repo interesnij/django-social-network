@@ -279,7 +279,7 @@ on('#ajax', 'click', '.m_select_photo', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_load_fullscreen('/users/load/u_img_load/', loader)
+  open_load_fullscreen('/users/load/u_img_message_load/', loader) 
 });
 on('#ajax', 'click', '.m_select_video', function() {
   this.parentElement.classList.remove("show");
