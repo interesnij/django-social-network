@@ -480,3 +480,25 @@ on('#ajax', 'click', '.u_message_reply', function() {
   }};
   link.send();
 });
+
+on('#ajax', 'change', '#u_comment_photo_attach', function() {
+  if (this.files.length > 10) {
+      toast_error("Не больше 10 фотографий");return
+  }
+  form_data = new FormData(this.parentElement);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/chat/user_progs/add_attach_photo/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    photo_list = response.querySelectorAll(".pag");
+    photo_message_upload_attach(photo_list, document.body.querySelector(".message_attach_block"));
+    }
+    close_create_window();
+  }
+  link_.send(form_data);
+});

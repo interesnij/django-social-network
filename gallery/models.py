@@ -378,10 +378,10 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED = '_PRO','PUB','MAN','_DEL','_CLO'
+    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = '_PRO','PUB','MAN','_DEL','_CLO','_MES'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),(MESSAGE, 'Загруженный в сообщениях'),
         (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 

@@ -55,6 +55,23 @@ class UserLoadPhotoComment(ListView):
 	def get_queryset(self):
 		return self.list.get_items()
 
+class UserLoadPhotoMessage(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from gallery.models import PhotoList
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_message_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.get_lists = PhotoList.get_user_lists(request.user.pk)
+		return super(UserLoadPhotoMessage,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadPhotoMessage,self).get_context_data(**kwargs)
+		context["list"], context["get_lists"] = self.list, self.get_lists
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()
+
 
 class UserLoadVideo(ListView):
 	template_name, paginate_by = None, 15

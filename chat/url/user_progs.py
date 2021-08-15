@@ -18,4 +18,5 @@ urlpatterns = [
 	url(r'^restore_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageRecover.as_view()),
 
     url(r'^create_chat/(?P<pk>\d+)/$', CreateUserChat.as_view()),
+    url(r'^add_attach_photo/$', PhotoAttachInChatUserCreate.as_view()),
 ]

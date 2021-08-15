@@ -367,3 +367,16 @@ class UserMessageRecover(View):
 			return HttpResponse()
 		else:
 			raise Http404
+
+
+class PhotoAttachInChatUserCreate(View):
+    def post(self, request, *args, **kwargs):
+		from gallery.models import Photo
+        photos = []
+        if request.is_ajax():
+            for p in request.FILES.getlist('file'):
+                photo = Photo.objects.create(creator=request.user, preview=p,file=p, type="_MES")
+                photos += [photo,]
+            return render_for_platform(request, 'chat/create/u_new_photos.html',{'object_list': photos})
+        else:
+            raise Http404
