@@ -41,7 +41,7 @@ function remove_file_message_attach(){
 
 function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
-  div = create_preview_photo(src, photo_pk, user_pk);
+  div = create_preview_message_photo(src, photo_pk, user_pk);
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
@@ -52,7 +52,7 @@ function photo_message_upload_attach(photo_list, block){
   is_full_message_attach();
   for (var i = 0; i < photo_list.length; i++){
     parent = photo_list[i];
-    div = create_preview_photo(parent.querySelector(".progressive").getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
+    div = create_preview_message_photo(parent.querySelector(".progressive").getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
     add_file_message_attach();
     block.append(div);
     is_full_message_attach();
