@@ -3,7 +3,7 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
-  if (input.innerHTML.trim() == "" && !document.body.querySelector(".special_block").firstChild{
+  if (input.innerHTML.trim() == "" && !document.body.querySelector(".special_block").firstChild){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
   } else {
