@@ -20,4 +20,4 @@ from docs.models import Doc
 from chat.models import Message
 from gallery.models import PhotoList
 
-PhotoList.objects.filter(type=PhotoList.WALL,community__isnull=False).delete()
+Message.objects.all().update(unread=False)
