@@ -372,6 +372,8 @@ class UserMessageRecover(View):
 class PhotoAttachInChatUserCreate(View):
 	def post(self, request, *args, **kwargs):
 		from gallery.models import Photo
+		from common.template.user import render_for_platform
+		
 		photos = []
 		if request.is_ajax():
 			for p in request.FILES.getlist('file'):
