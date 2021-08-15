@@ -529,7 +529,7 @@ on('body', 'click', '.video_attach_list', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_video_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (video_list_post_attach(document.body.querySelector(".attach_block"), name, pk, count), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_video_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_list_comment_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
+    check_video_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (video_list_message_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
   }
 });
 
@@ -570,7 +570,7 @@ on('body', 'click', '.music_attach_list', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_playlist_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (playlist_post_attach(document.body.querySelector(".attach_block"), name, pk, count), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_playlist_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (playlist_comment_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
+    check_playlist_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (playlist_message_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
   }
 });
 
@@ -596,7 +596,7 @@ on('body', 'click', '.doc_attach_list', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_doc_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (doc_list_post_attach(document.body.querySelector(".attach_block"), name, pk, count), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_doc_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (doc_list_comment_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
+    check_doc_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (doc_list_message_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
   }
 });
 on('body', 'click', '.doc_attach_list', function() {
@@ -609,7 +609,7 @@ on('body', 'click', '.doc_attach_list', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_doc_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_list_post_attach(document.body.querySelector(".attach_block"), name, pk, count), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_doc_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_list_comment_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
+    check_doc_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_list_message_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
   }
 });
 
@@ -660,7 +660,7 @@ on('body', 'click', '.good_attach_list', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_good_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_list_post_attach(document.body.querySelector(".attach_block"), name, pk, count), close_create_window())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_good_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_list_comment_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
+    check_good_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_list_message_attach(document.body.querySelector(".message_attach_block"), name, pk, count), close_create_window())
   }
 });
 
