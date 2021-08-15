@@ -481,7 +481,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   link.send();
 });
 
-on('#ajax', 'change', '#u_comment_photo_attach', function() {
+on('#ajax', 'change', '#u_photo_message_attach', function() {
   if (this.files.length > 10) {
       toast_error("Не больше 10 фотографий");return
   }
