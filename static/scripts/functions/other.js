@@ -3,7 +3,7 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
-  if (input.innerHTML.trim() == ""){
+  if (input.innerHTML.trim() == "" && !document.body.querySelector(".special_block").firstChild{
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
   } else {
@@ -11,7 +11,7 @@ function check_message_form_btn() {
     btn_block.querySelector("#message_post_btn").style.display = "block";
   }
 }
-function show_message_form_send_btn() { 
+function show_message_form_send_btn() {
   document.body.querySelector("#voice_start_btn").style.display = "none";
   document.body.querySelector("#message_post_btn").style.display = "block";
 }
