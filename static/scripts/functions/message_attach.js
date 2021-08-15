@@ -45,6 +45,7 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }
 
 function photo_message_upload_attach(photo_list, block){
@@ -55,8 +56,8 @@ function photo_message_upload_attach(photo_list, block){
     add_file_message_attach();
     block.append(div);
     is_full_message_attach();
+    show_message_form_send_btn()
   };
-  close_create_window()
   }
 
 
@@ -66,6 +67,7 @@ function video_message_attach(block, pk, counter, src) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }
 
 function music_message_attach(block, pk, counter, src) {
@@ -74,6 +76,7 @@ function music_message_attach(block, pk, counter, src) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }
 
 function doc_message_attach(block, media_block, pk) {
@@ -82,6 +85,7 @@ function doc_message_attach(block, media_block, pk) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }
 
 function good_message_attach(block, src, pk, uuid, title) {
@@ -90,6 +94,7 @@ function good_message_attach(block, src, pk, uuid, title) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }
 
 function article_message_attach(_this, block) {
@@ -98,4 +103,5 @@ function article_message_attach(_this, block) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
+  show_message_form_send_btn()
 }

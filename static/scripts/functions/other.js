@@ -11,7 +11,7 @@ function check_message_form_btn() {
     btn_block.querySelector("#message_post_btn").style.display = "block";
   }
 }
-function show_message_form_send_btn() {
+function show_message_form_send_btn() { 
   document.body.querySelector("#voice_start_btn").style.display = "none";
   document.body.querySelector("#message_post_btn").style.display = "block";
 }
