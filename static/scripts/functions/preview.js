@@ -129,7 +129,7 @@ function create_preview_message_photo(img_src, photo_pk, user_pk){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("preview_photo", "image_fit", "pointer"); 
+  $img.classList.add("u_photo_priview", "image_fit", "pointer"); 
   $img.setAttribute("src", img_src);
   $img.setAttribute('photo-pk', photo_pk);
   $img.setAttribute('data-pk', user_pk);
