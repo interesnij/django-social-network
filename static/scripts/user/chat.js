@@ -357,7 +357,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
                                              result > 0 ? chats.querySelector(".tab_badge").innerHTML = result : chats.innerHTML = '',
                                              console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
                                            ) : null;
-        ajax.querySelector(".message_text").focus()
+        document.body.querySelector(".message_text").focus()
       }
     }
     ajax_link.send();
