@@ -60,48 +60,96 @@ function photo_message_upload_attach(photo_list, block){
   };
   }
 
+function photo_list_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_photo_list(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn()
+}
 
 function video_message_attach(block, pk, counter, src) {
   is_full_message_attach();
-  div = create_preview_video(src, pk, counter)
+  div = create_preview_video(src, pk, counter);
   block.append(div);
-  add_file_message_attach()
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn()
+}
+function video_list_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_video_list(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn()
 }
 
 function music_message_attach(block, pk, counter, src) {
   is_full_message_attach();
-  div = create_preview_music(src, pk, counter)
+  div = create_preview_music(src, pk, counter);
   block.append(div);
-  add_file_message_attach()
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn();
+}
+function playlist_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_playlist(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn()
 }
 
 function doc_message_attach(block, media_block, pk) {
   is_full_message_attach();
-  div = create_preview_doc(media_block, pk)
+  div = create_preview_doc(media_block, pk);
   block.append(div);
-  add_file_message_attach()
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn()
+}
+function doc_list_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_doc_list(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn()
 }
 
 function good_message_attach(block, src, pk, uuid, title) {
   is_full_message_attach();
-  div = create_preview_good(src, pk, uuid, title)
+  div = create_preview_good(src, pk, uuid, title);
   block.append(div);
-  add_file_message_attach()
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn()
+}
+function good_list_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_good_list(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn()
 }
 
 function article_message_attach(_this, block) {
   is_full_message_attach();
-  div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title)
+  div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title);
   block.append(div);
-  add_file_message_attach()
+  add_file_message_attach();
+  is_full_message_attach();
+  show_message_form_send_btn()
+}
+function article_list_message_attach(block, title, pk, count) {
+  is_full_message_attach();
+  div = create_preview_article_list(title, pk, count);
+  block.append(div);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn()
 }

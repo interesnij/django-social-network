@@ -129,7 +129,7 @@ function create_preview_message_photo(img_src, photo_pk, user_pk){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("u_photo_priview", "image_fit", "pointer"); 
+  $img.classList.add("u_photo_priview", "image_fit", "pointer");
   $img.setAttribute("src", img_src);
   $img.setAttribute('photo-pk', photo_pk);
   $img.setAttribute('data-pk', user_pk);
@@ -199,6 +199,21 @@ function create_preview_video(img_src, pk, counter){
   $div.append($icon_div);
   return $div
 }
+
+function create_preview_video_list(name, pk, count){
+  $div = document.createElement("div");
+  $div.classList.add("mt-1");
+  $div.style.flexBasis = "100%";
+  $div.setAttribute("videolist-pk", pk);
+  $div.innerHTML = '<div class="card-body border" videolist-pk="' + pk + '" style="padding-bottom: 0;"><div style="display:flex"><figure><a class="u_load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_video_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div></div>'
+
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="lvi' + pk + '">';
+  $div.append($input);
+  $div.append(video_preview_delete());
+  return $div
+}
+
 function create_preview_music(img_src, pk, counter){
   $div = document.createElement("div");
   $input = document.createElement("span");

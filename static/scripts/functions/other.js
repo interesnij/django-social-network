@@ -358,10 +358,26 @@ function check_video_in_block(block, _this, pk) {
         return false
     }
 }
+function check_video_list_in_block(block, _this, pk) {
+    if (block.querySelector('[videolist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Видеоальбом уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
 function check_music_in_block(block, _this, counter) {
     if (block.querySelector('[music-counter=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
         _this.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_playlist_in_block(block, _this, pk) {
+    if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Плейлист уже прикреплён")
         return true
     } else {
         return false
@@ -376,10 +392,26 @@ function check_doc_in_block(block, _this, pk) {
         return false
     }
 }
+function check_doc_list_in_block(block, _this, pk) {
+    if (block.querySelector('[doclist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Список документов уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
 function check_good_in_block(block, _this, pk) {
     if (block.querySelector('[good-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
         _this.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_good_list_in_block(block, _this, pk) {
+    if (block.querySelector('[goodlist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Список товаров уже прикреплён")
         return true
     } else {
         return false
