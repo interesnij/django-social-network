@@ -32,7 +32,7 @@ class PhotoDetail(TemplateView):
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_user_item(self.photo, "gallery/photo/u_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PhotoDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
