@@ -1177,12 +1177,26 @@ html {
   border: 1px grey solid;
   z-index: 2
 }
+.list_preview_delete{
+  position: absolute;
+  right: 20px;
+  padding: 6px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  top: 6px;
+  height: 25px;
+  width: 25px;
+  border: 1px grey solid;
+  z-index: 2
+}
 .photo_preview_delete svg,
 .video_preview_delete svg,
 .doc_preview_delete svg,
 .music_preview_delete svg,
 .good_preview_delete svg,
-.article_preview_delete svg{
+.article_preview_delete svg,
+.list_preview_delete svg{
   width: 12px;
   position: absolute;
   color: grey;

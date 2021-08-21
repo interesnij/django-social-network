@@ -6,6 +6,14 @@ function photo_preview_delete(){
   $span.setAttribute("flow", "up");
   return $span
 }
+function list_preview_delete(){
+  $span = document.createElement("span");
+  $span.classList.add("list_preview_delete");
+  $span.innerHTML = '<svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
+  $span.setAttribute("tooltip", "Не прикреплять");
+  $span.setAttribute("flow", "up");
+  return $span
+}
 
 function video_preview_delete(){
   $span = document.createElement("span");
@@ -204,12 +212,24 @@ function create_preview_video_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
   $div.setAttribute("videolist-pk", pk);
-  $div.innerHTML = '<div style="display:flex"><figure><a class="u_load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 u_load_video_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex"><figure><a class="u_load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 u_load_video_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="lvi' + pk + '">';
   $div.append($input);
-  $div.append(video_preview_delete());
+  $div.append(list_preview_delete());
+  return $div
+}
+function create_preview_video_list(name, pk, count){
+  $div = document.createElement("div");
+  $div.style.flexBasis = "100%";
+  $div.setAttribute("videolist-pk", pk);
+  $div.innerHTML = '<div style="display:flex"><figure><a class="u_load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 u_load_video_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
+
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="lvi' + pk + '">';
+  $div.append($input);
+  $div.append(list_preview_delete());
   return $div
 }
 
@@ -353,6 +373,18 @@ on('#ajax', 'click', '.doc_preview_delete', function() {
   try{ remove_file_dropdown(); is_full_dropdown()} catch { remove_file_attach(), is_full_attach()}
 });
 on('#ajax', 'click', '.video_preview_delete', function() {
+  parent = this.parentElement;
+  block = parent.parentElement;
+  if (block.classList.contains("attach_block")){
+    remove_file_attach(), is_full_attach()
+  } else if (block.classList.contains("img_block")){
+    remove_file_dropdown(); is_full_dropdown()
+  } else if (block.classList.contains("message_attach_block")){
+    remove_file_message_attach(); is_full_message_attach(); check_message_form_btn()
+  }
+  parent.remove();
+});
+on('#ajax', 'click', '.list_preview_delete', function() {
   parent = this.parentElement;
   block = parent.parentElement;
   if (block.classList.contains("attach_block")){
