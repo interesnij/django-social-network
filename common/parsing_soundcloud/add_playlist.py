@@ -5,7 +5,8 @@ import json, requests
 
 
 def add_playlist(_url, request_user, list):
-    response = requests.get(url= "https://api.soundcloud.com/playlists?url=" + _url + "&client_id=dce5652caa1b66331903493735ddd64d")
+    #response = requests.get(url= "https://api.soundcloud.com/playlists?url=" + _url + "&client_id=dce5652caa1b66331903493735ddd64d")
+    response = requests.get(url= "https://api.soundcloud.com/playlists/96722464/")
     data = response.json()
 
     if data:
