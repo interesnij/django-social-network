@@ -34,21 +34,21 @@ import json, requests
 response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
 #data = "   " + str(response.json()) + "   "
 #data.replace("   [", "").replace("   ]", "")
-
+null = False
 #data = response.json()
 data = {
 	"duration": 4711995,
 	"genre": "",
-	"release_day": null,
+	"release_day": False,
 	"permalink": "music",
 	"permalink_url": "https://soundcloud.com/jig-saw19/sets/music",
-	"release_month": null,
-	"release_year": null,
-	"description": null,
+	"release_month": False,
+	"release_year": False,
+	"description": False,
 	"uri": "https://api.soundcloud.com/playlists/38194153",
-	"label_name": null,
-	"label_id": null,
-	"label": null,
+	"label_name": False,
+	"label_id": False,
+	"label": False,
 	"tag_list": "",
 	"track_count": 12,
 	"user_id": 59164042,
