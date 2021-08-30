@@ -180,9 +180,11 @@ class SoundList(models.Model):
         return self.type[:4] == "_CLO"
 
     @classmethod
-    def create_list(cls, creator, name, description, community, is_public):
+    def create_list(cls, creator, name, description, community):
         from notify.models import Notify, Wall
         from common.processing.music import get_playlist_processing
+
+        is_public = True
 
         list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
