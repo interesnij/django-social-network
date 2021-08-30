@@ -23,13 +23,11 @@ on('#ajax', 'click', '.u_soundcloud_set_create', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen("/music/user_progs/souncloud_create_list_window/", loader)
 });
-on('#ajax', 'click', '.u_soundcloud_set_list_main', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_list_window_main/", loader)
-});
+
 on('#ajax', 'click', '.u_soundcloud_set_list', function() {
+  this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_list_window/", loader)
+  open_fullscreen("/music/user_progs/souncloud_list_window/" + uuid + "/", loader)
 });
 on('#ajax', 'click', '.u_music_list_create_window', function() {
   loader = document.getElementById("create_loader");

@@ -27,11 +27,13 @@ class UserSoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UserSoundcloudSetWindow,self).get_context_data(**kwargs)
+        context["list"] = self.list
         return context
 
 
