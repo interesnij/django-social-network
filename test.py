@@ -32,12 +32,11 @@ from datetime import datetime, date, time
 import json, requests
 
 
-def add_playlist(url):
-    response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
-    data = response.json()
+response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
+data = response.json()
 
-    print(data)
+print(data)
 
-    if data:
-        for track in data['tracks']:
-            print(track)
+if data:
+    for track in data['tracks']:
+        print(track)
