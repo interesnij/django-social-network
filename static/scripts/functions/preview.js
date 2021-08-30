@@ -211,8 +211,9 @@ function create_preview_video(img_src, pk, counter){
 function create_preview_video_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
+  $div.style.position = "relative";
   $div.setAttribute("videolist-pk", pk);
-  $div.innerHTML = '<div style="display:flex;position:relative"><figure><a class="load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_video_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex"><figure><a class="load_video_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_video_list pointer">' + name + '</h6><p>Роликов: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="lvi' + pk + '">';
@@ -258,8 +259,9 @@ function create_preview_music(img_src, pk, counter){
 function create_preview_playlist(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
+  $div.style.position = "relative";
   $div.setAttribute("playlist-pk", pk);
-  $div.innerHTML = '<div style="display:flex;position:relative"><figure><a class="load_playlist pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_playlist pointer">' + name + '</h6><p>Треков: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex;"><figure><a class="load_playlist pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_playlist pointer">' + name + '</h6><p>Треков: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="lmu' + pk + '">';
@@ -302,8 +304,9 @@ function create_preview_doc(media_body, pk){
 function create_preview_doc_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
+  $div.style.position = "relative";
   $div.setAttribute("doclist-pk", pk);
-  $div.innerHTML = '<div style="display:flex;position:relative"><figure><a class="load_doc_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_doc_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex;"><figure><a class="load_doc_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_doc_list pointer">' + name + '</h6><p>Документов: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="ldo' + pk + '">';
@@ -336,8 +339,9 @@ function create_preview_good(img_src, pk, uuid, title){
 function create_preview_good_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
+  $div.style.position = "relative";
   $div.setAttribute("goodlist-pk", pk);
-  $div.innerHTML = '<div style="display:flex;position:relative"><figure><a class="load_good_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_good_list pointer">' + name + '</h6><p>Товаров: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex;"><figure><a class="load_good_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_good_list pointer">' + name + '</h6><p>Товаров: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="lgo' + pk + '">';
@@ -376,8 +380,9 @@ function create_preview_article(img_src, pk, title){
 function create_preview_article_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
+  $div.style.position = "relative";
   $div.setAttribute("articlelist-pk", pk);
-  $div.innerHTML = '<div style="display:flex;position:relative"><figure><a class="load_article_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_article_list pointer">' + name + '</h6><p>Статей: ' + count + '</p></div></div>'
+  $div.innerHTML = '<div style="display:flex;"><figure><a class="load_article_list pointer"><svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></a></figure><div class="media-body" style="margin-left: 10px;margin-top: 15px;"><h6 class="my-0 mt-1 load_article_list pointer">' + name + '</h6><p>Статей: ' + count + '</p></div></div>'
 
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="lgo' + pk + '">';
