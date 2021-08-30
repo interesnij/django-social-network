@@ -1,10 +1,9 @@
 from django.conf.urls import url, include
-from gallery.views import PhotoDetail, MessagePhotoDetail, LoadPhotoList
+from gallery.views import PhotoDetail, MessagePhotoDetail
 
 urlpatterns=[
 	url(r'^photo/(?P<pk>\d+)/$', PhotoDetail.as_view(), name="photo_detail"),
 	url(r'^message_photo/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', MessagePhotoDetail.as_view(), name="message_photo_detail"),
-	url(r'^list_load/(?P<pk>\d+)/$', LoadPhotoList.as_view()),
 
 	url(r'^user/', include('gallery.url.user')),
 	url(r'^community/', include('gallery.url.community')),
