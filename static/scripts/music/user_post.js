@@ -169,15 +169,13 @@ on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
 });
 
 on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
-  this.disabled = true;
+  uuid = this.getAttribute("data-uuid");
   form = document.body.querySelector("#u_soundcloud_set_form");
   form_data = new FormData(form);
   if (!form.querySelector("#id_permalink").value){
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!");
-  } else {this.disabled = true}
-  saver = document.body.querySelector(".pk_saver");
-  uuid = saver.getAttribute("data-uuid");
+  }
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + uuid + "/", true );
@@ -186,7 +184,7 @@ on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         close_create_window();
         this_page_reload(document.location.href);
-      }
+      } else {this.disabled = false}
     }
     ajax_link.send(form_data);
 });
