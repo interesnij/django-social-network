@@ -33,9 +33,10 @@ import json, requests
 
 response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
 data = response.json()
+data_2 = json.dumps(data)
 
 print(json.dumps(data))
 
 if data:
-    for track in data['tracks']:
+    for track in data_2['tracks']:
         print(track)
