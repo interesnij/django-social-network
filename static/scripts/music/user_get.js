@@ -25,9 +25,8 @@ on('#ajax', 'click', '.u_soundcloud_set_create', function() {
 });
 
 on('#ajax', 'click', '.u_soundcloud_set_list', function() {
-  this.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/souncloud_list_window/" + uuid + "/", loader)
+  open_fullscreen("/music/user_progs/souncloud_list_window/" + this.parentElement.parentElement.getAttribute('data-uuid') + "/", loader)
 });
 on('#ajax', 'click', '.u_music_list_create_window', function() {
   loader = document.getElementById("create_loader");
