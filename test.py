@@ -38,5 +38,5 @@ data_2 = json.dumps(data)
 print(json.dumps(data))
 
 if data:
-    for track in data_2['tracks']:
+    for track in data['tracks']:
         print(track)
