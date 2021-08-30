@@ -35,8 +35,8 @@ response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://s
 #data = "   " + str(response.json()) + "   "
 #data.replace("   [", "").replace("   ]", "")
 
-data = response.json()
-data.replace("[", "").replace("]", "")
+#data = response.json()
+from . import data
 
 if data:
     for track in data['tracks']:

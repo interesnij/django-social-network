@@ -1,4 +1,4 @@
-[{
+data = {
 	"duration": 4711995,
 	"genre": "",
 	"release_day": null,
@@ -6338,4 +6338,4 @@
 	"purchase_url": null,
 	"tracks_uri": "https://api.soundcloud.com/playlists/581474/tracks",
 	"tracks": []
-}]
+}
