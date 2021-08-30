@@ -33,7 +33,7 @@ class CommunitySoundcloudSetWindow(TemplateView):
         return super(CommunitySoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserSoundcloudSetWindow,self).get_context_data(**kwargs)
+        context = super(CommunitySoundcloudSetWindow,self).get_context_data(**kwargs)
         context["list"] = self.list
         return context
 
