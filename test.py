@@ -34,8 +34,8 @@ import json, requests
 response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
 #data = "   " + str(response.json()) + "   "
 #data.replace("   [", "").replace("   ]", "")
-response.del[0]
-response.del[-1]
+response.remove(0)
+response.remove(-1)
 data = response.json()
 
 if data:
