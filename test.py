@@ -37,5 +37,5 @@ response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://s
 
 data = response.json()
 
-for track in data['tracks']:
+for track in data[0]['tracks']:
     print(track)
