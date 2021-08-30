@@ -13,11 +13,11 @@ def add_playlist(url, request_user, list):
 
     if data:
         try:
-            playlist_url = data['artwork_url'].replace("large.jpg", "crop.jpg")
+            playlist_url = data[0]['artwork_url'].replace("large.jpg", "crop.jpg")
             list.get_remote_image(playlist_url)
         except:
             pass
-        for track in data['tracks']:
+        for track in data[0]['tracks']:
             created = track['created_at']
             created = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
 
