@@ -348,7 +348,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
         m_page = 2;
         m_loaded = false;
-        scrolled(window.location.href, '.chat_container', target = 0);
+        scrolled('.chat_container', target = 0);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
         chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
@@ -499,7 +499,7 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
     photo_message_upload_attach(photo_list, document.body.querySelector(".message_attach_block"));
     }
     close_create_window();
-    show_message_form_send_btn(); 
+    show_message_form_send_btn();
   }
   link_.send(form_data);
 });

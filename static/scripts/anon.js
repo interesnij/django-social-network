@@ -3,8 +3,6 @@ function profile_list_block_load(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   saver = _this.parentElement.parentElement.parentElement;
   saver.classList.contains("community") ?
-  link = "/communities/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/" :
-  link = "/users/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/";
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {
@@ -16,7 +14,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
          list_load(document.body.querySelector(".is_block_paginate"), link);
-         scrolled(link, '.list_pk', target = 0)
+         scrolled('.list_pk', target = 0)
        };
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
@@ -477,22 +475,22 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(link, '.list_pk', target = 0)
+        scrolled('.list_pk', target = 0)
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(link, '.list_pk', target = 0)
+        scrolled('.list_pk', target = 0)
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);
-        scrolled(link, '.list_pk', target = 0)
+        scrolled('.list_pk', target = 0)
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled(link, '.list_pk', target = 0)
+        scrolled('.list_pk', target = 0)
     }
 }
 
@@ -550,7 +548,7 @@ if_list(document.getElementById('ajax'));
 
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
-function scrolled(link, block_id, target) {
+function scrolled(block_id, target) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
@@ -558,12 +556,13 @@ function scrolled(link, block_id, target) {
     onscroll = function() {
         try {
             _block = document.body.querySelector(block_id);
-            box = _block.querySelector('.last');
-            if (box && box.classList.contains("last")) {
+            box = _block.querySelector('.next_page_list');
+            if (box && box.classList.contains("next_page_list")) {
                 inViewport = elementInViewport(box);
                 if (inViewport) {
-                    box.classList.remove("last");
-                    paginate(link, block_id);
+                    box.classList.remove("next_page_list");
+                    paginate(box.parentElement);
+                    box.remove();
                 }
             };
             if (target == 1) {
@@ -572,17 +571,14 @@ function scrolled(link, block_id, target) {
         } catch {return}
     }
 }
-page = 2;
 loaded = false;
 
-function paginate(link, block_id) {
-    block = document.body.querySelector(block_id);
-    if (block.getElementsByClassName('pag').length === (page - 1) * 15) {
+function paginate(block) {
         if (loaded) {
             return
         };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        link_3.open('GET', link + '?page=' + page++, true);
+        link_3.open('GET', block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
         link_3.onreadystatechange = function() {
@@ -596,23 +592,20 @@ function paginate(link, block_id) {
                     xxx = document.createElement("span");
                     xxx.innerHTML = elem.querySelector(block_id).innerHTML;
                     block.insertAdjacentHTML('beforeend', xxx.innerHTML)
-                    //block.append(xxx);
                 } else {
-                    //block.append(elem)
                     block.insertAdjacentHTML('beforeend', elem.innerHTML)
                 }
             }
         }
         link_3.send();
-    }
 }
 
 function create_pagination(block) {
   if (block.querySelector('.is_paginate')) {
-    scrolled(window.location.href, '.is_paginate', target = 0)
+    scrolled('.is_paginate', target = 0)
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled(window.location.href, '.is_post_paginate', target = 1)
+    scrolled('.is_post_paginate', target = 1)
   }
 }
 
