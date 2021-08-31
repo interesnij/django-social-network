@@ -561,7 +561,7 @@ function scrolled(block_id, target) {
                 inViewport = elementInViewport(box);
                 if (inViewport) {
                     box.classList.remove("next_page_list");
-                    paginate(box.parentElement);
+                    paginate(box.parentElement, target);
                     box.remove();
                 }
             };
@@ -573,7 +573,7 @@ function scrolled(block_id, target) {
 }
 loaded = false;
 
-function paginate(block) {
+function paginate(block, target) {
         if (loaded) {
             return
         };
@@ -585,16 +585,13 @@ function paginate(block) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                if (elem.getElementsByClassName('pag').length < 15) {
-                    loaded = true
-                };
-                if (elem.querySelector(block_id)) {
-                    xxx = document.createElement("span");
-                    xxx.innerHTML = elem.querySelector(block_id).innerHTML;
-                    block.insertAdjacentHTML('beforeend', xxx.innerHTML)
+                loaded = true
+                if (target == 1) {
+                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else {
-                    block.insertAdjacentHTML('beforeend', elem.innerHTML)
-                }
+                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
+                };
+                block.remove()
             }
         }
         link_3.send();
