@@ -172,7 +172,7 @@ function scrolled(block_id, target) {
                 inViewport = elementInViewport(box);
                 if (inViewport) {
                     box.classList.remove("next_page_list");
-                    paginate(box);
+                    paginate(box, target);
                 }
             };
             if (target == 1) {
