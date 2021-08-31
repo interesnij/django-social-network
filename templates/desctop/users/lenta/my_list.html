@@ -87,6 +87,13 @@
           </div>
           {% endif %}
         </span>
+        <div class="load">
+          {% if page_obj.has_next %}
+            <a class="next_page_list" href="?page={{ page_obj.next_page_number }}">
+              <img src="/static/images/preloader.gif' %}">
+            </a> 
+          {% endif %}
+        </div>
     </span>
   </span>
 </span>
