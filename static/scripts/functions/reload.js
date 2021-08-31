@@ -216,6 +216,8 @@ function paginate(block) {
             return
         };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        console.log(block);
+        console.log(block.getAttribute("data-link"));
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
