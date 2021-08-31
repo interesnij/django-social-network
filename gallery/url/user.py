@@ -12,5 +12,5 @@ urlpatterns=[
 	url(r'^preview_photo/(?P<pk>\d+)/$', GetUserPhoto.as_view()),
 
 	url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoUserCommentList.as_view()),
-	url(r'^load/(?P<uuid>[0-9a-f-]+)/$', UserLoadPhotoList.as_view()), name="user_load_photo_list",
+	url(r'^load/(?P<uuid>[0-9a-f-]+)/$', UserLoadPhotoList.as_view()), name="user_load_photo_list"),
 ]
