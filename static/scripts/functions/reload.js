@@ -217,7 +217,7 @@ function paginate(block) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
                 loaded = true
-                block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(block.classList).innerHTML);
+                block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML);
                 block.remove()
             }
         }
