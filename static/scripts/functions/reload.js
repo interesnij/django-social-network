@@ -25,29 +25,6 @@ function get_post_view() {
     }
 }
 
-function scrolled(block_id, target) {
-    // работа с прокруткой:
-    // 1. Ссылка на страницу с пагинацией
-    // 2. id блока, куда нужно грузить следующие страницы
-    // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
-    onscroll = function() {
-        try {
-            _block = document.body.querySelector(block_id);
-            box = _block.querySelector('.next_page_list');
-            if (box && box.classList.contains("next_page_list")) {
-                inViewport = elementInViewport(box);
-                if (inViewport) {
-                    box.classList.remove("next_page_list");
-                    paginate(box.parentElement);
-                    box.remove();
-                }
-            };
-            if (target == 1) {
-                get_post_view()
-            }
-        } catch {return}
-    }
-}
 loaded = false;
 m_loaded = false;
 
@@ -182,7 +159,30 @@ function send_change_c_video_list(el) {
 }
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 
-function top_paginate( block_id) {
+function scrolled(block_id, target) {
+    // работа с прокруткой:
+    // 1. Ссылка на страницу с пагинацией
+    // 2. id блока, куда нужно грузить следующие страницы
+    // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
+    onscroll = function() {
+        try {
+            _block = document.body.querySelector(block_id);
+            box = _block.querySelector('.next_page_list');
+            if (box && box.classList.contains("next_page_list")) {
+                inViewport = elementInViewport(box);
+                if (inViewport) {
+                    box.classList.remove("next_page_list");
+                    paginate(box);
+                }
+            };
+            if (target == 1) {
+                get_post_view()
+            }
+        } catch {return}
+    }
+}
+
+function top_paginate(block_id) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
@@ -196,16 +196,9 @@ function top_paginate( block_id) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                if (elem.getElementsByClassName('pag').length < 15) {
-                    m_loaded = true
-                };
-                if (elem.querySelector(".is_chat_paginate")) {
-                    xxx = document.createElement("span");
-                    xxx.innerHTML = elem.querySelector(".is_chat_paginate").innerHTML;
-                    document.body.querySelector(".is_chat_paginate").insertAdjacentHTML('afterbegin', xxx.innerHTML)
-                } else {
-                    document.body.querySelector(".is_chat_paginate").insertAdjacentHTML('afterbegin', elem.innerHTML)
-                }
+                loaded = true
+                block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML);
+                block.remove()
             }
         }
         link_3.send();
@@ -216,8 +209,6 @@ function paginate(block) {
             return
         };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        console.log(block);
-        console.log(block.getAttribute("data-link"));
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -225,16 +216,9 @@ function paginate(block) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                if (elem.getElementsByClassName('pag').length < 15) {
-                    loaded = true
-                };
-                if (elem.querySelector(block_id)) {
-                    xxx = document.createElement("span");
-                    xxx.innerHTML = elem.querySelector(block_id).innerHTML;
-                    block.insertAdjacentHTML('beforeend', xxx.innerHTML)
-                } else {
-                    block.insertAdjacentHTML('beforeend', elem.innerHTML)
-                }
+                loaded = true
+                block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML);
+                block.remove()
             }
         }
         link_3.send();
