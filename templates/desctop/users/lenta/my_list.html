@@ -78,6 +78,13 @@
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
+          <div class="load centered m-1">
+            {% if page_obj.has_next %}
+              <a class="next_page_list" next-page-pk="{{ page_obj.next_page_number }}">
+                <img src="/static/images/preloader.gif">
+              </a>
+            {% endif %}
+          </div>
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">
@@ -87,13 +94,6 @@
           </div>
           {% endif %}
         </span>
-        <div class="load">
-          {% if page_obj.has_next %}
-            <a class="next_page_list" href="?page={{ page_obj.next_page_number }}">
-              <img src="/static/images/preloader.gif">
-            </a>
-          {% endif %}
-        </div>
     </span>
   </span>
 </span>
