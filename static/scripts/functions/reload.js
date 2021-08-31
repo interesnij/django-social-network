@@ -182,7 +182,7 @@ function scrolled(block_id, target) {
     }
 }
 
-function top_paginate(block_id) {
+function top_paginate(block_id, target) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
@@ -204,7 +204,7 @@ function top_paginate(block_id) {
         link_3.send();
 };
 
-function paginate(block) {
+function paginate(block, target) {
         if (loaded) {
             return
         };
@@ -216,8 +216,12 @@ function paginate(block) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                loaded = true
-                block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML);
+                loaded = true;
+                if (target == 1) {
+                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
+                } else {
+                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
+                };
                 block.remove()
             }
         }
