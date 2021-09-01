@@ -234,7 +234,7 @@ function create_pagination(block) {
     scrolled(block.querySelector('.chat_container'), target = 0)
   }
   else if (block.querySelector('.is_paginate')) {
-    scrolled(block.querySelector('.is_paginate'), target = 0)ж
+    scrolled(block.querySelector('.is_paginate'), target = 0);
     console.log("Работает пагинация для списка не постов")
   }
   else if (block.querySelector('.is_post_paginate')) {
