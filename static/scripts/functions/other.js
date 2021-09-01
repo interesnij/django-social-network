@@ -944,6 +944,25 @@ function addStyleSheets(href) {
     $head.appendChild($link)
 }
 
+function get_document_opacity_0() {
+  if (document.body.querySelector(".mobile_naw")) {
+    document.body.querySelector(".main-container").style.opacity = "0";
+  } else {
+  document.body.querySelector(".main-header").style.opacity = "0";
+  document.body.querySelector(".main-container").style.opacity = "0";
+  document.body.querySelector(".left_panel_menu").style.opacity = "0"
+  }
+}
+function get_document_opacity_1() {
+  if (document.body.querySelector(".mobile_naw")) {
+    document.body.querySelector(".main-container").style.opacity = "1";
+  } else {
+  document.body.querySelector(".main-header").style.opacity = "1";
+  document.body.querySelector(".main-container").style.opacity = "1";
+  document.body.querySelector(".left_panel_menu").style.opacity = "1"
+  }
+}
+
 function open_fullscreen(url, block) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', url, true);
@@ -954,7 +973,8 @@ function open_fullscreen(url, block) {
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
             if (block.querySelector(".next_page_list")) {
-              console.log("Контент должен бы иметь пагинацию")
+              console.log("Контент должен бы иметь пагинацию");
+              get_document_opacity_0()
               if (block.querySelector(".is_block_paginate")) {
                 scrolled(block.querySelector(".is_block_paginate"), target = 0);
                 console.log("Работает пагинация обычная")

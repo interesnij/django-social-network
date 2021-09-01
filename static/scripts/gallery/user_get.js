@@ -52,29 +52,35 @@ on('#ajax', 'click', '.u_photo_priview', function() {
 on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+  get_document_opacity_1()
 });
 on('#ajax', 'click', '.good_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+  get_document_opacity_1()
 });
 on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+  get_document_opacity_1()
 });
 on('#ajax', 'click', '.item_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
+  get_document_opacity_1()
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader)
+  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader);
+  get_document_opacity_1()
 });
 on('#ajax', 'click', '.u_all_photo_dislikes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader)
+  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader);
+  get_document_opacity_1()
 });
 
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
