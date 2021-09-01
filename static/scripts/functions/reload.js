@@ -273,9 +273,6 @@ function if_list(block) {
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
         scrolled(_block.querySelector('.list_pk'), target = 1);
-        console.log("Работает пагинация для списка постов");
-        console.log(_block);
-        console.log(_block.querySelector('.span_list_pk'))
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
@@ -324,6 +321,7 @@ function list_block_load(target_block, response_block, link) {
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        get_dragula(".is_post_paginate");
        get_dragula(".date-list");
+       create_pagination(target_block);
     }};
     request.upload.onprogress = function(event) {
       console.log( 'начало работы');
