@@ -275,7 +275,7 @@ function if_list(block) {
         scrolled(_block.querySelector('.list_pk'), target = 1);
         console.log("Работает пагинация для списка постов");
         console.log(_block);
-        console.log(_block.querySelector('.list_pk'))
+        console.log(_block.querySelector('.span_list_pk'))
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
