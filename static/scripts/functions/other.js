@@ -955,11 +955,11 @@ function open_fullscreen(url, block) {
             block.innerHTML = elem;
             if (block.querySelector(".next_page_list")) {
               console.log("Контент должен бы иметь пагинацию")
-              if (block.querySelector(".is_paginate")) {
-                scrolled(block.querySelector(".is_paginate"), target = 0);
+              if (block.querySelector(".is_block_paginate")) {
+                scrolled(block.querySelector(".is_block_paginate"), target = 0);
                 console.log("Работает пагинация обычная")
               } else {
-                scrolled(block.querySelector(".is_post_paginate"), target = 1)
+                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
                 console.log("Работает пагинация постов")
               }
             }
