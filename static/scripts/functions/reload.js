@@ -274,6 +274,7 @@ function if_list(block) {
         list_block_load(_block, ".post_container", link);
         scrolled(_block.querySelector('.list_pk'), target = 1);
         console.log("Работает пагинация для списка постов");
+        console.log(_block);
         console.log(_block.querySelector('.list_pk'))
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
