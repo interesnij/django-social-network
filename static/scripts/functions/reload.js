@@ -234,10 +234,12 @@ function create_pagination(block) {
     scrolled(block.querySelector('.chat_container'), target = 0)
   }
   else if (block.querySelector('.is_paginate')) {
-    scrolled(block.querySelector('.is_paginate'), target = 0)
+    scrolled(block.querySelector('.is_paginate'), target = 0)ж
+    console.log("Работает пагинация для списка не постов")
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled(block.querySelector('.is_post_paginate'), target = 1)
+    scrolled(block.querySelector('.is_post_paginate'), target = 1);
+    console.log("Работает пагинация для списка постов")
   }
 }
 
@@ -270,7 +272,8 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'), target = 1)
+        scrolled(_block.querySelector('.list_pk'), target = 1);
+        console.log("Работает пагинация для списка постов")
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
