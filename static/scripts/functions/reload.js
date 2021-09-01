@@ -25,9 +25,6 @@ function get_post_view() {
     }
 }
 
-loaded = false;
-m_loaded = false;
-
 function get_dragula(block) {
   // функция инициирует библиотеку dragula.js
   _block = document.querySelector(block)
@@ -164,7 +161,7 @@ function scrolled(_block, target) {
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
-    onscroll = function() {
+    document.wheelDelta = function() {
         try {
             box = _block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
@@ -185,7 +182,6 @@ function top_paginate(block, target) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
-        if (m_loaded) { return };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -194,7 +190,6 @@ function top_paginate(block, target) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                loaded = true
                 if (target == 1) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else {
@@ -207,7 +202,6 @@ function top_paginate(block, target) {
 };
 
 function paginate(block, target) {
-        //if (loaded) { return };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -216,7 +210,6 @@ function paginate(block, target) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                //loaded = true;
                 if (elem.querySelector(".is_post_paginate")) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else if (elem.querySelector(".is_paginate")){
