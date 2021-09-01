@@ -25,7 +25,7 @@
               <div class="is_paginate">
                 {% if object_list %}
                   {% for object in object_list %}
-                  <div class="list-group-item pag {% if forloop.last %}last{% endif %}" data-uuid="{{ object.post.uuid }}">
+                  <div class="list-group-item pag" data-uuid="{{ object.post.uuid }}">
                       <div class="media">
                         <div class="media-body">
                           {% if object.post.community %}

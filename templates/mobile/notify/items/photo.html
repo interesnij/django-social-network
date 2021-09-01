@@ -1,10 +1,10 @@
-<div class="card mb-3 pag border {% if forloop.last %}last{% endif %}">
+<div class="card mb-3 pag border">
   <div class="card-header" style="padding-bottom: 0;">
       <div class="media">
         {% include 'mobile/generic/user/creator_figure.html' %}
           <div class="media-body">
               <p class="mb-0" data-uuid="{{ object.post.uuid }}" data-pk="{{ object.post.creator.pk }}">
-                {% include 'mobile/generic/user/creator.html' %}  
+                {% include 'mobile/generic/user/creator.html' %}
                 {{ object.get_verb_display }}
               </p>
               <p class="mb-0 small">{{ object.get_created }}</p>

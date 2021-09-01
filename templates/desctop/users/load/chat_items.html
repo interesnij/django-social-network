@@ -2,7 +2,7 @@
 {% for object in object_list %}
 
 {% if object.type %}
-<div class="list-group-item load_pag pointer chat_item_load_one {% if forloop.last %}load_last{% endif %}" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item load_pag pointer chat_item_load_one" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   <div style="display:flex" style="padding-top: 5px;padding-bottom: 5px;">
       <figure>
         {% if object.avatar %}
@@ -18,7 +18,7 @@
 </div>
 
 {% elif object.last_name %}
-<div class="list-group-item load_pag pointer chat_item_load_one {% if forloop.last %}load_last{% endif %}" data-pk="u{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item load_pag pointer chat_item_load_one" data-pk="u{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   <div style="display:flex">
       <figure>
         {% if object.s_avatar %}

@@ -1,7 +1,7 @@
 <span class="friends_items_load_container" data-link="">
 {% for object in object_list %}
 
-<div class="list-group-item load_pag pointer chat_friends_load_one {% if forloop.last %}load_last{% endif %}" data-pk="{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item load_pag pointer chat_friends_load_one" data-pk="{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   <div style="display:flex">
       <figure>
         {% if object.s_avatar %}

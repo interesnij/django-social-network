@@ -1,6 +1,6 @@
 {% if object.is_have_user_set %}
   {% with u_s=object.get_first_user_set %}
-  <div class="card mb-2 pag {% if forloop.last %}last{% endif %}">
+  <div class="card mb-2 pag">
 <div class="card-header" style="">
     <div class="media">
       <figure>
@@ -26,7 +26,7 @@
 
 {% elif object.is_have_object_set %}
   {% with o_s=object.get_first_object_set %}
-  <div class="card mb-2 pag {% if forloop.last %}last{% endif %}">
+  <div class="card mb-2 pag">
 <div class="card-header" style="">
     <div class="media">
         <div class="media-body">
@@ -56,7 +56,7 @@
   {% endwith %}
 
 {% else %}
-<div class="card mb-2 pag {% if forloop.last %}last{% endif %}">
+<div class="card mb-2 pag">
 <div class="card-header" style="">
   <div class="media">
     <figure>

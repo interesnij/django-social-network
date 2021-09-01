@@ -1,7 +1,7 @@
 
 {% if object_list %}
 {% for object in object_list %}
-  <div class="pointer p-1 col-md-6 col-lg-4 detail_photo  pag {% if forloop.last %}last{% endif %}" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
+  <div class="pointer p-1 col-md-6 col-lg-4 detail_photo pag" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
     <div class="progressive replace" data-href="{{ object.file.url }}">
       {% if object.preview %}
         <img class="preview image_fit_200" src="{{ object.preview.url }}" alt="img">
