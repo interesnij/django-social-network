@@ -207,7 +207,7 @@ function top_paginate(block, target) {
 };
 
 function paginate(block, target) {
-        if (loaded) { return };
+        //if (loaded) { return };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -216,12 +216,14 @@ function paginate(block, target) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                loaded = true;
-                if (target == 1) {
+                //loaded = true;
+                if (elem.querySelector(".is_post_paginate")) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
-                } else {
+                } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                };
+                } else if (elem.querySelector(".is_block_paginate")){
+                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
+                }
                 block.remove()
             }
         }
