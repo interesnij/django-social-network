@@ -955,10 +955,10 @@ function get_document_opacity_0() {
 }
 function get_document_opacity_1() {
   if (document.body.querySelector(".mobile_naw")) {
-    document.body.querySelector(".main-container").style.opacity = "1";
+    document.body.querySelector(".main-container").style.height = "1000000px";
   } else {
   document.body.querySelector(".main-header").style.opacity = "1";
-  document.body.querySelector(".main-container").style.opacity = "1";
+  document.body.querySelector(".main-container").style.height = "100%";
   document.body.querySelector(".left_panel_menu").style.opacity = "1"
   }
 }

@@ -1,3 +1,22 @@
+function get_document_opacity_0() {
+  if (document.body.querySelector(".mobile_naw")) {
+    document.body.querySelector(".main-container").style.opacity = "0";
+  } else {
+  document.body.querySelector(".main-header").style.opacity = "0";
+  document.body.querySelector(".main-container").style.opacity = "0";
+  document.body.querySelector(".left_panel_menu").style.opacity = "0"
+  }
+}
+function get_document_opacity_1() {
+  if (document.body.querySelector(".mobile_naw")) {
+    document.body.querySelector(".main-container").style.opacity = "1";
+  } else {
+  document.body.querySelector(".main-header").style.opacity = "1";
+  document.body.querySelector(".main-container").style.opacity = "1";
+  document.body.querySelector(".left_panel_menu").style.opacity = "1"
+  }
+}
+
 function profile_list_block_load(_this, block, url, actions_class) {
   // подгрузка списков в профиле пользователя
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
