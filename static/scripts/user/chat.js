@@ -345,10 +345,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
-
-        m_page = 2;
         m_loaded = false;
-        scrolled('.chat_container', target = 0);
+        scrolled(rtr.querySelector('.chat_container'), target = 0);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
         chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),

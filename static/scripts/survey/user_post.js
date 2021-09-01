@@ -26,11 +26,11 @@ on('#create_loader', 'click', '#u_add_survey_btn', function() {
     _new = document.createElement("div");
     _new.innerHTML = elem;
     if (document.querySelector(".attach_block")){
-      document.body.querySelector(".attach_block").append(_new.querySector(".load_pag"));
+      document.body.querySelector(".attach_block").append(_new.querySelector(".load_pag"));
       add_file_attach();
       is_full_attach();
-    } else if (document.querySector(".message_attach_block")){
-      document.body.querySelector(".message_attach_block").append(_new.querySector(".load_pag"));
+    } else if (document.querySelector(".message_attach_block")){
+      document.body.querySelector(".message_attach_block").append(_new.querySelector(".load_pag"));
       add_file_attach();
       is_full_attach();
     }

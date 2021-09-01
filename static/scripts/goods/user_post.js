@@ -255,7 +255,7 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
       check_good_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (good_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, media_block, pk))
     } else if (document.body.querySelector(".attach_block")){
       check_good_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (good_post_attach(document.body.querySelector(".attach_block"), media_block, pk))
-    } else if (document.body.querySector(".message_attach_block")){
+    } else if (document.body.querySelector(".message_attach_block")){
       check_good_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (good_message_attach(document.body.querySelector(".message_attach_block"), media_block, pk))
     }
     else {

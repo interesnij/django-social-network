@@ -14,7 +14,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
          list_load(document.body.querySelector(".is_block_paginate"), link);
-         scrolled('.list_pk', target = 0)
+         scrolled(document.body.querySelector('.list_pk'), target = 0)
        };
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
@@ -466,7 +466,14 @@ function open_fullscreen(link, block) {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     block.parentElement.style.display = "block";
-    block.innerHTML = elem
+    block.innerHTML = elem;
+    if (block.querySelector(".next_page_list")) {
+      if (block.querySelector(".is_paginate")) {
+        scrolled(block.querySelector(".is_paginate"), target = 0)
+      } else {
+        scrolled(block.querySelector(".is_post_paginate"), target = 1)
+      }
+    }
   }};
   link_.send();
 }
@@ -475,22 +482,22 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled('.list_pk', target = 0)
+        scrolled(_block.querySelector('.list_pk'), target = 0)
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block, ".post_container", link);
-        scrolled('.list_pk', target = 0)
+        list_block_load(_block.querySelector('.list_pk'), ".post_container", link);
+        scrolled(_block.querySelector('.list_pk'), target = 0)
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);
-        scrolled('.list_pk', target = 0)
+        scrolled(lenta.querySelector('.list_pk'), target = 0)
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled('.list_pk', target = 0)
+        scrolled(lenta.querySelector('.list_pk'), target = 0)
     }
 }
 
@@ -548,14 +555,13 @@ if_list(document.getElementById('ajax'));
 
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
-function scrolled(block_id, target) {
+function scrolled(_block, target) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
         try {
-            _block = document.body.querySelector(block_id);
             box = _block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
                 inViewport = elementInViewport(box);
@@ -599,10 +605,10 @@ function paginate(block, target) {
 
 function create_pagination(block) {
   if (block.querySelector('.is_paginate')) {
-    scrolled('.is_paginate', target = 0)
+    scrolled(block.querySelector('.is_paginate'), target = 0)
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled('.is_post_paginate', target = 1)
+    scrolled(block.querySelector('.is_paginate'), target = 1)
   }
 }
 

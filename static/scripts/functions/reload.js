@@ -159,14 +159,13 @@ function send_change_c_video_list(el) {
 }
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 
-function scrolled(block_id, target) {
+function scrolled(_block, target) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
         try {
-            _block = document.body.querySelector(block_id);
             box = _block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
                 inViewport = elementInViewport(box);
@@ -182,12 +181,11 @@ function scrolled(block_id, target) {
     }
 }
 
-function top_paginate(block_id, target) {
+function top_paginate(block, target) {
     // работа с прокруткой для подгрузки сообщений вверх страницы:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
-    block = document.body.querySelector(block_id);
-        if (m_loaded) {return};
+        if (m_loaded) { return };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -209,9 +207,7 @@ function top_paginate(block_id, target) {
 };
 
 function paginate(block, target) {
-        if (loaded) {
-            return
-        };
+        if (loaded) { return };
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -232,39 +228,16 @@ function paginate(block, target) {
         link_3.send();
 }
 
-function create_load_pagination(block) {
-    // подключаем пагинцию списков в подгружаемых окнах.
-    if (block.querySelector('.img_load_container')) {
-        _block = block.querySelector('.img_load_container');
-        scrolled('.img_load_container', target = 0)
-    } else if (block.querySelector('.articles_load_container')) {
-        _block = block.querySelector('.articles_load_container');
-        scrolled('.articles_load_container', target = 0)
-    } else if (block.querySelector('.goods_load_container')) {
-        _block = block.querySelector('.goods_load_container');
-        scrolled('.goods_load_container', target = 0)
-    } else if (block.querySelector('.music_load_container')) {
-        _block = block.querySelector('.music_load_container');
-        scrolled('.music_load_container', target = 0)
-    } else if (block.querySelector('.music_list_load_container')) {
-        _block = block.querySelector('.music_list_load_container');
-        scrolled('.music_list_load_container', target = 0)
-    } else if (block.querySelector('.video_load_container')) {
-        _block = block.querySelector('.video_load_container');
-        scrolled('.video_load_container', target = 0)
-    }
-}
-
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
-    scrolled('.chat_container', target = 0)
+    scrolled(block.querySelector('.chat_container'), target = 0)
   }
   else if (block.querySelector('.is_paginate')) {
-    scrolled('.is_paginate', target = 0)
+    scrolled(block.querySelector('.is_paginate'), target = 0)
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled('.is_post_paginate', target = 1)
+    scrolled(block.querySelector('.is_post_paginate'), target = 1)
   }
 }
 
@@ -297,22 +270,22 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled('.list_pk', target = 1)
+        scrolled(_block.querySelector('.list_pk'), target = 1)
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled('.list_pk', target = 1)
+        scrolled(_block.querySelector('.list_pk'), target = 1)
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);
-        scrolled('.list_pk', target = 1)
+        scrolled(lenta.querySelector('.list_pk'), target = 1)
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled('.list_pk', target = 1);
+        scrolled(lenta.querySelector('.list_pk'), target = 1);
     }
 }
 
