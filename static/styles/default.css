@@ -1,5 +1,5 @@
 .next_page_list img {
-  width: auto
+  width: auto !important
 }
 
 .repost_style_btn {
