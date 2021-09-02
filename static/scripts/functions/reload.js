@@ -214,8 +214,8 @@ function paginate(block, target) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                } else if (elem.querySelector(".is_block_paginate")){
-                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
+                } else if (document.body.querySelector(".is_block_paginate")){
+                  block.parentElement.insertAdjacentHTML('beforeend', document.body.querySelector(".is_block_paginate").innerHTML)
                 }
                 block.remove()
             }
