@@ -7,7 +7,7 @@
     <form id="add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
     <h5 class="mt-1">
-      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом {{ list.creator.get_full_name_genitive }}
         <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
         {% if list.is_main or list.is_have_edit %}
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
@@ -16,6 +16,7 @@
         <span class="pointer badge badge-light-secondary u_photo_list_edit">Изменить список</span>
         <span class="pointer badge badge-light-danger u_photo_list_remove">Удалить список</span>
         {% endif %}
+        <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
     </h5>
     </form>
   </div>
@@ -28,11 +29,7 @@
             <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
           </p>
           <div class="progressive replace" data-href="{{ object.file.url }}">
-            {% if object.preview %}
-              <img class="preview image_fit_200" src="{{ object.preview.url }}" alt="img">
-            {% else %}
-              <svg class="svg_default image_fit_200" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-            {% endif %}
+            <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
           </div>
         </div>
         {% endfor %}
