@@ -1,9 +1,13 @@
-from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 from survey.models import SurveyList, Survey
 
 
-class SurveyView(TemplateView):
-    template_name = "surveyView.html"
+class SurveyView(ListView):
+	template_name = "survey.html"
+
+	def get_queryset(self):
+		return Survey.objects.only("pk")
+
 
 
 class LoadSurveyList(ListView):
