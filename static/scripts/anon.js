@@ -632,11 +632,21 @@ function paginate(block, target) {
 }
 
 function create_pagination(block) {
-  if (block.querySelector('.is_paginate')) {
-    scrolled(block.querySelector('.is_paginate'), target = 0)
+  if (block.querySelector('.chat_container')) {
+    scrolled(block.querySelector('.chat_container'), target = 0)
+  }
+  else if (block.querySelector('.is_paginate')) {
+    scrolled(block.querySelector('.is_paginate'), target = 0);
+    console.log("Работает пагинация для списка не постов")
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled(block.querySelector('.is_paginate'), target = 1)
+    scrolled(block.querySelector('.is_post_paginate'), target = 1);
+    console.log("Работает пагинация для списка постов")
+  }
+  else if (block.querySelector('.is_block_paginate')) {
+    scrolled(block.querySelector('.is_block_paginate'), target = 0);
+    console.log("Работает пагинация для списка в блоке")
+    console.log(block);
   }
 }
 
