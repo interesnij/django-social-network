@@ -598,17 +598,12 @@ function scrolled(_block, target) {
                 inViewport = elementInViewport(box);
                 if (inViewport) {
                     box.classList.remove("next_page_list");
-                    paginate(box.parentElement, target);
-                    box.remove();
+                    paginate(box, target);
                 }
             };
-            if (target == 1) {
-                get_post_view()
-            }
         } catch {return}
     }
 }
-loaded = false;
 
 function paginate(block, target) {
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
