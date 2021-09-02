@@ -310,24 +310,27 @@ function get_preview(response, type) {
 };
 function close_fullscreen() {
   if (document.body.querySelector(".create_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("create_loader"))
     document.body.querySelector(".create_fullscreen").style.display = "none";
     document.querySelector("#create_fullscreen").innerHTML=""
   } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("photo_loader"))
     document.body.querySelector(".photo_fullscreen").style.display = "none";
     document.querySelector("#photo_loader").innerHTML=""
   } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("article_loader"))
     document.body.querySelector(".article_fullscreen").style.display = "none";
     document.querySelector("#article_loader").innerHTML=""
   } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("item_loader"))
     document.body.querySelector(".item_fullscreen").style.display = "none";
     document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
   } else if (document.body.querySelector(".good_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("good_loader"))
     document.body.querySelector(".good_fullscreen").style.display = "none";
     document.body.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
-    document.body.querySelector(".article_fullscreen").style.display = "none";
-    document.body.querySelector(".article_fullscreen").querySelector(".loader_0").innerHTML=""
   } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
+    get_document_opacity_1(document.getElementById("votes_loader"))
     document.body.querySelector(".votes_fullscreen").style.display = "none";
     document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
   }
