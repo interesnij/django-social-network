@@ -37,6 +37,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
          list_load(document.body.querySelector(".is_block_paginate"), link);
+         //scrolled(lenta.querySelector('.list_pk'), target = 0)
        };
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
