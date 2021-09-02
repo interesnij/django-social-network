@@ -982,8 +982,7 @@ function open_fullscreen(url, block) {
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
             if (block.querySelector(".next_page_list")) {
-              console.log("Контент должен бы иметь пагинацию");
-              get_document_opacity_0()
+              get_document_opacity_0();
               if (block.querySelector(".is_block_paginate")) {
                 scrolled(block.querySelector(".is_block_paginate"), target = 0);
                 console.log("Работает пагинация обычная")
@@ -1008,7 +1007,16 @@ function open_load_fullscreen(link, block) {
             block.parentElement.style.display = "block";
             block.innerHTML = "";
             block.innerHTML = elem;
-            create_pagination(block) 
+            if (block.querySelector(".next_page_list")) {
+              get_document_opacity_0();
+              if (block.querySelector(".is_block_paginate")) {
+                scrolled(block.querySelector(".is_block_paginate"), target = 0);
+                console.log("Работает пагинация обычная")
+              } else {
+                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
+                console.log("Работает пагинация постов")
+              }
+            }
         }
     };
     link_.send();
