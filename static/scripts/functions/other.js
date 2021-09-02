@@ -213,6 +213,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
         elem_.innerHTML = request.responseText;
        document.body.querySelector(block).innerHTML = elem_.querySelector(block).innerHTML;
        create_pagination(document.body.querySelector(block));
+       console.log("create_pagination: " document.body.querySelector(block))
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
          class_to_add[i].classList.add(actions_class, "pointer");
