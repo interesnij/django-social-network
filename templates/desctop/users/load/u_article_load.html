@@ -1,11 +1,3 @@
-<style>
-  #add_multi_comments_articles {
-    border: 1px dashed green;
-    padding: 5px;
-    text-align: center;}
-  #add_multi_comments_articles:hover {cursor: pointer}
-  .btn-primary { display:none }
-</style>
 
 <div class="card mb-4">
   <div class="card-header border-bottom">
@@ -49,6 +41,11 @@
     </div>
   </div>
   {% endfor %}
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_article_load/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
 </div>
 
 {% else %}
