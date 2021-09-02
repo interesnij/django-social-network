@@ -50,24 +50,24 @@ on('#ajax', 'click', '.u_photo_priview', function() {
 });
 
 on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
+  get_document_opacity_1(document.getElementById("photo_loader"));
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
-  this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
-  get_document_opacity_1()
+  this.parentElement.parentElement.parentElement.parentElement.innerHTML = ""
 });
 on('#ajax', 'click', '.good_fullscreen_hide_2', function() {
+  get_document_opacity_1(document.getElementById("good_loader"));
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
-  this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
-  get_document_opacity_1()
+  this.parentElement.parentElement.parentElement.parentElement.innerHTML = ""
 });
 on('#ajax', 'click', '.create_fullscreen_hide_2', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
-  get_document_opacity_1()
+  get_document_opacity_1(null)
 });
 on('#ajax', 'click', '.item_fullscreen_hide_2', function() {
+  get_document_opacity_1(document.getElementById("item_loader"));
   this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none";
   this.parentElement.parentElement.parentElement.parentElement.innerHTML = "";
-  get_document_opacity_1()
 });
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {

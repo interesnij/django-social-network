@@ -952,16 +952,20 @@ function get_document_opacity_0() {
   document.body.querySelector(".main-container").style.opacity = "0";
   document.body.querySelector(".left_panel_menu").style.opacity = "0"
   }
-}
-function get_document_opacity_1() {
+};
+function get_document_opacity_1(block) {
+  main_container = document.body.querySelector(".main-container");
   if (document.body.querySelector(".mobile_naw")) {
-    document.body.querySelector(".main-container").style.opacity = "1";
+    main_container.style.opacity = "1";
   } else {
   document.body.querySelector(".main-header").style.opacity = "1";
-  document.body.querySelector(".main-container").style.opacity = "1";
+  main_container.style.opacity = "1";
   document.body.querySelector(".left_panel_menu").style.opacity = "1"
+  };
+  if (block.querySelector(".pag")) {
+    create_pagination(main_container)
   }
-}
+};
 
 function open_fullscreen(url, block) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

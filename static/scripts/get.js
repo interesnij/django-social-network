@@ -232,26 +232,26 @@ on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
   parent.innerHTML=""
 });
 
-on('#ajax', 'click', '.article_fullscreen_hide', function() {document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.photo_fullscreen_hide', function() {document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.votes_fullscreen_hide', function() {document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.item_fullscreen_hide', function() {document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.community_fullscreen_hide', function() {document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.good_fullscreen_hide', function() {document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML="";get_document_opacity_1()});
-on('#ajax', 'click', '.stat_fullscreen_hide', function() {document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML="";get_document_opacity_1()});
-on('body', 'click', '.video_fullscreen_hide', function() {document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML="";get_document_opacity_1()});
+on('#ajax', 'click', '.article_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("article_loader"));document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
+on('#ajax', 'click', '.photo_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("photo_loader"));document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
+on('#ajax', 'click', '.votes_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("votes_loader"));document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
+on('#ajax', 'click', '.item_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("item_loader"));document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
+on('#ajax', 'click', '.community_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("community_loader"));get_document_opacity_1(document.getElementById("community_loader"));document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
+on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("load_staff_window"));document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
+on('#ajax', 'click', '.good_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("good_loader"));document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
+on('#ajax', 'click', '.stat_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("stat_loader"));document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
+on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("video_loader"));document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.querySelector(".video_fullscreen").style.display = "none";
   video_window = document.querySelector(".video_fullscreen");
+  get_document_opacity_1(document.getElementById("video_loader"));
   video_window.classList.remove("video_fullscreen_resized", "draggable");
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";
-  document.getElementById("video_loader").innerHTML="";
-  ;get_document_opacity_1()
+  document.getElementById("video_loader").innerHTML=""
 });
-on('body', 'click', '.create_fullscreen_hide', function() {close_create_window();get_document_opacity_1()});
-on('body', 'click', '.worker_fullscreen_hide', function() {document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML="";get_document_opacity_1()});
+on('body', 'click', '.create_fullscreen_hide', function() {close_create_window();get_document_opacity_1(null)});
+on('body', 'click', '.worker_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("worker_loader"))document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
 
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
