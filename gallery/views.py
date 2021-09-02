@@ -1,5 +1,6 @@
-from gallery.models import Photo
+from gallery.models import Photo, Photolist
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 
 
 class PhotoDetail(TemplateView):
@@ -86,3 +87,34 @@ class MessagePhotoDetail(TemplateView):
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
+
+
+class LoadPhotoList(ListView):
+	template_name, community = None, None
+
+	def get(self,request,*args,**kwargs):
+		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.community:
+			from common.templates import get_template_community_item, get_template_anon_community_item
+			self.community = self.list.community
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_item(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_item(self.list, "gallery/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			from common.templates import get_template_user_item, get_template_anon_user_item
+
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_item(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_item(self.list, "gallery/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadPhotoList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(LoadPhotoList,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		context["community"] = self.community
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()

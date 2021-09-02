@@ -1,7 +1,11 @@
 from django.conf.urls import url, include
+from goods.views import GoodsView, LoadGoodList
 
 
 urlpatterns=[
+	url(r'^load_list/(?P<uuid>[0-9a-f-]+)/$', LoadGoodList.as_view(), name="load_good_list"),
+	url(r'^$', GoodsView.as_view()),
+
 	url(r'^user/', include('goods.url.user')),
 	url(r'^community/', include('goods.url.community')),
 

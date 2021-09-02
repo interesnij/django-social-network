@@ -85,30 +85,31 @@ class GenreMusicView(ListView):
 
 
 class LoadPlaylist(ListView):
-    template_name, paginate_by = None, 15
+	template_name, community = None, None
 
-    def get(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_anonymous:
-            if self.list.community:
-                from common.templates import get_template_anon_community
-                self.template_name = get_template_anon_community(self.list, "music/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-            else:
-                from common.templates import get_template_anon_user
-                self.template_name = get_template_anon_user(self.list, "music/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            if self.list.community:
-                from common.templates import get_template_community
-                self.template_name = get_template_community(self.list, "music/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-            else:
-                from common.templates import get_template_user
-                self.template_name = get_template_user(self.list, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
-        return super(LoadPlaylist,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.community:
+			from common.templates import get_template_community_item, get_template_anon_community_item
+			self.community = self.list.community
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_item(self.list, "music/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_item(self.list, "music/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			from common.templates import get_template_user_item, get_template_anon_user_item
 
-    def get_context_data(self,**kwargs):
-        c = super(LoadPlaylist,self).get_context_data(**kwargs)
-        c['list'] = self.list
-        return c
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_item(self.list, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_item(self.list, "music/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadPlaylist,self).get(request,*args,**kwargs)
 
-    def get_queryset(self):
-        return self.list.get_items()
+	def get_context_data(self,**kwargs):
+		context = super(LoadPlaylist,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		context["community"] = self.community
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()

@@ -21,7 +21,8 @@
         {% elif request.user.pk in list.get_users_ids %}
           <span class="pointer badge badge-light-danger u_uncopy_doc_list">Удалить список из коллекции</span>
         {% endif %}
-        <span class="pointer badge badge-light-warning u_close_doc_list">♦ Закрыть список</span>
+        <span class="pointer badge badge-light-warning c_close_doc_list">Закрыть список</span>
+        <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
       </h5>
     </div>
     <div class="card mb-2">
@@ -36,7 +37,7 @@
                     <img src="/static/images/preloader.gif">
                 </div>
                 {% endif %}
-                
+
                 {% else %}
                 <div class="card centered doc_empty">
                     <div class="card-body" style="margin-top: 10%;">

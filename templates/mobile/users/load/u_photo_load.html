@@ -66,7 +66,7 @@
 
 <span class="load_block">
 {% if object_list %}
-<div style="margin-top: 20px;padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_img_load/">
+<div style="margin-top: 20px;padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
   {% for object in object_list %}
   <div class="pointer u_load_photo_detail pag">
     <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
@@ -81,7 +81,11 @@
       </span>
   </div>
     {% endfor %}
-
+    {% if page_obj.has_next %}
+    <div class="load centered m-1 next_page_list" data-link="/users/load/u_img_load/?page={{ page_obj.next_page_number }}">
+        <img src="/static/images/preloader.gif">
+    </div>
+    {% endif %}
 </div>
 {% else %}
 <div class="card mb-3 centered item_empty">

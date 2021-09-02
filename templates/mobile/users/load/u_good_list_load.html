@@ -1,6 +1,6 @@
 <span class="load_block">
 {% if object_list %}
-<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_load_paginate" data-link="/users/load/u_good_load/">
+<div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 {% for object in object_list %}
 <div class="mb-3 pag" style="flex: 0 0 50%;max-width:50%;padding:5px;position: relative;">
   <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ object.get_list_uuid }}">
@@ -44,7 +44,11 @@
     </span>
 </div>
   {% endfor %}
-
+  {% if page_obj.has_next %}
+  <div class="load centered m-1 next_page_list" data-link="/users/load/u_good_list_load/{{ list.uuid }}/?page={{ page_obj.next_page_number }}">
+      <img src="/static/images/preloader.gif">
+  </div>
+  {% endif %}
 </div>
 {% else %}
 <div class="card mb-3 centered">
