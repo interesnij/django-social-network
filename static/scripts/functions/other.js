@@ -132,7 +132,7 @@ function profile_list_block_attach(_this, block, url, actions_class) {
          link = lenta.getAttribute("data-link");
          //list_load(document.body.querySelector(".is_block_paginate"), link);
          console.log("youhuuuu")
-         scrolled(lenta.querySelector('.is_block_paginate'), target = 0)
+         scrolled(document.body.querySelector('.is_block_paginate'), target = 0)
        };
     }};
     request.send( null );
