@@ -5,7 +5,10 @@
   <span class="load_block">
   <div class="media mt-3" class="uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
-      <p><span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом {{ list.community.name }}</p>
+      <p>
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом
+        <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
+      </p>
       {% if list|is_user_can_add_list:request.user.pk %}
         <span class="pointer badge badge-light-success c_copy_photo_list">Добавить список в коллекцию</span>
       {% elif request.user.pk in list.get_users_ids %}
