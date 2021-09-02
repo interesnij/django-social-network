@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from docs.views import DocsView, LoadGoodList
+from docs.views import DocsView, LoadDocList
 
 
 urlpatterns = [
