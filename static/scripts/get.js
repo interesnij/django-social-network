@@ -251,7 +251,7 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.getElementById("video_loader").innerHTML=""
 });
 on('body', 'click', '.create_fullscreen_hide', function() {close_create_window();get_document_opacity_1(null)});
-on('body', 'click', '.worker_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("worker_loader"))document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
+on('body', 'click', '.worker_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("worker_loader"));document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
 
 // END FULLSCREENS //
 //--------------------------------------------------------------------//
