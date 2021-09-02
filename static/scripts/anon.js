@@ -512,22 +512,22 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'), target = 0)
+        scrolled(_block.querySelector('.list_pk'), target = 1);
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block.querySelector('.list_pk'), ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'), target = 0)
+        list_block_load(_block, ".post_container", link);
+        scrolled(_block.querySelector('.list_pk'), target = 1)
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);
-        scrolled(lenta.querySelector('.list_pk'), target = 0)
+        scrolled(lenta.querySelector('.list_pk'), target = 1)
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled(lenta.querySelector('.list_pk'), target = 0)
+        scrolled(lenta.querySelector('.list_pk'), target = 1);
     }
 }
 
