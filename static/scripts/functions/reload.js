@@ -236,6 +236,10 @@ function create_pagination(block) {
     scrolled(block.querySelector('.is_post_paginate'), target = 1);
     console.log("Работает пагинация для списка постов")
   }
+  else if (block.querySelector('.is_block_paginate')) {
+    scrolled(block.querySelector('.is_block_paginate'), target = 1);
+    console.log("Работает пагинация для списка в блоке")
+  }
 }
 
 function scrollToBottom(id) {
