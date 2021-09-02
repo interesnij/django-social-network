@@ -26,6 +26,8 @@ function profile_list_block_load(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   saver = _this.parentElement.parentElement.parentElement;
   saver.classList.contains("community") ?
+  link = "/communities/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/" :
+  link = "/users/" + saver.getAttribute("data-pk") + url + saver.getAttribute("data-uuid") + "/";
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {
@@ -39,6 +41,8 @@ function profile_list_block_load(_this, block, url, actions_class) {
          list_load(document.body.querySelector(".is_block_paginate"), link);
          //scrolled(lenta.querySelector('.list_pk'), target = 0)
        };
+       //create_pagination(document.body.querySelector(block));
+
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
          class_to_add[i].classList.add(actions_class, "pointer");
