@@ -7,7 +7,7 @@
     <form id="c_add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
     <h5 class="mt-1">
-      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом {{ list.community.name }}
+      <p><span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом {{ list.community.name }}</p>
         <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
         {% if list.is_main or list.is_have_edit %}
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
