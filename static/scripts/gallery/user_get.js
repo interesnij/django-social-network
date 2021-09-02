@@ -10,7 +10,6 @@ on('#ajax', 'click', '.load_profile_photo_list', function() {
 });
 
 on('#ajax', 'click', '.load_attach_photo_list', function() {
-  console.log("youhuuuu")
   profile_list_block_attach(this, ".load_block", "/u_photo_list_load/", "load_attach_photo_list");
 });
 
