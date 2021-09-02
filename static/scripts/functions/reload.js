@@ -237,8 +237,9 @@ function create_pagination(block) {
     console.log("Работает пагинация для списка постов")
   }
   else if (block.querySelector('.is_block_paginate')) {
-    scrolled(block.querySelector('.is_block_paginate'), target = 1);
+    scrolled(block, target = 0);
     console.log("Работает пагинация для списка в блоке")
+    console.log(block);
   }
 }
 
