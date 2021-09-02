@@ -47,6 +47,11 @@
                       {% for object in object_list %}
                         {% include 'desctop/users/music/anon_track.html' %}
                       {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'user_music_list' pk=user.pk uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
                     </ul>
 
                 {% else %}

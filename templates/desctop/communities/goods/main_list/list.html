@@ -32,6 +32,11 @@
               {% for object in object_list %}
                 {% include 'desctop/communities/goods/main_list/good.html' %}
               {% endfor %}
+              {% if page_obj.has_next %}
+              <div class="load centered m-1 next_page_list" data-link="{% url 'community_goods' pk=community.pk %}?page={{ page_obj.next_page_number }}">
+                  <img src="/static/images/preloader.gif">
+              </div>
+              {% endif %}
 
               {% else %}
               <div class="card centered items_empty">

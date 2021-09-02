@@ -27,6 +27,11 @@
 <div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="card-body bg-light-secondary chatview" id="chatcontent" style="height: 530px;">
         <ul class="chatlist app is_chat_paginate">
+          {% if page_obj.has_next %}
+          <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
+              <img src="/static/images/preloader.gif">
+          </div>
+          {% endif %}
 
           {% if object_list %}
           {% for object in object_list reversed %}

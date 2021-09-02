@@ -25,6 +25,12 @@
                         {% for doc in object_list %}
                           {% include 'mobile/communities/docs/admin_doc.html' %}
                         {% endfor %}
+                        {% if page_obj.has_next %}
+                        <div class="load centered m-1 next_page_list" data-link="{% url 'community_docs' pk=community.pk %}?page={{ page_obj.next_page_number }}">
+                            <img src="/static/images/preloader.gif">
+                        </div>
+                        {% endif %}
+                        
                         {% else %}
                         <div class="card centered doc_empty">
                             <div class="card-body" style="margin-top: 10%;">

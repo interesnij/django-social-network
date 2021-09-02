@@ -25,6 +25,12 @@
                       {% for object in object_list %}
                         {% include 'desctop/users/video/main_list/video.html' %}
                       {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'user_video' pk=user.pk %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
+
                     {% else %}
                       <div class="card items_empty centered">
                         <div class="card-body" styley="margin-top: 10%;">
