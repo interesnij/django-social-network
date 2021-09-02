@@ -110,7 +110,7 @@ function send_change_items(array, link) {
 
 function profile_list_block_attach(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-
+  console.log("youhuuuu")
   request.open( 'GET', "/users/load" + url + _this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {
@@ -127,7 +127,7 @@ function profile_list_block_attach(_this, block, url, actions_class) {
        parent.querySelector(".list_svg")? parent.querySelector(".list_svg").classList.remove(actions_class, "pointer") : null;
        parent.querySelector(".list_name").classList.remove(actions_class, "pointer");
        parent.classList.replace("border", "active_border");
-       console.log("youhuuuu")
+
        if (elem_.querySelector(".is_block_paginate")) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
