@@ -218,9 +218,8 @@ function paginate(block, target) {
                   block_paginate = document.body.querySelector(".is_block_paginate");
                   if (elem.querySelector(".load_block")){
                       block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
-                    }
-                  else {
-                      block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML)
+                  } else {
+                    block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML)
                   }};
                 block.remove()
             }
@@ -310,6 +309,7 @@ function list_load(block, link) {
         if (request.readyState == 4 && request.status == 200) {
             block.innerHTML = request.responseText;
             get_dragula(".drag_container");
+            create_pagination(block);
         }
     };
     request.send(null);
