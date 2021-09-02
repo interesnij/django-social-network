@@ -14,7 +14,7 @@ function get_document_opacity_1(block) {
   } else {
   document.body.querySelector(".main-header").style.opacity = "1";
   main_container.style.opacity = "1";
-  document.body.querySelector(".left_panel_menu").style.opacity = "1"
+  document.body.querySelector(".nav-pills").style.opacity = "1"
   };
   if (block.querySelector(".pag")) {
     create_pagination(main_container)
