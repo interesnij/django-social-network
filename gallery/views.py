@@ -1,4 +1,4 @@
-from gallery.models import Photo, Photolist
+from gallery.models import Photo, PhotoList
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 

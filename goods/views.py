@@ -1,4 +1,4 @@
-from goods.models import Good, Goodlist
+from goods.models import Good, GoodList
 from django.views.generic import ListView
 
 

@@ -1,4 +1,4 @@
-from docs.models import Doclist, Doc
+from docs.models import DocList, Doc
 from django.views.generic import ListView
 
 
