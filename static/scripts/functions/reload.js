@@ -215,7 +215,7 @@ function paginate(block, target) {
                 } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
                 } else if (document.body.querySelector(".is_block_paginate")){
-                  block.parentElement.insertAdjacentHTML('beforeend', document.body.querySelector(".is_block_paginate").innerHTML)
+                  block.parentElement.insertAdjacentHTML('beforeend', block.innerHTML)
                 }
                 block.remove()
             }
