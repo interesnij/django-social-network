@@ -1008,7 +1008,7 @@ function open_load_fullscreen(link, block) {
             block.parentElement.style.display = "block";
             block.innerHTML = "";
             block.innerHTML = elem;
-            create_load_pagination(document.getElementById('create_loader'))
+            create_pagination(block) 
         }
     };
     link_.send();
