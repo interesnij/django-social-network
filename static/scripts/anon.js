@@ -4,7 +4,7 @@ function get_document_opacity_0() {
   } else {
   document.body.querySelector(".main-header").style.opacity = "0";
   document.body.querySelector(".main-container").style.opacity = "0";
-  document.body.querySelector(".left_panel_menu").style.opacity = "0"
+  document.body.querySelector(".nav-pills").style.opacity = "0"
   }
 }
 function get_document_opacity_1(block) {
@@ -484,25 +484,28 @@ function dragElement(elmnt) {
   }
 }
 
-function open_fullscreen(link, block) {
-  var link_, elem;
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', link, true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    block.parentElement.style.display = "block";
-    block.innerHTML = elem;
-    if (block.querySelector(".next_page_list")) {
-      if (block.querySelector(".is_paginate")) {
-        scrolled(block.querySelector(".is_paginate"), target = 0)
-      } else {
-        scrolled(block.querySelector(".is_post_paginate"), target = 1)
-      }
-    }
-  }};
-  link_.send();
+function open_fullscreen(url, block) {
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', url, true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            elem = link.responseText;
+            block.parentElement.style.display = "block";
+            block.innerHTML = elem;
+            if (block.querySelector(".next_page_list")) {
+              get_document_opacity_0();
+              if (block.querySelector(".is_block_paginate")) {
+                scrolled(block.querySelector(".is_block_paginate"), target = 0);
+                console.log("Работает пагинация обычная")
+              } else {
+                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
+                console.log("Работает пагинация постов")
+              }
+            }
+        }
+    };
+    link.send();
 }
 function if_list(block) {
     if (block.querySelector('.is_profile_post_paginate')) {
