@@ -130,7 +130,8 @@ function profile_list_block_attach(_this, block, url, actions_class) {
        if (elem_.querySelector(".is_block_paginate")) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
-         list_load(document.body.querySelector(block).innerHTML, link);
+         list_load(document.body.querySelector(".is_block_paginate"), link);
+         console.log("youhuuuu")
          //scrolled(lenta.querySelector('.list_pk'), target = 0)
        };
     }};
