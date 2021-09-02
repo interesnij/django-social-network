@@ -1,4 +1,4 @@
-from posts.models import Postlist, Post
+from posts.models import PostList, Post
 from django.views.generic import ListView
 
 
