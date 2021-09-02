@@ -417,6 +417,12 @@ class Photo(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
+    def get_preview(self):
+        if self.preview:
+            return self.preview.url
+        else:
+            return '/static/images/no_img/list.jpg'
+
     def plus_likes(self, count):
         self.like += count
         return self.save(update_fields=['like'])

@@ -210,9 +210,10 @@ function paginate(block, target) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                if (elem.querySelector(".is_post_paginate")) {
-                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
-                } else if (elem.querySelector(".is_paginate")){
+                //if (elem.querySelector(".is_post_paginate")) {
+                //  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
+                //}
+                if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
                 } else if (elem.querySelector(".is_block_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
