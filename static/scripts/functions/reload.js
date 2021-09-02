@@ -297,7 +297,6 @@ function if_list(block) {
 
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
-load_chart();
 get_dragula(".drag_container");
 get_dragula(".drag_list");
 
