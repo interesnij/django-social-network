@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from posts.models import SurveyList, Survey
+from survey.models import SurveyList, Survey
 
 
 class SurveyView(TemplateView):

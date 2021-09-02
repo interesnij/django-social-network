@@ -1,4 +1,4 @@
-from docs.models import VideoList, Video
+from video.models import VideoList, Video
 from django.views.generic import ListView
 
 
