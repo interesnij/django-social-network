@@ -126,7 +126,7 @@ class PhotoList(models.Model):
         if self.cover_photo:
             return self.cover_photo.file.url
         elif self.photo_list.filter(type="PUB").exists():
-            return self.photo_list.filter(type="PUB").last().file.url
+            return self.photo_list.filter(type="PUB").first().file.url
         else:
             return "/static/images/no_img/list.jpg"
 
