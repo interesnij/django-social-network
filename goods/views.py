@@ -2,7 +2,7 @@ from goods.models import Good, GoodList
 from django.views.generic import ListView
 
 
-class GoodView(ListView):
+class GoodsView(ListView):
 	template_name = "goods.html"
 
 	def get_queryset(self):
