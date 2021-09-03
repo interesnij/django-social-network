@@ -8,28 +8,6 @@ from common.template.good import get_template_community_good
 from django.http import Http404
 
 
-class CommunityLoadGoodList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
-		if self.list.community:
-			self.template_name = get_template_community_good(self.list, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			from common.template.good import get_template_user_good
-			self.template_name = get_template_user_good(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(CommunityLoadGoodList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		c = super(CommunityLoadGoodList,self).get_context_data(**kwargs)
-		c['community'], c['list'] = self.c, self.list
-		return c
-
-	def get_queryset(self):
-		list = self.list.get_goods()
-		return list
-
-
 class CommunityGood(TemplateView):
 	template_name = None
 

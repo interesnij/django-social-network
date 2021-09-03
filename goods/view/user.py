@@ -9,24 +9,6 @@ from common.template.good import get_template_user_good, get_permission_user_goo
 from django.http import Http404
 
 
-class UserLoadGoodList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_good(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		c = super(UserLoadGoodList,self).get_context_data(**kwargs)
-		c['user'], c['list'] = self.list.creator, self.list
-		return c
-
-	def get_queryset(self):
-		list = self.list.get_goods()
-		return list
-
-
 class UserGood(TemplateView):
 	template_name = None
 

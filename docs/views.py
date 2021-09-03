@@ -13,7 +13,7 @@ class LoadDocList(ListView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+		self.list = DocList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			from common.templates import get_template_community_item, get_template_anon_community_item
 			self.community = self.list.community
