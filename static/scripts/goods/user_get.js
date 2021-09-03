@@ -100,5 +100,5 @@ on('#ajax', 'click', '.u_good_comments', function() {
 on('#ajax', 'click', '.load_good_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   loader = document.getElementById("item_loader");
-  open_fullscreen("/goods/load_list/" + parent.getAttribute("data-pk") + "/", loader)
+  open_fullscreen("/goods/load_list/" + parent.getAttribute("goodlist-pk") + "/", loader)
 });

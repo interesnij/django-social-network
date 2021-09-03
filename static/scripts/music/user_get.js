@@ -41,7 +41,7 @@ on('#ajax', 'click', '.u_playlist_edit', function() {
 on('#ajax', 'click', '.load_music_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   loader = document.getElementById("item_loader");
-  open_fullscreen("/music/load_list/" + parent.getAttribute("data-pk") + "/", loader)
+  open_fullscreen("/music/load_list/" + parent.getAttribute("playlist-pk") + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_music_repost', function() {

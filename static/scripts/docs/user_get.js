@@ -42,7 +42,7 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
 on('#ajax', 'click', '.load_doc_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   loader = document.getElementById("item_loader");
-  open_fullscreen("/docs/load_list/" + parent.getAttribute("data-pk") + "/", loader)
+  open_fullscreen("/docs/load_list/" + parent.getAttribute("doclist-pk") + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {

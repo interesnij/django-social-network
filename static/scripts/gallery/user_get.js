@@ -93,7 +93,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
 })
 
 on('#ajax', 'click', '.load_photo_list', function() {
-  open_fullscreen("/gallery/load_list/" + this.parentElement.parentElement.getAttribute("data-pk") + "/", document.getElementById("item_loader"))
+  open_fullscreen("/gallery/load_list/" + this.parentElement.parentElement.getAttribute("photolist-pk") + "/", document.getElementById("item_loader"))
 });
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
