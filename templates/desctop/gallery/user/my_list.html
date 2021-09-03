@@ -8,7 +8,7 @@
       {% csrf_token %}
     <h5 class="mt-1">
       <p>
-        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - альбом
         <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
       </p>
         <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">

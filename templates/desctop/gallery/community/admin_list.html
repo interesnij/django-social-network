@@ -8,7 +8,7 @@
       {% csrf_token %}
     <h5 class="mt-1">
       <p>
-        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - альбом
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - альбом
         <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
       </p>
         <input type="file" id="c_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">

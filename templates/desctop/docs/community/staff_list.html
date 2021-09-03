@@ -4,13 +4,13 @@
   <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
       <p>
-        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> - документы
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - документы
         <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
       </p>
       {% if list|is_user_can_add_list:request.user.pk %}
-        <span class="pointer badge badge-light-success u_copy_doc_list">Добавить список в коллекцию</span>
+        <span class="pointer badge badge-light-success c_copy_doc_list">Добавить список в коллекцию</span>
       {% elif request.user.pk in list.get_users_ids %}
-        <span class="pointer badge badge-light-danger u_uncopy_doc_list">Удалить список из коллекции</span>
+        <span class="pointer badge badge-light-danger c_uncopy_doc_list">Удалить список из коллекции</span>
       {% endif %}
       <span class="pointer badge badge-light-warning c_close_doc_list">Закрыть список</span>
       <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
