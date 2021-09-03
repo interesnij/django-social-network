@@ -433,6 +433,7 @@ function check_good_list_in_block(block, _this, pk) {
 function close_create_window() {
     document.querySelector(".create_fullscreen").style.display = "none";
     document.getElementById("create_loader").innerHTML = "";
+    get_document_opacity_1(document.body.querySelector(".main_container"))
 }
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {

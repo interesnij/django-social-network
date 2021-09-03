@@ -64,6 +64,13 @@ function playlist_post_attach(block, title, pk, count) {
   block.append(div);
   add_file_attach()
   is_full_attach();
+};
+function video_list_post_attach(block, title, pk, count) {
+  is_full_attach();
+  div = create_preview_video_list(title, pk, count);
+  block.append(div);
+  add_file_attach()
+  is_full_attach();
 }
 
 function photo_post_attach(block, photo_pk, user_pk, src) {
