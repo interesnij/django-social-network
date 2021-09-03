@@ -114,7 +114,7 @@ def get_post_attach(post, user):
         elif item[:3] == "lmu":
             #try:
             from music.models import SoundList
-            playlist = SoundList.objects.get(pk=item[3:], type="PUB")
+            playlist = SoundList.objects.get(pk=item[3:])
             if playlist.type[0] == "_":
                 pass
             if playlist.community:
