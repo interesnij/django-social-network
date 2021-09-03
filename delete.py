@@ -14,10 +14,10 @@ django.setup()
 
 from django.conf import settings
 from users.models import User
-from music.models import SoundList
+from music.models import SoundList, Music
 from video.models import VideoList
 from docs.models import Doc
 from chat.models import Message
 from gallery.models import PhotoList
 
-Message.objects.all().update(unread=False)
+Music.objects.all().update(creator_id=7)
