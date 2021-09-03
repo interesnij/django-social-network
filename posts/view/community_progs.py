@@ -93,7 +93,7 @@ class PostCommunityEdit(TemplateView):
             post = form_post.save(commit=False)
             if post.text or attach:
                 from common.template.user import render_for_platform
-                new_post = post.edit_post(text=post.text,category=post.category,list=post.list,attach=attach,comments_enabled=post.comments_enabled,is_signature=post.is_signature,votes_on=post.votes_on))
+                new_post = post.edit_post(text=post.text,category=post.category,list=post.list,attach=attach,comments_enabled=post.comments_enabled,is_signature=post.is_signature,votes_on=post.votes_on)
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
