@@ -115,6 +115,8 @@ def get_post_attach(post, user):
             try:
                 from music.models import SoundList
                 playlist = SoundList.objects.get(pk=item[3:], type="PUB")
+                if playlist.type[0] == "_":
+                    pass
                 if playlist.community:
                     creator, name, add, remove, repost = playlist.community, ": " + playlist.community.name, "c_add_music_list", "c_remove_music_list", "c_ucm_music_list_repost"
                 else:
