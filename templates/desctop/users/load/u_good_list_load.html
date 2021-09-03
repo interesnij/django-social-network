@@ -3,7 +3,7 @@
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 {% for object in object_list %}
 <div class="col-md-6 mb-3 pag">
-  <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ object.get_list_uuid }}">
+  <div class="good_load_one pointer" good-pk="{{ object.pk }}" data-uuid="{{ list.uuid }}">
     <div class="row align-items-center no-gutters">
       <div class="col">
         {% if object.image %}
