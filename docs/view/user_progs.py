@@ -70,6 +70,7 @@ class UserDocListCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         form_post = DoclistForm(request.POST)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid():
             list = form_post.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))

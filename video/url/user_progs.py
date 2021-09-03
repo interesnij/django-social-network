@@ -3,7 +3,7 @@ from video.view.user_progs import *
 
 
 urlpatterns = [
-    url(r'^create_video/$', UserVideoCreate.as_view()),
+    url(r'^create_video/(?P<pk>\d+)/$', UserVideoCreate.as_view()),
     url(r'^edit/(?P<uuid>[0-9a-f-]+)/$', UserVideoEdit.as_view()),
     url(r'^delete/(?P<uuid>[0-9a-f-]+)/$', UserVideoDelete.as_view()),
     url(r'^restore/(?P<uuid>[0-9a-f-]+)/$', UserVideoRecover.as_view()),

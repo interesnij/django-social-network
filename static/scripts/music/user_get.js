@@ -63,5 +63,6 @@ on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
 
 on('#ajax', 'click', '.u_track_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/add_track/", loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  open_fullscreen("/music/user_progs/add_track/" + pk + "/", loader)
 });

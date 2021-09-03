@@ -22,6 +22,8 @@ class SurveyUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from survey.forms import SurveyForm
+        
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         self.form = SurveyForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():
             survey = self.form.save(commit=False)

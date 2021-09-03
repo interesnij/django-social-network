@@ -205,7 +205,8 @@ on('#ajax', 'click', '#good_image5', function() {
 });
 on('#ajax', 'click', '.u_good_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/user_progs/add/', loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  open_fullscreen('/goods/user_progs/add/' + pk + "/", loader)
 });
 
 on('#ajax', 'click', '#u_add_good_btn', function() {

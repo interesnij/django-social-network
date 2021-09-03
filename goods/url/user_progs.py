@@ -17,7 +17,7 @@ urlpatterns=[
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserRecover.as_view())),
 
-    url(r'^add/$', GoodUserCreate.as_view()),
+    url(r'^add/(?P<pk>\d+)/$', GoodUserCreate.as_view()),
     url(r'^edit/(?P<pk>\d+)/$', GoodUserEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/$', UserGoodDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', UserGoodRecover.as_view()),

@@ -125,6 +125,7 @@ class GoodUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid():
             from common.notify.notify import user_notify
 

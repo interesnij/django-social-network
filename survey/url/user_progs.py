@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 
 urlpatterns=[
-    url(r'^add/$', SurveyUserCreate.as_view()),
+    url(r'^add/(?P<pk>\d+)/$', SurveyUserCreate.as_view()),
     url(r'^edit/(?P<pk>\d+)/$', SurveyUserEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/$', SurveyUserDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', SurveyUserRecover.as_view()),

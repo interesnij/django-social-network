@@ -21,7 +21,7 @@ on('#ajax', 'click', '.u_doc_list_add', function() {
 on('#ajax', 'click', '.u_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/user_progs/create_doc/", loader);
+  open_fullscreen("/docs/user_progs/create_doc/" + pk + "/", loader);
 });
 on('body', 'click', '.u_doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;

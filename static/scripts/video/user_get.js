@@ -5,7 +5,8 @@ on('#ajax', 'click', '.u_video_list_add', function() {
 });
 on('#ajax', 'click', '.u_video_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/user_progs/create_video/", loader)
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader)
 });
 
 on('#ajax', 'click', '.u_copy_video_list', function() {

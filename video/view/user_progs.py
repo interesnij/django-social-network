@@ -223,7 +223,9 @@ class UserVideoCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from video.forms import VideoForm
+        
         self.form_post = VideoForm(request.POST, request.FILES)
+        self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form_post.is_valid():
             video = self.form_post.save(commit=False)
             new_video = video.create_video(creator=request.user,image=video.image, title=video.title,file=video.file,uri=video.uri,description=video.description,list=video.list,comments_enabled=video.comments_enabled,votes_on=video.votes_on,is_public=request.POST.get("is_public"),community=None)
