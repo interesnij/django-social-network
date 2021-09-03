@@ -94,10 +94,3 @@ on('#ajax', 'click', '.c_good_comments', function() {
     block_comments.classList.add("show")
   }
 });
-
-on('#ajax', 'click', '.c_load_good_list', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/goods/community/load/" + uuid + "/", loader)
-});

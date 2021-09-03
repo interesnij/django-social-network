@@ -13,12 +13,6 @@ on('#ajax', 'click', '.c_uncopy_video_list', function() {
   on_off_list_in_collections(this, "/video/community_progs/remove_list_from_collections/", "c_copy_video_list", "c_uncopy_video_list", "Добавить")
 });
 
-on('#ajax', 'click', '.c_load_video_list', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/video/community/load/" + pk + "/" + uuid + "/", loader)
-});
 on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');

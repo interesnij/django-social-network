@@ -39,11 +39,11 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
   open_fullscreen("/docs/user_progs/edit_list/" + uuid + "/", loader)
 });
 
-on('#ajax', 'click', '.u_load_doc_list', function() {
+on('#ajax', 'click', '.load_doc_list', function() {
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
+  uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/docs/user/load/" + pk + "/" + uuid + "/", loader)
+  open_fullscreen("/docs/load_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {

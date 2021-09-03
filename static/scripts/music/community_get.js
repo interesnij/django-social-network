@@ -21,10 +21,6 @@ on('#ajax', 'click', '.c_ucm_music_list_repost', function() {
   open_fullscreen("/music/repost/c_ucm_list_window/" + pk + "/" + uuid + "/", loader);
   clear_attach_block();
 })
-on('#ajax', 'click', '.c_load_music_list', function() {
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/music/community/load/" + this.parentElement.parentElement.parentElement.getAttribute("data-uuid") + "/", loader)
-});
 
 on('#ajax', 'click', '.c_soundcloud_set_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

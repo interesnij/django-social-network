@@ -92,11 +92,11 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   clear_attach_block();
 })
 
-on('#ajax', 'click', '.u_load_photo_list', function() {
+on('#ajax', 'click', '.load_photo_list', function() {
   parent = this.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/gallery/user/load/" + uuid + "/", loader)
+  open_fullscreen("/gallery/load_list/" + uuid + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
