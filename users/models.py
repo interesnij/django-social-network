@@ -1276,7 +1276,7 @@ class User(AbstractUser):
         return Doc.objects.filter(creator_id=self.pk, community__isnull=True, type="PUB")[:6]
     def get_6_tracks(self):
         from music.models import Music
-        return Music.objects.filter(creator_id=self.pk, community__isnull=True)[:6]
+        return Music.objects.filter(creator_id=self.pk, community__isnull=True, type="PUB")[:6]
     def get_2_videos(self):
         from video.models import Video
         return Video.objects.filter(creator_id=self.pk, community__isnull=True, type="PUB")[:2]
