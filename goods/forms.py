@@ -6,7 +6,7 @@ class GoodForm(forms.ModelForm):
 
 	class Meta:
 		model = Good
-		fields = ['title', 'image', 'price', 'description', ]
+		fields = ['title', 'image', 'price', 'description', 'list', ]
 
 class CommentForm(forms.ModelForm):
 	text=forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
