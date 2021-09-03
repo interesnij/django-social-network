@@ -497,11 +497,9 @@ class Music(models.Model):
     def create_track(cls, creator, title, file, list, is_public, community):
         from common.processing.music import get_music_processing
 
-        _list = SoundList.objects.get(pk=list)
-
-        _list.count += 1
-        _list.save(update_fields=["count"])
-        track = cls.objects.create(creator=creator,order=_list.count,list=_list,title=title,file=file)
+        list.count += 1
+        list.save(update_fields=["count"])
+        track = cls.objects.create(creator=creator,order=list.count,list=list,title=title,file=file)
         if community:
             community.plus_tracks(1)
         else:

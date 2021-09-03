@@ -513,10 +513,9 @@ class Good(models.Model):
 		from common.processing.good import get_good_processing
 		if not price:
 			price = 0
-		_list = GoodList.objects.get(pk=list)
-		_list.count += 1
-		_list.save(update_fields=["count"])
-		good = cls.objects.create(creator=creator,order=_list.count,title=title,list=_list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
+		list.count += 1
+		list.save(update_fields=["count"])
+		good = cls.objects.create(creator=creator,order=list.count,title=title,list=list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
 		for img in images:
 			GoodImage.objects.create(good=good, image=img)
 		if not list.is_private() and is_public:
