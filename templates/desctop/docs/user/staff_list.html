@@ -22,7 +22,7 @@
                         {% include 'desctop/users/docs/doc.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
-                      <div class="load centered m-1 next_page_list" data-link="{% url 'user_load_photo_list' uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'load_doc_list' uuid=list.uuid %}?page={{ page_obj.next_page_number }}">
                           <img src="/static/images/preloader.gif">
                       </div>
                       {% endif %}

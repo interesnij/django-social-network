@@ -10,26 +10,6 @@ from gallery.forms import PhotoDescriptionForm
 from common.template.user import get_detect_platform_template
 
 
-class UserLoadPhotoList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_permission_user_photo(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		if request.user.is_authenticated and request.user.pk == self.list.creator.pk:
-			self.photo_list = self.list.get_staff_items()
-		else:
-			self.photo_list = self.list.get_items()
-		return super(UserLoadPhotoList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		c = super(UserLoadPhotoList,self).get_context_data(**kwargs)
-		c['user'], c['list'] = self.list.creator, self.list
-		return c
-
-	def get_queryset(self):
-		return self.photo_list
-
 
 class UserPhotosList(ListView):
     template_name = None
