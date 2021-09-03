@@ -124,6 +124,7 @@ on('#video_loader', 'click', '.u_video_dislike2', function() {
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   if (!form.querySelector("#id_title").value){
     form.querySelector("#id_title").style.border = "1px #FF0000 solid";
@@ -140,7 +141,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
   } else {this.disabled = true}
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/user_progs/create_video/", true );
+  link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

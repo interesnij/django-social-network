@@ -78,6 +78,7 @@ on('#ajax', 'click', '.u_remove_doc_from_list', function() {
 on('#ajax', 'click', '#u_create_doc_btn', function() {
   form = document.querySelector("#u_doc_create");
   form_data = new FormData(form);
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
@@ -98,7 +99,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
     toast_error("Загрузите документ!")
   } else { this.disabled = true }
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/docs/user_progs/create_doc/", true );
+  link_.open( 'POST', "/docs/user_progs/create_doc/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

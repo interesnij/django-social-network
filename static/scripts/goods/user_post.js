@@ -212,6 +212,7 @@ on('#ajax', 'click', '.u_good_add', function() {
 on('#ajax', 'click', '#u_add_good_btn', function() {
   form_post = document.body.querySelector("#u_add_good_form");
   form_data = new FormData(form_post);
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   lists = form_post.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;

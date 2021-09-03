@@ -31,6 +31,7 @@ on('body', 'click', '#u_create_track_btn', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
+  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
   lists = form.querySelector("#id_list");
   selectedOptions = lists.selectedOptions;
@@ -52,7 +53,7 @@ on('body', 'click', '#u_create_track_btn', function() {
   } else { _this.disabled = true }
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/music/user_progs/create_track/", true );
+  link_.open( 'POST', "/music/user_progs/create_track/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
