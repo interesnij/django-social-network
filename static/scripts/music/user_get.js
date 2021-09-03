@@ -40,9 +40,8 @@ on('#ajax', 'click', '.u_playlist_edit', function() {
 
 on('#ajax', 'click', '.load_music_list', function() {
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/music/load_list/" + uuid + "/", loader)
+  open_fullscreen("/music/load_list/" + parent.getAttribute("data-pk") + "/", loader)
 });
 
 on('#ajax', 'click', '.u_ucm_music_repost', function() {

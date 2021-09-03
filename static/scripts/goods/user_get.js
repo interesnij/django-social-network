@@ -99,7 +99,6 @@ on('#ajax', 'click', '.u_good_comments', function() {
 
 on('#ajax', 'click', '.load_good_list', function() {
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
   loader = document.getElementById("item_loader");
-  open_fullscreen("/goods/load_list/" + uuid + "/", loader)
+  open_fullscreen("/goods/load_list/" + parent.getAttribute("data-pk") + "/", loader)
 });
