@@ -513,7 +513,7 @@ class Post(models.Model):
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
-    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, is_public, community):
+    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
         from common.processing.post import get_post_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
@@ -522,9 +522,8 @@ class Post(models.Model):
         _list.count += 1
         _list.save(update_fields=["count"])
         post = cls.objects.create(creator=creator,list=_list,order=_list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
-
-        if not _list.is_private() and is_public:
-            get_post_processing(post, Post.PUBLISHED)
+        get_post_processing(post, Post.PUBLISHED)
+        if not _list.is_private():
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
@@ -542,15 +541,13 @@ class Post(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
                     user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
-        else:
-            get_post_processing(post, Post.PRIVATE)
         if community:
             community.plus_posts(1)
         else:
             creator.plus_posts(1)
         return post
 
-    def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on, is_public):
+    def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on):
         from common.processing.post  import get_post_processing
 
         _attach = str(attach)
@@ -567,15 +564,7 @@ class Post(models.Model):
         self.is_signature = is_signature
         self.list = list
         self.votes_on = votes_on
-
-        if is_public and self.is_private():
-            get_post_processing(self, Post.PUBLISHED)
-            self.make_publish()
-        elif not is_public and self.is_open():
-            get_post_processing(self, Post.PRIVATE)
-            self.make_private()
-        else:
-            get_post_processing(self, self.type)
+        get_post_processing(self, self.type)
         self.save()
         return self
 

@@ -380,14 +380,14 @@ class Doc(models.Model):
         return mime_type
 
     @classmethod
-    def create_doc(cls, creator, title, file, list, is_public, community, type_2):
+    def create_doc(cls, creator, title, file, list, community, type_2):
         from common.processing.doc import get_doc_processing
 
         list.count += 1
         list.save(update_fields=["count"])
         doc = cls.objects.create(creator=creator,order=list.count,title=title,list=list,file=file,community=community, type_2=type_2)
-        if not list.is_private() and is_public:
-            get_doc_processing(doc, Doc.PUBLISHED)
+        get_doc_processing(doc, Doc.PUBLISHED)
+        if not list.is_private():
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
@@ -406,15 +406,13 @@ class Doc(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
                     user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
-        else:
-            get_doc_processing(doc, Doc.PRIVATE)
         if community:
             community.plus_docs(1)
         else:
             creator.plus_docs(1)
         return doc
 
-    def edit_doc(self, title, list, file, is_public):
+    def edit_doc(self, title, list, file):
         from common.processing.doc  import get_doc_processing
 
         if self.list.pk != list.pk:
@@ -425,12 +423,6 @@ class Doc(models.Model):
         self.title = title
         self.list = list
         self.file = file
-        if is_public:
-            get_doc_processing(self, Doc.PUBLISHED)
-            self.make_publish()
-        else:
-            get_doc_processing(self, Doc.PRIVATE)
-            self.make_private()
         return self.save()
 
     def make_private(self):

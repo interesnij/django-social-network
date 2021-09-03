@@ -1,23 +1,4 @@
-<style>
-  #video_holder{
-  width: 200px;
-  min-width: 200px;
-  padding: 10px;
-  text-align: center;
-  margin:10px;
-  }
-  #video_holder{
-  cursor: pointer;
-  margin:9px;
-  }
-  #video_holder img{
-  width: 172px;
-  height: auto;
-  }
-  #id_list{
-  height: auto;
-}
-</style>
+
     <form id="c_create_video_form">
       {% csrf_token %}
         <div class="card">
@@ -62,12 +43,6 @@
                     <div id="video_holder">
                       <h4>Обложка</h4>
                       <i>(обязательно)</i>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_is_public">
-                      <label class="custom-control-label" for="id_is_public">Виден всем</label>
                     </div>
                   </div>
                   <div class="form-group">

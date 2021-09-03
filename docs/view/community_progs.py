@@ -69,7 +69,7 @@ class CommunityDocCreate(TemplateView):
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community.pk):
             doc = form_post.save(commit=False)
-            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,list=doc.list,is_public=request.POST.get("is_public"),community=community, type_2=doc.type_2)
+            new_doc = doc.create_doc(creator=request.user,title=doc.title,file=doc.file,list=doc.list,community=community, type_2=doc.type_2)
             return render_for_platform(request, 'docs/doc_create/c_new_doc.html',{'doc': new_doc})
         else:
             return HttpResponseBadRequest()

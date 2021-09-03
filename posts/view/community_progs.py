@@ -57,7 +57,6 @@ class PostCommunityCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
                                             votes_on=post.votes_on,
-                                            is_public=request.POST.get("is_public"),
                                             community=community
                                             )
                 return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
@@ -101,8 +100,7 @@ class PostCommunityEdit(TemplateView):
                                             attach=attach,
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
-                                            votes_on=post.votes_on,
-                                            is_public=request.POST.get("is_public")
+                                            votes_on=post.votes_on)
                                             )
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:

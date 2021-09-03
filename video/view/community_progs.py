@@ -258,7 +258,6 @@ class CommunityVideoCreate(TemplateView):
                                             list=new_video.list,
                                             comments_enabled=new_video.comments_enabled,
                                             votes_on=new_video.votes_on,
-                                            is_public=request.POST.get("is_public"),
                                             community=self.community)
 			return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
 		else:
@@ -291,8 +290,7 @@ class CommunityVideoEdit(TemplateView):
                                         description=new_video.description,
                                         list=new_video.list,
                                         comments_enabled=new_video.comments_enabled,
-                                        votes_on=new_video.votes_on,
-                                        is_public=request.POST.get("is_public"))
+                                        votes_on=new_video.votes_on)
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()

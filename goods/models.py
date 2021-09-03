@@ -509,7 +509,7 @@ class Good(models.Model):
 		return GoodImage.objects.filter(good_id=self.pk)
 
 	@classmethod
-	def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, community, is_public):
+	def create_good(cls, creator, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, community):
 		from common.processing.good import get_good_processing
 		if not price:
 			price = 0
@@ -518,8 +518,8 @@ class Good(models.Model):
 		good = cls.objects.create(creator=creator,order=list.count,title=title,list=list,description=description,votes_on=votes_on,comments_enabled=comments_enabled,image=image,price=price,sub_category=sub_category,community=community)
 		for img in images:
 			GoodImage.objects.create(good=good, image=img)
-		if not list.is_private() and is_public:
-			get_good_processing(good, Good.PUBLISHED)
+		get_good_processing(good, Good.PUBLISHED)
+		if not list.is_private():
 			if community:
 				from common.notify.progs import community_send_notify, community_send_wall
 				from notify.models import Notify, Wall
@@ -538,15 +538,13 @@ class Good(models.Model):
 				for user_id in creator.get_user_news_notify_ids():
 					Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOO", object_id=good.pk, verb="ITE")
 					user_send_notify(good.pk, creator.pk, user_id, None, "create_u_good_notify")
-		else:
-			get_good_processing(good, Good.PRIVATE)
 		if community:
 			community.plus_goods(1)
 		else:
 			creator.plus_goods(1)
 		return good
 
-	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, list, sub_category, is_public):
+	def edit_good(self, description, votes_on, comments_enabled, title, image, images, price, list, sub_category):
 		from common.processing.good import get_good_processing
 		self.title = title
 		self.description = description
@@ -562,12 +560,6 @@ class Good(models.Model):
 		self.list = list
 		self.sub_category = sub_category
 		self.community = community
-		if is_public:
-			get_good_processing(self, Good.PUBLISHED)
-			self.make_publish()
-		else:
-			get_good_processing(self, Good.PRIVATE)
-			self.make_private()
 		if images:
 			for image in images:
 				GoodImage.objects.create(good=good, image=image)

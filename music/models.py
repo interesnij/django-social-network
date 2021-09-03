@@ -494,7 +494,7 @@ class Music(models.Model):
         self.save()
 
     @classmethod
-    def create_track(cls, creator, title, file, list, is_public, community):
+    def create_track(cls, creator, title, file, list, community):
         from common.processing.music import get_music_processing
 
         list.count += 1
@@ -504,8 +504,8 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             user.plus_tracks(1)
-        if not list.is_private() and is_public:
-            get_music_processing(track, Track.PUBLISHED)
+        get_music_processing(track, Track.PUBLISHED)
+        if not list.is_private():
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
@@ -524,11 +524,9 @@ class Music(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
                     user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
-        else:
-            get_music_processing(track, Music.PRIVATE)
         return track
 
-    def edit_track(self, title, file, list, is_public):
+    def edit_track(self, title, file, list):
         from common.processing.music  import get_music_processing
 
         self.title = title
@@ -539,12 +537,6 @@ class Music(models.Model):
             list.count += 1
             list.save(update_fields=["count"])
         self.list = list
-        if is_public:
-            get_music_processing(self, Music.PUBLISHED)
-            self.make_publish()
-        else:
-            get_music_processing(self, Music.PRIVATE)
-            self.make_private()
         return self.save()
 
     def delete_item(self, community):

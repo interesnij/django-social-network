@@ -488,7 +488,7 @@ class Video(models.Model):
         return self.list.all()[0].uuid
 
     @classmethod
-    def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, is_public, community):
+    def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, community):
         from common.processing.video import get_video_processing
 
         list.count += 1
@@ -498,8 +498,8 @@ class Video(models.Model):
             community.plus_videos(1)
         else:
             creator.plus_videos(1)
-        if not list.is_private() and is_public:
-            get_video_processing(video, Video.PUBLISHED)
+        get_video_processing(video, Video.PUBLISHED)
+        if not list.is_private():
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
                 from notify.models import Notify, Wall
@@ -518,11 +518,9 @@ class Video(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
                     user_send_notify(video.pk, creator.pk, user_id, None, "create_u_video_notify")
-        else:
-            get_video_processing(video, Video.PRIVATE)
         return video
 
-    def edit_video(self, title, file, uri, description, lists, comments_enabled, votes_on, is_public):
+    def edit_video(self, title, file, uri, description, lists, comments_enabled, votes_on):
         from common.processing.video import get_video_processing
 
         self.title = title
@@ -537,12 +535,6 @@ class Video(models.Model):
         self.description = description
         self.comments_enabled = comments_enabled
         self.votes_on = votes_on
-        if is_public:
-            get_video_processing(self, Video.PUBLISHED)
-            self.make_publish()
-        else:
-            get_video_processing(self, Video.PRIVATE)
-            self.make_private()
         return self.save()
 
     def get_uri(self):

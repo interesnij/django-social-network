@@ -143,8 +143,7 @@ class GoodCommunityCreate(TemplateView):
                                         price=good.price,
                                         comments_enabled=good.comments_enabled,
                                         votes_on=good.votes_on,
-                                        community=good.community,
-                                        is_public=request.POST.get("is_public"))
+                                        community=good.community)
             return render_for_platform(request,'goods/good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()
@@ -182,8 +181,7 @@ class GoodCommunityEdit(TemplateView):
                                         description=good.description,
                                         price=good.price,
                                         comments_enabled=good.comments_enabled,
-                                        votes_on=good.votes_on,
-                                        is_public=request.POST.get("is_public"))
+                                        votes_on=good.votes_on)
             return render_for_platform(request, 'goods/good_base/c_new_good.html',{'object': new_good})
         else:
             return HttpResponseBadRequest()

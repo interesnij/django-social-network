@@ -46,7 +46,6 @@ class PostUserCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
                                             votes_on=post.votes_on,
-                                            is_public=request.POST.get("is_public"),
                                             community=None
                                             )
                 return render_for_platform(request, 'posts/post_user/new_post.html', {'object': new_post})
@@ -88,7 +87,6 @@ class PostUserEdit(TemplateView):
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
                                             votes_on=post.votes_on,
-                                            is_public=request.POST.get("is_public")
                                             )
                 return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
             else:
