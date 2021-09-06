@@ -121,6 +121,8 @@ class PhotoList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return False
 
     def get_cover_photo(self):
         if self.cover_photo:
@@ -703,6 +705,8 @@ class Photo(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return False
 
 
 class PhotoComment(models.Model):
