@@ -312,7 +312,7 @@ class Message(models.Model):
             preview = "Вложения"
         else:
             preview = self.text[:80]
-        return '<div class="media p-1 pag" data-uuid="' + self.uuid + '">' + preview + '</div>'
+        return '<div class="media p-1 pag" data-uuid="' + str(self.uuid) + '">' + preview + '</div>'
 
     def is_message_in_favourite(self, user_id):
         return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
