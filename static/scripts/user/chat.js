@@ -476,8 +476,7 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
   link.send();
 });
 on('#ajax', 'click', '.u_message_reply', function() {
-  target = document.body.querySelector(".custom_color");
-  message = target.parentElement.parentElement;
+  message = document.body.querySelector(".target_message");
   checkbox = message.querySelector(".message_checkbox");
   checkbox.checked = false;
   checkbox.style.display = "none"
