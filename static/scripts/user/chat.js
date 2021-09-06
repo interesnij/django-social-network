@@ -472,7 +472,10 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
   link.send();
 });
 on('#ajax', 'click', '.u_message_reply', function() {
-  item = this.parentElement.nextElementSibling;
+  target = document.body.querySelector(".custom_color");
+  message = target.parentElement.parentElement;
+  block = document.body.querySelector(".parent_message_block");
+  block.innerHTML = "<div>Hey hey!! <span class='remove_parent_block' style='float:right'>x</span></div>"
   uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/reply_message/" + uuid + "/", true );
