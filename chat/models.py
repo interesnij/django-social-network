@@ -303,6 +303,17 @@ class Message(models.Model):
                 return True
         return False
 
+    def get_parent_message(self):
+        if self.voice:
+            preview = "Голосовое сообщение"
+        if self.sticker:
+            preview = "Наклейка"
+        if self.attach:
+            preview = "Вложения"
+        else:
+            preview = self.text[:80]
+        return '<div class="media p-1 pag" data-uuid="' object.uuid + '">'> + preview + '</div>'
+
     def is_message_in_favourite(self, user_id):
         return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
 
