@@ -1,9 +1,7 @@
 {% load message %}
 
 <div class="message media p-1 pag {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}">
-  <div class="toggle_message custom-control custom-checkbox">
-    <input type="checkbox" class="custom-control-input">
-  </div>
+    <input type="checkbox" class="toggle_message custom-control-input">
 
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
