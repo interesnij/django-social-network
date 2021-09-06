@@ -353,7 +353,6 @@ function ajax_get_reload(url) {
             document.title = title;
             if_list(rtr);
             load_chart();
-            loaded = false;
             create_pagination(rtr);
             get_dragula(".drag_container");
             get_dragula(".drag_list");
