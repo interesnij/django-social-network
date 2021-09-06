@@ -22,6 +22,7 @@ function show_message_form_voice_btn() {
 
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  console.log(item)
     ajax_link.open( 'GET', url + item.getAttribute("data-uuid") + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
