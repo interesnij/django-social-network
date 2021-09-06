@@ -1,9 +1,6 @@
 {% load message %}
 
 <div class="message media p-1 pag {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
-    {% if object.parent %}
-      {{ object.get_parent_message|safe }}
-    {% endif %}
     <span>
       <input type="checkbox" class="toggle_message message_checkbox">
     </span>
@@ -17,6 +14,11 @@
         <a href="{{ object.creator.get_link }}" class="ajax">{{ object.creator.first_name }}</a>
         <small class="float-right text-muted">{{ object.get_created }}</small>
       </h5>
+
+      {% if object.parent %}
+        {{ object.get_parent_message|safe }}
+      {% endif %}
+
       {% if object.voice %}
         <audio src="{{ object.voice.url }}"></audio>
       {% elif object.sticker %}
