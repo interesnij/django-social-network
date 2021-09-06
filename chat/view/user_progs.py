@@ -208,6 +208,7 @@ class UserSendMessage(View):
 											text=message.text,
 											voice=request.POST.get('voice'),
 											sticker=request.POST.get('sticker'),
+											parent=request.POST.get('parent'),
 											attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
 		else:
@@ -249,42 +250,6 @@ class UserMessageEdit(TemplateView):
 			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
 		else:
 			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
-
-
-class UserMessageReply(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_my_template
-		from chat.models import Message
-
-		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/reply_message.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserMessageReply,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from chat.forms import MessageForm
-
-		context = super(UserMessageReply,self).get_context_data(**kwargs)
-		context["object"] = self.message
-		context["form"] = MessageForm()
-		return context
-
-	def post(self, request, *args, **kwargs):
-		from common.check.message import check_can_send_message
-		from chat.models import Message, Chat
-		from chat.forms import MessageForm
-		from common.template.user import render_for_platform
-
-		parent, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), MessageForm(request.POST)
-		chat = parent.chat
-		check_can_send_message(request.user, chat)
-		if request.is_ajax() and form_post.is_valid():
-			message = form_post.save(commit=False)
-			if request.POST.get('text') or request.POST.get('attach_items'):
-				new_message = Message.send_message(chat=chat, parent=parent, creator=request.user, repost=None, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'))
-			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
-		else:
 			return HttpResponseBadRequest()
 
 
@@ -373,7 +338,7 @@ class PhotoAttachInChatUserCreate(View):
 	def post(self, request, *args, **kwargs):
 		from gallery.models import Photo
 		from common.template.user import render_for_platform
-		
+
 		photos = []
 		if request.is_ajax():
 			for p in request.FILES.getlist('file'):

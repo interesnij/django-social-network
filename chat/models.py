@@ -401,10 +401,15 @@ class Message(models.Model):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
+        if parent:
+            parent_id = parent
+        else:
+            parent_id = None
+
         if voice:
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, type=Message.PUBLISHED)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, type=Message.PUBLISHED)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
@@ -415,16 +420,16 @@ class Message(models.Model):
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING)
         get_message_processing(creator_message, 'PUB')
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
             elif sticker:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
         return creator_message
