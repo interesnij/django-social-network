@@ -175,7 +175,7 @@
   display: none;
   position: absolute;
   top: 20px;
-  left: 7px
+  left: -12px
 }
 .message:hover .toggle_message{
   display: block !important;
