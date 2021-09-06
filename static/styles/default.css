@@ -170,14 +170,14 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.toggle_message {
+.message_checkbox {
   cursor: pointer;
   display: none;
   position: absolute;
   top: 20px;
   left: -12px
 }
-.message:hover .toggle_message{
+.message:hover .message_checkbox{
   display: block !important;
 
 }

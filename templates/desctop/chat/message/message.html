@@ -2,7 +2,7 @@
 
 <div class="message media p-1 pag {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}">
     <span>
-      <input type="checkbox" class="toggle_message">
+      <input type="checkbox" class="toggle_message message_checkbox">
     </span>
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
