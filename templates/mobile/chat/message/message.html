@@ -19,7 +19,7 @@
 
       {% if object.text %}
         <div class="">
-          {{ object.text|safe }}
+          <span class="text">{{ object.text|safe }}</span>
           ( {% if object.is_copy_reed %} не прочитано {% else %} прочитано {% endif %})
         </div>
       {% endif %}
