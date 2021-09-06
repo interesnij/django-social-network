@@ -425,6 +425,10 @@ on('#ajax', 'click', '.u_message_delete', function() {
   hide_chat_console(null)
 });
 
+on('#ajax', 'click', '.remove_parent_block', function() {
+  this.parentElement.parentElement.remove()
+});
+
 on('#ajax', 'click', '.u_message_restore', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
@@ -475,7 +479,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   target = document.body.querySelector(".custom_color");
   message = target.parentElement.parentElement;
   block = document.body.querySelector(".parent_message_block");
-  block.innerHTML = "<div>Hey hey!! <span class='remove_parent_block' style='float:right'>x</span></div>"
+  block.innerHTML = "<div><div>Hey hey!! <span class='remove_parent_block pointer' style='float:right'>x</span></div></div>"
   uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/reply_message/" + uuid + "/", true );
