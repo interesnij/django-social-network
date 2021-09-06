@@ -1,10 +1,9 @@
 function get_toggle_messages() {
-  list = document.body.querySelectorAll(".custom_color");
+  list = document.body.querySelectorAll(".target_message");
   query = [];
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
   };
-  console.log(list)
   return query
 }
 function show_chat_console(is_favourite) {
@@ -367,7 +366,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   checkbox = message.querySelector(".message_checkbox");
   is_toggle = false, is_favourite = false;
   if (message.classList.contains("custom_color")) {
-    message.classList.remove("custom_color");
+    message.classList.remove("custom_color", "target_message");
     checkbox.checked = false;
     checkbox.style.display = "none"
     list = message.parentElement.querySelectorAll(".message");
@@ -381,7 +380,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     }
     is_toggle ? null : hide_chat_console(is_favourite)
   } else {
-    message.classList.add("custom_color");
+    message.classList.add("custom_color", "target_message");
 
     checkbox.checked = true;
     checkbox.style.display = "block"
