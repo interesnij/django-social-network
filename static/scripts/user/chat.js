@@ -481,7 +481,8 @@ on('#ajax', 'click', '.u_message_reply', function() {
   checkbox = message.querySelector(".message_checkbox");
   checkbox.checked = false;
   checkbox.style.display = "none"
-  
+  message.classList.remove("target_message", "custom_color");
+
   block = document.body.querySelector(".parent_message_block");
   block.innerHTML = "<div><div>Hey hey!! <span class='remove_parent_block pointer' style='float:right'>x</span></div></div>"
   uuid = this.getAttribute("data-uuid");
