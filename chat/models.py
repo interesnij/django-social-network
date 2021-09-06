@@ -317,7 +317,7 @@ class Message(models.Model):
             preview = parent.text[:80]
         user = parent.creator
 
-        return '<div class="media p-1" data-uuid="' + str(parent.uuid) + '"><figure><a href="' + user.get_link() + '" class="ajax"><img src="' + user.get_avatar() + '" style="border-radius:30px;width:30px;" alt="image"></a></figure><div class="media-body" style="line-height: 1em;"><p class="time-title mb-0"><a href="' + user.get_link()  + '" class="ajax">' + user.first_name + '</a></p><small class="float-right text-muted">' + parent.get_created() + '</small><p class="text">' + preview + '</p></div></div>'
+        return '<div class="media p-1" data-uuid="' + str(parent.uuid) + '" style="border-left: 1px solid rgba(0, 0, 0, 0.7)"><figure><a href="' + user.get_link() + '" class="ajax"><img src="' + user.get_avatar() + '" style="border-radius:30px;width:30px;" alt="image"></a></figure><div class="media-body" style="line-height: 1em;"><p class="time-title mb-0"><a href="' + user.get_link()  + '" class="ajax">' + user.first_name + '</a></p><small class="text-muted">' + parent.get_created() + '</small><p class="text">' + preview + '</p></div></div>'
 
     def is_message_in_favourite(self, user_id):
         return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
