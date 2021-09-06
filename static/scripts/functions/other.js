@@ -26,6 +26,9 @@ function remove_item_and_show_restore_block(item, url, _class, title) {
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
+        checkbox = item.querySelector(".message_checkbox");
+        checkbox.checked = false;
+        checkbox.style.display = "none";
         p = document.createElement("div");
         p.classList.add("media", "p-1");
         p.style.padding = "20px";
