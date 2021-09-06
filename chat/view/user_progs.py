@@ -202,7 +202,6 @@ class UserSendMessage(View):
 			message = form_post.save(commit=False)
 			new_message = Message.send_message(
 											chat=chat,
-											parent=None,
 											creator=request.user,
 											repost=None,
 											text=message.text,
