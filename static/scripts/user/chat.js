@@ -481,9 +481,12 @@ on('#ajax', 'click', '.u_message_reply', function() {
   checkbox.checked = false;
   checkbox.style.display = "none"
   message.classList.remove("target_message", "custom_color");
+  if (message.querySelector(".message_text").firstChild) {
+    parent = message.querySelector(".message_text").innerHTML[:80]
+  } else {parent = "Вложения"};
 
   block = document.body.querySelector(".parent_message_block");
-  block.innerHTML = "<div><div>Hey hey!! <span class='remove_parent_block pointer' style='float:right'>x</span></div></div>"
+  block.innerHTML = "<div><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + ">' <div>" + parent + "<span class='remove_parent_block pointer' style='float:right'>x</span></div></div>"
   uuid = this.getAttribute("data-uuid");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/reply_message/" + uuid + "/", true );
