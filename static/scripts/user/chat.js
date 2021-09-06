@@ -486,7 +486,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   } else {parent = "Вложения"};
 
   block = document.body.querySelector(".parent_message_block");
-  block.innerHTML = "<div style='position:relative;padding-top:7px;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + ">' <div>" + parent + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top: 20%;font-size: 25px;'>x</span></div></div>"
+  block.innerHTML = "<div style='position:relative;padding-top:7px;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + '"><div>" + parent + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top: 20%;font-size: 25px;'>x</span></div></div>"
   hide_chat_console(null)
 });
 
