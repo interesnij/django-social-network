@@ -487,16 +487,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
 
   block = document.body.querySelector(".parent_message_block");
   block.innerHTML = "<div style='position:relative'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + ">' <div>" + parent + "<span class='remove_parent_block pointer' style='float:right;position:relative;right: 0;top: 20%;font-size: 25px;>x</span></div></div>"
-  uuid = this.getAttribute("data-uuid");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/reply_message/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console(null)
-  }};
-  link.send();
+  hide_chat_console(null)
 });
 
 on('#ajax', 'change', '#u_photo_message_attach', function() {
