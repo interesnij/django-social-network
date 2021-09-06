@@ -366,7 +366,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   is_toggle = false, is_favourite = false;
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color");
-    message.querySelector(".message_checkbox").addAttr("checked");
+    message.querySelector(".message_checkbox").addAttribute("checked");
     list = message.parentElement.querySelectorAll(".message");
     for (var i = 0; i < list.length; i++){
       if (list[i].classList.contains("custom_color")) {
@@ -379,7 +379,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     is_toggle ? null : hide_chat_console(is_favourite)
   } else {
     message.classList.add("custom_color");
-    message.querySelector(".message_checkbox").removeAttr("checked");
+    message.querySelector(".message_checkbox").removeAttribute("checked");
     show_chat_console(is_favourite)
   };
   if (get_toggle_messages().length > 1) {
