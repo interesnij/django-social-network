@@ -303,8 +303,11 @@ function send_message (form_post, url) {
     form_post.querySelector(".hide_block_menu").classList.remove("show");
     form_post.querySelector(".message_text").innerHTML = ""
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
+    form_post.querySelector(".parent_message_block").remove();
     form_post.querySelector(".type_hidden").value = '';
+    show_message_form_voice_btn();
     document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
+
   }};
 
   link_.send(form_data);
