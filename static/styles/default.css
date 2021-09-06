@@ -177,7 +177,7 @@
   top: 20px;
   left: 7px
 }
-.message:hover .change_avatar{
+.message:hover .toggle_message{
   display: block !important;
 
 }
