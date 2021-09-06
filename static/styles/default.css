@@ -179,7 +179,10 @@
 }
 .message:hover .change_avatar{
   display: block !important;
-  
+
+}
+.message {
+  position: relative;
 }
 .avatar_figure:hover .change_avatar{
   display: block !important;
