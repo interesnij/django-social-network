@@ -1,5 +1,5 @@
 .next_page_list img {
-  width: auto !important
+  width: 30px !important
 }
 
 .repost_style_btn {
@@ -170,7 +170,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
+.toggle_message {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 7px
+}
+.message:hover .change_avatar{
+  display: block !important;
+  
+}
 .avatar_figure:hover .change_avatar{
   display: block !important;
   position: absolute;
