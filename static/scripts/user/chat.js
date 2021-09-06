@@ -4,6 +4,7 @@ function get_toggle_messages() {
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
   };
+  console.log(list)
   return query
 }
 function show_chat_console(is_favourite) {
