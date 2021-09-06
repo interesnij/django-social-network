@@ -304,15 +304,20 @@ class Message(models.Model):
         return False
 
     def get_parent_message(self):
-        if self.voice:
+        if not self.parent:
+            return '<div class="media p-1 pag">Нет ответа!</div>'
+        parent = self.parent
+        if parent.voice:
             preview = "Голосовое сообщение"
-        if self.sticker:
+        if parent.sticker:
             preview = "Наклейка"
-        if self.attach:
+        if parent.attach:
             preview = "Вложения"
         else:
-            preview = self.text[:80]
-        return '<div class="media p-1 pag" data-uuid="' + str(self.uuid) + '">' + preview + '</div>'
+            preview = parent.text[:80]
+        user = parent.creator
+
+        return '<div class="media p-1" data-uuid="' + str(parent.uuid) + '"><figure><a href="' + user.get_link() + '" class="ajax"><img src="' + user.get_avatar() + '" style="border-radius:30px;width:30px;" alt="image"></a></figure><div class="media-body"><p class="time-title mb-0"><a href="' + object.creator.get_link  + '" class="ajax">' + object.creator.first_name + '</a><small class="float-right text-muted">' + object.get_created() + '</small></p><span class="text">' + preview + '</span></div></div>'
 
     def is_message_in_favourite(self, user_id):
         return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
