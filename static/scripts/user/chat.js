@@ -6,10 +6,10 @@ function get_toggle_messages() {
   };
   return query
 }
-function show_chat_console(is_favourite) {
+function show_chat_console(message) {
   _console = document.body.querySelector(".console_btn_other");
-  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-
+  message.querySelector(".favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
+  (message.querySelector(".message_sticker"), message.querySelector(".audio")) ? _console.querySelector(".u_message_edit").style.display = "none" : null
   list = document.body.querySelectorAll(".custom_color");
   query = [];
   for (var i = 0; i < list.length; i++){
@@ -21,9 +21,9 @@ function show_chat_console(is_favourite) {
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
 }
 
-function hide_chat_console(is_favourite) {
+function hide_chat_console() {
   _console = document.body.querySelector(".console_btn_other");
-  is_favourite ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
+  _console.querySelector(".u_message_edit").style.display = "block";
   _console.style.display = "none";
   _console.previousElementSibling.style.display = "unset";
   _console.parentElement.parentElement.querySelector("h5").style.display = "unset"
@@ -364,7 +364,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.toggle_message', function(e) {
+on('#ajax', 'click', '.toggle_message', function() {
   message = this.parentElement.parentElement;
   checkbox = message.querySelector(".message_checkbox");
   is_toggle = false, is_favourite = false;
@@ -387,7 +387,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
 
     checkbox.checked = true;
     checkbox.style.display = "block"
-    show_chat_console(is_favourite)
+    show_chat_console(message)
   };
   if (get_toggle_messages().length > 1) {
     document.body.querySelector(".one_message").style.display = "none"
