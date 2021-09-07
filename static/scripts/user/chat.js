@@ -23,7 +23,7 @@ function show_chat_console(message) {
 
 function hide_chat_console() {
   _console = document.body.querySelector(".console_btn_other");
-  _console.querySelector(".u_message_edit").style.display = "block";
+  _console.querySelector(".u_message_edit").style.display = "unset";
   _console.style.display = "none";
   _console.previousElementSibling.style.display = "unset";
   _console.parentElement.parentElement.querySelector("h5").style.display = "unset"
