@@ -417,7 +417,7 @@ on('#ajax', 'click', '.toggle_message_favourite', function() {
       is_favourite = true
     }
   }
-  hide_chat_console(is_favourite)
+  hide_chat_console()
 });
 
 on('#ajax', 'click', '.u_message_delete', function() {
@@ -425,7 +425,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
   for (var i = 0; i < list.length; i++){
     remove_item_and_show_restore_block(list[i], "/chat/user_progs/delete_message/", "u_message_restore", "Сообщение удалено")
   };
-  hide_chat_console(null)
+  hide_chat_console()
 });
 
 on('#ajax', 'click', '.remove_parent_block', function() {
@@ -459,7 +459,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console(null);
+    hide_chat_console();
     item.classList.add("is_fixed");
     item.style.display = "none"
   }};
@@ -474,7 +474,7 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console(null)
+    hide_chat_console()
   }};
   link.send();
 });
@@ -495,7 +495,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
 
   block = document.body.querySelector(".parent_message_block");
   block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + parent + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
-  hide_chat_console(null)
+  hide_chat_console()
 });
 
 on('#ajax', 'change', '#u_photo_message_attach', function() {
