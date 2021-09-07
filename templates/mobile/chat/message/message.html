@@ -1,4 +1,4 @@
-<div class="media p-2 message pag {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+<div class="media p-2 message pag {% if object.is_copy_reed %}bg-light-secondary{% else %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
         {% if object.creator.s_avatar %}
@@ -20,7 +20,6 @@
       {% if object.text %}
         <div class="">
           <span class="text">{{ object.text|safe }}</span>
-          ( {% if object.is_copy_reed %} не прочитано {% else %} прочитано {% endif %})
         </div>
       {% endif %}
 
