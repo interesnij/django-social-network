@@ -484,11 +484,13 @@ on('#ajax', 'click', '.u_message_reply', function() {
   checkbox.checked = false;
   checkbox.style.display = "none";
   message.classList.remove("target_message", "custom_color");
-  if (message.querySelector(".text") != null) {
+  if (message.querySelector(".attach_container")) {
+    parent = "Вложения"
+  } else if (message.querySelector(".text") != null) {
     parent = message.querySelector(".text").innerHTML
   } else if(message.querySelector(".message_sticker")) {
       parent = "Наклейка"
-  } else {parent = "Вложения"};
+  };
   creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
 
   block = document.body.querySelector(".parent_message_block");
