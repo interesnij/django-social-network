@@ -484,7 +484,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   checkbox.checked = false;
   checkbox.style.display = "none";
   message.classList.remove("target_message", "custom_color");
-  if (message.querySelector(".text").firstChild) {
+  if (message.querySelector(".text").innerHTML) {
     parent = message.querySelector(".text").innerHTML
   } else if(message.querySelector(".message_sticker")) {
       parent = "Наклейка"
