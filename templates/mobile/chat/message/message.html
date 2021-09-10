@@ -1,3 +1,5 @@
+{% load message %}
+
 <div class="media p-2 message pag {% if request.user.pk == object.creator.pk and not object.is_copy_reed %}bg-light-secondary{% endif %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
