@@ -400,7 +400,7 @@ on('#ajax', 'click', '.toggle_message', function() {
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
   is_favourite = false;
-  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite_message/" : "/chat/user_progs/favorite/";
+  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite_message/" : url = "/chat/user_progs/favorite/";
 
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
