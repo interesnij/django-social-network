@@ -46,6 +46,11 @@ on('#ajax', 'input', '.message_text', function() {
 setTimeout(() => {
   console.log('асинхронное сообщение, которое появится на экране через 3 секунды')
 }, 3000);
+});
+on('#ajax', 'change', '.message_text', function() {
+setTimeout(() => {
+  console.log('асинхронное сообщение, которое появится на экране через 3 секунды')
+}, 3000);
 })
 
 on('#ajax', 'click', '.classic_smile_item', function() {
