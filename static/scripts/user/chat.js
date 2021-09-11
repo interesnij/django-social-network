@@ -311,6 +311,7 @@ function send_message (form_post, url) {
 }
 
 function send_draft_message (form_post, url) {
+  console.log(form_post);
   text = form_post.querySelector(".type_hidden");
   text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
   form_data = new FormData(form_post);
