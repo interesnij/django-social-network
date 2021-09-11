@@ -50,7 +50,7 @@ on('#ajax', 'input', '.message_text', function() {
         remove_class_timeout(_this);
         setTimeout(function(){
           form = _this.parentElement.parentElement;
-          send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("data-pk"));
+          send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("data-pk") + "/");
           form.nextElementSibling.innerHTML = "Черновик сохранен"
       }, 10000)
   }
