@@ -45,7 +45,11 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   block.append(div);
   add_file_message_attach()
   is_full_message_attach();
-  show_message_form_send_btn()
+  show_message_form_send_btn();
+  setTimeout(function(){
+    form = _this.parentElement;
+      send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 7000)
 }
 
 function photo_message_upload_attach(photo_list, block){
