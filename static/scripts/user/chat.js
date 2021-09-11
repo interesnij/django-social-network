@@ -40,20 +40,14 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
-  copied = true;
   if (document.body.querySelector(".chatlist")) {
-  check_message_form_btn();
-};
-setTimeout(() => {
-  if (copied) {
-    console.log('асинхронное сообщение, которое появится на экране через 3 секунды');
-    copied = false
+    check_message_form_btn()
   }
-}, 3000)
 });
-on('#ajax', 'change', '.message_text', function() {
-
-})
+on('#ajax', 'oninput', '.message_text', function() {
+    console.log('асинхронное сообщение, которое появится на экране через 1 секунды');
+  }, 1000)
+});
 
 on('#ajax', 'click', '.classic_smile_item', function() {
   input = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".smile_supported");
