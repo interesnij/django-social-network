@@ -45,6 +45,7 @@ on('#ajax', 'input', '.message_text', function() {
   }
 });
 on('#ajax', 'oninput', '.message_text', function() {
+  setTimeout(function(){
     console.log('асинхронное сообщение, которое появится на экране через 1 секунды');
   }, 1000)
 });
