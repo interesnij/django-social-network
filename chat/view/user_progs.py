@@ -218,6 +218,7 @@ class UserSaveDraftMessage(View):
 	def post(self,request,*args,**kwargs):
 		from chat.models import Message, Chat
 		from chat.forms import MessageForm
+		from django.http import HttpResponse
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		if request.POST.get('text') or request.POST.get('attach_items'):
