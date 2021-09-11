@@ -44,10 +44,19 @@ on('#ajax', 'input', '.message_text', function() {
     check_message_form_btn()
   }
 });
-on('#ajax', 'oninput', '.message_text', function() {
-  setTimeout(function(){
-    console.log('асинхронное сообщение, которое появится на экране через 1 секунды');
-  }, 1000)
+on('#ajax', 'input', '.message_text', function() {
+  copied = false;
+  if (!copied) {
+      setTimeout(function(){
+        console.log('посылаем ajax после трех секунд.');
+        copied = true
+    }, 3000)
+  } else {
+    setTimeout(function(){
+      console.log('задержка!');
+      copied = false
+  }, 5000)
+  }
 });
 
 on('#ajax', 'click', '.classic_smile_item', function() {
