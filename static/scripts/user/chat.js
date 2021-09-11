@@ -45,8 +45,10 @@ on('#ajax', 'input', '.message_text', function() {
 };
 });
 on('#ajax', 'change', '.message_text', function() {
+  setTimeout(() => {
 setTimeout(() => {
   console.log('асинхронное сообщение, которое появится на экране через 3 секунды')
+}, 3000);
 }, 3000);
 })
 
