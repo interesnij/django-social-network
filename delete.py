@@ -13,11 +13,11 @@ import django, json, requests
 django.setup()
 
 from django.conf import settings
-from users.models import User
+from docs.models import DocList
 from music.models import SoundList, Music
 from video.models import VideoList
 from docs.models import Doc
 from chat.models import Message
 from gallery.models import PhotoList
 
-Music.objects.all().update(creator_id=7)
+DocList.objects.all().update(can_see_item="0", can_see_comment="0", add_item="0", add_comment="0", can_copy_list="0", )
