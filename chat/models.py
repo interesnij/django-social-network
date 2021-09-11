@@ -444,6 +444,9 @@ class Message(models.Model):
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING)
+            if chat.is_have_draft_message(creator.pk):
+                message = chat.get_draft_message(creator.pk)
+                message.delete()
         get_message_processing(creator_message, 'PUB')
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
