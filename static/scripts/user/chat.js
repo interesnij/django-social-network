@@ -51,7 +51,7 @@ on('#ajax', 'input', '.message_text', function() {
         setTimeout(function(){
           form = _this.parentElement.parentElement;
           if (form.querySelector(".message_text").innerHTML || form.querySelector(".special_block").innerHTML){
-            send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+            send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
           }
       }, 7000)
   }
@@ -307,6 +307,21 @@ function send_message (form_post, url) {
 
   }};
 
+  link_.send(form_data);
+}
+
+function send_draft_message (form_post, url) {
+  text = form_post.querySelector(".type_hidden");
+  text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
+  form_data = new FormData(form_post);
+  pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {}};
   link_.send(form_data);
 }
 
