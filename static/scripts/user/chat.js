@@ -42,7 +42,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 
 function remove_class_timeout(el) {
   setTimeout(function(){
-    el.classList.remove("draft_deleted");
+    el.classList.remove("draft_created");
 }, 3000)
 }
 on('#ajax', 'input', '.message_text', function() {
