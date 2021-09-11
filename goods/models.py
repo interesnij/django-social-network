@@ -735,13 +735,13 @@ class GoodImage(models.Model):
 
 class GoodComment(models.Model):
 	EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
-    DELETED, EDITED_DELETED = '_DEL', '_DELE'
-    CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
-    TYPE = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
-        (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
-        (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
-    )
+	DELETED, EDITED_DELETED = '_DEL', '_DELE'
+	CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
+	TYPE = (
+		(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
+		(DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
+		(CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
+	)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='good_comment_replies', null=True, blank=True, verbose_name="Родительский комментарий")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
