@@ -52,7 +52,6 @@ on('#ajax', 'input', '.message_text', function() {
           form = _this.parentElement.parentElement;
           if (form.querySelector(".message_text").innerHTML || form.querySelector(".special_block").innerHTML){
             send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-            form.nextElementSibling.innerHTML = "Черновик сохранен"
           }
       }, 7000)
   }
