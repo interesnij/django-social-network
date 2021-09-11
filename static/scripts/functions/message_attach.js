@@ -47,7 +47,7 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
   show_message_form_send_btn();
   setTimeout(function(){
-    form = _this.parentElement;
+    form = block.parentElement;
       send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 7000)
 }
