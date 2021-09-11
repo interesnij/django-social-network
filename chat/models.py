@@ -619,6 +619,10 @@ class Message(models.Model):
         from common.attach.message_attach import get_message_attach
         return get_message_attach(self, user)
 
+    def get_edit_attach(self, user):
+        from common.attach.message_attach import get_message_edit
+        return get_message_edit(self, user)
+
     def get_attach_photos(self):
         if "pho" in self.attach:
             query = []
@@ -672,6 +676,8 @@ class Message(models.Model):
         elif self.type == "_CLOF":
             self.type = Message.FIXED
         self.save(update_fields=['type'])
+
+
 
 class MessageFavourite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
