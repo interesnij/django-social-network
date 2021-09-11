@@ -5,7 +5,7 @@
     <input class="type_hidden" type="hidden" name="text" />
     <div class="parent_message_block"></div>
     <div class="row files_0 special_block">
-      {{ get_message_draft|get_edit_attach:request.user.pk }}
+      {{ get_message_draft|get_edit_attach:request.user.pk|safe }}
     </div>
     <div class="input-group input-group-sm">
       <div class="input-group-prepend">
