@@ -40,14 +40,14 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
-  copied = false;
+  copied = true;
   if (document.body.querySelector(".chatlist")) {
   check_message_form_btn();
 };
 setTimeout(() => {
   if (copied) {
     console.log('асинхронное сообщение, которое появится на экране через 3 секунды');
-    copied = true
+    copied = false
   }
 }, 3000)
 });
