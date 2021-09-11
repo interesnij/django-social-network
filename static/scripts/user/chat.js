@@ -39,6 +39,12 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   };
   block.classList.toggle("show");
 })
+
+function remove_class_timeout(el) {
+  setTimeout(function(){
+    el.classList.remove("draft_deleted");
+}, 3000)
+}
 on('#ajax', 'input', '.message_text', function() {
   _this = this;
   if (document.body.querySelector(".chatlist")) {
@@ -48,9 +54,7 @@ on('#ajax', 'input', '.message_text', function() {
       setTimeout(function(){
         console.log('посылаем ajax после трех секунд.');
         _this.classList.add("draft_created");
-        setTimeout(function(){
-          _this.classList.remove("draft_deleted");
-      }, 3000)
+        remove_class_timeout(_this)
     }, 3000)
   }
 });
