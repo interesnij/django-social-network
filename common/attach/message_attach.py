@@ -407,29 +407,33 @@ def get_message_edit(message, user):
     return block
 
 
-def get_message_edit(message, user):
+def get_post_edit(post, user):
     block = ''
-    for item in message.attach.split(","):
+    for item in post.attach.split(","):
         if item[:3] == "pho":
-            #try:
-            from gallery.models import Photo
-            photo = Photo.objects.get(pk=item[3:])
-            if photo.type[0] == "_":
+            try:
+                from gallery.models import Photo
+                photo = Photo.objects.get(pk=item[3:])
+                if photo.type[0] == "_":
+                    pass
+                if photo.community:
+                    el = ''.join(['<div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(post.uuid), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
+                else:
+                    el = ''.join(['<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(post.uuid), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
+                block = ''.join([block, '<div class="photo"><span class="photo_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="pho', str(photo.pk), '"></span>', el, '</div>'])
+            except:
                 pass
-            if photo.community:
-                el = ''.join(['<div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(post.uuid), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
-            else:
-                el = ''.join(['<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(post.uuid), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
-            block = ''.join([block, '<div class="photo"><span class="photo_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="pho', str(photo.pk), '"></span>', el, '</div>'])
-            #except:
-            #    pass
         elif item[:3] == "vid":
             try:
                 from video.models import Video
                 video = Video.objects.get(query, pk=item[3:])
                 if video.type[0] == "_":
                     pass
-                block = ''.join([block, '<div class="col-md-6"><span class="video_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="vid', str(video.pk), '"></span><img class="image_fit" src="', video.image.url, '"><span class="video_icon_play_v2 u_video_detail" video-pk="', str(video.pk), '"></span></div>'])
+                if photo.community:
+                    _class = "c_video_detail"
+                else:
+                    _class = "u_video_detail"
+                block = ''.join([block, '<div class="col-md-6"><span class="video_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="vid', str(video.pk), '"></span><img class="image_fit" src="', video.image.url, '"><span class="video_icon_play_v2 "', _class, '" video-pk="', str(video.pk), '"></span></div>'])
             except:
                 pass
         elif item[:3] == "mus":
@@ -453,22 +457,28 @@ def get_message_edit(message, user):
         elif item[:3] == "sur":
             try:
                 from survey.models import Survey
-                survey = Survey.objects.get(query, pk=item[3:])
                 if survey.type[0] == "_":
                     pass
+                survey = Survey.objects.get(query, pk=item[3:])
                 _class, voted, answers, creator = "", "", "", survey.creator
+                if survey.commuity:
+                    survey_vote = "c_survey_vote "
+                    survey_detail = "c_survey_detail "
+                else:
+                    survey_vote = "u_survey_vote "
+                    survey_detail = "u_survey_detail "
                 if survey.is_time_end():
                     time = "<p>Время голосования вышло</p>"
                 else:
                     time = "<p>До " + str(survey.time_end) + "</p>"
                     if user.is_authenticated and not survey.is_user_voted(user.pk):
-                        _class = " pointer u_survey_vote " + str(survey.is_multiple)
+                        _class = " pointer " + survey_vote + str(survey.is_multiple)
                 if survey.image:
                     image = '<img src="' + survey.image.url + '" alt="user image">'
                 else:
                     image = ""
                 if survey.is_have_votes():
-                    voters = '<span class="u_survey_detail pointer">'
+                    voters = '<span class="' + survey_detail + ' pointer">'
                     for user in survey.get_6_users():
                         if user.s_avatar:
                             img = '<img src="' + user.s_avatar.url + '" style="width: 40px;border-radius:40px;" alt="image">'
@@ -481,7 +491,7 @@ def get_message_edit(message, user):
                     if answer.is_user_voted(user.pk):
                         voted = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
                     answers = ''.join([answers, '<div class="lite_color answer_style', _class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;">', voted, str(answer.get_procent()), '%</span></div>'])
-                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="u_survey_detail pointer">', survey.title, '</h4><a class="underline ajax" href="/users/', creator.pk, '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
+                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="', survey_detail, 'pointer">', survey.title, '</h4><a class="underline ajax" href="/users/', creator.pk, '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
             except:
                 pass
         elif item[:3] == "lmu":
@@ -515,9 +525,9 @@ def get_message_edit(message, user):
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoList
-                list = VideoList.objects.get(list_query, pk=item[3:])
                 if list.type[0] == "_":
                     pass
+                list = VideoList.objects.get(list_query, pk=item[3:])
                 image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
                 block = ''.join([block, '<div class="folder" videolist-pk="', str(list.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lvi', str(list.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 load_video_list pointer">', image, '</div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 load_video_list pointer"><a class="nowrap">', list.name, ' (', str(list.count_items()), ')</a></p></div><small class="file-accessed pointer video_attach_list_remove underline">Открепить</small></div></div>'])
             except:
