@@ -40,15 +40,16 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 })
 on('#ajax', 'input', '.message_text', function() {
+  _this = this;
   if (document.body.querySelector(".chatlist")) {
     check_message_form_btn()
   };
-  if (!this.classList.contains("draft_created")) {
+  if (!_this.classList.contains("draft_created")) {
       setTimeout(function(){
         console.log('посылаем ajax после трех секунд.');
-        this.classList.add("draft_created");
+        _this.classList.add("draft_created");
         setTimeout(function(){
-          this.classList.remove("draft_deleted");
+          _this.classList.remove("draft_deleted");
       }, 3000)
     }, 3000)
   }
