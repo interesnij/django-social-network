@@ -43,17 +43,14 @@ on('#ajax', 'input', '.message_text', function() {
   if (document.body.querySelector(".chatlist")) {
     check_message_form_btn()
   };
-  copied = false;
-  if (!copied) {
+  if (!this.classList.contains("draft_created")) {
       setTimeout(function(){
         console.log('посылаем ajax после трех секунд.');
-        copied = true
+        this.classList.add("draft_created");
+        setTimeout(function(){
+          this.classList.remove("draft_deleted");
+      }, 3000)
     }, 3000)
-  } else {
-    setTimeout(function(){
-      console.log('задержка!');
-      copied = false
-  }, 5000)
   }
 });
 
