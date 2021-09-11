@@ -51,9 +51,11 @@ on('#ajax', 'input', '.message_text', function() {
     check_message_form_btn()
   };
   if (!_this.classList.contains("draft_created")) {
-        console.log('посылаем ajax после трех секунд.');
         _this.classList.add("draft_created");
-        remove_class_timeout(_this)
+        remove_class_timeout(_this);
+        setTimeout(function(){
+          console.log('посылаем ajax после трех секунд.');
+      }, 3000)
   }
 });
 
