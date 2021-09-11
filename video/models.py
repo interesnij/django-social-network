@@ -641,11 +641,11 @@ class Video(models.Model):
 
 
 class VideoComment(models.Model):
-    EDITED, PUBLISHED, PROCESSING = 'EDI', 'PUB', '_PRO'
+    EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
     DELETED, EDITED_DELETED = '_DEL', '_DELE'
     CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
         (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
         (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )

@@ -28,22 +28,24 @@ class ChatDetailView(ListView):
 		from common.template.user import get_settings_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.pk = request.user.pk
 		if self.chat.is_private():
 			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_group():
 			self.template_name = get_settings_template("chat/chat/detail/group_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
-		unread_messages = self.chat.get_unread_message(request.user.pk)
+		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
-		self.get_messages = self.chat.get_messages_for_recipient(request.user.pk)
-		self.get_fix_message = self.chat.get_fix_message_for_recipient(request.user.pk)
+		self.get_messages = self.chat.get_messages_for_recipient(self.pk)
+		self.get_fix_message = self.chat.get_fix_message_for_recipient(self.pk)
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatDetailView,self).get_context_data(**kwargs)
 		context['chat'] = self.chat
 		context['object'] = self.get_fix_message
+		context['is_have_draft'] = self.chat.is_have_draft_message(self.pk)
 		return context
 
 	def get_queryset(self):

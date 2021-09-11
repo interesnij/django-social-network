@@ -230,6 +230,13 @@ class Chat(models.Model):
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
 
+    def get_draft_message(self, user_id):
+        return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
+
+    def is_have_draft_message(self, user_id):
+        return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
+
+
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
@@ -262,10 +269,10 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    PROCESSING, PUBLISHED, EDITED, DELETED, CLOSED, FIXED, FIXED_EDITED = '_PRO','PUB','EDI','_DEL','_CLO','_FIX','_FIXE'
+    PROCESSING, PUBLISHED, EDITED, DELETED, CLOSED, FIXED, FIXED_EDITED, DRAFT = '_PRO','PUB','EDI','_DEL','_CLO','_FIX','_FIXE','_DRA'
     DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED = '_DELF','_DELFI','_DELE','_CLOFI','_CLOF','_CLOE'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),
+        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
         (DELETED_FIXED, 'Удалённый закрепленный'),(DELETED_EDITED_FIXED, 'Удалённый измененный закрепленный'),(DELETED_EDITED, 'Удалённый измененный'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_EDITED_FIXED, 'Закрытый измененный закрепленный'),(CLOSED_FIXED, 'Закрытый закрепленный'),
     )
 
@@ -449,6 +456,32 @@ class Message(models.Model):
                 get_message_processing(recipient_message, 'PUB')
                 recipient_message.create_socket()
         return creator_message
+
+    def save_draft_message(chat, creator_id, parent, text, attach):
+        # программа для сохранения черновика сообщения в чате
+        if parent:
+            parent_id = parent
+        else:
+            parent_id = None
+
+        if text:
+            import re
+            ids = re.findall(r'data-pk="(?P<pk>\d+)"', text)
+            if ids:
+                from common.model.other import UserPopulateSmiles
+                for id in ids:
+                    UserPopulateSmiles.get_plus_or_create(user_pk=creator_id, smile_pk=id)
+
+        if chat.is_have_draft_message(creator_id):
+            message = chat.get_draft_message(creator_id)
+            message.text = text
+            message.attach = Message.get_format_attach(attach)
+            message.parent_id = parent_id
+            message.save(update_fields=["text","attach","parent_id"])
+            return message
+        else:
+            message = Message.objects.create(chat=chat, creator_id=creator_id, recipient_id=creator_id, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+            return message
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing

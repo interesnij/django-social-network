@@ -365,7 +365,7 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    PROCESSING, DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_DRA","_FIX",'PUB','MAN','_DEL','_CLO', '_MES'
+    PROCESSING, DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_DRA","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
         (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
@@ -886,11 +886,11 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    EDITED, PUBLISHED, PROCESSING = 'EDI', 'PUB', '_PRO'
+    EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
     DELETED, EDITED_DELETED = '_DEL', '_DELE'
     CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
         (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
         (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )

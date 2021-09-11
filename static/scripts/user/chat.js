@@ -42,7 +42,10 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 on('#ajax', 'input', '.message_text', function() {
   if (document.body.querySelector(".chatlist")) {
   check_message_form_btn()
-  }
+};
+setTimeout(() => {
+  console.log('асинхронное сообщение, которое появится на экране через 3 секунды')
+}, 3000);
 })
 
 on('#ajax', 'click', '.classic_smile_item', function() {
