@@ -40,11 +40,6 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 })
 
-function remove_class_timeout(el) {
-  setTimeout(function(){
-    el.classList.remove("draft_created");
-}, 10000)
-}
 on('#ajax', 'input', '.message_text', function() {
   _this = this;
   if (document.body.querySelector(".chatlist")) {
@@ -54,7 +49,9 @@ on('#ajax', 'input', '.message_text', function() {
         _this.classList.add("draft_created");
         remove_class_timeout(_this);
         setTimeout(function(){
-          console.log('посылаем ajax после трех секунд.');
+          form = _this.parentElement.parentElement;
+          send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("data-pk"));
+          form.nextElementSibling.innerHTML = "Черновик сохранен"
       }, 10000)
   }
 });

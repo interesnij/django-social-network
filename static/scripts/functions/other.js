@@ -20,6 +20,12 @@ function show_message_form_voice_btn() {
   document.body.querySelector("#message_post_btn").style.display = "none";
 }
 
+function remove_class_timeout(el) {
+  setTimeout(function(){
+    el.classList.remove("draft_created");
+}, 10000)
+}
+
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', url + item.getAttribute("data-uuid") + "/", true );
