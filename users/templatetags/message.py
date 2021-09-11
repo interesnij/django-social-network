@@ -28,3 +28,7 @@ def get_attach(message, request_user):
 @register.filter
 def is_favourite(message, user_id):
     return message.is_message_in_favourite(user_id)
+
+@register.filter
+def get_edit_attach(message, request_user):
+    return message.get_edit_attach(request_user)

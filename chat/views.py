@@ -45,7 +45,8 @@ class ChatDetailView(ListView):
 		context = super(ChatDetailView,self).get_context_data(**kwargs)
 		context['chat'] = self.chat
 		context['object'] = self.get_fix_message
-		context['is_have_draft'] = self.chat.is_have_draft_message(self.pk)
+		if self.chat.is_have_draft_message(self.pk):
+			context['get_message_draft'] = self.chat.get_draft_message(self.pk) 
 		return context
 
 	def get_queryset(self):
