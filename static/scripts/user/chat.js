@@ -43,7 +43,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 function remove_class_timeout(el) {
   setTimeout(function(){
     el.classList.remove("draft_created");
-}, 3000)
+}, 10000)
 }
 on('#ajax', 'input', '.message_text', function() {
   _this = this;
@@ -55,7 +55,7 @@ on('#ajax', 'input', '.message_text', function() {
         remove_class_timeout(_this);
         setTimeout(function(){
           console.log('посылаем ajax после трех секунд.');
-      }, 3000)
+      }, 10000)
   }
 });
 
