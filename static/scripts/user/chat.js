@@ -50,8 +50,10 @@ on('#ajax', 'input', '.message_text', function() {
         remove_class_timeout(_this);
         setTimeout(function(){
           form = _this.parentElement.parentElement;
-          send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-          form.nextElementSibling.innerHTML = "Черновик сохранен"
+          if (!form.querySelector(".message_text").innerHTML && !form.querySelector(".special_block").innerHTML){
+            send_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+            form.nextElementSibling.innerHTML = "Черновик сохранен"
+          }
       }, 7000)
   }
 });
