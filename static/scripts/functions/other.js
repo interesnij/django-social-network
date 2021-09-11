@@ -23,7 +23,7 @@ function show_message_form_voice_btn() {
 function remove_class_timeout(el) {
   setTimeout(function(){
     el.classList.remove("draft_created");
-}, 10000)
+}, 3000)
 }
 
 function remove_item_and_show_restore_block(item, url, _class, title) {
