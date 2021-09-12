@@ -310,6 +310,9 @@ class Message(models.Model):
                 return True
         return False
 
+    def is_edited(self):
+        return self.type == "EDI"
+
     def get_count_attach(self):
         if self.attach:
             length = self.attach.split(",")
