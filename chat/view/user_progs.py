@@ -249,12 +249,10 @@ class UserMessageEdit(TemplateView):
 
 	def post(self, request, *args, **kwargs):
 		from chat.models import Message
-		from chat.forms import MessageForm
 		from common.template.user import render_for_platform
 
 		_message = Message.objects.get(uuid=self.kwargs["uuid"])
-		form_post = MessageForm(request.POST, instance=_message)
-		if request.is_ajax() and form_post.is_valid():
+		if request.is_ajax():
 			if request.POST.get('text') or request.POST.get('attach_items'):
 				_message.edit_message(text=request.POST.get('text'), attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/new_edit_message.html', {'object': _message})
