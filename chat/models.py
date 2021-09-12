@@ -496,7 +496,7 @@ class Message(models.Model):
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
 
-        MessageVersion.objects.create(message=self, text=self.text, attach=self.get_attach(attach))
+        MessageVersion.objects.create(message=self, text=self.text, attach=self.attach)
         if self.type == Message.PUBLISHED:
             self.type = Message.EDITED
         elif self.type == Message.FIXED:
