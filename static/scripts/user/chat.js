@@ -538,7 +538,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
 on('#ajax', 'click', '.edit_message_form_remove', function() {
   box = this.parentElement.parentElement;
   box.innerHTML = "";
-  box.previousElementSibling.style.display = "undet"
+  box.previousElementSibling.style.display = "unset"
 });
 
 on('#ajax', 'change', '#u_photo_message_attach', function() {
