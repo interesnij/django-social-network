@@ -43,14 +43,14 @@ class ChatDetailView(ListView):
 		self.get_fix_message = self.chat.get_fix_message_for_recipient(self.pk)
 
 		channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'message',
-            'chat_id': self.chat.pk,
-            'recipient_ids': str(self.chat.get_recipients_ids(request.user.pk)),
-            'name': "u_message_read",
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
+		payload = {
+			'type': 'receive',
+			'key': 'message',
+			'chat_id': self.chat.pk,
+			'recipient_ids': str(self.chat.get_recipients_ids(request.user.pk)),
+			'name': "u_message_read",
+		}
+		async_to_sync(channel_layer.group_send)('notification', payload)
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
