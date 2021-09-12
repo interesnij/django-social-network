@@ -505,7 +505,7 @@ class Message(models.Model):
         self.text = text
         get_edit_message_processing(self)
         self.save()
-        for copy in self.copy.all():
+        for copy in Message.objects.filter(copy_id=self.pk):
             copy.attach = self.attach
             copy.text = self.text
             copy.type = self.type
