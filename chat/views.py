@@ -27,7 +27,7 @@ class ChatDetailView(ListView):
 		from chat.models import Chat
 		from common.template.user import get_settings_template
 		from asgiref.sync import async_to_sync
-        from channels.layers import get_channel_layer
+		from channels.layers import get_channel_layer
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
