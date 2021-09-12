@@ -564,8 +564,7 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
   link_.send(form_data);
 });
 
-
-on('#ajax', 'click', '#message_post_btn', function() {
+on('#ajax', 'click', '.edit_message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
