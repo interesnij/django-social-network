@@ -535,6 +535,11 @@ on('#ajax', 'click', '.u_message_edit', function() {
   };
   link_.send();
 });
+on('#ajax', 'click', '.edit_message_form_remove', function() {
+  box = this.parentElement.parentElement.parentElement;
+  box.innerHTML = "";
+  box.previousElementSibling.style.display = "block"
+}
 
 on('#ajax', 'change', '#u_photo_message_attach', function() {
   if (this.files.length > 10) {
