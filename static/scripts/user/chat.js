@@ -563,3 +563,34 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
   }
   link_.send(form_data);
 });
+
+
+on('#ajax', 'click', '#message_post_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement;
+  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form_post.querySelector(".message_text").classList.add("border_red");
+    form_post.querySelector(".message_dropdown").classList.add("border_red");
+    return
+  };
+
+  text = form_post.querySelector(".type_hidden");
+  text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
+  form_data = new FormData(form_post);
+  message = form_post.parentElement.previousElementSibling;
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    message.innerHTML = new_post;
+    form_post.parentElement,innerHTML = ""
+  }};
+
+  link_.send(form_data);
+});
