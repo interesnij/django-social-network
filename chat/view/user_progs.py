@@ -248,19 +248,17 @@ class UserMessageEdit(TemplateView):
 		return context
 
 	def post(self, request, *args, **kwargs):
-		from common.check.message import check_can_send_message
 		from chat.models import Message
 		from chat.forms import MessageForm
 		from common.template.user import render_for_platform
 
-		parent, form_post = Message.objects.get(uuid=self.kwargs["uuid"]), MessageForm(request.POST)
-		chat = parent.chat
-		check_can_send_message(request.user, chat)
+		_message = Message.objects.get(uuid=self.kwargs["uuid"])
+		form_post = MessageForm(request.POST, instance=message)
 		if request.is_ajax() and form_post.is_valid():
 			message = form_post.save(commit=False)
 			if request.POST.get('text') or request.POST.get('attach_items'):
-				new_message = Message.edit_message(text=message.text, attach=request.POST.getlist('attach_items'))
-			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
+				_message.edit_message(text=message.text, attach=request.POST.getlist('attach_items'))
+			return render_for_platform(request, 'chat/message/edit_message.html', {'object': _message})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()

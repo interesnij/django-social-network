@@ -489,14 +489,15 @@ class Message(models.Model):
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
 
+        MessageVersion.objects.create(message=self, text=self.text, attach=self.get_attach(attach))
         if self.type == Message.PUBLISHED:
             self.type = Message.EDITED
         elif self.type == Message.FIXED:
             self.type = Message.FIXED_EDITED
-
         self.attach = self.get_attach(attach)
         self.text = text
-        get_edit_message_processing(self)
+        get_edit_message_processing(self) 
+        self.save()
         return self
 
     def get_created(self):
@@ -690,3 +691,19 @@ class MessageFavourite(models.Model):
         unique_together = (('user', 'message'),)
         verbose_name = 'Избранное сообщение'
         verbose_name_plural = 'Избранные сообщения'
+
+
+class MessageVersion(models.Model):
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_version")
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=1000, blank=True)
+    attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+
+    class Meta:
+        verbose_name = "Копия сообщения перед изменением"
+        verbose_name_plural = "Копии сообщений перед изменением"
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
+
+    def __str__(self):
+        return self.text
