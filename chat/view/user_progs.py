@@ -255,9 +255,8 @@ class UserMessageEdit(TemplateView):
 		_message = Message.objects.get(uuid=self.kwargs["uuid"])
 		form_post = MessageForm(request.POST, instance=_message)
 		if request.is_ajax() and form_post.is_valid():
-			message = form_post.save(commit=False)
 			if request.POST.get('text') or request.POST.get('attach_items'):
-				_message.edit_message(text=message.text, attach=request.POST.getlist('attach_items'))
+				_message.edit_message(text=request.POST.get('text'), attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/new_edit_message.html', {'object': _message})
 		else:
 			from django.http import HttpResponseBadRequest
