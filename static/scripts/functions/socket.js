@@ -17,9 +17,9 @@ function case_user_chat_typed(pk, first_name) {
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     p = chat.querySelector("p");
     p.style.display = "none";
-    p.previousElementSibling.innerHTML = first_name + " набирает сообщение...";
+    p.nextElementSibling.innerHTML = first_name + " набирает сообщение...";
     setTimeout(function(){
-      p.previousElementSibling.innerHTML = "";
+      p.nextElementSibling.innerHTML = "";
       p.style.display = "unset";
   }, 3000)
   }
