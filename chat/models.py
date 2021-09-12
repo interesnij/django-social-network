@@ -496,7 +496,7 @@ class Message(models.Model):
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
 
-        MessageVersion.objects.create(message=self, text=self.text, attach=self.attach)
+        MessageVersion.objects.create(message=self, text=self.text, attach=self.attach.replace("<div class='attach_container'></div>", ""))
         if self.type == Message.PUBLISHED:
             self.type = Message.EDITED
         elif self.type == Message.FIXED:
@@ -505,6 +505,10 @@ class Message(models.Model):
         self.text = text
         get_edit_message_processing(self)
         self.save()
+        for copy in self.copy.all():
+            copy.attach = self.attach
+            copy.text = self.text
+            copy.type = self.type
         return self
 
     def get_created(self):
