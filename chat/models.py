@@ -369,7 +369,7 @@ class Message(models.Model):
 
     def get_format_attach(value):
         _attach = str(value)
-        return _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        return _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "").replace("<div class='attach_container'></div>", "")
 
 
     def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
