@@ -522,7 +522,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
   form.style.display = "none";
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -531,8 +531,8 @@ on('#ajax', 'click', '.u_message_edit', function() {
     response.innerHTML = elem;
     form.nextElementSibling.innerHTML = response;
     }
-    link_.send();
-  }
+  };
+  link_.send();
 });
 
 on('#ajax', 'change', '#u_photo_message_attach', function() {
