@@ -502,7 +502,7 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'chat_id': chat.pk,
-            'recipient_ids': str(chat.get_recipients_ids(creator.pk)),
+            'recipient_ids': str(chat.get_recipients_ids(creator.pk) + [creator.pk]),
             'name': "u_message_typed",
             'user_name': creator.first_name,
         }
