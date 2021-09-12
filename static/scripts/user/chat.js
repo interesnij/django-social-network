@@ -40,7 +40,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 })
 
-on('#ajax', 'input', '.message_text', function() {
+on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
   if (document.body.querySelector(".chatlist")) {
     check_message_form_btn()
@@ -53,8 +53,9 @@ on('#ajax', 'input', '.message_text', function() {
           if (form.querySelector(".message_text").innerHTML || form.querySelector(".special_block").innerHTML){
             send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
           }
-      }, 7000)
-  }
+      }, 1000)
+  };
+
 });
 
 

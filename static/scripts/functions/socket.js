@@ -1,7 +1,19 @@
 function case_user_notify() {
   console.log('заявки, дружба, приглашения...');
   new Audio('/static/audio/apple/stargaze.mp3').play();
-}
+};
+function case_user_chat_typed(pk, first_name) {
+  if (document.body.querySelector(".chat_container")) {
+    if (pk == document.body.querySelector(".chat_container").getAttribute("chat-pk")) {
+      console.log('пользователь пишет...');
+      typed_box = document.body.querySelector("user_typed_box");
+      typed_box.innerHTML = first_name + " набирает сообщение..."
+      setTimeout(function(){
+        typed_box.innerHTML = "";
+    }, 3000)
+    }
+  }
+};
 function case_u_post_notify(uuid) {
     console.log('Реакции на записи');
     try{
@@ -9,7 +21,7 @@ function case_u_post_notify(uuid) {
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
     }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_c_post_notify(uuid) {
     console.log('Реакции на записи сообщества');
     try{
@@ -17,7 +29,7 @@ function case_c_post_notify(uuid) {
       post_update_votes(document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ), uuid);
     }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_u_post_repost_notify(uuid) {
     console.log('Репосты на записи');
     try{
@@ -29,7 +41,7 @@ function case_u_post_repost_notify(uuid) {
       block.innerHTML = count;
     }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_c_post_repost_notify(uuid) {
     console.log('Репосты на записи сообщества');
     try{
@@ -41,24 +53,23 @@ function case_c_post_repost_notify(uuid) {
       block.innerHTML = count;
     }}catch{null};
     new Audio('/static/audio/apple/nota.mp3').play();
-}
-
+};
 function case_u_photo_notify(uuid) {
     console.log('Реакции на фото');
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_c_photo_notify(uuid) {
     console.log('Реакции на фото сообщества');
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_u_photo_repost_notify(uuid) {
     console.log('Репосты записи');
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 function case_c_photo_repost_notify(uuid) {
     console.log('Репосты записи сообщества');
     new Audio('/static/audio/apple/nota.mp3').play();
-}
+};
 
 function case_u_post_create(uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
@@ -193,12 +204,12 @@ event.creator_id != request_user_id
           if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
         }
         break;
-
+        case_user_chat_typed(pk, first_name)
     case "message":
-      if (event.recipient_ids.indexOf( request_user_id ) != -1){ 
+      if (event.recipient_ids.indexOf( request_user_id ) != -1){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
-        console.log(event.recipient_ids)
-        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id);}
+        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id)};
+        if (event.name == "u_message_typed"){case_user_chat_typed(event.chat_id, event.user_name)}
       }
       break;
 

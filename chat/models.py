@@ -472,6 +472,9 @@ class Message(models.Model):
 
     def save_draft_message(chat, creator_id, parent, text, attach):
         # программа для сохранения черновика сообщения в чате
+        from asgiref.sync import async_to_sync
+        from channels.layers import get_channel_layer
+
         if parent:
             parent_id = parent
         else:
@@ -491,10 +494,19 @@ class Message(models.Model):
             message.attach = Message.get_format_attach(attach)
             message.parent_id = parent_id
             message.save(update_fields=["text","attach","parent_id"])
-            return message
         else:
-            message = Message.objects.create(chat=chat, creator_id=creator_id, recipient_id=creator_id, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
-            return message
+            Message.objects.create(chat=chat, creator_id=creator_id, recipient_id=creator_id, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': 'message',
+            'chat_id': self.chat.pk,
+            'recipient_ids': str(self.chat.get_recipients_ids(self.creator.pk)),
+            'name': "u_message_typed",
+            'user_name': self.creator.first_name,
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
