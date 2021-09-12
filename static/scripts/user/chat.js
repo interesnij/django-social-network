@@ -526,7 +526,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     response = document.createElement("span");
     response.innerHTML = link_.responseText;
-    message.querySelector(".edit_form_box").innerHTML = response.innerHTML;
+    message.nextElementSibling.innerHTML = response.innerHTML;
     objDiv = document.body.querySelector(".chatlist");
     objDiv.scrollTop = objDiv.scrollHeight;
     }
