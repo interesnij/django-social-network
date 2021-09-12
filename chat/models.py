@@ -509,6 +509,7 @@ class Message(models.Model):
             copy.attach = self.attach
             copy.text = self.text
             copy.type = self.type
+            copy.save()
         return self
 
     def get_created(self):
