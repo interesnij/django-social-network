@@ -518,8 +518,6 @@ on('#ajax', 'click', '.u_message_edit', function() {
   //checkbox.checked = false;
   //checkbox.style.display = "none";
   //message.classList.remove("target_message", "custom_color");
-  form = document.body.querySelector(".customize_form");
-  form.style.display = "none";
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
@@ -528,7 +526,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     response = document.createElement("span");
     response.innerHTML = link_.responseText;
-    document.body.querySelector(".edit_form_box").innerHTML = response.innerHTML;
+    message.querySelector(".edit_form_box").innerHTML = response.innerHTML;
     objDiv = document.body.querySelector(".chatlist");
     objDiv.scrollTop = objDiv.scrollHeight;
     }
