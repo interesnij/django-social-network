@@ -310,6 +310,13 @@ class Message(models.Model):
                 return True
         return False
 
+    def get_count_attach(self):
+        if self.attach:
+            length = self.attach.split(",")
+            return "files_" + str(len(length))
+        else:
+            return "files_0"
+
     def get_parent_message(self):
         if not self.parent:
             return '<div class="media p-1 pag">Нет ответа!</div>'
@@ -496,7 +503,7 @@ class Message(models.Model):
             self.type = Message.FIXED_EDITED
         self.attach = self.get_attach(attach)
         self.text = text
-        get_edit_message_processing(self) 
+        get_edit_message_processing(self)
         self.save()
         return self
 

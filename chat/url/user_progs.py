@@ -7,7 +7,6 @@ urlpatterns = [
     url(r'^send_message/(?P<pk>\d+)/$', UserSendMessage.as_view()),
     url(r'^save_draft_message/(?P<pk>\d+)/$', UserSaveDraftMessage.as_view()),
     url(r'^edit_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageEdit.as_view()),
-    url(r'^reply_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageEdit.as_view()),
     url(r'^load_chat_message/(?P<uuid>[0-9a-f-]+)/$', LoadUserChatMessage.as_view()),
     url(r'^load_message/(?P<uuid>[0-9a-f-]+)/$', LoadUserMessage.as_view()),
     url(r'^fixed_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageFixed.as_view()),

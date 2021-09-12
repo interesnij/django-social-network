@@ -511,6 +511,30 @@ on('#ajax', 'click', '.u_message_reply', function() {
   hide_chat_console()
 });
 
+on('#ajax', 'click', '.u_message_edit', function() {
+  hide_chat_console();
+  message = document.body.querySelector(".target_message");
+  checkbox = message.querySelector(".message_checkbox");
+  checkbox.checked = false;
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  form = document.body.querySelector(".customize_form");
+  form.style.display = "none";
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    form.nextElementSibling.innerHTML = response;
+    }
+    link_.send();
+  }
+});
+
 on('#ajax', 'change', '#u_photo_message_attach', function() {
   if (this.files.length > 10) {
       toast_error("Не больше 10 фотографий");return
