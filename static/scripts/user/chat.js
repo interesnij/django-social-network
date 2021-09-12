@@ -508,8 +508,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
 
   block = document.body.querySelector(".parent_message_block");
   block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + parent + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
-  hide_chat_console();
-  window.scrollTo(1000,1000);
+
 });
 
 on('#ajax', 'click', '.u_message_edit', function() {
@@ -530,7 +529,8 @@ on('#ajax', 'click', '.u_message_edit', function() {
     response = document.createElement("span");
     response.innerHTML = link_.responseText;
     form.nextElementSibling.innerHTML = response.innerHTML;
-    window.scrollTo(1000,1000);
+    objDiv = form.nextElementSibling;
+    objDiv.scrollTop = objDiv.scrollHeight;
     }
   };
   link_.send();
