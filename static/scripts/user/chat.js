@@ -515,9 +515,10 @@ on('#ajax', 'click', '.u_message_edit', function() {
   hide_chat_console();
   message = document.body.querySelector(".target_message");
   checkbox = message.querySelector(".message_checkbox");
-  //checkbox.checked = false;
-  //checkbox.style.display = "none";
-  //message.classList.remove("target_message", "custom_color");
+  checkbox.checked = false;
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  message.style.display = "none";
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
