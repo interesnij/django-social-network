@@ -515,9 +515,9 @@ on('#ajax', 'click', '.u_message_edit', function() {
   hide_chat_console();
   message = document.body.querySelector(".target_message");
   checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
-  checkbox.style.display = "none";
-  message.classList.remove("target_message", "custom_color");
+  //checkbox.checked = false;
+  //checkbox.style.display = "none";
+  //message.classList.remove("target_message", "custom_color");
   form = document.body.querySelector(".customize_form");
   form.style.display = "none";
 
