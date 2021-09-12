@@ -470,7 +470,7 @@ class Message(models.Model):
                 recipient_message.create_socket()
         return creator_message
 
-    def save_draft_message(chat, creator_id, parent, text, attach):
+    def save_draft_message(chat, creator, parent, text, attach):
         # программа для сохранения черновика сообщения в чате
         from asgiref.sync import async_to_sync
         from channels.layers import get_channel_layer
@@ -486,25 +486,25 @@ class Message(models.Model):
             if ids:
                 from common.model.other import UserPopulateSmiles
                 for id in ids:
-                    UserPopulateSmiles.get_plus_or_create(user_pk=creator_id, smile_pk=id)
+                    UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
 
-        if chat.is_have_draft_message(creator_id):
-            message = chat.get_draft_message(creator_id)
+        if chat.is_have_draft_message(creator.pk):
+            message = chat.get_draft_message(creator.pk)
             message.text = text
             message.attach = Message.get_format_attach(attach)
             message.parent_id = parent_id
             message.save(update_fields=["text","attach","parent_id"])
         else:
-            Message.objects.create(chat=chat, creator_id=creator_id, recipient_id=creator_id, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+            Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
 
         channel_layer = get_channel_layer()
         payload = {
             'type': 'receive',
             'key': 'message',
-            'chat_id': self.chat.pk,
-            'recipient_ids': str(self.chat.get_recipients_ids(self.creator.pk)),
+            'chat_id': chat.pk,
+            'recipient_ids': str(chat.get_recipients_ids(creator.pk)),
             'name': "u_message_typed",
-            'user_name': self.creator.first_name,
+            'user_name': creator.first_name,
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
