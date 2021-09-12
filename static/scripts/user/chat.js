@@ -526,9 +526,8 @@ on('#ajax', 'click', '.u_message_edit', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
     response = document.createElement("span");
-    response.innerHTML = elem.innerHTML;
+    response.innerHTML = link_.responseText;
     form.nextElementSibling.innerHTML = response.innerHTML;
     }
   };
