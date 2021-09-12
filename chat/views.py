@@ -26,6 +26,8 @@ class ChatDetailView(ListView):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from common.template.user import get_settings_template
+		from asgiref.sync import async_to_sync
+        from channels.layers import get_channel_layer
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
@@ -39,6 +41,16 @@ class ChatDetailView(ListView):
 		unread_messages.update(unread=False)
 		self.get_messages = self.chat.get_messages_for_recipient(self.pk)
 		self.get_fix_message = self.chat.get_fix_message_for_recipient(self.pk)
+
+		channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': 'message',
+            'chat_id': self.chat.pk,
+            'recipient_ids': str(self.chat.get_recipients_ids(request.user.pk)),
+            'name': "u_message_read",
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
 		return super(ChatDetailView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -46,7 +58,7 @@ class ChatDetailView(ListView):
 		context['chat'] = self.chat
 		context['object'] = self.get_fix_message
 		if self.chat.is_have_draft_message(self.pk):
-			context['get_message_draft'] = self.chat.get_draft_message(self.pk) 
+			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
 		return context
 
 	def get_queryset(self):

@@ -24,6 +24,22 @@ function case_user_chat_typed(pk, first_name) {
   }, 3000)
   }
 };
+function case_user_chat_read(pk) {
+  if (document.body.querySelector(".chat_container")) {
+    if (pk == document.body.querySelector(".chat_container").getAttribute("chat-pk")) {
+      console.log('пользователь прочитал сообщения...');
+      box = document.body.querySelector(".chat_container");
+      list = box.querySelectorAll(".message");
+      for (var i = 0; i < list.length; i++){
+        list[i].classList.remove(".bg-light-secondary")
+      }
+    }
+  } if (document.body.querySelector(".chat_list_container")) {
+    list = document.body.querySelector(".chat_list_container");
+    chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
+    chat.querySelector(".tab_badge").remove();
+  }
+};
 function case_u_post_notify(uuid) {
     console.log('Реакции на записи');
     try{
@@ -214,12 +230,13 @@ event.creator_id != request_user_id
           if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
         }
         break;
-        case_user_chat_typed(pk, first_name)
+        case_user_chat_read(pk)
     case "message":
       if (event.recipient_ids.indexOf( request_user_id ) != -1){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
-        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id)};
-        if (event.name == "u_message_typed"){case_user_chat_typed(event.chat_id, event.user_name)}
+        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id)}
+        else if (event.name == "u_message_typed"){case_user_chat_typed(event.chat_id, event.user_name)}
+        else if (event.name == "u_message_read"){case_user_chat_read(event.chat_id)}
       }
       break;
 

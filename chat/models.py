@@ -471,7 +471,8 @@ class Message(models.Model):
         return creator_message
 
     def save_draft_message(chat, creator, parent, text, attach):
-        # программа для сохранения черновика сообщения в чате
+        # программа для сохранения черновика сообщения в чате, а также посылания сокета
+        # всем участникам чата, что создатель черновика набирает сообщение
         from asgiref.sync import async_to_sync
         from channels.layers import get_channel_layer
 
@@ -502,7 +503,7 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'chat_id': chat.pk,
-            'recipient_ids': str(chat.get_recipients_ids(creator.pk) + [creator.pk]),
+            'recipient_ids': str(chat.get_recipients_ids(creator.pk)),
             'name': "u_message_typed",
             'user_name': creator.first_name,
         }
