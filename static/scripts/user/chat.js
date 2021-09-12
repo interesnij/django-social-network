@@ -587,7 +587,7 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    message.innerHTML = new_post;
+    message.innerHTML = new_post.innerHTML;
     form_post.parentElement.innerHTML = "";
     message.style.display = "flex"
   }};
