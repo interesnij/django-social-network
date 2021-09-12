@@ -529,7 +529,7 @@ on('#ajax', 'click', '.u_message_edit', function() {
     response = document.createElement("span");
     response.innerHTML = link_.responseText;
     form.nextElementSibling.innerHTML = response.innerHTML;
-    objDiv = form.nextElementSibling;
+    objDiv = document.body.querySelector(".chatlist");
     objDiv.scrollTop = objDiv.scrollHeight;
     }
   };
