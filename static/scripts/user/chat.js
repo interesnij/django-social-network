@@ -528,8 +528,8 @@ on('#ajax', 'click', '.u_message_edit', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     response = document.createElement("span");
-    response.innerHTML = elem.innerHTML; 
-    form.nextElementSibling.innerHTML = response;
+    response.innerHTML = elem.innerHTML;
+    form.nextElementSibling.innerHTML = response.innerHTML;
     }
   };
   link_.send();
