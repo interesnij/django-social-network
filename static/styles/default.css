@@ -1,7 +1,11 @@
 .next_page_list img {
   width: 30px !important
 }
-
+.user_typed_box {
+  position: absolute;
+  bottom: 31px;
+}
+}
 .repost_style_btn {
   top: 1px;
   position: absolute;
