@@ -6,7 +6,7 @@ function case_user_chat_typed(pk, first_name) {
   if (document.body.querySelector(".chat_container")) {
     if (pk == document.body.querySelector(".chat_container").getAttribute("chat-pk")) {
       console.log('пользователь пишет...');
-      typed_box = document.body.querySelector("user_typed_box");
+      typed_box = document.body.querySelector(".user_typed_box");
       typed_box.innerHTML = first_name + " набирает сообщение..."
       setTimeout(function(){
         typed_box.innerHTML = "";
