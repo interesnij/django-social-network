@@ -12,6 +12,16 @@ function case_user_chat_typed(pk, first_name) {
         typed_box.innerHTML = "";
     }, 3000)
     }
+  } if (document.body.querySelector(".chat_list_container")) {
+    list = document.body.querySelector(".chat_list_container");
+    chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
+    p = chat.querySelector("p");
+    p.style.display = "none";
+    p.previousElementSibling.innerHTML = first_name + " набирает сообщение...";
+    setTimeout(function(){
+      p.previousElementSibling.innerHTML = "";
+      p.style.display = "unset";
+  }, 3000)
   }
 };
 function case_u_post_notify(uuid) {
