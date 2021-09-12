@@ -528,7 +528,6 @@ on('#ajax', 'click', '.u_message_edit', function() {
     response = document.createElement("span");
     response.innerHTML = link_.responseText;
     box = message.nextElementSibling;
-    box.style.marginTop = "10px";
     box.innerHTML = response.innerHTML;
     objDiv = document.body.querySelector(".chatlist");
     objDiv.scrollTop = objDiv.scrollHeight;
