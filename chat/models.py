@@ -547,9 +547,9 @@ class Message(models.Model):
             images = re.findall(r'<img.*?>', self.text)
             for image in images:
                 count += (len(image) -1)
-            return self.text[:count]
+            return self.text[:count].replace("<br>", "")
         else:
-            return self.text[:60]
+            return self.text[:60].replace("<br>", "")
 
     def is_repost(self):
         return self.repost
