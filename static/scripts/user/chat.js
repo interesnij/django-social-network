@@ -273,7 +273,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
-  __text = _text.replace("<br>","");
+  __text = _text.replace("<br><br>","");
   console.log(_text)
   console.log(__text)
   if (!__text && !form_post.querySelector(".special_block").innerHTML){
