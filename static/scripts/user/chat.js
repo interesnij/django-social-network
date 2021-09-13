@@ -272,7 +272,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 });
 
 function send_message (form_post, url) {
-  if (!form_post.querySelector(".message_text").replace("<br>","").innerHTML && !form_post.querySelector(".special_block").innerHTML){
+  if (!form_post.querySelector(".message_text").innerHTML.replace("<br>","") && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
