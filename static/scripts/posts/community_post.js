@@ -15,6 +15,12 @@ on('#ajax', 'click', '#community_article_add', function() {
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
+  _text = form_post.querySelector(".smile_supported").innerHTML;
+
+  if (!_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
+    toast_error("Напишите или прикрепите что-нибудь")
+  };
+
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
@@ -22,9 +28,6 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   $input.value = form_post.querySelector(".smile_supported").innerHTML;
   form_post.append($input);
   form_data = new FormData(form_post);
-  if (!form_post.querySelector(".smile_supported").innerHTML && !form_post.querySelector(".attach_block").innerHTML) {
-    toast_error("Напишите или прикрепите что-нибудь")
-  }
 
   lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".post_stream");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -59,6 +62,11 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 
 on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
+  _text = form_post.querySelector(".smile_supported").innerHTML;
+  if (!_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
+    toast_error("Напишите или прикрепите что-нибудь")
+  };
+
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");

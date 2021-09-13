@@ -69,6 +69,14 @@ function get_edit_comment_form(_this, url){
 
 function post_edit_comment_form(_this, url) {
   form = _this.parentElement.parentElement.parentElement
+  _text = form_post.querySelector(".smile_supported").innerHTML;
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
+    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
+    return
+  };
+  
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
   $input = document.createElement("input");
@@ -81,12 +89,7 @@ function post_edit_comment_form(_this, url) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('POST', url + _this.getAttribute("data-pk") + "/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  if (!form.querySelector(".text-comment").value && !form.querySelector(".img_block").firstChild){
-    toast_error("Напишите или прикрепите что-нибудь");
-    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
-    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
-    return
-  };
+
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
           elem = link_.responseText;
@@ -856,40 +859,43 @@ function elementInViewport(el) {
 }
 
 function send_comment(form, block, link) {
+  _text = form_post.querySelector(".comment_text").innerHTML;
+  if (/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" || form.querySelector(".img_block").firstChild) {
+    toast_error("Напишите или прикрепите что-нибудь"); return
+  };
+
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("type_hidden");
   $input.value = form.querySelector(".comment_text").innerHTML;
   form.append($input);
-    form_comment = new FormData(form);
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link_.open('POST', link, true);
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    if (form.querySelector(".comment_text").value || form.querySelector(".img_block").firstChild) {
-      toast_error("Напишите или прикрепите что-нибудь"); return
-    };
-    link_.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            form.querySelector(".comment_text").innerHTML = "";
-            elem = link_.responseText;
-            new_post = document.createElement("span");
-            new_post.innerHTML = elem;
-            block.append(new_post);
-            toast_success(" Комментарий опубликован");
-            form.querySelector(".img_block").innerHTML = "";
-            form.querySelector(".type_hidden").remove();
-            try {
-                form_dropdown = form.querySelector(".current_file_dropdown");
-                form_dropdown.classList.remove("current_file_dropdown");
-                form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
-                form_dropdown.parentElement.parentElement.classList.add("files_null")
-            } catch {
-                null
-            }
-        }
-    };
-    link_.send(form_comment)
+  form_comment = new FormData(form);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('POST', link, true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          form.querySelector(".comment_text").innerHTML = "";
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          block.append(new_post);
+          toast_success(" Комментарий опубликован");
+          form.querySelector(".img_block").innerHTML = "";
+          form.querySelector(".type_hidden").remove();
+          try {
+              form_dropdown = form.querySelector(".current_file_dropdown");
+              form_dropdown.classList.remove("current_file_dropdown");
+              form_dropdown.parentElement.parentElement.classList.remove("files_one", "files_two");
+              form_dropdown.parentElement.parentElement.classList.add("files_null")
+          } catch {
+              null
+          }
+      }
+  };
+  link_.send(form_comment)
 }
 
 function load_chart() {

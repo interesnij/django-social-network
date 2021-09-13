@@ -71,25 +71,6 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   }
 })
 
-on('#ajax', 'click', '#send_page_message_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  this.disabled = true;
-  form.querySelector(".type_hidden").value = form.querySelector(".page_message_text").innerHTML;
-  form_data = new FormData(form);
-
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/chat/user_progs/send_page_message/' + this.getAttribute("data-pk") + '/', true );
-      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            toast_success("Сообщение отправлено");
-            document.querySelector(".item_fullscreen").style.display = "none";
-            document.getElementById("item_loader").innerHTML="";
-        } else {this.disabled = false}
-      }
-      ajax_link.send(form_data);
-});
-
 function send_comment_sticker(form_post,value) {
   comment_form = false, reply_form = false, parent_form = false;
   $sticker = document.createElement("input");
@@ -271,6 +252,33 @@ on('#ajax', 'click', '#add_chat_btn', function() {
       ajax_link.send(form_data);
 });
 
+on('#ajax', 'click', '#send_page_message_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  _text = form_post.querySelector(".page_message_text").innerHTML;
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form_post.querySelector(".page_message_text").classList.add("border_red");
+    try{form_post.querySelector(".message_dropdown").classList.add("border_red")}catch{null};
+    return
+  };
+
+  this.disabled = true;
+  form.querySelector(".type_hidden").value = form.querySelector(".page_message_text").innerHTML;
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/chat/user_progs/send_page_message/' + this.getAttribute("data-pk") + '/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            toast_success("Сообщение отправлено");
+            document.querySelector(".item_fullscreen").style.display = "none";
+            document.getElementById("item_loader").innerHTML="";
+        } else {this.disabled = false}
+      }
+      ajax_link.send(form_data);
+});
+
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
 
@@ -314,7 +322,11 @@ function send_message (form_post, url) {
 }
 
 function send_draft_message (form_post, url) {
-  console.log(form_post);
+  _text = form_post.querySelector(".message_text").innerHTML;
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML){
+    return
+  };
+
   text = form_post.querySelector(".type_hidden");
   text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
   form_data = new FormData(form_post);
