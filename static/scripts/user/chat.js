@@ -276,7 +276,7 @@ function send_message (form_post, url) {
   console.log(_text.replace(/<\/?[^>]+>/g,''));
   console.log(_text.replace(/<\/?[^>]+>/g,'') == "");
 
-  if (_text.replace(/<\/?[^>]+>/g,'') == "" && !form_post.querySelector(".special_block").innerHTML){
+  if (_text.trim().replace(/<\/?[^>]+>/g,'') == "" && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
