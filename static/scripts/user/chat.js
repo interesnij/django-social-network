@@ -273,6 +273,8 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
+  console.log(_text.replace(/<\/?[^>]+>/g,''));
+  return
 
   if (_text.replace(/<\/?[^>]+>/g,'') == "" && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
