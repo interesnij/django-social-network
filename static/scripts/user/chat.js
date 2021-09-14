@@ -615,6 +615,14 @@ on('#ajax', 'click', '.u_message_transfer', function() {
 
 on('#ajax', 'click', '.go_transfer_messages', function() {
   list = get_toggle_messages();
+  saver = document.createElement("div");
+  for (var i = 0; i < list.length; i++) {
+    $input = document.createElement("input");
+    $input.setAttribute("type", "hidden");
+    $input.setAttribute("name", "transfer");
+    $input.setAttribute("value", list[i].getAttribute("data-uuid"));
+    saver.append($input)
+  };
 
   if (list.length > 1) {
     count = list.length
@@ -657,7 +665,8 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       window.history.pushState(null, "vfgffgfgf", url);
       scrolled(rtr.querySelector('.chat_container'), target = 0);
       block = rtr.querySelector(".parent_message_block");
-      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
+      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
+      block.append(saver);
     }
   }
   ajax_link.send();
