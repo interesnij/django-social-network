@@ -1,10 +1,10 @@
 {% load message %}
-
+<div class="parent_message_block"></div>
 <form class="customize_form">
-  <span class="user_typed_box small"></span> 
+  <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
-    <div class="parent_message_block"></div>
+
     {% if get_message_draft %}
       <div class="row {{ get_message_draft.get_count_attach }} special_block message_attach_block">
         {{ get_message_draft|get_edit_attach:request.user.pk|safe }}
