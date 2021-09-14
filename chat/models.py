@@ -456,9 +456,9 @@ class Message(models.Model):
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING)
             if transfer:
-                messages = Message.objects.filter(id__in=transfer)
-                for i in messages:
-                    creator_message.transfer.add(i)
+                for i in transfer:
+                    m = Message.objects.get(uuid=i)
+                    creator_message.transfer.add(m)
             if chat.is_have_draft_message(creator.pk):
                 message = chat.get_draft_message(creator.pk)
                 message.delete()
@@ -503,9 +503,9 @@ class Message(models.Model):
         else:
             message = Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
         if transfer:
-            messages = Message.objects.filter(id__in=transfer)
-            for i in messages:
-                creator_message.transfer.add(i)
+            for i in transfer:
+                m = Message.objects.get(uuid=i)
+                creator_message.transfer.add(m)
 
         channel_layer = get_channel_layer()
         payload = {
