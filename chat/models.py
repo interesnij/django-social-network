@@ -280,11 +280,12 @@ class Message(models.Model):
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
-    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_copy")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
+    repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
+    transfer = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_transfer")
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)

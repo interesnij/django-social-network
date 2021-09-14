@@ -13,10 +13,6 @@ function show_chat_console(message) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
   list = document.body.querySelectorAll(".custom_color");
-  //query = [];
-  //for (var i = 0; i < list.length; i++){
-  //    query.push(list[i])
-  //};
 
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
