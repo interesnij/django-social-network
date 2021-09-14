@@ -3,7 +3,7 @@
 <div class="
     message media p-1 pag
     {% if request.user.pk == object.creator.pk %}
-      {% if object.is_copy_reed %}
+      {% if not object.is_copy_reed %}
         bg-light-secondary
       {% endif %}
       is_have_edited
