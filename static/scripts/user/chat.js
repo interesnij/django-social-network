@@ -649,9 +649,8 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
   };
 
-  var url = this.getAttribute('href');
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  ajax_link.open( 'GET', url, true );
+  ajax_link.open( 'GET', "/chat/" + this.getAttribute("data-pk") + "/", true );
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
