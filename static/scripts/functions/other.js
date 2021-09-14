@@ -76,7 +76,7 @@ function post_edit_comment_form(_this, url) {
     form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
     return
   };
-  
+
   span_form = form.parentElement;
   block = span_form.parentElement.parentElement.parentElement;
   $input = document.createElement("input");
@@ -860,7 +860,7 @@ function elementInViewport(el) {
 
 function send_comment(form, block, link) {
   _text = form_post.querySelector(".comment_text").innerHTML;
-  if (/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" || form.querySelector(".img_block").firstChild) {
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" || form.querySelector(".img_block").firstChild) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };
 
