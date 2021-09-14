@@ -1,0 +1,47 @@
+{% for message in object.transfer.all %}
+<div class="media p-1">
+    <figure>
+      <a href="{{ message.creator.get_link }}" class="ajax">
+        <img src="{{ message.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+      </a>
+    </figure>
+    <div class="media-body">
+      <h5 class="time-title mb-0">
+        <a href="{{ message.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ message.creator.get_full_name }}</span></a>
+        <small class="float-right">{{ message.get_created }} {% if message.is_edited %}(ред.){% endif %}</small>
+      </h5>
+
+      {% if object.parent %}
+        {{ message.get_parent_message|safe }}
+      {% endif %}
+
+      {% if message.voice %}
+        <audio class="audio" src="{{ message.voice.url }}"></audio>
+      {% elif message.sticker %}
+      <div class="message_sticker mt-1">
+        <img src="{{ message.sticker.image.url }}" style="width: 128px;" tooltip="{{ message.sticker.category.name }}" flow="up">
+      </div>
+      {% else %}
+
+        <div class="pointer toggle_message">
+          <span class="text">{{ message.text|safe }}</span>
+        </div>
+
+      {% if message.attach %}
+        {{ message|get_attach:request.user|safe }}
+      {% endif %}
+
+      {% if message.repost %}
+        <span style="margin-left: 5%;" data-uuid="{{ message.parent.uuid }}">
+          {% if message.repost.community %}
+            {% include message.get_c_repost_items_desctop %}
+          {% else %}
+            {% include message.get_u_repost_items_desctop %}
+          {% endif %}
+        </span>
+      {% endif %}
+
+      {% endif %}
+    </div>
+</div>
+{% endfor %}
