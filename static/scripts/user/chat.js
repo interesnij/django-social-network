@@ -4,6 +4,7 @@ function get_toggle_messages() {
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
   };
+  console.log(list)
   return query
 }
 function show_chat_console(message) {
@@ -610,4 +611,54 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
 on('#ajax', 'click', '.u_message_transfer', function() {
   loader = document.getElementById("create_loader");
   open_fullscreen('/users/load/chats/', loader)
+});
+
+on('#ajax', 'click', '.go_transfer_messages', function() {
+  list = get_toggle_messages();
+
+  if (list.length > 1) {
+    count = list.length
+    a = count % 10, b = count % 100;
+    if (a == 1 && b != 11){
+      preview = "<span class='pointer underline'>" + str(count) + " сообщение</span>"
+    }
+    else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
+      preview = "<span class='pointer underline'>" + str(count) + " сообщения</span>"
+    }
+    else {
+      preview = "<span class='pointer underline'>" + str(count) + " сообщения</span>"
+    };
+    creator_p = '<p><a class="underline">Пересланные сообщения</a></p>'
+  } else {
+    message = document.body.querySelector(".target_message");
+    if (message.querySelector(".attach_container")) {
+      preview = "Вложения"
+    } else if (message.querySelector(".text") != null) {
+      preview = message.querySelector(".text").innerHTML
+    } else if(message.querySelector(".message_sticker")) {
+        preview = "Наклейка"
+    };
+    creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
+  };
+
+  var url = this.getAttribute('href');
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.open( 'GET', url, true );
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+      elem_ = document.createElement('span');
+      elem_.innerHTML = ajax_link.responseText;
+      ajax = elem_.querySelector("#reload_block");
+      rtr = document.getElementById('ajax');
+      rtr.innerHTML = ajax.innerHTML;
+      objDiv = document.querySelector(".chat_container");
+      objDiv.scrollTop = objDiv.scrollHeight;
+      window.history.pushState(null, "vfgffgfgf", url);
+      scrolled(rtr.querySelector('.chat_container'), target = 0);
+      block = rtr.querySelector(".parent_message_block");
+      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
+    }
+  }
+  ajax_link.send();
 });
