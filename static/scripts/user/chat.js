@@ -614,6 +614,7 @@ on('#ajax', 'click', '.u_message_transfer', function() {
 });
 
 on('#ajax', 'click', '.go_transfer_messages', function() {
+  url = "/chat/" + this.getAttribute("data-pk") + "/";
   list = get_toggle_messages();
   saver = document.createElement("div");
   for (var i = 0; i < list.length; i++) {
@@ -648,9 +649,13 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     };
     creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
   };
-
+  if (url == window.location.href) {
+    block = rtr.querySelector(".parent_message_block");
+    block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
+    block.append(saver);
+  } else {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  ajax_link.open( 'GET', "/chat/" + this.getAttribute("data-pk") + "/", true );
+  ajax_link.open( 'GET', url, true );
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
@@ -669,4 +674,5 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     }
   }
   ajax_link.send();
+}
 });
