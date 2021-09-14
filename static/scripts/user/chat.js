@@ -279,7 +279,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
 
-  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML){
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
@@ -623,6 +623,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     $input.setAttribute("type", "hidden");
     $input.setAttribute("name", "transfer");
     $input.setAttribute("value", list[i].getAttribute("data-uuid"));
+    $input.classList.add("transfer");
     saver.append($input)
   };
 
