@@ -315,7 +315,7 @@ class Message(models.Model):
         return self.type == "EDI"
 
     def is_have_transfer(self):
-        return self.transfer.filter(pk=self.pk)
+        return self.transfer.all()[0]
 
     def get_count_attach(self):
         if self.attach:
