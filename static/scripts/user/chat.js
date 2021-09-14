@@ -653,7 +653,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
   };
   if (url == window.location.href) {
     block = rtr.querySelector(".parent_message_block");
-    block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
+    block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
     block.append(saver);
   } else {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
