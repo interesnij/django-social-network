@@ -605,3 +605,9 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
 
   link_.send(form_data);
 });
+
+
+on('#ajax', 'click', '.u_message_transfer', function() {
+  loader = document.getElementById("create_loader");
+  open_fullscreen('/users/load/chats/', loader)
+});

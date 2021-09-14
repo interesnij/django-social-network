@@ -340,3 +340,15 @@ class SmilesLoad(TemplateView):
 		context["populate_smiles"] = self.populate_smiles
 		context["is_have_populate_smiles"] = self.is_have_populate_smiles
 		return context
+
+
+class ChatsLoad(ListView):
+	template_name, paginate_by = None, 20
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/load/chats.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = request.user.get_all_chats()
+		return super(ChatsLoad,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		return self.list
