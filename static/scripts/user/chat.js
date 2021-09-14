@@ -629,13 +629,13 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     count = list.length
     a = count % 10, b = count % 100;
     if (a == 1 && b != 11){
-      preview = "<span class='pointer underline'>" + str(count) + " сообщение</span>"
+      preview = "<span class='pointer underline'>" + count + " сообщение</span>"
     }
     else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
-      preview = "<span class='pointer underline'>" + str(count) + " сообщения</span>"
+      preview = "<span class='pointer underline'>" + count + " сообщения</span>"
     }
     else {
-      preview = "<span class='pointer underline'>" + str(count) + " сообщения</span>"
+      preview = "<span class='pointer underline'>" + count + " сообщения</span>"
     };
     creator_p = '<p><a class="underline">Пересланные сообщения</a></p>'
   } else {
