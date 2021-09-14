@@ -671,7 +671,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       window.history.pushState(null, "vfgffgfgf", url);
       scrolled(rtr.querySelector('.chat_container'), target = 0);
       block = rtr.querySelector(".parent_message_block");
-      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
+      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
       block.append(saver);
       show_message_form_send_btn();
     }
