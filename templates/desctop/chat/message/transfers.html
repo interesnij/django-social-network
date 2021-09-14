@@ -1,5 +1,6 @@
 {% load message %}
 
+<div class="transfers_container">
 {% for message in object.transfer.all %}
 <div class="media p-1">
     <figure>
@@ -25,9 +26,7 @@
       </div>
       {% else %}
 
-        <div class="pointer toggle_message">
-          <span class="text">{{ message.text|safe }}</span>
-        </div>
+      <span class="text">{{ message.text|safe }}</span>
 
       {% if message.attach %}
         {{ message|get_attach:request.user|safe }}
@@ -47,3 +46,4 @@
     </div>
 </div>
 {% endfor %}
+</div>
