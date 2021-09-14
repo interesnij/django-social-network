@@ -198,7 +198,7 @@ class UserSendMessage(View):
 		from chat.forms import MessageForm
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
-		if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
+		if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker') or request.POST.get('transfer'):
 			message = form_post.save(commit=False)
 			new_message = Message.send_message(
 											chat=chat,
@@ -208,6 +208,7 @@ class UserSendMessage(View):
 											voice=request.POST.get('voice'),
 											sticker=request.POST.get('sticker'),
 											parent=request.POST.get('parent'),
+											transfer=request.POST.getlist('transfer'),
 											attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
 		else:

@@ -610,7 +610,8 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
 
 on('#ajax', 'click', '.u_message_transfer', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/chats/', loader)
+  open_fullscreen('/users/load/chats/', loader);
+  hide_chat_console();
 });
 
 on('#ajax', 'click', '.go_transfer_messages', function() {
@@ -671,6 +672,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       block = rtr.querySelector(".parent_message_block");
       block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div>" + preview + "<span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>";
       block.append(saver);
+      show_message_form_send_btn();
     }
   }
   ajax_link.send();

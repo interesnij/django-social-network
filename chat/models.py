@@ -431,7 +431,7 @@ class Message(models.Model):
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
                 recipient_message.create_socket()
             get_message_processing(creator_message, 'PUB')
-    def send_message(chat, creator, repost, parent, text, attach, voice, sticker):
+    def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
         # программа для отсылки сообщения в чате
         from common.processing.message import get_message_processing
 
@@ -454,7 +454,10 @@ class Message(models.Model):
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING)
+            if transfer:
+                creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING, transfer_id__in=transfer)
+            else:
+                creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.PROCESSING)
             if chat.is_have_draft_message(creator.pk):
                 message = chat.get_draft_message(creator.pk)
                 message.delete()
@@ -465,13 +468,15 @@ class Message(models.Model):
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
             elif sticker:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
+            elif transfer:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING, transfer_id__in=transfer)
             else:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
-                get_message_processing(recipient_message, 'PUB')
-                recipient_message.create_socket()
+            get_message_processing(recipient_message, 'PUB')
+            recipient_message.create_socket()
         return creator_message
 
-    def save_draft_message(chat, creator, parent, text, attach):
+    def save_draft_message(chat, creator, parent, text, attach, transfer):
         # программа для сохранения черновика сообщения в чате, а также посылания сокета
         # всем участникам чата, что создатель черновика набирает сообщение
         from asgiref.sync import async_to_sync
@@ -495,9 +500,10 @@ class Message(models.Model):
             message.text = text
             message.attach = Message.get_format_attach(attach)
             message.parent_id = parent_id
+            message.transfer_id__in = transfer
             message.save(update_fields=["text","attach","parent_id"])
         else:
-            Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+            Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT,transfer_id__in=transfer)
 
         channel_layer = get_channel_layer()
         payload = {
@@ -727,6 +733,7 @@ class MessageVersion(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
+    transfer = models.ForeignKey(Message, blank=True, null=True, on_delete=models.CASCADE, related_name="message_transfer_version")
 
     class Meta:
         verbose_name = "Копия сообщения перед изменением"
