@@ -285,7 +285,7 @@ class Message(models.Model):
     copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_copy")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
-    transfer = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_transfer")
+    transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
