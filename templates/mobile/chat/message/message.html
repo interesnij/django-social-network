@@ -1,45 +1,64 @@
 {% load message %}
 
-<div class="media p-2 message pag {% if request.user.pk == object.creator.pk and not object.is_copy_reed %}bg-light-secondary{% endif %} {% if object|is_favourite:request.user.pk %}favourite{% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+<div class="
+    message media p-1 pag
+    {% if request.user.pk == object.creator.pk %}
+      {% if not object.is_copy_reed %}
+        bg-light-secondary
+      {% endif %}
+      is_have_edited
+    {% endif %}
+    {% if object|is_favourite:request.user.pk %}
+      favourite
+    {% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+    <span>
+      <input type="checkbox" class="toggle_message message_checkbox">
+    </span>
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
-        {% if object.creator.s_avatar %}
-          <img src="{{ object.creator.s_avatar.url }}" style="border-radius:40px;width:40px;" alt="image">
-        {% else %}
-          <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        {% endif %}
+        <img src="{{ object.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
       </a>
     </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
-        <a href="{{ object.creator.get_link }}" class="ajax">{{ object.creator.first_name }}</a>
-        <small class="text-muted">{{ object.get_created }}</small>
+        <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
+        <small class="float-right">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
       </h5>
-    {% if object.voice %}
-      <audio src="{{ object.voice.url }}"></audio>
-    {% else %}
 
-      {% if object.text %}
-        <div class="">
-          <span class="text">{{ object.text|safe }}</span>
-        </div>
+      {% if object.parent %}
+        {{ object.get_parent_message|safe }}
       {% endif %}
 
-        {% if object.attach %}
-          {% load message %}
-          {{ object|get_attach:request.user|safe }}
-        {% endif %}
+      {% if object.voice %}
+        <audio class="audio" src="{{ object.voice.url }}"></audio>
+      {% elif object.sticker %}
+      <div class="message_sticker mt-1">
+        <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+      </div>
+      {% else %}
 
-        {% if object.repost %}
-          <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-            {% if object.repost.community %}
-              {% include object.get_c_repost_items_mobile %}
-            {% else %}
-              {% include object.get_u_repost_items_mobile %}
-            {% endif %}
-          </span>
-        {% endif %}
+        <div class="pointer toggle_message">
+          <span class="text">{{ object.text|safe }}</span>
+        </div>
 
-    {% endif %}
+      {% if object.attach %}
+        {{ object|get_attach:request.user|safe }}
+      {% endif %}
+
+      {% if object.repost %}
+        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+          {% if object.repost.community %}
+            {% include object.get_c_repost_items_desctop %}
+          {% else %}
+            {% include object.get_u_repost_items_desctop %}
+          {% endif %}
+        </span>
+      {% endif %}
+      {% if object.transfer %}
+        {% include 'mobile/chat/message/transfers.html' %}
+      {% endif %}
+
+      {% endif %}
     </div>
 </div>
+<span class="edit_form_box"></span>

@@ -314,6 +314,9 @@ class Message(models.Model):
     def is_edited(self):
         return self.type == "EDI"
 
+    def is_have_transfer(self):
+        return self.transfer == None
+
     def get_count_attach(self):
         if self.attach:
             length = self.attach.split(",")
