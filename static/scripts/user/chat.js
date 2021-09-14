@@ -9,14 +9,14 @@ function get_toggle_messages() {
 function show_chat_console(message) {
   _console = document.body.querySelector(".console_btn_other");
   message.querySelector(".favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
-  if (message.querySelector(".message_sticker") || message.querySelector(".audio")) {
+  if (message.querySelector(".message_sticker") || message.querySelector(".audio") || message.classList.contains("is_have_edited")) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
   list = document.body.querySelectorAll(".custom_color");
-  query = [];
-  for (var i = 0; i < list.length; i++){
-      query.push(list[i])
-  };
+  //query = [];
+  //for (var i = 0; i < list.length; i++){
+  //    query.push(list[i])
+  //};
 
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
