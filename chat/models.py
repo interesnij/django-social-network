@@ -172,14 +172,14 @@ class Chat(models.Model):
         if self.image:
             figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:30px;width:30px;" alt="image"></figure>'])
         elif member.s_avatar:
-            figure = ''.join(['<figure><a href="/users/', str(member.pk),'" class="ajax"><img src="', member.s_avatar.url,'" style="border-radius:50px;width:50px;" alt="image"></a></figure>'])
+            figure = ''.join(['<figure><a href="/users/', str(member.pk),'" class="ajax"><img src="', member.s_avatar.url,'" style="border-radius:30px;width:30px;" alt="image"></a></figure>'])
         else:
             figure = '<figure><svg fill="currentColor" class="svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
         if self.name:
              chat_name = self.name
         else:
             chat_name = member.get_full_name()
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position: absolute;top: 30px;">', member.get_online_status(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;top:30px;left:25px">', member.get_online_status(), '</span>', buttons, '</span></div>'])
         return ''.join([figure, media_body])
 
     def get_header_group_chat(self, user_id):
@@ -194,7 +194,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = "Групповой чат"
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position: absolute;top: 30px;">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;top:30px;left:25px">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
         return ''.join([media_body, avatars])
 
     def is_not_empty(self):
