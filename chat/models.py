@@ -593,7 +593,7 @@ class Message(models.Model):
         if self.is_manager():
             creator = self.creator
             return creator.get_full_name() + self.text
-        elif self.transfer:
+        elif self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 return "Пересланные сообщение"
             else:
@@ -674,35 +674,6 @@ class Message(models.Model):
         return try_except(self.repost.type == Post.VIDEO_LIST_REPOST)
     def get_video_list_repost(self):
         return self.repost.parent.post_video_list.exclude(type__contains="_")[0]
-
-    def get_fixed_message_for_chat(self, chat_id):
-        try:
-            message = Message.objects.get(chat_id=chat_id, type__contains="_FIX")
-            if message.type == "_FIX":
-                message.type = "PUB"
-            else:
-                message.type = "EDI"
-            message.save(update_fields=['type'])
-            new_fixed = Message.objects.get(pk=self.pk)
-            if new_fixed.type == "PUB":
-                new_fixed.type = "_FIX"
-            else:
-                new_fixed.type = "_FIXE"
-            new_fixed.save(update_fields=['type'])
-        except:
-            new_fixed = Message.objects.get(pk=self.pk)
-            if new_fixed.type == "PUB":
-                new_fixed.type = "_FIX"
-            else:
-                new_fixed.type = "_FIXE"
-            new_fixed.save(update_fields=['type'])
-
-    def get_unfixed_message_for_chat(self):
-        if new_fixed.type == "_FIX":
-            new_fixed.type = "PUB"
-        else:
-            new_fixed.type = "EDI"
-        new_fixed.save(update_fields=['type'])
 
     def get_u_message_parent(self, user):
         from common.attach.message_attach import get_u_message_parent
@@ -843,7 +814,7 @@ class MessageFixed(models.Model):
         if message.is_manager():
             creator = self.creator
             return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
-        elif message.transfer:
+        elif message.is_have_transfer():
             if message.transfer.all().count() > 1:
                 return "Пересланные сообщение"
             else:
