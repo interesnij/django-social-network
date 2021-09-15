@@ -3219,7 +3219,7 @@ body.dragging * {
 .card .card-footer {
   background: none;
   border: 0;
-  padding: 0.75em 0.95em;
+  padding: 0.35em 0.55em;
 }
 
 .card .card-body {
