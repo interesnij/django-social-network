@@ -320,10 +320,10 @@ class Message(models.Model):
         self.save(update_fields=['type'])
         fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
         if creator.is_women():
-            var = " закрепила"
+            var = "</a> закрепила"
         else:
-            var = " закрепил"
-        text = '<span>' + creator.get_full_name() + var + " сообщение.</span>"
+            var = "</a> закрепил"
+        text = '<i><a class="ajax" href="' + creator.get_link() + '">' + creator.get_full_name() + var + " сообщение.</i>"
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
         return info_message
 
@@ -336,10 +336,10 @@ class Message(models.Model):
         if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
             fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
             if creator.is_women():
-                var = " открепила"
+                var = "</a> открепила"
             else:
-                var = " открепил"
-            text = '<span>' + creator.get_full_name() + var + " сообщение.</span>"
+                var = "</a> открепил"
+            text = '<i><a class="ajax" href="' + creator.get_link() + '">' + creator.get_full_name() + var + " сообщение.</i>"
             info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             return info_message
 
