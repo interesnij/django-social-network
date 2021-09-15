@@ -180,7 +180,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = member.get_full_name()
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;top:30px;left:72px">', member.get_online_status(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;left:72px">', member.get_online_status(), '</span>', buttons, '</span></div>'])
         return ''.join([figure, media_body])
 
     def get_header_group_chat(self, user_id):
@@ -195,7 +195,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = "Групповой чат"
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;top:30px;left:25px">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display" style="position:absolute;left:25px">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
         return ''.join([media_body, avatars])
 
     def is_not_empty(self):
