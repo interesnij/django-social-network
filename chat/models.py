@@ -322,10 +322,10 @@ class Message(models.Model):
         self.save(update_fields=['type'])
         fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
         if creator.is_women():
-            var = "</a> закрепила"
+            var = " закрепила"
         else:
-            var = "</a> закрепил"
-        text = '<i><a class="ajax" href="' + creator.get_link() + '">' + creator.get_full_name() + var + " сообщение.</i>"
+            var = " закрепил"
+        text = 'var + " сообщение."
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
         return info_message
 
@@ -338,10 +338,10 @@ class Message(models.Model):
         if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
             fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
             if creator.is_women():
-                var = "</a> открепила"
+                var = " открепила"
             else:
-                var = "</a> открепил"
-            text = '<i><a class="ajax" href="' + creator.get_link() + '">' + creator.get_full_name() + var + " сообщение.</i>"
+                var = " открепил"
+            text = var + " сообщение."
             info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             return info_message
 
@@ -590,6 +590,13 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
+        if self.transfer:
+            if self.transfer.all().count() > 1:
+                return "Пересланные сообщение"
+            else:
+                return "Пересланное сообщение"
+        elif self.parent:
+            return "Ответ на сообщение"
         if self.sticker:
             return "Стикер"
         elif self.voice:
@@ -604,9 +611,11 @@ class Message(models.Model):
             images = re.findall(r'<img.*?>', self.text)
             for image in images:
                 count += (len(image) -1)
-            return self.text[:count].replace("<br>", "  ")
-        else:
-            return self.text[:60].replace("<br>", "  ")
+            if self.is_manager():
+                creator = self.creator
+                return "<i><a class='ajax' href='" + creator.get_link() + "'>" + creator.get_full_name() + self.text + "</i>"
+            else:
+                return self.text[:count].replace("<br>", "  ")
 
     def is_repost(self):
         return self.repost
