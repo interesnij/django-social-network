@@ -823,3 +823,21 @@ class MessageFixed(models.Model):
         self.save(update_fields=['type'])
         if MessageFixed.objects.filter(chat_id=chat_id,message=self).exists():
             fixed_message = MessageFixed.objects.get(chat_id=chat_id,message=self).delete()
+
+    def get_preview_message(self):
+        message = self.message
+        if message.transfer:
+            if message.transfer.all().count > 1:
+                return "Пересланные сообщение"
+            else:
+                return "Пересланное сообщение"
+        elif message.parent:
+            return "Ответ на сообщение"
+        elif message.attach:
+            return "Вложения"
+        elif message.voice:
+            return "Голосовое сообщение"
+        elif message.sticker:
+            return "Наклейка"
+        elif message.text:
+            return message.get_preview_text()
