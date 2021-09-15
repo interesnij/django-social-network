@@ -53,6 +53,11 @@ on('#ajax', 'input', '.chat_message_text', function() {
   };
 });
 
+on('#ajax', 'click', '.show_chat_fixed_messages', function() {
+  pk = this.parentElement.parentElement.getAttribute('chat-pk');
+  loader = document.getElementById("window_loader");
+  open_fullscreen("/chat/" + pk + "/fixed_messages/", loader)
+});
 
 on('#ajax', 'click', '.classic_smile_item', function() {
   input = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".smile_supported");

@@ -1,0 +1,35 @@
+{% load message %}
+
+<div class="container mt-3">
+  <span class="load_block">
+    <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
+      <h5 class="mt-1">
+        <p>
+          <span>{{ chat.name }}</span> ({{ chat.get_fix_message_count }})
+        </p>
+      </h5>
+    </div>
+  <div class="container-fluid mt-3 pk_saver">
+    <div class="ul is_block_paginate no-gutters">
+      {% if object_list %}
+      {% for object in object_list %}
+      <li class="list-group-item pag" data-pk="{{ object.pk }}">
+        <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
+          {{ object|get_preview_message:request.user.pk|safe }}
+        </a>
+      </li>
+      {% endfor %}
+        {% if page_obj.has_next %}
+        <div class="load centered m-1 next_page_list" data-link="/chat/{{ chat.pk }}/fixed_messages/?page={{ page_obj.next_page_number }}">
+            <img src="/static/images/preloader.gif">
+        </div>
+        {% endif %}
+      {% else %}
+      <div class="card mb-3 centered items_empty">
+        <h6 style="margin: 20px;text-align: center;"> Закрепленных сообщений нет...</h6>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </span>
+</div>

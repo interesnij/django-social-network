@@ -241,6 +241,9 @@ class Chat(models.Model):
         if MessageFixed.objects.filter(chat_id=self.id).exists():
             return MessageFixed.objects.filter(chat_id=self.id).first()
 
+    def get_fixed_messages(self):
+        return MessageFixed.objects.filter(chat_id=self.id)
+
     def get_fix_message_count(self):
         if MessageFixed.objects.filter(chat_id=self.id).exists():
             return MessageFixed.objects.filter(chat_id=self.id).values("pk").count()
