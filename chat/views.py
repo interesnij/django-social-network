@@ -40,7 +40,6 @@ class ChatDetailView(ListView):
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 		self.get_messages = self.chat.get_messages_for_recipient(self.pk)
-		self.get_fix_message = self.chat.get_fix_message_for_recipient(self.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
