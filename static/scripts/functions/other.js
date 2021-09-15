@@ -37,8 +37,7 @@ function remove_item_and_show_restore_block(item, url, _class, title) {
         checkbox.style.display = "none";
         p = document.createElement("div");
         p.classList.add("media", "p-1");
-        p.style.padding = "20px";
-        p.innerHTML = "<span class='" + _class + " pointer border p-2' data-uuid='" + item.getAttribute("data-uuid") + "'>" + title + ". <span class='underline'>Восстановить</span></span>";
+        p.innerHTML = "<span style='width:100%' class='" + _class + " pointer border p-2' data-uuid='" + item.getAttribute("data-uuid") + "'>" + title + ". <span class='underline'>Восстановить</span></span>";
         item.parentElement.insertBefore(p, item), item.style.display = "none";
         item.classList.remove("custom_color");
       }
