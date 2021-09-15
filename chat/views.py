@@ -75,7 +75,7 @@ class ChatFixedMessagesView(ListView):
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatFixedMessagesView,self).get_context_data(**kwargs)
-		context['user'] = self.user
+		context['chat'] = self.chat
 		return context
 
 	def get_queryset(self):
