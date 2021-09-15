@@ -590,7 +590,10 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        if self.transfer:
+        if self.is_manager():
+            creator = self.creator
+            return creator.get_full_name() + self.text
+        elif self.transfer:
             if self.transfer.all().count() > 1:
                 return "Пересланные сообщение"
             else:
@@ -611,11 +614,7 @@ class Message(models.Model):
             images = re.findall(r'<img.*?>', self.text)
             for image in images:
                 count += (len(image) -1)
-            if self.is_manager():
-                creator = self.creator
-                return "<i><a class='ajax' href='" + creator.get_link() + "'>" + creator.get_full_name() + self.text + "</i>"
-            else:
-                return self.text[:count].replace("<br>", "  ")
+            return self.text[:count].replace("<br>", "  ")
 
     def is_repost(self):
         return self.repost
