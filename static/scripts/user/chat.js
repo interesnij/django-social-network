@@ -55,7 +55,7 @@ on('#ajax', 'input', '.chat_message_text', function() {
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
   pk = this.parentElement.parentElement.getAttribute('chat-pk');
-  loader = document.getElementById("window_loader");
+  loader = document.getElementById("item_loader");
   open_fullscreen("/chat/" + pk + "/fixed_messages/", loader)
 });
 
