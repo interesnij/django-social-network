@@ -5,18 +5,19 @@
     <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
       <h5 class="mt-1">
         <p>
-          <span>{{ chat.name }}</span> ({{ chat.get_fix_message_count }})
+          В чате закреплено: {{ chat.get_fix_message_count }}
         </p>
       </h5>
     </div>
   <div class="container-fluid mt-3 pk_saver">
     <div class="ul is_block_paginate no-gutters">
       {% if object_list %}
-      {% for object in object_list %}
+      {% for fix in object_list %}
+      {% with object=fix.message %}
       <li class="list-group-item pag" data-pk="{{ object.pk }}">
           <div class="" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
               <span>
-                <input type="checkbox" class="toggle_message message_checkbox">
+                <input type="checkbox" class="toggle_fix_message message_checkbox">
               </span>
               <figure>
                 <a href="{{ object.creator.get_link }}" class="ajax">
@@ -41,9 +42,7 @@
                 </div>
                 {% else %}
 
-                  <div class="pointer toggle_message">
-                    <span class="text">{{ object.text|safe }}</span>
-                  </div>
+                <span class="text toggle_fix_message">{{ object.text|safe }}</span>
 
                 {% if object.attach %}
                   {{ object|get_attach:request.user|safe }}
@@ -65,8 +64,9 @@
                 {% endif %}
               </div>
           </div>
-          <span class="edit_form_box"></span>
       </li>
+      {% endwith %}
+
       {% endfor %}
         {% if page_obj.has_next %}
         <div class="load centered m-1 next_page_list" data-link="/chat/{{ chat.pk }}/fixed_messages/?page={{ page_obj.next_page_number }}">
