@@ -858,5 +858,5 @@ class MessageFixed(models.Model):
             count = 60
             images = re.findall(r'<img.*?>', message.text)
             for image in images:
-                count += (len(image) -1
+                count += (len(image) -1)
             return message.text[:count].replace("<br>", "  ")
