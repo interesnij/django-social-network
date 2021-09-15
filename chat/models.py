@@ -77,7 +77,9 @@ class Chat(models.Model):
             return str(count) + " участников"
 
     def get_first_message(self, user_id):
-        return self.chat_message.filter(recipient_id=user_id).exclude(creator_id=user_id, type__contains="_").first()
+        query = Q(recipient_id=user_id)|Q(type=Message.MANAGER)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return self.chat_message.filter(query).first()
 
     def get_messages(self):
         return self.chat_message.exclude(type__contains="_")
