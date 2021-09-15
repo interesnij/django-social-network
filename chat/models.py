@@ -753,24 +753,6 @@ class Message(models.Model):
             self.type = Message.FIXED
         self.save(update_fields=['type'])
 
-    def fixed_message_for_user_chat(self, creator_id):
-        if self.type == "PUB":
-            self.type = "_FIX"
-        else:
-            self.type = "_FIXE"
-        self.save(update_fields=['type'])
-        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator_id,message=self)
-        return fixed_message
-
-    def unfixed_message_for_user_chat(self, creator_id):
-        if self.type == "_FIX":
-            self.type = "PUB"
-        else:
-            self.type = "EDI"
-        self.save(update_fields=['type'])
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
-
 
 class MessageFavourite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
