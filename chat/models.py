@@ -827,7 +827,7 @@ class MessageFixed(models.Model):
     def get_preview_message(self):
         message = self.message
         if message.transfer:
-            if message.transfer.all().count > 1:
+            if message.transfer.all().count() > 1:
                 return "Пересланные сообщение"
             else:
                 return "Пересланное сообщение"
