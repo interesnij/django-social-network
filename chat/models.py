@@ -269,10 +269,10 @@ class ChatUsers(models.Model):
 
 
 class Message(models.Model):
-    PROCESSING, PUBLISHED, EDITED, DELETED, CLOSED, FIXED, FIXED_EDITED, DRAFT = '_PRO','PUB','EDI','_DEL','_CLO','_FIX','_FIXE','_DRA'
+    MANAGER, PROCESSING, PUBLISHED, EDITED, DELETED, CLOSED, FIXED, FIXED_EDITED, DRAFT = 'MAN', '_PRO','PUB','EDI','_DEL','_CLO','_FIX','_FIXE','_DRA'
     DELETED_FIXED, DELETED_EDITED_FIXED, DELETED_EDITED, CLOSED_EDITED_FIXED, CLOSED_FIXED, CLOSED_EDITED = '_DELF','_DELFI','_DELE','_CLOFI','_CLOF','_CLOE'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
+        (MANAGER, 'Специальное'),(PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
         (DELETED_FIXED, 'Удалённый закрепленный'),(DELETED_EDITED_FIXED, 'Удалённый измененный закрепленный'),(DELETED_EDITED, 'Удалённый измененный'),(CLOSED_EDITED, 'Закрытый измененный'),(CLOSED_EDITED_FIXED, 'Закрытый измененный закрепленный'),(CLOSED_FIXED, 'Закрытый закрепленный'),
     )
 
@@ -302,6 +302,37 @@ class Message(models.Model):
 
     def __str__(self):
         return self.text
+
+    def fixed_message_for_user_chat(self, creator):
+        if self.type == "PUB":
+            self.type = "_FIX"
+        else:
+            self.type = "_FIXE"
+        self.save(update_fields=['type'])
+        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
+        if creator.is_women():
+            var = " закрепила"
+        else:
+            var = " закрепил"
+        text = '<span>' + creator.get_full_name() + var + " сообщение.</span>"
+        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+        return info_message
+
+    def unfixed_message_for_user_chat(self, creator):
+        if self.type == "_FIX":
+            self.type = "PUB"
+        else:
+            self.type = "EDI"
+        self.save(update_fields=['type'])
+        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
+            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
+            if creator.is_women():
+                var = " открепила"
+            else:
+                var = " открепил"
+            text = '<span>' + creator.get_full_name() + var + " сообщение.</span>"
+            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            return info_message
 
     def is_copy_reed(self):
         """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
@@ -722,6 +753,23 @@ class Message(models.Model):
             self.type = Message.FIXED
         self.save(update_fields=['type'])
 
+    def fixed_message_for_user_chat(self, creator_id):
+        if self.type == "PUB":
+            self.type = "_FIX"
+        else:
+            self.type = "_FIXE"
+        self.save(update_fields=['type'])
+        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator_id,message=self)
+        return fixed_message
+
+    def unfixed_message_for_user_chat(self, creator_id):
+        if self.type == "_FIX":
+            self.type = "PUB"
+        else:
+            self.type = "EDI"
+        self.save(update_fields=['type'])
+        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
+            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
 
 
 class MessageFavourite(models.Model):
@@ -749,3 +797,37 @@ class MessageVersion(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class MessageFixed(models.Model):
+    chat = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Чат", on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Тот, кто закрепил сообщение", null=True, on_delete=models.SET_NULL)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Закрепленное сообщение"
+        verbose_name_plural = "Закрепленные сообщения"
+        ordering = ["-created"]
+        indexes = (BrinIndex(fields=['created']),)
+
+    def __str__(self):
+        return self.text
+
+    def get_fixed_message_for_chat(self, chat_id, creator_id,):
+        if self.type == "PUB":
+            self.type = "_FIX"
+        else:
+            self.type = "_FIXE"
+        self.save(update_fields=['type'])
+        fixed_message = MessageFixed.objects.create(chat_id=chat_id,creator_id=creator_id,message=self)
+        return fixed_message
+
+    def get_unfixed_message_for_chat(self, chat_id):
+        if self.type == "_FIX":
+            self.type = "PUB"
+        else:
+            self.type = "EDI"
+        self.save(update_fields=['type'])
+        if MessageFixed.objects.filter(chat_id=chat_id,message=self).exists():
+            fixed_message = MessageFixed.objects.get(chat_id=chat_id,message=self).delete()

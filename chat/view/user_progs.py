@@ -271,7 +271,7 @@ class UserMessageFixed(View):
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		check_can_send_message(request.user, message.chat)
 		if request.is_ajax():
-			message.get_fixed_message_for_chat(message.chat.pk)
+			message.fixed_message_for_user_chat(request.user)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -285,7 +285,7 @@ class UserMessageUnFixed(View):
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
-			message.get_unfixed_message_for_chat()
+			message.unfixed_message_for_user_chat(request.user)
 			return HttpResponse()
 		else:
 			raise Http404
