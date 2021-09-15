@@ -507,6 +507,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   message = document.body.querySelector(".target_message");
   checkbox = message.querySelector(".message_checkbox");
   checkbox.checked = false;
+  hide_chat_console();
   checkbox.style.display = "none";
   message.classList.remove("target_message", "custom_color");
   if (message.querySelector(".attach_container")) {
