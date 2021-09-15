@@ -506,7 +506,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     if (message.querySelector(".attach_container")) {
       parent = "Вложения"
     } else if (message.querySelector(".text") != null) {
-      parent = message.querySelector(".text").innerHTML
+      parent = message.querySelector(".text").innerHTML.replace("<br>","")
     } else if(message.querySelector(".message_sticker")) {
         parent = "Наклейка"
     };
