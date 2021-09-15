@@ -774,6 +774,9 @@ class Message(models.Model):
             self.type = Message.FIXED
         self.save(update_fields=['type'])
 
+    def get_manager_text(self):
+        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + self.text + '</i>'
+
 
 class MessageFavourite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
