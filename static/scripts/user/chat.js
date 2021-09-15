@@ -510,10 +510,10 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     } else if(message.querySelector(".message_sticker")) {
         parent = "Наклейка"
     };
-    creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
+    creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>'
 
     block = document.body.querySelector(".fixed_messages");
-    block.innerHTML = "<div data-uuid='" + uuid + "'>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + ",</span><span class='u_remove_fixed_message pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
+    block.innerHTML = "<div class='pointer show_chat_fixed_messages' style='padding-left:3px;padding-right:3px'>" + creator_p + "<div class='border-bottom' style='position:relative'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + ",</span></div></div></div>"
   }};
   link.send();
 });
