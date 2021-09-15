@@ -353,6 +353,8 @@ class Message(models.Model):
 
     def is_edited(self):
         return self.type == "EDI"
+    def is_manager(self):
+        return self.type == Message.MANAGER
 
     def is_have_transfer(self):
         if self.transfer.exists():

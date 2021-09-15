@@ -1,5 +1,8 @@
 {% load message %}
 
+{% if object.is_mamager %}
+{{ object }}
+{% else %}
 <div class="
     message media p-1 pag
     {% if request.user.pk == object.creator.pk %}
@@ -62,3 +65,4 @@
     </div>
 </div>
 <span class="edit_form_box"></span>
+{% endif %}
