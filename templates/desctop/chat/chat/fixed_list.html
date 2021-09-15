@@ -14,9 +14,58 @@
       {% if object_list %}
       {% for object in object_list %}
       <li class="list-group-item pag" data-pk="{{ object.pk }}">
-        <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
-          {{ object|get_preview_message:request.user.pk|safe }}
-        </a>
+          <div class="" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+              <span>
+                <input type="checkbox" class="toggle_message message_checkbox">
+              </span>
+              <figure>
+                <a href="{{ object.creator.get_link }}" class="ajax">
+                  <img src="{{ object.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+                </a>
+              </figure>
+              <div class="media-body">
+                <h5 class="time-title mb-0">
+                  <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
+                  <small class="float-right">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
+                </h5>
+
+                {% if object.parent %}
+                  {{ object.get_parent_message|safe }}
+                {% endif %}
+
+                {% if object.voice %}
+                  <audio class="audio" src="{{ object.voice.url }}"></audio>
+                {% elif object.sticker %}
+                <div class="message_sticker mt-1">
+                  <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
+                </div>
+                {% else %}
+
+                  <div class="pointer toggle_message">
+                    <span class="text">{{ object.text|safe }}</span>
+                  </div>
+
+                {% if object.attach %}
+                  {{ object|get_attach:request.user|safe }}
+                {% endif %}
+
+                {% if object.repost %}
+                  <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
+                    {% if object.repost.community %}
+                      {% include object.get_c_repost_items_desctop %}
+                    {% else %}
+                      {% include object.get_u_repost_items_desctop %}
+                    {% endif %}
+                  </span>
+                {% endif %}
+                {% if object.is_have_transfer %}
+                  {% include 'desctop/chat/message/transfers.html' %}
+                {% endif %}
+
+                {% endif %}
+              </div>
+          </div>
+          <span class="edit_form_box"></span>
       </li>
       {% endfor %}
         {% if page_obj.has_next %}
