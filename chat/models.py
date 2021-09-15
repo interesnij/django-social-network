@@ -837,7 +837,10 @@ class MessageFixed(models.Model):
 
     def get_preview_message(self):
         message = self.message
-        if message.transfer:
+        if message.is_manager():
+            creator = self.creator
+            return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
+        elif message.transfer:
             if message.transfer.all().count() > 1:
                 return "Пересланные сообщение"
             else:
@@ -855,9 +858,5 @@ class MessageFixed(models.Model):
             count = 60
             images = re.findall(r'<img.*?>', self.text)
             for image in images:
-                count += (len(image) -1)
-            if message.is_manager():
-                creator = self.creator
-                return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
-            else:
-                return message.text[:count].replace("<br>", "  ")
+                count += (len(image) -1
+            return message.text[:count].replace("<br>", "  ")
