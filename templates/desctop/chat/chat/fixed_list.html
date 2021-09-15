@@ -14,9 +14,8 @@
       {% if object_list %}
       {% for fix in object_list %}
       {% with object=fix.message %}
-      <li class="message media p-1 pag" data-pk="{{ object.pk }}">
-          <div class="" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
-              <span> 
+          <div class="message media p-1 pag" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+              <span>
                 <input type="checkbox" class="toggle_fix_message message_checkbox">
               </span>
               <figure>
@@ -64,7 +63,6 @@
                 {% endif %}
               </div>
           </div>
-      </li>
       {% endwith %}
 
       {% endfor %}
