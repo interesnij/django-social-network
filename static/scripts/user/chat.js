@@ -4,9 +4,8 @@ function get_toggle_messages() {
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
   };
-  console.log(list)
   return query
-}
+};
 function show_chat_console(message) {
   _console = document.body.querySelector(".console_btn_other");
   message.querySelector(".favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
@@ -18,7 +17,7 @@ function show_chat_console(message) {
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
-}
+};
 
 function hide_chat_console() {
   _console = document.body.querySelector(".console_btn_other");
@@ -26,7 +25,7 @@ function hide_chat_console() {
   _console.style.display = "none";
   _console.previousElementSibling.style.display = "unset";
   _console.parentElement.parentElement.querySelector("h5").style.display = "unset"
-}
+};
 
 on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
 on('#ajax', 'click', '.smile_sticker_dropdown', function() {
@@ -35,7 +34,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
     list_load(block, "/users/load/smiles_stickers/")
   };
   block.classList.toggle("show");
-})
+});
 
 on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
@@ -52,7 +51,6 @@ on('#ajax', 'input', '.chat_message_text', function() {
           }
       }, 1000)
   };
-
 });
 
 
@@ -66,7 +64,7 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   if (document.body.querySelector(".chatlist")) {
   check_message_form_btn()
   }
-})
+});
 
 function send_comment_sticker(form_post,value) {
   comment_form = false, reply_form = false, parent_form = false;
@@ -130,7 +128,7 @@ function send_comment_sticker(form_post,value) {
       }
   };
   link_.send(form)
-}
+};
 
 on('#ajax', 'click', '.classic_sticker_item', function() {
   if (document.body.querySelector(".chatlist")){
@@ -143,7 +141,7 @@ on('#ajax', 'click', '.classic_sticker_item', function() {
     form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     send_comment_sticker(form, this.getAttribute("data-pk"))
   }
-})
+});
 
 function send_message_sticker(url, value) {
   is_chat = false; is_page = false;
@@ -221,7 +219,7 @@ on('#ajax', 'click', '.user_add_members', function() {
   block.classList.add("mt-4");
   list_load(block, "/users/load/friends/")
 } else { block.style.display = "block"}
-})
+});
 
 on('#ajax', 'click', '#add_chat_btn', function() {
   form = this.parentElement.parentElement.parentElement;
@@ -314,9 +312,8 @@ function send_message (form_post, url) {
     document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
 
   }};
-
   link_.send(form_data);
-}
+};
 
 function send_draft_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
@@ -336,7 +333,7 @@ function send_draft_message (form_post, url) {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {}};
   link_.send(form_data);
-}
+};
 
 on('#ajax', 'click', '#message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
@@ -419,7 +416,7 @@ on('#ajax', 'click', '.toggle_message', function() {
   } else {
     document.body.querySelector(".one_message").style.display = "unset"
   };
-})
+});
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
   is_favourite = false;
@@ -474,22 +471,6 @@ on('#ajax', 'click', '.u_message_restore', function() {
   link.send();
 });
 
-on('#ajax', 'click', '.u_message_fixed', function() {
-  item = document.body.querySelector(".custom_color");
-
-  uuid = this.getAttribute("data-uuid");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console();
-    item.classList.add("is_fixed");
-    item.style.display = "none"
-  }};
-  link.send();
-});
 on('#ajax', 'click', '.u_message_unfixed', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
@@ -503,6 +484,40 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
   }};
   link.send();
 });
+
+on('#ajax', 'click', '.u_message_fixed', function() {
+  message = document.body.querySelector(".target_message");
+  checkbox = message.querySelector(".message_checkbox");
+  checkbox.checked = false;
+  hide_chat_console();
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  uuid = message.getAttribute("data-uuid");
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    hide_chat_console();
+    message.classList.add("is_fixed");
+    message.style.display = "none";
+    if (message.querySelector(".attach_container")) {
+      parent = "Вложения"
+    } else if (message.querySelector(".text") != null) {
+      parent = message.querySelector(".text").innerHTML
+    } else if(message.querySelector(".message_sticker")) {
+        parent = "Наклейка"
+    };
+    creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
+
+    block = document.body.querySelector(".fixed_messages");
+    block.innerHTML = "<div data-uuid='" + uuid + "'>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + ",</span><span class='u_remove_fixed_message pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
+  }};
+  link.send();
+});
+
 on('#ajax', 'click', '.u_message_reply', function() {
   message = document.body.querySelector(".target_message");
   checkbox = message.querySelector(".message_checkbox");
@@ -638,7 +653,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       preview = "<span class='pointer underline'>" + count + " сообщения</span>"
     }
     else {
-      preview = "<span class='pointer underline'>" + count + " сообщения</span>"
+      preview = "<span class='pointer underline'>" + count + " сообщений</span>"
     };
     creator_p = '<p><a class="underline">Пересланные сообщения</a></p>'
   } else {

@@ -25,6 +25,7 @@
           </div>
       </div>
 <div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+    <div class="fixed_messages"></div>
     <div class="card-body chatview" id="chatcontent" style="height: 510px;">
         <ul class="chatlist app is_chat_paginate">
           {% if page_obj.has_next %}
