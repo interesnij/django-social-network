@@ -325,7 +325,7 @@ class Message(models.Model):
             var = " закрепила"
         else:
             var = " закрепил"
-        text = 'var + " сообщение."
+        text = var + " сообщение."
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
         return info_message
 
