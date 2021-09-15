@@ -237,12 +237,12 @@ class Chat(models.Model):
         return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
 
     def get_first_fix_message(self):
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).first()
+        if MessageFixed.objects.filter(chat_id=self.id).exists():
+            return MessageFixed.objects.filter(chat_id=self.id).first()
 
     def get_fix_message_count(self):
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).values("pk").count()
+        if MessageFixed.objects.filter(chat_id=self.id).exists():
+            return MessageFixed.objects.filter(chat_id=self.id).values("pk").count()
         else:
             return 0
 
