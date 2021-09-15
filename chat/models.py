@@ -858,6 +858,6 @@ class MessageFixed(models.Model):
                 count += (len(image) -1)
             if message.is_manager():
                 creator = self.creator
-                return '<i><a target="_blank" href="' creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
+                return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
             else:
                 return message.text[:count].replace("<br>", "  ")
