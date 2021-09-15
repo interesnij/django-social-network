@@ -70,7 +70,7 @@ class ChatFixedMessagesView(ListView):
 		from common.template.user import get_settings_template
 		from chat.models import Chat
 
-		self.template_name, self.chat = get_settings_template("chat/chat/detail/fixed_list.html", request.user, request.META['HTTP_USER_AGENT']), Chat.objects.get(pk=self.kwargs["pk"])
+		self.template_name, self.chat = get_settings_template("chat/chat/fixed_list.html", request.user, request.META['HTTP_USER_AGENT']), Chat.objects.get(pk=self.kwargs["pk"])
 		return super(ChatFixedMessagesView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
