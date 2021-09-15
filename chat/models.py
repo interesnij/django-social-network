@@ -856,7 +856,7 @@ class MessageFixed(models.Model):
         elif message.text:
             import re
             count = 60
-            images = re.findall(r'<img.*?>', self.text)
+            images = re.findall(r'<img.*?>', message.text)
             for image in images:
                 count += (len(image) -1
             return message.text[:count].replace("<br>", "  ")
