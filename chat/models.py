@@ -236,6 +236,16 @@ class Chat(models.Model):
     def is_have_draft_message(self, user_id):
         return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
 
+    def get_first_fix_message(self):
+        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
+            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).first()
+
+    def get_fix_message_count(self):
+        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
+            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).values("pk").count()
+        else:
+            return 0
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
@@ -317,17 +327,6 @@ class Message(models.Model):
         text = '<span>' + creator.get_full_name() + var + " сообщение.</span>"
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
         return info_message
-
-    def get_first_fix_message(self):
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).first()
-
-    def get_fix_message_count(self):
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            return MessageFixed.objects.filter(chat_id=self.chat.id,message=self).values("pk").count()
-        else:
-            return 0
-
 
     def unfixed_message_for_user_chat(self, creator):
         if self.type == "_FIX":
