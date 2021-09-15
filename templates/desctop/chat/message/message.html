@@ -1,8 +1,9 @@
 {% load message %}
 
 {% if object.is_manager %}
-
-{{ object }}
+<div class="media p-1 pag">
+  {{ object|safe }}
+</div>
 
 {% else %}
 <div class="
