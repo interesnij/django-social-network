@@ -622,29 +622,30 @@ class Message(models.Model):
             return text
 
     def get_manager_text(self):
-        if self.is_have_transfer():
-            if self.transfer.all().count() > 1:
+        message = self.message
+        if message.is_have_transfer():
+            if message.transfer.all().count() > 1:
                 text = "Пересланные сообщение"
             else:
                 text = "Пересланное сообщение"
-        elif self.parent:
+        elif message.parent:
             text = "Ответ на сообщение"
-        if self.sticker:
+        if message.sticker:
             text = "Стикер"
-        elif self.voice:
+        elif message.voice:
             text = "Голосовое сообщение"
-        elif self.attach and self.text:
+        elif message.attach and message.text:
             text = "Текст и вложения"
-        elif self.attach and not self.text:
+        elif message.attach and not message.text:
             text = "Вложения"
-        elif self.text:
+        elif message.text:
             import re
             count = 60
-            images = re.findall(r'<img.*?>', self.text)
+            images = re.findall(r'<img.*?>', message.text)
             for image in images:
                 count += (len(image) -1)
-            text = self.text[:count].replace("<br>", "  ")
-        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + text + '</i>'
+            text = message.text[:count].replace("<br>", "  ")
+        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + self.text + text + '</i>'
 
     def is_repost(self):
         return self.repost
