@@ -348,7 +348,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     block.innerHTML = "<div class='pointer show_chat_fixed_messages'>" + creator_p + "<div class='border-bottom' style='position:relative;padding-bottom: 5px;'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span></div></div></div>";
 
     message_load = document.body.querySelector(".chatlist");
-    elem = link_.responseText;
+    elem = link.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     message_load.append(new_post);
