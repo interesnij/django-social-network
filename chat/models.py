@@ -511,7 +511,7 @@ class Message(models.Model):
             else:
                 message.type = "_FIXE"
             message.save(update_fields=['type'])
-            for i in message.copy.all():
+            for i in Message.objects.filter(copy_id=message.pk):
                 if i.type == "PUB":
                     i.type = "_FIX"
                 else:
@@ -523,7 +523,7 @@ class Message(models.Model):
             else:
                 self.type = "_FIXE"
             self.save(update_fields=['type'])
-            for i in self.copy.all():
+            for i in Message.objects.filter(copy_id=self.pk):
                 if i.type == "PUB":
                     i.type = "_FIX"
                 else:
@@ -558,7 +558,7 @@ class Message(models.Model):
             else:
                 message.type = "EDI"
             message.save(update_fields=['type'])
-            for i in message.copy.all():
+            for i in Message.objects.filter(copy_id=message.pk):
                 if i.type == "_FIX":
                     i.type = "PUB"
                 else:
@@ -570,7 +570,7 @@ class Message(models.Model):
             else:
                 self.type = "EDI"
             self.save(update_fields=['type'])
-            for i in self.copy.all():
+            for i in Message.objects.filter(copy_id=self.pk):
                 if i.type == "_FIX":
                     i.type = "PUB"
                 else:
