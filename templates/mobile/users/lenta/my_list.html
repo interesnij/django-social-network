@@ -1,5 +1,4 @@
 <span class="post_container">
-  {% include 'mobile/users/profile/new_post.html' %}
 
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
@@ -47,6 +46,10 @@
           {% elif is_user_can_offer_post %}
             {% include 'mobile/users/profile/new_offer_post.html' %}
           {% endif %}
+
+        {% elif list.creator.pk == request.user.pk %}
+          {% include 'desctop/users/profile/new_post.html' %}
+        {% endif %}
         {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ user.pk }}">
@@ -58,7 +61,7 @@
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
-          
+
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">

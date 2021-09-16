@@ -1,5 +1,5 @@
 <span class="post_container">
-  {% include 'desctop/communities/detail_sections/create_post.html' %}
+
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
@@ -46,6 +46,9 @@
           {% elif is_user_can_offer_post %}
             {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
           {% endif %}
+          {% elif list.community.pk == community.pk %}
+            {% include 'desctop/communities/detail_sections/create_post.html' %}
+          {% endif %}
         {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ community.pk }}">
@@ -57,7 +60,7 @@
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
-          
+
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">
