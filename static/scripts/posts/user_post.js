@@ -30,7 +30,7 @@ on('#ajax', 'click', '#u_add_article', function() {
 on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
-  if (!_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
     toast_error("Напишите или прикрепите что-нибудь")
   };
 
