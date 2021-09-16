@@ -317,37 +317,6 @@ class Message(models.Model):
     def __str__(self):
         return self.text
 
-    def fixed_message_for_user_chat(self, creator):
-        if self.type == "PUB":
-            self.type = "_FIX"
-        else:
-            self.type = "_FIXE"
-        self.save(update_fields=['type'])
-        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
-        if creator.is_women():
-            var = " закрепила"
-        else:
-            var = " закрепил"
-        text = var + " сообщение."
-        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-        return info_message
-
-    def unfixed_message_for_user_chat(self, creator):
-        if self.type == "_FIX":
-            self.type = "PUB"
-        else:
-            self.type = "EDI"
-        self.save(update_fields=['type'])
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
-            if creator.is_women():
-                var = " открепила"
-            else:
-                var = " открепил"
-            text = var + " сообщение."
-            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-            return info_message
-
     def is_copy_reed(self):
         """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
         Зачем это - при отрисовке первого сообщения правильно выводить кол-во непрочитанных. """
@@ -526,6 +495,100 @@ class Message(models.Model):
             recipient_message.create_socket()
         return creator_message
 
+    def fixed_message_for_user_chat(self, creator):
+        """
+            Мы должны пометить все сообшения ветки как FIXED.
+            Для этого выясняем: это родительское сообщение, или имеет такое в поле copy.
+            Его и все копированные помечаем и сохраняем. Создаем запись в таблице закрепленных сообщений,
+            и в поле copy записываем сообшение, которое закрепляем. Мера нужна для показывания людям сообщения,
+            которое открепили, чтобы новое поле не создавать, их и так много.
+            Также создаем сокеты, чтобы участники чата увидели новое инфо-сообщение сразу
+        """
+        if self.copy:
+            message = self.copy
+            if message.type == "PUB":
+                message.type = "_FIX"
+            else:
+                message.type = "_FIXE"
+            message.save(update_fields=['type'])
+            for i in message.copy.all():
+                if i.type == "PUB":
+                    i.type = "_FIX"
+                else:
+                    i.type = "_FIXE"
+                i.save(update_fields=['type'])
+        else:
+            if self.type == "PUB":
+                self.type = "_FIX"
+            else:
+                self.type = "_FIXE"
+            self.save(update_fields=['type'])
+            for i in self.copy.all():
+                if i.type == "PUB":
+                    i.type = "_FIX"
+                else:
+                    i.type = "_FIXE"
+                i.save(update_fields=['type'])
+
+        self.save(update_fields=['type'])
+        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
+        if creator.is_women():
+            var = " закрепила"
+        else:
+            var = " закрепил"
+        text = var + " сообщение."
+        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
+        for recipient_id in self.chat.get_recipients_ids(creator.pk):
+            info_message.create_socket()
+        return info_message
+
+    def unfixed_message_for_user_chat(self, creator):
+        """
+            Мы должны пометить все сообшения ветки как обычные или измененные.
+            Для этого выясняем: это родительское сообщение, или имеет такое в поле copy.
+            Его и все копированные помечаем и сохраняем. Создаем запись в таблице закрепленных сообщений,
+            и в поле copy записываем сообшение, которое открепляем. Мера нужна для показывания людям сообщения,
+            которое открепили, чтобы новое поле не создавать, их и так много.
+            Также создаем сокеты, чтобы участники чата увидели новое инфо-сообщение сразу
+        """
+        if self.copy:
+            message = self.copy
+            if message.type == "_FIX":
+                message.type = "PUB"
+            else:
+                message.type = "EDI"
+            message.save(update_fields=['type'])
+            for i in message.copy.all():
+                if i.type == "_FIX":
+                    i.type = "PUB"
+                else:
+                    i.type = "EDI"
+                i.save(update_fields=['type'])
+        else:
+            if self.type == "_FIX":
+                self.type = "PUB"
+            else:
+                self.type = "EDI"
+            self.save(update_fields=['type'])
+            for i in self.copy.all():
+                if i.type == "_FIX":
+                    i.type = "PUB"
+                else:
+                    i.type = "EDI"
+                i.save(update_fields=['type'])
+
+        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
+            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
+            if creator.is_women():
+                var = " открепила"
+            else:
+                var = " открепил"
+            text = var + " сообщение."
+            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
+            for recipient_id in self.chat.get_recipients_ids(creator.pk):
+                info_message.create_socket()
+            return info_message
+
     def save_draft_message(chat, creator, parent, text, attach, transfer):
         # программа для сохранения черновика сообщения в чате, а также посылания сокета
         # всем участникам чата, что создатель черновика набирает сообщение
@@ -622,7 +685,7 @@ class Message(models.Model):
             return text
 
     def get_manager_text(self):
-        message = MessageFixed.objects.get(message=self)
+        message = self.copy
         if message.is_have_transfer():
             if message.transfer.all().count() > 1:
                 text = "Пересланные сообщение"
