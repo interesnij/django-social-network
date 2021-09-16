@@ -65,6 +65,40 @@ class PostCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
+class PostCommunityCreate(View):
+    def post(self,request,*args,**kwargs):
+        from common.check.community import check_private_post_exists
+
+        form_post = PostForm(request.POST)
+        list = PostList.objects.get(pk=self.kwargs["pk"])
+        community = list.community
+
+        check_private_post_exists(community)
+        if (community.is_wall_close() or community.is_staff_post_member_can()) and not request.user.is_staff_of_community(community.pk):
+            raise Http404
+        elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community(community.pk):
+            raise Http404
+        elif request.is_ajax() and form_post.is_valid():
+            check_can_get_lists(request.user, community)
+            post = form_post.save(commit=False)
+            if request.POST.get('text') or request.POST.get('attach_items'):
+                attach = request.POST.getlist('attach_items')
+                new_post = post.create_post(
+                                            creator=request.user,
+                                            attach=attach,
+                                            text=post.text,
+                                            category=post.category,
+                                            list=list,
+                                            comments_enabled=post.comments_enabled,
+                                            votes_on=post.votes_on,
+                                            community=community
+                                            )
+                return HttpResponse()
+            else:
+                return HttpResponseBadRequest()
+        else:
+            return HttpResponseBadRequest()
+
 class PostCommunityEdit(TemplateView):
     template_name = None
 

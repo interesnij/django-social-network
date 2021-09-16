@@ -547,6 +547,14 @@ class Post(models.Model):
             creator.plus_posts(1)
         return post
 
+    @classmethod
+    def create_offer_post(cls, creator, list, text, category, attach, comments_enabled, is_signature=False, votes_on, community=None):
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[","").replace("]", "").replace(" ", "")
+
+        post = cls.objects.create(creator=creator,list=list,text=text,category=category,community=community,comments_enabled=comments_enabled,votes_on=votes_on,attach=_attach,type=Post.DRAFT)
+        return post
+
     def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on):
         from common.processing.post  import get_post_processing
 
