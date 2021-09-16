@@ -548,7 +548,7 @@ class Post(models.Model):
         return post
 
     @classmethod
-    def create_offer_post(cls, creator, list, text, category, attach, comments_enabled, is_signature=False, votes_on, community=None):
+    def create_offer_post(cls, creator, list, text, category, attach, comments_enabled, is_signature=None, votes_on, community=None):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[","").replace("]", "").replace(" ", "")
 
