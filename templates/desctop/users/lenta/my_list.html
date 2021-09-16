@@ -1,5 +1,4 @@
 <span class="post_container">
-  {% include 'desctop/users/profile/new_post.html' %}
 
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
@@ -51,6 +50,8 @@
             {% endif %}
 
           </span>
+          {% include 'desctop/users/profile/new_post.html' %}
+          
         {% elif not user.is_post_manager %}
           <span>
             <a class="u_uncopy_post_list pointer">Удалить список</a>
