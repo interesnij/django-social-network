@@ -617,7 +617,7 @@ class Message(models.Model):
             text = self.text[:count].replace("<br>", "  ")
         if self.is_manager():
             creator = self.creator
-            return creator.get_full_name() + self.text + text
+            return creator.get_full_name() + text
         else:
             return text
 
