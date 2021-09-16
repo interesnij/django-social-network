@@ -593,10 +593,7 @@ class Message(models.Model):
         return naturaltime(self.created)
 
     def get_preview_text(self):
-        if self.is_manager():
-            creator = self.creator
-            return creator.get_full_name() + self.text
-        elif self.is_have_transfer():
+        if self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 text = "Пересланные сообщение"
             else:
