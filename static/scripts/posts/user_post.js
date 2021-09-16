@@ -43,7 +43,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   form_data = new FormData(form_post);
 
   lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
-  pk = form_post.parentElement.parentElement.parentElement.getAttribute("list-pk");
+  pk = form_post.parentElement.parentElement.getAttribute("data-uuid");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/user_progs/add_post/" + pk + "/", true );
