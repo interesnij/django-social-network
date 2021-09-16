@@ -273,7 +273,7 @@ class UserMessageFixed(View):
 		check_can_send_message(request.user, message.chat)
 		if request.is_ajax():
 			info_message = message.fixed_message_for_user_chat(request.user)
-			return render_for_platform(request, 'chat/message/message.html', {'object': info_message})
+			return render_for_platform(request, 'chat/message/info_message.html', {'object': info_message})
 		else:
 			raise Http404
 
