@@ -19,5 +19,6 @@ from video.models import VideoList
 from docs.models import Doc
 from chat.models import Message
 from gallery.models import PhotoList
+from chat.models import Message
 
-DocList.objects.all().update(can_see_item="0", can_see_comment="0", add_item="0", add_comment="0", can_copy_list="0", )
+Message.objects.filter(type=Message.MANAGER).delete()
