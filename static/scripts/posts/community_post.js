@@ -38,20 +38,16 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    if (!form_post.querySelector(".list").value) {toast_error("Выберите список для новой записи");return};
     clear_attach_block();
 
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    list = form_post.parentElement.parentElement.querySelector(".tab_active");
-    list_name = list.innerHTML;
-    list_pk = list.getAttribute("list-pk");
     drops = form_post.querySelectorAll(".dropdown-menu");
     form_post.querySelector(".input_text").remove();
     form_post.querySelector(".smile_supported").innerHTML = "";
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    (new_post.querySelector('.span1').classList.contains(list_pk) && new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
+    (new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
                                        toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null)
                                     :  toast_info('Запись опубликована');
