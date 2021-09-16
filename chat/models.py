@@ -598,26 +598,31 @@ class Message(models.Model):
             return creator.get_full_name() + self.text
         elif self.is_have_transfer():
             if self.transfer.all().count() > 1:
-                return "Пересланные сообщение"
+                text = "Пересланные сообщение"
             else:
-                return "Пересланное сообщение"
+                text = "Пересланное сообщение"
         elif self.parent:
-            return "Ответ на сообщение"
+            text = "Ответ на сообщение"
         if self.sticker:
-            return "Стикер"
+            text = "Стикер"
         elif self.voice:
-            return "Голосовое сообщение"
+            text = "Голосовое сообщение"
         elif self.attach and self.text:
-            return "Текст и вложения"
+            text = "Текст и вложения"
         elif self.attach and not self.text:
-            return "Вложения"
+            text = "Вложения"
         elif self.text:
             import re
             count = 60
             images = re.findall(r'<img.*?>', self.text)
             for image in images:
                 count += (len(image) -1)
-            return self.text[:count].replace("<br>", "  ")
+            text = self.text[:count].replace("<br>", "  ")
+        if self.is_manager():
+            creator = self.creator
+            return creator.get_full_name() + self.text + text
+        else:
+            return text
 
     def is_repost(self):
         return self.repost

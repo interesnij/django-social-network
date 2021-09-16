@@ -1,3 +1,9 @@
+.show_chat_fixed_messages {
+  padding-left:7px;
+  line-height: 100%;
+  padding-top: 3px;
+}
+
 .next_page_list img {
   width: 30px !important
 }
