@@ -358,3 +358,54 @@ class PhotoAttachInChatUserCreate(View):
 			return render_for_platform(request, 'chat/create/u_new_photos.html',{'object_list': photos})
 		else:
 			raise Http404
+
+
+class ChatMemberCreate(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from chat.models import ChatUsers
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and chat.creator == request.user:
+			ChatUsers.create_membership(user=user, chat=chat)
+			return HttpResponse()
+		else:
+			raise Http404
+
+class ChatMemberDelete(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from chat.models import ChatUsers
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and chat.creator == request.user:
+			ChatUsers.delete_membership(user=user, chat=chat)
+			return HttpResponse()
+		else:
+			raise Http404
+
+class ChatAdminCreate(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+			new_admin = chat.add_administrator(user)
+			return HttpResponse()
+		else:
+			raise Http404
+
+class ChatAdminDelete(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+			new_admin = chat.remove_administrator(user)
+			return HttpResponse()
+		else:
+			raise Http404

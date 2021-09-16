@@ -82,3 +82,21 @@ class ChatFixedMessagesView(ListView):
 	def get_queryset(self):
 		chats = self.chat.get_fixed_messages()
 		return chats
+
+
+class ChatMembers(ListView):
+	template_name, paginate_by = None, 20
+
+	def get(self,request,*args,**kwargs):
+		from common.template.user import get_settings_template
+
+		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(ChatMembers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(ChatMembers,self).get_context_data(**kwargs)
+		context["chat"] = self.chat
+		return context
+
+	def get_queryset(self):
+		return self.chat.get_members(self.chat)

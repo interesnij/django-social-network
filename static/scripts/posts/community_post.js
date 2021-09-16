@@ -17,8 +17,8 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
 
-  if (!_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
-    toast_error("Напишите или прикрепите что-нибудь")
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".files_0")) {
+    toast_error("Напишите или прикрепите что-нибудь"); return
   };
 
   $input = document.createElement("input");
@@ -63,7 +63,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
-  if (!_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".attach_block").innerHTML) {
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь")
   };
 
