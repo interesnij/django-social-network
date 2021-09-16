@@ -72,7 +72,7 @@
             {% include 'desctop/users/profile/new_offer_post.html' %}
           {% endif %}
 
-        {% else %}
+        {% elif list.creator.pk == request.user.pk %}
           {% include 'desctop/users/profile/new_post.html' %}
         {% endif %}
         <span></span>
