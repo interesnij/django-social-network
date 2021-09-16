@@ -340,8 +340,6 @@ on('#ajax', 'click', '.u_message_fixed', function() {
         parent = "Наклейка"
     };
     creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>';
-
-    console.log(message);
     message.remove();
 
     block = document.body.querySelector(".fixed_messages");
@@ -354,7 +352,6 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     message_load.append(new_post);
     objDiv = document.body.querySelector("#chatcontent");
     objDiv.scrollTop = objDiv.scrollHeight;
-    console.log(new_post);
   }};
   link.send();
 });
