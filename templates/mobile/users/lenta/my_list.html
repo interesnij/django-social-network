@@ -50,7 +50,6 @@
         {% elif list.creator.pk == request.user.pk %}
           {% include 'desctop/users/profile/new_post.html' %}
         {% endif %}
-        {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ user.pk }}">
           {% for object in object_list %}
