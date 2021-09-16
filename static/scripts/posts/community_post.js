@@ -47,7 +47,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     form_post.querySelector(".input_text").remove();
     form_post.querySelector(".smile_supported").innerHTML = "";
     for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
-    (new_post.querySelector(".card")) ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
+    new_post.querySelector(".card") ? (lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML),
                                        toast_info('Запись опубликована'),
                                        lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null)
                                     :  toast_info('Запись опубликована');
