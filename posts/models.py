@@ -517,11 +517,10 @@ class Post(models.Model):
         from common.processing.post import get_post_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _list = PostList.objects.get(pk=list)
 
-        _list.count += 1
-        _list.save(update_fields=["count"])
-        post = cls.objects.create(creator=creator,list=_list,order=_list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
+        list.count += 1
+        list.save(update_fields=["count"])
+        post = cls.objects.create(creator=creator,list=list,order=list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
         get_post_processing(post, Post.PUBLISHED)
         if not _list.is_private():
             if community:
