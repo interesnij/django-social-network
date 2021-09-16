@@ -33,7 +33,8 @@ class PostCommunityCreate(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["pk"])
+        community = list.community
 
         check_private_post_exists(community)
         if (community.is_wall_close() or community.is_staff_post_member_can()) and not request.user.is_staff_of_community(community.pk):
@@ -46,7 +47,7 @@ class PostCommunityCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.template.user import render_for_platform
 
-                list, attach = request.POST.get("lists"), request.POST.getlist('attach_items')
+                attach = request.POST.getlist('attach_items')
                 new_post = post.create_post(
                                             creator=request.user,
                                             attach=attach,

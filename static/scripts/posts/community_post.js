@@ -30,7 +30,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   form_data = new FormData(form_post);
 
   lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".post_stream");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
+  pk = form_post.parentElement.parentElement.parentElement.getAttribute("list-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/posts/community_progs/add_post/" + pk + "/", true );
