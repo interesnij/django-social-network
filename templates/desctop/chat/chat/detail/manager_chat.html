@@ -24,7 +24,7 @@
       </div>
 <div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
     <div class="fixed_messages">
-      {% if chat.get_first_fix_message %}
+      {% if fix_message %}
         {% include 'desctop/chat/chat/fixed_message.html' %}
       {% endif %}
     </div>

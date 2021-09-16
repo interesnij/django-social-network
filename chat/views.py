@@ -55,6 +55,7 @@ class ChatDetailView(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(ChatDetailView,self).get_context_data(**kwargs)
 		context['chat'] = self.chat
+		context['fix_message'] = self.chat.get_first_fix_message
 		if self.chat.is_have_draft_message(self.pk):
 			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
 		return context
