@@ -42,7 +42,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post.append($input);
   form_data = new FormData(form_post);
 
-  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling.querySelector(".post_stream");
+  lenta_load = form_post.parentElement.nextElementSibling.nextElementSibling;
   pk = form_post.parentElement.parentElement.parentElement.getAttribute("list-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
