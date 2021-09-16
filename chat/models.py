@@ -536,7 +536,7 @@ class Message(models.Model):
             var = " закрепила"
         else:
             var = " закрепил"
-        text = var + " сообщение."
+        text = var + " сообщение "
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
         for recipient_id in self.chat.get_recipients_ids(creator.pk):
             info_message.create_socket()
@@ -583,7 +583,7 @@ class Message(models.Model):
                 var = " открепила"
             else:
                 var = " открепил"
-            text = var + " сообщение."
+            text = var + " сообщение "
             info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
             for recipient_id in self.chat.get_recipients_ids(creator.pk):
                 info_message.create_socket()

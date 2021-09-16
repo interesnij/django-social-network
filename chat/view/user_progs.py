@@ -266,13 +266,14 @@ class UserMessageFixed(View):
 	def get(self,request,*args,**kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
-		from django.http import HttpResponse, Http404
+		from django.http import Http404
+		from common.template.user import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		check_can_send_message(request.user, message.chat)
 		if request.is_ajax():
-			message.fixed_message_for_user_chat(request.user)
-			return HttpResponse()
+			info_message = message.fixed_message_for_user_chat(request.user)
+			return render_for_platform(request, 'chat/message/message.html', {'object': info_message})
 		else:
 			raise Http404
 
@@ -280,13 +281,14 @@ class UserMessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
-		from django.http import HttpResponse, Http404
+		from django.http import Http404
+		from common.template.user import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
 			check_can_send_message(request.user, message.chat)
-			message.unfixed_message_for_user_chat(request.user)
-			return HttpResponse()
+			info_message = message.unfixed_message_for_user_chat(request.user)
+			return render_for_platform(request, 'chat/message/message.html', {'object': info_message})
 		else:
 			raise Http404
 

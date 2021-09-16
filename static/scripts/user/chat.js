@@ -320,6 +320,93 @@ function send_message (form_post, url) {
   link_.send(form_data);
 };
 
+on('#ajax', 'click', '.u_message_fixed', function() {
+  message = document.body.querySelector(".target_message");
+  checkbox = message.querySelector(".message_checkbox");
+  checkbox.checked = false;
+  hide_chat_console();
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  uuid = message.getAttribute("data-uuid");
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    hide_chat_console();
+    message.classList.add("is_fixed");
+    message.style.display = "none";
+    if (message.querySelector(".attach_container")) {
+      parent = "Вложения"
+    } else if (message.querySelector(".text") != null) {
+      parent = message.querySelector(".text").innerHTML.replace(/<br>/g,"  ")
+    } else if(message.querySelector(".message_sticker")) {
+        parent = "Наклейка"
+    };
+    creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>'
+
+    block = document.body.querySelector(".fixed_messages");
+    block.innerHTML = "<div class='pointer show_chat_fixed_messages'>" + creator_p + "<div class='border-bottom' style='position:relative;padding-bottom: 5px;'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span></div></div></div>";
+
+    message_load = document.body.querySelector(".chatlist");
+    elem = link_.responseText;
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    message_load.append(new_post);
+    objDiv = document.body.querySelector("#chatcontent");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }};
+  link.send();
+});
+
+on('#ajax', 'click', '.u_message_reply', function() {
+  message = document.body.querySelector(".target_message");
+  checkbox = message.querySelector(".message_checkbox");
+  checkbox.checked = false;
+  hide_chat_console();
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  if (message.querySelector(".attach_container")) {
+    parent = "Вложения"
+  } else if (message.querySelector(".text") != null) {
+    parent = message.querySelector(".text").innerHTML.replace(/<br>/g,"  ")
+  } else if(message.querySelector(".message_sticker")) {
+      parent = "Наклейка"
+  };
+  creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
+
+  block = document.body.querySelector(".parent_message_block");
+  block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span><span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
+
+});
+
+on('#ajax', 'click', '.u_message_edit', function() {
+  hide_chat_console();
+  message = document.body.querySelector(".target_message");
+  checkbox = message.querySelector(".message_checkbox");
+  checkbox.checked = false;
+  checkbox.style.display = "none";
+  message.classList.remove("target_message", "custom_color");
+  message.style.display = "none";
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    response = document.createElement("span");
+    response.innerHTML = link_.responseText;
+    box = message.nextElementSibling;
+    box.innerHTML = response.innerHTML;
+    objDiv = document.body.querySelector(".chatlist");
+    objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  };
+  link_.send();
+});
+
 function send_draft_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML){
@@ -490,84 +577,6 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
   link.send();
 });
 
-on('#ajax', 'click', '.u_message_fixed', function() {
-  message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
-  hide_chat_console();
-  checkbox.style.display = "none";
-  message.classList.remove("target_message", "custom_color");
-  uuid = message.getAttribute("data-uuid");
-
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/fixed_message/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console();
-    message.classList.add("is_fixed");
-    message.style.display = "none";
-    if (message.querySelector(".attach_container")) {
-      parent = "Вложения"
-    } else if (message.querySelector(".text") != null) {
-      parent = message.querySelector(".text").innerHTML.replace(/<br>/g,"  ")
-    } else if(message.querySelector(".message_sticker")) {
-        parent = "Наклейка"
-    };
-    creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>'
-
-    block = document.body.querySelector(".fixed_messages");
-    block.innerHTML = "<div class='pointer show_chat_fixed_messages'>" + creator_p + "<div class='border-bottom' style='position:relative;padding-bottom: 5px;'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span></div></div></div>"
-  }};
-  link.send();
-});
-
-on('#ajax', 'click', '.u_message_reply', function() {
-  message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
-  hide_chat_console();
-  checkbox.style.display = "none";
-  message.classList.remove("target_message", "custom_color");
-  if (message.querySelector(".attach_container")) {
-    parent = "Вложения"
-  } else if (message.querySelector(".text") != null) {
-    parent = message.querySelector(".text").innerHTML.replace(/<br>/g,"  ")
-  } else if(message.querySelector(".message_sticker")) {
-      parent = "Наклейка"
-  };
-  creator_p = '<p><a class="underline" target="_blank" href="' + message.querySelector(".creator_link").getAttribute("href") + '">' + message.querySelector(".creator_name").innerHTML + '</a></p>'
-
-  block = document.body.querySelector(".parent_message_block");
-  block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span><span class='remove_parent_block pointer' style='float:right;position:absolute;right: 0;top:-15px;font-size: 25px;'>x</span></div></div></div>"
-
-});
-
-on('#ajax', 'click', '.u_message_edit', function() {
-  hide_chat_console();
-  message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
-  checkbox.style.display = "none";
-  message.classList.remove("target_message", "custom_color");
-  message.style.display = "none";
-
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/chat/user_progs/edit_message/" + message.getAttribute("data-uuid") + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    response = document.createElement("span");
-    response.innerHTML = link_.responseText;
-    box = message.nextElementSibling;
-    box.innerHTML = response.innerHTML;
-    objDiv = document.body.querySelector(".chatlist");
-    objDiv.scrollTop = objDiv.scrollHeight;
-    }
-  };
-  link_.send();
-});
 on('#ajax', 'click', '.edit_message_form_remove', function() {
   box = this.parentElement.parentElement;
   box.innerHTML = "";
