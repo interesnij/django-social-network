@@ -5,16 +5,17 @@
     <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
       <h5 class="mt-1">
         <p>
-          В чате закреплено: {{ chat.get_fix_message_count }}
+          В чате закреплено: {{ chat.get_fix_message_count_ru }}
         </p>
       </h5>
     </div>
   <div class="container-fluid mt-3 pk_saver">
-    <div class="ul is_block_paginate no-gutters">
+    <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
       {% if object_list %}
       {% for fix in object_list %}
       {% with object=fix.message %}
-          <div class="message media p-1 pag" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+          <div class="list-group-item message media p-1 pag" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+            <div class="list">
               <span>
                 <input type="checkbox" class="toggle_fix_message message_checkbox">
               </span>
@@ -62,6 +63,7 @@
 
                 {% endif %}
               </div>
+            </div>
           </div>
       {% endwith %}
 

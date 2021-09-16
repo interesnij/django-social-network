@@ -250,6 +250,17 @@ class Chat(models.Model):
         else:
             return 0
 
+    def get_fix_message_count_ru(self):
+        count = self.get_fix_message_count()
+
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " сообщение"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " сообщения"
+        else:
+            return str(count) + " сообщений"
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
