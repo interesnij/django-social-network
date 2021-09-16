@@ -1,3 +1,7 @@
+on('#ajax', 'click', '.input_new_post_in_list', function() {
+  this.nextElementSibling.style.display = "block";
+});
+
 on('#ajax', 'click', '.u_copy_post_list', function() {
   on_off_list_in_collections(this, "/posts/user_progs/add_list_in_collections/", "u_uncopy_post_list", "u_copy_post_list", "Удалить")
 });
@@ -279,7 +283,7 @@ on('#ajax', 'click', '.m_select_photo', function() {
   this.parentElement.parentElement.parentElement.previousElementSibling.classList.add("message_attach_block");
   clear_comment_dropdown();
   loader = document.getElementById("create_loader");
-  open_load_fullscreen('/users/load/u_img_message_load/', loader) 
+  open_load_fullscreen('/users/load/u_img_message_load/', loader)
 });
 on('#ajax', 'click', '.m_select_video', function() {
   this.parentElement.classList.remove("show");
