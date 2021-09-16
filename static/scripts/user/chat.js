@@ -322,11 +322,7 @@ function send_message (form_post, url) {
 
 on('#ajax', 'click', '.u_message_fixed', function() {
   message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
   hide_chat_console();
-  checkbox.style.display = "none";
-  message.classList.remove("target_message", "custom_color");
   uuid = message.getAttribute("data-uuid");
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -336,8 +332,6 @@ on('#ajax', 'click', '.u_message_fixed', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     hide_chat_console();
-    message.classList.add("is_fixed");
-    message.style.display = "none";
     if (message.querySelector(".attach_container")) {
       parent = "Вложения"
     } else if (message.querySelector(".text") != null) {
@@ -345,7 +339,10 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     } else if(message.querySelector(".message_sticker")) {
         parent = "Наклейка"
     };
-    creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>'
+    creator_p = '<p>' + message.querySelector(".creator_name").innerHTML + '</p>';
+
+    console.log(message);
+    message.remove();
 
     block = document.body.querySelector(".fixed_messages");
     block.innerHTML = "<div class='pointer show_chat_fixed_messages'>" + creator_p + "<div class='border-bottom' style='position:relative;padding-bottom: 5px;'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span></div></div></div>";
@@ -357,6 +354,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
     message_load.append(new_post);
     objDiv = document.body.querySelector("#chatcontent");
     objDiv.scrollTop = objDiv.scrollHeight;
+    console.log(new_post);
   }};
   link.send();
 });
