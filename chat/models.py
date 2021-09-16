@@ -621,6 +621,9 @@ class Message(models.Model):
         else:
             return text
 
+    def get_manager_text(self):
+        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + self.get_preview_text() + '</i>'
+
     def is_repost(self):
         return self.repost
 
@@ -749,9 +752,6 @@ class Message(models.Model):
         elif self.type == "_CLOF":
             self.type = Message.FIXED
         self.save(update_fields=['type'])
-
-    def get_manager_text(self):
-        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + self.text + '</i>'
 
 
 class MessageFavourite(models.Model):
