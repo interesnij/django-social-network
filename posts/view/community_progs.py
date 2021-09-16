@@ -65,7 +65,7 @@ class PostCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
-class PostCommunityCreate(View):
+class CommunitySaveDraftPost(View):
     def post(self,request,*args,**kwargs):
         from common.check.community import check_private_post_exists
 
