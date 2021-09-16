@@ -622,7 +622,7 @@ class Message(models.Model):
             return text
 
     def get_manager_text(self):
-        message = self.message
+        message = MessageFixed.objects.get(message=self)
         if message.is_have_transfer():
             if message.transfer.all().count() > 1:
                 text = "Пересланные сообщение"
