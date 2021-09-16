@@ -1,5 +1,5 @@
 on('#ajax', 'click', '.input_new_post_in_list', function() {
-  this.nextElementSibling.style.display = "block";
+  this.parentElement.nextElementSibling.style.display = "block";
 });
 
 on('#ajax', 'click', '.u_copy_post_list', function() {
