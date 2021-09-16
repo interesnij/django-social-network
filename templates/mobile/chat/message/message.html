@@ -16,7 +16,7 @@
     </span>
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax">
-        {{ object.creator.get_40_avatar }}
+        {{ object.creator.get_40_avatar|safe }}
       </a>
     </figure>
     <div class="media-body">
