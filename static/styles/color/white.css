@@ -143,9 +143,9 @@ a.media:hover {
   color: #000000;
 }
 .form-control:focus, select:focus {
-  border-color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 0, 0, 0.2);
   background-color: white;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 1);
 }
 .line-control-menu-bar, .line-control-status-bar {
   background: #f0f2f6;
