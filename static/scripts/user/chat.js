@@ -706,7 +706,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
   }
   ajax_link.send();
 };
-u_message_transfersetTimeout(function(){
+setTimeout(function(){
   form = block.parentElement;
     send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
