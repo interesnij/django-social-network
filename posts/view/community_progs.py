@@ -89,7 +89,7 @@ class CommunitySaveCreatorDraftPost(View):
                                         votes_on=post.votes_on,
                                         community=community
                                         )
-                return HttpResponse()
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
@@ -116,7 +116,7 @@ class CommunitySaveOfferDraftPost(View):
                                         votes_on=post.votes_on,
                                         community=community
                                         )
-                return HttpResponse()
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 

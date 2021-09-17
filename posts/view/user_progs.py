@@ -70,7 +70,7 @@ class UserSaveCreatorDraftPost(View):
                                         comments_enabled=post.comments_enabled,
                                         votes_on=post.votes_on,
                                         )
-                return HttpResponse()
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
@@ -89,7 +89,7 @@ class UserSaveOfferDraftPost(View):
                                         comments_enabled=post.comments_enabled,
                                         votes_on=post.votes_on,
                                         )
-                return HttpResponse()
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
