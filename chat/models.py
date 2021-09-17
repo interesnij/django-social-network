@@ -561,7 +561,7 @@ class Message(models.Model):
         if transfer:
             for i in transfer:
                 m = Message.objects.get(uuid=i)
-                creator_message.transfer.add(m)
+                message.transfer.add(m)
 
         channel_layer = get_channel_layer()
         payload = {
