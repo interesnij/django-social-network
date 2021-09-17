@@ -541,7 +541,6 @@ class Message(models.Model):
         else:
             parent_id = None
 
-        message.transfer.clear()
         if text:
             import re
             ids = re.findall(r'data-pk="(?P<pk>\d+)"', text)
@@ -559,6 +558,7 @@ class Message(models.Model):
 
         else:
             message = Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+        message.transfer.clear()
         if transfer:
             for i in transfer:
                 m = Message.objects.get(uuid=i)
