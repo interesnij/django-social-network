@@ -545,7 +545,7 @@ on('#ajax', 'click', '.remove_parent_block', function() {
   setTimeout(function(){
     send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
-  this.parentElement.parentElement.parentElement.remove()
+  this.parentElement.parentElement.parentElement.parentElement.remove()
 });
 
 on('#ajax', 'click', '.u_message_restore', function() {
@@ -703,7 +703,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       window.history.pushState(null, "vfgffgfgf", url);
       scrolled(rtr.querySelector('.chat_container'), target = 0);
       block = rtr.querySelector(".parent_message_block");
-      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'>" + preview + "<span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div></div>";
+      block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + preview + "</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div></div>";
       block.append(saver);
       show_message_form_send_btn();
     }
