@@ -8,7 +8,7 @@
     <input class="type_hidden" type="hidden" name="text" />
     <div class="parent_message_block">
         {% if get_message_draft.parent %}
-          {% with parent == get_message_draft.parent %}
+          {% with parent = get_message_draft.parent %}
         <div>
           <p>
             <a class="underline" target="_blank" href="{{ parent.creator.get_link }}">
