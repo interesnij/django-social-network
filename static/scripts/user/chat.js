@@ -541,6 +541,10 @@ on('#ajax', 'click', '.u_message_delete', function() {
 });
 
 on('#ajax', 'click', '.remove_parent_block', function() {
+  form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  setTimeout(function(){
+    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 1000)
   this.parentElement.parentElement.parentElement.remove()
 });
 
