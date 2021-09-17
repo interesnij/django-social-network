@@ -46,7 +46,7 @@ on('#ajax', 'input', '.chat_message_text', function() {
         remove_class_timeout(_this);
         setTimeout(function(){
           form = _this.parentElement.parentElement;
-          if ( !_this.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == ""|| !form.querySelector(".files_0").innerHTML){
+          if ( !_this.value.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == ""|| !form.querySelector(".files_0").innerHTML){
             send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
           }
       }, 1000)
