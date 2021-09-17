@@ -541,6 +541,7 @@ class Message(models.Model):
         else:
             parent_id = None
 
+        message.transfer.clear()
         if text:
             import re
             ids = re.findall(r'data-pk="(?P<pk>\d+)"', text)
