@@ -222,13 +222,9 @@ class UserSaveDraftMessage(View):
 		from django.http import HttpResponse
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
-		if request.POST.get('text') or request.POST.get('attach_items'):
-			message = form_post.save(commit=False)
-			Message.save_draft_message(chat=chat,creator=request.user,text=message.text,parent=request.POST.get('parent'),attach=request.POST.getlist('attach_items'), transfer=request.POST.getlist('transfer'),)
-			return HttpResponse()
-		else:
-			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
+		message = form_post.save(commit=False)
+		Message.save_draft_message(chat=chat,creator=request.user,text=message.text,parent=request.POST.get('parent'),attach=request.POST.getlist('attach_items'), transfer=request.POST.getlist('transfer'),)
+		return HttpResponse()
 
 class UserMessageEdit(TemplateView):
 	template_name = None

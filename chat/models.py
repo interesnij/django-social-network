@@ -492,7 +492,11 @@ class Message(models.Model):
                     creator_message.transfer.add(m)
             if chat.is_have_draft_message(creator.pk):
                 message = chat.get_draft_message(creator.pk)
-                message.delete()
+                message.text = ""
+                message.attach = ""
+                message.parent_id = None
+                message.transfer.clear()
+                message.save(update_fields=["text","attach","parent_id"])
         get_message_processing(creator_message, 'PUB')
 
         for recipient_id in chat.get_recipients_ids(creator.pk):
@@ -505,6 +509,50 @@ class Message(models.Model):
             get_message_processing(recipient_message, 'PUB')
             recipient_message.create_socket()
         return creator_message
+
+    def save_draft_message(chat, creator, parent, text, attach, transfer):
+        # программа для сохранения черновика сообщения в чате, а также посылания сокета
+        # всем участникам чата, что создатель черновика набирает сообщение
+        from asgiref.sync import async_to_sync
+        from channels.layers import get_channel_layer
+
+        if parent:
+            parent_id = parent
+        else:
+            parent_id = None
+
+        if text:
+            import re
+            ids = re.findall(r'data-pk="(?P<pk>\d+)"', text)
+            if ids:
+                from common.model.other import UserPopulateSmiles
+                for id in ids:
+                    UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
+
+        if chat.is_have_draft_message(creator.pk):
+            message = chat.get_draft_message(creator.pk)
+            message.text = text
+            message.attach = Message.get_format_attach(attach)
+            message.parent_id = parent_id
+            message.save(update_fields=["text","attach","parent_id"])
+
+        else:
+            message = Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+        if transfer:
+            for i in transfer:
+                m = Message.objects.get(uuid=i)
+                creator_message.transfer.add(m)
+
+        channel_layer = get_channel_layer()
+        payload = {
+            'type': 'receive',
+            'key': 'message',
+            'chat_id': chat.pk,
+            'recipient_ids': str(chat.get_recipients_ids(creator.pk)),
+            'name': "u_message_typed",
+            'user_name': creator.first_name,
+        }
+        async_to_sync(channel_layer.group_send)('notification', payload)
 
     def fixed_message_for_user_chat(self, creator):
         """
@@ -599,49 +647,6 @@ class Message(models.Model):
             for recipient_id in self.chat.get_recipients_ids(creator.pk):
                 info_message.create_socket()
             return info_message
-
-    def save_draft_message(chat, creator, parent, text, attach, transfer):
-        # программа для сохранения черновика сообщения в чате, а также посылания сокета
-        # всем участникам чата, что создатель черновика набирает сообщение
-        from asgiref.sync import async_to_sync
-        from channels.layers import get_channel_layer
-
-        if parent:
-            parent_id = parent
-        else:
-            parent_id = None
-
-        if text:
-            import re
-            ids = re.findall(r'data-pk="(?P<pk>\d+)"', text)
-            if ids:
-                from common.model.other import UserPopulateSmiles
-                for id in ids:
-                    UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-
-        if chat.is_have_draft_message(creator.pk):
-            message = chat.get_draft_message(creator.pk)
-            message.text = text
-            message.attach = Message.get_format_attach(attach)
-            message.parent_id = parent_id
-            message.save(update_fields=["text","attach","parent_id"])
-        else:
-            message = Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
-        if transfer:
-            for i in transfer:
-                m = Message.objects.get(uuid=i)
-                creator_message.transfer.add(m)
-
-        channel_layer = get_channel_layer()
-        payload = {
-            'type': 'receive',
-            'key': 'message',
-            'chat_id': chat.pk,
-            'recipient_ids': str(chat.get_recipients_ids(creator.pk)),
-            'name': "u_message_typed",
-            'user_name': creator.first_name,
-        }
-        async_to_sync(channel_layer.group_send)('notification', payload)
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
