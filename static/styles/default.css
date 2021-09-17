@@ -1,3 +1,8 @@
+.post .card-footer {
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
 .show_chat_fixed_messages {
   padding-left:7px;
   line-height: 100%;
