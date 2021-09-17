@@ -354,7 +354,7 @@ class Message(models.Model):
         inputs = ""
         for i in transfers:
             inputs += '<input type="hidden" name="transfer" value="' + str(i.uuid) + '" class="transfer">'
-        return '<div><p><a class="underline">' + text_2 + '</a></p><div style="position:relative;padding-bottom:7px"><div><span class="pointer underline">' + text + '</span><span class="remove_parent_block pointer message_form_parent_block">x</span></div></div></div>' + inputs + '</div></div>'
+        return '<div><p><a class="underline">' + text_2 + '</a></p><div style="position:relative;padding-bottom:7px"><div><span class="pointer underline">' + text + '</span><span class="remove_parent_block pointer message_form_parent_block">x</span></div></div>' + inputs + '</div>'
 
     def is_edited(self):
         return self.type == "EDI"
