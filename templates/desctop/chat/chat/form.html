@@ -26,7 +26,7 @@
         {% endwith %}
 
         {% elif get_message_draft.is_have_transfer %}
-          {{ get_message_draft|get_draft_transfers_block|safe }}
+          {{ get_message_draft.get_draft_transfers_block|safe }}
         {% endif %}
 
     </div>
