@@ -336,6 +336,26 @@ class Message(models.Model):
                 return True
         return False
 
+    def get_draft_transfers_block(self):
+        transfers = self.transfer.all()
+        count = transfers.count()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            text = str(count) + " сообщение"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            text = str(count) + " сообщения"
+        else:
+            text = str(count) + " сообщений"
+        if count > 1:
+            text_2 = "Пересланные сообщения"
+        else:
+            text_2 = "Пересланное сообщение"
+        inputs = ""
+        for i in transfers:
+            inputs += '<input type="hidden" name="transfer" value="' + str(i.uuid) + '" class="transfer">'
+        return '<div><p><a class="underline">' + text_2 + '</a></p><div style="position:relative;padding-bottom:7px"><div><span class="pointer underline">' + text + '</span><span class="remove_parent_block pointer message_form_parent_block">x</span></div></div></div><div>' + inputs + '</div>
+
     def is_edited(self):
         return self.type == "EDI"
     def is_manager(self):

@@ -3,6 +3,14 @@
   padding-right: 17px !important;
 }
 
+.message_form_parent_block {
+  float:right;
+  position:absolute;
+  right: 0;
+  top:-15px;
+  font-size: 25px;
+}
+
 .show_chat_fixed_messages {
   padding-left:7px;
   line-height: 100%;
