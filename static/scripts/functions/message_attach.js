@@ -49,7 +49,7 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   setTimeout(function(){
     form = block.parentElement;
       send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
+}, 2000) 
 }
 
 function photo_message_upload_attach(photo_list, block){

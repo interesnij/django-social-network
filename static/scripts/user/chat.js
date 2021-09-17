@@ -374,7 +374,10 @@ on('#ajax', 'click', '.u_message_reply', function() {
 
   block = document.body.querySelector(".parent_message_block");
   block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span><span class='remove_parent_block message_form_parent_block pointer'>x</span></div></div></div>"
-
+  setTimeout(function(){
+    form = block.parentElement;
+      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 1000)
 });
 
 on('#ajax', 'click', '.u_message_edit', function() {
@@ -702,5 +705,9 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     }
   }
   ajax_link.send();
-}
+};
+u_message_transfersetTimeout(function(){
+  form = block.parentElement;
+    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 1000)
 });
