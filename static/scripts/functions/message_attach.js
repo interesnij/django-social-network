@@ -23,7 +23,11 @@ function add_file_message_attach(){
   else if (files_block.classList.contains("files_6")){ files_block.classList.add("files_7"), files_block.classList.remove("files_6")}
   else if (files_block.classList.contains("files_7")){ files_block.classList.add("files_8"), files_block.classList.remove("files_7")}
   else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_9"), files_block.classList.remove("files_8")}
-  else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_10"), files_block.classList.remove("files_9")}
+  else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_10"), files_block.classList.remove("files_9")};
+  setTimeout(function(){
+    form = files_block.parentElement;
+      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 1000)
 }
 function remove_file_message_attach(){
   files_block = document.body.querySelector(".message_attach_block");
@@ -36,7 +40,11 @@ function remove_file_message_attach(){
   else if (files_block.classList.contains("files_7")){ files_block.classList.add("files_6"), files_block.classList.remove("files_7")}
   else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_7"), files_block.classList.remove("files_8")}
   else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_8"), files_block.classList.remove("files_9")}
-  else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
+  else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")};
+  setTimeout(function(){
+    form = files_block.parentElement;
+      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+}, 1000)
 }
 
 function photo_message_attach(block, photo_pk, user_pk, src) {
@@ -46,10 +54,6 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   add_file_message_attach()
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 2000) 
 }
 
 function photo_message_upload_attach(photo_list, block){
@@ -62,10 +66,6 @@ function photo_message_upload_attach(photo_list, block){
     is_full_message_attach();
     show_message_form_send_btn()
   };
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
   }
 
 function photo_list_message_attach(block, title, pk, count) {
@@ -75,10 +75,6 @@ function photo_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 
 function video_message_attach(block, pk, counter, src) {
@@ -88,10 +84,6 @@ function video_message_attach(block, pk, counter, src) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 function video_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -100,10 +92,6 @@ function video_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 
 function music_message_attach(block, pk, counter, src) {
@@ -113,10 +101,6 @@ function music_message_attach(block, pk, counter, src) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 function playlist_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -125,10 +109,6 @@ function playlist_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 
 function doc_message_attach(block, media_block, pk) {
@@ -138,10 +118,6 @@ function doc_message_attach(block, media_block, pk) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 function doc_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -150,10 +126,6 @@ function doc_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 
 function good_message_attach(block, src, pk, uuid, title) {
@@ -163,10 +135,6 @@ function good_message_attach(block, src, pk, uuid, title) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 function good_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -175,10 +143,6 @@ function good_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 
 function article_message_attach(_this, block) {
@@ -188,10 +152,6 @@ function article_message_attach(_this, block) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
 function article_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -200,8 +160,4 @@ function article_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-  setTimeout(function(){
-    form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
-}, 7000)
 }
