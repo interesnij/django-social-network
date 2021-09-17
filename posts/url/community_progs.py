@@ -5,7 +5,8 @@ from posts.view.community_progs import *
 urlpatterns = [
 	url(r'^add_post/(?P<pk>\d+)/$', PostCommunityCreate.as_view()),
 	url(r'^edit_post/(?P<uuid>[0-9a-f-]+)/$', PostCommunityEdit.as_view()),
-	url(r'^save_draft_post/(?P<pk>\d+)/$', CommunitySaveDraftPost.as_view()),
+	url(r'^save_creator_draft_post/(?P<pk>\d+)/$', CommunitySaveCreatorDraftPost.as_view()),
+	url(r'^save_offer_draft_post/(?P<pk>\d+)/$', CommunitySaveOfferDraftPost.as_view()),
 	url(r'^add_offer_post/(?P<pk>\d+)/$', PostOfferCommunityCreate.as_view()),
 
 	url(r'^add_comment/$', PostCommunityCommentCreate.as_view()),

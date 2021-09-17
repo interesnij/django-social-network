@@ -351,6 +351,24 @@ class PostList(models.Model):
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
 
+    def get_user_creator_draft_post(self, user_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, type=Post.CREATOR_DRAFT).first()
+    def is_user_have_creator_draft_post(self, user_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, type=Post.CREATOR_DRAFT).exists()
+    def get_user_offer_draft_post(self, user_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, type=Post.OFFER_DRAFT).first()
+    def is_user_have_offer_draft_post(self, user_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, type=Post.OFFER_DRAFT).exists()
+
+    def get_community_creator_draft_post(self, user_id, community_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, community_id=community_id, type=Post.CREATOR_DRAFT).first()
+    def is_community_have_creator_draft_post(self, user_id, community_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, community_id=community_id, type=Post.CREATOR_DRAFT).exists()
+    def get_user_offer_draft_post(self, user_id, community_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, community_id=community_id, type=Post.OFFER_DRAFT).first()
+    def is_user_have_offer_draft_post(self, user_id, community_id):
+        return Post.objects.filter(list_id=self.pk, creator_id=user_id, community_id=community_id, type=Post.OFFER_DRAFT).exists()
+
 
 class PostCategory(models.Model):
 	name = models.CharField(max_length=100, verbose_name="Тематика")
@@ -365,10 +383,10 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    PROCESSING, DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_DRA","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
+    PROCESSING, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (PROCESSING, 'Обработка'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -547,11 +565,69 @@ class Post(models.Model):
         return post
 
     @classmethod
-    def create_offer_post(cls, creator, list, text, category, attach, comments_enabled, votes_on, community=None):
+    def create_creator_draft_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
         _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[","").replace("]", "").replace(" ", "")
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
-        post = cls.objects.create(creator=creator,list=list,text=text,category=category,community=community,comments_enabled=comments_enabled,votes_on=votes_on,attach=_attach,type=Post.DRAFT)
+        if community:
+            if list.is_community_have_creator_draft_post(creator.pk, community.pk):
+                post = list.get_community_creator_draft_post(creator.pk, community.pk)
+                post.text = text
+                post.community = community
+                post.category = category
+                post.attach = _attach
+                post.parent = parent
+                post.comments_enabled = comments_enabled
+                post.is_signature = is_signature
+                post.votes_on = votes_on
+                post.save()
+            else:
+                post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach)
+        else:
+            if list.is_user_have_creator_draft_post(creator.pk):
+                post = list.get_user_creator_draft_post(creator.pk)
+                post.text = text
+                post.category = category
+                post.attach = _attach
+                post.parent = parent
+                post.comments_enabled = comments_enabled
+                post.votes_on = votes_on
+                post.save()
+            else:
+                post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,comments_enabled=comments_enabled,votes_on=votes_on,attach=_attach)
+        return post
+
+    @classmethod
+    def create_offer_draft_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
+        if community:
+            if list.is_community_have_offer_draft_post(creator.pk, community.pk):
+                post = list.get_community_offer_draft_post(creator.pk, community.pk)
+                post.text = text
+                post.community = community
+                post.category = category
+                post.attach = _attach
+                post.parent = parent
+                post.comments_enabled = comments_enabled
+                post.is_signature = is_signature
+                post.votes_on = votes_on
+                post.save()
+            else:
+                post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach)
+        else:
+            if list.is_user_have_offer_draft_post(creator.pk):
+                post = list.get_user_offer_draft_post(creator.pk)
+                post.text = text
+                post.category = category
+                post.attach = _attach
+                post.parent = parent
+                post.comments_enabled = comments_enabled
+                post.votes_on = votes_on
+                post.save()
+            else:
+                post = cls.objects.create(creator=creator,list=list,text=text,category=category,parent=parent,comments_enabled=comments_enabled,votes_on=votes_on,attach=_attach)
         return post
 
     def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on):

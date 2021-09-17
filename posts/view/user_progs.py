@@ -55,27 +55,44 @@ class PostUserCreate(View):
             return HttpResponseBadRequest()
 
 
-class UserSaveDraftPost(View):
+class UserSaveCreatorDraftPost(View):
     def post(self,request,*args,**kwargs):
-        form_post, list, attach = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
+        form_post, list = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            if post.text or attach:
-                new_post = post.create_draft_post(
-                                            creator=request.user,
-                                            text=post.text,
-                                            category=post.category,
-                                            list=list,
-                                            attach=attach,
-                                            comments_enabled=post.comments_enabled,
-                                            votes_on=post.votes_on,
-                                            )
+            new_post = post.create_creator_draft_post(
+                                        creator=request.user,
+                                        text=post.text,
+                                        category=post.category,
+                                        list=list,
+                                        attach=request.POST.getlist('attach_items'),
+                                        comments_enabled=post.comments_enabled,
+                                        votes_on=post.votes_on,
+                                        )
                 return HttpResponse()
-            else:
-                return HttpResponseBadRequest()
         else:
             return HttpResponseBadRequest()
+
+class UserSaveOfferDraftPost(View):
+    def post(self,request,*args,**kwargs):
+        form_post, list = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"])
+
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            new_post = post.create_offer_draft_post(
+                                        creator=request.user,
+                                        text=post.text,
+                                        category=post.category,
+                                        list=list,
+                                        attach=request.POST.getlist('attach_items'),
+                                        comments_enabled=post.comments_enabled,
+                                        votes_on=post.votes_on,
+                                        )
+                return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
 
 class PostUserEdit(TemplateView):
     template_name = None
