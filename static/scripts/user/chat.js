@@ -545,7 +545,7 @@ on('#ajax', 'click', '.remove_parent_block', function() {
   setTimeout(function(){
     send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
-  this.parentElement.parentElement.parentElement.parentElement.remove()
+  this.parentElement.parentElement.parentElement.remove()
 });
 
 on('#ajax', 'click', '.u_message_restore', function() {
