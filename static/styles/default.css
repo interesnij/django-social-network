@@ -1,6 +1,6 @@
 .post .card-footer {
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 17px !important;
+  padding-right: 17px !important;
 }
 
 .show_chat_fixed_messages {
