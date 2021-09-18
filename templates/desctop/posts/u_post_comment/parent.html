@@ -85,15 +85,14 @@
             </div>
         </div>
     </div>
-    <span style="cursor:pointer;display: flex;" class="show_replies content-color-primary">
-        {% if comment.count_replies %}
-        ---- {{ comment.count_replies_ru }} ----
-        {% endif %}
-    </span>
-    <span class="stream_reply_comments">
-        {% for reply in comment.get_replies %}
-        {% include 'desctop/posts/u_post_comment/reply.html' %}
-        {% endfor %}
-
-    </span>
 </div>
+<span style="cursor:pointer;display: flex;" class="show_replies content-color-primary">
+    {% if comment.count_replies %}
+    ---- {{ comment.count_replies_ru }} ----
+    {% endif %}
+</span>
+<span class="stream_reply_comments">
+    {% for reply in comment.get_replies %}
+    {% include 'desctop/posts/u_post_comment/reply.html' %}
+    {% endfor %}
+</span>
