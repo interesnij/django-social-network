@@ -180,7 +180,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = member.get_full_name()
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:72px;top: 17px;">', member.get_online_status(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0"><a href="', member.get_link(), '" target="_blank">', chat_name, '</a></h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:72px;top: 17px;">', member.get_online_status(), '</span>', buttons, '</span></div>'])
         return ''.join([figure, media_body])
 
     def get_header_group_chat(self, user_id):
@@ -962,7 +962,7 @@ class MessageFixed(models.Model):
             for image in images:
                 count += (len(image) -1)
             return message.text[:count].replace("<br>", "  ")
-            
+
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
