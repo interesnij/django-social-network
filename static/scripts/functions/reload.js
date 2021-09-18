@@ -231,11 +231,13 @@ function open_fullscreen(url, block) {
             block.innerHTML = elem;
             get_document_opacity_0();
             if (block.querySelector(".next_page_list")) {
-              create_pagination(block);
               block.onwheel = function (e) {
                 if (this.scrollTop === 0 && e.deltaY !== 100){
                   console.log("2");
                 }
+              };
+              block.onscroll = function() {
+                  console.log("onscroll");
               }
             }
         }
@@ -280,16 +282,11 @@ function create_pagination(block) {
     scrolled(block.querySelector('.is_post_paginate'), target = 1);
     console.log("Работает пагинация для списка постов")
   }
-  else if (block.querySelector('.is_block_paginate')) {
-    scrolled(block.querySelector('.is_block_paginate'), target = 0);
-    console.log("Работает пагинация для списка в блоке")
-    console.log(block);
-  }
-}
+};
 
 function scrollToBottom(id) {
     document.querySelector(id).scrollIntoView(false);
-}
+};
 
 function minus_one_chat() {
     if (document.body.querySelector(".new_unread_chats")) {
