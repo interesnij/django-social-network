@@ -993,12 +993,25 @@ function get_document_opacity_1(block) {
     create_pagination(main_container);
 };
 
+function stop_body_scroll() {
+  body = document.body;
+  body.style.overflow = "hidden";
+  body.style.margimRight = "4px";
+};
+function start_body_scroll() {
+  body = document.body;
+  body.style.overflow = "auto";
+  body.style.margimRight = "0";
+};
+
 function open_fullscreen(url, block) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', url, true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            stop_body_scroll();
             elem = link.responseText;
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
