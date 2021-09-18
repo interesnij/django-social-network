@@ -565,6 +565,34 @@ class Post(models.Model):
         return post
 
     @classmethod
+    def create_offer_post(cls, creator, text, list, attach, community):
+        from common.processing.post import get_post_offer_processing
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
+        post = cls.objects.create(creator=creator,list=list,text=text,community=community,attach=_attach,type=Post.C_OFFER)
+        get_post_offer_processing(post)
+
+        if community:
+            from common.notify.progs import community_send_notify, community_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="SIT")
+            community_send_wall(post.pk, creator.pk, community.pk, None, "suggest_c_post_wall")
+            for user_id in community.get_staff_members_ids():
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="SIT")
+                community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "suggest_c_post_notify")
+            else:
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+                Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="SIT")
+                user_send_wall(post.pk, None, "suggest_u_post_wall")
+                for user_id in creator.get_user_news_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="SIT")
+                    user_send_notify(post.pk, creator.pk, user_id, None, "suggest_u_post_notify")
+        return post
+
+    @classmethod
     def create_creator_draft_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")

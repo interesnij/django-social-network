@@ -192,7 +192,8 @@ class PostOfferCommunityCreate(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        community = Community.objects.get(pk=self.kwargs["pk"])
+        list = PostList.objects.get(pk=self.kwargs["pk"])
+        community = list.community
         check_private_post_exists(community)
 
         if community.is_wall_close():
@@ -212,16 +213,8 @@ class PostOfferCommunityCreate(View):
                                             creator=request.user,
                                             attach=attach,
                                             text=post.text,
-                                            category=post.category,
-                                            list=post.list,
-                                            parent=None,
-                                            comments_enabled=post.comments_enabled,
-                                            is_signature=post.is_signature,
-                                            votes_on=post.votes_on,
-                                            is_public=request.POST.get("is_public"),
+                                            list=list,
                                             community=community)
-                get_post_offer_processing(new_post)
-                community_notify(request.user, community, None, "pos"+str(new_post.pk), "c_post_notify", "SIT")
                 return render_for_platform(request, 'posts/post_community/post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()

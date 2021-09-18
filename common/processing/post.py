@@ -3,6 +3,10 @@ def get_post_processing(post, type):
     post.type = type
     post.save(update_fields=['type'])
     return post
+def get_post_offer_processing(post):
+    post.type = "_COF"
+    post.save(update_fields=['type'])
+    return post
 def get_post_comment_processing(comment, type):
     comment.type = type
     comment.save(update_fields=['type'])
