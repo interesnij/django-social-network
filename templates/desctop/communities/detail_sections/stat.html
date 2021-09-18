@@ -15,10 +15,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'community_members' community.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ community.count_members }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_members' community.pk %}" class="ajax">
+           {{ community.count_members }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+          <a href="{% url 'community_members' community.pk %}" class="ajax">
+           {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}
+          </a>
+         </p>
        </div>
      </div>
    </div>
@@ -27,10 +33,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ community.count_goods }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_goods|rupluralize:"товар,товара,товаров" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+             {{ community.count_goods }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
+             {{ community.count_goods|rupluralize:"товар,товара,товаров" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
@@ -39,10 +51,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ community.count_photos }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_photos|rupluralize:"фотография,фотографии,фотографий" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+           {{ community.count_photos }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+             {{ community.count_photos|rupluralize:"фотография,фотографии,фотографий" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
@@ -51,10 +69,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ community.count_tracks }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_tracks|rupluralize:"трек,трека,треков" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+          <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+            {{ community.count_tracks }}
+          </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_music' pk=community.pk %}" class="ajax">
+             {{ community.count_tracks|rupluralize:"трек,трека,треков" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
@@ -63,10 +87,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ community.count_videos }}</h4>
-         <p class="content-color-secondary mb-0">{{ community.count_videos|rupluralize:"ролик,ролика,роликов" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+             {{ community.count_videos }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'community_video' pk=community.pk %}" class="ajax">
+             {{ community.count_videos|rupluralize:"ролик,ролика,роликов" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
