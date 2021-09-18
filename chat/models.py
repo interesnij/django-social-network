@@ -722,7 +722,7 @@ class Message(models.Model):
             text = '<span class="underline">Черновик:</span>' + self.get_type_text()
         else:
             if self.creator.id == user_id:
-                text = '<span class="underline">Вы:</span>' + self.get_type_text()
+                text = '<span class="underline">Вы: </span>' + self.get_type_text()
             else:
                 text = self.get_type_text()
         if self.is_manager():
@@ -734,23 +734,7 @@ class Message(models.Model):
 
     def get_manager_text(self):
         message = self.copy
-        if message.is_have_transfer():
-            if message.transfer.all().count() > 1:
-                text = "Пересланные сообщение"
-            else:
-                text = "Пересланное сообщение"
-        elif message.parent:
-            text = "Ответ на сообщение"
-        if message.sticker:
-            text = "Стикер"
-        elif message.voice:
-            text = "Голосовое сообщение"
-        elif message.attach and message.text:
-            text = "Текст и вложения"
-        elif message.attach and not message.text:
-            text = "Вложения"
-        elif message.text:
-            text = message.get_text_60()
+        text = message.get_type_text()
         return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
 
     def is_repost(self):
