@@ -1,6 +1,7 @@
 {% load liked_user %}
 
-<div class="media comment">
+<div class="comment">
+  <div class="media">
     {% include 'mobile/generic/user/comment_figure.html' %}
     <div class="media-body" style="overflow: inherit;">
       {% include 'base_block/comment/parent_el.html' %}
@@ -80,27 +81,26 @@
                           {% include 'base_block/comment/reply_comment_form.html' %}
                       </form>
                     </div>
-
-                    <span style="cursor:pointer;display: flex;" class="show_replies content-color-primary">
-                        {% if comment.count_replies %}
-                        ---- {{ comment.count_replies_ru }} ----
-                        {% endif %}
-                    </span>
-
-                    <span class="stream_reply_comments">
-                      {% for reply in comment.get_replies %}
-                        {% if reply.is_deleted %}
-                          <div class="comment">
-                            <p class="underline" style="display: flex;">Комментарий удален</p>
-                          </div>
-                        {% else %}
-                          {% include 'mobile/goods/u_good_comment/reply.html' %}
-                        {% endif %}
-                      {% endfor %}
-                    </span>
-
                 </div>
             </div>
         </div>
     </div>
+</div>
+<span style="cursor:pointer;display: flex;" class="show_replies content-color-primary">
+    {% if comment.count_replies %}
+    ---- {{ comment.count_replies_ru }} ----
+    {% endif %}
+</span>
+
+<span class="stream_reply_comments">
+  {% for reply in comment.get_replies %}
+    {% if reply.is_deleted %}
+      <div class="comment">
+        <p class="underline" style="display: flex;">Комментарий удален</p>
+      </div>
+    {% else %}
+      {% include 'mobile/goods/u_good_comment/reply.html' %}
+    {% endif %}
+  {% endfor %}
+</span>
 </div>
