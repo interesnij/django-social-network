@@ -717,8 +717,8 @@ class Message(models.Model):
 
 
     def get_preview_text(self, user_id):
-        if self.chat.is_have_draft_message(self.pk):
-            message = self.chat.get_draft_message(self.pk)
+        if self.chat.is_have_draft_message(user_id):
+            message = self.chat.get_draft_message(user_id)
             text = 'Черновик: ' + self.get_type_text()
         else:
             if self.creator.id == user_id:
