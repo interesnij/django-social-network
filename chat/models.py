@@ -726,7 +726,7 @@ class Message(models.Model):
         if self.is_manager():
             creator = self.creator
             message = self.copy
-            return creator.get_full_name() + self.get_text_60() + message
+            return creator.get_full_name() + self.text + message.get_text_60()
         else:
             return text
 
@@ -748,7 +748,7 @@ class Message(models.Model):
         elif message.attach and not message.text:
             text = "Вложения"
         elif message.text:
-            text = self.get_text_60()
+            text = message.get_text_60()
         return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
 
     def is_repost(self):
