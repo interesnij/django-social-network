@@ -745,7 +745,7 @@ class Message(models.Model):
             for image in images:
                 count += (len(image) -1)
             text = message.text[:count].replace("<br>", "  ")
-        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a>' + self.text + '<a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
+        return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
 
     def is_repost(self):
         return self.repost
