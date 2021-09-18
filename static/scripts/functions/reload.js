@@ -237,8 +237,7 @@ function open_fullscreen(url, block) {
                 if (box && box.classList.contains("next_page_list")) {
                     inViewport = elementInViewport(box);
                     if (inViewport) {
-                        console.log(box)
-                        box.classList.remove("next_page_list");
+                        box.remove();
                         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                         link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
                         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -247,9 +246,7 @@ function open_fullscreen(url, block) {
                             if (this.readyState == 4 && this.status == 200) {
                                 var elem = document.createElement('span');
                                 elem.innerHTML = link_3.responseText;
-                                block.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
-                                console.log(box)
-                                box.remove();
+                                block.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
                               }
                         }
                         link_3.send();
