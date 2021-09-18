@@ -599,7 +599,7 @@ nav {
 }
 
 .underline {
-text-decoration:underline;
+  text-decoration: underline !important;
 }
 
 .post_attach_panel .media,
