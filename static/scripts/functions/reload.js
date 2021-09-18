@@ -233,6 +233,7 @@ function open_fullscreen(url, block) {
             if (block.querySelector(".next_page_list")) {
               block.onscroll = function() {
                 box = block.querySelector('.next_page_list');
+                console.log(box)
                 if (box && box.classList.contains("next_page_list")) {
                     inViewport = elementInViewport(box);
                     if (inViewport) {
