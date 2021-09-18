@@ -231,13 +231,10 @@ function open_fullscreen(url, block) {
             block.innerHTML = elem;
             get_document_opacity_0();
             if (block.querySelector(".next_page_list")) {
-              block.onwheel = function (e) {
-                if (this.scrollTop === 0 && e.deltaY !== 100){
-                  console.log("2");
-                }
-              };
+              box = block.querySelector(".next_page_list");
+              url = box.getAttribute("data-link");
+              box.remove();
               block.onscroll = function() {
-                box = block.querySelector(".next_page_list");
                 var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
                 link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -247,7 +244,6 @@ function open_fullscreen(url, block) {
                         var elem = document.createElement('span');
                         elem.innerHTML = link_3.responseText;
                         box.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
-                        box.remove()
                       }
                 }
                 link_3.send();
