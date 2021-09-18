@@ -2,7 +2,9 @@
   padding-left: 17px !important;
   padding-right: 17px !important;
 }
-
+.show_replies {
+  cursor:pointer;
+}
 .message_form_parent_block {
   float:right;
   position:absolute;
@@ -5032,7 +5034,10 @@ cursor: pointer;
   width: 85%;
   height: auto;
 }
-.stream_reply_comments{display:none;}
+.stream_reply_comments{
+  display:none;
+  margin-left: 7%;
+}
 .stream_reply_comments figure img{
   width: 30px;
   height: 30px;
@@ -5150,7 +5155,7 @@ cursor: pointer;
   visibility: hidden;
   position: absolute;
   width: 300px;
-  bottom: 45px;
+  bottom: 20px;
   margin-bottom: 10px;
   display: flex;
   transition: 0.5s;
