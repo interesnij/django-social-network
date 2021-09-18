@@ -260,7 +260,7 @@ function paginate(block, target) {
                   block_paginate = elem.querySelector(".is_block_paginate");
                   if (elem.querySelector(".load_block")){
                       block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
-                  };
+                  }}
                 block.remove()
             }
         }
