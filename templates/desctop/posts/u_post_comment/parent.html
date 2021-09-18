@@ -88,15 +88,14 @@
                         {% endif %}
                     </span>
 
-                    <span class="stream_reply_comments">
-                        {% for reply in comment.get_replies %}
-                        {% include 'desctop/posts/u_post_comment/reply.html' %}
-                        {% endfor %}
-
-                    </span>
-
                 </div>
             </div>
         </div>
     </div>
+    <span class="stream_reply_comments">
+        {% for reply in comment.get_replies %}
+        {% include 'desctop/posts/u_post_comment/reply.html' %}
+        {% endfor %}
+
+    </span>
 </div>
