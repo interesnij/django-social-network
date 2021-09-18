@@ -50,7 +50,7 @@ background-color: #271531;
 .content-color-primary {
   color: #ffffff;
 }
-.media p {
+.media p, .media span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .content-color-secondary {

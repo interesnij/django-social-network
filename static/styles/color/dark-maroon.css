@@ -47,7 +47,7 @@ body {
 .bg-light-opac {
   background-color: #4d1123;
 }
-.media p {
+.media p, .media span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .content-color-primary {

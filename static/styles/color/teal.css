@@ -34,7 +34,7 @@ body {
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
-.media p {
+.media p, .media span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .boxed-page .wrapper {
