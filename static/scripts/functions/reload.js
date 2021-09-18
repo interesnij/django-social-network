@@ -246,6 +246,7 @@ function open_fullscreen(url, block) {
                                 var elem = document.createElement('span');
                                 elem.innerHTML = link_3.responseText;
                                 block.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                                console.log(box)
                                 box.remove();
                               }
                         }
