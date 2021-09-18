@@ -1002,14 +1002,15 @@ function open_fullscreen(url, block) {
             elem = link.responseText;
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
+            get_document_opacity_0();
             if (block.querySelector(".next_page_list")) {
-              get_document_opacity_0();
-              if (block.querySelector(".is_block_paginate")) {
-                scrolled(block.querySelector(".is_block_paginate"), target = 0);
-                console.log("Работает пагинация обычная")
-              } else {
-                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
-                console.log("Работает пагинация постов")
+              block.onwheel = function (e) {
+                if (this.scrollTop === this.scrollHeight - this.clientHeight && e.deltaY !== -100) {
+                  console.log("1");
+                }
+                if (this.scrollTop === 0 && e.deltaY !== 100){
+                  console.log("2");
+                }
               }
             }
         }
