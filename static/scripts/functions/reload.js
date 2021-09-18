@@ -257,7 +257,7 @@ function open_fullscreen(url, block) {
         }
     };
     link.send();
-}
+};
 
 function paginate(block, target) {
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -275,10 +275,8 @@ function paginate(block, target) {
                 }}
                 block.remove()
             }
-        }
         link_3.send();
-}
-
+};
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
