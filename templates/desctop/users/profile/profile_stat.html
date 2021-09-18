@@ -5,10 +5,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'follows' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_followers }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+             {{ user.count_followers }}
+           </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+             {{ user.count_followers|rupluralize:"подписчик,подписчика,подписчиков" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
@@ -18,12 +24,12 @@
      <div class="media">
        <div class="media-body">
          <h4 class="content-color-primary mb-0">
-           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+           <a href="{% url 'communities' pk=user.pk %}" class="ajax">
              {{ user.count_communities }}
            </a>
           </h4>
          <p class="content-color-secondary mb-0">
-           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+           <a href="{% url 'communities' pk=user.pk %}" class="ajax">
            {{ user.count_communities|rupluralize:"группа,группы,групп" }}
            </a>
          </p>
@@ -35,10 +41,16 @@
    <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_goods }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_goods|rupluralize:"товар,товара,товаров" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
+             {{ user.count_goods }}
+            </a>
+         </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'user_goods' pk=user.pk %}" class="ajax">
+             {{ user.count_goods|rupluralize:"товар,товара,товаров" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
@@ -48,10 +60,16 @@
     <div class="col text-center">
       <div class="media">
         <div class="media-body">
-          <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
-          <h4 class="content-color-primary mb-0">{{ user.get_music_count }}</h4>
-          <p class="content-color-secondary mb-0">{{ user.get_music_count|rupluralize:"трек,трека,треков" }}</p>
-          </a>
+          <h4 class="content-color-primary mb-0">
+            <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+              {{ user.get_music_count }}
+            </a>
+          </h4>
+          <p class="content-color-secondary mb-0">
+            <a href="{% url 'user_music' pk=user.pk %}" class="ajax">
+              {{ user.get_music_count|rupluralize:"трек,трека,треков" }}
+            </a>
+          </p>
         </div>
       </div>
     </div>
@@ -60,10 +78,16 @@
      <div class="col text-center">
        <div class="media">
          <div class="media-body">
-           <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
-           <h4 class="content-color-primary mb-0">{{ user.get_video_count }}</h4>
-           <p class="content-color-secondary mb-0">{{ user.get_video_count|rupluralize:"ролик,ролика,роликов" }}</p>
-           </a>
+           <h4 class="content-color-primary mb-0">
+             <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+               {{ user.get_video_count }}
+             </a>
+           </h4>
+           <p class="content-color-secondary mb-0">
+             <a href="{% url 'user_video' pk=user.pk %}" class="ajax">
+               {{ user.get_video_count|rupluralize:"ролик,ролика,роликов" }}
+            </a>
+           </p>
          </div>
        </div>
      </div>
