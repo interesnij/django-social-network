@@ -231,9 +231,7 @@ function open_fullscreen(url, block) {
             block.innerHTML = elem;
             get_document_opacity_0();
             if (block.querySelector(".next_page_list")) {
-              block.onscroll = function (e) {
-                console.log("1111");
-              }
+              create_pagination(block);
               block.onwheel = function (e) {
                 if (this.scrollTop === 0 && e.deltaY !== 100){
                   console.log("2");
