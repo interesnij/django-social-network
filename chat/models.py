@@ -726,7 +726,7 @@ class Message(models.Model):
         if self.is_manager():
             creator = self.creator
             message = self.copy
-            return creator.get_full_name() + self.text + '<a class="underline">' + message.get_text_60() + '</a>'
+            return creator.get_full_name() + self.text + '<span class="underline">' + message.get_text_60() + '</span>'
         else:
             return text
 
