@@ -15,11 +15,11 @@
       {% for fix in object_list %}
       {% with object=fix.message %}
           <div class="list-group-item message media p-1 pag" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
+            <p>
+              <i>Закреплено {{ fix.get_created }}</i>
+              <span class="u_message_unfixed pointer"></span>
+            </p>
             <div class="media">
-              <p>
-                <i>Закреплено {{ fix.get_created }}</i>
-                <span class="u_message_unfixed pointer"></span>
-              </p>
               <figure>
                 <a href="{{ object.creator.get_link }}" class="ajax">
                   <img src="{{ object.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
