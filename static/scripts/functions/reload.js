@@ -256,7 +256,11 @@ function paginate(block, target) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                };
+                } else if (elem.querySelector(".is_block_paginate")){
+                  block_paginate = elem.querySelector(".is_block_paginate");
+                  if (elem.querySelector(".load_block")){
+                      block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
+                  };
                 block.remove()
             }
         }
