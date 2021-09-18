@@ -233,10 +233,11 @@ function open_fullscreen(url, block) {
             if (block.querySelector(".next_page_list")) {
               block.onscroll = function() {
                 box = block.querySelector('.next_page_list');
-                console.log(box)
+
                 if (box && box.classList.contains("next_page_list")) {
                     inViewport = elementInViewport(box);
                     if (inViewport) {
+                        console.log(box)
                         box.classList.remove("next_page_list");
                         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                         link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
