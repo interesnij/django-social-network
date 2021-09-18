@@ -715,11 +715,10 @@ class Message(models.Model):
         elif self.text:
             return self.get_text_60()
 
-
     def get_preview_text(self, user_id):
         if self.chat.is_have_draft_message(user_id):
             message = self.chat.get_draft_message(user_id)
-            if message:
+            if message.get_type_text():
                 text = 'Черновик: ' + message.get_type_text()
             else:
                 if self.creator.id == user_id:
