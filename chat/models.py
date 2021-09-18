@@ -692,6 +692,14 @@ class Message(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
+    def get_text_60(self):
+        import re
+        count = 60
+        images = re.findall(r'<img.*?>', self.text)
+        for image in images:
+            count += (len(image) -1)
+        return self.text[:count].replace("<br>", "  ")
+
     def get_preview_text(self):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
@@ -717,7 +725,8 @@ class Message(models.Model):
             text = self.text[:count].replace("<br>", "  ")
         if self.is_manager():
             creator = self.creator
-            return creator.get_full_name() + text
+            message = self.copy
+            return creator.get_full_name() + self.get_text_60() + message
         else:
             return text
 
@@ -739,12 +748,7 @@ class Message(models.Model):
         elif message.attach and not message.text:
             text = "Вложения"
         elif message.text:
-            import re
-            count = 60
-            images = re.findall(r'<img.*?>', message.text)
-            for image in images:
-                count += (len(image) -1)
-            text = message.text[:count].replace("<br>", "  ")
+            text = self.get_text_60()
         return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
 
     def is_repost(self):
