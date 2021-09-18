@@ -60,7 +60,7 @@ class PostCommunityCreate(View):
                                             votes_on=post.votes_on,
                                             community=community
                                             )
-                return render_for_platform(request, 'posts/post_community/new_post.html', {'object': new_post})
+                return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
         else:

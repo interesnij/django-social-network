@@ -14,13 +14,19 @@
    </div>
    {% endif %}
    {% if user.count_communities and is_community_open %}
-   <div class="col text-center"> 
+   <div class="col text-center">
      <div class="media">
        <div class="media-body">
-         <a href="{% url 'communities' pk=user.pk %}" class="ajax">
-         <h4 class="content-color-primary mb-0">{{ user.count_communities }}</h4>
-         <p class="content-color-secondary mb-0">{{ user.count_communities|rupluralize:"группа,группы,групп" }}</p>
-         </a>
+         <h4 class="content-color-primary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+             {{ user.count_communities }}
+           </a>
+          </h4>
+         <p class="content-color-secondary mb-0">
+           <a href="{% url 'follows' pk=user.pk %}" class="ajax">
+           {{ user.count_communities|rupluralize:"группа,группы,групп" }}
+           </a>
+         </p>
        </div>
      </div>
    </div>
