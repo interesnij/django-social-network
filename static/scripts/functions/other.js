@@ -859,7 +859,7 @@ function elementInViewport(el) {
 }
 
 function send_comment(form, block, link) {
-  _text = form_post.querySelector(".comment_text").innerHTML;
+  _text = form.querySelector(".comment_text").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" || form.querySelector(".img_block").firstChild) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };
