@@ -5145,7 +5145,17 @@ cursor: pointer;
 .comment_dislike_window,
 .comment_like_window,
 .dislike_window,
-.repost_window { opacity: 0; visibility: hidden; position: absolute; bottom: 25px; margin-bottom: 10px; display: flex; transition: 0.5s; }
+.repost_window {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  width: 300px;
+  bottom: 45px;
+  margin-bottom: 10px;
+  display: flex;
+  transition: 0.5s;
+}
+
 .like_window:hover,
 .comment_like_window:hover,
 .comment_dislike_window:hover,
