@@ -962,3 +962,7 @@ class MessageFixed(models.Model):
             for image in images:
                 count += (len(image) -1)
             return message.text[:count].replace("<br>", "  ")
+            
+    def get_created(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
