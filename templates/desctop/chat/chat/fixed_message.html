@@ -1,5 +1,9 @@
 <div class="pointer show_chat_fixed_messages" style="padding-left:7px;line-height: 100%;">
-  <p>{{ fix_message.creator }}  <span class="small text-muted">{{ fix_message.message.get_created }}</span></p>
+  <p>
+    <svg style="width: 17px;vertical-align: bottom;" fill="currentColor" viewBox="0 0 24 24">
+      <g><rect fill="none" height="18" width="18"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g>
+    </svg>
+    {{ fix_message.creator }}  <span class="small text-muted">{{ fix_message.message.get_created }}</span></p>
   <div class="border-bottom" style="position:relative;padding-bottom: 5px;">
     <div style="overflow: hidden;text-overflow:ellipsis;padding-right:5px;">
       <span style="white-space: nowrap;">{{ fix_message.get_preview_message }}</span>
