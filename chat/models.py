@@ -125,6 +125,26 @@ class Chat(models.Model):
 
     def get_preview_message(self, user_id):
         first_message, is_read, creator_figure = self.get_first_message(user_id), '', ''
+
+        if self.is_have_draft_message(user_id):
+            message = self.get_draft_message(user_id)
+            if message.get_type_text():
+                preview_text = 'Черновик: ' + message.get_type_text()
+            else:
+                if first_message.creator.id == user_id:
+                    preview_text = 'Вы: ' + first_message.get_type_text()
+                else:
+                    preview_text = first_message.get_type_text()
+        else:
+            if first_message.creator.id == user_id:
+                preview_text = 'Вы: ' + first_message.get_type_text()
+            else:
+                preview_text = first_message.get_type_text()
+        if first_message.is_manager():
+            creator = first_message.creator
+            message = first_message.copy
+            preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
+
         if user_id == first_message.creator.pk and not first_message.is_copy_reed():
             is_read = '<span class="tab_badge badge-info small_badge"></span>'
         if self.is_private():
@@ -143,7 +163,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(user_id), is_read, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, is_read, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif self.is_group():
             if self.image:
@@ -154,7 +174,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = "Групповой чат"
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(user_id), '</p></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_avatars(self):
@@ -715,21 +735,8 @@ class Message(models.Model):
         elif self.text:
             return self.get_text_60()
 
-    def get_preview_text(self, user_id):
-        if self.chat.is_have_draft_message(user_id):
-            message = self.chat.get_draft_message(user_id)
-            if message.get_type_text():
-                text = 'Черновик: ' + message.get_type_text()
-            else:
-                if self.creator.id == user_id:
-                    text = 'Вы: ' + self.get_type_text()
-                else:
-                    text = self.get_type_text()
-        else:
-            if self.creator.id == user_id:
-                text = 'Вы: ' + self.get_type_text()
-            else:
-                text = self.get_type_text()
+    def get_preview_text(self):
+        text = self.get_type_text()
         if self.is_manager():
             creator = self.creator
             message = self.copy
