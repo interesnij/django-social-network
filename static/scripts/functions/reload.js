@@ -155,7 +155,24 @@ function send_change_c_video_list(el) {
   send_change_items(el.parentElement.querySelectorAll(".c_video_list"), "/video/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
 }
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
-
+function block_scrolled(_block) {
+  window.onscroll = function() {
+    console.log("paginate")
+      try {
+          box = _block.querySelector('.next_page_list');
+          if (box && box.classList.contains("next_page_list")) {
+              inViewport = elementInViewport(box);
+              if (inViewport) {
+                  box.classList.remove("next_page_list");
+                  paginate(box, target);
+              }
+          };
+          if (target == 1) {
+              get_post_view()
+          }
+      } catch {return}
+  }
+}
 function scrolled(_block, target) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
@@ -214,9 +231,7 @@ function open_fullscreen(url, block) {
             block.innerHTML = elem;
             get_document_opacity_0();
             if (block.querySelector(".next_page_list")) {
-              window.onscroll = function () {
-                console.log("onscroll2")
-              };
+              block_scrolled(block);
               block.onwheel = function (e) {
                 if (this.scrollTop === 0 && e.deltaY !== 100){
                   console.log("2");
