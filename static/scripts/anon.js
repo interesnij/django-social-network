@@ -5,7 +5,9 @@ function get_document_opacity_0() {
   document.body.querySelector(".main-header").style.opacity = "0";
   document.body.querySelector(".main-container").style.opacity = "0";
   document.body.querySelector(".nav-pills").style.opacity = "0"
-  }
+  };
+  document.body.style.overflow = "hidden";
+  document.body.style.marginRight = "4px";
 }
 function get_document_opacity_1(block) {
   main_container = document.body.querySelector(".main-container");
@@ -18,7 +20,9 @@ function get_document_opacity_1(block) {
   };
   if (block.querySelector(".pag")) {
     create_pagination(main_container)
-  }
+  };
+  document.body.style.overflow = "auto";
+  document.body.style.marginRight = "0";
 }
 
 function profile_list_block_load(_this, block, url, actions_class) {

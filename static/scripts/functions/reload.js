@@ -225,7 +225,6 @@ function open_fullscreen(url, block) {
 
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            stop_body_scroll();
             elem = link.responseText;
             block.parentElement.style.display = "block";
             block.innerHTML = elem;

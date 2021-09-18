@@ -978,9 +978,11 @@ function get_document_opacity_0() {
   } else {
   document.body.querySelector(".main-header").style.opacity = "0";
   document.body.querySelector(".main-container").style.opacity = "0";
-  document.body.querySelector(".left_panel_menu").style.opacity = "0"
-  }
-};
+  document.body.querySelector(".nav-pills").style.opacity = "0"
+  };
+  document.body.style.overflow = "hidden";
+  document.body.style.marginRight = "4px";
+}
 function get_document_opacity_1(block) {
   main_container = document.body.querySelector(".main-container");
   if (document.body.querySelector(".mobile_naw")) {
@@ -988,10 +990,14 @@ function get_document_opacity_1(block) {
   } else {
   document.body.querySelector(".main-header").style.opacity = "1";
   main_container.style.opacity = "1";
-  document.body.querySelector(".left_panel_menu").style.opacity = "1"
+  document.body.querySelector(".nav-pills").style.opacity = "1"
   };
-    create_pagination(main_container);
-};
+  if (block.querySelector(".pag")) {
+    create_pagination(main_container)
+  };
+  document.body.style.overflow = "auto";
+  document.body.style.marginRight = "0";
+}
 
 function stop_body_scroll() {
   body = document.body;
