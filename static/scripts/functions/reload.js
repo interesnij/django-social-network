@@ -265,17 +265,24 @@ function paginate(block, target) {
 
         link_3.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                var elem = document.createElement('span'); 
+                var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
                 if (elem.querySelector(".is_post_paginate")) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                }}
+                } else if (document.body.querySelector(".is_block_paginate")){
+                  block_paginate = document.body.querySelector(".is_block_paginate");
+                  if (elem.querySelector(".load_block")){
+                      block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
+                  } else {
+                    block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML)
+                  }};
                 block.remove()
             }
+        }
         link_3.send();
-};
+}
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
