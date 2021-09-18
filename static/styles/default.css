@@ -1,3 +1,9 @@
+.reply figure img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .post .card-footer {
   padding-left: 17px !important;
   padding-right: 17px !important;
