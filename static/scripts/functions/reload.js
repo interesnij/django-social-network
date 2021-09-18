@@ -237,7 +237,19 @@ function open_fullscreen(url, block) {
                 }
               };
               block.onscroll = function() {
-                  console.log("onscroll");
+                box = block.querySelector(".next_page_list");
+                var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
+                link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                link_3.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var elem = document.createElement('span');
+                        elem.innerHTML = link_3.responseText;
+                        box.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
+                      }
+                }
+                link_3.send();
               }
             }
         }
