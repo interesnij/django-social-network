@@ -235,6 +235,7 @@ function open_fullscreen(url, block) {
               url = box.getAttribute("data-link");
               box.remove();
               block.onscroll = function() {
+                
                 var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
                 link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -243,7 +244,7 @@ function open_fullscreen(url, block) {
                     if (this.readyState == 4 && this.status == 200) {
                         var elem = document.createElement('span');
                         elem.innerHTML = link_3.responseText;
-                        block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                        block.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
                       }
                 }
                 link_3.send();
