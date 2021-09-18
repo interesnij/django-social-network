@@ -696,7 +696,7 @@ class Message(models.Model):
             count += (len(image) -1)
         return self.text[:count].replace("<br>", "  ")
 
-    def get_type_text(self, message):
+    def get_type_text(self):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 return "Пересланные сообщение"
