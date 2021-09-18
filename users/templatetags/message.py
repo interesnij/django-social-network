@@ -11,6 +11,10 @@ def is_read(message, user_id):
     return message.is_copy_reed(user_id)
 
 @register.filter
+def get_preview_text(message, user_id):
+    return message.get_preview_text(user_id)
+
+@register.filter
 def get_preview_message(chat, user_id):
     return chat.get_preview_message(user_id)
 

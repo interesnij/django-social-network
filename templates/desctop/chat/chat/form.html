@@ -18,7 +18,7 @@
           <div style="position:relative;padding-bottom:7px">
             <input type="hidden" name="parent" value="{{ parent.uuid }}">
             <div style="overflow: hidden;text-overflow:ellipsis;padding-right:5px;">
-              <span style="white-space: nowrap;">{{ parent.get_preview_text }}</span>
+              <span style="white-space: nowrap;">{{ parent.get_preview_text|request.user.pk }}</span>
               <span class="remove_parent_block message_form_parent_block pointer">x</span>
             </div>
           </div>
