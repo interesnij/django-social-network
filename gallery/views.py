@@ -90,7 +90,7 @@ class MessagePhotoDetail(TemplateView):
 
 
 class LoadPhotoList(ListView):
-	template_name, community = None, None
+	template_name, community, paginate_by = None, None, 20
 
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
