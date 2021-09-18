@@ -696,7 +696,7 @@ class Message(models.Model):
             count += (len(image) -1)
         return self.text[:count].replace("<br>", "  ")
 
-    def get_type_text(self):
+    def get_type_text(self, message):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 return "Пересланные сообщение"
@@ -704,7 +704,7 @@ class Message(models.Model):
                 return "Пересланное сообщение"
         elif self.parent:
             return "Ответ на сообщение"
-        if self.sticker:
+        elif self.sticker:
             return "Стикер"
         elif self.voice:
             return "Голосовое сообщение"
@@ -719,7 +719,13 @@ class Message(models.Model):
     def get_preview_text(self, user_id):
         if self.chat.is_have_draft_message(user_id):
             message = self.chat.get_draft_message(user_id)
-            text = 'Черновик: ' + message.get_type_text()
+            if message:
+                text = 'Черновик: ' + message.get_type_text()
+            else:
+                if self.creator.id == user_id:
+                    text = 'Вы: ' + self.get_type_text()
+                else:
+                    text = self.get_type_text()
         else:
             if self.creator.id == user_id:
                 text = 'Вы: ' + self.get_type_text()
