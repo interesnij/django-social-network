@@ -1,3 +1,12 @@
+#item_loader {
+  margin-top:30px;
+  position: relative;
+  overflow-y: auto;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
 .reply figure img {
   width: 30px;
   height: 30px;
