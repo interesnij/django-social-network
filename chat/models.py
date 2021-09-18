@@ -350,7 +350,7 @@ class Message(models.Model):
         inputs = ""
         for i in transfers:
             inputs += '<input type="hidden" name="transfer" value="' + str(i.uuid) + '" class="transfer">'
-        return '<div><p><a class="underline">' + text_2 + '</a></p><div style="position:relative;padding-bottom:7px"><div><span class="pointer underline">' + text + '</span><span class="remove_parent_block pointer message_form_parent_block">x</span></div></div>' + inputs + '</div>'
+        return '<div><p>' + text_2 + '</p><div style="position:relative;padding-bottom:7px"><div><span class="pointer underline">' + text + '</span><span class="remove_parent_block pointer message_form_parent_block">x</span></div></div>' + inputs + '</div>'
 
     def is_edited(self):
         return self.type == "EDI"
@@ -699,7 +699,7 @@ class Message(models.Model):
     def get_type_text(self):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
-                return "Пересланные сообщение"
+                return "Пересланные сообщения"
             else:
                 return "Пересланное сообщение"
         elif self.parent:
@@ -939,7 +939,7 @@ class MessageFixed(models.Model):
             return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
         elif message.is_have_transfer():
             if message.transfer.all().count() > 1:
-                return "Пересланные сообщение"
+                return "Пересланные сообщения"
             else:
                 return "Пересланное сообщение"
         elif message.parent:

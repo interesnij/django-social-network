@@ -666,7 +666,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     else {
       preview = "<span class='pointer underline'>" + count + " сообщений</span>"
     };
-    creator_p = '<p><a class="underline">Пересланные сообщения</a></p>'
+    creator_p = '<p>Пересланные сообщения</p>'
   } else {
     message = document.body.querySelector(".target_message");
     if (message.querySelector(".attach_container")) {
