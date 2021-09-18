@@ -201,6 +201,31 @@ function top_paginate(block, target) {
         link_3.send();
 };
 
+function open_fullscreen(url, block) {
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', url, true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            stop_body_scroll();
+            elem = link.responseText;
+            block.parentElement.style.display = "block";
+            block.innerHTML = elem;
+            get_document_opacity_0();
+            if (block.querySelector(".next_page_list")) {
+              create_pagination(block);
+              block.onwheel = function (e) {
+                if (this.scrollTop === 0 && e.deltaY !== 100){
+                  console.log("2");
+                }
+              }
+            }
+        }
+    };
+    link.send();
+}
+
 function paginate(block, target) {
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
@@ -214,15 +239,7 @@ function paginate(block, target) {
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
                 } else if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                } else if (document.body.querySelector(".is_block_paginate")){
-                  block_paginate = document.body.querySelector(".is_block_paginate");
-                  console.log("is_block_paginate");
-                  if (elem.querySelector(".load_block")){
-                    console.log("load_block");
-                    block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
-                  } else {
-                    block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML)
-                  }};
+                };
                 block.remove()
             }
         }

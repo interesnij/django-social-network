@@ -1004,56 +1004,6 @@ function start_body_scroll() {
   body.style.margimRight = "0";
 };
 
-function open_fullscreen(url, block) {
-    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', url, true);
-    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-    link.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            stop_body_scroll();
-            elem = link.responseText;
-            block.parentElement.style.display = "block";
-            block.innerHTML = elem;
-            get_document_opacity_0();
-            if (block.querySelector(".next_page_list")) {
-              block.onwheel = function (e) {
-                if (this.scrollTop === 0 && e.deltaY !== 100){
-                  console.log("2");
-                }
-              }
-            }
-        }
-    };
-    link.send();
-}
-
-function open_load_fullscreen(link, block) {
-    var link_, elem;
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link_.open('GET', link, true);
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link_.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            elem = link_.responseText;
-            block.parentElement.style.display = "block";
-            block.innerHTML = "";
-            block.innerHTML = elem;
-            if (block.querySelector(".next_page_list")) {
-              get_document_opacity_0();
-              if (block.querySelector(".is_block_paginate")) {
-                scrolled(block.querySelector(".is_block_paginate"), target = 0);
-                console.log("Работает пагинация обычная")
-              } else {
-                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
-                console.log("Работает пагинация постов")
-              }
-            }
-        }
-    };
-    link_.send();
-}
-
 function post_update_votes(post, uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('GET', "/posts/user_progs/update_votes/" + uuid + "/", true);
