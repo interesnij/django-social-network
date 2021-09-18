@@ -143,9 +143,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            if first_message.creator.id == user_id:
-                creator_figure = '<span class="underline">Вы:</span> '
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), is_read, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', first_message.get_preview_text(user_id), is_read, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif self.is_group():
             if self.image:
@@ -158,7 +156,7 @@ class Chat(models.Model):
                 chat_name = "Групповой чат"
             if first_message.creator.id == user_id:
                 creator_figure = '<span class="underline">Вы:</span> '
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(), '</p></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0" style="white-space: nowrap;">', creator_figure, first_message.get_preview_text(user_id), '</p></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_avatars(self):
@@ -700,29 +698,35 @@ class Message(models.Model):
             count += (len(image) -1)
         return self.text[:count].replace("<br>", "  ")
 
-    def get_preview_text(self):
+    def get_type_text(self):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
-                text = "Пересланные сообщение"
+                return "Пересланные сообщение"
             else:
-                text = "Пересланное сообщение"
+                return "Пересланное сообщение"
         elif self.parent:
-            text = "Ответ на сообщение"
+            return "Ответ на сообщение"
         if self.sticker:
-            text = "Стикер"
+            return "Стикер"
         elif self.voice:
-            text = "Голосовое сообщение"
+            return "Голосовое сообщение"
         elif self.attach and self.text:
-            text = "Текст и вложения"
+            return "Текст и вложения"
         elif self.attach and not self.text:
-            text = "Вложения"
+            return "Вложения"
         elif self.text:
-            import re
-            count = 60
-            images = re.findall(r'<img.*?>', self.text)
-            for image in images:
-                count += (len(image) -1)
-            text = self.text[:count].replace("<br>", "  ")
+            return self.get_text_60()
+
+
+    def get_preview_text(self, user_id):
+        if self.chat.is_have_draft_message(self.pk):
+            message = self.chat.get_draft_message(self.pk)
+            text = '<span class="underline">Черновик:</span>' + message.get_type_text()
+        else:
+            if self.creator.id == user_id:
+                text = '<span class="underline">Вы:</span>' + message.get_type_text()
+            else:
+                text = self.get_type_text()
         if self.is_manager():
             creator = self.creator
             message = self.copy
