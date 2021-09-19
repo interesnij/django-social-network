@@ -242,9 +242,9 @@ event.creator_id != request_user_id
       // создатель события, чтобы и ему не показывать, он то знает.
         if (event.name == "u_message_create"){
           console.log(event.beep);
-          if (event.recipient_id != request_user_id ){
+        //  if (event.recipient_id != request_user_id ){
             case_u_message_create(event.chat_id, event.message_id, event.beep)
-          }
+        //  }
         }
         else if (event.name == "u_message_typed"){
           if (event.recipient_ids.indexOf( request_user_id ) != -1){

@@ -252,8 +252,8 @@ on('#ajax', 'click', '#add_chat_btn', function() {
 
 on('#ajax', 'click', '#send_page_message_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  _text = form_post.querySelector(".page_message_text").innerHTML;
-  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML){
+  _text = form.querySelector(".page_message_text").innerHTML;
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".page_message_text").classList.add("border_red");
     try{form_post.querySelector(".message_dropdown").classList.add("border_red")}catch{null};
