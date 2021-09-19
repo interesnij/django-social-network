@@ -37,8 +37,8 @@ function case_user_chat_read(pk) {
       for (var i = 0; i < list.length; i++){
         list[i].classList.remove(".bg-light-secondary")
       }
-    }
-  } else if (document.body.querySelector(".chat_list_container")) {
+    }}
+    else if (document.body.querySelector(".chat_list_container")) {
     list = document.body.querySelector(".chat_list_container");
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     chat.querySelector(".tab_badge").remove();
@@ -237,15 +237,22 @@ event.creator_id != request_user_id
         }
         break;
     case "message":
-      if (event.recipient_id != request_user_id ){
-        console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
         if (event.name == "u_message_create"){
-          console.log(event.beep);
-          case_u_message_create(event.chat_id, event.message_id, event.beep)
+          if (event.recipient_id != request_user_id ){
+            console.log(event.beep);
+            case_u_message_create(event.chat_id, event.message_id, event.beep)
+          }
         }
-        else if (event.name == "u_message_typed"){case_user_chat_typed(event.chat_id, event.user_name)}
-        else if (event.name == "u_message_read"){case_user_chat_read(event.chat_id)}
-      }
+        else if (event.name == "u_message_typed"){
+          if (event.recipient_ids.indexOf( request_user_id ) != -1){
+            case_user_chat_typed(event.chat_id, event.user_name)
+          }
+        }
+        else if (event.name == "u_message_read"){
+          if (event.recipient_ids.indexOf( request_user_id ) != -1){
+            case_user_chat_read(event.chat_id)
+          }
+        }
       break;
 
     default:
