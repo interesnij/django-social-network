@@ -164,6 +164,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
       chats.classList.add("tab_badge", "badge-success");
       chats.innerHTML = "";tab_span.append(count);chats.append(count);
   }
+  // если получатель не отключил звук
   if (beep) {
     audio = new Audio('/static/audio/apple/message.mp3');
     audio.volume = 0.5;
@@ -241,9 +242,7 @@ event.creator_id != request_user_id
       // те, что не требуют звука, посылаются скопом. И проверяется, есть ли среди списка
       // создатель события, чтобы и ему не показывать, он то знает.
         if (event.name == "u_message_create"){
-          console.log("message_create!")
           if (event.recipient_id == request_user_id ){
-            console.log(event.recipient_id, request_user_id)
             case_u_message_create(event.chat_id, event.message_id, event.beep)
           }
         }
