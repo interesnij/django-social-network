@@ -453,7 +453,7 @@ class Message(models.Model):
             'type': 'receive',
             'key': 'message',
             'message_id': str(self.uuid),
-            'chat_id': self.chat.pk,
+            'chat_id': str(self.chat.pk),
             'recipient_id': str(recipient_id),
             'name': "u_message_create",
             'beep': beep_on,
