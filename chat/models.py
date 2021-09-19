@@ -140,7 +140,7 @@ class Chat(models.Model):
         return members[0].user
     def get_chat_user(self, user_id):
         members = self.chat_relation.filter(user_id=user_id)
-        return members[0].user
+        return members[0]
 
     def get_preview_message(self, user_id):
         first_message, is_read, creator_figure = self.get_first_message(user_id), '', ''
@@ -167,7 +167,8 @@ class Chat(models.Model):
         if user_id == first_message.creator.pk and not first_message.is_copy_reed():
             is_read = '<span class="tab_badge badge-info small_badge"></span>'
         if self.is_private():
-            member = self.get_chat_member(user_id)
+            chat_user = self.get_chat_user(user_id)
+            member = chat_user.member
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif member.s_avatar:
@@ -325,6 +326,12 @@ class ChatUsers(models.Model):
         else:
             from datetime import datetime
             return self.no_disturb < datetime.now()
+
+    def get_beep_icon(self):
+        if self.beep():
+            return ''
+        else:
+            return ''
 
     class Meta:
         unique_together = (('user', 'chat'),)
