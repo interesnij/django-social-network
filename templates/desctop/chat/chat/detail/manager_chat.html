@@ -3,7 +3,7 @@
 {% load message %}
 {% block content %}
 
-<div class="container main-container">
+<div class="container main-container pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
 <div class="row">
     <div class="col-md-8 mt-1">
       <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
@@ -29,7 +29,7 @@
               </div>
           </div>
       </div>
-<div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+<div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
     <div class="fixed_messages">
       {% if fix_message %}
         {% include 'desctop/chat/chat/fixed_message.html' %}
