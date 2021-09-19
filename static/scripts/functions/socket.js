@@ -118,7 +118,7 @@ function case_u_post_create(uuid) {
   link_.send()
 }}
 
-function case_u_message_create(request_user_id, chat_id, message_uuid) {
+function case_u_message_create(chat_id, message_uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container")) {
@@ -164,9 +164,11 @@ function case_u_message_create(request_user_id, chat_id, message_uuid) {
       chats.classList.add("tab_badge", "badge-success");
       chats.innerHTML = "";tab_span.append(count);chats.append(count);
   }
-  audio = new Audio('/static/audio/apple/message.mp3');
-  audio.volume = 0.5;
-  audio.play()
+  if (beep) {
+    audio = new Audio('/static/audio/apple/message.mp3');
+    audio.volume = 0.5;
+    audio.play()
+  }
 }
 
 
@@ -236,9 +238,12 @@ event.creator_id != request_user_id
         break;
         case_user_chat_read(pk)
     case "message":
-      if (event.recipient_ids.indexOf( request_user_id ) != -1){
+      if (event.recipient_id != request_user_id ){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
-        if (event.name == "u_message_create"){case_u_message_create(request_user_id, event.chat_id, event.message_id)}
+        if (event.name == "u_message_create"){
+          console.log(event.beep);
+          case_u_message_create(event.chat_id, event.message_id, event.beep)
+        }
         else if (event.name == "u_message_typed"){case_user_chat_typed(event.chat_id, event.user_name)}
         else if (event.name == "u_message_read"){case_user_chat_read(event.chat_id)}
       }

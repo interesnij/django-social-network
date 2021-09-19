@@ -67,13 +67,16 @@ class Chat(models.Model):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk).exclude(pk=exclude_creator_pk)
 
+    def get_recipients_2(self, exclude_creator_pk):
+        return ChatUsers.objects.filter(chat_id=self.pk).exclude(user_pk=exclude_creator_pk)
+
     def get_members_ids(self):
         users = self.get_members().values('id')
         return [_user['id'] for _user in users]
 
     def get_recipients_ids(self, exclude_creator_pk):
         users = self.get_recipients(exclude_creator_pk).values('id')
-        return [_user['id'] for _user in users]
+        return [i['id'] for i in users]
 
     def get_members_count(self):
         return self.get_members().values('id').count()
@@ -313,6 +316,13 @@ class ChatUsers(models.Model):
         else:
             pass
 
+    def beep(self):
+        if not self.no_disturb:
+            return True
+        else:
+            from datetime import datetime
+            return self.no_disturb < datetime.now()
+
     class Meta:
         unique_together = (('user', 'chat'),)
         indexes = [
@@ -434,7 +444,7 @@ class Message(models.Model):
     def get_reseiver_ids(self):
         return self.chat.get_members_ids()
 
-    def create_socket(self):
+    def create_socket(self, recipient_id, beep_on):
         from asgiref.sync import async_to_sync
         from channels.layers import get_channel_layer
 
@@ -444,8 +454,9 @@ class Message(models.Model):
             'key': 'message',
             'message_id': str(self.uuid),
             'chat_id': self.chat.pk,
-            'recipient_ids': str(self.chat.get_recipients_ids(self.creator.pk)),
+            'recipient_id': str(recipient_id),
             'name': "u_message_create",
+            'beep': beep_on,
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
@@ -484,8 +495,8 @@ class Message(models.Model):
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, sticker_id=sticker, recipient_id=recipient_id, repost=repost, voice=voice, type=Message.PUBLISHED)
             else:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
-                get_message_processing(recipient_message, 'PUB')
-                recipient_message.create_socket()
+            get_message_processing(recipient_message, 'PUB')
+            recipient_message.create_socket()
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
@@ -520,7 +531,6 @@ class Message(models.Model):
             parent_id = parent
         else:
             parent_id = None
-
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
         elif sticker:
@@ -549,15 +559,15 @@ class Message(models.Model):
                 message.save(update_fields=["text","attach","parent_id"])
         get_message_processing(creator_message, 'PUB')
 
-        for recipient_id in chat.get_recipients_ids(creator.pk):
+        for recipient in chat.get_recipients_2(creator.pk):
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
             elif sticker:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient_id, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
             get_message_processing(recipient_message, 'PUB')
-            recipient_message.create_socket()
+            recipient_message.create_socket(recipient.user.pk, recipient.beep())
         return creator_message
 
     def save_draft_message(chat, creator, parent, text, attach, transfer):
