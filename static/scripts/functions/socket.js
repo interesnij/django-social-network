@@ -243,7 +243,7 @@ event.creator_id != request_user_id
         if (event.name == "u_message_create"){
           console.log("message_create!")
           if (event.recipient_id != request_user_id ){
-            console.log(event.recipient_id)
+            console.log(event.recipient_id, request_user_id)
             case_u_message_create(event.chat_id, event.message_id, event.beep)
           }
         }
