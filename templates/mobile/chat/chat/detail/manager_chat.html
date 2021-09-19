@@ -20,7 +20,12 @@
     </div>
 </div>
 <div class="container mt-3 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
-    <div class="card-body chatview" id="chatcontent" style="margin-top: 50px;">
+  <div class="fixed_messages">
+    {% if fix_message %}
+      {% include 'mobile/chat/chat/fixed_message.html' %}
+    {% endif %}
+  </div>
+    <div class="card-body chatview" id="chatcontent" style="height: 80%">
         <ul class="chatlist app is_chat_paginate">
 
           {% if object_list %}
