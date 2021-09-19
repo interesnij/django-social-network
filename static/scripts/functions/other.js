@@ -696,7 +696,7 @@ function send_change(span, _link, new_class, html) {
 
 function chat_send_change(span, _link, new_class, html) {
     parent = span.parentElement;
-    item = parent.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    item = parent.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + item.getAttribute("chat-pk") + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
