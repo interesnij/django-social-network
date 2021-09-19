@@ -678,7 +678,8 @@ function comment_wall_restore(_this, _link) {
 function send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk"); link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk");
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + uuid + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
@@ -691,7 +692,26 @@ function send_change(span, _link, new_class, html) {
         }
     };
     link.send(null)
-}
+};
+
+function chat_send_change(span, _link, new_class, html) {
+    parent = span.parentElement;
+    item = parent.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', "/chat/" + item.getAttribute("data-chat") + _link, true);
+    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link.onreadystatechange = function() {
+        if (link.readyState == 4 && link.status == 200) {
+            new_span = document.createElement("span");
+            new_span.classList.add(new_class, "dropdown-item");
+            new_span.innerHTML = html;
+            parent.innerHTML = "";
+            parent.append(new_span)
+        }
+    };
+    link.send(null)
+};
+
 function mob_send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -708,7 +728,7 @@ function mob_send_change(span, _link, new_class, html) {
         }
     };
     link.send(null)
-}
+};
 
 function send_good_change(span, _link, new_class, html) {
     parent = span.parentElement;
@@ -727,7 +747,7 @@ function send_good_change(span, _link, new_class, html) {
         }
     };
     link.send(null)
-}
+};
 function send_mob_good_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = parent.parentElement.parentElement.parentElement.parentElement;
@@ -745,7 +765,7 @@ function send_mob_good_change(span, _link, new_class, html) {
         }
     };
     link.send(null)
-}
+};
 
 function send_photo_change(span, _link, new_class, html) {
     parent = span.parentElement;
@@ -765,7 +785,7 @@ function send_photo_change(span, _link, new_class, html) {
         }
     };
     link.send(null)
-}
+};
 
 class ToastManager {
     constructor() {
