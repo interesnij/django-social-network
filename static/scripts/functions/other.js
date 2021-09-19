@@ -698,7 +698,7 @@ function chat_send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = parent.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', "/chat/" + item.getAttribute("data-chat") + _link, true);
+    link.open('GET', "/chat/" + item.getAttribute("chat-pk") + _link, true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {

@@ -715,5 +715,5 @@ on('#ajax', 'click', '.on_full_chat_notify', function() {
   chat_send_change(this, "/beep_on/", "off_full_chat_notify", "Откл. уведомления")
 });
 on('#ajax', 'click', '.off_full_chat_notify', function() {
-  chat_send_change(this, "/beep_on/", "on_full_chat_notify", "Вкл. уведомления")
+  chat_send_change(this, "/beep_off/", "on_full_chat_notify", "Вкл. уведомления")
 });
