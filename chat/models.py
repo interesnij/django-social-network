@@ -14,11 +14,17 @@ class Chat(models.Model):
     PRIVATE, MANAGER, PROCESSING, GROUP, PRIVATE_FIXED, GROUP_FIXED = 'PRI', 'MAN', '_PRO', 'GRO', '_FIXT', '_FIXG'
     DELETED_PRIVATE, DELETED_GROUP, DELETED_MANAGER, DELETED_PRIVATE_FIXED, DELETED_GROUP_FIXED = '_DEL', '_DELG', '_DELM', '_DELPF', '_DELGF'
     CLOSED_PRIVATE, CLOSED_GROUP, CLOSED_MANAGER, CLOSED_PRIVATE_FIXED, CLOSED_GROUP_FIXED = '_CLO', '_CLOG', '_CLOM', '_CLOPF', '_CLOGF'
+
+    ALL_CAN, CREATOR, CREATOR_ADMINS = 1,2,3
+
     TYPE = (
         (PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
         (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_GROUP, 'Удалённый групповой'),(DELETED_MANAGER, 'Удалённый менеджерский'),(DELETED_PRIVATE_FIXED, 'Удалённый приватный закреплённый'),(DELETED_GROUP_FIXED, 'Удалённый групповой закреплённый'),
         (CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_GROUP, 'Закрытый групповой'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_PRIVATE_FIXED, 'Закрытый закреплённый приватный'),(CLOSED_GROUP_FIXED, 'Закрытый групповой закреплённый'),
     )
+    ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
+    ADMIN_PERM = ((CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
+
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Тип чата")
     image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_chat_directory,processors=[ResizeToFit(width=100, height=100,)])
@@ -27,6 +33,13 @@ class Chat(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
     order = models.PositiveIntegerField(default=0)
+
+    """ Полномочия в чате """
+    can_add_members = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто приглашает участников")
+    can_edit_info = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто редактирует информацию")
+    can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто закрепляет сообщения")
+    can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
+    can_add_admin = models.PositiveSmallIntegerField(choices=ADMIN_PERM, default=1, verbose_name="Кто назначает админов")
 
     class Meta:
         verbose_name = "Беседа"
@@ -283,6 +296,7 @@ class ChatUsers(models.Model):
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
+    no_disturb = models.DateTimeField(blank=True, verbose_name='Не беспокоить до...')
 
     def __str__(self):
         return self.user.get_full_name()
