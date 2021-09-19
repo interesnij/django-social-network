@@ -416,7 +416,7 @@ class UserChatBeepOff(View):
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
 		if request.is_ajax():
-			chat_user.no_disturb = datetime.now() + timedelta(year=3)
+			chat_user.no_disturb = datetime.now() + timedelta(weeks=100)
 			chat_user.save(update_fields=["no_disturb"])
 			return HttpResponse()
 		else:
