@@ -270,8 +270,8 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             toast_success("Сообщение отправлено");
-            document.querySelector(".item_fullscreen").style.display = "none";
-            document.getElementById("item_loader").innerHTML="";
+            document.querySelector(".create_fullscreen").style.display = "none";
+            document.getElementById("create_loader").innerHTML="";
         } else {this.disabled = false}
       }
       ajax_link.send(form_data);
