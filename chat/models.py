@@ -68,7 +68,7 @@ class Chat(models.Model):
         return User.objects.filter(chat_users__chat__pk=self.pk).exclude(pk=exclude_creator_pk)
 
     def get_recipients_2(self, exclude_creator_pk):
-        return ChatUsers.objects.filter(chat_id=self.pk).exclude(user_pk=exclude_creator_pk)
+        return ChatUsers.objects.filter(chat_id=self.pk).exclude(user_id=exclude_creator_pk)
 
     def get_members_ids(self):
         users = self.get_members().values('id')
