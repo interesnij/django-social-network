@@ -198,7 +198,7 @@ on('#ajax', 'click', '.user_create_chat', function() {
   open_fullscreen("/chat/user_progs/create_chat/" + pk + "/", loader)
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
-  loader = document.getElementById("item_loader");
+  loader = document.getElementById("create_loader");
   pk = this.getAttribute("data-pk");
   open_fullscreen("/chat/user_progs/send_page_message/" + pk + "/", loader)
 });
