@@ -110,7 +110,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-LOGOUT_REDIRECT_URL = "main"
+LOGOUT_REDIRECT_URL = "news_list"
 
 LANGUAGE_CODE = 'ru-RU'
 
