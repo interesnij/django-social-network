@@ -118,7 +118,7 @@ function case_u_post_create(uuid) {
   link_.send()
 }}
 
-function case_u_message_create(chat_id, message_uuid) {
+function case_u_message_create(chat_id, message_uuid, beep) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
   if (document.body.querySelector(".chat_list_container")) {
