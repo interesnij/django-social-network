@@ -296,7 +296,7 @@ class ChatUsers(models.Model):
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
-    no_disturb = models.DateTimeField(auto_now_add=True, verbose_name='Не беспокоить до...')
+    no_disturb = models.DateTimeField(blank=True, null=True, verbose_name='Не беспокоить до...')
 
     def __str__(self):
         return self.user.get_full_name()
