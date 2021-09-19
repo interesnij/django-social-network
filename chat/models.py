@@ -139,8 +139,12 @@ class Chat(models.Model):
         members = self.chat_relation.exclude(user_id=user_id)
         return members[0].user
     def get_chat_user(self, user_id):
-        members = self.chat_relation.exclude(user_id=user_id)
-        return members[0]
+        try:
+            members = self.chat_relation.exclude(user_id=user_id)
+            return members[0]
+        except:
+            member = self.chat_relation.get(user_id=user_id)
+            return members
     def get_chat_request_user(self, user_id):
         return self.chat_relation.get(user_id=user_id)
 
