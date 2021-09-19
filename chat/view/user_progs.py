@@ -414,7 +414,7 @@ class UserChatBeepOff(View):
 		from datetime import datetime, timedelta
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		chat_user = ChatUsers.objects.get(chat_pk=chat.pk, user_id=request.user.pk)
+		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
 		if request.is_ajax():
 			chat_user.no_disturb = datetime.now() + timedelta(year=3)
 			chat_user.save(update_fields=["no_disturb"])
@@ -429,7 +429,7 @@ class UserChatBeepOn(View):
 		from django.http import HttpResponse
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		chat_user = ChatUsers.objects.get(chat_pk=chat.pk, user_id=request.user.pk)
+		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
 		if request.is_ajax():
 			chat_user.no_disturb = None
 			chat_user.save(update_fields=["no_disturb"])
