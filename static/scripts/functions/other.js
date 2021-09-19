@@ -995,7 +995,7 @@ function get_document_opacity_1(block) {
   if (block.querySelector(".pag")) {
     create_pagination(main_container)
   };
-  document.body.style.overflow = "auto";
+  document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
 }
 
