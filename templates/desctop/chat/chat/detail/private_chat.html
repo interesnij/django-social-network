@@ -3,7 +3,7 @@
 {% load message %}
 {% block content %}
 
-<div class="container main-container">
+<div class="container main-container pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
 <div class="row">
     <div class="col-md-8 mt-1">
       <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
@@ -17,14 +17,18 @@
                     <a class="dropdown-item chat_search pointer">Поиск сообщений</a>
                     <a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a>
                     <a class="dropdown-item show_attach_files pointer">Показать вложения</a>
-                    <a class="dropdown-item hide_chat_notify pointer">Откл. уведомления</a>
+                    {% if is_muted %}
+                      <a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a>
+                    {% else %}
+                      <a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a>
+                    {% endif %}
                     <a class="dropdown-item clean_chat_messages pointer">Очистить историю</a>
                     <a class="dropdown-item u_delete_chat pointer">Удалить чат</a>
                 </div>
               </div>
           </div>
       </div>
-<div class="px-0 card no-shadow pk_saver chat_container" chat-pk="{{ chat.pk }}" data-pk="{{ request.user.pk }}">
+<div class="px-0 card no-shadow">
   <div class="fixed_messages">
     {% if fix_message %}
       {% include 'desctop/chat/chat/fixed_message.html' %}

@@ -58,6 +58,9 @@ class Chat(models.Model):
         return self.type == Chat.MANAGER
     def is_open(self):
         return self.type[0] != "_"
+    def is_muted(self, user_id):
+        chat_user = ChatUsers.objects.get(chat_pk=self.pk, user_id=user_id)
+        return chat_user.beep()
 
     def get_members(self):
         from users.models import User
