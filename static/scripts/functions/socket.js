@@ -237,9 +237,12 @@ event.creator_id != request_user_id
         }
         break;
     case "message":
+      // где уведы со звуком, там посылаем по одному, проверяя включен ли звук.
+      // те, что не требуют звука, посылаются скопом. И проверяется, есть ли среди списка
+      // создатель события, чтобы и ему не показывать, он то знает.
         if (event.name == "u_message_create"){
+          console.log(event.beep);
           if (event.recipient_id != request_user_id ){
-            console.log(event.beep);
             case_u_message_create(event.chat_id, event.message_id, event.beep)
           }
         }
