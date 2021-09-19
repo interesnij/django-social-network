@@ -38,7 +38,7 @@ function case_user_chat_read(pk) {
         list[i].classList.remove(".bg-light-secondary")
       }
     }
-  } if (document.body.querySelector(".chat_list_container")) {
+  } else if (document.body.querySelector(".chat_list_container")) {
     list = document.body.querySelector(".chat_list_container");
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     chat.querySelector(".tab_badge").remove();
@@ -236,7 +236,6 @@ event.creator_id != request_user_id
           if (event.name == "u_post_create"){case_u_post_create(event.post_id)}
         }
         break;
-        case_user_chat_read(pk)
     case "message":
       if (event.recipient_id != request_user_id ){
         console.log("уведомления сообщений, звуки, отрисовка созданных элементов для участников чата");
