@@ -212,7 +212,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = member.get_full_name()
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0"><a href="', member.get_link(), '" target="_blank">', chat_name, '</a></h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:72px;top: 17px;">', member.get_online_status(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0"><a href="', member.get_link(), '" target="_blank">', chat_name, '</a></h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:72px;top: 19px;">', member.get_online_status(), '</span>', buttons, '</span></div>'])
         return ''.join(['<a href="', member.get_link(), '" target="_blank">', figure, '</a>', media_body])
 
     def get_header_group_chat(self, user_id):
@@ -227,7 +227,7 @@ class Chat(models.Model):
              chat_name = self.name
         else:
             chat_name = "Групповой чат"
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:25px;top: 17px;">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-0 pointer u_chat_settings">', chat_name, '</h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:25px;top: 19px;">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
         return ''.join([media_body, avatars])
 
     def is_not_empty(self):
@@ -561,11 +561,11 @@ class Message(models.Model):
 
         for recipient in chat.get_recipients_2(creator.pk):
             if voice:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, voice=voice, parent_id=parent_id, type=Message.PUBLISHED)
             elif sticker:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, sticker_id=sticker, parent_id=parent_id, type=Message.PUBLISHED)
             else:
-                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.pk, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=text, parent_id=parent_id, attach=Message.get_format_attach(attach), type=Message.PROCESSING)
             get_message_processing(recipient_message, 'PUB')
             recipient_message.create_socket(recipient.user.pk, recipient.beep())
         return creator_message
