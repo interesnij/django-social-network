@@ -992,9 +992,6 @@ function get_document_opacity_1(block) {
   main_container.style.opacity = "1";
   document.body.querySelector(".nav-pills").style.opacity = "1"
   };
-  if (block.querySelector(".pag")) {
-    create_pagination(main_container)
-  };
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
 }
