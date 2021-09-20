@@ -29,13 +29,7 @@
                 </div>
               </div>
           </div>
-          <div class="input-group" style="display:none;">
-            <input type="text" style="height: 30px;" placeholder="Поиск" name="chat_q" class="form-control">
-            <div class="input-group-append" style="height: 30px;">
-              <button class="btn btn-sm custom_color" type="button">Искать</button>
-              <button class="btn btn-sm custom_color border-left hide_chat_search" type="button">х</button>
-            </div>
-          </div>
+          {% include 'desctop/chat/chat/search.html' %}
       </div>
 <div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
   <div class="fixed_messages">

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8 mt-1">
       <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
-          <div class="media w-100">
+          <div class="chat_header media w-100">
             {{ chat|get_header_manager_chat:request.user.pk|safe }}
               <div class="dropdown d-inline-block">
                 <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
@@ -28,6 +28,7 @@
                 </div>
               </div>
           </div>
+          {% include 'desctop/chat/chat/search.html' %}
       </div>
 <div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
     <div class="fixed_messages">
