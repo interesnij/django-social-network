@@ -38,8 +38,13 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 
 on('#ajax', 'click', '.chat_search', function() {
   header = this.parentElement.parentElement.parentElement;
-  header.nextElementSibling.style.display = "unset";
+  header.nextElementSibling.style.display = "flex";
   header.style.display = "none";
+});
+on('#ajax', 'click', '.hide_chat_search', function() {
+  search = this.parentElement.parentElement;
+  header.previousElementSibling.style.display = "block";
+  search.style.display = "none";
 });
 
 on('#ajax', 'input', '.chat_message_text', function() {
