@@ -21,7 +21,7 @@ class MessagesListView(ListView):
 
 
 class ChatDetailView(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, can_add_members_in_chat = None, 15, None
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
@@ -35,6 +35,7 @@ class ChatDetailView(ListView):
 			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_group():
 			self.template_name = get_settings_template("chat/chat/detail/group_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.can_add_members_in_chat = self.chat.is_user_can_add_members(request.user)
 		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		unread_messages = self.chat.get_unread_message(self.pk)
@@ -57,6 +58,7 @@ class ChatDetailView(ListView):
 		context['chat'] = self.chat
 		context['fix_message'] = self.chat.get_first_fix_message
 		context['is_muted'] = self.chat.is_muted(self.pk)
+		context['can_add_members'] = self.can_add_members_in_chat
 		if self.chat.is_have_draft_message(self.pk):
 			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
 		return context

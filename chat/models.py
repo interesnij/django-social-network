@@ -50,6 +50,15 @@ class Chat(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def is_user_can_add_members(self, user):
+        if self.can_add_members == self.ALL_CAN:
+            return True
+        elif self.can_add_members == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_add_members == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        return False
+
     def is_private(self):
         return self.type == Chat.PRIVATE
     def is_group(self):
