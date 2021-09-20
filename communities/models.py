@@ -1028,7 +1028,7 @@ class CommunityMemberPerm(models.Model):
         (NO_ITEM, 'Не может иметь действия с элементом'),
     )
 
-    user = models.OneToOneField(CommunityMembership, null=True, blank=True, on_delete=models.CASCADE, related_name='commuity_member_settings', verbose_name="Подписчик сообщества")
+    user = models.OneToOneField(CommunityMembership, null=True, blank=True, on_delete=models.CASCADE, related_name='commuity_ie_settings', verbose_name="Подписчик сообщества")
 
     can_see_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит информацию профиля")
     can_see_community = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит сообщества")

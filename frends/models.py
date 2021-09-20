@@ -47,7 +47,7 @@ class ConnectPerm(models.Model):
         (NO_ITEM, 'Не может иметь действия с элементом'),
     )
 
-    user = models.OneToOneField(Connect, null=True, blank=True, on_delete=models.CASCADE, related_name='connect_settings', verbose_name="Друг")
+    user = models.OneToOneField(Connect, null=True, blank=True, on_delete=models.CASCADE, related_name='connect_ie_settings', verbose_name="Друг")
 
     can_see_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит информацию профиля")
     can_see_community = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит сообщества")

@@ -1030,7 +1030,7 @@ class ChatPerm(models.Model):
         (NO_ITEM, 'Не может иметь действия с элементом'),
     )
 
-    user = models.OneToOneField(Connect, null=True, blank=True, on_delete=models.CASCADE, related_name='connect_settings', verbose_name="Друг")
+    user = models.OneToOneField(ChatUsers, null=True, blank=True, on_delete=models.CASCADE, related_name='chat_ie_settings', verbose_name="Друг")
 
     can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
     can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информации")
