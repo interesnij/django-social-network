@@ -1014,3 +1014,33 @@ class MessageFixed(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
+
+
+class ChatPerm(models.Model):
+    """ связь с таблицей участников беседы. Появляется после ее инициирования, когда участник
+        получит какое либо исключение или включение для какой-либо категории.
+        1. NO_VALUE - неактивное значение.
+        2. YES_ITEM - может соверщать описанные действия
+        3. NO_ITEM - не может соверщать описанные действия
+    """
+    NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
+    ITEM = (
+        (NO_VALUE, 'Не активно'),
+        (YES_ITEM, 'Может иметь действия с элементом'),
+        (NO_ITEM, 'Не может иметь действия с элементом'),
+    )
+
+    user = models.OneToOneField(Connect, null=True, blank=True, on_delete=models.CASCADE, related_name='connect_settings', verbose_name="Друг")
+
+    can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
+    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информации")
+    can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
+    can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
+    can_see_post_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комменты к записям")
+    can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
+    can_add_design = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто меняет дизайн")
+
+    class Meta:
+        verbose_name = 'Исключения/Включения участника беседы'
+        verbose_name_plural = 'Исключения/Включения участников беседы'
+        index_together = [('id', 'user'),]
