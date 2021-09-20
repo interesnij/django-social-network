@@ -15,14 +15,14 @@ class Chat(models.Model):
     DELETED_PRIVATE, DELETED_GROUP, DELETED_MANAGER, DELETED_PRIVATE_FIXED, DELETED_GROUP_FIXED = '_DEL', '_DELG', '_DELM', '_DELPF', '_DELGF'
     CLOSED_PRIVATE, CLOSED_GROUP, CLOSED_MANAGER, CLOSED_PRIVATE_FIXED, CLOSED_GROUP_FIXED = '_CLO', '_CLOG', '_CLOM', '_CLOPF', '_CLOGF'
 
-    ALL_CAN, CREATOR, CREATOR_ADMINS = 1,2,3
+    ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
         (PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
         (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_GROUP, 'Удалённый групповой'),(DELETED_MANAGER, 'Удалённый менеджерский'),(DELETED_PRIVATE_FIXED, 'Удалённый приватный закреплённый'),(DELETED_GROUP_FIXED, 'Удалённый групповой закреплённый'),
         (CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_GROUP, 'Закрытый групповой'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_PRIVATE_FIXED, 'Закрытый закреплённый приватный'),(CLOSED_GROUP_FIXED, 'Закрытый групповой закреплённый'),
     )
-    ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
+    ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),(MEMBERS_BUT, 'Участники кроме'),(SOME_MEMBERS, 'Некоторые участники'),)
     ADMIN_PERM = ((CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
 
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
@@ -40,6 +40,7 @@ class Chat(models.Model):
     can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто закрепляет сообщения")
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
     can_add_admin = models.PositiveSmallIntegerField(choices=ADMIN_PERM, default=1, verbose_name="Кто назначает админов")
+    can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто меняет дизайн")
 
     class Meta:
         verbose_name = "Беседа"
@@ -57,7 +58,116 @@ class Chat(models.Model):
             return True
         elif self.can_add_members == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
+        elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 1, 0):
+            return True
+        elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 1, 1):
+            return True
         return False
+    def is_user_can_edit_info(self, user):
+        if self.can_edit_info == self.ALL_CAN:
+            return True
+        elif self.can_edit_info == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_edit_info == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 2, 0):
+            return True
+        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 2, 1):
+            return True
+        return False
+    def is_user_can_fix_item(self, user):
+        if self.can_fix_item == self.ALL_CAN:
+            return True
+        elif self.can_fix_item == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_fix_item == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        elif self.can_fix_item == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 3, 0):
+            return True
+        elif self.can_fix_item == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 3, 1):
+            return True
+        return False
+    def is_user_can_mention(self, user):
+        if self.can_mention == self.ALL_CAN:
+            return True
+        elif self.can_mention == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_mention == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        elif self.can_mention == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 4, 0):
+            return True
+        elif self.can_mention == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 4, 1):
+            return True
+        return False
+    def is_user_can_add_admin(self, user):
+        if self.can_add_admin == self.ALL_CAN:
+            return True
+        elif self.can_add_admin == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_add_admin == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        return False
+    def is_user_can_add_design(self, user):
+        if self.can_mention == self.ALL_CAN:
+            return True
+        elif self.can_add_design == self.CREATOR and self.creator.pk == user.pk:
+            return True
+        elif self.can_add_design == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+            return True
+        elif self.can_add_design == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 5, 0):
+            return True
+        elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 5, 1):
+            return True
+
+    def get_special_perm_for_user(self, user_id, type, value):
+        """
+        type 1 - can_add_members,
+        2 - can_edit_info,
+        3 - can_fix_item
+        4 - can_mention
+        5 - can_add_design
+        value 0 - MEMBERS_BUT, value 1 - SOME_MEMBERS
+
+        Логика такая.
+        Если MEMBERS_BUT, то мы проверяем, есть ли запись ChatPerm.
+        Если ее нет, тогда правда, если есть и он в поле chat_ie_settings (для типа 1)
+        не имеет значение 2 (Не может совершат действия с элементом), тоже правда.
+
+        Если SOME_MEMBERS, то запись должна быть точно, ведь он включающий в список действий.
+        Потому если ее нет, то ложь. Если есть и в поле chat_ie_settings (для типа 1)
+        стоит значение 1 (может совершать действия с элементом), то правда.
+        """
+        member = ChatUsers.objects.get(user_id=user_id)
+        if value == 0:
+            try:
+                ie = member.chat_ie_settings
+                if type == 1:
+                    return ie.can_add_in_chat != 2
+                elif type == 2:
+                    return ie.can_add_info != 2
+                elif type == 3:
+                    return ie.can_add_fix != 2
+                elif type == 4:
+                    return ie.can_send_mention != 2
+                elif type == 5:
+                    return ie.can_add_design != 2
+            except ChatPerm.DoesNotExist:
+                 return True
+        elif value == 1:
+            try:
+                ie = member.chat_ie_settings
+                if type == 1:
+                    return ie.can_add_in_chat == 1
+                elif type == 2:
+                    return ie.can_add_info == 1
+                elif type == 3:
+                    return ie.can_add_fix == 1
+                elif type == 4:
+                    return ie.can_send_mention == 1
+                elif type == 5:
+                    return ie.can_add_design == 1
+            except ChatPerm.DoesNotExist:
+                 return False
 
     def is_private(self):
         return self.type == Chat.PRIVATE
@@ -1046,7 +1156,6 @@ class ChatPerm(models.Model):
     can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информации")
     can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
     can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
-    can_see_post_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комменты к записям")
     can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
     can_add_design = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто меняет дизайн")
 
