@@ -38,7 +38,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 
 on('#ajax', 'click', '.chat_search', function() {
   header = this.parentElement.parentElement.parentElement;
-  header.nextElementSibling.style.display = "block";
+  header.nextElementSibling.style.display = "unset";
   header.style.display = "none";
 });
 
