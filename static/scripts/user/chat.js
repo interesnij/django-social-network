@@ -38,8 +38,10 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
 
 on('#ajax', 'click', '.chat_search', function() {
   header = this.parentElement.parentElement.parentElement;
-  header.nextElementSibling.style.display = "flex";
+  input = header.nextElementSibling;
+  input.style.display = "flex";
   header.style.display = "none";
+  input.focus();
 });
 on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
