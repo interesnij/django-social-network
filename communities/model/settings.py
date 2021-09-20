@@ -232,7 +232,7 @@ class CommunityPrivatePlanner(models.Model):
         (SOME_MEMBERS, 'Некоторые участники'),
     )
 
-    community = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='community_private_planner', verbose_name="Сообщество")
+    community = models.OneToOneField(Community, primary_key=True, on_delete=models.CASCADE, related_name='community_private_planner', verbose_name="Сообщество")
     can_see_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто видит комментарии")
     add_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто добавляет комментарии")
     vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")

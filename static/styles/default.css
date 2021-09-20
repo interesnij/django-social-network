@@ -122,6 +122,12 @@
   width: 7px !important;
   height: 7px !important;
   padding: 0 !important;
+  position: absolute;
+  right: 0;
+}
+
+p .small_badge {
+  padding-right: 15px
 }
 .custom-control {
   cursor: pointer;
