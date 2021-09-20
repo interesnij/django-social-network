@@ -35,13 +35,13 @@ function case_user_chat_read(pk) {
       box = document.body.querySelector(".chat_container");
       list = box.querySelectorAll(".message");
       for (var i = 0; i < list.length; i++){
-        list[i].classList.remove(".bg-light-secondary")
+        list[i].classList.remove("bg-light-secondary")
       }
     }}
     else if (document.body.querySelector(".chat_list_container")) {
     list = document.body.querySelector(".chat_list_container");
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
-    chat.querySelector(".tab_badge").remove();
+    chat.querySelector("p").classList.remove("bg-light-secondary");
   }
 };
 function case_u_post_notify(uuid) {
