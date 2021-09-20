@@ -43,7 +43,7 @@ on('#ajax', 'click', '.chat_search', function() {
 });
 on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
-  header.previousElementSibling.style.display = "block";
+  search.previousElementSibling.style.display = "block";
   search.style.display = "none";
 });
 
