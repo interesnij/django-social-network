@@ -36,6 +36,12 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 });
 
+on('#ajax', 'click', '.chat_search', function() {
+  header = this.parentElement.parentElement.parentElement;
+  header.nextElementSibling.style.display = "block";
+  header.style.display = "none";
+});
+
 on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
   if (document.body.querySelector(".chatlist")) {
