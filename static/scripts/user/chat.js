@@ -645,6 +645,7 @@ on('#ajax', 'click', '.u_message_transfer', function() {
 on('#ajax', 'click', '.go_transfer_messages', function() {
   url = "/chat/" + this.getAttribute("data-pk") + "/";
   list = get_toggle_messages();
+  get_document_opacity_1();
   saver = document.createElement("div");
   for (var i = 0; i < list.length; i++) {
     $input = document.createElement("input");
