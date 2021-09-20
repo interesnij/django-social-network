@@ -41,7 +41,7 @@ on('#ajax', 'click', '.chat_search', function() {
   input = header.nextElementSibling;
   input.style.display = "flex";
   header.style.display = "none";
-  input.focus();
+  input.querySelector(".form-control").focus();
 });
 on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
