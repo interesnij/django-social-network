@@ -239,10 +239,10 @@ class User(AbstractUser):
         return self.save(update_fields=['b_avatar'])
 
     def get_b_avatar(self):
-        try:
+        if self.b_avatar:
             return self.b_avatar.url
-        except:
-            return None
+        else:
+            return '/static/images/no_img/list.jpg'
 
     def get_avatar(self):
         try:
