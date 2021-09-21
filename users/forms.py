@@ -40,15 +40,14 @@ class UserPrivateForm(forms.ModelForm):
 		fields = (
                 'can_see_community',
                 'can_see_friend',
-                'can_receive_message',
+                'can_send_message',
+                'can_add_in_chat',
                 'can_see_post',
                 'can_see_photo',
                 'can_see_good',
                 'can_see_video',
                 'can_see_music',
-                'can_see_planner_workspace',
-                'can_see_planner_board',
-                'can_see_planner_column',
+                'can_see_planner',
                 'can_see_doc',
                 )
 class UserPrivatePostForm(forms.ModelForm):
