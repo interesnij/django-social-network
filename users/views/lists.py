@@ -211,27 +211,49 @@ class UserPostsListView(ListView):
 	template_name, paginate_by, is_user_can_work_post = None, 15, None
 
 	def get(self,request,*args,**kwargs):
+		""" is_user_can_see_post_section - может ли гость видеть раздел записей
+			is_user_can_create_posts - может ли гость создавать записи в списках того, к кому зашел
+		"""
 		from posts.models import PostList
 		from common.templates import get_owner_template_user, get_template_anon_user
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk == request.user.pk:
-			self.list = self.post_list.get_staff_items()
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
-			self.is_user_can_work_post = True 
+			if request.user.pk == self.post_list.creator.pk:
+				self.list = self.post_list.get_staff_items()
+				self.is_user_can_create_posts = True
+				self.is_user_can_see_post_section = True
+			else:
+				self.list = self.post_list.get_items()
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_post(request.user.pk)
+				self.is_user_can_see_post_section = self.post_list.creator.is_user_can_see_post(request.user.pk)
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
+
 		if request.user.is_authenticated:
 			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
-			self.is_user_can_work_post = self.user.is_user_can_work_post(request.user.pk)
 		else:
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if self.user.is_anon_user_can_see_post():
+				self.is_user_can_see_post_section = True
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPostsListView,self).get_context_data(**kwargs)
-		c['user'], c['post_lists'], c['fix_list'], c['list'], c['is_user_can_work_post'] = self.user, self.post_lists, self.user.get_fix_list(), self.post_list, self.is_user_can_work_post
+		c['user'],
+		c['post_lists'],
+		c['fix_list'],
+		c['list'],
+		c['is_user_can_see_post_section'],
+		c['is_user_can_create_posts'] =
+		self.user,
+		self.post_lists,
+		self.user.get_fix_list(),
+		self.post_list,
+		self.is_user_can_see_post_section,
+		self.is_user_can_create_posts
 		return c
 
 	def get_queryset(self):

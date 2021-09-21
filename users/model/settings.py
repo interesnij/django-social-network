@@ -125,7 +125,7 @@ class UserColorSettings(models.Model):
 
 
 class UserPrivate(models.Model):
-    ALL_CAN, FRIENDS, MEMBERS, FRIENDS_MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','FM','EO','Y','FB','MB','SF','SM'
+    ALL_CAN, FRIENDS, MEMBERS, FRIENDS_MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
     PERM_PLANNER = (
         (ALL_CAN, 'Все пользователи'),

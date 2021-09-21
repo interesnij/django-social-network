@@ -1,3 +1,5 @@
+{% if is_user_can_create_posts %}
+
 <span class="post_container">
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
@@ -41,7 +43,7 @@
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
-          
+
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">
@@ -54,3 +56,4 @@
     </span>
   </span>
 </span>
+{% endif %}
