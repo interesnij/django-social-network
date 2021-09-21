@@ -1686,7 +1686,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_doc == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_doccan_see_doc == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_doc == private.FRIENDS and user_pk in self.get_all_connection_ids():
             return True
         elif private.can_see_doc == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
