@@ -1610,9 +1610,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_post == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_post == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 8, 0):
+        elif private.can_see_post == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 8, 0):
             return True
-        elif self.can_see_post == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 8, 1):
+        elif private.can_see_post == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 8, 1):
             return True
         return False
 
@@ -1626,9 +1626,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 2, 0):
+        elif private.can_see_community == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 2, 0):
             return True
-        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 2, 1):
+        elif private.can_see_community == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 2, 1):
             return True
         return False
 
@@ -1642,9 +1642,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_photo == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_photo == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 10, 0):
+        elif private.can_see_photo == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 10, 0):
             return True
-        elif self.can_see_photo == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
+        elif private.can_see_photo == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
             return True
         return False
 
@@ -1658,9 +1658,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_video == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_video == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 14, 0):
+        elif private.can_see_video == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 14, 0):
             return True
-        elif self.can_see_video == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 14, 1):
+        elif private.can_see_video == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 14, 1):
             return True
         return False
 
@@ -1674,9 +1674,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_music == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_music == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 7, 0):
+        elif private.can_see_music == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 7, 0):
             return True
-        elif self.can_see_music == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 7, 1):
+        elif private.can_see_music == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 7, 1):
             return True
         return False
 
@@ -1690,9 +1690,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_doc == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_doc == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 6, 0):
+        elif private.can_see_doc == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 6, 0):
             return True
-        elif self.can_see_doc == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 6, 1):
+        elif private.can_see_doc == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 6, 1):
             return True
         return False
 
@@ -1706,9 +1706,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_friend == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_friend == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 3, 0):
+        elif private.can_see_friend == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 3, 0):
             return True
-        elif self.can_see_friend == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 3, 1):
+        elif private.can_see_friend == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 3, 1):
             return True
         return False
 
@@ -1722,9 +1722,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_good == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_good == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 12, 0):
+        elif private.can_see_good == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 12, 0):
             return True
-        elif self.can_see_good == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
+        elif private.can_see_good == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
             return True
         return False
 
