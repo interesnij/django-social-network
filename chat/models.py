@@ -119,14 +119,11 @@ class Chat(models.Model):
         elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 5, 1):
             return True
 
+
     def get_special_perm_for_user(self, user_id, type, value):
         """
-        type 1 - can_add_members,
-        2 - can_edit_info,
-        3 - can_fix_item
-        4 - can_mention
-        5 - can_add_design
-        value 0 - MEMBERS_BUT, value 1 - SOME_MEMBERS
+        type 1 - can_add_members, 2 - can_edit_info, 3 - can_fix_item, 4 - can_mention, 5 - can_add_design
+        value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
 
         Логика такая.
         Если MEMBERS_BUT, то мы проверяем, есть ли запись ChatPerm.

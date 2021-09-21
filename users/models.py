@@ -1932,3 +1932,85 @@ class User(AbstractUser):
         from notify.models import UserProfileNotify
         recipients = UserProfileNotify.objects.filter(user=self.pk).values("target")
         return [i['target'] for i in recipients]
+
+
+    def get_special_perm_for_user(self, user_id, type, value):
+        """
+        type 1 - can_see_info,
+        2 - can_see_community,
+        3 - can_see_friend
+        4 - can_send_message
+        5 - can_add_in_chat
+        6 - can_see_doc,
+        7 - can_see_music,
+        8 - can_see_post
+        9 - can_see_post_comment
+        10 - can_see_photo
+        11 - can_see_photo_comment,
+        12 - can_see_good,
+        13 - can_see_good_comment
+        14 - can_see_video
+        15 - can_see_video_comment
+        16 - can_see_planner,
+        17 - can_see_planner_comment,
+        18 - can_add_post
+        19 - can_add_photo
+        20 - can_add_good
+        21 - can_add_video,
+        22 - can_add_planner,
+        23 - can_add_doc
+        24 - can_add_music
+        25 - can_create_post
+        26 - can_create_post_comment
+        27 - can_create_photo,
+        28 - can_create_photo_comment,
+        29 - can_create_good
+        30 - can_create_good_comment
+        31 - can_create_video
+        32 - can_create_video_comment
+        33 - can_create_planner
+        34 - can_create_planner_comment
+        35 - can_create_doc,
+        36 - can_create_music,
+        value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
+
+        Логика такая.
+        Если MEMBERS_BUT, то мы проверяем, есть ли запись ConnectPerm.
+        Если ее нет, тогда правда, если есть и он в поле connect_ie_settings (для типа 1)
+        не имеет значение 2 (Не может совершат действия с элементом), тоже правда.
+
+        Если SOME_MEMBERS, то запись должна быть точно, ведь он включающий в список действий.
+        Потому если ее нет, то ложь. Если есть и в поле connect_ie_settings (для типа 1)
+        стоит значение 1 (может совершать действия с элементом), то правда.
+        """
+        member = ConnectPerm.objects.get(user_id=user_id)
+        if value == 0:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_add_in_chat != 2
+                elif type == 2:
+                    return ie.can_add_info != 2
+                elif type == 3:
+                    return ie.can_add_fix != 2
+                elif type == 4:
+                    return ie.can_send_mention != 2
+                elif type == 5:
+                    return ie.can_add_design != 2
+            except ChatPerm.DoesNotExist:
+                 return True
+        elif value == 1:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_add_in_chat == 1
+                elif type == 2:
+                    return ie.can_add_info == 1
+                elif type == 3:
+                    return ie.can_add_fix == 1
+                elif type == 4:
+                    return ie.can_send_mention == 1
+                elif type == 5:
+                    return ie.can_add_design == 1
+            except ChatPerm.DoesNotExist:
+                 return False
