@@ -321,13 +321,13 @@ class ProfileUserView(TemplateView):
                 self.template_name = "users/account/anon_no_child_safety.html"
             else:
                 self.template_name = "users/account/anon_user.html"
-            self.is_photo_open = self.user.is_anon_photo_open()
-            self.is_video_open = self.user.is_anon_video_open()
-            self.is_music_open = self.user.is_anon_music_open()
-            self.is_doc_open = self.user.is_anon_doc_open()
-            self.is_community_open = self.user.is_anon_community_open()
-            self.is_friend_open = self.user.is_anon_friend_open()
-            self.is_good_open = self.user.is_anon_good_open()
+            self.is_photo_open = self.user.is_anon_user_can_see_photo()
+            self.is_video_open = self.user.is_anon_user_can_see_video()
+            self.is_music_open = self.user.is_anon_user_can_see_music()
+            self.is_doc_open = self.user.is_anon_user_can_see_doc()
+            self.is_community_open = self.user.is_anon_user_can_see_community()
+            self.is_friend_open = self.user.is_anon_user_can_see_friend()
+            self.is_good_open = self.user.is_anon_user_can_see_good()
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
         else:

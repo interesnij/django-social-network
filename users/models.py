@@ -1595,10 +1595,6 @@ class User(AbstractUser):
         elif self.can_see_info == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 1, 1):
             return True
         return False
-    def is_anon_user_can_see_post(self):
-        """ Проверяем, может ли аноним видеть информацию пользователя. Тут все просто. """
-        private = self.user_private
-        return private.can_see_post == private.ALL_CAN
 
     def is_user_can_see_post(self, user_pk):
         private = self.user_private
@@ -1727,6 +1723,31 @@ class User(AbstractUser):
         elif private.can_see_good == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
             return True
         return False
+
+    def is_anon_user_can_see_post(self):
+        private = self.user_private
+        return private.can_see_post == private.ALL_CAN
+    def is_anon_user_can_see_photo(self):
+        private = self.user_private
+        return private.can_see_photo == private.ALL_CAN
+    def is_anon_user_can_see_community(self):
+        private = self.user_private
+        return private.can_see_community == private.ALL_CAN
+    def is_anon_user_can_see_friend(self):
+        private = self.user_private
+        return private.can_see_friend == private.ALL_CAN
+    def is_anon_user_can_see_doc(self):
+        private = self.user_private
+        return private.can_see_doc == private.ALL_CAN
+    def is_anon_user_can_see_music(self):
+        private = self.user_private
+        return private.can_see_music == private.ALL_CAN
+    def is_anon_user_can_see_video(self):
+        private = self.user_private
+        return private.can_see_video == private.ALL_CAN
+    def is_anon_user_can_see_good(self):
+        private = self.user_private
+        return private.can_see_good == private.ALL_CAN
 
     def get_special_perm_see(self, user_id, type, value):
         """
