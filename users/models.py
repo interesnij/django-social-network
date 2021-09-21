@@ -1289,360 +1289,6 @@ class User(AbstractUser):
         from goods.models import Good
         return Good.objects.filter(creator_id=self.pk, community__isnull=True, type="PUB")[:3]
 
-    def is_anon_photo_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_photo == UserPrivate.ALL_CAN
-    def is_anon_post_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_post == UserPrivate.ALL_CAN
-    def is_anon_friend_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_friend == UserPrivate.ALL_CAN
-    def is_anon_community_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_community == UserPrivate.ALL_CAN
-    def is_anon_good_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_good == UserPrivate.ALL_CAN
-    def is_anon_video_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_video == UserPrivate.ALL_CAN
-    def is_anon_music_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_music == UserPrivate.ALL_CAN
-    def is_anon_workspace_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_planner_workspace == UserPrivate.ALL_CAN
-    def is_anon_board_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_planner_board == UserPrivate.ALL_CAN
-    def is_anon_column_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_planner_column == UserPrivate.ALL_CAN
-    def is_anon_doc_open(self):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-        return private.can_see_doc == UserPrivate.ALL_CAN
-
-    def is_photo_open(self, user_pk):
-        from users.model.settings import UserPrivate
-
-        private = UserPrivate.objects.get(user=self)
-        if private.can_see_photo == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_photo == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_photo == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_photo == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_photo == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserPhotoCanSeeGalleryExcludes
-            return not UserPhotoCanSeeGalleryExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_photo == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserPhotoCanSeeGalleryIncludes
-            return UserPhotoCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_photo(self, user_pk):
-        from users.model.settings import UserPrivatePhoto
-
-        private = UserPrivatePhoto.objects.get(user=self)
-        if private.add_item == UserPrivatePhoto.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivatePhoto.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivatePhoto.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivatePhoto.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivatePhoto.FRIENDS_BUT:
-            from users.model.list import UserPhotoAddItemExcludes
-            return not UserPhotoAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivatePhoto.SOME_FRIENDS:
-            from users.model.list import UserPhotoAddItemIncludes
-            return UserPhotoAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_post_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_post == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_post == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_post == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_post == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_post == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserPostCanSeeGalleryExcludes
-            return not UserPostCanSeeGalleryExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_post == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserPostCanSeeGalleryIncludes
-            return UserPostCanSeeGalleryIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_post(self, user_pk):
-        from users.model.settings import UserPrivatePost
-
-        private = UserPrivatePost.objects.get(user=self)
-        if private.add_item == UserPrivatePost.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivatePost.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivatePost.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivatePost.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivatePost.FRIENDS_BUT:
-            from users.model.list import UserPostAddItemExcludes
-            return not UserPostAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivatePost.SOME_FRIENDS:
-            from users.model.list import UserPostAddItemIncludes
-            return UserPostAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_video_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_video == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_video == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_video == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_video == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_video == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserVideoCanSeeVideoExcludes
-            return not UserVideoCanSeeVideoExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_video == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserVideoCanSeeVideoIncludes
-            return UserVideoCanSeeVideoIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_video(self, user_pk):
-        from users.model.settings import UserPrivateVideo
-
-        private = UserPrivateVideo.objects.get(user=self)
-        if private.add_item == UserPrivateVideo.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivateVideo.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivateVideo.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivateVideo.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivateVideo.FRIENDS_BUT:
-            from users.model.list import UserVideoAddItemExcludes
-            return not UserVideoAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivateVideo.SOME_FRIENDS:
-            from users.model.list import UserVideoAddItemIncludes
-            return UserVideoAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_music_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_music == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_music == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_music == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_music == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_music == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserMusicCanSeeMusicExcludes
-            return not UserMusicCanSeeMusicExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_music == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserMusicCanSeeMusicIncludes
-            return UserMusicCanSeeMusicIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_music(self, user_pk):
-        from users.model.settings import UserPrivateMusic
-
-        private = UserPrivateMusic.objects.get(user=self)
-        if private.add_item == UserPrivateMusic.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivateMusic.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivateMusic.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivateMusic.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivateMusic.FRIENDS_BUT:
-            from users.model.list import UserMusicAddItemExcludes
-            return not UserMusicAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivateMusic.SOME_FRIENDS:
-            from users.model.list import UserMusicAddItemIncludes
-            return UserMusicAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_good_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_good == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_good == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_good == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_good == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_good == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserGoodCanSeeMarketExcludes
-            return not UserGoodCanSeeMarketExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_good == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserGoodCanSeeMarketIncludes
-            return UserGoodCanSeeMarketIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_good(self, user_pk):
-        from users.model.settings import UserPrivateGood
-
-        private = UserPrivateGood.objects.get(user=self)
-        if private.add_item == UserPrivateGood.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivateGood.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivateGood.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivateGood.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivateGood.FRIENDS_BUT:
-            from users.model.list import UserGoodAddItemExcludes
-            return not UserGoodAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivateGood.SOME_FRIENDS:
-            from users.model.list import UserGoodAddItemIncludes
-            return UserGoodAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_community_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_community == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_community == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_community == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_community == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_community == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserCommunityCanSeeExcludes
-            return not UserCommunityCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_community == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserCommunityCanSeeIncludes
-            return UserCommunityCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_friend_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_friend == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_friend == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_friend == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_friend == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_friend == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserFriendCanSeeExcludes
-            return not UserFriendCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_friend == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserFriendCanSeeIncludes
-            return UserFriendCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_message_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_receive_message == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_receive_message == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_receive_message == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_receive_message == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_receive_message == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserMessageCanSeeExcludes
-            return not UserMessageCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_receive_message == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserMessageCanSeeIncludes
-            return UserMessageCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
-    def is_doc_open(self, user_pk):
-        from users.model.settings import UserPrivate
-        private = UserPrivate.objects.get(user=self)
-
-        if private.can_see_doc == UserPrivate.ALL_CAN:
-            return True
-        elif private.can_see_doc == UserPrivate.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.can_see_doc == UserPrivate.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.can_see_doc == UserPrivate.YOU and user_pk == self.pk:
-            return True
-        elif private.can_see_doc == UserPrivate.FRIENDS_BUT:
-            from users.model.list import UserDocCanSeeExcludes
-            return not UserDocCanSeeExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.can_see_doc == UserPrivate.SOME_FRIENDS:
-            from users.model.list import UserDocCanSeeIncludes
-            return UserDocCanSeeIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-    def is_user_can_work_doc(self, user_pk):
-        from users.model.settings import UserPrivateDoc
-
-        private = UserPrivateDoc.objects.get(user=self)
-        if private.add_item == UserPrivateDoc.ALL_CAN:
-            return True
-        elif private.add_item == UserPrivateDoc.FRIENDS and user_pk in self.get_all_connection_ids():
-            return True
-        elif private.add_item == UserPrivateDoc.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
-            return True
-        elif private.add_item == UserPrivateDoc.YOU and user_pk == self.pk:
-            return True
-        elif private.add_item == UserPrivateDoc.FRIENDS_BUT:
-            from users.model.list import UserDocAddItemExcludes
-            return not UserDocAddItemExcludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        elif private.add_item == UserPrivateDoc.SOME_FRIENDS:
-            from users.model.list import UserDocAddItemIncludes
-            return UserDocAddItemIncludes.objects.filter(owner=self.pk, user=user_pk).exists()
-        else:
-            return False
-
     def get_music_count(self):
         return self.profile.tracks
 
@@ -1934,7 +1580,27 @@ class User(AbstractUser):
         return [i['target'] for i in recipients]
 
 
-    def get_special_perm_for_user(self, user_id, type, value):
+    def is_user_can_see_info(self, user):
+        private = self.user_private
+        if private.can_see_info == private.ALL_CAN:
+            return True
+        elif private.can_see_info == private.YOU and self.pk == user.pk:
+            return True
+        elif private.can_see_info == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_info == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_info == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 1, 0):
+            return True
+        elif self.can_see_info == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 1, 1):
+            return True
+        return False
+    def is_anon_user_can_see_info(self, user):
+        """ Проверяем, может ли аноним видеть информацию пользователя. Тут все просто. """
+        private = self.user_private
+        return private == private.ALL_CAN
+
+    def get_special_perm_see(self, user_id, type, value):
         """
         type 1 - can_see_info,
         2 - can_see_community,
@@ -1953,25 +1619,6 @@ class User(AbstractUser):
         15 - can_see_video_comment
         16 - can_see_planner,
         17 - can_see_planner_comment,
-        18 - can_add_post
-        19 - can_add_photo
-        20 - can_add_good
-        21 - can_add_video,
-        22 - can_add_planner,
-        23 - can_add_doc
-        24 - can_add_music
-        25 - can_create_post
-        26 - can_create_post_comment
-        27 - can_create_photo,
-        28 - can_create_photo_comment,
-        29 - can_create_good
-        30 - can_create_good_comment
-        31 - can_create_video
-        32 - can_create_video_comment
-        33 - can_create_planner
-        34 - can_create_planner_comment
-        35 - can_create_doc,
-        36 - can_create_music,
         value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
 
         Логика такая.
@@ -1988,29 +1635,202 @@ class User(AbstractUser):
             try:
                 ie = member.connect_ie_settings
                 if type == 1:
-                    return ie.can_add_in_chat != 2
+                    return ie.can_see_info != 2
                 elif type == 2:
-                    return ie.can_add_info != 2
+                    return ie.can_see_community != 2
                 elif type == 3:
-                    return ie.can_add_fix != 2
+                    return ie.can_see_friend != 2
                 elif type == 4:
-                    return ie.can_send_mention != 2
+                    return ie.can_send_message != 2
                 elif type == 5:
-                    return ie.can_add_design != 2
-            except ChatPerm.DoesNotExist:
+                    return ie.can_add_in_chat != 2
+                if type == 6:
+                    return ie.can_see_doc != 2
+                elif type == 7:
+                    return ie.can_see_music != 2
+                elif type == 8:
+                    return ie.can_see_post != 2
+                elif type == 9:
+                    return ie.can_see_post_comment != 2
+                elif type == 10:
+                    return ie.can_see_photo != 2
+                if type == 11:
+                    return ie.can_see_photo_comment != 2
+                elif type == 12:
+                    return ie.can_see_good != 2
+                elif type == 13:
+                    return ie.can_see_good_comment != 2
+                elif type == 14:
+                    return ie.can_see_video != 2
+                elif type == 15:
+                    return ie.can_see_video_comment != 2
+                if type == 16:
+                    return ie.can_see_planner != 2
+                elif type == 17:
+                    return ie.can_see_planner_comment != 2
+            except ConnectPerm.DoesNotExist:
                  return True
         elif value == 1:
             try:
                 ie = member.connect_ie_settings
                 if type == 1:
-                    return ie.can_add_in_chat == 1
+                    return ie.can_see_info == 1
                 elif type == 2:
-                    return ie.can_add_info == 1
+                    return ie.can_see_community == 1
                 elif type == 3:
-                    return ie.can_add_fix == 1
+                    return ie.can_see_friend == 1
                 elif type == 4:
-                    return ie.can_send_mention == 1
+                    return ie.can_send_message == 1
                 elif type == 5:
-                    return ie.can_add_design == 1
-            except ChatPerm.DoesNotExist:
+                    return ie.can_add_in_chat == 1
+                if type == 6:
+                    return ie.can_see_doc == 1
+                elif type == 7:
+                    return ie.can_see_music == 1
+                elif type == 8:
+                    return ie.can_see_post == 1
+                elif type == 9:
+                    return ie.can_see_post_comment == 1
+                elif type == 10:
+                    return ie.can_see_photo == 1
+                if type == 11:
+                    return ie.can_see_photo_comment == 1
+                elif type == 12:
+                    return ie.can_see_good == 1
+                elif type == 13:
+                    return ie.can_see_good_comment == 1
+                elif type == 14:
+                    return ie.can_see_video == 1
+                elif type == 15:
+                    return ie.can_see_video_comment == 1
+                if type == 16:
+                    return ie.can_see_planner == 1
+                elif type == 17:
+                    return ie.can_see_planner_comment == 1
+            except ConnectPerm.DoesNotExist:
+                 return False
+
+    def get_special_perm_copy(self, user_id, type, value):
+        """
+        type 1 - can_copy_post,
+        2 - can_copy_photo
+        3 - can_copy_good
+        4 - can_copy_video,
+        5 - can_copy_planner,
+        6 - can_copy_doc
+        7 - can_copy_music
+        """
+        member = ConnectPerm.objects.get(user_id=user_id)
+        if value == 0:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_copy_post != 2
+                elif type == 2:
+                    return ie.can_copy_photo != 2
+                elif type == 3:
+                    return ie.can_copy_good != 2
+                elif type == 4:
+                    return ie.can_copy_video != 2
+                elif type == 5:
+                    return ie.can_copy_planner != 2
+                if type == 6:
+                    return ie.can_copy_doc != 2
+                elif type == 7:
+                    return ie.can_copy_music != 2
+            except ConnectPerm.DoesNotExist:
+                 return True
+        elif value == 1:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_copy_post == 1
+                elif type == 2:
+                    return ie.can_copy_photo == 1
+                elif type == 3:
+                    return ie.can_copy_good == 1
+                elif type == 4:
+                    return ie.can_copy_video == 1
+                elif type == 5:
+                    return ie.can_copy_planner == 1
+                if type == 6:
+                    return ie.can_copy_doc == 1
+                elif type == 7:
+                    return ie.can_copy_music == 1
+            except ConnectPerm.DoesNotExist:
+                 return False
+
+    def get_special_perm_create(self, user_id, type, value):
+        """
+        type 1 - can_create_post
+        2 - can_create_post_comment
+        3 - can_create_photo,
+        4 - can_create_photo_comment,
+        5 - can_create_good
+        6 - can_create_good_comment
+        7 - can_create_video
+        8 - can_create_video_comment
+        9 - can_create_planner
+        10 - can_create_planner_comment
+        11 - can_create_doc,
+        12 - can_create_music,
+        """
+        member = ConnectPerm.objects.get(user_id=user_id)
+        if value == 0:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_create_post != 2
+                elif type == 2:
+                    return ie.can_create_post_comment != 2
+                elif type == 3:
+                    return ie.can_create_photo != 2
+                elif type == 4:
+                    return ie.can_create_photo_comment != 2
+                elif type == 5:
+                    return ie.can_create_good != 2
+                if type == 6:
+                    return ie.can_create_good_comment != 2
+                elif type == 7:
+                    return ie.can_create_video != 2
+                elif type == 8:
+                    return ie.can_create_video_comment != 2
+                elif type == 9:
+                    return ie.can_create_planner != 2
+                elif type == 10:
+                    return ie.can_create_planner_comment != 2
+                if type == 11:
+                    return ie.can_create_doc != 2
+                elif type == 12:
+                    return ie.can_create_music != 2
+            except ConnectPerm.DoesNotExist:
+                 return True
+        elif value == 1:
+            try:
+                ie = member.connect_ie_settings
+                if type == 1:
+                    return ie.can_create_post == 1
+                elif type == 2:
+                    return ie.can_create_post_comment == 1
+                elif type == 3:
+                    return ie.can_create_photo == 1
+                elif type == 4:
+                    return ie.can_create_photo_comment == 1
+                elif type == 5:
+                    return ie.can_create_good == 1
+                if type == 6:
+                    return ie.can_create_good_comment == 1
+                elif type == 7:
+                    return ie.can_create_video == 1
+                elif type == 8:
+                    return ie.can_create_video_comment == 1
+                elif type == 9:
+                    return ie.can_create_planner == 1
+                elif type == 10:
+                    return ie.can_create_planner_comment == 1
+                if type == 11:
+                    return ie.can_create_doc == 1
+                elif type == 12:
+                    return ie.can_create_music == 1
+            except ConnectPerm.DoesNotExist:
                  return False

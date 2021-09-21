@@ -46,6 +46,7 @@ class ConnectPerm(models.Model):
         (YES_ITEM, 'Может иметь действия с элементом'),
         (NO_ITEM, 'Не может иметь действия с элементом'),
     )
+
     user = models.OneToOneField(Connect, null=True, blank=True, on_delete=models.CASCADE, related_name='connect_ie_settings', verbose_name="Друг")
 
     can_see_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит информацию профиля")
@@ -71,13 +72,13 @@ class ConnectPerm(models.Model):
     can_see_planner = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит рабочие пространства и доски")
     can_see_planner_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комменты к доскам")
 
-    can_add_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе записи и списки")
-    can_add_photo = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе фото и списки")
-    can_add_good = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе товары и списки")
-    can_add_video = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе видео и списки")
-    can_add_planner = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе рабочие пространства и доски")
-    can_add_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе документы и списки")
-    can_add_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет к себе музыку и списки")
+    can_copy_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует записи и списки")
+    can_copy_photo = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует фото и списки")
+    can_copy_good = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует товары и списки")
+    can_copy_video = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует видео и списки")
+    can_copy_planner = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует рабочие пространства и доски")
+    can_copy_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует документы и списки")
+    can_copy_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует музыку и списки")
 
     can_create_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает записи и списки, работает с ними")
     can_create_post_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к записям")
