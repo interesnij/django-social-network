@@ -264,7 +264,7 @@ class ProfileUserView(TemplateView):
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
             elif user_pk == r_user_pk:
-                self.is_community_open, self.is_photo_open, self.is_post_open, self.is_video_open, self.is_music_open, self.is_friend_open, self.is_good_open  = True,True,True,True,True,True,True
+                self.is_community_open, self.is_photo_open, self.is_video_open, self.is_music_open, self.is_friend_open, self.is_good_open  = True,True,True,True,True,True
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/you_suspended.html"
                 elif self.user.is_closed():
@@ -276,14 +276,13 @@ class ProfileUserView(TemplateView):
             elif r_user_pk != user_pk:
                 self.get_buttons_block, self.common_frends = request.user.get_buttons_profile(user_pk), self.user.get_common_friends_of_user(self.request.user)[0:5]
 
-                self.is_photo_open = self.user.is_photo_open(r_user_pk)
-                self.is_post_open = self.user.is_post_open(r_user_pk)
-                self.is_video_open = self.user.is_video_open(r_user_pk)
-                self.is_music_open = self.user.is_music_open(r_user_pk)
-                self.is_doc_open = self.user.is_doc_open(r_user_pk)
-                self.is_community_open = self.user.is_community_open(r_user_pk)
-                self.is_friend_open = self.user.is_friend_open(r_user_pk)
-                self.is_good_open = self.user.is_good_open(r_user_pk)
+                self.is_photo_open = self.user.is_user_can_see_photo(r_user_pk)
+                self.is_video_open = self.user.is_user_can_see_video(r_user_pk)
+                self.is_music_open = self.user.is_user_can_see_music(r_user_pk)
+                self.is_doc_open = self.user.is_user_can_see_doc(r_user_pk)
+                self.is_community_open = self.user.is_user_can_see_community(r_user_pk)
+                self.is_friend_open = self.user.is_user_can_see_friend(r_user_pk)
+                self.is_good_open = self.user.is_user_can_see_good(r_user_pk)
 
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
@@ -323,7 +322,6 @@ class ProfileUserView(TemplateView):
             else:
                 self.template_name = "users/account/anon_user.html"
             self.is_photo_open = self.user.is_anon_photo_open()
-            self.is_post_open = self.user.is_anon_post_open()
             self.is_video_open = self.user.is_anon_video_open()
             self.is_music_open = self.user.is_anon_music_open()
             self.is_doc_open = self.user.is_anon_doc_open()

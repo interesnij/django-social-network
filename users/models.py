@@ -1600,19 +1600,131 @@ class User(AbstractUser):
         private = self.user_private
         return private.can_see_post == private.ALL_CAN
 
-    def is_user_can_see_post(self, user):
+    def is_user_can_see_post(self, user_pk):
         private = self.user_private
         if private.can_see_post == private.ALL_CAN:
             return True
-        elif private.can_see_post == private.YOU and self.pk == user.pk:
+        elif private.can_see_post == private.YOU and self.pk == user_pk:
             return True
         elif private.can_see_post == private.FRIENDS and user_pk in self.get_all_connection_ids():
             return True
         elif private.can_see_post == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_post == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 8, 0):
+        elif self.can_see_post == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 8, 0):
             return True
-        elif self.can_see_post == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 8, 1):
+        elif self.can_see_post == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 8, 1):
+            return True
+        return False
+
+    def is_user_can_see_community(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 2, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 2, 1):
+            return True
+        return False
+
+    def is_user_can_see_photo(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 10, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
+            return True
+        return False
+
+    def is_user_can_see_video(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 14, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 14, 1):
+            return True
+        return False
+
+    def is_user_can_see_music(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 7, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 7, 1):
+            return True
+        return False
+
+    def is_user_can_see_doc(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 6, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 6, 1):
+            return True
+        return False
+
+    def is_user_can_see_friend(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 3, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 3, 1):
+            return True
+        return False
+
+    def is_user_can_see_good(self, user_pk):
+        private = self.user_private
+        if private.can_see_community == private.ALL_CAN:
+            return True
+        elif private.can_see_community == private.YOU and self.pk == user_pk:
+            return True
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_see_community == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 12, 0):
+            return True
+        elif self.can_see_community == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
             return True
         return False
 
