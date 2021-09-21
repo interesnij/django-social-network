@@ -187,7 +187,7 @@ class CommunityPrivateMusic(models.Model):
             CommunityPrivateMusic.objects.create(community=instance)
 
 class CommunitySectionsOpen(models.Model):
-    ALL_CAN,MEMBERS,MEMBERSHIPS,YOU,MEMBERSHIPS_BUT,MEMBERS_BUT,SOME_MEMBERSHIPS,SOME_MEMBERS = 'AC','M','ME','Y','MEB','MB','SME','SM'
+    ALL_CAN,MEMBERS,MEMBERSHIPS,YOU,MEMBERSHIPS_BUT,MEMBERS_BUT,SOME_MEMBERSHIPS,SOME_MEMBERS = 1,2,3,4,5,6,7,8
 
     PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERSHIPS, 'Подписчики'),(YOU, 'Только я'),(MEMBERSHIPS_BUT, 'Подписчики, кроме'),(SOME_MEMBERSHIPS, 'Некоторые подписчики'),)
     PERM_PLANNER = (
