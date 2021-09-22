@@ -33,11 +33,11 @@ class PostList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
 
-    _can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
-    _can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
-    _create_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
-    _create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
-    _can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует записи и списки")
+    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
+    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
+    create_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+    create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
+    can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует записи и списки")
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
