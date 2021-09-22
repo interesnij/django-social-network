@@ -208,7 +208,7 @@ class AllPossibleUsersList(ListView):
 		return self.request.user.get_possible_friends()
 
 class UserPostsListView(ListView):
-	template_name, paginate_by, is_user_can_work_post = None, 15, None
+	template_name, paginate_by, is_user_can_see_post_section, is_user_can_create_posts = None, 15, None, None
 
 	def get(self,request,*args,**kwargs):
 		""" is_user_can_see_post_section - может ли гость видеть раздел записей
