@@ -243,17 +243,27 @@ class UserPostsListView(ListView):
 				self.is_user_can_see_post_list = self.post_list.is_user_can_see_item(request.user)
 				self.is_user_can_create_posts = self.post_list.is_user_can_create_item(request.user)
 		else:
-			""" Анонимный пользователь
+			""" Гость - пользователь
 				Потому проверяем, может ли:
 				видеть записи пользователя is_user_can_see_post_section - да,
-				видеть этот список is_user_can_see_post_list
+				видеть этот список is_user_can_see_post_list,
+				создавать записи в этом список is_user_can_create_posts
 			"""
+			self.is_user_can_see_post_section = self.user.is_user_can_see_post(request.user.pk)
+			self.is_user_can_see_post_list = self.post_list.is_user_can_see_item(request.user)
+			self.is_user_can_create_posts = self.post_list.is_user_can_create_item(request.user)
+
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 
 		if request.user.is_authenticated:
 			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
+			""" Анонимный пользователь
+				Потому проверяем, может ли:
+				видеть записи пользователя is_user_can_see_post_section - да,
+				видеть этот список is_user_can_see_post_list
+			"""
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
 			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_item()
