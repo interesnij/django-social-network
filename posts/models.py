@@ -52,7 +52,6 @@ class PostList(models.Model):
         verbose_name_plural = "списки записей"
 
     def is_user_can_see_item(self, user):
-        return True
         if self.community:
             if self.can_see_item == PostList.ALL_CAN:
                 return True
@@ -75,7 +74,7 @@ class PostList(models.Model):
                 return True
             elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
                 return True
-        return True
+        return False
     def is_anon_user_can_see_item(self):
         return self.can_see_item == self.ALL_CAN
 
