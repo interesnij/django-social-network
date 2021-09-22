@@ -7,12 +7,6 @@
 <meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
 {% endblock %}
 {% block content %}
-is_photo_open {{ is_photo_open }},
-is_video_open {{ is_video_open }},
-is_music_open {{ is_music_open }},
-is_doc_open {{ is_doc_open }},
-is_community_open {{ is_community_open }},
-is_friend_open {{ is_friend_open }}
 <div class="mt-3 pk_saver main-container" data-pk="{{ user.pk }}">
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
@@ -101,9 +95,7 @@ is_friend_open {{ is_friend_open }}
             {% include 'desctop/users/profile/goods.html' %}
           {% endif %}
 
-          {% if is_post_open %}
             <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
-          {% endif %}
 
         </div>
     </div>
