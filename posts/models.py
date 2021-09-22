@@ -1410,10 +1410,11 @@ class PostListPerm(models.Model):
         1. YES_ITEM - может соверщать описанные действия
         2. NO_ITEM - не может соверщать описанные действия
     """
-    NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
+    NO_VALUE, YES_ITEM, NO_ITEM, TEST = 0, 1, 2, 3
     ITEM = (
         (YES_ITEM, 'Может иметь действия с элементом'),
         (NO_ITEM, 'Не может иметь действия с элементом'),
+        (TEST, 'TEST'),
     )
 
     list = models.ForeignKey(PostList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
