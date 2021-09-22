@@ -53,7 +53,7 @@ class PostList(models.Model):
 
     def is_user_can_see_item(self, user):
         if self.community:
-            if self.can_see_item == 1:
+            if self.can_see_item == ALL_CAN:
                 return True
             elif self.can_see_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
                 return True
