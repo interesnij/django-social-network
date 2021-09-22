@@ -52,7 +52,7 @@ class PostList(models.Model):
         verbose_name_plural = "списки записей"
 
     def is_user_can_see_item(self, user):
-
+        return True
         if self.community:
             if self.can_see_item == PostList.ALL_CAN:
                 return True
