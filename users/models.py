@@ -1642,7 +1642,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_photo == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
             return True
-        return self.user_private 
+        return self.user_private.can_see_photo
 
     def is_user_can_see_video(self, user_pk):
         private = self.user_private
