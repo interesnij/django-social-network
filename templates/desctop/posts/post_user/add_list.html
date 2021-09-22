@@ -13,13 +13,12 @@
               <div class="form-group">
                   <label>Описание</label>
                   <input name="description" class="form-control">
-                </div>
-                <div class="form-group">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_public" class="custom-control-input" checked id="id_1214">
-                    <label class="custom-control-label" for="id_1214">Виден всем</label>
-                  </div>
-                </div>
+              </div>
+              <div class="form-group form_group_flex">
+                  <label>Кто видит список</label>
+                  {{ form.can_see_item }}
+                  <div class="can_see_item_collector"></div>
+              </div>
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm custom_color border create_fullscreen_hide" style="position: relative; top: -10px; left: -10px;">Отмена</button>
