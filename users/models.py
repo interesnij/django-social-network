@@ -1582,7 +1582,7 @@ class User(AbstractUser):
 
     def is_user_can_see_info(self, user):
         private = self.user_private
-        if private.can_see_info == private.ALL_CAN:
+        if private.can_see_info == "AC":
             return True
         elif private.can_see_info == private.YOU and self.pk == user.pk:
             return True
@@ -1598,7 +1598,7 @@ class User(AbstractUser):
 
     def is_user_can_see_post(self, user_pk):
         private = self.user_private
-        if private.can_see_post == private.ALL_CAN:
+        if private.can_see_post == "AC":
             return True
         elif private.can_see_post == private.YOU and self.pk == user_pk:
             return True
@@ -1614,7 +1614,7 @@ class User(AbstractUser):
 
     def is_user_can_see_community(self, user_pk):
         private = self.user_private
-        if private.can_see_community == private.ALL_CAN:
+        if private.can_see_community == "AC":
             return True
         elif private.can_see_community == private.YOU and self.pk == user_pk:
             return True
@@ -1646,7 +1646,7 @@ class User(AbstractUser):
 
     def is_user_can_see_video(self, user_pk):
         private = self.user_private
-        if private.can_see_video == private.ALL_CAN:
+        if private.can_see_video == "AC":
             return True
         elif private.can_see_video == private.YOU and self.pk == user_pk:
             return True
@@ -1662,7 +1662,7 @@ class User(AbstractUser):
 
     def is_user_can_see_music(self, user_pk):
         private = self.user_private
-        if private.can_see_music == private.ALL_CAN:
+        if private.can_see_music == "AC":
             return True
         elif private.can_see_music == private.YOU and self.pk == user_pk:
             return True
@@ -1678,7 +1678,7 @@ class User(AbstractUser):
 
     def is_user_can_see_doc(self, user_pk):
         private = self.user_private
-        if private.can_see_doc == private.ALL_CAN:
+        if private.can_see_doc == "AC":
             return True
         elif private.can_see_doc == private.YOU and self.pk == user_pk:
             return True
@@ -1694,7 +1694,7 @@ class User(AbstractUser):
 
     def is_user_can_see_friend(self, user_pk):
         private = self.user_private
-        if private.can_see_friend == private.ALL_CAN:
+        if private.can_see_friend == "AC":
             return True
         elif private.can_see_friend == private.YOU and self.pk == user_pk:
             return True
@@ -1710,7 +1710,7 @@ class User(AbstractUser):
 
     def is_user_can_see_good(self, user_pk):
         private = self.user_private
-        if private.can_see_good == private.ALL_CAN:
+        if private.can_see_good == "AC":
             return True
         elif private.can_see_good == private.YOU and self.pk == user_pk:
             return True
@@ -1726,28 +1726,28 @@ class User(AbstractUser):
 
     def is_anon_user_can_see_post(self):
         private = self.user_private
-        return private.can_see_post == private.ALL_CAN
+        return private.can_see_post == "AC"
     def is_anon_user_can_see_photo(self):
         private = self.user_private
-        return private.can_see_photo == private.ALL_CAN
+        return private.can_see_photo == "AC"
     def is_anon_user_can_see_community(self):
         private = self.user_private
-        return private.can_see_community == private.ALL_CAN
+        return private.can_see_community == "AC"
     def is_anon_user_can_see_friend(self):
         private = self.user_private
-        return private.can_see_friend == private.ALL_CAN
+        return private.can_see_friend == "AC"
     def is_anon_user_can_see_doc(self):
         private = self.user_private
-        return private.can_see_doc == private.ALL_CAN
+        return private.can_see_doc == "AC"
     def is_anon_user_can_see_music(self):
         private = self.user_private
-        return private.can_see_music == private.ALL_CAN
+        return private.can_see_music == "AC"
     def is_anon_user_can_see_video(self):
         private = self.user_private
-        return private.can_see_video == private.ALL_CAN
+        return private.can_see_video == "AC"
     def is_anon_user_can_see_good(self):
         private = self.user_private
-        return private.can_see_good == private.ALL_CAN
+        return private.can_see_good == "AC"
 
     def get_special_perm_see(self, user_id, type, value):
         """
