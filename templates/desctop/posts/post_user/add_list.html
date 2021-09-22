@@ -16,8 +16,63 @@
               </div>
               <div class="form-group form_group_flex">
                   <label>Кто видит список</label>
-                  {{ form.can_see_item }}
+                  <select name="can_see_item" id="id_can_see_item">
+                    <option value="1" selected="">Все пользователи</option>
+                    <option value="2">Друзья</option>
+                    <option value="3">Друзья и друзья друзей</option>
+                    <option value="4">Только я</option>
+                    <option value="5">Друзья, кроме</option>
+                    <option value="6">Выбрать друзей</option>
+                  </select>
                   <div class="can_see_item_collector"></div>
+              </div>
+              <div class="form-group form_group_flex">
+                  <label>Кто видит комментарии</label>
+                  <select name="can_see_comment" id="id_can_see_comment">
+                    <option value="1" selected="">Все пользователи</option>
+                    <option value="2">Друзья</option>
+                    <option value="3">Друзья и друзья друзей</option>
+                    <option value="4">Только я</option>
+                    <option value="5">Друзья, кроме</option>
+                    <option value="6">Выбрать друзей</option>
+                  </select>
+                  <div class="can_see_comment_collector"></div>
+              </div>
+              <div class="form-group form_group_flex">
+                  <label>Кто пишет записи</label>
+                  <select name="create_item" id="id_create_item">
+                    <option value="1">Все пользователи</option>
+                    <option value="2">Друзья</option>
+                    <option value="3">Друзья и друзья друзей</option>
+                    <option value="4" selected="">Только я</option>
+                    <option value="5">Друзья, кроме</option>
+                    <option value="6">Выбрать друзей</option>
+                  </select>
+                  <div class="create_item_collector"></div>
+              </div>
+              <div class="form-group form_group_flex">
+                  <label>Кто пишет комментарии</label>
+                  <select name="create_comment" id="id_create_comment">
+                    <option value="1" selected="">Все пользователи</option>
+                    <option value="2">Друзья</option>
+                    <option value="3">Друзья и друзья друзей</option>
+                    <option value="4">Только я</option>
+                    <option value="5">Друзья, кроме</option>
+                    <option value="6">Выбрать друзей</option>
+                  </select>
+                  <div class="create_comment_collector"></div>
+              </div>
+              <div class="form-group form_group_flex">
+                  <label>Кто может копировать</label>
+                  <select name="create_copy" id="id_create_copy">
+                    <option value="1" selected="">Все пользователи</option>
+                    <option value="2">Друзья</option>
+                    <option value="3">Друзья и друзья друзей</option>
+                    <option value="4">Только я</option>
+                    <option value="5">Друзья, кроме</option>
+                    <option value="6">Выбрать друзей</option>
+                  </select>
+                  <div class="create_copy_collector"></div>
               </div>
             </div>
             <div class="card-footer">
