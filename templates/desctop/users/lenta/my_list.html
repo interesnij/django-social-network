@@ -42,7 +42,6 @@
     {% include 'desctop/users/lenta/my_lists.html' %}
     <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
-        can_see_item {{ list.can_see_item }} | create_item {{ list.create_item }}
         {% if is_user_can_see_post_list %}
 
         {% if request.user.pk == list.creator.pk %}
