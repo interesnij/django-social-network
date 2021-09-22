@@ -53,7 +53,7 @@ class PostList(models.Model):
 
     def is_user_can_see_item(self, user):
         if self.community:
-            if self.can_see_item == ALL_CAN:
+            if self.can_see_item == PostList.ALL_CAN:
                 return True
             elif self.can_see_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
                 return True
@@ -62,7 +62,7 @@ class PostList(models.Model):
             elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
                 return True
         else:
-            if self.can_see_item == ALL_CAN:
+            if self.can_see_item == PostList.ALL_CAN:
                 return True
             elif self.can_see_item == self.YOU and user.pk == self.creator.pk:
                 return True
