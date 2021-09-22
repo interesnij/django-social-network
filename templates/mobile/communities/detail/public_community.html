@@ -33,9 +33,8 @@
 
   {% include 'mobile/communities/detail_sections/stat.html' %}
 
-  {% if is_post_open %}
-    <div class="is_community_post_paginate mt-3 post_view_generator" list-pk="{{ post_list_pk }}"></div>
-  {% endif %}
+  <div class="is_community_post_paginate mt-3 post_view_generator" list-pk="{{ post_list_pk }}"></div>
+
 </div>
 
 {% load get_key %}
