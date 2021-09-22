@@ -1,3 +1,5 @@
+{% if is_user_can_see_post_section %}
+
 <span class="post_container">
 
 {% if fix_list.count_fix_items > 1 %}
@@ -40,15 +42,11 @@
           <a class="u_delete_post_list pointer">удалить список</a>
         </span>
         {% endif %}
-        {% if user.pk != request.user.pk %}
-          {% if is_user_can_work_post %}
-            {% include 'mobile/users/profile/new_post.html' %}
-          {% elif is_user_can_offer_post %}
-            {% include 'mobile/users/profile/new_offer_post.html' %}
-          {% endif %}
 
-        {% elif list.creator.pk == request.user.pk %}
-          {% include 'desctop/users/profile/new_post.html' %}
+        {% if is_user_can_create_posts %}
+          {% include 'mobile/users/profile/new_post.html' %}
+        {% elif is_user_can_offer_post %}
+          {% include 'mobile/users/profile/new_offer_post.html' %}
         {% endif %}
 
         <span class="post_stream is_post_paginate" owner-pk="{{ user.pk }}">
@@ -73,3 +71,4 @@
     </span>
   </span>
 </span>
+{% endif %}

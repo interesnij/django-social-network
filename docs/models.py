@@ -31,8 +31,7 @@ class DocList(models.Model):
     can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
     add_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает документы и потом с этими документами работает")
     add_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
-    can_copy_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
-    can_copy_list = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует список")
+    can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')

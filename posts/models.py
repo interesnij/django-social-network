@@ -14,11 +14,14 @@ class PostList(models.Model):
     MAIN, LIST, MANAGER, PROCESSING, FIXED, DRAFT = 'MAI','LIS','MAN','_PRO','_FIX','_DRA'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,2,3,4,5,6
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
     )
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья/подписчики'),(EACH_OTHER, 'Друзья,друзья друзей/None'),(YOU, 'Только я/админы'),(FRIENDS_BUT, 'Друзья/подписчики, кроме'),(SOME_FRIENDS, 'Некоторые друзья/подписчики'),)
+
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
@@ -30,12 +33,105 @@ class PostList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
 
+    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
+    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
+    create_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+    create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
+    can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует записи и списки")
+
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
 
     class Meta:
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
+
+    def is_user_can_see_item(self, user):
+        if self.community:
+            if self.can_see_item == self.ALL_CAN:
+                return True
+            elif self.can_see_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
+                return True
+            elif self.can_see_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
+                return True
+            elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
+                return True
+        else:
+            if self.can_see_item == self.ALL_CAN:
+                return True
+            elif self.can_see_item == self.YOU and user.pk == self.creator.pk:
+                return True
+            elif self.can_see_item == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
+                return True
+            elif self.can_see_item == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.can_see_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
+                return True
+            elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
+                return True
+        return False
+    def is_anon_user_can_see_item(self):
+        return self.can_see_item == self.ALL_CAN
+
+    def is_user_can_create_item(self, user):
+        if self.community:
+            if self.can_create_item == self.ALL_CAN:
+                return True
+            elif self.can_create_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
+                return True
+            elif self.can_create_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
+                return True
+            elif self.can_create_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
+                return True
+        else:
+            if self.can_create_item == self.ALL_CAN:
+                return True
+            elif self.can_create_item == self.YOU and user.pk == self.creator.pk:
+                return True
+            elif self.can_create_item == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
+                return True
+            elif self.can_create_item == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.can_create_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
+                return True
+            elif self.can_create_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
+                return True
+        return False
+    def is_anon_user_can_create_item(self):
+        return self.can_create_item == self.ALL_CAN
+
+    def get_ie_perm_for_user(self, user_id, type, value):
+        member = PostListPerm.objects.get(user_id=user_id)
+        if value == 0:
+            if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
+                ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
+                if type == 1:
+                    return ie.can_see_item != 2
+                elif type == 2:
+                    return ie.can_see_comment != 2
+                elif type == 3:
+                    return ie.create_item != 2
+                elif type == 4:
+                    return ie.create_comment != 2
+                elif type == 5:
+                    return ie.can_copy != 2
+            else:
+                 return True
+        elif value == 1:
+            if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
+                ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
+                if type == 1:
+                    return ie.can_see_item == 1
+                elif type == 2:
+                    return ie.can_see_comment == 1
+                elif type == 3:
+                    return ie.create_item == 1
+                elif type == 4:
+                    return ie.create_comment == 1
+                elif type == 5:
+                    return ie.can_copy == 1
+            else:
+                 return False
 
     def get_order(self):
         from users.model.list import UserPostListPosition
@@ -1307,3 +1403,28 @@ class PostComment(models.Model):
                 return "files_null"
         else:
             return "files_null"
+
+
+class PostListPerm(models.Model):
+    """ включения и исключения для пользователей касательно конкретного списка записей
+        1. YES_ITEM - может соверщать описанные действия
+        2. NO_ITEM - не может соверщать описанные действия
+    """
+    NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
+    ITEM = (
+        (YES_ITEM, 'Может иметь действия с элементом'),
+        (NO_ITEM, 'Не может иметь действия с элементом'),
+    )
+
+    list = models.ForeignKey(PostList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Пользователь")
+
+    can_see_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит список/записи")
+    can_see_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комментарии")
+    create_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает записи")
+    create_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комментарии")
+    can_copy = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто может добавлять список/записи себе")
+
+    class Meta:
+        verbose_name = 'Исключения/Включения участника беседы'
+        verbose_name_plural = 'Исключения/Включения участников беседы'

@@ -32,6 +32,7 @@
 {% include 'mobile/users/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
+        {% if is_user_can_see_post_list %}
         <span class="post_stream is_post_paginate">
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/anon_post.html' %}
@@ -41,7 +42,7 @@
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
-          
+
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">
@@ -51,6 +52,7 @@
           </div>
           {% endif %}
         </span>
+        {% endif %}
     </span>
   </span>
 </span>

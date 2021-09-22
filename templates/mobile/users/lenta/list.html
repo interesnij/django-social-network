@@ -1,3 +1,5 @@
+{% if is_user_can_see_post_section %}
+
 <span class="post_container">
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
@@ -42,7 +44,7 @@
             <a class="u_uncopy_post_list pointer">Удалить список</a>
           {% endif %}
         </span>
-        {% if is_user_can_work_post %}
+        {% if is_user_can_create_posts %}
           {% include 'mobile/users/profile/new_post.html' %}
         {% elif is_user_can_offer_post %}
           {% include 'mobile/users/profile/new_offer_post.html' %}
@@ -58,7 +60,7 @@
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
-          
+
           {% if not object and not object_list %}
           <div class="card mb-3 items_empty centered">
             <div class="card-body">
@@ -71,3 +73,4 @@
     </span>
   </span>
 </span>
+{% endif %}

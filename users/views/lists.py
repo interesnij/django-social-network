@@ -208,7 +208,7 @@ class AllPossibleUsersList(ListView):
 		return self.request.user.get_possible_friends()
 
 class UserPostsListView(ListView):
-	template_name, paginate_by, is_user_can_see_post_section, is_user_can_create_posts = None, 15, None, None
+	template_name, paginate_by, is_user_can_see_post_section, is_user_can_see_post_list, is_user_can_create_posts = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		""" is_user_can_see_post_section - может ли гость видеть раздел записей
@@ -222,13 +222,32 @@ class UserPostsListView(ListView):
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
 			if request.user.pk == self.post_list.creator.pk:
 				self.list = self.post_list.get_staff_items()
-				self.is_user_can_create_posts = True
+				""" создатель активного списка на своей странице и это его страница.
+					Потому он может:
+					- видеть записи пользователя is_user_can_see_post_section,
+					- видеть этот список is_user_can_see_post_list,
+					- создавать записи в этом список is_user_can_create_posts
+				"""
 				self.is_user_can_see_post_section = True
+				self.is_user_can_see_post_list = True
+				self.is_user_can_create_posts = True
 			else:
+				""" создатель активного списка на своей странице и это его пост.
+					Потому проверяем, может ли:
+					видеть записи пользователя is_user_can_see_post_section - да,
+					видеть этот список is_user_can_see_post_list,
+					создавать записи в этом список is_user_can_create_posts
+				"""
 				self.list = self.post_list.get_items()
-				self.is_user_can_create_posts = self.post_list.is_user_can_create_post(request.user.pk)
-				self.is_user_can_see_post_section = self.post_list.creator.is_user_can_see_post(request.user.pk)
+				self.is_user_can_see_post_section = True
+				self.is_user_can_see_post_list = self.post_list.is_user_can_see_item(request.user)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_item(request.user)
 		else:
+			""" Анонимный пользователь
+				Потому проверяем, может ли:
+				видеть записи пользователя is_user_can_see_post_section - да,
+				видеть этот список is_user_can_see_post_list
+			"""
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
 
@@ -236,13 +255,13 @@ class UserPostsListView(ListView):
 			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			if self.user.is_anon_user_can_see_post():
-				self.is_user_can_see_post_section = True
+			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
+			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_item()
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPostsListView,self).get_context_data(**kwargs)
-		c['user'],c['post_lists'],c['fix_list'],c['list'],c['is_user_can_see_post_section'],c['is_user_can_create_posts'] = self.user,self.post_lists,self.user.get_fix_list(),self.post_list,self.is_user_can_see_post_section,self.is_user_can_create_posts
+		c['user'],c['post_lists'],c['fix_list'],c['list'],c['is_user_can_see_post_section'],c['is_user_can_see_post_list'],c['is_user_can_create_posts'] = self.user,self.post_lists,self.user.get_fix_list(),self.post_list,self.is_user_can_see_post_section,self.is_user_can_create_posts, self.is_user_can_see_post_list
 		return c
 
 	def get_queryset(self):
