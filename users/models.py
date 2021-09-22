@@ -1630,7 +1630,7 @@ class User(AbstractUser):
 
     def is_user_can_see_photo(self, user_pk):
         private = self.user_private
-        if private.can_see_photo == private.ALL_CAN:
+        if private.can_see_photo == "AC":
             return True
         elif private.can_see_photo == private.YOU and self.pk == user_pk:
             return True
