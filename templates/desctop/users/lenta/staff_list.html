@@ -1,5 +1,5 @@
 
-{% if is_user_can_see_post_section %}
+
 
 <span class="post_container">
 
@@ -36,7 +36,7 @@
   {% include 'desctop/users/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
-        {{ is_user_can_see_post_list }} jjuyj
+        {{ is_user_can_see_post_list }}
         {% if is_user_can_see_post_list %}
         <span>
           <a class="close_post_list pointer">Закрыть</a>
@@ -78,4 +78,3 @@
     </span>
   </span>
 </span>
-{% endif %}
