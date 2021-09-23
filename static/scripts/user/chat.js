@@ -57,6 +57,7 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 
 function create_user_input_card(name, pk) {
   $span = document.createElement("span");
+  $span.setAttribute("data-pk", pk);
   $span.classList.add("btn","btn-sm","btn-succes","success-gradient");
   $span.innerHTML = name + " <span class='remove_friend_input'>x<span>";
   $span.style.margin = "2px";
@@ -104,7 +105,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
     input_svg = this.querySelector(".active_svg");
     input_svg.classList.remove("active_svg");
     friend_input = header.querySelector('[data-pk=' + '"' + pk + '"' + ']');
-    friend_input.parentElement.remove();
+    friend_input.remove();
     if (!header.querySelector(".remove_friend_input")) {
       header.querySelector(".header_title").style.display = "block";
     }
