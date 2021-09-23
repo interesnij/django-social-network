@@ -75,10 +75,6 @@ on('#ajax', 'click', '.remove_friend_input', function() {
   container = header.parentElement;
   if (!header.querySelector(".remove_friend_input")) {
     header.querySelector(".header_title").style.display = "block";
-    btn = container.querySelector("#append_friends_to_chat_btn");
-    btn_text = "Выберите собеседников";
-    btn.disabled = true;
-  } else {
   };
 
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
@@ -102,15 +98,21 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   btn = container.querySelector("#append_friends_to_chat_btn");
   header = container.querySelector(".card-header");
   header_title = header.querySelector(".header_title");
+  pk = this.getAttribute("data-pk")
 
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
     input_svg.classList.remove("active_svg");
+    friend_input = header.querySelector('[data-pk=' + '"' + pk + '"' + ']');
+    friend_input.parentElement.remove();
+    if (!header.querySelector(".remove_friend_input")) {
+      header.querySelector(".header_title").style.display = "block";
+    }
   } else {
     input_svg = this.querySelector(".item_attach_circle");
     input_svg.classList.add("active_svg");
     header_title.style.display = "none";
-    header.append(create_user_input_card(this.querySelector("h6").innerHTML, this.getAttribute("data-pk")))
+    header.append(create_user_input_card(this.querySelector("h6").innerHTML, pk))
   };
 
   count = container.querySelectorAll(".active_svg").length;
