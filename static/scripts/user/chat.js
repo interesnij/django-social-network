@@ -73,7 +73,7 @@ on('#ajax', 'click', '.remove_friend_input', function() {
   header = parent.parentElement;
   parent.remove();
   container = header.parentElement;
-  if (!header.querySelector(".remove_friend")) {
+  if (!header.querySelector(".remove_friend_input")) {
     header.querySelector(".header_title").style.display = "block";
     btn = container.querySelector("#append_friends_to_chat_btn");
     btn_text = "Выберите собеседников";
