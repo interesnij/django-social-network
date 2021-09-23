@@ -63,7 +63,7 @@ function create_user_input_card(name, pk) {
   $input.classList.add("friend_pk");
   $input.setAttribute("type", "hidden");
   $input.value = pk;
-  $span.add($input);
+  $span.append($input);
   return $span
 };
 
