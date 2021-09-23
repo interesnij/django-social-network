@@ -59,6 +59,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
   count = container.querySelectorAll(".active_svg").length;
   btn = container.querySelector("#append_friends_to_chat_btn");
+  console.log(count);
   if (count > 1) {
     btn_text = "Добавить собеседника"
   } else { btn_text = "Добавить собеседников" };
