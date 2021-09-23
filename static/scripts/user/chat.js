@@ -55,23 +55,38 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
   open_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", loader)
 });
 
+function create_user_input_card(name, pk) {
+  $span = document.createElement("span");
+  $span.classList.add("btn","btn-sm","btn-succes","success-gradient");
+  $span.innerHTML = name + " <span class='remove_friend remove_friend'>x<span>"
+  $input = document.createElement("input");
+  $input.classList.add("friend_pk");
+  $input.setAttribute("type", "hidden");
+  $input.value = pk;
+  $span.add($input);
+  return $span
+};
+
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
   btn = container.querySelector("#append_friends_to_chat_btn");
+  header = container.querySelector(".card-header");
+  header_title = header.querySelector(".header_title");
 
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
     input_svg.classList.remove("active_svg");
-
   } else {
     input_svg = this.querySelector(".item_attach_circle");
     input_svg.classList.add("active_svg");
+    header_title.style.display = "none";
+    header.append(create_user_input_card(this.querySelector("h6").innerHTML, this.getAttribute("data-pk")))
   };
 
   count = container.querySelectorAll(".active_svg").length;
   console.log(count);
   if (count > 1) {
-    btn_text = "Добавить собеседников";
+    btn_text = "Добавить собеседников" + "(" + count + ")";
     btn.disabled = false;
   } else if (count == 1) {
     btn_text = "Добавить собеседника";
