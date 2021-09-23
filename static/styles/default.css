@@ -645,6 +645,9 @@ nav {
   right: 10px !important;
   top: 16px !important;
 }
+.friends_chat_load_several {
+  top: 8px !important;
+}
 
 .doc_media_body {
   line-height: initial;
