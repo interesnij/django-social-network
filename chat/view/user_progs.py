@@ -443,6 +443,7 @@ class GetFriendsAppendChat(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
+		from common.template.user import get_settings_template
 
 		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
