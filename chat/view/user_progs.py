@@ -436,3 +436,32 @@ class UserChatBeepOn(View):
 			return HttpResponse()
 		else:
 			raise Http404
+
+
+class GetFriendsAppendChat(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+
+		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		return super(GetFriendsAppendChat,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(GetFriendsAppendChat,self).get_context_data(**kwargs)
+		context["chat"] = self.chat
+		return context
+
+	def get_queryset(self):
+		query = []
+		r_user = self.request.user
+		memders_ids = self.chat.get_recipients_ids()
+		friends = r_user.get_all_connection()
+		for frend in friends:
+			if frend.pk in memders_ids:
+				pass
+			else:
+				if r_user.is_user_can_add_in_chat(frend):
+					query.append(frend)
+		return query

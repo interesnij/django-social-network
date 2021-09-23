@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/remove_member/(?P<user_pk>\d+)/$', ChatMemberDelete.as_view()),
     url(r'^beep_off/(?P<pk>\d+)/$', UserChatBeepOff.as_view()),
     url(r'^beep_on/(?P<pk>\d+)/$', UserChatBeepOn.as_view()),
+
+    url(r'^get_friends_for_append_chat/(?P<pk>\d+)/$', GetFriendsAppendChat.as_view()),
 ]

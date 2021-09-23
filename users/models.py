@@ -1596,6 +1596,26 @@ class User(AbstractUser):
             return True
         return False
 
+    def is_user_can_add_in_chat(self, user):
+        """ Немного поменяем поведение проверки на приватность добавления пользователя в чат.
+            Если выбрано YOU, мы подразумеваем "Только я", а это в данном случае НИКТО.
+            Потому вернем False, если выбран этот пункт.
+         """
+        private = self.user_private
+        if private.can_add_in_chat == "AC":
+            return True
+        elif private.can_add_in_chat == private.YOU:
+            return False
+        elif private.can_add_in_chat == private.FRIENDS and user_pk in self.get_all_connection_ids():
+            return True
+        elif private.can_add_in_chat == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif self.can_add_in_chat == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 5, 0):
+            return True
+        elif self.can_add_in_chat == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 5, 1):
+            return True
+        return False
+
     def is_user_can_see_post(self, user_pk):
         private = self.user_private
         if private.can_see_post == "AC":
