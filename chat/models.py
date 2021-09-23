@@ -325,7 +325,7 @@ class Chat(models.Model):
         urls = []
         for user in self.chat_relation.all()[:10]:
             i = user.user
-            urls += '<a target="_blank" tooltip="', i.get_full_name() ,'" flow="down"><img src="' + i.get_s_avatar() + '" alt="avatar" /></a>'
+            urls += '<a target="_blank" tooltip="', i.get_full_name() ,'" flow="down">' + i.get_s_avatar() + '</a>'
         return urls
 
     def get_header_private_chat(self, user_id):
