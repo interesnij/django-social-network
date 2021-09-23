@@ -1602,7 +1602,7 @@ class User(AbstractUser):
             Потому вернем False, если выбран этот пункт.
          """
         private = self.user_private
-        if private.can_add_in_chat == "AC":
+        if private.can_add_in_chat == private.ALL_CAN:
             return True
         elif private.can_add_in_chat == private.YOU:
             return False
