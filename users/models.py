@@ -1590,9 +1590,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_info == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_see_info == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 1, 0):
+        elif private.can_see_info == private.MEMBERS_BUT and private.get_special_perm_see(self.pk, user.pk, 1, 0):
             return True
-        elif self.can_see_info == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 1, 1):
+        elif private.can_see_info == private.SOME_MEMBERS and private.get_special_perm_see(self.pk, user.pk, 1, 1):
             return True
         return False
 
@@ -1610,9 +1610,9 @@ class User(AbstractUser):
             return True
         elif private.can_add_in_chat == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif self.can_add_in_chat == self.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 5, 0):
+        elif private.can_add_in_chat == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user.pk, 5, 0):
             return True
-        elif self.can_add_in_chat == self.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 5, 1):
+        elif private.can_add_in_chat == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user.pk, 5, 1):
             return True
         return False
 
@@ -1662,7 +1662,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_photo == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
             return True
-        return self.user_private.can_see_photo
+        return False
 
     def is_user_can_see_video(self, user_pk):
         private = self.user_private
