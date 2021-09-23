@@ -2,7 +2,6 @@
 
 <span class="is_block_paginate">
 {% for object in object_list %}
-  {{ object.user_private.can_add_in_chat }}
   <div class="media pag pointer add_member_chat_toggle border-bottom pb-1" data-pk="{{ object.pk }}" style="position:relative">
     <figure style="width:30px;">
       {% if object.s_avatar %}
@@ -16,7 +15,7 @@
         {{ object.get_full_name }}
       </h6>
     </div>
-    <span class="item_attach_circle music_load_several" tooltip="Выбрать несколько" flow="up">
+    <span class="item_attach_circle" tooltip="Выбрать несколько" flow="up">
       <svg fill="currentColor" viewBox="0 0 24 24">
         <path d="M24 24H0V0h24v24z" fill="none"></path><circle cx="12" cy="12" r="8"></circle>
       </svg>
