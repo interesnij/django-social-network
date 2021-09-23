@@ -58,7 +58,8 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 function create_user_input_card(name, pk) {
   $span = document.createElement("span");
   $span.classList.add("btn","btn-sm","btn-succes","success-gradient");
-  $span.innerHTML = name + " <span class='remove_friend remove_friend'>x<span>"
+  $span.innerHTML = name + " <span class='remove_friend_input'>x<span>";
+  $span.style.margin = "2px";
   $input = document.createElement("input");
   $input.classList.add("friend_pk");
   $input.setAttribute("type", "hidden");
@@ -66,6 +67,36 @@ function create_user_input_card(name, pk) {
   $span.append($input);
   return $span
 };
+
+on('#ajax', 'click', '.remove_friend_input', function() {
+  parent = this.parentElement;
+  header = parent.parentElement;
+  container = header.parentElement;
+  if (!header.querySelector(".remove_friend")) {
+    header.querySelector(".header_title").style.display = "block";
+    btn = container.querySelector("#append_friends_to_chat_btn");
+    btn_text = "Выберите собеседников";
+    btn.disabled = true;
+  } else {
+    count = container.querySelectorAll(".active_svg").length;
+    console.log(count);
+    if (count > 1) {
+      btn_text = "Добавить собеседников" + " (" + count + ")";
+      btn.disabled = false;
+    } else if (count == 1) {
+      btn_text = "Добавить собеседника";
+      btn.disabled = false;
+    } else {
+      btn_text = "Выберите собеседников";
+      btn.disabled = true;
+    };
+    btn.innerHTML = btn_text;
+  };
+  friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
+  friend.querySelector(".active_svg");
+  friend.classList.remove("active_svg");
+  parent.remove()
+})
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
@@ -86,7 +117,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   count = container.querySelectorAll(".active_svg").length;
   console.log(count);
   if (count > 1) {
-    btn_text = "Добавить собеседников" + "(" + count + ")";
+    btn_text = "Добавить собеседников" + " (" + count + ")";
     btn.disabled = false;
   } else if (count == 1) {
     btn_text = "Добавить собеседника";
