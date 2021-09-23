@@ -50,7 +50,7 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 });
 
 on('#ajax', 'click', '.u_add_members_in_chat', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   loader = document.getElementById("worker_loader");
   open_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", loader)
 });
