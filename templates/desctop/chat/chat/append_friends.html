@@ -3,7 +3,7 @@
 <span class="is_block_paginate">
 {% for object in object_list %}
   {{ object.user_private.can_add_in_chat }}
-  <div class="media pag pointer add_member_chat_toggle" data-pk="{{ object.pk }}">
+  <div class="media pag pointer add_member_chat_toggle border-bottom" data-pk="{{ object.pk }}">
     <figure style="width:30px;">
       {% if object.s_avatar %}
         <img src="{{ object.s_avatar.url }}" style="width:30px;border-radius:30px;" alt="image">
