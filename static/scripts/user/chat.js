@@ -55,6 +55,31 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
   open_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", loader)
 });
 
+on('#ajax', 'click', '.add_member_chat_toggle', function() {
+  count = document.body.querySelectorAll(".active_svg").length;
+  if (count > 1) {
+    btn_text = "Добавить собеседника"
+  } else { btn_text = "Добавить собеседников" };
+
+  if (this.querySelector(".active_svg")) {
+    input_svg = this.querySelector(".active_svg");
+    input_svg.classList.remove("active_svg")
+  } else {
+    input_svg = this.querySelector(".item_attach_circle");
+    input_svg.classList.add("active_svg");
+    count -= 1
+    if (count != 0) {
+      container = this.parentElement.parentElement.parentElement;
+      btn = container.querySelector("#append_friends_to_chat_btn");
+      btn.innerHTML = btn_text;
+      btn.disabled = False
+    } else {
+      btn.innerHTML = "Выберите собеседников";
+      btn.disabled = True
+    }
+  };
+}
+
 on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
   if (document.body.querySelector(".chatlist")) {
