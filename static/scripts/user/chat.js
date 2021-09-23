@@ -78,7 +78,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
       btn.disabled = True
     }
   };
-}
+});
 
 on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
