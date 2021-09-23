@@ -56,8 +56,8 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 });
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
-  count = document.body.querySelectorAll(".active_svg").length;
   container = this.parentElement.parentElement.parentElement;
+  count = container.querySelectorAll(".active_svg").length;
   btn = container.querySelector("#append_friends_to_chat_btn");
   if (count > 1) {
     btn_text = "Добавить собеседника"
