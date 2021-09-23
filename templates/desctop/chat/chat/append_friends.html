@@ -16,6 +16,11 @@
         {{ object.get_full_name }}
       </h6>
     </div>
+    <span class="item_attach_circle music_load_several" tooltip="Выбрать несколько" flow="up">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M24 24H0V0h24v24z" fill="none"></path><circle cx="12" cy="12" r="8"></circle>
+      </svg>
+  </span>
   </div>
 {% endfor %}
 {% if page_obj.has_next %}
