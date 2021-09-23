@@ -1,6 +1,6 @@
 """ TemplateView """
 from django.views.generic import TemplateView
-
+from django.views.generic import ListView
 
 class CreateUserChat(TemplateView):
 	""" если у инициатора нет друзей, показываем форму пустого чата. Если есть, то с возможностью добавлять друзей в чат.
