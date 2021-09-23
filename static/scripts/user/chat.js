@@ -80,7 +80,6 @@ on('#ajax', 'click', '.remove_friend_input', function() {
     btn.disabled = true;
   } else {
     count = container.querySelectorAll(".active_svg").length;
-    console.log(count);
     if (count > 1) {
       btn_text = "Добавить собеседников" + " (" + count + ")";
       btn.disabled = false;
@@ -93,6 +92,9 @@ on('#ajax', 'click', '.remove_friend_input', function() {
     };
     btn.innerHTML = btn_text;
   };
+  console.log(this.nextElementSibling);
+  console.log(this.nextElementSibling.value);
+  
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
   friend.querySelector(".active_svg");
   friend.classList.remove("active_svg");
