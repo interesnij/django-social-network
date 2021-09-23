@@ -57,21 +57,23 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   count = document.body.querySelectorAll(".active_svg").length;
+  container = this.parentElement.parentElement.parentElement;
+  btn = container.querySelector("#append_friends_to_chat_btn");
   if (count > 1) {
     btn_text = "Добавить собеседника"
   } else { btn_text = "Добавить собеседников" };
+  btn.innerHTML = btn_text;
 
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
-    input_svg.classList.remove("active_svg")
+    input_svg.classList.remove("active_svg");
+    btn.disabled = false;
+
   } else {
     input_svg = this.querySelector(".item_attach_circle");
     input_svg.classList.add("active_svg");
-    count -= 1
+    count -= 1;
     if (count != 0) {
-      container = this.parentElement.parentElement.parentElement;
-      btn = container.querySelector("#append_friends_to_chat_btn");
-      btn.innerHTML = btn_text;
       btn.disabled = false
     } else {
       btn.innerHTML = "Выберите собеседников";
