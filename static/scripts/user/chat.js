@@ -92,12 +92,9 @@ on('#ajax', 'click', '.remove_friend_input', function() {
     };
     btn.innerHTML = btn_text;
   };
-  console.log(this.nextElementSibling);
-  console.log(this.nextElementSibling.value);
-  
+
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
-  friend.querySelector(".active_svg");
-  friend.classList.remove("active_svg");
+  friend.querySelector(".active_svg").remove("active_svg");
 })
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
