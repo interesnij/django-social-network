@@ -57,30 +57,30 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
-  count = container.querySelectorAll(".active_svg").length;
   btn = container.querySelector("#append_friends_to_chat_btn");
-  console.log(count);
-  if (count > 1) {
-    btn_text = "Добавить собеседника"
-  } else { btn_text = "Добавить собеседников" };
-  btn.innerHTML = btn_text;
 
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
     input_svg.classList.remove("active_svg");
-    btn.disabled = false;
 
   } else {
     input_svg = this.querySelector(".item_attach_circle");
     input_svg.classList.add("active_svg");
-    count -= 1;
-    if (count != 0) {
-      btn.disabled = false
-    } else {
-      btn.innerHTML = "Выберите собеседников";
-      btn.disabled = true
-    }
   };
+
+  count = container.querySelectorAll(".active_svg").length;
+  console.log(count);
+  if (count > 1) {
+    btn_text = "Добавить собеседников";
+    btn.disabled = false;
+  } else if (count == 1) {
+    btn_text = "Добавить собеседника";
+    btn.disabled = false;
+  } else {
+    btn_text = "Выберите собеседников";
+    btn.disabled = true;
+  };
+  btn.innerHTML = btn_text;
 });
 
 on('#ajax', 'input', '.chat_message_text', function() {
