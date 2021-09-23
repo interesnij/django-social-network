@@ -72,10 +72,10 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
       container = this.parentElement.parentElement.parentElement;
       btn = container.querySelector("#append_friends_to_chat_btn");
       btn.innerHTML = btn_text;
-      btn.disabled = False
+      btn.disabled = false
     } else {
       btn.innerHTML = "Выберите собеседников";
-      btn.disabled = True
+      btn.disabled = true
     }
   };
 });
