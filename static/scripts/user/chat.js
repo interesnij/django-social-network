@@ -79,22 +79,22 @@ on('#ajax', 'click', '.remove_friend_input', function() {
     btn_text = "Выберите собеседников";
     btn.disabled = true;
   } else {
-    count = container.querySelectorAll(".active_svg").length;
-    if (count > 1) {
-      btn_text = "Добавить собеседников" + " (" + count + ")";
-      btn.disabled = false;
-    } else if (count == 1) {
-      btn_text = "Добавить собеседника";
-      btn.disabled = false;
-    } else {
-      btn_text = "Выберите собеседников";
-      btn.disabled = true;
-    };
-    btn.innerHTML = btn_text;
   };
 
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
-  friend.querySelector(".active_svg").remove("active_svg");
+  friend.querySelector(".active_svg").classList.remove("active_svg");
+  count = container.querySelectorAll(".active_svg").length;
+  if (count > 1) {
+    btn_text = "Добавить собеседников" + " (" + count + ")";
+    btn.disabled = false;
+  } else if (count == 1) {
+    btn_text = "Добавить собеседника";
+    btn.disabled = false;
+  } else {
+    btn_text = "Выберите собеседников";
+    btn.disabled = true;
+  };
+  btn.innerHTML = btn_text;
 })
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
