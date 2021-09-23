@@ -457,7 +457,7 @@ class GetFriendsAppendChat(ListView):
 	def get_queryset(self):
 		query = []
 		r_user = self.request.user
-		memders_ids = self.chat.get_recipients_ids()
+		memders_ids = self.chat.get_recipients_ids(r_user.pk)
 		friends = r_user.get_all_connection()
 		for frend in friends:
 			if frend.pk in memders_ids:
