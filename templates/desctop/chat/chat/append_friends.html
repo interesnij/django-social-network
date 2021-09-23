@@ -1,8 +1,8 @@
-{{ perm.can_add_in_chat }}
+
 
 <span class="is_block_paginate">
 {% for object in object_list %}
-
+  {{ object.user_private.can_add_in_chat }}
 <div class="list-group-item pag pointer add_member_chat_toggle" data-pk="{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   <div style="display:flex">
       <figure>
