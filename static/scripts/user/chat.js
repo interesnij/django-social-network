@@ -71,6 +71,7 @@ function create_user_input_card(name, pk) {
 on('#ajax', 'click', '.remove_friend_input', function() {
   parent = this.parentElement;
   header = parent.parentElement;
+  parent.remove();
   container = header.parentElement;
   if (!header.querySelector(".remove_friend")) {
     header.querySelector(".header_title").style.display = "block";
@@ -95,7 +96,6 @@ on('#ajax', 'click', '.remove_friend_input', function() {
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
   friend.querySelector(".active_svg");
   friend.classList.remove("active_svg");
-  parent.remove()
 })
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
