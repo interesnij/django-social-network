@@ -452,6 +452,7 @@ class GetFriendsAppendChat(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(GetFriendsAppendChat,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
+		context["perm"] = self.request.user.user_private
 		return context
 
 	def get_queryset(self):
