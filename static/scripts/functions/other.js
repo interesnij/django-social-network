@@ -3,7 +3,7 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
-  if (input.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){ 
+  if (input.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){ 
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
   } else {
