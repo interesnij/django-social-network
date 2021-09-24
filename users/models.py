@@ -1604,15 +1604,15 @@ class User(AbstractUser):
         private = self.user_private
         if private.can_add_in_chat == "1":
             return True
-        elif private.can_add_in_chat == 6:
+        elif private.can_add_in_chat == "6":
             return False
-        elif private.can_add_in_chat == 4 and user_pk in self.get_all_connection_ids():
+        elif private.can_add_in_chat == "4" and user_pk in self.get_all_connection_ids():
             return True
-        elif private.can_add_in_chat == 5 and user_pk in self.get_friend_and_friend_of_friend_ids():
+        elif private.can_add_in_chat == "5" and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_add_in_chat == 9 and self.get_special_perm_see(self.pk, user_pk, 5, 0):
+        elif private.can_add_in_chat == "9" and self.get_special_perm_see(self.pk, user_pk, 5, 0):
             return True
-        elif private.can_add_in_chat == 10 and self.get_special_perm_see(self.pk, user_pk, 5, 1):
+        elif private.can_add_in_chat == "10" and self.get_special_perm_see(self.pk, user_pk, 5, 1):
             return True
         return False
 
