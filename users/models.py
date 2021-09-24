@@ -1602,7 +1602,7 @@ class User(AbstractUser):
             Потому вернем False, если выбран этот пункт.
          """
         private = self.user_private
-        if private.can_add_in_chat == "AC":
+        if private.can_add_in_chat:
             return True
         elif private.can_add_in_chat == 6:
             return False
@@ -1614,7 +1614,7 @@ class User(AbstractUser):
             return True
         elif private.can_add_in_chat == 10 and self.get_special_perm_see(self.pk, user_pk, 5, 1):
             return True
-        return True
+        return False
 
     def is_user_can_see_post(self, user_pk):
         private = self.user_private
