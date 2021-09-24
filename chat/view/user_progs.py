@@ -465,6 +465,6 @@ class GetFriendsAppendChat(ListView):
 			if frend.pk in memders_ids:
 				pass
 			else:
-				if r_user.is_user_can_add_in_chat(frend):
+				if frend.is_user_can_add_in_chat(r_user.pk):
 					query.append(frend)
 		return query
