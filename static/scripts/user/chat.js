@@ -104,6 +104,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
     input_svg.classList.remove("active_svg");
+    input_svg.setAttribute("tooltip", "Выбрать друга")
     friend_input = header.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     friend_input.remove();
     if (!header.querySelector(".remove_friend_input")) {
@@ -112,6 +113,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   } else {
     input_svg = this.querySelector(".item_attach_circle");
     input_svg.classList.add("active_svg");
+    input_svg.setAttribute("tooltip", "Отменить")
     header_title.style.display = "none";
     header.append(create_user_input_card(this.querySelector("h6").innerHTML, pk))
   };
