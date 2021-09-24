@@ -1636,7 +1636,7 @@ class User(AbstractUser):
         private = self.user_private
         if private.can_see_community == "AC":
             return True
-        elif private.can_see_community == private.YOU and self.pk == user_pk:
+        elif private.can_see_community == private.YOU or self.pk == user_pk:
             return True
         elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
             return True
