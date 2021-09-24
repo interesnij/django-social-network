@@ -58,7 +58,7 @@ on('#ajax', 'click', '.u_add_members_in_chat', function() {
 function create_user_input_card(name, pk) {
   $span = document.createElement("span");
   $span.setAttribute("data-pk", pk);
-  $span.classList.add("p-1","custom_color");
+  $span.classList.add("btn","btn-sm","custom_color");
   $span.innerHTML = name + " <span class='remove_friend_input pointer'>x<span>";
   $span.style.margin = "2px";
   $input = document.createElement("input");
