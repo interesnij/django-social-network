@@ -20,10 +20,10 @@ function create_fullscreen(url, type_class) {
   $load_div.classList.add("centered", "m-1", "next_page_list");
 
   $loader.setAttribute("id", "fullscreen_loader");
-  $hide_span.append(hide_svg);
+  $hide_span.innerHTML = hide_svg;
   $parent_div.append($hide_span);
   $parent_div.append($loader);
-  $parent_div.append($load_div); 
+  $parent_div.append($load_div);
 
   container.append($parent_div);
 
