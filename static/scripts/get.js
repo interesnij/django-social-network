@@ -188,7 +188,7 @@ window.addEventListener('popstate', function (e) {
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  change_tihs_fullscreen(this, document.getElementById('item_loader'));
+  change_this_fullscreen(this, document.getElementById('item_loader'));
 })
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
