@@ -406,7 +406,6 @@ function ajax_get_reload(url) {
             create_pagination(rtr);
             get_dragula(".drag_container");
             get_dragula(".drag_list");
-            document.body.querySelector("#fullscreens_container").innerHTML = "";
             get_document_opacity_1(rtr)
         }
     }
