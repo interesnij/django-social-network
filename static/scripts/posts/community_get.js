@@ -42,19 +42,20 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/communities/")
   }
-})
+});
 
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  open_fullscreen("/communities/post/" + uuid + "/", document.getElementById("item_loader"))
+  create_fullscreen("/communities/post/" + uuid + "/", "item_fullscreen");
 });
+
 on('#ajax', 'click', '.c_fix_fullscreen', function() {
   container = this.parentElement;
   uuid = container.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   loader = document.getElementById("item_loader");
   open_fullscreen("/communities/fix_post/" + pk + "/" + uuid + "/", loader)
-})
+});
 
 on('#ajax', 'click', '.c_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement

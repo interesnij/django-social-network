@@ -403,10 +403,10 @@ function ajax_get_reload(url) {
             window.history.pushState(null, "vfgffgfgf", url);
             document.title = title;
             if_list(rtr);
-            load_chart();
             create_pagination(rtr);
             get_dragula(".drag_container");
             get_dragula(".drag_list");
+            document.body.querySelector("#fullscreens_container").innerHTML = ""
         }
     }
     ajax_link.send()

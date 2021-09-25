@@ -1,3 +1,72 @@
+function create_fullscreen(url, type_class) {
+  container = document.body.querySelector("#fullscreens_container");
+  count_items = container.querySelectorAll(".fullscreen").length;
+  $parent_div = document.createElement("div");
+  $parent_div.classList.add("card", "mb-3", "border", type_class);
+  $parent_div.style.zIndex = "100" + count_items;
+
+  if (document.body.querySelector(".desctop_nav")) {
+    hide_svg = '<svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  } else { hide_svg = "" };
+  $hide_span = document.createElement("span");
+  $hide_span.classList.add("this_fullscreen_hide");
+  $loader = document.createElement("div");
+
+  $load_gif = document.createElement("img");
+  $load_gif.setAttribute("src", location.protocol + "//" + location.host + "/static/images/preloader.gif");
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1", "next_page_list");
+
+  $loader.setAttribute("id", "fullscreen_loader");
+  $hide_span.innerHTML = hide_svg;
+  $parent_div.append($hide_span);
+  $parent_div.append($loader);
+  $parent_div.append($load_div);
+
+  container.append($parent_div);
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link.open('GET', url, true);
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link.responseText;
+          $loader.innerHTML = elem;
+          get_document_opacity_0();
+          if ($loader.querySelector(".next_page_list")) {
+            $loader.onscroll = function() {
+              box = $loader.querySelector('.next_page_list');
+
+              if (box && box.classList.contains("next_page_list")) {
+                  inViewport = elementInViewport(box);
+                  if (inViewport) {
+                      box.remove();
+                      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                      link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
+                      link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                      link_3.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                              var elem = document.createElement('span');
+                              elem.innerHTML = link_3.responseText;
+                              $loader.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                            }
+                      }
+                      link_3.send();
+                  }
+              };
+            }
+          }
+      }
+  };
+  link.send();
+};
+on('body', 'click', '.this_fullscreen_hide', function() {
+  get_document_opacity_1(document.body.querySelector(".main-container"));
+  this.parentElement.remove();
+});
+
 function get_document_opacity_0() {
   if (document.body.querySelector(".mobile_naw")) {
     document.body.querySelector(".main-container").style.opacity = "0";
@@ -572,6 +641,7 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
+        document.body.querySelector("#fullscreens_container").innerHTML = ""
       }
     }
     ajax_link.send();

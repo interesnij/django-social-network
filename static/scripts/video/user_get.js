@@ -25,9 +25,7 @@ on('#ajax', 'click', '.load_attach_video_list', function() {
 });
 
 on('#ajax', 'click', '.load_video_list', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/video/load_list/" + parent.getAttribute("videolist-pk") + "/", loader)
+  create_fullscreen("/video/load_list/" + this.parentElement.parentElement.parentElement.getAttribute("videolist-pk") + "/", "item_fullscreen")
 });
 
 on('#ajax', 'click', '.u_ucm_video_repost', function() {
