@@ -1,9 +1,74 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function create_fullscreen(url, type_class) {
+  container = document.body.querySelector("#fullscreens_container");
+  count_items = container.querySelectorAll(".fullscreen").length;
+  $parent_div = document.createElement("div");
+  $parent_div.classList.add("card", "mb-3", "border", type_class);
+  $parent_div.style.zIndex = "100" + count_items;
+
+  if (document.body.querySelector(".desctop_nav")) {
+    hide_svg = '<svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  } else { hide_svg = "" };
+  $hide_span = document.createElement("span");
+  $hide_span.classList.add("this_fullscreen_hide");
+  $loader = document.createElement("div");
+
+  $load_gif = document.createElement("img");
+  $load_gif.setAttribute("src", location.protocol + "//" + location.host + "/static/images/preloader.gif");
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1", "next_page_list");
+
+  $loader.setAttribute("id", "fullscreen_loader");
+  $hide_span.append(hide_svg);
+  $parent_div.append($hide_span);
+  $parent_div.append($loader);
+  $load_div.append($load_div);
+
+  container.append($parent_div);
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link.open('GET', url, true);
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link.responseText;
+          $loader.innerHTML = elem;
+          get_document_opacity_0();
+          if ($loader.querySelector(".next_page_list")) {
+            $loader.onscroll = function() {
+              box = $loader.querySelector('.next_page_list');
+
+              if (box && box.classList.contains("next_page_list")) {
+                  inViewport = elementInViewport(box);
+                  if (inViewport) {
+                      box.remove();
+                      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                      link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
+                      link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                      link_3.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                              var elem = document.createElement('span');
+                              elem.innerHTML = link_3.responseText;
+                              $loader.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                            }
+                      }
+                      link_3.send();
+                  }
+              };
+            }
+          }
+      }
+  };
+  link.send();
+}
+
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
-  if (input.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){ 
+  if (input.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
   } else {
