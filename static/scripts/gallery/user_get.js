@@ -20,9 +20,8 @@ on('#ajax', 'click', '.detail_photo', function() {
 });
 
 on('#ajax', 'click', '.u_avatar_detail', function() {
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/avatar/" + pk + "/", loader)
+  document.body.querySelector(".avatar_figure") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+  create_fullscreen("/gallery/user/avatar/" + pk + "/", "photo_fullscreen")
 });
 
 on('#ajax', 'click', '.comment_photo', function() {
@@ -94,7 +93,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
 
 on('#ajax', 'click', '.load_photo_list', function() {
   create_fullscreen("/gallery/load_list/" + this.parentElement.parentElement.getAttribute("photolist-pk") + "/", "item_fullscreen")
-}); 
+});
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
