@@ -84,7 +84,7 @@ function get_document_opacity_1(block) {
     main_container.style.clipPath = "none";
   } else {
   document.body.querySelector(".main-header").style.clipPath = "none";
-  main_container.style.opacity = "1";
+  main_container.style.clipPath = "none";
   document.body.querySelector(".nav-pills").style.clipPath = "none"
   };
   document.body.style.overflow = "scroll";
