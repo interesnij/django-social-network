@@ -5163,8 +5163,8 @@ cursor: pointer;
   top: 40px;
   z-index: 500;
 }
-.prev_photo, .prev_item, .prev_good { position: absolute; right: -25px; top: 160px; cursor: pointer; }
-.next_photo, .next_item, .next_good  { position: absolute; left: -25px; top: 160px; cursor: pointer; }
+.prev_photo, .prev_item, .prev_good { position: absolute; right: -25px; top: 160px; cursor: pointer; z-index: 1000}
+.next_photo, .next_item, .next_good  { position: absolute; left: -25px; top: 160px; cursor: pointer; z-index: 1000}
 
 .hide_image {
     display: none;

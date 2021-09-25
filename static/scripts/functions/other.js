@@ -5,7 +5,7 @@ function create_fullscreen(url, type_class) {
   count_items = container.querySelectorAll(".fullscreen").length;
   $parent_div = document.createElement("div");
   $parent_div.classList.add("card", "mb-3", "border", type_class);
-  $parent_div.style.zIndex = "100" + count_items;
+  $parent_div.style.zIndex = 100 + count_items;
 
   if (document.body.querySelector(".desctop_nav")) {
     hide_svg = '<svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
@@ -1064,11 +1064,11 @@ function addStyleSheets(href) {
 
 function get_document_opacity_0() {
   if (document.body.querySelector(".mobile_naw")) {
-    document.body.querySelector(".main-container").style.opacity = "0";
+    document.body.querySelector(".main-container").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
   } else {
-  document.body.querySelector(".main-header").style.opacity = "0";
-  document.body.querySelector(".main-container").style.opacity = "0";
-  document.body.querySelector(".nav-pills").style.opacity = "0"
+  document.body.querySelector(".main-header").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
+  document.body.querySelector(".main-container").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
+  document.body.querySelector(".nav-pills").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)"
   };
   document.body.style.overflow = "hidden";
   document.body.style.marginRight = "4px";
@@ -1076,11 +1076,11 @@ function get_document_opacity_0() {
 function get_document_opacity_1(block) {
   main_container = document.body.querySelector(".main-container");
   if (document.body.querySelector(".mobile_naw")) {
-    main_container.style.opacity = "1";
+    main_container.style.clipPath = "none";
   } else {
-  document.body.querySelector(".main-header").style.opacity = "1";
+  document.body.querySelector(".main-header").style.clipPath = "none";
   main_container.style.opacity = "1";
-  document.body.querySelector(".nav-pills").style.opacity = "1"
+  document.body.querySelector(".nav-pills").style.clipPath = "none"
   };
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
