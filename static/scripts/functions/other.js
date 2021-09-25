@@ -67,7 +67,7 @@ function create_fullscreen(url, type_class) {
 };
 
 
-function change_tihs_fullscreen(_this, type_class) {
+function change_this_fullscreen(_this, type_class) {
   $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
 

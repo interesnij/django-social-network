@@ -62,6 +62,22 @@ function create_fullscreen(url, type_class) {
   };
   link.send();
 };
+function change_this_fullscreen(_this, type_class) {
+  $loader = _this.parentElement.parentElement;
+  $loader.innerHTML = "";
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link.open('GET', _this.getAttribute("href"), true);
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link.responseText;
+          $loader.innerHTML = elem;
+      }
+  };
+  link.send();
+};
 on('body', 'click', '.this_fullscreen_hide', function() {
   get_document_opacity_1(document.body.querySelector(".main-container"));
   this.parentElement.remove();
