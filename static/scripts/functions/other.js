@@ -23,7 +23,7 @@ function create_fullscreen(url, type_class) {
   $hide_span.append(hide_svg);
   $parent_div.append($hide_span);
   $parent_div.append($loader);
-  $load_div.append($load_div);
+  $parent_div.append($load_div); 
 
   container.append($parent_div);
 
