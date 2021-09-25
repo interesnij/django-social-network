@@ -641,7 +641,8 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
-        document.body.querySelector("#fullscreens_container").innerHTML = ""
+        document.body.querySelector("#fullscreens_container").innerHTML = "";
+        get_document_opacity_1(rtr)
       }
     }
     ajax_link.send();
