@@ -33,6 +33,7 @@ function create_fullscreen(url, type_class) {
 
   link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+          $load_div.remove();
           elem = link.responseText;
           $loader.innerHTML = elem;
           get_document_opacity_0();
