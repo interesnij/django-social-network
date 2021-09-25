@@ -5145,7 +5145,7 @@ cursor: pointer;
 @media screen and (min-width: 621px) {
     .worker_fullscreen{left: 30%;width: 40%;padding-left: 5%;padding-right: 5%;}
 }
-
+.this_fullscreen_hide,
 .photo_fullscreen_hide,
 .create_fullscreen_hide,
 .community_fullscreen_hide,
@@ -5163,8 +5163,8 @@ cursor: pointer;
   top: 40px;
   z-index: 500;
 }
-.prev_photo, .prev_item, .prev_good { position: absolute; right: -7%; top: 160px; cursor: pointer; }
-.next_photo, .next_item, .next_good  { position: absolute; left: -7%; top: 160px; cursor: pointer; }
+.prev_photo, .prev_item, .prev_good { position: absolute; right: -25px; top: 160px; cursor: pointer; }
+.next_photo, .next_item, .next_good  { position: absolute; left: -25px; top: 160px; cursor: pointer; }
 
 .hide_image {
     display: none;
