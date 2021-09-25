@@ -724,34 +724,34 @@ function create_pagination(block) {
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 on('body', 'click', '.prev_good', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 on('body', 'click', '.prev_photo', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('photo_loader'));
+  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
 })
 
 on('#ajax', 'click', '.article_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("article_loader")), document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
