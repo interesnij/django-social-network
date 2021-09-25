@@ -1151,7 +1151,7 @@ class ChatPerm(models.Model):
     user = models.OneToOneField(ChatUsers, null=True, blank=True, on_delete=models.CASCADE, related_name='chat_ie_settings', verbose_name="Друг")
 
     can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
-    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информации")
+    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информацию")
     can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
     can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
     can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
