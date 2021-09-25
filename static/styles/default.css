@@ -1,7 +1,7 @@
 #fullscreen_loader {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 15px;
+  right: 15px;
   top: 70px;
   bottom: 0;
 }
