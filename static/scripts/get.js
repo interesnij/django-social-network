@@ -188,34 +188,34 @@ window.addEventListener('popstate', function (e) {
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
+  change_tihs_fullscreen(this, document.getElementById('item_loader'));
 })
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('item_loader'));
+  change_this_fullscreen(this, document.getElementById('item_loader'));
 })
 
 on('body', 'click', '.next_good', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  open_fullscreen(this.getAttribute('href'), document.getElementById('good_loader'));
+  change_this_fullscreen(this, document.getElementById('good_loader'));
 })
 on('body', 'click', '.prev_good', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
+  change_this_fullscreen(this, "photo_fullscreen")
 })
 
 on('body', 'click', '.next_photo', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
+  change_this_fullscreen(this, "photo_fullscreen")
 })
 on('body', 'click', '.prev_photo', function(event) {
   event.preventDefault();
   this.style.display = "none";
-  create_fullscreen(this.getAttribute('href'), "photo_fullscreen")
+  change_this_fullscreen(this, "photo_fullscreen")
 })
 
 on('#ajax', 'click', '.item_stat_f', function() {
