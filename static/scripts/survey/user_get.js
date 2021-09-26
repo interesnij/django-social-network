@@ -17,14 +17,14 @@ on('#ajax', 'click', '.u_add_survey', function() {
   create_fullscreen('/survey/user_progs/add/', "item_fullscreen");
 });
 
-on('#create_loader', 'click', '#need_time_end', function() {
+on('#ajax', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")
 });
 
-on('#create_loader', 'click', '.remove_answer', function() {
+on('#ajax', 'click', '.remove_answer', function() {
   this.parentElement.parentElement.parentElement.remove()
 });
-on('#create_loader', 'click', '.add_answer', function() {
+on('#ajax', 'click', '.add_answer', function() {
   container = this.parentElement.parentElement.parentElement.parentElement
   answers = container.querySelectorAll(".answer");
   answers.length > 9 ? toast_error("Допустимо не больше 10 вариантов!") :
