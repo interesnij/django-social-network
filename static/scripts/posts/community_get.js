@@ -23,12 +23,12 @@ on('#ajax', 'click', '.c_uncopy_post_list', function() {
 
 on('#ajax', 'click', '.c_add_post_list', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/posts/community_progs/add_list/" + pk + "/", "item_fullscreen");
+  create_fullscreen("/posts/community_progs/add_list/" + pk + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.c_edit_post_list', function() {
   list_pk = this.parentElement.parentElement.parentElement.getAttribute("list-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", "item_fullscreen");
+  create_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '#c_repost_for_community', function() {
@@ -59,7 +59,7 @@ on('#ajax', 'click', '.c_ucm_post_repost', function() {
   uuid = parent.getAttribute("data-uuid");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   //document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
-  create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_article_detail', function() {
@@ -72,28 +72,28 @@ on('#ajax', 'click', '.c_article_detail', function() {
 on('#ajax', 'click', '.c_all_posts_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_like/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/item_window/all_community_like/" + uuid + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.c_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.c_all_item_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.c_all_posts_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  create_fullscreen("/posts/item_window/all_community_comment_like/" + pk + "/", "item_fullscreen");
+  create_fullscreen("/posts/item_window/all_community_comment_like/" + pk + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.c_all_posts_comment_dislikes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  create_fullscreen("/posts/item_window/all_community_comment_dislike/" + pk + "/", "item_fullscreen");
+  create_fullscreen("/posts/item_window/all_community_comment_dislike/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.c_item_comments', function() {
@@ -114,17 +114,17 @@ on('#ajax', 'click', '.c_item_comments', function() {
 on('#ajax', 'click', '.c_comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
-  create_fullscreen('/users/load/c_img_comment_load/', "item_fullscreen");
+  create_fullscreen('/users/load/c_img_comment_load/', "photo_fullscreen");
 });
 on('#ajax', 'click', '.c_comment_video', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/c_video_load/', "item_fullscreen");
+  create_fullscreen('/users/load/c_video_load/', "video_fullscreen");
 });
 on('#ajax', 'click', '.c_comment_music', function() {
   this.classList.add("current_file_dropdown");
   clear_attach_block();
-  create_fullscreen('/users/load/c_music_load/', "item_fullscreen");
+  create_fullscreen('/users/load/c_music_load/', "worker_fullscreen");
 });
 on('#ajax', 'click', '.c_comment_good', function() {
   this.classList.add("current_file_dropdown");

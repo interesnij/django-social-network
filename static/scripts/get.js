@@ -1,5 +1,5 @@
 on('#ajax', 'click', '.u_add_survey', function() {
-  create_fullscreen('/survey/user_progs/add/', "item_fullscreen");
+  create_fullscreen('/survey/user_progs/add/', "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.hide_comment_form', function() {
