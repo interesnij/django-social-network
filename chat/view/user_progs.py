@@ -457,7 +457,7 @@ class InviteMembersInChat(ListView):
 		return query
 
 	def post(self,request,*args,**kwargs):
-        if request.is_ajax():
+		if request.is_ajax():
 			from common.template.user import render_for_platform
 
 			list = request.POST.getlist('chat_users')
