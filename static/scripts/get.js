@@ -224,20 +224,10 @@ on('#ajax', 'click', '.item_stat_f', function() {
   create_fullscreen("/stat/item/" + uuid + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement;
-  parent.parentElement.style.display = "none";
-  parent.innerHTML=""
+on('#ajax', 'click', '.item_fullscreen_hide', function() {
+  get_document_opacity_1(document.getElementById("ajax"));
+  this.parentElement.parentElement.parentElement.parentElement.remove()
 });
-
-on('#ajax', 'click', '.article_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("article_loader"));document.querySelector(".article_fullscreen").style.display = "none";document.getElementById("article_loader").innerHTML=""});
-on('#ajax', 'click', '.photo_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("photo_loader"));document.querySelector(".photo_fullscreen").style.display = "none";document.getElementById("photo_loader").innerHTML=""});
-on('#ajax', 'click', '.votes_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("votes_loader"));document.querySelector(".votes_fullscreen").style.display = "none";document.getElementById("votes_loader").innerHTML=""});
-on('#ajax', 'click', '.item_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("item_loader"));document.querySelector(".item_fullscreen").style.display = "none";document.getElementById("item_loader").innerHTML=""});
-on('#ajax', 'click', '.community_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("community_loader"));get_document_opacity_1(document.getElementById("community_loader"));document.querySelector(".community_fullscreen").style.display = "none";document.getElementById("community_loader").innerHTML=""});
-on('#ajax', 'click', '.community_manage_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("load_staff_window"));document.querySelector(".manage_window_fullscreen").style.display = "none";document.getElementById("load_staff_window").innerHTML=""});
-on('#ajax', 'click', '.good_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("good_loader"));document.querySelector(".good_fullscreen").style.display = "none";document.getElementById("good_loader").innerHTML=""});
-on('#ajax', 'click', '.stat_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("stat_loader"));document.querySelector(".stat_fullscreen").style.display = "none";document.getElementById("stat_loader").innerHTML=""});
 on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("video_loader"));document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.querySelector(".video_fullscreen").style.display = "none";
@@ -248,11 +238,6 @@ on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.body.querySelector(".video_btn_big").style.display = "block";
   document.getElementById("video_loader").innerHTML=""
 });
-on('body', 'click', '.create_fullscreen_hide', function() {close_create_window();get_document_opacity_1(null)});
-on('body', 'click', '.worker_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("worker_loader"));document.querySelector(".worker_fullscreen").style.display = "none";document.getElementById("worker_loader").innerHTML=""});
-
-// END FULLSCREENS //
-//--------------------------------------------------------------------//
 
 on('#ajax', 'click', '.show_replies', function() {
   this.nextElementSibling.classList.toggle('replies_open');
@@ -350,65 +335,3 @@ on('#ajax', 'click', '.music_list_comment', function() {
   }
   }
 });
-
-
-function get_emoji(){
-var emoji = window.emoji = {};
-emoji.replace = Replace;
-
-var GROUPS =
-  [
-   [/(\ud83c[\udde8-\uddfa])(\ud83c[\udde7-\uddfa])/g, ReplaceFlags],     // Flags
-   [/[\u0023-\u0039]\u20E3/g,                          ReplaceNumbers],   // Numbers
-   [/[\u2139-\u3299]/g,                                ReplaceStandard],  // Unsorted
-   [/[\u203C\u2049]/g,                                 ReplaceStandard],  // Punctuation
-   [/([\ud800-\udbff])([\udc00-\udfff])/g,             ReplaceSurrogate]  // Other (surrogate pairs)
-  ];
-
-function Replace (source)
-  {
-   var pattern;
-   for(var i=0, j=GROUPS.length; i<j; i++)
-     {
-      pattern = GROUPS[i];
-      if(pattern && pattern[0] && pattern[1])
-        {
-         if(source.match(pattern[0]))
-           {
-            source = source.replace(pattern[0], pattern[1]);
-           }
-        }
-     }
-   return(source);
-  }
-function ReplaceFlags (match)
-  {
-   return(GetHtmlCodeFromHex(
-     [
-      GetHexFromSurrogatePair(match.charCodeAt(0), match.charCodeAt(1)).toString(16),
-      GetHexFromSurrogatePair(match.charCodeAt(2), match.charCodeAt(3)).toString(16)
-     ].join('')));
-  }
-function ReplaceNumbers (match)
-  {
-   return(GetHtmlCodeFromHex(match.charCodeAt(0).toString(16) + match.charCodeAt(1).toString(16)));
-  }
-function ReplaceStandard (match)
-  {
-   return(GetHtmlCodeFromHex(match.charCodeAt(0).toString(16)));
-  }
-function ReplaceSurrogate (match, p1, p2)
-  {
-   return(GetHtmlCodeFromHex(GetHexFromSurrogatePair(p1.charCodeAt(0),p2.charCodeAt(0)).toString(16)));
-  }
-function GetHexFromSurrogatePair (a, b)
-  {
-   return((a - 0xD800) * 0x400 + (b - 0xDC00) + 0x10000);
-  }
-function GetHtmlCodeFromHex (hex)
-  {
-   return(['<span class="emojic"><span class="emoji emoji', hex, '"></span><span class="emojit">&#x', hex, ';</span></span>'].join(''));
-  }
-};
-
-get_emoji()
