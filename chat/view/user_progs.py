@@ -458,11 +458,12 @@ class InviteMembersInChat(ListView):
 
 	def post(self,request,*args,**kwargs):
         if request.is_ajax():
-            from common.template.user import render_for_platform
+			from common.template.user import render_for_platform
 
 			list = request.POST.getlist('chat_users')
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			info_messages = self.chat.invite_users_in_chat(list, request.user)
-            return render_for_platform(request, 'chat/chat/new_manager_messages.html', {'object_list': info_messages})
-        else:
-            return HttpResponseBadRequest()
+			return render_for_platform(request, 'chat/chat/new_manager_messages.html', {'object_list': info_messages})
+		else:
+			from django.http import HttpResponseBadRequest
+			return HttpResponseBadRequest()
