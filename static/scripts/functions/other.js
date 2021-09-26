@@ -2,7 +2,9 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
-  count_items = container.querySelectorAll(".fullscreen").length;
+  try {
+    count_items = container.querySelectorAll(".fullscreen").length
+  } catch {count_items = 0};
   $parent_div = document.createElement("div");
   $parent_div.classList.add("card", "mb-3", "border", type_class);
   $parent_div.style.zIndex = 100 + count_items;
