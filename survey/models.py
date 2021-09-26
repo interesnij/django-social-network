@@ -8,6 +8,7 @@ from imagekit.models import ProcessedImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from communities.models import Community
+from django.db.models import Q
 
 
 class SurveyList(models.Model):
