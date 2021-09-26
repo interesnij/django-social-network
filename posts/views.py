@@ -47,7 +47,7 @@ class LoadPostList(ListView):
 		return self.posts
 
 
-class LoadPost(ListView):
+class LoadPost(TemplateView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
@@ -85,7 +85,7 @@ class LoadPost(ListView):
 		return context
 
 
-class LoadFixPost(ListView):
+class LoadFixPost(TemplateView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
