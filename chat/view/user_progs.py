@@ -356,19 +356,6 @@ class PhotoAttachInChatUserCreate(View):
 			raise Http404
 
 
-class ChatMemberCreate(View):
-	def get(self,request,*args,**kwargs):
-		from users.models import User
-		from chat.models import ChatUsers
-		from django.http import HttpResponse
-
-		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
-		if request.is_ajax() and chat.creator == request.user:
-			ChatUsers.create_membership(user=user, chat=chat)
-			return HttpResponse()
-		else:
-			raise Http404
-
 class ChatMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
@@ -438,7 +425,7 @@ class UserChatBeepOn(View):
 			raise Http404
 
 
-class GetFriendsAppendChat(ListView):
+class InviteMembersInChat(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
@@ -447,10 +434,10 @@ class GetFriendsAppendChat(ListView):
 
 		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		return super(GetFriendsAppendChat,self).get(request,*args,**kwargs)
+		return super(InviteMembersInChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(GetFriendsAppendChat,self).get_context_data(**kwargs)
+		context = super(InviteMembersInChat,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
 		context["perm"] = self.request.user.user_private
 		return context
@@ -468,3 +455,14 @@ class GetFriendsAppendChat(ListView):
 				if frend.is_user_can_add_in_chat(r_user.pk):
 					query.append(frend)
 		return query
+
+	def post(self,request,*args,**kwargs):
+        if request.is_ajax():
+            from common.template.user import render_for_platform
+
+			list = request.POST.getlist('chat_users')
+			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+			info_messages = self.chat.invite_users_in_chat(list, request.user)
+            return render_for_platform(request, 'chat/chat/new_manager_messages.html', {'object_list': info_messages})
+        else:
+            return HttpResponseBadRequest()

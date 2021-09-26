@@ -51,7 +51,7 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 
 on('#ajax', 'click', '.u_add_members_in_chat', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
-  create_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", "worker_fullscreen");
+  create_fullscreen("/chat/user_progs/invite_members/" + pk + "/", "worker_fullscreen");
 });
 
 function create_user_input_card(name, pk) {
@@ -63,6 +63,7 @@ function create_user_input_card(name, pk) {
   $input = document.createElement("input");
   $input.classList.add("friend_pk");
   $input.setAttribute("type", "hidden");
+  $input.setAttribute("name", "chat_users");
   $input.value = pk;
   $span.append($input);
   return $span

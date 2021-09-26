@@ -20,10 +20,9 @@ urlpatterns = [
     url(r'^add_attach_photo/$', PhotoAttachInChatUserCreate.as_view()),
     url(r'^(?P<pk>\d+)/add_admin/(?P<user_pk>\d+)/$', ChatAdminCreate.as_view()),
     url(r'^(?P<pk>\d+)/remove_admin/(?P<user_pk>\d+)/$', ChatAdminDelete.as_view()),
-    url(r'^(?P<pk>\d+)/add_member/(?P<user_pk>\d+)/$', ChatMemberCreate.as_view()),
     url(r'^(?P<pk>\d+)/remove_member/(?P<user_pk>\d+)/$', ChatMemberDelete.as_view()),
     url(r'^beep_off/(?P<pk>\d+)/$', UserChatBeepOff.as_view()),
     url(r'^beep_on/(?P<pk>\d+)/$', UserChatBeepOn.as_view()),
 
-    url(r'^get_friends_for_append_chat/(?P<pk>\d+)/$', GetFriendsAppendChat.as_view()),
+    url(r'^invite_members/(?P<pk>\d+)/$', InviteMembersInChat.as_view()),
 ]

@@ -427,6 +427,24 @@ class Chat(models.Model):
         else:
             return str(count) + " сообщений"
 
+    def invite_users_in_chat(self, users_ids, creator):
+        from users.models import User
+
+        if creator.is_women():
+            var = " пригласила"
+        else:
+            var = " пригласил"
+        users = User.objects.filter(id__in=users_ids)
+        info_messages = []
+        for user in users:
+            ChatUsers.objects.create(chat=self, user=user)
+            text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + var + '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            info_messages.append(info_message)
+            for recipient in self.get_recipients_2(creator.pk):
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+        return info_messages
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
@@ -754,6 +772,9 @@ class Message(models.Model):
             'user_name': creator.first_name,
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
+
+    def invite_users_in_chat(self, users_ids):
+
 
     def fixed_message_for_user_chat(self, creator):
         """
