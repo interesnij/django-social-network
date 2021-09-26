@@ -773,9 +773,6 @@ class Message(models.Model):
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 
-    def invite_users_in_chat(self, users_ids):
-
-
     def fixed_message_for_user_chat(self, creator):
         """
             Мы должны пометить все сообшения ветки как FIXED.
