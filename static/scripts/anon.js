@@ -772,7 +772,7 @@ on('body', 'click', '.prev_photo', function(event) {
 
 on('#ajax', 'click', '.item_fullscreen_hide', function() {
   get_document_opacity_1(document.getElementById("ajax"));
-  this.parentElement.parentElement.parentElement.parentElement.remove()
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
 });
 on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("video_loader")), document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
