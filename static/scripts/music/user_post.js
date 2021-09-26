@@ -23,8 +23,7 @@ on('body', 'click', '.u_track_edit', function() {
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_track")}
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_track")
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/music/user_progs/edit_track/" + parent.getAttribute("data-pk") +"/", loader)
+  create_fullscreen("/music/user_progs/edit_track/" + parent.getAttribute("data-pk") +"/", "item_fullscreen");
 });
 
 on('body', 'click', '#u_create_track_btn', function() {

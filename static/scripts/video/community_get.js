@@ -1,10 +1,9 @@
 on('#ajax', 'click', '.c_video_list_add', function() {
   loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute('data-pk') + "/", loader)
+  create_fullscreen("/video/community_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute('data-pk') + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.c_video_add', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/create_video/", loader)
+  create_fullscreen("/video/community_progs/create_video/", "item_fullscreen");
 });
 on('#ajax', 'click', '.c_copy_video_list', function() {
   on_off_list_in_collections(this, "/video/community_progs/add_list_in_collections/", "c_uncopy_video_list", "c_copy_video_list", "Удалить")
@@ -17,76 +16,65 @@ on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/repost/c_ucm_video_list_window/" + pk + "/" + uuid + "/", loader);
+  create_fullscreen("/video/repost/c_ucm_video_list_window/" + pk + "/" + uuid + "/", "item_fullscreen");
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_ucm_video_repost', function() {
   parent = this.parentElement;
   track_pk = parent.getAttribute("data-pk");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/repost/c_ucm_video_window/" + pk + "/" + track_pk + "/", loader);
+  create_fullscreen("/video/repost/c_ucm_video_window/" + pk + "/" + track_pk + "/", "item_fullscreen");
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
   parent = this.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/repost/c_ucm_video_list_window/" + pk + "/" + uuid + "/", loader);
+  create_fullscreen("/video/repost/c_ucm_video_list_window/" + pk + "/" + uuid + "/", "item_fullscreen");
   clear_attach_block();
 })
 
 on('#ajax', 'click', '.с_video_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/add_list/" + pk + "/", loader)
+  create_fullscreen("/video/community_progs/add_list/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_video_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/edit_list/" + uuid + "/", loader)
+  create_fullscreen("/video/community_progs/edit_list/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_video_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community/add_list/" + pk + "/", loader)
+  create_fullscreen("/video/community/add_list/" + pk + "/", "item_fullscreen");
 });
 
 on('#video_loader', 'click', '.c_all_video_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/window/all_community_like/" + uuid + "/", loader)
+  create_fullscreen("/video/window/all_community_like/" + uuid + "/", "item_fullscreen");
 });
 on('#video_loader', 'click', '.c_all_video_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/window/all_community_dislike/" + uuid + "/", loader)
+  create_fullscreen("/video/window/all_community_dislike/" + uuid + "/", "item_fullscreen");
 });
 
 on('#video_loader', 'click', '.c_all_video_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/window/all_community_comment_like/" + pk + "/", loader)
+  create_fullscreen("/video/window/all_community_comment_like/" + pk + "/", "item_fullscreen");
 });
 on('#video_loader', 'click', '.c_all_video_comment_dislikes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/window/all_community_comment_dislike/" + pk + "/", loader)
+  create_fullscreen("/video/window/all_community_comment_dislike/" + pk + "/", "item_fullscreen");
 });
 
 on('#video_loader', 'click', '.c_all_video_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/video/window/all_community_reposts/" + uuid + "/", loader)
+  create_fullscreen("/video/window/all_community_reposts/" + uuid + "/", "item_fullscreen");
 });
 
 on('#video_loader', 'click', '.c_video_comments', function() {

@@ -133,8 +133,7 @@ on('body', 'click', '.c_video_list_abort_remove', function() {
 on('#ajax', 'click', '.c_video_create_window', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/video/community_progs/create_video/" + pk + "/", loader);
+  create_fullscreen("/video/community_progs/create_video/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_add_video_in_list', function() {

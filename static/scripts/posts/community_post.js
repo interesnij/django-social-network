@@ -9,8 +9,8 @@ on('#ajax', 'click', '#c_ucm_post_repost_btn', function() {
 });
 
 on('#ajax', 'click', '#community_article_add', function() {
-  var pk = this.getAttribute('data-pk');
-  open_fullscreen("/article/c_article_window/" + pk + "/", document.getElementById("create_loader"))
+  pk = this.getAttribute('data-pk');
+  create_fullscreen("/article/c_article_window/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
