@@ -77,8 +77,6 @@
   -webkit-appearance: none;
   -moz-appearance: none; appearance: none;
   cursor: pointer;
-  height: 25px;
-  padding: 0;
 }
 .form_group_flex select option{
   background-color: inherit;
