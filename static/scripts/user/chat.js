@@ -288,12 +288,11 @@ function send_message_sticker(url, value) {
 };
 
 on('#ajax', 'click', '.user_create_chat', function() {
-  loader = document.getElementById("item_loader");
   create_fullscreen("/chat/user_progs/create_chat/" + pk + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
   pk = this.getAttribute("data-pk");
-  create_fullscreen("/chat/user_progs/send_page_message/" + pk + "/", "item_fullscreen");
+  create_fullscreen("/chat/user_progs/send_page_message/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_chat_photo', function() {
