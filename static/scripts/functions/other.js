@@ -88,6 +88,10 @@ on('body', 'click', '.this_fullscreen_hide', function() {
   get_document_opacity_1(document.body.querySelector(".main-container"));
   this.parentElement.remove();
 });
+on('body', 'click', '.this_mob_fullscreen_hide', function() {
+  get_document_opacity_1(document.body.querySelector(".main-container"));
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+});
 
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");

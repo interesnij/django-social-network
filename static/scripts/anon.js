@@ -82,6 +82,10 @@ on('body', 'click', '.this_fullscreen_hide', function() {
   get_document_opacity_1(document.body.querySelector(".main-container"));
   this.parentElement.remove();
 });
+on('body', 'click', '.this_mob_fullscreen_hide', function() {
+  get_document_opacity_1(document.body.querySelector(".main-container"));
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+});
 
 function get_document_opacity_0() {
   if (document.body.querySelector(".mobile_naw")) {

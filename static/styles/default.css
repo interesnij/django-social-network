@@ -5090,45 +5090,13 @@ cursor: pointer;
 .stream-update { text-align: center; border-bottom: 1px solid #eeeeee; display: none; }
 
 .photo_fullscreen,
-.votes_fullscreen,
-.create_fullscreen,
-.community_fullscreen,
-.article_fullscreen,
 .item_fullscreen,
-.stat_fullscreen,
 .video_fullscreen,
-.worker_fullscreen,
-.good_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;display: block;overflow: auto; }
+.worker_fullscreen { position: fixed;top: 0;left: 0;width: 100%;height: 100%;padding: 5%;display: block;overflow: auto; }
 
-.open_10 {
-  position: fixed;
-  z-index: 10;
-}
-.open_11 {
-  position: fixed;
-  z-index: 11;
-}
-.open_100 {
-  position: fixed;
-  z-index: 100;
-}
-.open_200 {
-  position: fixed;
-  z-index: 200;
-}
-.open_300 {
-  position: fixed;
-  z-index: 1000;
-}
 
 @media screen and (min-width: 621px) {
-    .create_fullscreen,
-    .good_fullscreen,
-    .item_fullscreen,
-    .article_fullscreen,
-    .community_fullscreen,
-    .stat_fullscreen,
-    .votes_fullscreen {left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;}
+    .item_fullscreen {left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;}
 }
 @media screen and (min-width: 621px) {
   .photo_fullscreen{left: 10%;width: 80%;padding-left: 5%;padding-right: 5%;}
@@ -5147,14 +5115,7 @@ cursor: pointer;
 }
 .this_fullscreen_hide,
 .photo_fullscreen_hide,
-.create_fullscreen_hide,
-.community_fullscreen_hide,
-.community_manage_fullscreen_hide,
 .item_fullscreen_hide,
-.article_fullscreen_hide,
-.good_fullscreen_hide,
-.stat_fullscreen_hide,
-.votes_fullscreen_hide,
 .worker_fullscreen_hide {
   cursor: pointer;
   position: absolute;
