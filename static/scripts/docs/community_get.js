@@ -8,15 +8,13 @@ on('#ajax', 'click', '.c_uncopy_doc_list', function() {
 
 on('#ajax', 'click', '.c_doc_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/add_list/" + pk + "/", loader)
+  create_fullscreen("/docs/community_progs/add_list/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_doc_create', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
+  create_fullscreen("/docs/community_progs/create_doc/" + pk + "/", "item_fullscreen");
 });
 on('body', 'click', '.c_doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
@@ -24,29 +22,25 @@ on('body', 'click', '.c_doc_edit', function() {
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_doc")}
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_doc")
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/edit_doc/" + parent.getAttribute("data-pk") +"/", loader)
+  create_fullscreen("/docs/community_progs/edit_doc/" + parent.getAttribute("data-pk") + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_doc_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/edit_list/" + uuid + "/", loader)
+  create_fullscreen("/docs/community_progs/edit_list/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_ucm_doc_repost', function() {
   parent = this.parentElement;
   doc_pk = parent.getAttribute("doc-pk");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/docs/repost/c_ucm_doc_window/" + pk + "/" + doc_pk + "/", loader);
+  create_fullscreen("/docs/repost/c_ucm_doc_window/" + pk + "/" + doc_pk + "/", "item_fullscreen");
   clear_attach_block();
 })
 on('#ajax', 'click', '.c_ucm_doc_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/docs/repost/c_ucm_list_window/" + pk + "/" + uuid + "/", loader);
+  create_fullscreen("/docs/repost/c_ucm_list_window/" + pk + "/" + uuid + "/", "item_fullscreen");
   clear_attach_block();
 })

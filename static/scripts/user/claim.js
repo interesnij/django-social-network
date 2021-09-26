@@ -1,8 +1,7 @@
 on('#ajax', 'click', '.user_claim', function() {
   this.parentElement.classList.remove("show");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_user/claim_window/" + pk + "/", loader)
+  create_fullscreen("/managers/progs_user/claim_window/" + pk + "/", "worker_fullscreen");
 })
 on('#ajax', 'click', '.create_user_claim_btn', function() {
   form_data = new FormData(document.querySelector("#user_claim_form"));
@@ -24,8 +23,7 @@ on('#ajax', 'click', '.create_user_claim_btn', function() {
 
 on('#ajax', 'click', '.post_claim', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_post/claim_window/" + uuid + "/", loader)
+  create_fullscreen("/managers/progs_post/claim_window/" + uuid + "/", "worker_fullscreen");
 })
 on('#ajax', 'click', '.create_post_claim_btn', function() {
   uuid = this.getAttribute("data-uuid");
@@ -47,8 +45,7 @@ on('#ajax', 'click', '.create_post_claim_btn', function() {
 
 on('#ajax', 'click', '.post_comment_claim', function() {
   pk = this.parentElement.parentElement.getAttribute("data-pk");
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_post/claim_comment_window/" + pk + "/", loader)
+  create_fullscreen("/managers/progs_post/claim_comment_window/" + pk + "/", "worker_fullscreen");
 })
 on('#ajax', 'click', '.create_post_comment_claim_btn', function() {
   pk = this.getAttribute("data-pk");

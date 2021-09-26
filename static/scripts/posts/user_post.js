@@ -22,9 +22,7 @@ on('body', 'click', '.photo_attach_list_remove', function() {
 
 on('#ajax', 'click', '#u_add_article', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  open_fullscreen("/article/u_article_window/" + pk + "/", document.getElementById("create_loader"));
-  //CKEDITOR.replace('id_content');
-  //CKEDITOR.instances.id_content.updateElement();
+  create_fullscreen("/article/u_article_window/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '#u_add_post_btn', function() {

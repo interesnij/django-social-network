@@ -12,8 +12,7 @@ on('#ajax', 'click', '.community_suspend', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_community/suspend_window/" + pk + "/", loader)
+  create_fullscreen("/managers/progs_community/suspend_window/" + pk + "/", "item_fullscreen");
 })
 on('#ajax', 'click', '.community_blocker', function() {
   _this = this;
@@ -29,8 +28,7 @@ on('#ajax', 'click', '.community_blocker', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_community/block_window/" + pk + "/", loader)
+  create_fullscreen("/managers/progs_community/block_window/" + pk + "/", "item_fullscreen");
 })
 on('#ajax', 'click', '.community_warning_banner', function() {
   _this = this;
@@ -46,8 +44,7 @@ on('#ajax', 'click', '.community_warning_banner', function() {
     }
     li.classList.add("changed")
   }
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/managers/progs_community/warning_banner_window/" + pk + "/", loader)
+  create_fullscreen("/managers/progs_community/warning_banner_window/" + pk + "/", "item_fullscreen");
 })
 
 on('#ajax', 'click', '.create_community_suspend_btn', function() {

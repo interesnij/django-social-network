@@ -52,8 +52,7 @@ on('#ajax', 'click', '.c_remove_doc_list', function(e) {
 
 on('#ajax', 'click', '.c_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/docs/community_progs/create_doc/" + pk + "/", loader);
+  create_fullscreen("/docs/community_progs/create_doc/" + pk + "/", "item_fullscreen");
 });
 
 on('body', 'click', '.c_doc_remove', function() {

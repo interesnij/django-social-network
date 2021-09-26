@@ -33,8 +33,7 @@ on('#ajax', 'click', '.c_remove_good_list', function(e) {
 
 on('#ajax', 'click', '.c_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/community_progs/add_attach/' + pk + '/', loader);
+  create_fullscreen('/goods/community_progs/add_attach/' + pk + '/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_good_comment_edit', function() {
@@ -66,8 +65,7 @@ on('#ajax', 'click', '.c_good_comment_restore', function() {
 
 on('#ajax', 'click', '.c_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/goods/community_progs/add/' + pk + '/', loader)
+  create_fullscreen('/goods/community_progs/add/' + pk + '/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_good_off_private', function() {

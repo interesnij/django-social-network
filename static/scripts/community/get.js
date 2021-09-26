@@ -20,12 +20,10 @@ on('#ajax', 'change', '#sub_category', function() {
 on('#ajax', 'click', '.user_community_create_window', function(e) {
   e.preventDefault();
   pk = this.getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/communities/progs/add/", loader)
+  create_fullscreen("/communities/progs/add/", "item_fullscreen");
 });
 on('#ajax', 'click', '.community_claim', function() {
   this.parentElement.classList.remove("show");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/managers/progs_community/claim_window/" + pk, loader)
+  create_fullscreen("/managers/progs_community/claim_window/" + pk + "/", "item_fullscreen");
 })

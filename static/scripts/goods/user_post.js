@@ -204,9 +204,7 @@ on('#ajax', 'click', '#good_image5', function() {
   get_image_priview(this, img);
 });
 on('#ajax', 'click', '.u_good_add', function() {
-  loader = document.getElementById("create_loader");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  open_fullscreen('/goods/user_progs/add/' + pk + "/", loader)
+  create_fullscreen('/goods/user_progs/add/' + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '#u_add_good_btn', function() {

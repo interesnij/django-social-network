@@ -14,8 +14,7 @@ on('#ajax', 'click', '.load_attach_survey_list', function() {
 });
 
 on('#ajax', 'click', '.u_add_survey', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/survey/user_progs/add/', loader);
+  create_fullscreen('/survey/user_progs/add/', "item_fullscreen");
 });
 
 on('#create_loader', 'click', '#need_time_end', function() {

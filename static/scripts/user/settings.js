@@ -91,34 +91,26 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
 });
 
 on('#ajax', 'click', '.edit_user_name', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/edit_name/", loader)
+  create_fullscreen("/users/settings/edit_name/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.edit_user_password', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/edit_password/", loader)
+  create_fullscreen("/users/settings/edit_password/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.edit_user_email', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/edit_email/", loader)
+  create_fullscreen("/users/settings/edit_email/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.edit_user_phone', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/edit_phone/", loader)
+  create_fullscreen("/users/settings/edit_phone/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.edit_user_custom_link', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/edit_link/", loader)
+  create_fullscreen("/users/settings/edit_link/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_identified_send', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/identify_send/", loader)
+  create_fullscreen("/users/settings/identify_send/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_verified_send', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/verify_send/", loader)
+  create_fullscreen("/users/settings/verify_send/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.remove_user_profile', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/users/settings/remove_profile/", loader)
+  create_fullscreen("/users/settings/remove_profile/", "worker_fullscreen");
 });

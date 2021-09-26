@@ -25,26 +25,22 @@ on('#ajax', 'click', '.u_avatar_detail', function() {
 
 on('#ajax', 'click', '.comment_photo', function() {
   pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/comment_photo/" + pk + "/", loader)
+  create_fullscreen("/gallery/user/comment_photo/" + pk + "/", "photo_fullscreen");
 });
 on('#ajax', 'click', '.u_post_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/post_photo/" + uuid + "/" + pk + "/", loader)
+  create_fullscreen("/gallery/user/post_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
 });
 on('#ajax', 'click', '.message_photo', function() {
   pk = this.getAttribute('photo-pk');
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/message_photo/" + uuid + "/" + pk + "/", loader)
+  create_fullscreen("/gallery/message_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
 });
 
 on('#ajax', 'click', '.u_photo_priview', function() {
   pk = this.getAttribute('photo-pk');
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/preview_photo/" + pk + "/", loader)
+  create_fullscreen("/gallery/user/preview_photo/" + pk + "/", "photo_fullscreen");
 });
 
 on('#ajax', 'click', '.photo_fullscreen_hide_2', function() {
@@ -70,23 +66,18 @@ on('#ajax', 'click', '.item_fullscreen_hide_2', function() {
 
 on('#ajax', 'click', '.u_all_photo_likes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_like/" + uuid + "/", loader);
-  get_document_opacity_1()
+  create_fullscreen("/gallery/window/all_user_like/" + uuid + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.u_all_photo_dislikes', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", loader);
-  get_document_opacity_1()
+  create_fullscreen("/gallery/window/all_user_dislike/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
   pk = parent.getAttribute("data-pk");
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/" + uuid + "/", loader);
+  create_fullscreen("/gallery/window/u_ucm_photo_window/" + pk + "/" + uuid + "/", "item_fullscreen");
   clear_attach_block();
 })
 
@@ -98,8 +89,7 @@ on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", loader);
+  create_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", "item_fullscreen");
   clear_attach_block();
 })
 
@@ -109,13 +99,11 @@ on('#ajax', 'click', '.u_photos_add', function() {
 
 on('#ajax', 'click', '.u_photo_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user_progs/add_list/" + pk + "/", loader)
+  create_fullscreen("/gallery/user_progs/add_list/" + pk + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.u_photo_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("create_loader");
-  open_fullscreen("/gallery/user_progs/edit_list/" + uuid + "/", loader)
+  create_fullscreen("/gallery/user_progs/edit_list/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_photo_edit', function() {
@@ -125,20 +113,17 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 on('#ajax', 'click', '.u_all_photo_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_comment_like/" + pk + "/", loader)
+  create_fullscreen("/gallery/window/all_user_comment_like/" + pk + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.u_all_photo_comment_dislikes', function() {
   container = this.parentElement.parentElement.parentElement;
   pk = container.getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_comment_dislike/" + pk + "/", loader)
+  create_fullscreen("/gallery/window/all_user_comment_dislike/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_all_photo_reposts', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/gallery/window/all_user_reposts/" + uuid + "/", loader)
+  create_fullscreen("/gallery/window/all_user_reposts/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_photo_comments', function() {

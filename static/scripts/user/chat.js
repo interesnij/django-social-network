@@ -51,8 +51,7 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 
 on('#ajax', 'click', '.u_add_members_in_chat', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
-  loader = document.getElementById("worker_loader");
-  open_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", loader)
+  create_fullscreen("/chat/user_progs/get_friends_for_append_chat/" + pk + "/", "item_fullscreen");
 });
 
 function create_user_input_card(name, pk) {
@@ -150,8 +149,7 @@ on('#ajax', 'input', '.chat_message_text', function() {
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
   pk = this.parentElement.parentElement.getAttribute('chat-pk');
-  loader = document.getElementById("item_loader");
-  open_fullscreen("/chat/" + pk + "/fixed_messages/", loader)
+  create_fullscreen("/chat/" + pk + "/fixed_messages/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.classic_smile_item', function() {
@@ -291,26 +289,22 @@ function send_message_sticker(url, value) {
 
 on('#ajax', 'click', '.user_create_chat', function() {
   loader = document.getElementById("item_loader");
-  pk = this.getAttribute("data-pk");
-  open_fullscreen("/chat/user_progs/create_chat/" + pk + "/", loader)
+  create_fullscreen("/chat/user_progs/create_chat/" + pk + "/", "item_fullscreen");
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
-  loader = document.getElementById("create_loader");
   pk = this.getAttribute("data-pk");
-  open_fullscreen("/chat/user_progs/send_page_message/" + pk + "/", loader)
+  create_fullscreen("/chat/user_progs/send_page_message/" + pk + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.u_chat_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/user/chat_photo/" + pk + "/" + photo_pk + "/", loader)
+  create_fullscreen("/gallery/user/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 on('#ajax', 'click', '.c_chat_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   pk = document.body.querySelector(".pk_saver").getAttribute('chat-pk')
-  loader = document.getElementById("photo_loader");
-  open_fullscreen("/gallery/community/chat_photo/" + pk + "/" + photo_pk + "/", loader)
+  create_fullscreen("/gallery/community/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 
 on('#ajax', 'click', '.user_add_members', function() {
@@ -734,8 +728,7 @@ on('#ajax', 'click', '.edit_message_post_btn', function() {
 
 
 on('#ajax', 'click', '.u_message_transfer', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/users/load/chats/', loader);
+  create_fullscreen('/users/load/chats/', "item_fullscreen");
   hide_chat_console();
 });
 

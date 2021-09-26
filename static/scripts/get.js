@@ -1,6 +1,5 @@
 on('#ajax', 'click', '.u_add_survey', function() {
-  loader = document.getElementById("create_loader");
-  open_fullscreen('/survey/user_progs/add/', loader);
+  create_fullscreen('/survey/user_progs/add/', "item_fullscreen");
 });
 
 on('#ajax', 'click', '.hide_comment_form', function() {
@@ -222,8 +221,7 @@ on('#ajax', 'click', '.item_stat_f', function() {
   var parent, pk, uuid, loader
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
-  loader = document.getElementById("votes_loader");
-  open_fullscreen("/stat/item/" + uuid + "/", loader)
+  create_fullscreen("/stat/item/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.post_fullscreen_hide_2', function() {
