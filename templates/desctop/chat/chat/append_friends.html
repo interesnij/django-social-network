@@ -1,9 +1,9 @@
 <div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
     <div class="card-header">
-      <span class="header_title">Выбор пользователей<span>
+      <span class="header_title">Выбор собеседников<span>
     </div>
-    <div class="card-body" style="height: 510px;">
-        <div class="chatlist is_block_paginate">
+    <div class="card-body">
+        <div class="is_block_paginate">
           {% if object_list %}
           {% for object in object_list %}
           <div class="media pag pointer add_member_chat_toggle border-bottom" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
@@ -40,7 +40,7 @@
     </div>
     <div class="card-footer border-top">
       <button class="btn btn-sm custom_color" disabled id="append_friends_to_chat_btn" style="float: right;">
-
+        Выберите пользователей
       </button>
     </div>
 </div>
