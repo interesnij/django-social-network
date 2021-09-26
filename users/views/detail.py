@@ -5,53 +5,6 @@ from common.template.user import get_template_user
 from common.templates import get_template_anon_user, get_template_user
 
 
-class UserPostView(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_user_item, get_template_anon_user_item
-        from posts.models import Post, PostList
-
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.list = self.post.list
-        self.user, self.posts = self.list.creator, self.list.get_items()
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "users/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_post.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPostView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        c = super(UserPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["user"], c["next"], c["prev"], c["posts"] = self.post, self.list, self.user, \
-        self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
-        self.posts.filter(pk__lt=self.post.pk).order_by('pk').first(), self.posts
-        return c
-
-class UserFixPostView(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_user_item, get_template_anon_user_item
-        from posts.models import Post, PostList
-
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.list = PostList.objects.get(creator_id=self.user.pk, type=PostList.FIXED)
-        self.posts = self.list.get_fix_items()
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.post, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.post, "users/lenta/anon_fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserFixPostView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        c = super(UserFixPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["user"], c["next"], c["prev"] = self.post, self.list, self.user, \
-        self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
-        self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
-        return c
-
-
 class UserGallery(TemplateView):
     """
     галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты

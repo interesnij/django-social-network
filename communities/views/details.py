@@ -3,52 +3,6 @@ from communities.models import Community
 from common.check.community import check_can_get_lists
 
 
-class PostCommunity(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_community_item, get_template_anon_community_item
-        from posts.models import Post, PostList
-
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.list = self.post.list
-        self.posts = self.list.get_items()
-        if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.post, "communities/lenta/", "post.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_community_item(self.post, "communities/lenta/anon_post.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(PostCommunity,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        c = super(PostCommunity,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.post.community, self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
-        return c
-
-class CommunityFixPostView(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_community_item, get_template_anon_community_item
-        from posts.models import Post, PostList
-
-        self.post = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
-        self.posts = self.list.get_fix_items()
-        if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.post, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_community_item(self.post, "communities/lenta/anon_fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityFixPostView,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        c = super(CommunityFixPostView,self).get_context_data(**kwargs)
-        c["object"], c["list"], c["community"], c["next"], c["prev"] = self.post, self.list, self.post.community, \
-        self.posts.filter(pk__gt=self.post.pk).order_by('pk').first(), \
-        self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
-        return c
-
-
-
 class CommunityDetail(TemplateView):
     template_name,common_friends,common_friends_count, is_photo_open,is_post_open,is_members_open,is_doc_open,is_video_open,is_music_open,is_good_open = None,None,None,None,None,None,None,None,None,None
 
