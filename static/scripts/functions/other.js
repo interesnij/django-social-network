@@ -68,7 +68,7 @@ function create_fullscreen(url, type_class) {
 
 
 function change_this_fullscreen(_this, type_class) {
-  $loader = _this.parentElement.parentElement;
+  _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

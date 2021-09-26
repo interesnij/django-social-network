@@ -2,10 +2,10 @@
 
 <div class="row" style="margin-right: -10px;margin-left: -10px;">
   {% if next %}
-  <div class="col next_item" href="{% url 'user_post' uuid=next.uuid %}" style="padding:5px;">
-    <div class="btn btn-sm custom_color border" style="width: -webkit-fill-available;position:static">
+  <div class="col" style="padding:5px;">
+    <a class="btn btn-sm custom_color next_item border" href="{% url 'user_post' uuid=next.uuid %}" style="width: -webkit-fill-available;position:static">
       <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-    </div>
+    </a>
   </div>
   {% endif %}
 
@@ -53,10 +53,10 @@
     </a>
   </div>
   {% if prev %}
-  <div class="col next_item" href="{% url 'user_post' uuid=prev.uuid %}" style="padding:5px;">
-    <div class="btn btn-sm custom_color border" style="width: -webkit-fill-available;position:static">
+  <div class="col" href="{% url 'user_post' uuid=prev.uuid %}" style="padding:5px;">
+    <a class="btn btn-sm next_item custom_color border" href="{% url 'user_post' uuid=prev.uuid %}" style="width: -webkit-fill-available;position:static">
       <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
-    </div>
+    </a>
   </div>
   {% endif %}
 </div>
