@@ -241,7 +241,7 @@ class UserPostsListView(ListView):
 				self.list = self.post_list.get_items()
 				self.is_user_can_see_post_section = True
 				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
-				self.is_user_can_create_posts = self.post_list.is_user_can_create_item(request.user)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
 		else:
 			""" Гость - пользователь
 				Потому проверяем, может ли:
@@ -251,7 +251,7 @@ class UserPostsListView(ListView):
 			"""
 			self.is_user_can_see_post_section = self.user.is_user_can_see_post(request.user.pk)
 			self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
-			self.is_user_can_create_posts = self.post_list.is_user_can_create_item(request.user)
+			self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
 
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_user_lists(user_pk)
