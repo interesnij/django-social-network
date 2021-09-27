@@ -27,11 +27,11 @@ class DocList(models.Model):
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     count = models.PositiveIntegerField(default=0)
 
-    #can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
-    #can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
-    #add_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает документы и потом с этими документами работает")
-    #add_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
-    #can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
+    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
+    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
+    add_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает документы и потом с этими документами работает")
+    add_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
+    can_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')

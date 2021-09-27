@@ -38,11 +38,14 @@ class VideoList(models.Model):
     MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,2,3,4,5,6
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
+    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья/подписчики'),(EACH_OTHER, 'Друзья,друзья друзей/None'),(YOU, 'Только я/админы'),(FRIENDS_BUT, 'Друзья/подписчики, кроме'),(SOME_FRIENDS, 'Некоторые друзья/подписчики'),)
+
     community = models.ForeignKey('communities.Community', related_name='video_lists_community', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Сообщество")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     name = models.CharField(max_length=250, verbose_name="Название")
@@ -54,6 +57,12 @@ class VideoList(models.Model):
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
+
+    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
+    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
+    create_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+    create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
+    create_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
 
     class Meta:
         verbose_name = 'Видеоальбом'
