@@ -1,7 +1,16 @@
 from posts.models import PostList, Post
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
-from common.templates import get_template_community_item, get_template_anon_community_item, get_template_user_item, get_template_anon_user_item
+from common.templates import (
+								get_template_community_item,
+								get_template_anon_community_item,
+								get_template_user_item,
+								get_template_anon_user_item,
+								get_template_community_list,
+								get_template_anon_community_list,
+								get_template_user_list,
+								get_template_anon_user_list,
+							)
 
 
 class PostsView(ListView):
@@ -23,18 +32,18 @@ class LoadPostList(ListView):
 			else:
 				self.posts = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_community_item(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.pk == self.list.creator.pk:
 				self.posts = self.list.get_staff_items()
 			else:
 				self.posts = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_user_item(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadPostList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
