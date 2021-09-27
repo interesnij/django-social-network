@@ -44,7 +44,7 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
 
 on('#ajax', 'click', '.c_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/posts/post/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.c_fix_fullscreen', function() {
