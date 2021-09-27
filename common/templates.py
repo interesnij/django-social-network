@@ -346,7 +346,7 @@ def get_template_user_item(item, folder, template, request_user, user_agent):
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
-    elif item.type[0] == "_" or list.type[0]:
+    elif item.type[0] == "_" or list.type[0] == "_":
         template_name = get_fine_user_item(request_user, item, folder, template)
     elif user.type[0] == "_":
         template_name = get_fine_user(user)
@@ -377,7 +377,7 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
     user, list = item.creator, item.list
     if user.type[0] == "_":
         template_name = get_anon_fine_user(user)
-    elif item.type[0] == "_" or list.type[0]:
+    elif item.type[0] == "_" or list.type[0] == "_":
         template_name = get_anon_fine_user_list(item)
     elif user.is_closed_profile():
         template_name = "generic/u_template/anon_close_user.html"
