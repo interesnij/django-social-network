@@ -5124,8 +5124,12 @@ cursor: pointer;
   top: 40px;
   z-index: 500;
 }
-.prev_photo, .prev_item, .prev_good { position: absolute; right: -25px; top: 160px; cursor: pointer; z-index: 1000}
-.next_photo, .next_item, .next_good  { position: absolute; left: -25px; top: 160px; cursor: pointer; z-index: 1000}
+.prev_photo, .prev_item, .prev_good { position: absolute; right: -45px; top: 160px; cursor: pointer; z-index: 1000}
+.next_photo, .next_item, .next_good  { position: absolute; left: -45px; top: 160px; cursor: pointer; z-index: 1000}
+
+.prev_photo svg, .prev_item svg, .prev_good svg, .next_photo svg, .next_item svg, .next_good svg {
+  display: flex;
+}
 
 .hide_image {
     display: none;
