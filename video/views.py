@@ -1,5 +1,15 @@
 from video.models import VideoList, Video
 from django.views.generic import ListView
+from common.templates import (
+								get_template_community_item,
+								get_template_anon_community_item,
+								get_template_user_item,
+								get_template_anon_user_item,
+								get_template_community_list,
+								get_template_anon_community_list,
+								get_template_user_list,
+								get_template_anon_user_list,
+							)
 
 
 class AllVideoView(ListView):
@@ -15,19 +25,16 @@ class LoadVideoList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.list = VideoList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
-			from common.templates import get_template_community_item, get_template_anon_community_item
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.list, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_community_list(self.list, "video/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_community_item(self.list, "video/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "video/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			from common.templates import get_template_user_item, get_template_anon_user_item
-
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_user_list(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_user_item(self.list, "video/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_list(self.list, "video/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

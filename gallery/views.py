@@ -1,6 +1,16 @@
 from gallery.models import Photo, PhotoList
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
+from common.templates import (
+								get_template_community_item,
+								get_template_anon_community_item,
+								get_template_user_item,
+								get_template_anon_user_item,
+								get_template_community_list,
+								get_template_anon_community_list,
+								get_template_user_list,
+								get_template_anon_user_list,
+							)
 
 
 class PhotoDetail(TemplateView):
@@ -10,7 +20,6 @@ class PhotoDetail(TemplateView):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.list = self.photo.list
 		if self.photo.community:
-			from common.templates import get_template_community_item, get_template_anon_community_item
 			self.community = self.photo.community
 			if request.user.is_administrator_of_community(self.community.pk):
 				from gallery.forms import PhotoDescriptionForm
@@ -23,7 +32,6 @@ class PhotoDetail(TemplateView):
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			from common.templates import get_template_user_item, get_template_anon_user_item
 			if request.user.pk == self.photo.creator.pk:
 				from gallery.forms import PhotoDescriptionForm
 				self.photos = self.list.get_staff_items()
@@ -57,7 +65,6 @@ class MessagePhotoDetail(TemplateView):
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.message.get_attach_photos()
 		if self.photo.community:
-			from common.templates import get_template_community_item, get_template_anon_community_item
 			self.community = self.photo.community
 			if request.user.is_administrator_of_community(self.community.pk):
 				from gallery.forms import PhotoDescriptionForm
@@ -67,7 +74,6 @@ class MessagePhotoDetail(TemplateView):
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "chat/attach/photo/c/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			from common.templates import get_template_user_item, get_template_anon_user_item
 			if request.user.pk == self.photo.creator.pk:
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
@@ -95,19 +101,16 @@ class LoadPhotoList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
-			from common.templates import get_template_community_item, get_template_anon_community_item
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_community_list(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_community_item(self.list, "gallery/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "gallery/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			from common.templates import get_template_user_item, get_template_anon_user_item
-
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_user_list(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_user_item(self.list, "gallery/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_list(self.list, "gallery/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
