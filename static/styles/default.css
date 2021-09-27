@@ -5127,7 +5127,12 @@ cursor: pointer;
 .prev_photo, .prev_item, .prev_good { position: absolute; right: -15px; top: 160px; cursor: pointer; z-index: 1000}
 .next_photo, .next_item, .next_good  { position: absolute; left: -65px; top: 160px; cursor: pointer; z-index: 1000}
 
-.prev_photo svg, .prev_item svg, .prev_good svg, .next_photo svg, .next_item svg, .next_good svg {
+.desctop_version .prev_photo svg,
+.desctop_version .prev_item svg,
+.desctop_version .prev_good svg,
+.desctop_version .next_photo svg,
+.desctop_version .next_item svg,
+.desctop_version .next_good svg {
   position: fixed
 }
 
