@@ -36,7 +36,7 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {
-  create_fullscreen("/docs/load_list/" + this.parentElement.parentElement.parentElement.getAttribute("playlist-pk") + "/", "item_fullscreen")
+  create_fullscreen("/docs/load_list/" + this.parentElement.parentElement.parentElement.getAttribute("doclist-pk") + "/", "item_fullscreen")
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
