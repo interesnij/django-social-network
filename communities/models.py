@@ -77,6 +77,12 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def get_b_avatar(self):
+        if self.b_avatar:
+            return self.b_avatar.url
+        else:
+            return '/static/images/no_img/list.jpg'
+
     def plus_photos(self, count):
         self.community_info.photos += count
         return self.community_info.save(update_fields=['photos'])
