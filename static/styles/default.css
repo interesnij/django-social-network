@@ -5113,13 +5113,11 @@ cursor: pointer;
 @media screen and (min-width: 621px) {
     .worker_fullscreen{left: 30%;width: 40%;padding-left: 5%;padding-right: 5%;}
 }
-.this_fullscreen_hide,
-.photo_fullscreen_hide,
-.item_fullscreen_hide,
-.worker_fullscreen_hide {
+
+.this_fullscreen_hide {
   cursor: pointer;
   position: absolute;
-  right: 40px;
+  right: -20px;
   margin: 10px;
   top: 40px;
   z-index: 500;

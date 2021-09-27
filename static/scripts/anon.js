@@ -6,10 +6,10 @@ function create_fullscreen(url, type_class) {
   $parent_div.style.zIndex = 100 + count_items;
 
   if (document.body.querySelector(".desctop_nav")) {
-    hide_svg = '<svg class="svg_default svg_default_30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+    hide_svg = '<svg style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
   } else { hide_svg = "" };
   $hide_span = document.createElement("span");
-  $hide_span.classList.add("this_fullscreen_hide");
+  $hide_span.classList.add("this_fullscreen_hide", "btn_default");
   $loader = document.createElement("div");
 
   $load_gif = document.createElement("img");
