@@ -33,11 +33,11 @@ class PostList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
 
-    can_see_item = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
+    can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
-    create_item = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+    create_el = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
-    create_copy = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
+    copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
@@ -46,59 +46,59 @@ class PostList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
-    def is_user_can_see_item(self, user):
+    def is_user_can_see_el(self, user):
         if self.community:
-            if self.can_see_item == self.ALL_CAN:
+            if self.can_see_el == self.ALL_CAN:
                 return True
-            elif self.can_see_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
+            elif self.can_see_el == self.FRIENDS and user.is_member_of_community(self.community.pk):
                 return True
-            elif self.can_see_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
+            elif self.can_see_el == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
                 return True
-            elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
+            elif self.can_see_el == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
                 return True
         else:
-            if self.can_see_item == self.ALL_CAN:
+            if self.can_see_el == self.ALL_CAN:
                 return True
-            elif self.can_see_item == self.YOU and user.pk == self.creator.pk:
+            elif self.can_see_el == self.YOU and user.pk == self.creator.pk:
                 return True
-            elif self.can_see_item == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
+            elif self.can_see_el == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
                 return True
-            elif self.can_see_item == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
+            elif self.can_see_el == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
-            elif self.can_see_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
+            elif self.can_secan_see_ele_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 1, 0):
                 return True
-            elif self.can_see_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
+            elif self.can_see_el == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 1, 1):
                 return True
         return False
-    def is_anon_user_can_see_item(self):
-        return self.can_see_item == self.ALL_CAN
+    def is_anon_user_can_see_el(self):
+        return self.can_see_el == self.ALL_CAN
 
-    def is_user_can_create_item(self, user):
+    def is_user_can_create_el(self, user):
         if self.community:
-            if self.create_item == self.ALL_CAN:
+            if self.create_el == self.ALL_CAN:
                 return True
-            elif self.create_item == self.FRIENDS and user.is_member_of_community(self.community.pk):
+            elif self.create_el == self.FRIENDS and user.is_member_of_community(self.community.pk):
                 return True
-            elif self.create_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
+            elif self.create_el == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
                 return True
-            elif self.create_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
+            elif self.create_el == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
                 return True
         else:
-            if self.create_item == self.ALL_CAN:
+            if self.create_el == self.ALL_CAN:
                 return True
-            elif self.create_item == self.YOU and user.pk == self.creator.pk:
+            elif self.create_el == self.YOU and user.pk == self.creator.pk:
                 return True
-            elif self.create_item == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
+            elif self.create_el == self.FRIENDS and user.pk in self.creator.get_all_connection_ids():
                 return True
-            elif self.create_item == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
+            elif self.create_el == self.EACH_OTHER and user.pk in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
-            elif self.create_item == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
+            elif self.create_el == self.FRIENDS_BUT and self.get_ie_perm_for_user(user.pk, 3, 0):
                 return True
-            elif self.create_item == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
+            elif self.create_el == self.SOME_FRIENDS and self.get_ie_perm_for_user(user.pk, 3, 1):
                 return True
         return False
     def is_anon_user_can_create_item(self):
-        return self.create_item == self.ALL_CAN
+        return self.create_el == self.ALL_CAN
 
     def get_ie_perm_for_user(self, user_id, type, value):
         member = PostListPerm.objects.get(user_id=user_id)
@@ -106,30 +106,30 @@ class PostList(models.Model):
             if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
                 ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
                 if type == 1:
-                    return ie.can_see_item != 2
+                    return ie.can_see_el != 2
                 elif type == 2:
                     return ie.can_see_comment != 2
                 elif type == 3:
-                    return ie.create_item != 2
+                    return ie.create_el != 2
                 elif type == 4:
                     return ie.create_comment != 2
                 elif type == 5:
-                    return ie.can_copy != 2
+                    return ie.copy_el != 2
             else:
                  return True
         elif value == 1:
             if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
                 ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
                 if type == 1:
-                    return ie.can_see_item == 1
+                    return ie.can_see_el == 1
                 elif type == 2:
                     return ie.can_see_comment == 1
                 elif type == 3:
-                    return ie.create_item == 1
+                    return ie.create_el == 1
                 elif type == 4:
                     return ie.create_comment == 1
                 elif type == 5:
-                    return ie.can_copy == 1
+                    return ie.copy_el == 1
             else:
                  return False
 
