@@ -266,7 +266,7 @@ class UserPostsListView(ListView):
 			"""
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
-			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_item()
+			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_el()
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
