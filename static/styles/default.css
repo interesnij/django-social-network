@@ -24,6 +24,7 @@
   right: 15px;
   top: 70px;
   bottom: 0;
+  overflow-y: auto;
 }
 
 #item_loader {
