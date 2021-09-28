@@ -220,13 +220,11 @@ function post_edit_comment_form(_this, url) {
 function send_change_items(array, link) {
   // функция передает новый порядок элементов, принимая их массив и ссылку, по которой нужно отправить изменения.
   len = array.length + 1;
-  console.log(len);
   token = document.body.getAttribute("data-csrf");
   post_array = []
   for (var i=0; i<array.length; i++) {
     count = len -= 1;
     post_array.push({key:array[i].getAttribute("data-pk"),value: count});
-    console.log(count)
   };
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("POST", link);

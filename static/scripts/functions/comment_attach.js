@@ -43,7 +43,6 @@ function remove_file_dropdown(){
 function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
   is_full_dropdown();
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
-  console.log(img_block);
   div = create_preview_photo(src, photo_pk, user_pk);
   img_block.append(div);
   add_file_dropdown()
@@ -51,7 +50,7 @@ function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
 }
 function photo_list_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_photo_list(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
@@ -61,7 +60,7 @@ function photo_list_comment_attach(dropdown, title, pk, count) {
 function photo_comment_upload_attach(photo_list, dropdown){
   is_full_dropdown();
 
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   for (var i = 0; i < photo_list.length; i++){
     parent = photo_list[i];
     div = create_preview_photo(parent.querySelector(".progressive").getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
@@ -75,7 +74,7 @@ function photo_comment_upload_attach(photo_list, dropdown){
 
 function video_comment_attach(dropdown, pk, counter, src){
   is_full_dropdown(dropdown);
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_video(src, pk, counter)
   img_block.append($div);
   add_file_dropdown()
@@ -83,7 +82,7 @@ function video_comment_attach(dropdown, pk, counter, src){
 }
 function video_list_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_video_list(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
@@ -92,7 +91,7 @@ function video_list_comment_attach(dropdown, title, pk, count) {
 
 function music_comment_attach(dropdown, pk, counter, src){
   is_full_dropdown(dropdown);
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_music(src, pk, counter )
   add_file_dropdown();
   img_block.append(div)
@@ -100,7 +99,7 @@ function music_comment_attach(dropdown, pk, counter, src){
 }
 function playlist_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_playlist(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
@@ -109,7 +108,7 @@ function playlist_comment_attach(dropdown, title, pk, count) {
 
 function doc_comment_attach(dropdown, media_block, pk){
   is_full_dropdown(dropdown);
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_doc(media_block, pk)
   add_file_dropdown();
   img_block.append(div)
@@ -117,7 +116,7 @@ function doc_comment_attach(dropdown, media_block, pk){
 }
 function doc_list_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_doc_list(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
@@ -126,7 +125,7 @@ function doc_list_comment_attach(dropdown, title, pk, count) {
 
 function good_comment_attach(dropdown, src, pk, uuid, title){
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_good(src, pk, uuid, title)
   img_block.append(div);
   add_file_dropdown()
@@ -134,7 +133,7 @@ function good_comment_attach(dropdown, src, pk, uuid, title){
 }
 function good_list_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_good_list(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
@@ -144,7 +143,7 @@ function good_list_comment_attach(dropdown, title, pk, count) {
 function article_comment_attach(_this, dropdown){
   is_full_dropdown(dropdown);
   uuid = _this.getAttribute('data-uuid');
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, _this.parentElement.querySelector(".article_title").innerHTML)
   img_block.append(div);
   add_file_dropdown()
@@ -152,7 +151,7 @@ function article_comment_attach(_this, dropdown){
 }
 function article_list_comment_attach(dropdown, title, pk, count) {
   is_full_dropdown();
-  img_block = dropdown.parentElement.parentElement.parentElement.previousElementSibling;
+  img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_article_list(title, pk, count);
   img_block.append(div);
   add_file_dropdown()
