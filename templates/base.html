@@ -16,7 +16,7 @@
 
 </head>
   <body class="fixed-header" data-video="first_player" data-csrf="{{ csrf_token }}">
-    
+     <div class="wrapper">
         {% include "base_block/navbar.html" %}
         <div class="row no-gutters">
           <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
@@ -60,6 +60,7 @@
       <div id="video_loader"></div>
       <div id="draggable-resize" class="resize"></div>
     </div>
-
+    </div>
+    <div class="body_overlay"></div>
   </body>
 </html>
