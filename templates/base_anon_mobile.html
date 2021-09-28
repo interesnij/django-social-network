@@ -34,7 +34,6 @@
         <br><br><br>
         {% include "mobile/anon_tab.html" %}
 
-    <script defer src="/static/scripts/anon.js?ver1" type="text/javascript"></script>
     <div class="card video_fullscreen" style="display:none">
       <span class="video_btn_big" style="top: 30px; position: absolute;right: 12%;">
         <span class="video_fullscreen_resize" title="Свернуть">
@@ -56,6 +55,9 @@
       </span>
       <div id="video_loader"></div>
       <div id="draggable-resize" class="resize"></div>
+      <div class="body_overlay"></div>
+
+      <script defer src="/static/scripts/anon.js?ver1" type="text/javascript"></script>
     </div>
   </body>
 </html>

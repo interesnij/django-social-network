@@ -92,7 +92,7 @@ class LoadPost(TemplateView):
 		c["object"] = self.post
 		c["community"] = self.community
 		c["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
-		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
+		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
 		return c
 
 
@@ -132,5 +132,5 @@ class LoadFixPost(TemplateView):
 		c["object"] = self.post
 		c["community"] = self.community
 		c["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
-		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('pk').first()
+		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
 		return c
