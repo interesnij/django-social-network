@@ -40,6 +40,7 @@ function create_fullscreen(url, type_class) {
           $loader.innerHTML = elem;
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
+            console.log($loader);
             $loader.onscroll = function() {
               console.log("onscroll");
               box = $loader.querySelector('.next_page_list');
