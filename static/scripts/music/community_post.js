@@ -159,7 +159,7 @@ on('body', 'click', '#c_create_track_btn', function() {
     document.body.querySelector(".pk_saver").getAttribute("data-uuid") ? (
       uuid = document.body.querySelector(".pk_saver").getAttribute("data-uuid"),
       check_span1(response.querySelector('.span1'), uuid, response.innerHTML),
-      document.body.querySelector(".track_empty") ? document.body.querySelector(".track_empty").style.display = "none" : null) : get_preview(response, "track");
+      document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null) : get_preview(response, "track");
     toast_info("Аудиозапись создана!")
     close_create_window();
   }};

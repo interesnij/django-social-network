@@ -5146,8 +5146,25 @@ cursor: pointer;
 .desctop_version .next_photo svg,
 .desctop_version .next_item svg,
 .desctop_version .next_good svg {
-  position: fixed
+  position: fixed;
+  color: rgba(255, 255, 255, 0.8) !important;
 }
+.this_fullscreen_hide svg {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.desctop_version .prev_photo svg :hover,
+.desctop_version .prev_item svg :hover,
+.desctop_version .prev_good svg :hover,
+.desctop_version .next_photo svg :hover,
+.desctop_version .next_item svg :hover,
+.desctop_version .next_good svg :hover {
+  position: fixed;
+  color: rgba(255, 255, 255, 1) !important;
+}
+.this_fullscreen_hide svg :hover {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
 
 .hide_image {
     display: none;

@@ -272,7 +272,7 @@ function send_message_sticker(url, value) {
       new_post = document.createElement("span");
       new_post.innerHTML = elem;
       message_load.append(new_post);
-      message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
+      message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
       form_post.querySelector(".message_text").classList.remove("border_red");
       form_post.querySelector(".hide_block_menu").classList.remove("show");
       form_post.querySelector(".message_dropdown").classList.remove("border_red");
@@ -394,7 +394,7 @@ function send_message (form_post, url) {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     message_load.append(new_post);
-    message_load.querySelector(".item_empty") ? message_load.querySelector(".item_empty").style.display = "none" : null;
+    message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
     form_post.querySelector(".hide_block_menu").classList.remove("show");
     form_post.querySelector(".message_text").innerHTML = ""

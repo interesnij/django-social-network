@@ -143,7 +143,7 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
     if (span1.classList.contains(document.body.querySelector(".uuid_saver").getAttribute("data-uuid"))){
       container = document.body.querySelector(".is_paginate");
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
-      container.querySelector(".item_empty") ? container.querySelector(".item_empty").style.display = "none" : null;
+      container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
       toast_info("Документ создан!")
     } else{
       toast_info("Документ создан!")

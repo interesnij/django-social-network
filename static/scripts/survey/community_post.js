@@ -35,7 +35,7 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
     else {
         container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', _new.innerHTML);
-        container.querySelector(".surveys_empty") ? container.querySelector(".surveys_empty").style.display = "none" : null;
+        container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
         toast_info("Опрос создан!")
   }
   close_create_window();

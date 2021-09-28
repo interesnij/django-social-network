@@ -212,7 +212,7 @@ on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
     photo_list = document.createElement("div");
     response.innerHTML = elem;
     document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-    document.body.querySelector(".post_empty") ? document.body.querySelector(".post_empty").style.display = "none" : null
+    document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
   }}
   link_.send(form_data);
 });

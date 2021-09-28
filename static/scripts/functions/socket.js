@@ -114,7 +114,7 @@ function case_u_post_create(uuid) {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
           lenta.prepend(new_post);
-          document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
+          document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
   link_.send()
 }}
 
@@ -135,7 +135,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
           new_post.innerHTML = elem;
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.innerHTML)
           : lenta.prepend(new_post);
-          document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
+          document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
   link_.send()
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('chat-pk') == chat_id) {
@@ -153,7 +153,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
         lenta.append(new_post);
         objDiv = document.querySelector("#chatcontent");
         objDiv.scrollTop = objDiv.scrollHeight
-        document.body.querySelector(".item_empty") ? document.body.querySelector(".item_empty").style.display = "none" : null}}
+        document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
   link_.send()
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
