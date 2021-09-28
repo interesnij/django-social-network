@@ -5,7 +5,7 @@
   right: 0;
   height: 120vh;
   background-color: rgba(34, 41, 47, 0.5);
-  z-index: 5000;
+  z-index: 90;
   display: block;
   visibility: hidden;
   opacity: 0;
