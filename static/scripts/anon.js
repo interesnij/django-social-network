@@ -99,27 +99,18 @@ on('body', 'click', '.body_overlay', function() {
 });
 
 function get_document_opacity_0() {
-  if (document.body.querySelector(".mobile_naw")) {
-    document.body.querySelector(".main-container").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
-  } else {
-  document.body.querySelector(".main-header").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
-  document.body.querySelector(".main-container").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
-  document.body.querySelector(".nav-pills").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)"
-  };
   document.body.style.overflow = "hidden";
   document.body.style.marginRight = "4px";
+  overlay = document.body.querySelector(".body_overlay");
+  overlay.style.visibility = "unset";
+  overlay.style.opacity = "1";
 }
 function get_document_opacity_1(block) {
-  main_container = document.body.querySelector(".main-container");
-  if (document.body.querySelector(".mobile_naw")) {
-    main_container.style.clipPath = "none";
-  } else {
-  document.body.querySelector(".main-header").style.clipPath = "none";
-  main_container.style.clipPath = "none";
-  document.body.querySelector(".nav-pills").style.clipPath = "none"
-  };
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
+  overlay = document.body.querySelector(".body_overlay");
+  overlay.style.visibility = "hidden";
+  overlay.style.opacity = "0";
 }
 
 function profile_list_block_load(_this, block, url, actions_class) {
