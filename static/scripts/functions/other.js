@@ -886,7 +886,9 @@ function send_comment(form, block, link) {
   console.log(_text);
   console.log(form.querySelector(".img_block").innerHTML);
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" || !form.querySelector(".img_block").innerHTML) {
-    toast_error("Напишите или прикрепите что-нибудь"); return
+    toast_error("Напишите или прикрепите что-нибудь");
+    console.log("?");
+    return
   };
 
   $input = document.createElement("input");
