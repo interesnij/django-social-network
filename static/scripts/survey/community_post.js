@@ -36,10 +36,9 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
         container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', _new.innerHTML);
         container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
-        toast_info("Опрос создан!")
   }
-  close_create_window();
-  toast_info("Товар создан!")
+  close_fullscreen();
+  toast_info("Товар создан!");
   }};
   link_.send(form_data);
 });

@@ -265,12 +265,9 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
         container = document.body.querySelector(".is_paginate");
         container.insertAdjacentHTML('afterBegin', new_good.innerHTML);
         container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
-        toast_info("Товар создан!")
-      } else{
-        toast_info("Товар создан!")
       }
-  }
-  close_create_window();
+  };
+  close_fullscreen();
   toast_info("Товар создан!")
   }};
   link_.send(form_data);
@@ -302,7 +299,7 @@ on('#ajax', 'click', '#u_edit_good_list_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
         document.body.querySelector(".list_name").innerHTML = name;
-        close_create_window();
+        close_fullscreen();
         toast_success("Список товаров изменен")
       }
     }

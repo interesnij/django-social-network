@@ -90,6 +90,7 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
+
 on('body', 'click', '.body_overlay', function() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card").remove();

@@ -145,10 +145,9 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
       container.insertAdjacentHTML('afterBegin', response.innerHTML);
       container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
       toast_info("Документ создан!")
-    } else{
-      toast_info("Документ создан!")
-    }
-    close_create_window();
+    };
+    toast_info("Документ создан!");
+    close_fullscreen();
   }};
 
   link_.send(form_data);

@@ -688,7 +688,7 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
     photo_list = response.querySelectorAll(".pag");
     photo_message_upload_attach(photo_list, document.body.querySelector(".message_attach_block"));
     }
-    close_create_window();
+    close_fullscreen()
     show_message_form_send_btn();
   }
   link_.send(form_data);

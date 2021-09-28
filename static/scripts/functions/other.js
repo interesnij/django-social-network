@@ -99,6 +99,7 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
+
 on('body', 'click', '.body_overlay', function() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card").remove();
@@ -106,6 +107,13 @@ on('body', 'click', '.body_overlay', function() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
+function close_fullscreen() {
+  container = document.body.querySelector("#fullscreens_container");
+  container.querySelector(".card").remove();
+  if (!container.innerHTML) {
+    get_document_opacity_1(document.body.querySelector(".main-container"));
+  }
+};
 
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
@@ -271,7 +279,7 @@ function media_list_edit(_this, url) {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    close_create_window();
+    close_fullscreen();
     name = form.querySelector('#id_name').value;
     list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
@@ -436,124 +444,14 @@ function get_preview(response, type) {
   }
   };
 };
-function close_fullscreen() {
-  if (document.body.querySelector(".create_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("create_loader"))
-    document.body.querySelector(".create_fullscreen").style.display = "none";
-    document.querySelector("#create_fullscreen").innerHTML=""
-  } else if (document.body.querySelector(".photo_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("photo_loader"))
-    document.body.querySelector(".photo_fullscreen").style.display = "none";
-    document.querySelector("#photo_loader").innerHTML=""
-  } else if (document.body.querySelector(".article_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("article_loader"))
-    document.body.querySelector(".article_fullscreen").style.display = "none";
-    document.querySelector("#article_loader").innerHTML=""
-  } else if (document.body.querySelector(".item_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("item_loader"))
-    document.body.querySelector(".item_fullscreen").style.display = "none";
-    document.body.querySelector(".item_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.body.querySelector(".good_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("good_loader"))
-    document.body.querySelector(".good_fullscreen").style.display = "none";
-    document.body.querySelector(".good_fullscreen").querySelector(".loader_0").innerHTML=""
-  } else if (document.body.querySelector(".votes_fullscreen").style.display == "block") {
-    get_document_opacity_1(document.getElementById("votes_loader"))
-    document.body.querySelector(".votes_fullscreen").style.display = "none";
-    document.body.querySelector(".votes_fullscreen").querySelector(".loader_0").innerHTML=""
-  }
-}
-function check_photo_in_block(block, _this, pk) {
-    if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
-        _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
-        _this.parentElement.parentElement.setAttribute("flow", "up");
-        return true
-    } else {
-        return false
-    }
-}
-function check_photo_list_in_block(block, _this, pk) {
-    if (block.querySelector('[photolist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Альбом уже прикреплён")
-        return true
-    } else {
-        return false
-    }
-}
-function check_video_in_block(block, _this, pk) {
-    if (block.querySelector('[video-pk=' + '"' + pk + '"' + ']')) {
-        _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
-        _this.parentElement.parentElement.setAttribute("flow", "up");
-        return true
-    } else {
-        return false
-    }
-}
-function check_video_list_in_block(block, _this, pk) {
-    if (block.querySelector('[videolist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Видеоальбом уже прикреплён")
-        return true
-    } else {
-        return false
-    }
-}
-function check_music_in_block(block, _this, counter) {
-    if (block.querySelector('[music-counter=' + '"' + pk + '"' + ']')) {
-        _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
-        _this.parentElement.setAttribute("flow", "up");
-        return true
-    } else {
-        return false
-    }
-}
-function check_playlist_in_block(block, _this, pk) {
-    if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Плейлист уже прикреплён")
-        return true
-    } else {
-        return false
-    }
-}
-function check_doc_in_block(block, _this, pk) {
-    if (block.querySelector('[doc-pk=' + '"' + pk + '"' + ']')) {
-        _this.parentElement.parentElement.setAttribute("tooltip", "Документ уже выбран");
-        _this.parentElement.parentElement.setAttribute("flow", "up");
-        return true
-    } else {
-        return false
-    }
-}
-function check_doc_list_in_block(block, _this, pk) {
-    if (block.querySelector('[doclist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Список документов уже прикреплён")
-        return true
-    } else {
-        return false
-    }
-}
-function check_good_in_block(block, _this, pk) {
-    if (block.querySelector('[good-pk=' + '"' + pk + '"' + ']')) {
-        _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
-        _this.parentElement.setAttribute("flow", "up");
-        return true
-    } else {
-        return false
-    }
-}
-function check_good_list_in_block(block, _this, pk) {
-    if (block.querySelector('[goodlist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Список товаров уже прикреплён")
-        return true
-    } else {
-        return false
-    }
-}
 
-function close_create_window() {
-    document.querySelector(".create_fullscreen").style.display = "none";
-    document.getElementById("create_loader").innerHTML = "";
-    get_document_opacity_1(document.body.querySelector(".main_container"))
-}
+function close_fullscreen() {
+  container = document.body.querySelector("#fullscreens_container");
+  container.querySelector(".card").remove();
+  if (!container.innerHTML) {
+    get_document_opacity_1(document.body.querySelector(".main-container"));
+  }
+};
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
     form_post = _this.parentElement.parentElement.parentElement;
@@ -612,7 +510,7 @@ function attach_list_for_post(_this, url) {
                     response = document.createElement("span");
                     response.innerHTML = elem;
                     attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-                    close_create_window()
+                    close_fullscreen();
                 }
             };
             link_.send()

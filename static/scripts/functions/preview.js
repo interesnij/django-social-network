@@ -1,3 +1,89 @@
+function check_photo_in_block(block, _this, pk) {
+    if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
+        _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
+        _this.parentElement.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_photo_list_in_block(block, _this, pk) {
+    if (block.querySelector('[photolist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Альбом уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
+function check_video_in_block(block, _this, pk) {
+    if (block.querySelector('[video-pk=' + '"' + pk + '"' + ']')) {
+        _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
+        _this.parentElement.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_video_list_in_block(block, _this, pk) {
+    if (block.querySelector('[videolist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Видеоальбом уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
+function check_music_in_block(block, _this, counter) {
+    if (block.querySelector('[music-counter=' + '"' + pk + '"' + ']')) {
+        _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
+        _this.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_playlist_in_block(block, _this, pk) {
+    if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Плейлист уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
+function check_doc_in_block(block, _this, pk) {
+    if (block.querySelector('[doc-pk=' + '"' + pk + '"' + ']')) {
+        _this.parentElement.parentElement.setAttribute("tooltip", "Документ уже выбран");
+        _this.parentElement.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_doc_list_in_block(block, _this, pk) {
+    if (block.querySelector('[doclist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Список документов уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
+function check_good_in_block(block, _this, pk) {
+    if (block.querySelector('[good-pk=' + '"' + pk + '"' + ']')) {
+        _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
+        _this.parentElement.setAttribute("flow", "up");
+        return true
+    } else {
+        return false
+    }
+}
+function check_good_list_in_block(block, _this, pk) {
+    if (block.querySelector('[goodlist-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Список товаров уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+}
+
 function photo_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("photo_preview_delete");
@@ -637,10 +723,10 @@ on('body', 'click', '.photo_attach_list', function() {
   pk = _this.getAttribute('data-pk');
   count = _this.parentElement.querySelector(".count").innerHTML;
   if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_list_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (photo_list_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, src, title, pk, count), close_create_window())
+    check_photo_list_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (photo_list_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, src, title, pk, count), close_fullscreen();)
   } else if (document.body.querySelector(".attach_block")){
-    check_photo_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_list_post_attach(document.body.querySelector(".attach_block"), src, title, pk, count), close_create_window())
+    check_photo_list_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (photo_list_post_attach(document.body.querySelector(".attach_block"), src, title, pk, count), close_fullscreen();)
   } else if (document.body.querySelector(".message_attach_block")){
-    check_photo_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_list_message_attach(document.body.querySelector(".message_attach_block"), src, title, pk, count), close_create_window())
+    check_photo_list_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (photo_list_message_attach(document.body.querySelector(".message_attach_block"), src, title, pk, count), close_fullscreen();)
   }
 });
