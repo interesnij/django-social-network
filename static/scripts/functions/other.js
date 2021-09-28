@@ -41,15 +41,11 @@ function create_fullscreen(url, type_class) {
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
             $loader.onscroll = function() {
-              console.log("onscroll"); 
               box = $loader.querySelector('.next_page_list');
-              console.log(box);
               if (box && box.classList.contains("next_page_list")) {
-                  console.log($loader);
                   inViewport = elementInViewport(box);
                   if (inViewport) {
                       box.remove();
-                      console.log("inViewport");
                       var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                       link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
                       link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
