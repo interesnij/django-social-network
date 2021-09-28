@@ -23,7 +23,7 @@ function create_fullscreen(url, type_class) {
   $parent_div.append($loader);
   $parent_div.append($load_div);
 
-  container.append($parent_div);
+  container.prepend($parent_div);
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', url, true);
@@ -87,6 +87,13 @@ on('body', 'click', '.this_fullscreen_hide', function() {
 on('body', 'click', '.this_mob_fullscreen_hide', function() {
   this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
   if (!document.body.querySelector("#fullscreens_container").innerHTML) {
+    get_document_opacity_1(document.body.querySelector(".main-container"));
+  }
+});
+on('body', 'click', '.body_overlay', function() {
+  container = document.body.querySelector("#fullscreens_container");
+  container.querySelector(".card").remove();
+  if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
