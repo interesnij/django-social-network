@@ -43,6 +43,7 @@ function remove_file_dropdown(){
 function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
   is_full_dropdown();
   img_block = dropdown.parentElement.previousElementSibling;
+  console.log(img_block);
   div = create_preview_photo(src, photo_pk, user_pk);
   img_block.append(div);
   add_file_dropdown()
