@@ -88,7 +88,6 @@ function change_this_fullscreen(_this, type_class) {
 };
 
 on('body', 'click', '.this_fullscreen_hide', function() {
-  get_document_opacity_1(document.body.querySelector(".main-container"));
   this.parentElement.remove();
   if (!document.body.querySelector("#fullscreens_container").innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
