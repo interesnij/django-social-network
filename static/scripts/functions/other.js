@@ -4,7 +4,7 @@ function create_fullscreen(url, type_class) {
 
   container = document.body.querySelector("#fullscreens_container");
   try {
-    count_items = container.querySelectorAll(".fullscreen").length
+    count_items = container.querySelectorAll(".card").length
   } catch {count_items = 0};
   $parent_div = document.createElement("div");
   $parent_div.classList.add("card", "mb-3", "border", type_class);
