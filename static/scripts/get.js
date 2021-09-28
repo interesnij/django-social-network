@@ -193,29 +193,7 @@ on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
   change_this_fullscreen(this, document.getElementById('item_loader'));
-})
-
-on('body', 'click', '.next_good', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, document.getElementById('good_loader'));
-})
-on('body', 'click', '.prev_good', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
-
-on('body', 'click', '.next_photo', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
-on('body', 'click', '.prev_photo', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
+});
 
 on('#ajax', 'click', '.item_stat_f', function() {
   var parent, pk, uuid, loader

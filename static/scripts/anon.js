@@ -752,29 +752,7 @@ on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
   change_this_fullscreen(this, "photo_fullscreen")
-})
-
-on('body', 'click', '.next_good', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
-on('body', 'click', '.prev_good', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
-
-on('body', 'click', '.next_photo', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
-on('body', 'click', '.prev_photo', function(event) {
-  event.preventDefault();
-  this.style.display = "none";
-  change_this_fullscreen(this, "photo_fullscreen")
-})
+});
 
 on('#ajax', 'click', '.item_fullscreen_hide', function() {
   get_document_opacity_1(document.getElementById("ajax"));
