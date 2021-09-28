@@ -1096,8 +1096,8 @@ function get_document_opacity_0() {
   //document.body.querySelector(".main-container").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)";
   //document.body.querySelector(".nav-pills").style.clipPath = "polygon(0px 0px,0px 0px,0px 0px,0px 0px)"
   //};
-  //document.body.style.overflow = "hidden";
-  //document.body.style.marginRight = "4px";
+  document.body.style.overflow = "hidden";
+  document.body.style.marginRight = "4px";
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "unset";
   overlay.style.opacity = "1";
@@ -1111,8 +1111,8 @@ function get_document_opacity_1(block) {
   //main_container.style.clipPath = "none";
   //document.body.querySelector(".nav-pills").style.clipPath = "none"
   //};
-  //document.body.style.overflow = "scroll";
-  //document.body.style.marginRight = "0";
+  document.body.style.overflow = "scroll";
+  document.body.style.marginRight = "0";
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "hidden";
   overlay.style.opacity = "0";
