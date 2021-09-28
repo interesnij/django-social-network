@@ -1,4 +1,5 @@
 function check_photo_in_block(block, _this, pk) {
+  console.log(block);
     if (block.querySelector('[photo-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Изображение уже выбрано");
         _this.parentElement.parentElement.setAttribute("flow", "up");
