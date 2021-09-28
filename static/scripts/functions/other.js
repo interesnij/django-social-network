@@ -45,7 +45,7 @@ function create_fullscreen(url, type_class) {
               box = $loader.querySelector('.next_page_list');
               console.log(box);
               if (box && box.classList.contains("next_page_list")) {
-                  console.log(box, "next_page_list");
+                  console.log($loader);
                   inViewport = elementInViewport(box);
                   if (inViewport) {
                       box.remove();
