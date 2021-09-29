@@ -5135,6 +5135,22 @@ cursor: pointer;
     .worker_fullscreen{left: 30%;width: 40%;padding-left: 5%;padding-right: 5%;}
 }
 
+.video_fullscreen_hide,
+.video_fullscreen_normal {
+  cursor: pointer;
+  position: absolute;
+  right: -20px;
+  margin: 10px;
+  top: 40px;
+  z-index: 500;
+}
+.video_fullscreen_hide svg {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.video_fullscreen_hide svg :hover {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
 .this_fullscreen_hide {
   cursor: pointer;
   position: absolute;
