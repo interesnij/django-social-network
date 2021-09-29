@@ -93,10 +93,14 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 
 on('body', 'click', '.body_overlay', function() {
   container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".card").remove();
   if (!container.innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
-  }
+    container.querySelector(".card").remove();
+  } else {
+    video = container.nextElementSibling;
+    video.querySelector("#video_loader").innerHTML = "";
+    video.style.display = "none";
+  };
+  get_document_opacity_1(document.body.querySelector(".main-container"));
 });
 
 function get_document_opacity_0() {
