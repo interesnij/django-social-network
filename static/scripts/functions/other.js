@@ -105,9 +105,8 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 });
 
 on('body', 'click', '.body_overlay', function() {
-  container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".card").remove();
-  if (!container.innerHTML) {
+  this.parentElement.remove();
+  if (!document.body.querySelector("#fullscreens_container").innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
