@@ -64,6 +64,7 @@ function create_fullscreen(url, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           $load_div.remove();
           elem = link.responseText;
+          elem_html = document.createElement("span");
           elem_html = elem.innerHTML;
           console.log(elem_html);
           $parent_div.style.height = elem_html.scrollHeight;
