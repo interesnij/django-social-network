@@ -32,7 +32,7 @@ function create_fullscreen(url, type_class) {
   try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
 
   $parent_div = document.createElement("div");
-  $parent_div.classList.add("card", "mb-3", "border", type_class);
+  $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
   $parent_div.style.zIndex = 100 + count_items;
 
   if (document.body.querySelector(".desctop_nav")) {
@@ -66,7 +66,7 @@ function create_fullscreen(url, type_class) {
           elem = link.responseText;
 
           $loader.innerHTML = elem;
-          $parent_div.style.height = $loader.querySelector(".card").scrollHeight + "px";
+          $parent_div.style.height = $loader.scrollHeight + "px";
 
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
