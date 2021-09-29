@@ -126,9 +126,9 @@ on('body', 'click', '.body_overlay', function() {
   if (container.innerHTML) {
     container.querySelector(".card").remove();
   } else {
-    video = container.previousElementSibling;
-    video.querySelector("#video_loader").innerHTML = "";
-    video.style.display = "none";
+    video = document.body.querySelector("#video_loader");
+    video.innerHTML = "";
+    video.parentElement.style.display = "none";
   };
   get_document_opacity_1(document.body.querySelector(".main-container"));
 });
