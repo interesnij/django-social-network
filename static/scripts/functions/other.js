@@ -66,8 +66,7 @@ function create_fullscreen(url, type_class) {
           elem = link.responseText;
 
           $loader.innerHTML = elem;
-          $parent_div.style.height = $loader.scrollHeight;
-          console.log($loader.scrollHeight)
+          $parent_div.style.height = $loader.scrollHeight + "px";
 
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
