@@ -484,7 +484,7 @@ on('#ajax', 'click', '.music_list_item', function() {
 
         function play_video_list(url, counter, video_pk){
           loader = document.getElementById("video_loader");
-          open_fullscreen(url, loader);
+          open_video_fullscreen(url);
           video_player_id = document.body.getAttribute('data-video');
           document.body.setAttribute('data-video', video_player_id + "a");
           setTimeout(function() {
