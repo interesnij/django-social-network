@@ -9,11 +9,6 @@ function create_fullscreen(url, type_class) {
   $parent_div.classList.add("card", "mb-3", "border", type_class);
   $parent_div.style.zIndex = 100 + count_items;
 
-  $overlay = document.createElement("div");
-  $overlay.style.zIndex = 100 + count_items;
-  $overlay.classList.add("body_overlay");
-
-
   if (document.body.querySelector(".desctop_nav")) {
     hide_svg = '<svg class="svg_default" style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
   } else { hide_svg = "" };
@@ -31,7 +26,6 @@ function create_fullscreen(url, type_class) {
   $parent_div.append($hide_span);
   $parent_div.append($loader);
   $parent_div.append($load_div);
-  $parent_div.append($overlay);
 
   container.prepend($parent_div);
 
@@ -105,8 +99,9 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 });
 
 on('body', 'click', '.body_overlay', function() {
-  this.parentElement.remove();
-  if (!document.body.querySelector("#fullscreens_container").innerHTML) {
+  container = document.body.querySelector("#fullscreens_container");
+  container.querySelector(".card").remove();
+  if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
 });
@@ -1002,10 +997,16 @@ function addStyleSheets(href) {
 function get_document_opacity_0() {
   document.body.style.overflow = "hidden";
   document.body.style.marginRight = "4px";
+  overlay = document.body.querySelector(".body_overlay");
+  overlay.style.visibility = "unset";
+  overlay.style.opacity = "1";
 }
 function get_document_opacity_1(block) {
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
+  overlay = document.body.querySelector(".body_overlay");
+  overlay.style.visibility = "hidden";
+  overlay.style.opacity = "0";
 }
 
 function stop_body_scroll() {
