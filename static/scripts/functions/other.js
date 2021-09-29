@@ -31,9 +31,9 @@ function create_fullscreen(url, type_class) {
   $parent_div.append($hide_span);
   $parent_div.append($loader);
   $parent_div.append($load_div);
-  $parent_div.append($load_div);
+  $parent_div.append($overlay);
 
-  container.prepend($overlay);
+  container.prepend($parent_div);
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', url, true);
