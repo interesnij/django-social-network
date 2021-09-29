@@ -21,6 +21,9 @@ function play_video_list(url, counter, video_pk){
     }
     }
   }, 500);
+  video = document.createElement("div");
+  video.classList.add("video_init");
+  document.body.querySelector("#fullscreens_container").append(video)
 };
 
 function create_fullscreen(url, type_class) {

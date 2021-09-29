@@ -528,7 +528,11 @@ function play_video_list(url, counter, video_pk){
     }
     }
   }, 500);
-}
+  video = document.createElement("div");
+  video.classList.add("video_init");
+  document.body.querySelector("#fullscreens_container").append(video)
+};
+
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   document.querySelector("#draggable-header").onmousedown = dragMouseDown;
