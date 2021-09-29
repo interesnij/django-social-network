@@ -136,7 +136,7 @@ on('body', 'click', '.body_overlay', function() {
       video = document.body.querySelector("#video_loader");
       video.innerHTML = "";
       video.parentElement.style.display = "none";
-    } else {container.querySelector(".card").remove()};
+    } else {container.querySelector(".card_fullscreen").remove()};
   };
   if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
 });
