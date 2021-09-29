@@ -133,7 +133,6 @@ on('body', 'click', '.body_overlay', function() {
       video.innerHTML = "";
       video.parentElement.style.display = "none";
     } else {container.querySelector(".card").remove()};
-    container.querySelector(".card").remove();
   };
   if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
 });
