@@ -5144,10 +5144,14 @@ cursor: pointer;
   top: 40px;
   z-index: 500;
 }
-.video_fullscreen_hide svg {
+.video_fullscreen_hide svg,
+.video_fullscreen_resize svg {
   color: rgba(255, 255, 255, 0.9) !important;
+  position: fixed;
 }
-.video_fullscreen_hide svg :hover {
+
+.video_fullscreen_hide svg :hover,
+.video_fullscreen_resize svg :hover {
   color: rgba(255, 255, 255, 1) !important;
 }
 
@@ -5166,7 +5170,7 @@ cursor: pointer;
   cursor: pointer;
   z-index: 1000
 }
-.next_item  {
+.next_item {
   position: absolute;
   left: -65px;
   top: 160px;
@@ -5186,7 +5190,6 @@ cursor: pointer;
 }
 .desctop_version .prev_item svg :hover,
 .desctop_version .next_item svg :hover{
-  position: fixed;
   color: rgba(255, 255, 255, 1) !important;
 }
 .this_fullscreen_hide svg :hover {
