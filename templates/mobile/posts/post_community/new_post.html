@@ -2,7 +2,7 @@
   <span class="span1 {% for list in object.get_lists %}{{ list.pk }} {% endfor %}"></span>
     {% include 'mobile/posts/post_community/admin_card_header.html' %}
 
-    <div class="c_fullscreen pointer">
+    <div class="fullscreen pointer">
       {{ object.text|safe }}
     </div>
 

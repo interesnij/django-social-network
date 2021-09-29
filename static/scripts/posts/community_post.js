@@ -82,11 +82,11 @@ on('#ajax', 'click', '#c_edit_post_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
     form_post.parentElement.remove();
-    block.querySelector(".c_fullscreen") ? block.querySelector(".c_fullscreen").remove() : null;
+    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").remove() : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").remove() : null;
     block.querySelector(".card-footer").remove()
-    if (new_post.querySelector(".c_fullscreen")) {
-      block.append(new_post.querySelector(".c_fullscreen"))
+    if (new_post.querySelector(".fullscreen")) {
+      block.append(new_post.querySelector(".fullscreen"))
     }
     if (new_post.querySelector(".attach_container")) {
       block.append(new_post.querySelector(".attach_container"))

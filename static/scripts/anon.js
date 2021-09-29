@@ -503,7 +503,7 @@ on('body', 'click', '#logg', function() {
 
 function play_video_list(url, counter, video_pk){
   loader = document.getElementById("video_loader");
-  open_fullscreen(url, loader);
+  open_video_fullscreen(url);
 
   video_player_id = document.body.getAttribute('data-video');
   document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
@@ -575,31 +575,25 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
-}
+};
 
-function open_fullscreen(url, block) {
+function open_video_fullscreen(url) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', url, true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             elem = link.responseText;
+            block = document.body.querySelector("#video_loader")
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
-            if (block.querySelector(".next_page_list")) {
-              get_document_opacity_0();
-              if (block.querySelector(".is_block_paginate")) {
-                scrolled(block.querySelector(".is_block_paginate"), target = 0);
-                console.log("Работает пагинация обычная")
-              } else {
-                scrolled(block.querySelector(".is_block_post_paginate"), target = 1)
-                console.log("Работает пагинация постов")
-              }
-            }
+            get_document_opacity_0();
         }
     };
     link.send();
-}
+};
+
 function if_list(block) {
     if (block.querySelector('.is_profile_post_paginate')) {
         _block = block.querySelector('.is_profile_post_paginate');

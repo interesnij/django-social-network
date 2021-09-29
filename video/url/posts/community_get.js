@@ -6,7 +6,7 @@ on('#ajax', 'click', '.c_post_edit', function() {
     clear_attach_block();
     div = document.createElement("div");
     block.append(div);
-    block.querySelector(".c_fullscreen") ? block.querySelector(".c_fullscreen").style.display = "none" : null;
+    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
@@ -44,10 +44,6 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
   }
 })
 
-on('#ajax', 'click', '.c_fullscreen', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  open_fullscreen("/communities/post/" + uuid + "/", document.getElementById("item_loader"))
-});
 on('#ajax', 'click', '.c_fix_fullscreen', function() {
   container = this.parentElement;
   uuid = container.getAttribute('data-uuid');

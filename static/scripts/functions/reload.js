@@ -218,7 +218,7 @@ function top_paginate(block, target) {
         link_3.send();
 };
 
-function open_fullscreen(url, block) {
+function open_video_fullscreen(url) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', url, true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -226,32 +226,10 @@ function open_fullscreen(url, block) {
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             elem = link.responseText;
+            block = document.body.querySelector("#video_loader")
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
             get_document_opacity_0();
-            if (block.querySelector(".next_page_list")) {
-              block.onscroll = function() {
-                box = block.querySelector('.next_page_list');
-                if (box && box.classList.contains("next_page_list")) {
-                    inViewport = elementInViewport(box);
-                    if (inViewport) {
-                        box.remove();
-                        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                        link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
-                        link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-                        link_3.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
-                                var elem = document.createElement('span');
-                                elem.innerHTML = link_3.responseText;
-                                block.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
-                              }
-                        }
-                        link_3.send();
-                    }
-                };
-              }
-            }
         }
     };
     link.send();

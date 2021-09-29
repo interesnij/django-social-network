@@ -283,7 +283,7 @@ function create_preview_video(img_src, pk, counter){
   $icon_div = document.createElement("span");
   $img.classList.add("image_fit");
   $img.src = img_src;
-  $icon_div.classList.add("video_icon_play_v2", "u_video_list_detail");
+  $icon_div.classList.add("video_icon_play_v2", "video_list_detail");
   $icon_div.setAttribute("video-counter", counter);
   $icon_div.setAttribute("video-pk", pk);
 

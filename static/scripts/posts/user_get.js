@@ -70,10 +70,9 @@ on('#ajax', 'click', '.fullscreen', function() {
   create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.fix_fullscreen', function() {
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  uuid = this.parentElement.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  create_fullscreen("/users/detail/fix_post/" + uuid + "/", "item_fullscreen");
+  create_fullscreen("/posts/fix_post/" + uuid + "/", "item_fullscreen");
 })
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement

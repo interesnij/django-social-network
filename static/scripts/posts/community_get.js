@@ -6,7 +6,7 @@ on('#ajax', 'click', '.c_post_edit', function() {
     clear_attach_block();
     div = document.createElement("div");
     block.append(div);
-    block.querySelector(".c_fullscreen") ? block.querySelector(".c_fullscreen").style.display = "none" : null;
+    block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
@@ -40,18 +40,6 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/communities/")
   }
-});
-
-on('#ajax', 'click', '.c_fullscreen', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.c_fix_fullscreen', function() {
-  container = this.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  create_fullscreen("/communities/fix_post/" + pk + "/" + uuid + "/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.c_ucm_post_repost', function() {
