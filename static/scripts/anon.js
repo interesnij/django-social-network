@@ -93,7 +93,7 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 
 on('body', 'click', '.body_overlay', function() {
   container = document.body.querySelector("#fullscreens_container");
-  if (!container.innerHTML) {
+  if (container.innerHTML) {
     container.querySelector(".card").remove();
   } else {
     video = container.nextElementSibling;
