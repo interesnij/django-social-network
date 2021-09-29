@@ -124,14 +124,17 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 on('body', 'click', '.body_overlay', function() {
   container = document.body.querySelector("#fullscreens_container");
   if (container.innerHTML) {
+    if (container.querySelector(".video_init")) {
+      container.querySelector(".video_init").remove();
+      video = document.body.querySelector("#video_loader");
+      video.innerHTML = "";
+      video.parentElement.style.display = "none";
+    } else {container.querySelector(".card").remove()};
     container.querySelector(".card").remove();
-  } else {
-    video = document.body.querySelector("#video_loader");
-    video.innerHTML = "";
-    video.parentElement.style.display = "none";
   };
-  get_document_opacity_1(document.body.querySelector(".main-container"));
+  if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
 });
+
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card").remove();
