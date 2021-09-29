@@ -5144,6 +5144,15 @@ cursor: pointer;
   top: 40px;
   z-index: 500;
 }
+.video_fullscreen_resize {
+  cursor: pointer;
+  position: absolute;
+  right: -20px;
+  margin: 10px;
+  top: 60px;
+  z-index: 500;
+}
+
 .video_fullscreen_hide svg,
 .video_fullscreen_resize svg {
   color: rgba(255, 255, 255, 0.9) !important;
