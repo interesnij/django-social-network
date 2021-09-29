@@ -126,7 +126,7 @@ on('body', 'click', '.body_overlay', function() {
   if (container.innerHTML) {
     container.querySelector(".card").remove();
   } else {
-    video = container.nextElementSibling;
+    video = container.previousElementSibling;
     video.querySelector("#video_loader").innerHTML = "";
     video.style.display = "none";
   };
