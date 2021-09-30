@@ -384,7 +384,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
 
-  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form_post.querySelector(".special_block").innerHTML && !form_post.querySelector(".transfer")){
+  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".special_block").innerHTML && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
@@ -710,7 +710,8 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
 
 on('#ajax', 'click', '.edit_message_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-  if (!form_post.querySelector(".message_text").innerHTML && !form_post.querySelector(".special_block").innerHTML){
+  _text = form_post.querySelector(".message_text").innerHTML;
+  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".special_block").innerHTML){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
