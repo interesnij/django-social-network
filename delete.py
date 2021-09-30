@@ -26,7 +26,8 @@ text = "https://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.
 
 http = re.findall(r'(https?://[^\s]+)', text)
 a_1 = text
-_loop = [a_1]
+_loop = []
+_loop.append(a_1)
 
 if http:
     this = -1
