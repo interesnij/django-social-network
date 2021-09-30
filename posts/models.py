@@ -635,7 +635,7 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         #http = re.findall(r'https?://[\S]+', text)
-        re.search("(?P<url>https?://[^\s]+)", text).group("url")
+        http = re.search("(?P<url>https?://[^\s]+)", text).group("url")
         a_1 = text
         _loop = [a_1]
 
