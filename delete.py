@@ -36,11 +36,14 @@ if http:
 #        a = ""
         this += 1
         next += 1
-        print (p)
+        print ("Ссылка", p)
+        print ("=========")
 #        _loop.append(a)
         if "трезвый.рус" in p:
             _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
         else:
             _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-        print (_loop[this])
-        print (_loop[next])
+        print ("Старая переменная", _loop[this])
+        print ("---------")
+        print ("Новая переменная", _loop[next])
+        print ("---------")
