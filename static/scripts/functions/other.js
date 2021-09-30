@@ -1,13 +1,13 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+
+var savedRange,isInFocus;
 function saveSelection() {
-    if(window.getSelection)
-    {
+    if(window.getSelection) {
         savedRange = window.getSelection().getRangeAt(0);
     }
-    else if(document.selection)
-    {
-        savedRange = document.selection.createRange();
+    else if(document.selection) {
+      savedRange = document.selection.createRange();
     }
 }
 
@@ -15,19 +15,16 @@ function restoreSelection() {
     isInFocus = true;
     document.getElementById("area").focus();
     if (savedRange != null) {
-        if (window.getSelection)
-        {
+        if (window.getSelection) {
             var s = window.getSelection();
             if (s.rangeCount > 0)
                 s.removeAllRanges();
             s.addRange(savedRange);
         }
-        else if (document.createRange)
-        {
+        else if (document.createRange) {
             window.getSelection().addRange(savedRange);
         }
-        else if (document.selection)
-        {
+        else if (document.selection) {
             savedRange.select();
         }
     }
