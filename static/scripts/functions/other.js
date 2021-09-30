@@ -68,8 +68,12 @@ function create_fullscreen(url, type_class) {
           height = $loader.scrollHeight*1 + 30;
           if (height < 500) {
             $parent_div.style.height = height + "px";
-          } else { $parent_div.style.height = "100%"};
-          $parent_div.style.top = "15px";
+            top_height = (window.innerHeight - height) / 2 + "px";
+            $parent_div.style.top = top_height;
+          } else { 
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+          }
           console.log(height);
 
           get_document_opacity_0();
