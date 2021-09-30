@@ -13,7 +13,7 @@ function saveSelection() {
 
 function restoreSelection() {
     isInFocus = true;
-    document.getElementById("area").focus();
+    document.body.querySelector(".smile_supported").focus();
     if (savedRange != null) {
         if (window.getSelection) {
             var s = window.getSelection();
