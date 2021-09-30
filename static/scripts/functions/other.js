@@ -115,7 +115,7 @@ function create_fullscreen(url, type_class) {
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
-  //$parent_div.style.height = "35px";
+  $parent_div.style.height = "35px";
   $loader.append(create_gif_loading());
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
