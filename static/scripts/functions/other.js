@@ -42,10 +42,9 @@ function create_fullscreen(url, type_class) {
   $loader = document.createElement("div");
 
   $load_gif = document.createElement("img");
-  $load_gif.setAttribute("src", location.protocol + "//" + location.host + "/static/images/preloader.gif");
-  console.log($load_gif);
+  $load_gif.setAttribute("src", "/static/images/preloader.gif");
   $load_div = document.createElement("div");
-  $load_div.classList.add("centered", "m-1", "next_page_list");
+  $load_div.classList.add("centered", "m-1");
 
   $loader.setAttribute("id", "fullscreen_loader");
   $hide_span.innerHTML = hide_svg;
