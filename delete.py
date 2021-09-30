@@ -40,4 +40,5 @@ if http:
             _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
         else:
             _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+        print (_loop)
     print (_loop[next])
