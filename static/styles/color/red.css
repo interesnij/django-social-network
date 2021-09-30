@@ -113,7 +113,7 @@ body {
 .iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
   background: #e52222;
 }
-.card, .mobile_naw {
+.card, .mobile_naw, .card_fullscreen {
   background-color: #da4e4e;
 }
 
@@ -197,7 +197,7 @@ a.media:hover {
   background-color: #D32C2C !important;
 }
 .like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window, .custom_color, .fullscreen_color {
+.comment_like_window, .comment_dislike_window, .custom_color {
   background: #d53434 !important; color: rgba(255, 255, 255, 0.6) !important;
 }
 .thumb{

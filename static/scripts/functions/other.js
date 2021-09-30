@@ -32,7 +32,7 @@ function create_fullscreen(url, type_class) {
   try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
 
   $parent_div = document.createElement("div");
-  $parent_div.classList.add("fullscreen_color", "mb-3", "border", type_class);
+  $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
   $parent_div.style.zIndex = 100 + count_items;
 
   if (document.body.querySelector(".desctop_nav")) {
@@ -136,7 +136,7 @@ on('body', 'click', '.body_overlay', function() {
       video = document.body.querySelector("#video_loader");
       video.innerHTML = "";
       video.parentElement.style.display = "none";
-    } else {container.querySelector(".fullscreen_color").remove()};
+    } else {container.querySelector(".card_fullscreen").remove()};
   };
   if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
 });
