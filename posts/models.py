@@ -637,11 +637,12 @@ class Post(models.Model):
         http = re.findall(r'https?://[\S]+', text)
         t2, t3, t4, t5, t6 ,t7 = "", "", "", "", "", ""
         _loop = [text,t2,t3,t4,t5,t6,t7]
+        _http = http.split(",")
 
-        if http:
+        if _http:
             this = -1
             next = 0
-            for p in http:
+            for p in _http:
                 this += 1
                 next += 1
                 if "трезвый.рус" in p:
