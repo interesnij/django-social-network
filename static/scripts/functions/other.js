@@ -120,12 +120,12 @@ function change_this_fullscreen(_this, type_class) {
           height = $loader.scrollHeight*1;
           $parent_div = $loader.parentElement
           if (height < 500){
-            $parent_div.style.height = height + "px";
+            $loader.style.height = height + "px";
             top_height = (window.innerHeight - height - 50) / 2 + "px";
-            $parent_div.style.top = top_height;
+            $loader.style.top = top_height;
           } else {
-            $parent_div.style.height = "100%";
-            $parent_div.style.top = "15px";
+            $loader.style.height = "100%";
+            $loader.style.top = "15px";
           }
       }
   };
