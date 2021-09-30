@@ -22,7 +22,7 @@ from gallery.models import PhotoList
 from chat.models import Message
 import re
 
-text = "https://www.youtube.com/watch?v=BjwRjaStTGA&t=16698s https://www.youtube.com/watch?v=BjwRjaStTGA&t=16698s"
+text = "https://www.youtube.com/1111111 https://www.youtube.com/2222222222 https://www.youtube.com/3333333333"
 
 http = re.findall(r'(https?://[^\s]+)', text)
 a_1, a_2, a_3, a_4 = text, "","",""
