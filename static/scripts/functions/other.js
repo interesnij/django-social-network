@@ -130,7 +130,7 @@ function change_this_fullscreen(_this, type_class) {
             $parent_div.style.top = _height + "px";
             console.log(_height);
             console.log(_height*1 + 50);
-            prev_next_height = _height*1 + 50;
+            prev_next_height = _height*1 + 50 + "px";
             $loader.querySelector(".prev_item").style.top = "-" + prev_next_height;
             $loader.querySelector(".next_item").style.top = "-" + prev_next_height;
           } else {
