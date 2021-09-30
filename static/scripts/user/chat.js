@@ -146,7 +146,6 @@ on('#ajax', 'input', '.smile_supported', function() {
       img_list[i].remove()
     };
   };
-  get_caret();
 
   if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
@@ -160,7 +159,8 @@ on('#ajax', 'input', '.smile_supported', function() {
           send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
       }, 1000)
     }
-  }
+  };
+  setEndOfContenteditable(_this);
 });
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
