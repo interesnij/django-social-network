@@ -1,53 +1,120 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
 
-var savedRange,isInFocus;
-function saveSelection() {
-    if(window.getSelection) {
-        savedRange = window.getSelection().getRangeAt(0);
+function get_caret(block) {
+var editable = block, selection, range;
+var captureSelection = function(e) {
+    var isOrContainsAnchor = false,
+        isOrContainsFocus = false,
+        sel = window.getSelection(),
+        parentAnchor = sel.anchorNode,
+        parentFocus = sel.focusNode;
+
+    while(parentAnchor && parentAnchor != document.documentElement) {
+        if(parentAnchor == editable) {
+            isOrContainsAnchor = true;
+        }
+        parentAnchor = parentAnchor.parentNode;
     }
-    else if(document.selection) {
-      savedRange = document.selection.createRange();
+
+    while(parentFocus && parentFocus != document.documentElement) {
+        if(parentFocus == editable) {
+            isOrContainsFocus = true;
+        }
+        parentFocus = parentFocus.parentNode;
     }
-}
 
-function restoreSelection() {
-    isInFocus = true;
-    document.body.querySelector(".smile_supported").focus();
-    if (savedRange != null) {
-        if (window.getSelection) {
-            var s = window.getSelection();
-            if (s.rangeCount > 0)
-                s.removeAllRanges();
-            s.addRange(savedRange);
-        }
-        else if (document.createRange) {
-            window.getSelection().addRange(savedRange);
-        }
-        else if (document.selection) {
-            savedRange.select();
-        }
+    if(!isOrContainsAnchor || !isOrContainsFocus) {
+        return;
     }
-}
-var isInFocus = false;
-function onDivBlur(){isInFocus = false;}
 
-function cancelEvent(e) {
-    if (isInFocus == false && savedRange != null) {
-        if (e && e.preventDefault) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-        else {
-            window.event.cancelBubble = true;
-        }
-        restoreSelection();
-        return false;
+    selection = window.getSelection();
+
+    if(selection.getRangeAt !== undefined) {
+        range = selection.getRangeAt(0);
+    } else if(
+        document.createRange &&
+        selection.anchorNode &&
+        selection.anchorOffset &&
+        selection.focusNode &&
+        selection.focusOffset
+    ) {
+        range = document.createRange();
+        range.setStart(selection.anchorNode, selection.anchorOffset);
+        range.setEnd(selection.focusNode, selection.focusOffset);
+    } else {}
+};
+
+editable.onkeyup = captureSelection;
+
+editable.onmousedown = function(e) {
+    editable.className = editable.className + ' selecting';
+};
+document.onmouseup = function(e) {
+    if(editable.className.match(/\sselecting(\s|$)/)) {
+        editable.className = editable.className.replace(/ selecting(\s|$)/, '');
+        captureSelection();
     }
-}
+};
 
+editable.onblur = function(e) {
+    var cursorStart = document.createElement('span'),
+        collapsed = !!range.collapsed;
 
+    cursorStart.id = 'cursorStart';
+    cursorStart.appendChild(document.createTextNode('—'));
 
+    range.insertNode(cursorStart);
+
+    if(!collapsed) {
+        var cursorEnd = document.createElement('span');
+        cursorEnd.id = 'cursorEnd';
+        range.collapse();
+        range.insertNode(cursorEnd);
+    }
+};
+
+var afterFocus = [];
+editable.onfocus = function(e) {
+    setTimeout(function() {
+        var cursorStart = document.getElementById('cursorStart'),
+            cursorEnd = document.getElementById('cursorEnd');
+
+        if(editable.className.match(/\sselecting(\s|$)/)) {
+            if(cursorStart) {
+                cursorStart.parentNode.removeChild(cursorStart);
+            }
+            if(cursorEnd) {
+                cursorEnd.parentNode.removeChild(cursorEnd);
+            }
+        } else if(cursorStart) {
+            captureSelection();
+            var range = document.createRange();
+
+            if(cursorEnd) {
+                range.setStartAfter(cursorStart);
+                range.setEndBefore(cursorEnd);
+
+                cursorStart.parentNode.removeChild(cursorStart);
+                cursorEnd.parentNode.removeChild(cursorEnd);
+
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else {
+                range.selectNode(cursorStart);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('delete', false, null);
+            }
+        }
+        for(var i = 0; i < afterFocus.length; i++) {
+            afterFocus[i]();
+        }
+        afterFocus = [];
+        captureSelection();
+    }, 10);
+};
+};
 
 function play_video_list(url, counter, video_pk){
   loader = document.getElementById("video_loader");
