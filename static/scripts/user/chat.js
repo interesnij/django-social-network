@@ -139,11 +139,11 @@ on('#ajax', 'input', '.smile_supported', function() {
   br_list = _html.querySelectorAll("br");
   img_list = _html.querySelectorAll("img");
   for (var i = 0; i < br_list.length; i++){
-    br_list[i].setAttribute("style", "")
+    _html.querySelector(br_list[i]).replace("style", "")
   };
   for (var i = 0; i < img_list.length; i++){
-    if (!br_list[i].getAttribute("data-pk")) {
-      br_list[i].remove()
+    if (!img_list[i].getAttribute("data-pk")) {
+      _html.querySelector(img_list[i]).remove()
     };
   };
   _this.innerHTML = _html;
