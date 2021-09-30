@@ -20,6 +20,7 @@ from docs.models import Doc
 from chat.models import Message
 from gallery.models import PhotoList
 from chat.models import Message
+import re
 
 text = "https://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698shttps://www.youtube.com/watch?v=BjwRjaStTGA&t=16698s"
 
