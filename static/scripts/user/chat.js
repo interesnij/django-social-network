@@ -133,20 +133,22 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   btn.innerHTML = btn_text;
 });
 
-on('#ajax', 'input', '.chat_message_text', function() {
+on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  _this.innerHTML = _this.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'')
-  if (document.body.querySelector(".chatlist")) {
-    check_message_form_btn()
-  };
-  if (!_this.classList.contains("draft_created")) {
+  _this.innerHTML = _this.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'');
+  if (_this.classList.contains("chat_message_text")){
+    if (document.body.querySelector(".chatlist")) {
+      check_message_form_btn()
+    };
+    if (!_this.classList.contains("draft_created")) {
         _this.classList.add("draft_created");
         remove_class_timeout(_this);
         setTimeout(function(){
           form = _this.parentElement.parentElement;
           send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
       }, 1000)
-  };
+    }
+  }
 });
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
