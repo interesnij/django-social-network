@@ -5180,14 +5180,14 @@ cursor: pointer;
 }
 .prev_item {
   position: absolute;
-  right: -15px;
+  right: -10px;
   top: 40%;
   cursor: pointer;
   z-index: 1000
 }
 .next_item {
   position: absolute;
-  left: -65px;
+  left: -60px;
   top: 40%;
   cursor: pointer;
   z-index: 1000
