@@ -1,119 +1,148 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
 
-function get_caret(block) {
-var editable = block, selection, range;
-var captureSelection = function(e) {
-    var isOrContainsAnchor = false,
-        isOrContainsFocus = false,
-        sel = window.getSelection(),
-        parentAnchor = sel.anchorNode,
-        parentFocus = sel.focusNode;
+function get_caret() {
+  var editable = document.querySelector('.smile_supported'),
+      selection, range;
 
-    while(parentAnchor && parentAnchor != document.documentElement) {
-        if(parentAnchor == editable) {
-            isOrContainsAnchor = true;
-        }
-        parentAnchor = parentAnchor.parentNode;
-    }
+  // Populates selection and range variables
+  var captureSelection = function(e) {
+      // Don't capture selection outside editable region
+      var isOrContainsAnchor = false,
+          isOrContainsFocus = false,
+          sel = window.getSelection(),
+          parentAnchor = sel.anchorNode,
+          parentFocus = sel.focusNode;
 
-    while(parentFocus && parentFocus != document.documentElement) {
-        if(parentFocus == editable) {
-            isOrContainsFocus = true;
-        }
-        parentFocus = parentFocus.parentNode;
-    }
+      while(parentAnchor && parentAnchor != document.documentElement) {
+          if(parentAnchor == editable) {
+              isOrContainsAnchor = true;
+          }
+          parentAnchor = parentAnchor.parentNode;
+      }
 
-    if(!isOrContainsAnchor || !isOrContainsFocus) {
-        return;
-    }
+      while(parentFocus && parentFocus != document.documentElement) {
+          if(parentFocus == editable) {
+              isOrContainsFocus = true;
+          }
+          parentFocus = parentFocus.parentNode;
+      }
 
-    selection = window.getSelection();
+      if(!isOrContainsAnchor || !isOrContainsFocus) {
+          return;
+      }
 
-    if(selection.getRangeAt !== undefined) {
-        range = selection.getRangeAt(0);
-    } else if(
-        document.createRange &&
-        selection.anchorNode &&
-        selection.anchorOffset &&
-        selection.focusNode &&
-        selection.focusOffset
-    ) {
-        range = document.createRange();
-        range.setStart(selection.anchorNode, selection.anchorOffset);
-        range.setEnd(selection.focusNode, selection.focusOffset);
-    } else {}
-};
+      selection = window.getSelection();
 
-editable.onkeyup = captureSelection;
+      // Get range (standards)
+      if(selection.getRangeAt !== undefined) {
+          range = selection.getRangeAt(0);
 
-editable.onmousedown = function(e) {
-    editable.className = editable.className + ' selecting';
-};
-document.onmouseup = function(e) {
-    if(editable.className.match(/\sselecting(\s|$)/)) {
-        editable.className = editable.className.replace(/ selecting(\s|$)/, '');
-        captureSelection();
-    }
-};
+      // Get range (Safari 2)
+      } else if(
+          document.createRange &&
+          selection.anchorNode &&
+          selection.anchorOffset &&
+          selection.focusNode &&
+          selection.focusOffset
+      ) {
+          range = document.createRange();
+          range.setStart(selection.anchorNode, selection.anchorOffset);
+          range.setEnd(selection.focusNode, selection.focusOffset);
+      } else {
+          // Failure here, not handled by the rest of the script.
+          // Probably IE or some older browser
+      }
+  };
 
-editable.onblur = function(e) {
-    var cursorStart = document.createElement('span'),
-        collapsed = !!range.collapsed;
+  // Recalculate selection while typing
+  editable.onkeyup = captureSelection;
 
-    cursorStart.id = 'cursorStart';
-    cursorStart.appendChild(document.createTextNode('—'));
+  // Recalculate selection after clicking/drag-selecting
+  editable.onmousedown = function(e) {
+      editable.className = editable.className + ' selecting';
+  };
+  document.onmouseup = function(e) {
+      if(editable.className.match(/\sselecting(\s|$)/)) {
+          editable.className = editable.className.replace(/ selecting(\s|$)/, '');
+          captureSelection();
+      }
+  };
 
-    range.insertNode(cursorStart);
+  editable.onblur = function(e) {
+      var cursorStart = document.createElement('span'),
+          collapsed = !!range.collapsed;
 
-    if(!collapsed) {
-        var cursorEnd = document.createElement('span');
-        cursorEnd.id = 'cursorEnd';
-        range.collapse();
-        range.insertNode(cursorEnd);
-    }
-};
+      cursorStart.id = 'cursorStart';
+      cursorStart.appendChild(document.createTextNode('—'));
 
-var afterFocus = [];
-editable.onfocus = function(e) {
-    setTimeout(function() {
-        var cursorStart = document.getElementById('cursorStart'),
-            cursorEnd = document.getElementById('cursorEnd');
+      // Insert beginning cursor marker
+      range.insertNode(cursorStart);
 
-        if(editable.className.match(/\sselecting(\s|$)/)) {
-            if(cursorStart) {
-                cursorStart.parentNode.removeChild(cursorStart);
-            }
-            if(cursorEnd) {
-                cursorEnd.parentNode.removeChild(cursorEnd);
-            }
-        } else if(cursorStart) {
-            captureSelection();
-            var range = document.createRange();
+      // Insert end cursor marker if any text is selected
+      if(!collapsed) {
+          var cursorEnd = document.createElement('span');
+          cursorEnd.id = 'cursorEnd';
+          range.collapse();
+          range.insertNode(cursorEnd);
+      }
+  };
 
-            if(cursorEnd) {
-                range.setStartAfter(cursorStart);
-                range.setEndBefore(cursorEnd);
+  // Add callbacks to afterFocus to be called after cursor is replaced
+  // if you like, this would be useful for styling buttons and so on
+  var afterFocus = [];
+  editable.onfocus = function(e) {
+      // Slight delay will avoid the initial selection
+      // (at start or of contents depending on browser) being mistaken
+      setTimeout(function() {
+          var cursorStart = document.getElementById('cursorStart'),
+              cursorEnd = document.getElementById('cursorEnd');
 
-                cursorStart.parentNode.removeChild(cursorStart);
-                cursorEnd.parentNode.removeChild(cursorEnd);
+          // Don't do anything if user is creating a new selection
+          if(editable.className.match(/\sselecting(\s|$)/)) {
+              if(cursorStart) {
+                  cursorStart.parentNode.removeChild(cursorStart);
+              }
+              if(cursorEnd) {
+                  cursorEnd.parentNode.removeChild(cursorEnd);
+              }
+          } else if(cursorStart) {
+              captureSelection();
+              var range = document.createRange();
 
-                selection.removeAllRanges();
-                selection.addRange(range);
-            } else {
-                range.selectNode(cursorStart);
-                selection.removeAllRanges();
-                selection.addRange(range);
-                document.execCommand('delete', false, null);
-            }
-        }
-        for(var i = 0; i < afterFocus.length; i++) {
-            afterFocus[i]();
-        }
-        afterFocus = [];
-        captureSelection();
-    }, 10);
-};
+              if(cursorEnd) {
+                  range.setStartAfter(cursorStart);
+                  range.setEndBefore(cursorEnd);
+
+                  // Delete cursor markers
+                  cursorStart.parentNode.removeChild(cursorStart);
+                  cursorEnd.parentNode.removeChild(cursorEnd);
+
+                  // Select range
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+              } else {
+                  range.selectNode(cursorStart);
+
+                  // Select range
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+
+                  // Delete cursor marker
+                  document.execCommand('delete', false, null);
+              }
+          }
+
+          // Call callbacks here
+          for(var i = 0; i < afterFocus.length; i++) {
+              afterFocus[i]();
+          }
+          afterFocus = [];
+
+          // Register selection again
+          captureSelection();
+      }, 10);
+  };
 };
 
 function play_video_list(url, counter, video_pk){
