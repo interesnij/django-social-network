@@ -242,7 +242,7 @@ class User(AbstractUser):
         if self.b_avatar:
             return self.b_avatar.url
         else:
-            return '/static/images/no_img/a_avatar.jpg'
+            return '/static/images/no_img/b_avatar.jpg'
 
     def get_avatar(self):
         try:
