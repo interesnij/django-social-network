@@ -31,8 +31,8 @@ _loop = [a_1]
 if http:
     this = -1
     next = 0
-    a = ""
     for p in http:
+        a = ""
         this += 1
         next += 1
         _loop.append(a)
