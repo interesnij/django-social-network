@@ -66,7 +66,7 @@ function create_fullscreen(url, type_class) {
           span = document.createElement("span");
           span.innerHTML = elem;
           height = span.querySelector(".card").scrollHeight*1 + 30;
-          console.log(span);
+          console.log(span.querySelector(".card").scrollHeight);
           if (height < 500) {
             $parent_div.style.height = height + "px";
           } else { $parent_div.style.height = "100%"};
