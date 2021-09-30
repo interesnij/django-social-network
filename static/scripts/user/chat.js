@@ -135,7 +135,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  _this.innerHTML = _this.innerHTML.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi/, "");
+  _this.innerHTML = _this.innerHTML.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "");
   br_list = _this.querySelectorAll("br");
   img_list = _this.querySelectorAll("img");
   for (var i = 0; i < br_list.length; i++){
