@@ -5114,8 +5114,13 @@ cursor: pointer;
 .photo_fullscreen,
 .item_fullscreen,
 .video_fullscreen,
-.worker_fullscreen { position: fixed;top: 15px;left: 0;width: 100%;height: 100%;padding: 5%;display: block;overflow: auto; }
-
+.worker_fullscreen {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  padding: 5%;
+  overflow: auto;
+}
 
 @media screen and (min-width: 621px) {
     .item_fullscreen {left: 15%;width: 60%;padding-left: 5%;padding-right: 5%;}
