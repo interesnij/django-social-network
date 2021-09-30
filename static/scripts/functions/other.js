@@ -115,6 +115,7 @@ function create_fullscreen(url, type_class) {
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
+  $parent_div.style.opacity = "0";
   $parent_div.style.height = "35px";
   $loader.append(create_gif_loading());
 
@@ -138,7 +139,8 @@ function change_this_fullscreen(_this, type_class) {
           } else {
             $parent_div.style.height = "100%";
             $parent_div.style.top = "15px";
-          }
+          };
+          $parent_div.style.opacity = "1";
       }
   };
   link.send();
