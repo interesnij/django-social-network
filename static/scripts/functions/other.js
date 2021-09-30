@@ -73,8 +73,7 @@ function create_fullscreen(url, type_class) {
           } else {
             $parent_div.style.height = "100%";
             $parent_div.style.top = "15px";
-          }
-          console.log(height);
+          };
 
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
@@ -118,6 +117,15 @@ function change_this_fullscreen(_this, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           elem = link.responseText;
           $loader.innerHTML = elem;
+          height = $loader.scrollHeight*1 + 30;
+          if (height < 500) {
+            $parent_div.style.height = height + "px";
+            top_height = (window.innerHeight - height - 50) / 2 + "px";
+            $parent_div.style.top = top_height;
+          } else {
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+          }
       }
   };
   link.send();
