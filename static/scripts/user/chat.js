@@ -146,9 +146,7 @@ on('#ajax', 'input', '.smile_supported', function() {
       img_list[i].remove()
     };
   };
-  setTimeout(function() {
-      _this.focus();
-    }, 0);
+  saveSelection();
 
   if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
