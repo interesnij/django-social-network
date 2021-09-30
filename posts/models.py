@@ -637,19 +637,18 @@ class Post(models.Model):
         http = re.findall(r'https?://[\S]+', text)
         t2, t3, t4, t5, t6 ,t7 = "", "", "", "", "", ""
         _loop = [text,t2,t3,t4,t5,t6,t7]
-        _http = http.split(",")
 
-        if _http:
+        if http:
             this = -1
             next = 0
-            for p in _http:
+            for p in http:
                 this += 1
                 next += 1
                 if "трезвый.рус" in p:
                     _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
                 else:
                     _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-            text = _loop[next]
+                text = _loop[next]
         else:
             text = text
         list.count += 1
