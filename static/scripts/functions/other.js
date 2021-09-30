@@ -126,9 +126,9 @@ function change_this_fullscreen(_this, type_class) {
           $parent_div = $loader.parentElement
           if (height < 500){
             $parent_div.style.height = height + "px";
-            top_height = (window.innerHeight - height - 50) / 2 + "px";
-            $parent_div.style.top = top_height;
-            prev_next_height = top_height + 50;
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height + 50;
             $loader.querySelector(".prev_item").style.top = "-" + prev_next_height;
             $loader.querySelector(".next_item").style.top = "-" + prev_next_height;
           } else {
