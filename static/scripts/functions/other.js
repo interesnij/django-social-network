@@ -72,6 +72,7 @@ function create_fullscreen(url, type_class) {
           height = $loader.scrollHeight*1 + 30;
           if (height < 500 && !$loader.querySelector(".data_display")) {
             $parent_div.style.height = height + "px";
+            $loader.style.overflowY = "unset";
 
             _height = (window.innerHeight - height - 50) / 2;
             $parent_div.style.top = _height + "px";
@@ -81,6 +82,7 @@ function create_fullscreen(url, type_class) {
           } else {
             $parent_div.style.height = "100%";
             $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
           };
           $parent_div.style.opacity = "1";
 
@@ -135,11 +137,13 @@ function change_this_fullscreen(_this, type_class) {
             _height = (window.innerHeight - height - 50) / 2;
             $parent_div.style.top = _height + "px";
             prev_next_height = _height*1 + 50 + "px";
+            $loader.style.overflowY = "unset";
             try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
             try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
           } else {
             $parent_div.style.height = "100%";
             $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
           };
           $parent_div.style.opacity = "1";
       }
