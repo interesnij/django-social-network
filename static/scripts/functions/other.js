@@ -109,7 +109,6 @@ function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
 
-
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', _this.getAttribute("href"), true);
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -118,7 +117,7 @@ function change_this_fullscreen(_this, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           elem = link.responseText;
           $loader.innerHTML = elem;
-          height = $loader.scrollHeight*1 + 30;
+          height = $loader.scrollHeight*1;
           $parent_div = $loader.parentElement
           if (height < 500){
             $parent_div.style.height = height + "px";
