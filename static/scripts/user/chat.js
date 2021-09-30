@@ -136,14 +136,14 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
   _this.innerHTML = _this.innerHTML.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "");
-  br_list = _this.innerHTML.querySelectorAll("br");
-  img_list = _this.innerHTML.querySelectorAll("img");
+  br_list = _this.querySelectorAll("br");
+  img_list = _this.querySelectorAll("img");
   for (var i = 0; i < br_list.length; i++){
-    _this.innerHTML.querySelector(br_list[i]).replace("style", "")
+    _this.querySelector(br_list[i]).replace("style", "")
   };
   for (var i = 0; i < img_list.length; i++){
     if (!img_list[i].getAttribute("data-pk")) {
-      _this.innerHTML.querySelector(img_list[i]).remove()
+      _this.querySelector(img_list[i]).remove()
     };
   };
 
