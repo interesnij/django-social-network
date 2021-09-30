@@ -28,7 +28,7 @@ on('#ajax', 'click', '#u_add_article', function() {
 on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
-  if (_text.replace(/<[^>]*(>|$)(?!img)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && form_post.querySelector(".files_0")) {
+  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };
 
