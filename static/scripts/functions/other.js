@@ -50,14 +50,12 @@ function create_fullscreen(url, type_class) {
   $hide_span = document.createElement("span");
   $hide_span.classList.add("this_fullscreen_hide");
   $loader = document.createElement("div");
-  $load_div.append(create_gif_loading ());
 
   $loader.setAttribute("id", "fullscreen_loader");
   $hide_span.innerHTML = hide_svg;
   $parent_div.append($hide_span);
   $parent_div.append($loader);
-  $parent_div.append($load_div);
-
+  $parent_div.append(create_gif_loading ());
   container.prepend($parent_div);
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
