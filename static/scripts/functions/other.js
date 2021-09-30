@@ -69,7 +69,7 @@ function create_fullscreen(url, type_class) {
 
           $loader.innerHTML = elem;
           height = $loader.scrollHeight*1 + 30;
-          if (height < 500 || !$loader.querySelector(".data_display")) {
+          if (height < 500 && !$loader.querySelector(".data_display")) {
             $parent_div.style.height = height + "px";
 
             _height = (window.innerHeight - height - 50) / 2;
