@@ -5181,7 +5181,7 @@ cursor: pointer;
 .prev_item {
   position: absolute;
   right: -15px;
-  top: 40;
+  top: 40px;
   cursor: pointer;
   z-index: 1000
 }
