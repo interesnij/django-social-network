@@ -43,13 +43,16 @@ function create_fullscreen(url, type_class) {
 
   $load_gif = document.createElement("img");
   $load_gif.setAttribute("src", "/static/images/preloader.gif");
-  $load_gif.classList.add("centered", "m-1");
+  $load_gif.style.width = "40px";
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1");
+  $load_div.append($load_gif);
 
   $loader.setAttribute("id", "fullscreen_loader");
   $hide_span.innerHTML = hide_svg;
   $parent_div.append($hide_span);
   $parent_div.append($loader);
-  $parent_div.append($load_gif);
+  $parent_div.append($load_div);
 
   container.prepend($parent_div);
 
@@ -59,7 +62,7 @@ function create_fullscreen(url, type_class) {
 
   link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          //$load_gif.remove();
+          //$load_div.remove();
           elem = link.responseText;
 
           $loader.innerHTML = elem;
