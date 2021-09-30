@@ -63,13 +63,15 @@ function create_fullscreen(url, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           $load_div.remove();
           elem = link.responseText;
-
-          $loader.innerHTML = elem;
-          $aaa = $loader.querySelector(".card").scrollHeight;
-          height = $aaa*1 + 50;
+          span = document.createElement("span");
+          span.innerHTML = elem;
+          height = span.querySelector(".card").scrollHeight*1 + 30;
           if (height < 500) {
             $parent_div.style.height = height + "px";
-          } else { $parent_div.style.height = "100%"}
+          } else { $parent_div.style.height = "100%"};
+
+
+          $loader.innerHTML = elem;
           console.log(height);
 
           get_document_opacity_0();
