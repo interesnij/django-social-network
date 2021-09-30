@@ -135,6 +135,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 
 on('#ajax', 'input', '.chat_message_text', function() {
   _this = this;
+  _this.innerHTML = _this.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'')
   if (document.body.querySelector(".chatlist")) {
     check_message_form_btn()
   };
