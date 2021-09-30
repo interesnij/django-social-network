@@ -139,7 +139,7 @@ on('#ajax', 'input', '.smile_supported', function() {
   br_list = _this.querySelectorAll("br");
   img_list = _this.querySelectorAll("img");
   for (var i = 0; i < br_list.length; i++){
-    br_list[i].replace("style", "")
+    br_list[i].style = ""
   };
   for (var i = 0; i < img_list.length; i++){
     if (!img_list[i].getAttribute("data-pk")) {
