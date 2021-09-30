@@ -135,7 +135,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  _this.innerHTML = _this.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'');
+  _this.innerHTML = _this.innerHTML.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "");
   if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
       check_message_form_btn()
