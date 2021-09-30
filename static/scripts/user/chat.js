@@ -135,18 +135,17 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  _html = _this.innerHTML.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "");
-  br_list = _html.querySelectorAll("br");
-  img_list = _html.querySelectorAll("img");
+  _this.innerHTML = _this.innerHTML.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "");
+  br_list = _this.innerHTML.querySelectorAll("br");
+  img_list = _this.innerHTML.querySelectorAll("img");
   for (var i = 0; i < br_list.length; i++){
-    _html.querySelector(br_list[i]).replace("style", "")
+    _this.innerHTML.querySelector(br_list[i]).replace("style", "")
   };
   for (var i = 0; i < img_list.length; i++){
     if (!img_list[i].getAttribute("data-pk")) {
-      _html.querySelector(img_list[i]).remove()
+      _this.innerHTML.querySelector(img_list[i]).remove()
     };
   };
-  _this.innerHTML = _html;
 
   if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
