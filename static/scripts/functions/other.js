@@ -117,7 +117,7 @@ function change_this_fullscreen(_this, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           elem = link.responseText;
           $loader.innerHTML = elem;
-          height = $loader.scrollHeight*1 + 30;
+          height = $loader.scrollHeight;
           if (height < 500) {
             $parent_div.style.height = height + "px";
             top_height = (window.innerHeight - height - 50) / 2 + "px";
