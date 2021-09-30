@@ -634,22 +634,23 @@ class Post(models.Model):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
-        #http = re.findall(r'(https?://[^\s]+)', text)
-        #a_1 = text
-        #_loop = [a_1]
+        http = re.findall(r'https?://[\S]+', text)
+        t2, t3, t4, t5, t6 ,t7 = "", "", "", "", "", ""
+        _loop = [text,t2,t3,t4,t5,t6,t7]
 
-        #if http:
-        #    this = -1
-        #    next = 0
-        #    a = ""
-        #    for p in http:
-        #        this += 1
-        #        next += 1
-        #        _loop.append(a)
-        #        if "трезвый.рус" in p:
-        #            _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
-        #        else:
-        #            _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+        if http:
+            this = -1
+            next = 0
+            for p in http:
+                this += 1
+                next += 1
+                if "трезвый.рус" in p:
+                    _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
+                else:
+                    _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+            text = _loop[next]
+        else:
+            text = text
         list.count += 1
         list.save(update_fields=["count"])
         post = cls.objects.create(creator=creator,list=list,order=list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
