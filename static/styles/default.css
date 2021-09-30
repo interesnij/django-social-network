@@ -5175,20 +5175,20 @@ cursor: pointer;
   position: absolute;
   right: -20px;
   margin: 10px;
-  top: 40px;
+  top: 0;
   z-index: 500;
 }
 .prev_item {
   position: absolute;
   right: -15px;
-  top: 160px;
+  top: 40;
   cursor: pointer;
   z-index: 1000
 }
 .next_item {
   position: absolute;
   left: -65px;
-  top: 160px;
+  top: 40%;
   cursor: pointer;
   z-index: 1000
 }
