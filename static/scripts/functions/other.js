@@ -26,6 +26,16 @@ function play_video_list(url, counter, video_pk){
   document.body.querySelector("#fullscreens_container").append(video)
 };
 
+function create_gif_loading () {
+  $load_gif = document.createElement("img");
+  $load_gif.setAttribute("src", "/static/images/preloader.gif");
+  $load_gif.style.width = "40px";
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1");
+  $load_div.append($load_gif);
+  return $load_div
+};
+
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
   try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
@@ -40,13 +50,7 @@ function create_fullscreen(url, type_class) {
   $hide_span = document.createElement("span");
   $hide_span.classList.add("this_fullscreen_hide");
   $loader = document.createElement("div");
-
-  $load_gif = document.createElement("img");
-  $load_gif.setAttribute("src", "/static/images/preloader.gif");
-  $load_gif.style.width = "40px";
-  $load_div = document.createElement("div");
-  $load_div.classList.add("centered", "m-1");
-  $load_div.append($load_gif);
+  $load_div.append(create_gif_loading ());
 
   $loader.setAttribute("id", "fullscreen_loader");
   $hide_span.innerHTML = hide_svg;
@@ -62,7 +66,7 @@ function create_fullscreen(url, type_class) {
 
   link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          //$load_div.remove();
+          $load_div.remove();
           elem = link.responseText;
 
           $loader.innerHTML = elem;
@@ -109,6 +113,7 @@ function create_fullscreen(url, type_class) {
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
+  $loader.append(create_gif_loading());
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', _this.getAttribute("href"), true);
