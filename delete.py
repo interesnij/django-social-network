@@ -28,6 +28,7 @@ http = re.findall(r'(https?://[^\s]+)', text)
 a_1, a_2, a_3, a_4 = text, "","",""
 _loop = [a_1, a_2, a_3, a_4]
 #_loop.append(a_1)
+print (http)
 
 if http:
     this = -1
@@ -41,5 +42,4 @@ if http:
             _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
         else:
             _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-        print (_loop)
     print (_loop[next])
