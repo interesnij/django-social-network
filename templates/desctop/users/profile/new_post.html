@@ -3,7 +3,7 @@
     <form id="form_post" name="new_post">
         {% csrf_token %}
         <div class="card-body p-0">
-            <div contenteditable="true" placeholder="Добавить запись в список" class="form-control new_element_text input_new_post_in_list smile_supported"></div>
+            <div contenteditable="true" placeholder="Добавить запись в список" class="form-control new_element_text input_new_post_in_list smile_supported" onblur="onDivBlur();" onmousedown="return cancelEvent(event);" onclick="return cancelEvent(event);" contentEditable="true" onmouseup="saveSelection();" onkeyup="saveSelection();" onfocus="restoreSelection();"></div>
         </div>
         <div class="card-footer border-top btn_default" style="padding: 0 15px;display:none">
             <span class="files_0 row"></span>

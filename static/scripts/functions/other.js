@@ -1,5 +1,57 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function saveSelection() {
+    if(window.getSelection)
+    {
+        savedRange = window.getSelection().getRangeAt(0);
+    }
+    else if(document.selection)
+    {
+        savedRange = document.selection.createRange();
+    }
+}
+
+function restoreSelection() {
+    isInFocus = true;
+    document.getElementById("area").focus();
+    if (savedRange != null) {
+        if (window.getSelection)
+        {
+            var s = window.getSelection();
+            if (s.rangeCount > 0)
+                s.removeAllRanges();
+            s.addRange(savedRange);
+        }
+        else if (document.createRange)
+        {
+            window.getSelection().addRange(savedRange);
+        }
+        else if (document.selection)
+        {
+            savedRange.select();
+        }
+    }
+}
+var isInFocus = false;
+function onDivBlur(){isInFocus = false;}
+
+function cancelEvent(e) {
+    if (isInFocus == false && savedRange != null) {
+        if (e && e.preventDefault) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        else {
+            window.event.cancelBubble = true;
+        }
+        restoreSelection();
+        return false;
+    }
+}
+
+
+
+
 function play_video_list(url, counter, video_pk){
   loader = document.getElementById("video_loader");
   open_video_fullscreen(url);
