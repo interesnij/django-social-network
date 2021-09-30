@@ -128,11 +128,9 @@ function change_this_fullscreen(_this, type_class) {
             $parent_div.style.height = height + "px";
             _height = (window.innerHeight - height - 50) / 2;
             $parent_div.style.top = _height + "px";
-            console.log(_height);
-            console.log(_height*1 + 50);
             prev_next_height = _height*1 + 50 + "px";
-            $loader.querySelector(".prev_item").style.top = "-" + prev_next_height;
-            $loader.querySelector(".next_item").style.top = "-" + prev_next_height;
+            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
           } else {
             $parent_div.style.height = "100%";
             $parent_div.style.top = "15px";
