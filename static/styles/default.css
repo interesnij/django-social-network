@@ -5173,7 +5173,7 @@ cursor: pointer;
 .this_fullscreen_hide {
   cursor: pointer;
   position: absolute;
-  right: -20px;
+  right: -17px;
   margin: 10px;
   top: 0;
   z-index: 500;
