@@ -14,11 +14,15 @@
       <div class="card mb-3">
           <div class="card-body">
               <div class="row align-items-center no-gutters">
-                  <a class="col">
-                    <figure class="mx-auto mb-3 avatar_figure" id="avatar_reload">
-                        <img src="{{ user.get_b_avatar }}" class="u_avatar_detail pointer">
-                    </figure>
-                  </a>
+                <a class="col">
+                  <figure class="mx-auto mb-3 avatar_figure">
+                    {% if user.b_avatar %}
+                      <img src="{{ user.get_b_avatar }}" class="u_avatar_detail pointer">
+                    {% else %}
+                      <img src="{{ user.get_b_avatar }}">
+                    {% endif %}
+                  </figure>
+                </a>
               </div>
 
             {% include get_buttons_block %}
