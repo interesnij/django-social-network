@@ -5181,16 +5181,16 @@ cursor: pointer;
 .prev_item {
   position: absolute;
   right: -10px;
-  top: -170%;
+  top: -40%;
   cursor: pointer;
-  z-index: 1000
+  z-index: 400
 }
 .next_item {
   position: absolute;
   left: -60px;
-  top: -170%;
+  top: -40%;
   cursor: pointer;
-  z-index: 1000
+  z-index: 400
 }
 
 .desctop_version .prev_item svg,
