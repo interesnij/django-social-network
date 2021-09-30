@@ -200,7 +200,7 @@ a.media:hover {
   background-color: #0094CB !important;
 }
 .like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window, .custom_color {
+.comment_like_window, .comment_dislike_window, .custom_color, .fullscreen_color {
   background: #009bd5 !important; color: rgba(255, 255, 255, 0.9) !important;
 }
 .thumb{
