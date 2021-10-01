@@ -85,4 +85,6 @@ for word in words:
             # Если они равны, выводим надпись о их нахождении.
             print("Найдено", word, "\nПохоже на", fragment)
         _phrase = phrase.replace(word, "'ой!'")
-print("Новый текст - ", _phrase)
+        __phrase = phrase.replace(fragment, "'ой!'")
+print("Вырезаем слово - ", _phrase)
+print("Вырезаем фрагмент- ", __phrase)
