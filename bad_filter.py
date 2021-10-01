@@ -84,5 +84,5 @@ for word in words:
         if distance(fragment, word) <= len(word)*0.25:
             # Если они равны, выводим надпись о их нахождении.
             print("Найдено", word, "\nПохоже на", fragment)
-        _phrase = phrase.replace(fragment, "'ой!'")
+        _phrase = phrase.replace(word, "'ой!'")
 print("Новый текст - ", _phrase)
