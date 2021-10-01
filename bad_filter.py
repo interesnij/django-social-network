@@ -1,6 +1,6 @@
 import string
 
-words = ["хуй", "пизда"]
+words = ["дурак", "кретин"]
 
 print("Фильтруемые слова:", words)
 
