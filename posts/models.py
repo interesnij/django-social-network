@@ -635,13 +635,15 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         http = re.findall(r'https?://[\S]+', text)
+        uri = re.findall(r'(?P<domain>\w+\.\w{2,3})', text)
+        links = http + uri
 
-        if http:
+        if links:
             _loop = []
             _loop.append(text)
             this = -1
             next = 0
-            for p in http:
+            for p in links:
                 a = ""
                 _loop.append(a)
                 this += 1
