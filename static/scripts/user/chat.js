@@ -176,7 +176,7 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   $img.setAttribute("data-pk", this.getAttribute("data-pk"))
   input.append($img);
   if (document.body.querySelector(".chatlist")) {
-  check_message_form_btn()
+  show_message_form_send_btn()
   }
 });
 
