@@ -73,20 +73,18 @@ for key, value in d.items():
 
 
 # Проходимся по всем словам.
-print("Текст - ", phrase)
 _loop = []
 _loop.append(phrase)
 this = -1
 next = 0
 
 for word in words:
-
+    a = ""
+    _loop.append(a)
+    this += 1
+    next += 1
     # Разбиваем слово на части, и проходимся по ним.
     for part in range(len(phrase)):
-        a = ""
-        _loop.append(a)
-        this += 1
-        next += 1
         # Вот сам наш фрагмент.
         fragment = phrase[part: part+len(word)]
         # Если отличие этого фрагмента меньше или равно 25% этого слова, то считаем, что они равны.
