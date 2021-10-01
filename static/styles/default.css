@@ -1,3 +1,8 @@
+.smile_supported img{
+  width: auto;
+  padding-left: 3px;
+  padding-right: 3px
+}
 
 .data_display form {
   padding-left: 5px;
