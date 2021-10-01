@@ -71,8 +71,9 @@ for key, value in d.items():
                 # Заменяем эту букву на ключ словаря.
                 phrase = phrase.replace(phr, key)
 
-# Проходимся по всем словам.
 
+# Проходимся по всем словам.
+print(_phrase)
 for word in words:
 
     # Разбиваем слово на части, и проходимся по ним.
