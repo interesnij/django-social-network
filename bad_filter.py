@@ -95,4 +95,5 @@ for word in words:
             print("Найдено", word, "\nПохоже на", fragment)
             _loop[next] = _loop[this].replace(word, "'ой!'")
 
-print("Новый текст - ", _loop[next])
+print("Новый текст - ", _loop[next], "\n")
+print(_loop)
