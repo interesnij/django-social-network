@@ -638,7 +638,7 @@ class Post(models.Model):
         links = re.findall(r'https?://[\S]+', _text)
 
         if links:
-            _loop = [], _exlude = []
+            _loop, _exlude = [], []
             _loop.append(_text)
             this = -1
             next = 0
