@@ -73,7 +73,7 @@ for key, value in d.items():
 
 
 # Проходимся по всем словам.
-print(_phrase)
+print(phrase)
 for word in words:
 
     # Разбиваем слово на части, и проходимся по ним.
