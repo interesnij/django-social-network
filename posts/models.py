@@ -653,7 +653,7 @@ class Post(models.Model):
                     _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
                 else:
                     _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-                _exlude.append(a)
+                _exlude.append(p)
             text = _loop[next]
         else:
             text = text
