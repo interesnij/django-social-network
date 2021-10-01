@@ -635,13 +635,15 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         http = re.findall(r'https?://[\S]+', text)
-        t2, t3, t4, t5, t6 ,t7 = "", "", "", "", "", ""
-        _loop = [text,t2,t3,t4,t5,t6,t7]
 
         if http:
+            _loop = []
+            _loop.append(text)
             this = -1
             next = 0
             for p in http:
+                a = ""
+                _loop.append(a)
                 this += 1
                 next += 1
                 if "трезвый.рус" in p:
