@@ -643,17 +643,16 @@ class Post(models.Model):
             this = -1
             next = 0
             for p in links:
-                if p in _exlude:
-                    pass
-                a = ""
-                _loop.append(a)
-                this += 1
-                next += 1
-                if "трезвый.рус" in p:
-                    _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
-                else:
-                    _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-                _exlude.append(p)
+                if not p in _exlude:
+                    a = ""
+                    _loop.append(a)
+                    this += 1
+                    next += 1
+                    if "трезвый.рус" in p:
+                        _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
+                    else:
+                        _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+                    _exlude.append(p)
             text = _loop[next]
         else:
             text = text
