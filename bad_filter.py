@@ -4,7 +4,7 @@ words = ["дурак", "кретин"]
 
 print("Фильтруемые слова:", words)
 
-#Фраза, которую будем проверять.
+# Фраза, которую будем проверять.
 phrase = input("Введите фразу для проверки: ").lower().replace(" ", "")
 
 def distance(a, b):
@@ -72,7 +72,9 @@ for key, value in d.items():
                 phrase = phrase.replace(phr, key)
 
 # Проходимся по всем словам.
+
 for word in words:
+
     # Разбиваем слово на части, и проходимся по ним.
     for part in range(len(phrase)):
         # Вот сам наш фрагмент.
@@ -81,5 +83,5 @@ for word in words:
         if distance(fragment, word) <= len(word)*0.25:
             # Если они равны, выводим надпись о их нахождении.
             print("Найдено", word, "\nПохоже на", fragment)
-            word = "ой"
-print(words)
+        _phrase = phrase.replace(fragment, "'ой!'")
+print(_phrase)
