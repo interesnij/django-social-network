@@ -635,15 +635,16 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         _text = text.replace("&nbsp;"," ")
 
-        http = re.findall(r'https?://[\S]+', _text)
-        links = http
+        links = re.findall(r'https?://[\S]+', _text)
 
         if links:
-            _loop = []
+            _loop = [], _exlude = []
             _loop.append(_text)
             this = -1
             next = 0
             for p in links:
+                if p in _exlude:
+                    pass
                 a = ""
                 _loop.append(a)
                 this += 1
@@ -652,6 +653,7 @@ class Post(models.Model):
                     _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
                 else:
                     _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+                _exlude.append(a)
             text = _loop[next]
         else:
             text = text
