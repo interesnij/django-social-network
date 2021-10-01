@@ -73,7 +73,7 @@ for key, value in d.items():
 
 
 # Проходимся по всем словам.
-print(phrase)
+print("Текст - ", phrase)
 for word in words:
 
     # Разбиваем слово на части, и проходимся по ним.
@@ -84,5 +84,5 @@ for word in words:
         if distance(fragment, word) <= len(word)*0.25:
             # Если они равны, выводим надпись о их нахождении.
             print("Найдено", word, "\nПохоже на", fragment)
-        _phrase = phrase.replace(fragment, "'ой!'")
-print(_phrase)
+        phrase.replace(fragment, "'ой!'")
+print("Новый текст - ", phrase)
