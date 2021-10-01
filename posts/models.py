@@ -655,7 +655,7 @@ class Post(models.Model):
             text = text
         list.count += 1
         list.save(update_fields=["count"])
-        post = cls.objects.create(creator=creator,list=list,order=list.count,text=_loop[next],category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
+        post = cls.objects.create(creator=creator,list=list,order=list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
         get_post_processing(post, Post.PUBLISHED)
         if not list.is_private():
             if community:
