@@ -91,3 +91,5 @@ def clear_bad_words(text):
                 # Если они равны, выводим надпись о их нахождении.
                 print("Найдено", word, "\nПохоже на", fragment)
                 _loop[next] = _loop[this].replace(word, "'ой!'").replace(fragment, "'ой!'")
+
+clear_bad_words(phrase)
