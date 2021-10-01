@@ -177,7 +177,8 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   input.append($img);
   if (document.body.querySelector(".chatlist")) {
   show_message_form_send_btn()
-  }
+  };
+  setEndOfContenteditable(input);
 });
 
 function send_comment_sticker(form_post,value) {
