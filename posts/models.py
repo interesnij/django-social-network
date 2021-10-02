@@ -629,13 +629,14 @@ class Post(models.Model):
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
         from common.processing_2 import get_text_processing, is_have_bad_words
-        from django.http import HttpResponse
+        from rest_framework.exceptions import PermissionDenied
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         if is_have_bad_words(text):
-            return HttpResponse("bad words")
+            return PermissionDenied("bad words")
+
         list.count += 1
         list.save(update_fields=["count"])
         _text = get_text_processing(text)
