@@ -1,4 +1,5 @@
 import string
+from django.http import HttpResponse
 
 words = ["дурак", "кретин"]
 
@@ -67,3 +68,31 @@ def is_have_bad_words(text):
             if distance(fragment, word) <= len(word)*0.25:
                 return False
     return True
+
+def get_links_in_text(text):
+    _text = text.replace("&nbsp;"," ")
+    links = re.findall(r'https?://[\S]+', _text)
+
+    if links:
+        _loop, _exlude = [], []
+        _loop.append(_text)
+        this = -1
+        next = 0
+        for p in links:
+            if not p in _exlude:
+                a = ""
+                _loop.append(a)
+                this += 1
+                next += 1
+                if "трезвый.рус" in p:
+                    _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
+                else:
+                    _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+            _exlude.append(p)
+        return _loop[next]
+    return _text
+
+def get_text_processing(text):
+    if is_have_bad_words(text):
+        return HttpResponse("bad words")
+    return get_links_in_text(text)

@@ -628,38 +628,17 @@ class Post(models.Model):
 
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
-        from common.processing.post import get_post_processing
+        from common.processing import get_text_processing
         import re
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _text = text.replace("&nbsp;"," ")
 
-        links = re.findall(r'https?://[\S]+', _text)
-
-        if links:
-            _loop, _exlude = [], []
-            _loop.append(_text)
-            this = -1
-            next = 0
-            for p in links:
-                if not p in _exlude:
-                    a = ""
-                    _loop.append(a)
-                    this += 1
-                    next += 1
-                    if "трезвый.рус" in p:
-                        _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
-                    else:
-                        _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
-                    _exlude.append(p)
-            text = _loop[next]
-        else:
-            text = text
         list.count += 1
         list.save(update_fields=["count"])
-        post = cls.objects.create(creator=creator,list=list,order=list.count,text=text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,)
-        get_post_processing(post, Post.PUBLISHED)
+        _text = get_text_processing(text)
+        post = cls.objects.create(creator=creator,list=list,order=list.count,text=_text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,type=Post.PUBLISHED)
+
         if not list.is_private():
             if community:
                 from common.notify.progs import community_send_notify, community_send_wall
