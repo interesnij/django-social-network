@@ -1,5 +1,6 @@
 import string
 from django.http import HttpResponse
+import re
 
 words = ["дурак", "кретин"]
 
