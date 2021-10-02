@@ -635,7 +635,7 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         if is_have_bad_words(text):
-            return PermissionDenied("bad words")
+            raise PermissionDenied("bad words")
 
         list.count += 1
         list.save(update_fields=["count"])
