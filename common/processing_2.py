@@ -94,6 +94,6 @@ def get_links_in_text(text):
     return _text
 
 def get_text_processing(text):
-    if is_have_bad_words(text):
-        return HttpResponse("bad words")
+    #if is_have_bad_words(text):
+    #    return HttpResponse("bad words")
     return get_links_in_text(text)
