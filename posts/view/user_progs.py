@@ -48,7 +48,10 @@ class PostUserCreate(View):
                                             votes_on=post.votes_on,
                                             community=None
                                             )
-                return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
+                if new_post:
+                    return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
+                else:
+                    return HttpResponseBadRequest()
             else:
                 return HttpResponseBadRequest()
         else:
