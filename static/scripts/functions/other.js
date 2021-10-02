@@ -199,14 +199,6 @@ on('body', 'click', '.body_overlay', function() {
   if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
 });
 
-function close_fullscreen() {
-  container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".card").remove();
-  if (!container.innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
-  }
-};
-
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
   btn_block = input.nextElementSibling.nextElementSibling;
