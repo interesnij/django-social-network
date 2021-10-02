@@ -628,7 +628,7 @@ class Post(models.Model):
 
     @classmethod
     def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community):
-        from common.processing import get_text_processing
+        from common.processing_2 import get_text_processing
         import re
 
         _attach = str(attach)
