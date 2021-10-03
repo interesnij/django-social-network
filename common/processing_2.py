@@ -67,9 +67,9 @@ def is_have_bad_words(text):
         for part in range(len(text)):
             fragment = text[part: part+len(word)]
             if distance(fragment, word) <= len(word)*0.25:
-                bad_text = "Исправьте слова" + "Найдено" + word + "Похоже на" + fragment
+                bad_text = "Исправьте слово: " + word + ", похожее на " + fragment
                 raise PermissionDenied(bad_text)
-    return False
+    return False 
 
 def get_links_in_text(text):
     _text = text.replace("&nbsp;"," ")
