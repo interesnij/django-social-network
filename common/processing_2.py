@@ -23,7 +23,10 @@ def distance(a, b):
     return current_row[n]
 
 def is_have_bad_words(text):
-    _text = text.lower().replace(" ", "")
+    lower_replace_text = text.lower().replace(" ", "")
+    CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    _text = re.sub(CLEANR, '', lower_replace_text)
+
     d = {'а' : ['а', 'a', '@'],
       'б' : ['б', '6', 'b'],
       'в' : ['в', 'b', 'v'],
