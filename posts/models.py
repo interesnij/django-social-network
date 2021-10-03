@@ -636,6 +636,7 @@ class Post(models.Model):
 
         if is_have_bad_words(text):
             raise PermissionDenied("bad words")
+        _text = get_text_processing(text)
 
         list.count += 1
         list.save(update_fields=["count"])
