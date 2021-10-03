@@ -920,7 +920,7 @@ class ToastManager {
                 newToastObject.progressElement.value = newToastObject.counter.toString();
                 if (newToastObject.counter >= 100) {
                     //newToast.style.display = 'none';
-                    newToast.remove();
+                    newToast.parentElement.remove();
                     clearInterval(newToastObject.timer);
                     this.toasts = this.toasts.filter((toast) => {
                         return toast.id === newToastObject.id
