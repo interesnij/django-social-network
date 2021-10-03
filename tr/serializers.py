@@ -43,7 +43,6 @@ absolute_words = [
                 "ахуячить",
                 "тхуярить",
                 "хуякнут",
-
                 "дохуяч",
                 "хуипан",
                 "хуйлор",
@@ -66,7 +65,6 @@ absolute_words = [
                 "оебучий",
                 "аебашить",
                 "ебляя",
-
                 "хуясебе",
                 "хуйсни",
                 "какогохуя",
@@ -178,6 +176,8 @@ class RegisterSerializer(serializers.Serializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError("Пароль 1 и пароль 2 не совпадают")
+        is_have_bad_words(data['first_name'])
+        is_have_bad_words(data['last_name'])
         return data
 
     def get_cleaned_data(self):
