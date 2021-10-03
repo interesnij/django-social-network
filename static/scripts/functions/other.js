@@ -919,7 +919,6 @@ class ToastManager {
                 newToastObject.counter += 1000 / newToastObject.timeout;
                 newToastObject.progressElement.value = newToastObject.counter.toString();
                 if (newToastObject.counter >= 100) {
-                    //newToast.style.display = 'none';
                     newToast.parentElement.remove();
                     clearInterval(newToastObject.timer);
                     this.toasts = this.toasts.filter((toast) => {
@@ -929,7 +928,7 @@ class ToastManager {
             }, 10)
         }
         newToast.addEventListener('click', () => {
-            newToast.style.display = 'none';
+            newToast.parentElement.remove();
             clearInterval(newToastObject.timer);
             this.toasts = this.toasts.filter((toast) => {
                 return toast.id === newToastObject.id
