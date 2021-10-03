@@ -1,28 +1,24 @@
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
-  count_items = container.querySelectorAll(".card").length;
+  try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
+
   $parent_div = document.createElement("div");
-  $parent_div.classList.add("card", "mb-3", "border", type_class);
+  $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
   $parent_div.style.zIndex = 100 + count_items;
+  $parent_div.style.opacity = "0";
 
   if (document.body.querySelector(".desctop_nav")) {
-    hide_svg = '<svg style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+    hide_svg = '<svg class="svg_default" style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
   } else { hide_svg = "" };
   $hide_span = document.createElement("span");
-  $hide_span.classList.add("this_fullscreen_hide", "btn_default");
+  $hide_span.classList.add("this_fullscreen_hide");
   $loader = document.createElement("div");
-
-  $load_gif = document.createElement("img");
-  $load_gif.setAttribute("src", location.protocol + "//" + location.host + "/static/images/preloader.gif");
-  $load_div = document.createElement("div");
-  $load_div.classList.add("centered", "m-1", "next_page_list");
 
   $loader.setAttribute("id", "fullscreen_loader");
   $hide_span.innerHTML = hide_svg;
   $parent_div.append($hide_span);
   $parent_div.append($loader);
-  $parent_div.append($load_div);
-
+  $parent_div.append(create_gif_loading ());
   container.prepend($parent_div);
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -31,13 +27,31 @@ function create_fullscreen(url, type_class) {
 
   link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+          $load_div.remove();
           elem = link.responseText;
+
           $loader.innerHTML = elem;
+          height = $loader.scrollHeight*1 + 30;
+          if (height < 500 && !$loader.querySelector(".data_display")) {
+            $parent_div.style.height = height + "px";
+            $loader.style.overflowY = "unset";
+
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height*1 + 50 + "px";
+            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+          } else {
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
+          };
+          $parent_div.style.opacity = "1";
+
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
             $loader.onscroll = function() {
               box = $loader.querySelector('.next_page_list');
-
               if (box && box.classList.contains("next_page_list")) {
                   inViewport = elementInViewport(box);
                   if (inViewport) {
@@ -62,9 +76,13 @@ function create_fullscreen(url, type_class) {
   };
   link.send();
 };
+
+
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
+  $parent_div.style.opacity = "0";
+  $parent_div.style.height = "35px";
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', _this.getAttribute("href"), true);
@@ -74,10 +92,27 @@ function change_this_fullscreen(_this, type_class) {
       if (this.readyState == 4 && this.status == 200) {
           elem = link.responseText;
           $loader.innerHTML = elem;
+          height = $loader.scrollHeight*1 + 30;
+          $parent_div = $loader.parentElement
+          if (height < 500 && !$loader.querySelector(".data_display")){
+            $parent_div.style.height = height + "px";
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height*1 + 50 + "px";
+            $loader.style.overflowY = "unset";
+            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+          } else {
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
+          };
+          $parent_div.style.opacity = "1";
       }
   };
   link.send();
 };
+
 on('body', 'click', '.this_fullscreen_hide', function() {
   this.parentElement.remove();
   if (!document.body.querySelector("#fullscreens_container").innerHTML) {
