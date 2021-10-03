@@ -2,7 +2,17 @@ import string
 from rest_framework.exceptions import PermissionDenied
 import re
 
-words = ["дурак", "кретин"]
+absolute_words = [
+                "дурак",
+                "кретин"
+                ]
+
+relative_words = [
+                    "потреблять",
+                    "подстрахуй",
+                    "парикмахер",
+                    "застрахуй",
+                ]
 
 def distance(a, b):
     "Вычисляет расстояние Левенштейна между a и b."
@@ -67,7 +77,7 @@ def is_have_bad_words(text):
                 if letter == phr:
                     _text = _text.replace(phr, key)
 
-    for word in words:
+    for word in absolute_words:
         for part in range(len(_text)):
             fragment = _text[part: part+len(word)]
             if distance(fragment, word) <= len(word)*0.25:
