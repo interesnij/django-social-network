@@ -25,7 +25,7 @@ on('#ajax', 'click', '#u_add_article', function() {
   create_fullscreen("/article/u_article_window/" + pk + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '#u_add_post_btn', function() {
+on('.list_pk', 'click', '#u_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
