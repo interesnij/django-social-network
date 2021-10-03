@@ -64,8 +64,10 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   } else {
         new_post = document.createElement("span");
         new_post.innerHTML = link_.responseText;
-        text = new_post.querySelector(".exception_value").innerHTML;
-        toast_info(text);
+        if (new_post.querySelector(".exception_value")){
+          text = new_post.querySelector(".exception_value").innerHTML;
+          toast_info(text)
+        }
     }
   };
 
