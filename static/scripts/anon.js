@@ -1,3 +1,13 @@
+function create_gif_loading () {
+  $load_gif = document.createElement("img");
+  $load_gif.setAttribute("src", "/static/images/preloader.gif");
+  $load_gif.style.width = "40px";
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1");
+  $load_div.append($load_gif);
+  return $load_div
+};
+
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
   try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
