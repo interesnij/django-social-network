@@ -66,7 +66,8 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
       new_post = document.createElement("span");
       new_post.innerHTML = elem;
       console.log(new_post);
-      toast_info(new_post.querySelector(".exception_value").innerHTML)
+      toast_info(new_post.querySelector(".exception_value").innerHTML);
+      return
     }
   };
 
