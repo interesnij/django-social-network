@@ -164,9 +164,6 @@ class RegisterSerializer(serializers.Serializer):
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
-    is_have_bad_words(first_name)
-    is_have_bad_words(last_name)
-
     def validate_email(self, email):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
@@ -194,6 +191,9 @@ class RegisterSerializer(serializers.Serializer):
     def save(self, request):
         adapter = get_adapter()
         user = adapter.new_user(request)
+        is_have_bad_words(user.first_name)
+        is_have_bad_words(user.last_name)
+
         users_count = User.objects.only("pk").count()
         user.phone = users_count + 156
         self.date_day = self.validated_data.get('date_day', '')
