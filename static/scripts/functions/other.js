@@ -920,6 +920,7 @@ class ToastManager {
                 newToastObject.progressElement.value = newToastObject.counter.toString();
                 if (newToastObject.counter >= 100) {
                     newToast.style.display = 'none';
+                    newToast.remove();
                     clearInterval(newToastObject.timer);
                     this.toasts = this.toasts.filter((toast) => {
                         return toast.id === newToastObject.id
@@ -951,7 +952,7 @@ function toast_error(text) {
 }
 
 function toast_info(text) {
-  toasts = document.body.querySelectorAll(".toast")
+  toasts = document.body.querySelectorAll(".toasts")
   for (var i = 0; i < toasts.length; i++){
     if (toasts[i].querySelector("h3").innerHTML = text) {
       return
