@@ -61,7 +61,13 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
-  } else { console.log(link_.responseText)}};
+  } else {
+      elem = link_.responseText;
+      new_post = document.createElement("span");
+      new_post.innerHTML = elem;
+      toast_info(new_post.querySelector(".exception_value").innerHTML)
+    }
+  };
 
   link_.send(form_data);
 });
