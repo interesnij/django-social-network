@@ -23,6 +23,7 @@ def distance(a, b):
     return current_row[n]
 
 def is_have_bad_words(text):
+    _text = text.lower().replace(" ", "")
     d = {'а' : ['а', 'a', '@'],
       'б' : ['б', '6', 'b'],
       'в' : ['в', 'b', 'v'],
@@ -59,13 +60,13 @@ def is_have_bad_words(text):
     }
     for key, value in d.items():
         for letter in value:
-            for phr in text:
+            for phr in _text:
                 if letter == phr:
-                    text = text.replace(phr, key)
+                    _text = _text.replace(phr, key)
 
     for word in words:
-        for part in range(len(text)):
-            fragment = text[part: part+len(word)]
+        for part in range(len(_text)):
+            fragment = _text[part: part+len(word)]
             if distance(fragment, word) <= len(word)*0.25:
                 bad_text = "Исправьте слово: " + fragment + ", похожее на " + word
                 raise PermissionDenied(bad_text)
