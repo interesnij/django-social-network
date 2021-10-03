@@ -66,7 +66,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
         new_post.innerHTML = link_.responseText;
         if (new_post.querySelector(".exception_value")){
           text = new_post.querySelector(".exception_value").innerHTML;
-          setTimeout(function() {toast_info(text)}, 1000);
+          toast_info(text)
         }
     }
   };

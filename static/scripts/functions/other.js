@@ -951,8 +951,13 @@ function toast_error(text) {
 }
 
 function toast_info(text) {
-    var toasts = new ToastManager();
-    toasts.showInfo(text)
+  toasts = document.body.querySelectorAll(".toast")
+  for (var i = 0; i < toasts.length; i++){
+    if (toasts[i].querySelector("h3").innerHTML = text) {
+      return
+    }
+  };
+  new ToastManager().showInfo(text)
 }
 
 function toast_warning(text) {
