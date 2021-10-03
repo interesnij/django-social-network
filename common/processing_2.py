@@ -1,5 +1,5 @@
 import string
-from django.http import HttpResponse
+from rest_framework.exceptions import PermissionDenied
 import re
 
 words = ["дурак", "кретин"]
@@ -67,7 +67,7 @@ def is_have_bad_words(text):
         for part in range(len(text)):
             fragment = text[part: part+len(word)]
             if distance(fragment, word) <= len(word)*0.25:
-                return True
+                raise PermissionDenied("bad words")
     return False
 
 def get_links_in_text(text):
@@ -94,6 +94,5 @@ def get_links_in_text(text):
     return _text
 
 def get_text_processing(text):
-    #if is_have_bad_words(text):
-    #    return HttpResponse("bad words")
+    is_have_bad_words(text)
     return get_links_in_text(text)
