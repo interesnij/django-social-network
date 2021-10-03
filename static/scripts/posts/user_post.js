@@ -62,12 +62,15 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
   } else {
-      elem = link_.responseText;
-      new_post = document.createElement("span");
-      new_post.innerHTML = elem;
-      console.log(new_post);
-      toast_info(new_post.querySelector(".exception_value").innerHTML);
-      return
+      loaded = false;
+      if (!loaded) {
+        elem = link_.responseText;
+        new_post = document.createElement("span");
+        new_post.innerHTML = elem;
+        console.log(new_post);
+        toast_info(new_post.querySelector(".exception_value").innerHTML);
+        loaded = true
+      }
     }
   };
 
