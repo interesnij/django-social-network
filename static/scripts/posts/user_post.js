@@ -62,13 +62,9 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
   } else {
-      loaded = false;
-      if (!loaded) {
-        elem = link_.responseText;
         new_post = document.createElement("span");
-        new_post.innerHTML = elem;
+        new_post.innerHTML = link_.responseText;
         toast_info(new_post.querySelector(".exception_value").innerHTML);
-      }
     }
   };
 
