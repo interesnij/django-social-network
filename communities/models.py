@@ -379,25 +379,25 @@ class Community(models.Model):
 
     def is_anon_user_can_see_post(self):
         private = self.community_private
-        return private.can_see_post == "AC"
+        return private.can_see_post == "1"
     def is_anon_user_can_see_photo(self):
         private = self.community_private
-        return private.can_see_photo == "AC"
+        return private.can_see_photo == "1"
     def is_anon_user_can_see_member(self):
         private = self.community_private
-        return private.can_see_member == "AC"
+        return private.can_see_member == "1"
     def is_anon_user_can_see_doc(self):
         private = self.community_private
-        return private.can_see_doc == "AC"
+        return private.can_see_doc == "1"
     def is_anon_user_can_see_music(self):
         private = self.community_private
-        return private.can_see_music == "AC"
+        return private.can_see_music == "1"
     def is_anon_user_can_see_video(self):
         private = self.community_private
-        return private.can_see_video == "AC"
+        return private.can_see_video == "1"
     def is_anon_user_can_see_good(self):
         private = self.community_private
-        return private.can_see_good == "AC"
+        return private.can_see_good == "1"
 
     def is_photo_open(self, user_id):
         from communities.model.settings import CommunityPrivate
