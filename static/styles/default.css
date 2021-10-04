@@ -53,8 +53,7 @@
 }
 
 .post .card-footer {
-  padding-left: 17px !important;
-  padding-right: 17px !important;
+  padding: 1px 17px !important;
 }
 .show_replies {
   cursor:pointer;
