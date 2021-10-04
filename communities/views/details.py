@@ -105,6 +105,7 @@ class CommunityDetail(TemplateView):
             self.is_doc_open = self.c.is_anon_user_can_see_doc()
             self.is_member_open = self.c.is_anon_user_can_see_member()
             self.is_good_open = self.c.is_anon_user_can_see_good()
+            self.is_post_open = self.c.is_anon_user_can_see_post()
 
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name
