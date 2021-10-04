@@ -388,7 +388,7 @@ class Community(models.Model):
         return private.can_see_member == "AC"
     def is_anon_user_can_see_doc(self):
         private = self.community_private
-        return private.community_private == "AC"
+        return private.can_see_doc == "AC"
     def is_anon_user_can_see_music(self):
         private = self.community_private
         return private.can_see_music == "AC"
