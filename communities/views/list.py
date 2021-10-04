@@ -363,7 +363,7 @@ class CommunityPostsListView(ListView):
 				self.post_lists = PostList.get_community_lists(self.c.pk)
 			self.template_name = get_template_community(self.post_list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
-			self.posts_list = self.list.get_items()
+			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_community_lists(self.c.pk)
 			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
 			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_el()
