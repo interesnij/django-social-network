@@ -419,7 +419,7 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_post == CommunityPrivate.ALL_CAN:
+        if private.can_see_post == "1":
             return True
         elif private.can_see_post == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
             return True
