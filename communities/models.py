@@ -403,15 +403,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_photo == CommunityPrivate.ALL_CAN:
+        if private.can_see_photo == "1":
             return True
-        elif private.can_see_photo == CommunityPrivate.MEMBERS and user_id in self.get_members_ids():
+        elif private.can_see_photo == "3" and user_id in self.get_members_ids():
             return True
-        elif private.can_see_photo == CommunityPrivate.YOU and user_id == self.creator.pk:
+        elif private.can_see_photo == "4" and user_id == self.creator.pk:
             return True
-        elif private.can_see_photo == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 10, 0):
+        elif private.can_see_photo == "6" and self.get_special_perm_see(self.pk, user_pk, 10, 0):
             return True
-        elif private.can_see_photo == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
+        elif private.can_see_photo == "8" and self.get_special_perm_see(self.pk, user_pk, 10, 1):
             return True
         return False
 
@@ -421,13 +421,13 @@ class Community(models.Model):
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_post == "1":
             return True
-        elif private.can_see_post == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_post == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_post == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_post == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_post == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 8, 0):
+        elif private.can_see_post == "6" and self.get_special_perm_see(self.pk, user_pk, 8, 0):
             return True
-        elif private.can_see_post == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 8, 1):
+        elif private.can_see_post == "8" and self.get_special_perm_see(self.pk, user_pk, 8, 1):
             return True
         return False
 
@@ -435,15 +435,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_send_message == CommunityPrivate.ALL_CAN:
+        if private.can_send_message == "1":
             return True
-        elif private.can_send_message == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_send_message == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_send_message == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_send_message == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_send_message == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 4, 0):
+        elif private.can_send_message == "6" and self.get_special_perm_see(self.pk, user_pk, 4, 0):
             return True
-        elif private.can_send_message == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 4, 1):
+        elif private.can_send_message == "8" and self.get_special_perm_see(self.pk, user_pk, 4, 1):
             return True
         return False
 
@@ -451,15 +451,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_good == CommunityPrivate.ALL_CAN:
+        if private.can_see_good == "1":
             return True
-        elif private.can_see_good == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_good == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_good == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_good == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_good == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 12, 0):
+        elif private.can_see_good == "6" and self.get_special_perm_see(self.pk, user_pk, 12, 0):
             return True
-        elif private.can_see_good == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
+        elif private.can_see_good == "8" and self.get_special_perm_see(self.pk, user_pk, 12, 1):
             return True
         return False
 
@@ -467,15 +467,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_video == CommunityPrivate.ALL_CAN:
+        if private.can_see_video == "1":
             return True
-        elif private.can_see_video == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_video == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_video == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_video == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_video == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 14, 0):
+        elif private.can_see_video == "6" and self.get_special_perm_see(self.pk, user_pk, 14, 0):
             return True
-        elif private.can_see_video == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 14, 1):
+        elif private.can_see_video == "8" and self.get_special_perm_see(self.pk, user_pk, 14, 1):
             return True
         return False
 
@@ -483,15 +483,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_music == CommunityPrivate.ALL_CAN:
+        if private.can_see_music == "1":
             return True
-        elif private.can_see_music == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_music == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_music == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_music == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_music == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 7, 0):
+        elif private.can_see_music == "6" and self.get_special_perm_see(self.pk, user_pk, 7, 0):
             return True
-        elif private.can_see_music == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 7, 1):
+        elif private.can_see_music == "8" and self.get_special_perm_see(self.pk, user_pk, 7, 1):
             return True
         return False
 
@@ -499,15 +499,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_doc == CommunityPrivate.ALL_CAN:
+        if private.can_see_doc == "1":
             return True
-        elif private.can_see_doc == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_doc == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_doc == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_doc == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_doc == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 6, 0):
+        elif private.can_see_doc == "6" and self.get_special_perm_see(self.pk, user_pk, 6, 0):
             return True
-        elif private.can_see_doc == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 6, 1):
+        elif private.can_see_doc == "8" and self.get_special_perm_see(self.pk, user_pk, 6, 1):
             return True
         return False
 
@@ -515,15 +515,15 @@ class Community(models.Model):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
-        if private.can_see_member == CommunityPrivate.ALL_CAN:
+        if private.can_see_member == "1":
             return True
-        elif private.can_see_member == CommunityPrivate.MEMBERS and user.is_member_of_community(self.pk):
+        elif private.can_see_member == "3" and user.is_member_of_community(self.pk):
             return True
-        elif private.can_see_member == CommunityPrivate.YOU and user.is_creator_of_community(self.pk):
+        elif private.can_see_member == "4" and user.is_creator_of_community(self.pk):
             return True
-        elif private.can_see_member == CommunityPrivate.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 3, 0):
+        elif private.can_see_member == "6" and self.get_special_perm_see(self.pk, user_pk, 3, 0):
             return True
-        elif private.can_see_member == CommunityPrivate.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 3, 1):
+        elif private.can_see_member == "8" and self.get_special_perm_see(self.pk, user_pk, 3, 1):
             return True
         return False
 

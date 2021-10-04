@@ -338,7 +338,7 @@ class CommunityPostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
-		from common.templates import get_template_community, get_template_anon_community
+		from common.templates import get_template_community_list, get_template_anon_community_list
 
 		self.c, self.post_list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if request.user.is_authenticated:
