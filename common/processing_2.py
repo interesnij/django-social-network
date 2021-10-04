@@ -32,7 +32,6 @@ absolute_words = [
                 "ахуячить",
                 "тхуярить",
                 "хуякнут",
-
                 "дохуяч",
                 "хуипан",
                 "хуйлор",
@@ -55,7 +54,6 @@ absolute_words = [
                 "оебучий",
                 "аебашить",
                 "ебляя",
-
                 "хуясебе",
                 "хуйсни",
                 "какогохуя",
@@ -164,9 +162,9 @@ def get_links_in_text(text):
                 this += 1
                 next += 1
                 if "трезвый.рус" in p:
-                    _loop[next] = _loop[this].replace(p, '<a class="ajax underline" href="' + p + '">' + p + '</a>')
+                    _loop[next] = _loop[this].replace(p, '<a onclick="stop_load_fullscreen()" class="ajax underline" href="' + p + '">' + p + '</a>')
                 else:
-                    _loop[next] = _loop[this].replace(p, '<a class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+                    _loop[next] = _loop[this].replace(p, '<a onclick="stop_load_fullscreen()" class="underline" target="_blank" href="' + p + '">' + p + '</a>')
             _exlude.append(p)
         return _loop[next]
     return _text
