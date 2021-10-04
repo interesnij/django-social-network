@@ -76,9 +76,8 @@ class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivate
 		fields = (
-                'can_see_members',
+                'can_see_member',
                 'can_send_message',
-                'can_add_in_chat',
                 'can_see_post',
                 'can_see_photo',
                 'can_see_good',
