@@ -10,7 +10,7 @@ class CommunityDetail(TemplateView):
         import re
         MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
-        self.c, user_agent = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT']
+        self.c, user_agent, r_user_pk = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], request.user.pk
 
         if request.user.is_authenticated:
             if request.user.type[0] == "_":
@@ -70,17 +70,17 @@ class CommunityDetail(TemplateView):
 
             from stst.models import CommunityNumbers
             if MOBILE_AGENT_RE.match(user_agent):
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.PHONE)
+                CommunityNumbers.objects.create(user=r_user_pk, community=self.c.pk, device=CommunityNumbers.PHONE)
             else:
-                CommunityNumbers.objects.create(user=request.user.pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
+                CommunityNumbers.objects.create(user=r_user_pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
-            self.is_photo_open = self.c.is_photo_open(request.user)
-            self.is_post_open = self.c.is_post_open(request.user)
-            self.is_video_open = self.c.is_video_open(request.user)
-            self.is_music_open = self.c.is_music_open(request.user)
-            self.is_doc_open = self.c.is_doc_open(request.user)
-            self.is_member_open = self.c.is_member_open(request.user)
-            self.is_good_open = self.c.is_good_open(request.user)
+            self.is_photo_open = self.c.is_photo_open(r_user_pk)
+            self.is_post_open = self.c.is_post_open(r_user_pk)
+            self.is_video_open = self.c.is_video_open(r_user_pk)
+            self.is_music_open = self.c.is_music_open(r_user_pk)
+            self.is_doc_open = self.c.is_doc_open(r_user_pk)
+            self.is_member_open = self.c.is_member_open(r_user_pk)
+            self.is_good_open = self.c.is_good_open(r_user_pk)
         elif request.user.is_anonymous:
             if self.c.type[0] == "_":
                 if self.c.is_suspended():
@@ -99,13 +99,12 @@ class CommunityDetail(TemplateView):
             elif self.c.is_private():
                 self.template_name = "communities/detail/anon_private_community.html"
 
-            self.is_photo_open = self.c.is_anon_photo_open()
-            self.is_post_open = self.c.is_anon_post_open()
-            self.is_video_open = self.c.is_anon_video_open()
-            self.is_music_open = self.c.is_anon_music_open()
-            self.is_doc_open = self.c.is_anon_doc_open()
-            self.is_member_open = self.c.is_anon_member_open()
-            self.is_good_open = self.c.is_anon_good_open()
+            self.is_photo_open = self.c.is_anon_user_can_see_photo()
+            self.is_video_open = self.c.is_anon_user_can_see_video()
+            self.is_music_open = self.c.is_anon_user_can_see_music()
+            self.is_doc_open = self.c.is_anon_user_can_see_doc() 
+            self.is_member_open = self.c.is_anon_user_can_see_member()
+            self.is_good_open = self.c.is_anon_user_can_see_good()
 
         if MOBILE_AGENT_RE.match(user_agent):
             self.template_name = "mobile/" + self.template_name

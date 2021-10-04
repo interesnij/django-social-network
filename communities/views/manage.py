@@ -39,9 +39,9 @@ class CommunitySectionsOpenView(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/sections.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
 		try:
-			self.sections = CommunitySectionsOpen.objects.get(community=self.c)
+			self.sections = CommunityPrivate.objects.get(community=self.c)
 		except:
-			self.sections = CommunitySectionsOpen.objects.create(community=self.c)
+			self.sections = CommunityPrivate.objects.create(community=self.c)
 		return super(CommunitySectionsOpenView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -51,7 +51,7 @@ class CommunitySectionsOpenView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.sections, self.form = CommunitySectionsOpen.objects.get(community=self.c), CommunitySectionOpenForm(request.POST, instance=self.sections)
+		self.sections, self.form = CommunityPrivate.objects.get(community=self.c), CommunitySectionOpenForm(request.POST, instance=self.sections)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ()

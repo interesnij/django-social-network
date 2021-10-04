@@ -22,8 +22,8 @@ class CommunityPrivateGoodInline(admin.TabularInline):
 class CommunityPrivateVideoInline(admin.TabularInline):
     model = CommunityPrivateVideo
 
-class CommunitySectionsOpenInline(admin.TabularInline):
-    model = CommunitySectionsOpen
+class CommunityPrivateInline(admin.TabularInline):
+    model = CommunityPrivate
 class CommunityInfoInline(admin.TabularInline):
     model = CommunityInfo
 
@@ -47,7 +47,7 @@ class CommunityAdmin(admin.ModelAdmin):
         CommunityPrivateGoodInline,
         CommunityPrivateVideoInline,
 
-        CommunitySectionsOpenInline,
+        CommunityPrivateInline,
         CommunityInfoInline,
     ]
 

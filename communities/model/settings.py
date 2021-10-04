@@ -186,7 +186,7 @@ class CommunityPrivateMusic(models.Model):
         if created:
             CommunityPrivateMusic.objects.create(community=instance)
 
-class CommunitySectionsOpen(models.Model):
+class CommunityPrivate(models.Model):
     ALL_CAN,MEMBERS,MEMBERSHIPS,YOU,MEMBERSHIPS_BUT,MEMBERS_BUT,SOME_MEMBERSHIPS,SOME_MEMBERS = 1,2,3,4,5,6,7,8
 
     PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERSHIPS, 'Подписчики'),(YOU, 'Только я'),(MEMBERSHIPS_BUT, 'Подписчики, кроме'),(SOME_MEMBERSHIPS, 'Некоторые подписчики'),)
@@ -200,12 +200,11 @@ class CommunitySectionsOpen(models.Model):
         (MEMBERS_BUT, 'Участники, кроме'),
         (SOME_MEMBERS, 'Некоторые участники'),
     )
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_sections_open', verbose_name="Сообщество")
-    can_see_members = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
+    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private', verbose_name="Сообщество")
+    can_see_member = models.CharField(max_length=3, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
     can_see_community = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
     can_see_info = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит информацию")
     can_send_message = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_add_in_chat = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет в беседы")
     can_see_post = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
     can_see_photo = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
     can_see_good = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
@@ -217,7 +216,7 @@ class CommunitySectionsOpen(models.Model):
     @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
         if created:
-            CommunitySectionsOpen.objects.create(community=instance)
+            CommunityPrivate.objects.create(community=instance)
 
 class CommunityPrivatePlanner(models.Model):
     ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS = 'AC','F','M','EO','Y','FB','MB','SF','SM'

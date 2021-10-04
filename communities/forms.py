@@ -74,7 +74,7 @@ class CommunityPrivateMusicForm(forms.ModelForm):
 
 class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:
-		model = CommunitySectionsOpen
+		model = CommunityPrivate
 		fields = (
                 'can_see_members',
                 'can_send_message',
