@@ -376,7 +376,7 @@ class CommunityPostsListView(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.posts_list
+		return self.list
 
 
 class PostsDraftCommunity(ListView):
