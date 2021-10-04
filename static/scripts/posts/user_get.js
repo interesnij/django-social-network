@@ -69,6 +69,11 @@ on('#ajax', 'click', '.fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
 });
+on('.fullscreen', 'click', 'a', function(e) {
+  e.stopPropagation();
+  //uuid = this.parentElement.getAttribute('data-uuid');
+  //create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
+});
 on('#ajax', 'click', '.fix_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
