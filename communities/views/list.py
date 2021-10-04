@@ -334,7 +334,7 @@ class CommunityVideoList(ListView):
 
 
 class CommunityPostsListView(ListView):
-	template_name, paginate_by, is_user_can_see_post_section, is_user_can_see_post_list, is_user_can_create_posts = None, 15, None, None, None
+	template_name, paginate_by, is_user_can_see_post_section, is_user_can_see_post_list, is_user_can_create_posts, post_lists = None, 15, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
