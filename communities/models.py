@@ -399,7 +399,7 @@ class Community(models.Model):
         private = self.community_private
         return private.can_see_good == "1"
 
-    def is_photo_open(self, user_id):
+    def is_user_can_see_photo(self, user_id):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -415,7 +415,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_post_open(self, user):
+    def is_user_can_see_post(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -431,7 +431,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_message_open(self, user):
+    def is_user_can_send_message(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -447,7 +447,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_good_open(self, user):
+    def is_user_can_see_good(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -463,7 +463,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_video_open(self, user):
+    def is_user_can_see_video(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -479,7 +479,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_music_open(self, user):
+    def is_user_can_see_music(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -495,7 +495,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_doc_open(self, user):
+    def is_user_can_see_doc(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)
@@ -511,7 +511,7 @@ class Community(models.Model):
             return True
         return False
 
-    def is_member_open(self, user):
+    def is_user_can_see_member(self, user):
         from communities.model.settings import CommunityPrivate
 
         private = CommunityPrivate.objects.get(community=self)

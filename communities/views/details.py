@@ -74,13 +74,13 @@ class CommunityDetail(TemplateView):
             else:
                 CommunityNumbers.objects.create(user=r_user_pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
-            self.is_photo_open = self.c.is_photo_open(r_user_pk)
-            self.is_post_open = self.c.is_post_open(r_user_pk)
-            self.is_video_open = self.c.is_video_open(r_user_pk)
-            self.is_music_open = self.c.is_music_open(r_user_pk)
-            self.is_doc_open = self.c.is_doc_open(r_user_pk)
-            self.is_member_open = self.c.is_member_open(r_user_pk)
-            self.is_good_open = self.c.is_good_open(r_user_pk)
+            self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
+            self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
+            self.is_video_open = self.c.is_user_can_see_video(r_user_pk)
+            self.is_music_open = self.c.is_user_can_see_music(r_user_pk)
+            self.is_doc_open = self.c.is_user_can_see_doc(r_user_pk)
+            self.is_member_open = self.c.is_user_can_see_member(r_user_pk)
+            self.is_good_open = self.c.is_user_can_see_good(r_user_pk)
         elif request.user.is_anonymous:
             if self.c.type[0] == "_":
                 if self.c.is_suspended():
@@ -102,7 +102,7 @@ class CommunityDetail(TemplateView):
             self.is_photo_open = self.c.is_anon_user_can_see_photo()
             self.is_video_open = self.c.is_anon_user_can_see_video()
             self.is_music_open = self.c.is_anon_user_can_see_music()
-            self.is_doc_open = self.c.is_anon_user_can_see_doc() 
+            self.is_doc_open = self.c.is_anon_user_can_see_doc()
             self.is_member_open = self.c.is_anon_user_can_see_member()
             self.is_good_open = self.c.is_anon_user_can_see_good()
 
