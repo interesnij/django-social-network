@@ -220,14 +220,17 @@ class UserPostsListView(ListView):
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk == request.user.pk:
 			self.post_lists = PostList.get_user_staff_lists(user_pk)
-			if request.user.pk == self.post_list.creator.pk:
-				self.list = self.post_list.get_staff_items()
-				""" создатель активного списка на своей странице и это его страница.
+			if (self.post_list.community and request.user.is_administrator_of_community(self.post_list.community.pk)) \
+			or (not self.post_list.community and request.user.pk == self.post_list.creator.pk):
+				""" Это страница пользователя. Мы проверяем полномочия его в отношении списка по
+					умолчанию первого. Если список имеет сообщество и пользователь его админ или
+					не имеет сообщество и он его создатель, тогда особые права.
 					Потому он может:
 					- видеть записи пользователя is_user_can_see_post_section,
 					- видеть этот список is_user_can_see_post_list,
 					- создавать записи в этом список is_user_can_create_posts
 				"""
+				self.list = self.post_list.get_staff_items()
 				self.is_user_can_see_post_section = True
 				self.is_user_can_see_post_list = True
 				self.is_user_can_create_posts = True
@@ -257,7 +260,7 @@ class UserPostsListView(ListView):
 			self.post_lists = PostList.get_user_lists(user_pk)
 
 		if request.user.is_authenticated:
-			self.template_name = get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
+			self.template_name =  get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
 			""" Анонимный пользователь
 				Потому проверяем, может ли:
@@ -267,6 +270,7 @@ class UserPostsListView(ListView):
 			self.template_name = get_template_anon_user(self.post_list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
 			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_el()
+			self.post_lists = PostList.get_user_lists(user_pk)
 		return super(UserPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

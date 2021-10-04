@@ -334,31 +334,45 @@ class CommunityVideoList(ListView):
 
 
 class CommunityPostsListView(ListView):
-	template_name, paginate_by, is_user_can_work_post, posts_list = None, 15, None, None
+	template_name, paginate_by, is_user_can_see_post_section, is_user_can_see_post_list, is_user_can_create_posts = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
-		from common.template.post import get_permission_community_post
+		from common.templates import get_template_community, get_template_anon_community
 
-		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
+		self.c, self.post_list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if request.user.is_authenticated:
-			if request.user.is_staff_of_community(self.c.pk):
-				self.posts_list = self.list.get_staff_items()
+			if (self.post_list.community and request.user.is_administrator_of_community(self.post_list.community.pk)) \
+				or (not self.post_list.community and request.user.pk == self.post_list.creator.pk):
+				self.list = self.post_list.get_staff_items()
 				self.post_lists = PostList.get_community_staff_lists(self.c.pk)
-				self.is_user_can_work_post = True
+				self.is_user_can_see_post_section = True
+				self.is_user_can_see_post_list = True
+				self.is_user_can_create_posts = True
+			elif request.user.is_administrator_of_community(self.c.pk):
+				self.list = self.post_list.get_items()
+				self.is_user_can_see_post_section = True
+				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
+				self.post_lists = PostList.get_community_staff_lists(self.c.pk)
 			else:
-				self.is_user_can_work_post = self.c.is_user_can_work_post(request.user)
-				self.posts_list = self.list.get_items()
-				self.post_lists = PostList.get_community_lists(self.c.pk)
+				self.is_user_can_see_post_section = self.c.is_user_can_see_post(request.user.pk)
+				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
+				self.list = self.post_list.get_items()
+				self.post_lists = PostList.get_user_lists(user_pk)
+			self.template_name = get_template_community_list(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
 			self.posts_list = self.list.get_items()
 			self.post_lists = PostList.get_community_lists(self.c.pk)
-		self.template_name = get_permission_community_post(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_post_section = self.user.is_anon_user_can_see_post()
+			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_el()
+			self.template_name = get_template_anon_community_list(self.list, "communities/lenta/list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunityPostsListView,self).get_context_data(**kwargs)
-		c['community'], c['post_lists'], c['list'], c['fix_list'], c['is_user_can_work_post'] = self.c, self.post_lists, self.list, self.c.get_fix_list(),self.is_user_can_work_post
+		c['community'], c['post_lists'], c['list'], c['fix_list'],c['is_user_can_see_post_section'],c['is_user_can_see_post_list'],c['is_user_can_create_posts'] = self.c, self.post_lists, self.list, self.c.get_fix_list(),self.is_user_can_work_post,,self.is_user_can_see_post_section,self.is_user_can_see_post_list, self.is_user_can_create_posts
 		return c
 
 	def get_queryset(self):
