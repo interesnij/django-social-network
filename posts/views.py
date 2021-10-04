@@ -27,13 +27,14 @@ class LoadPostList(ListView):
 		self.list = PostList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.community = self.list.community
-			if request.user.is_administrator_of_community(self.community.pk):
-				self.posts = self.list.get_staff_items()
-			else:
-				self.posts = self.list.get_items()
 			if request.user.is_authenticated:
+				if request.user.is_administrator_of_community(self.community.pk):
+					self.posts = self.list.get_staff_items()
+				else:
+					self.posts = self.list.get_items()
 				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
+				self.posts = self.list.get_items()
 				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.pk == self.list.creator.pk:
