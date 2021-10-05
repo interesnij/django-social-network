@@ -1,3 +1,6 @@
+button {
+  background-color: initial !important;
+}
 .smile_supported img{
   width: auto;
   padding-right: 2px;
