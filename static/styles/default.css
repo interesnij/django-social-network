@@ -33,8 +33,9 @@ button {
 
 #fullscreen_loader {
   position: absolute;
-  left: 15px;
-  right: 15px;
+  left: 5px;
+  right: 5px;
+  bottom: 10px;
   top: 10px;
   bottom: 0;
 }
