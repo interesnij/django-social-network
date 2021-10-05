@@ -3,6 +3,10 @@
   padding-right: 2px;
   padding-left: 2px;
 }
+.card-footer .this_mob_fullscreen_hide {
+  top: -10px;
+  left: -10px;
+}
 
 .data_display form {
   padding-left: 5px;
