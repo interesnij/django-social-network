@@ -1,6 +1,6 @@
 
 <div class="card mb-3" good-pk="{{ object.pk }}" data-pk="{{ user.pk }}">
-  <div class="row" style="margin-right: -10px;margin-left: -10px;">
+  <div class="row">
     {% if next %}
     <div class="col" style="padding:5px;">
       <a class="btn btn-sm border next_item" href="{% url 'user_good' uuid=list.uuid pk=next.pk %}" style="width: -webkit-fill-available;position:static">

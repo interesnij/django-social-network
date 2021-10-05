@@ -1,6 +1,6 @@
 
 <div class="data_display" data-uuid="{{ object.uuid }}" data-pk="{{ list.community.pk }}">
-  <div class="row" style="margin-right: -10px;margin-left: -10px;">
+  <div class="row">
     {% if next %}
     <div class="col" style="padding:5px;">
       <a class="btn btn-sm border next_item" href="{% url 'community_post_photo' photo_pk=next.pk uuid=post.uuid %}" style="width: -webkit-fill-available;position:static">
