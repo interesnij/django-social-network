@@ -63,6 +63,10 @@ function create_fullscreen(url, type_class) {
             $loader.style.overflowY = "auto";
           };
           $parent_div.style.opacity = "1";
+          $parent_div.style.opacity = "1";
+          if ($loader.querySelector(".data_display")) {
+            $loader.style.overflowY = "unset";
+          }
 
           get_document_opacity_0();
           if ($loader.querySelector(".next_page_list")) {
@@ -124,6 +128,10 @@ function change_this_fullscreen(_this, type_class) {
             $loader.style.overflowY = "auto";
           };
           $parent_div.style.opacity = "1";
+          $parent_div.style.opacity = "1";
+          if ($loader.querySelector(".data_display")) {
+            $loader.style.overflowY = "unset";
+          }
       }
   };
   link.send();
