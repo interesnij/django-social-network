@@ -60,7 +60,7 @@ function create_gif_loading () {
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
-  try {count_items = container.querySelectorAll(".card").length} catch {count_items = 0};
+  try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
 
   $parent_div = document.createElement("div");
   $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
@@ -523,7 +523,7 @@ function get_preview(response, type) {
 
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".fullscreen_card").remove();
+  container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
