@@ -17,7 +17,7 @@ def get_folder(user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
-        return "mobile/"
+        return "desctop/"
 
 """
     кончаются на item - шаблоны для списков и элементов в полную страницу
