@@ -174,16 +174,10 @@ function change_this_fullscreen(_this, type_class) {
 };
 
 on('body', 'click', '.this_fullscreen_hide', function() {
-  this.parentElement.remove();
-  if (!document.body.querySelector("#fullscreens_container").innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
-  }
+  close_fullscreen()
 });
 on('body', 'click', '.this_mob_fullscreen_hide', function() {
-  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
-  if (!document.body.querySelector("#fullscreens_container").innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
-  }
+  close_fullscreen()
 });
 
 on('body', 'click', '.body_overlay', function() {
@@ -529,7 +523,7 @@ function get_preview(response, type) {
 
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".card").remove();
+  container.querySelector(".fullscreen_card").remove();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   }
