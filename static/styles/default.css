@@ -5126,9 +5126,11 @@ cursor: pointer;
 .video_fullscreen,
 .worker_fullscreen {
   position: fixed;
-  left: 0;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  top: 5px;
   width: 100%;
-  padding: 5%;
   overflow: auto;
 }
 
