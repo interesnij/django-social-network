@@ -117,7 +117,7 @@ body {
 .iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
   background: #694a3e;
 }
-.card, .mobile_naw {
+.card, .mobile_naw, .card_fullscreen {
   background-color: #81594b;
 }
 
