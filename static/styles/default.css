@@ -4029,10 +4029,12 @@ body.dragging * {
   top: 0;
 }
 
-
+figure img {
+  width: 100%
+}
 @media screen and (max-width: 768px) {
    .card_fullscreen {
-    width: 96%;
+    width: 96% !important;
     overflow: auto;
     margin-left: 2%;
     margin-right: 2%;
