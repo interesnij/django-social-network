@@ -51,27 +51,6 @@ class CommunityNotifyMusicForm(forms.ModelForm):
         model = CommunityNotificationsMusic
         fields = ('repost',)
 
-class CommunityPrivatePostForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivatePost
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class CommunityPrivatePhotoForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivatePhoto
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class CommunityPrivateGoodForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivateGood
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class CommunityPrivateVideoForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivateVideo
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class CommunityPrivateMusicForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivateMusic
-		fields = ('add_item',)
-
 class CommunitySectionOpenForm(forms.ModelForm):
 	class Meta:
 		model = CommunityPrivate

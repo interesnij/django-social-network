@@ -50,31 +50,6 @@ class UserPrivateForm(forms.ModelForm):
                 'can_see_planner',
                 'can_see_doc',
                 )
-class UserPrivatePostForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivatePost
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class UserPrivatePhotoForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivatePhoto
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class UserPrivateGoodForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivateGood
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class UserPrivateVideoForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivateVideo
-		fields = ('can_see_comment', 'vote_on', 'add_item', 'add_comment',)
-class UserPrivateMusicForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivateMusic
-		fields = ('add_item',)
-
-class UserPrivatePlannerForm(forms.ModelForm):
-	class Meta:
-		model = UserPrivatePlanner
-		fields = ('can_see_comments','add_comments','vote_on',)
 
 class UserNameForm(forms.ModelForm):
 	class Meta:
