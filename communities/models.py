@@ -405,6 +405,8 @@ class Community(models.Model):
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_photo == "1":
             return True
+        elif private.can_see_photo == "9" and user_id in self.get_admins_ids():
+            return True
         elif private.can_see_photo == "3" and user_id in self.get_members_ids():
             return True
         elif private.can_see_photo == "4" and user_id == self.creator.pk:
@@ -420,6 +422,8 @@ class Community(models.Model):
 
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_post == "1":
+            return True
+        elif private.can_see_post == "9" and user_id in self.get_admins_ids():
             return True
         elif private.can_see_post == "3" and user.is_member_of_community(self.pk):
             return True
@@ -437,6 +441,8 @@ class Community(models.Model):
         private = CommunityPrivate.objects.get(community=self)
         if private.can_send_message == "1":
             return True
+        elif private.can_send_message == "9" and user_id in self.get_admins_ids():
+            return True
         elif private.can_send_message == "3" and user.is_member_of_community(self.pk):
             return True
         elif private.can_send_message == "4" and user.is_creator_of_community(self.pk):
@@ -452,6 +458,8 @@ class Community(models.Model):
 
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_good == "1":
+            return True
+        elif private.can_see_good == "9" and user_id in self.get_admins_ids():
             return True
         elif private.can_see_good == "3" and user.is_member_of_community(self.pk):
             return True
@@ -469,6 +477,8 @@ class Community(models.Model):
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_video == "1":
             return True
+        elif private.can_see_video == "9" and user_id in self.get_admins_ids():
+            return True
         elif private.can_see_video == "3" and user.is_member_of_community(self.pk):
             return True
         elif private.can_see_video == "4" and user.is_creator_of_community(self.pk):
@@ -484,6 +494,8 @@ class Community(models.Model):
 
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_music == "1":
+            return True
+        elif private.can_see_music == "9" and user_id in self.get_admins_ids():
             return True
         elif private.can_see_music == "3" and user.is_member_of_community(self.pk):
             return True
@@ -501,6 +513,8 @@ class Community(models.Model):
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_doc == "1":
             return True
+        elif private.can_see_doc == "9" and user_id in self.get_admins_ids():
+            return True
         elif private.can_see_doc == "3" and user.is_member_of_community(self.pk):
             return True
         elif private.can_see_doc == "4" and user.is_creator_of_community(self.pk):
@@ -516,6 +530,8 @@ class Community(models.Model):
 
         private = CommunityPrivate.objects.get(community=self)
         if private.can_see_member == "1":
+            return True
+        elif private.can_see_member == "9" and user_id in self.get_admins_ids():
             return True
         elif private.can_see_member == "3" and user.is_member_of_community(self.pk):
             return True

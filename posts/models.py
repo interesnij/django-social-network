@@ -14,13 +14,25 @@ class PostList(models.Model):
     MAIN, LIST, MANAGER, PROCESSING, FIXED, DRAFT, TEST = 'MAI','LIS','MAN','_PRO','_FIX','_DRA','_T'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,2,3,4,5,6
+
+    ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10,11
     TYPE = (
         (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
     )
-    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья/подписчики'),(EACH_OTHER, 'Друзья,друзья друзей/None'),(YOU, 'Только я/админы'),(FRIENDS_BUT, 'Друзья/подписчики, кроме'),(SOME_FRIENDS, 'Некоторые друзья/подписчики'),)
+    PERM = (
+            (ALL_CAN, 'Все пользователи'),
+            (FRIENDS, 'Друзья'),
+            (EACH_OTHER, 'Друзья,друзья друзей'),
+            (CREATOR, 'Только я'),
+            (FRIENDS_BUT, 'Друзья, кроме'),
+            (SOME_FRIENDS, 'Некоторые друзья'),
+            (MEMBERS, 'Подписчики'),
+            (ADMINS, 'Администраторы'),
+            (MEMBERS_BUT, 'Подписчики, кроме'),
+            (SOME_MEMBERS, 'Некоторые подписчики'),
+            )
 
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
