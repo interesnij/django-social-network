@@ -74,6 +74,10 @@ function fullscreen_resize() {
       prev_next_height = _height*1 + 50 + "px";
       try {loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
       try {loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+    } else {
+      fullscreen.style.height = "100%";
+      fullscreen.style.top = "15px";
+      loader.style.overflowY = "auto";
     }
   }
 };
