@@ -72,13 +72,13 @@ function fullscreen_resize() {
       _height = (window.innerHeight - height - 50) / 2;
       fullscreen.style.top = _height + "px";
       prev_next_height = _height*1 + 50 + "px";
-      try {loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
-      try {loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
     } else {
       fullscreen.style.height = "100%";
       fullscreen.style.top = "15px";
       loader.style.overflowY = "auto";
-    }
+    };
+    try {loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+    try {loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
   }
 };
 
