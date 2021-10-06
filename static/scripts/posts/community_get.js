@@ -87,13 +87,12 @@ on('#ajax', 'click', '.c_all_posts_comment_dislikes', function() {
 on('#ajax', 'click', '.c_item_comments', function() {
   clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   uuid = parent.getAttribute("data-uuid");
   block = parent.querySelector(".c_load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/posts/community/comment/" + uuid + "/" + pk + "/");
+    block.firstChild ? null : list_load(block, "/posts/community/comment/" + uuid + "/");
     block.classList.add("show")
   }
 });
