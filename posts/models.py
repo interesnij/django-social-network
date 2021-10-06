@@ -15,7 +15,7 @@ class PostList(models.Model):
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
 
-    ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10,11
+    ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
