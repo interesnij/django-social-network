@@ -337,6 +337,7 @@ function list_load(block, link) {
             block.innerHTML = request.responseText;
             get_dragula(".drag_container");
             create_pagination(block);
+            fullscreen_resize()
         }
     };
     request.send(null);
