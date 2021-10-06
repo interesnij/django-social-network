@@ -10,6 +10,10 @@ on('#ajax', 'click', '.hide_comment_form', function() {
   this.parentElement.parentElement.parentElement.remove();
 });
 
+on('#ajax', 'resize', '#fullscreen_loader', function() {
+  console.log("resize!");
+});
+
 on('#ajax', 'click', '.smile_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.querySelector(".card")) {
