@@ -60,7 +60,7 @@ class VideoCommunityCommentList(ListView):
 		from common.templates import get_template_user_comments
 
 		self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.community = self.video.community
 		if not request.is_ajax() or not self.video.comments_enabled:
 			raise Http404
 		self.template_name = get_template_user_comments(self.video, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])

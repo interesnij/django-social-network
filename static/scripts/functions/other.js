@@ -20,7 +20,7 @@ function setEndOfContenteditable(contentEditableElement) {
         range.collapse(false);
         range.select();
     }
-}
+};
 
 function play_video_list(url, counter, video_pk){
   loader = document.getElementById("video_loader");
@@ -57,6 +57,30 @@ function create_gif_loading () {
   $load_div.append($load_gif);
   return $load_div
 };
+
+function fullscreen_resize() {
+  container = document.body.querySelector("#fullscreens_container");
+  if (!container.innerHTML) {
+    fullscreen = container.querySelector(".card_fullscreen");
+    loader = fullscreen.querySelector("#fullscreen_loader");
+
+    height = loader.scrollHeight*1 + 30;
+    if (height < 500 && !loader.querySelector(".data_display")) {
+      fullscreen.style.height = height + "px";
+      loader.style.overflowY = "unset";
+
+      _height = (window.innerHeight - height - 50) / 2;
+      fullscreen.style.top = _height + "px";
+      prev_next_height = _height*1 + 50 + "px";
+      try {loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+      try {loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+    } else {
+      parent_div.style.height = "100%";
+      parent_div.style.top = "15px";
+      loader.style.overflowY = "auto";
+    };
+  }
+}
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");

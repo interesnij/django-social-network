@@ -78,13 +78,12 @@ on('#ajax', 'click', '.c_all_photo_reposts', function() {
 on('#ajax', 'click', '.c_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   block = data.querySelector(".c_load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/gallery/community/comment/" + pk + "/" + uuid + "/");
+    block.firstChild ? null : list_load(block, "/gallery/community/comment/" + uuid + "/");
     block.classList.add("show")
   }
 });

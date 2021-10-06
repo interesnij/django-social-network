@@ -9,5 +9,5 @@ urlpatterns=[
 	url(r'^preview_photo/(?P<pk>\d+)/$', GetCommunityPhoto.as_view()),
 	url(r'^chat_photo/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', CommunityChatPhoto.as_view(), name="community_chat_photo"),
 
-	url(r'^comment/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', PhotoCommunityCommentList.as_view()),
+	url(r'^comment/(?P<uuid>[0-9a-f-]+)/$', PhotoCommunityCommentList.as_view()),
 ]

@@ -75,13 +75,12 @@ on('#video_loader', 'click', '.c_all_video_reposts', function() {
 on('#video_loader', 'click', '.c_video_comments', function() {
   clear_comment_dropdown();
   video_display = this.parentElement.parentElement.parentElement;
-  pk = video_display.getAttribute("data-pk");
   uuid = video_display.getAttribute("data-uuid");
   block_comments = video_display.nextElementSibling;
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
   } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/video/community/comment/" + uuid + "/" + pk + "/");
+    block_comments.firstChild ? null : list_load(block_comments, "/video/community/comment/" + uuid + "/");
     block_comments.classList.add("show")
   }
 });

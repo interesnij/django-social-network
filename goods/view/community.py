@@ -40,7 +40,8 @@ class GoodCommunityCommentList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_comments
 
-		self.good, self.c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+		self.good = Good.objects.get(pk=self.kwargs["good_pk"])
+		self.c = self.good.community
 		check_can_get_lists(self.request.user, self.c)
 		if not request.is_ajax() or not self.good.comments_enabled:
 			raise Http404

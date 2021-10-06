@@ -90,7 +90,7 @@ on('#ajax', 'click', '.c_item_comments', function() {
   uuid = parent.getAttribute("data-uuid");
   block = parent.querySelector(".c_load_comments");
   if (block.classList.contains("show")){
-    block.classList.remove("show")
+    block.classList.remove("show") 
   } else {
     block.firstChild ? null : list_load(block, "/posts/community/comment/" + uuid + "/");
     block.classList.add("show")

@@ -108,13 +108,12 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 on('#ajax', 'click', '.u_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
-  pk = data.getAttribute("data-pk");
   uuid = data.getAttribute("data-uuid");
   block = data.querySelector(".u_load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    block.firstChild ? null : list_load(block, "/gallery/user/comment/" + pk + "/" + uuid + "/");
+    block.firstChild ? null : list_load(block, "/gallery/user/comment/" + uuid + "/");
     block.classList.add("show")
   }
 });

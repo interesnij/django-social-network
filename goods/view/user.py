@@ -43,7 +43,8 @@ class GoodUserCommentList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_comments
 
-		self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
+		self.good = Good.objects.get(pk=self.kwargs["good_pk"])
+		self.user = self.good.creator
 		self.template_name = get_template_user_comments(self.good, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		if not request.is_ajax() or not self.good.comments_enabled:
 			raise Http404

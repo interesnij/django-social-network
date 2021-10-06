@@ -71,7 +71,7 @@ class PhotoCommunityCommentList(ListView):
 		from common.templates import get_template_user_comments
 
 		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.community = self.photo.community
 		if not request.is_ajax() or not self.photo.comments_enabled:
 			raise Http404
 		self.template_name = get_template_user_comments(self.photo, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])

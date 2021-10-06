@@ -10,7 +10,6 @@ from gallery.forms import PhotoDescriptionForm
 from common.template.user import get_detect_platform_template
 
 
-
 class UserPhotosList(ListView):
     template_name = None
     paginate_by = 15
@@ -71,7 +70,7 @@ class PhotoUserCommentList(ListView):
 		from common.templates import get_template_user_comments
 
 		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-		self.user = User.objects.get(pk=self.kwargs["pk"])
+		self.user = self.photo.creator
 		if not request.is_ajax() or not self.photo.comments_enabled:
 			raise Http404
 		self.template_name = get_template_user_comments(self.photo, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
