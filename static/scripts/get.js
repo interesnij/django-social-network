@@ -7,7 +7,11 @@ on('#ajax', 'click', '.load_next_list_comments', function() {
         if (this.readyState == 4 && this.status == 200) {
             elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
-            _this.parentElement.append(elem_.innerHTML);
+
+            elem_2 = document.createElement('span');
+            elem_2.innerHTML = elem_.innerHTML
+            _this.parentElement.append(elem_2);
+            _this.remove();
             fullscreen_resize();
         }
     }
