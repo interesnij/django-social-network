@@ -67,5 +67,8 @@
 
     {% endif %}
   {% endfor %}
+  {% if page_obj.has_next %}
+    <a class="pointer load_next_list_comments mt-1" data-link="/gallery/community/reply/{{ comment.uuid }}/?page={{ page_obj.next_page_number }}">Показать еще ответы</a>
+  {% endif %}
 </span>
 </div>

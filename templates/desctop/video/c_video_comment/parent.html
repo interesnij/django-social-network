@@ -103,6 +103,8 @@
       {% include 'desctop/video/c_video_comment/reply.html' %}
     {% endif %}
   {% endfor %}
-
+  {% if page_obj.has_next %}
+    <a class="pointer load_next_list_comments mt-1" data-link="/video/user/reply/{{ comment.uuid }}/?page={{ page_obj.next_page_number }}">Показать еще ответы</a>
+  {% endif %}
 </span>
 </div>
