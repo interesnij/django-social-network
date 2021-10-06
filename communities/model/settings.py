@@ -129,63 +129,6 @@ class CommunityPrivatePost(models.Model):
         if created:
             CommunityPrivatePost.objects.create(community=instance)
 
-class CommunityPrivatePhoto(models.Model):
-    ALL_CAN, MEMBERS, YOU, MEMBERS_BUT, SOME_MEMBERS,ADMINS = '1','2','3','4','5','6'
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERS, 'Подписчики'),(YOU, 'Только я'),(MEMBERS_BUT, 'Подписчики, кроме'),(SOME_MEMBERS, 'Некоторые подписчики'),(ADMINS, 'Администраторы'),)
-
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private_photo', verbose_name="Сообщество")
-    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
-    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет фото и потом с этими фото работает")
-    add_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
-
-    @receiver(post_save, sender=Community)
-    def create_model(sender, instance, created, **kwargs):
-        if created:
-            CommunityPrivatePhoto.objects.create(community=instance)
-
-class CommunityPrivateGood(models.Model):
-    ALL_CAN, MEMBERS, YOU, MEMBERS_BUT, SOME_MEMBERS,ADMINS = '1','2','3','4','5','6'
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERS, 'Подписчики'),(YOU, 'Только я'),(MEMBERS_BUT, 'Подписчики, кроме'),(SOME_MEMBERS, 'Некоторые подписчики'),(ADMINS, 'Администраторы'),)
-
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private_good', verbose_name="Сообщество")
-    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
-    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет товары и потом с этими товарами работает")
-    add_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
-
-    @receiver(post_save, sender=Community)
-    def create_model(sender, instance, created, **kwargs):
-        if created:
-            CommunityPrivateGood.objects.create(community=instance)
-
-class CommunityPrivateVideo(models.Model):
-    ALL_CAN, MEMBERS, YOU, MEMBERS_BUT, SOME_MEMBERS,ADMINS = '1','2','3','4','5','6'
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERS, 'Подписчики'),(YOU, 'Только я'),(MEMBERS_BUT, 'Подписчики, кроме'),(SOME_MEMBERS, 'Некоторые подписчики'),(ADMINS, 'Администраторы'),)
-
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private_video', verbose_name="Сообщество")
-    can_see_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто видит комментарии")
-    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет видео и потом с этими видео работает")
-    add_comment = models.CharField(max_length=5, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет комментарии")
-
-    @receiver(post_save, sender=Community)
-    def create_model(sender, instance, created, **kwargs):
-        if created:
-            CommunityPrivateVideo.objects.create(community=instance)
-
-class CommunityPrivateMusic(models.Model):
-    ALL_CAN, MEMBERS, YOU, MEMBERS_BUT, SOME_MEMBERS,ADMINS = '1','2','3','4','5','6'
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERS, 'Подписчики'),(YOU, 'Только я'),(MEMBERS_BUT, 'Подписчики, кроме'),(SOME_MEMBERS, 'Некоторые подписчики'),(ADMINS, 'Администраторы'),)
-
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private_audio', verbose_name="Сообщество")
-    add_item = models.CharField(max_length=5, choices=PERM, default=YOU, verbose_name="Кто добавляет аудио и потом с этими аудио работает")
-
-    @receiver(post_save, sender=Community)
-    def create_model(sender, instance, created, **kwargs):
-        if created:
-            CommunityPrivateMusic.objects.create(community=instance)
-
 class CommunityPrivate(models.Model):
     ALL_CAN,MEMBERS,MEMBERSHIPS,YOU,MEMBERSHIPS_BUT,MEMBERS_BUT,SOME_MEMBERSHIPS,SOME_MEMBERS,ADMINS = 1,2,3,4,5,6,7,8,9
 
@@ -218,28 +161,3 @@ class CommunityPrivate(models.Model):
     def create_model(sender, instance, created, **kwargs):
         if created:
             CommunityPrivate.objects.create(community=instance)
-
-class CommunityPrivatePlanner(models.Model):
-    ALL_CAN, FRIENDS, MEMBERS, EACH_OTHER, YOU, FRIENDS_BUT, MEMBERS_BUT, SOME_FRIENDS, SOME_MEMBERS,ADMINS = '1','2','3','4','5','6','7','8','9', "10"
-    PERM = (
-        (ALL_CAN, 'Все пользователи'),
-        (MEMBERS, 'Участники пространства или доски'),
-        (FRIENDS, 'Друзья'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (FRIENDS_BUT, 'Друзья, кроме'),
-        (SOME_FRIENDS, 'Некоторые друзья'),
-        (MEMBERS_BUT, 'Участники, кроме'),
-        (SOME_MEMBERS, 'Некоторые участники'),
-        (ADMINS, 'Администраторы'),
-    )
-
-    community = models.OneToOneField(Community, primary_key=True, on_delete=models.CASCADE, related_name='community_private_planner', verbose_name="Сообщество")
-    can_see_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто видит комментарии")
-    add_comments = models.CharField(max_length=2, choices=PERM, default=MEMBERS, verbose_name="Кто добавляет комментарии")
-    vote_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-
-    @receiver(post_save, sender=Community)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            CommunityPrivatePlanner.objects.create(community=instance)

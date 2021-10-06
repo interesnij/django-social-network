@@ -19,18 +19,6 @@ class UserNotificationsMusicInline(admin.TabularInline):
 
 class UserPrivateInline(admin.TabularInline):
     model = UserPrivate
-class UserPrivatePostInline(admin.TabularInline):
-    model = UserPrivatePost
-class UserPrivatePhotoInline(admin.TabularInline):
-    model = UserPrivatePhoto
-class UserPrivateGoodInline(admin.TabularInline):
-    model = UserPrivateGood
-class UserPrivateVideoInline(admin.TabularInline):
-    model = UserPrivateVideo
-class UserPrivateMusicInline(admin.TabularInline):
-    model = UserPrivateMusic
-class UserPrivatePlannerInline(admin.TabularInline):
-    model = UserPrivatePlanner
 
 class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings
@@ -46,13 +34,6 @@ class UserAdmin(admin.ModelAdmin):
         UserNotificationsMusicInline,
 
         UserPrivateInline,
-        UserPrivatePostInline,
-        UserPrivatePhotoInline,
-        UserPrivateGoodInline,
-        UserPrivateVideoInline,
-        UserPrivateMusicInline,
-        UserPrivatePlannerInline,
-
         UserColorSettingsInline,
     ]
     search_fields = ('last_name','first_name')

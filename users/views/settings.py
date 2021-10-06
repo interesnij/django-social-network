@@ -217,10 +217,7 @@ class UserPrivateView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private = UserPrivate.objects.get(user=request.user)
-		except:
-			self.private = UserPrivate.objects.create(user=request.user)
+		self.private = UserPrivate.objects.get(user=request.user)
 		self.form = UserPrivateForm(instance=self.private)
 		self.template_name = get_settings_template("users/settings/private.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateView,self).get(request,*args,**kwargs)
@@ -242,23 +239,24 @@ class UserPrivatePostView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private_post = UserPrivatePost.objects.get(user=request.user)
-		except:
-			self.private_post = UserPrivatePost.objects.create(user=request.user)
-		self.form = UserPrivatePostForm(instance=self.private_post)
+		self.list = request.user.get_post_list()
 		self.template_name = get_settings_template("users/settings/private_post.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from posts.forms import PostListForm
+
 		context = super(UserPrivatePostView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = self.form
+		context["form"] = PostListForm(instance=self.list)
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_post = UserPrivatePost.objects.get(user=request.user)
-		self.form = UserPrivatePostForm(request.POST, instance=self.private_post)
+		from posts.forms import PostListForm
+		
+		self.list = request.user.get_post_list()
+		self.form = PostListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
@@ -267,23 +265,24 @@ class UserPrivateGoodView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private_good = UserPrivateGood.objects.get(user=request.user)
-		except:
-			self.private_good = UserPrivateGood.objects.create(user=request.user)
-		self.form = UserPrivateGoodForm(instance=self.private_good)
+		self.list = request.user.get_good_list()
 		self.template_name = get_settings_template("users/settings/private_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from goods.forms import GoodListForm
+
 		context = super(UserPrivateGoodView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = self.form
+		context["form"] = GoodListForm(instance=self.list)
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_good = UserPrivateGood.objects.get(user=request.user)
-		self.form = UserPrivateGoodForm(request.POST, instance=self.private_good)
+		from goods.forms import GoodListForm
+
+		self.list = request.user.get_good_list()
+		self.form = GoodListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
@@ -292,23 +291,24 @@ class UserPrivateVideoView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private_video = UserPrivateVideo.objects.get(user=request.user)
-		except:
-			self.private_video = UserPrivateVideo.objects.create(user=request.user)
-		self.form = UserPrivateVideoForm(instance=self.private_video)
+		self.list = request.user.get_video_list()
 		self.template_name = get_settings_template("users/settings/private_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from video.forms import VideoListForm
+
 		context = super(UserPrivateVideoView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = self.form
+		context["form"] = VideoListForm(instance=self.list)
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_video = UserPrivateVideo.objects.get(user=request.user)
-		self.form = UserPrivateVideoForm(request.POST, instance=self.private_video)
+		from video.forms import VideoListForm
+
+		self.list = request.user.get_video_list()
+		self.form = VideoListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
@@ -317,23 +317,24 @@ class UserPrivatePhotoView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private_photo = UserPrivatePhoto.objects.get(user=request.user)
-		except:
-			self.private_photo = UserPrivatePhoto.objects.create(user=request.user)
-		self.form = UserPrivatePhotoForm(instance=self.private_photo)
+		self.list = request.user.get_photo_list()
 		self.template_name = get_settings_template("users/settings/private_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from gallery.forms import PhotoListForm
+
 		context = super(UserPrivatePhotoView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = self.form
+		context["form"] = PhotoListForm(instance=self.list)
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_photo = UserPrivatePhoto.objects.get(user=request.user)
-		self.form = UserPrivatePhotoForm(request.POST, instance=self.private_photo)
+		from gallery.forms import PhotoListForm
+
+		self.list = request.user.get_photo_list()
+		self.form = PhotoListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
@@ -342,23 +343,24 @@ class UserPrivateMusicView(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		try:
-			self.private_music = UserPrivateMusic.objects.get(user=request.user)
-		except:
-			self.private_music = UserPrivateMusic.objects.create(user=request.user)
-		self.form = UserPrivateMusicForm(instance=self.private_music)
+		self.list = request.user.get_playlist()
 		self.template_name = get_settings_template("users/settings/private_music.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from music.forms import PlaylistForm
+
 		context = super(UserPrivateMusicView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = self.form
+		context["form"] = PlaylistForm(instance=self.list)
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private_music = UserPrivateMusic.objects.get(user=request.user)
-		self.form = UserPrivateMusicForm(request.POST, instance=self.private_music)
+		from music.forms import PlaylistForm
+
+		self.list = request.user.get_playlist()
+		self.form = PlaylistForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()

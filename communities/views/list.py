@@ -352,13 +352,13 @@ class CommunityPostsListView(ListView):
 			elif request.user.is_administrator_of_community(self.c.pk):
 				self.list = self.post_list.get_items()
 				self.is_user_can_see_post_section = True
-				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
-				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
+				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user.pk)
 				self.post_lists = PostList.get_community_staff_lists(self.c.pk)
 			else:
 				self.is_user_can_see_post_section = self.c.is_user_can_see_post(request.user.pk)
-				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user)
-				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user)
+				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user.pk)
 				self.list = self.post_list.get_items()
 				self.post_lists = PostList.get_community_lists(self.c.pk)
 			self.template_name = get_template_community(self.post_list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())

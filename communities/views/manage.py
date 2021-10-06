@@ -189,20 +189,22 @@ class CommunityPrivatePostView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/private_post.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		try:
-			self.private_post = CommunityPrivatePost.objects.get(community=self.c)
-		except:
-			self.private_post = CommunityPrivatePost.objects.create(community=self.c)
+		self.list = self.c.get_post_list()
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from posts.forms import PostListForm
+
 		c = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
-		c["community"], c["form"] = self.c, CommunityPrivatePostForm(instance=self.private_post)
+		c["community"], c["form"], c["list"] = self.c, PostListForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
+		from posts.forms import PostListForm
+		
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_post, self.form = CommunityPrivatePost.objects.get(community=self.c), CommunityPrivatePostForm(request.POST, instance=self.private_post)
+		self.list = self.c.get_post_list()
+		self.form = PostListForm(request.POST, instance=self.list)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()
@@ -213,20 +215,22 @@ class CommunityPrivateGoodView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/private_good.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		try:
-			self.private_good = CommunityPrivateGood.objects.get(community=self.c)
-		except:
-			self.private_good = CommunityPrivateGood.objects.create(community=self.c)
+		self.list = self.c.get_good_list()
 		return super(CommunityPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from goods.forms import GoodListForm
+
 		c = super(CommunityPrivateGoodView,self).get_context_data(**kwargs)
-		c["community"], c["form"] = self.c, CommunityPrivateGoodForm(instance=self.private_good)
+		c["community"], c["form"], c["list"] = self.c, GoodListForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
+		from goods.forms import GoodListForm
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_good, self.form = CommunityPrivateGood.objects.get(community=self.c), CommunityPrivateGoodForm(request.POST, instance=self.private_good)
+		self.form = GoodListForm(request.POST, instance=self.list)
+		self.list = self.c.get_good_list()
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()
@@ -237,20 +241,22 @@ class CommunityPrivateVideoView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/private_video.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		try:
-			self.private_video = CommunityPrivateVideo.objects.get(community=self.c)
-		except:
-			self.private_video = CommunityPrivateVideo.objects.create(community=self.c)
+		self.list = self.c.get_video_list()
 		return super(CommunityPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from video.forms import VideoListForm
+
 		c = super(CommunityPrivateVideoView,self).get_context_data(**kwargs)
-		c["community"], c["form"] = self.c, CommunityPrivateVideoForm(instance=self.private_video)
+		c["community"], c["form"], c["list"] = self.c, VideoListForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
+		from video.forms import VideoListForm
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_video, self.form = CommunityPrivateVideo.objects.get(community=self.c), CommunityPrivateVideoForm(request.POST, instance=self.private_video)
+		self.list = self.c.get_video_list()
+		self.form = VideoListForm(request.POST, instance=self.list)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()
@@ -261,20 +267,22 @@ class CommunityPrivatePhotoView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/private_photo.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		try:
-			self.private_photo = CommunityPrivatePhoto.objects.get(community=self.c)
-		except:
-			self.private_photo = CommunityPrivatePhoto.objects.create(community=self.c)
+		self.list = self.c.get_photo_list()
 		return super(CommunityPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from gallery.forms import PhotoListForm
+
 		c = super(CommunityPrivatePhotoView,self).get_context_data(**kwargs)
-		c["community"], c["form"] = self.c, CommunityPrivatePhotoForm(instance=self.private_photo)
+		c["community"], c["form"], c["list"] = self.c, PhotoListForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
+		from gallery.forms import PhotoListForm
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_photo, self.form = CommunityPrivatePhoto.objects.get(community=self.c), CommunityPrivatePhotoForm(request.POST, instance=self.private_photo)
+		self.list = self.c.get_photo_list()
+		self.form = PhotoListForm(request.POST, instance=self.list)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()
@@ -285,20 +293,22 @@ class CommunityPrivateMusicView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/private_music.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		try:
-			self.private_music = CommunityPrivateMusic.objects.get(community=self.c)
-		except:
-			self.private_music = CommunityPrivateMusic.objects.create(community=self.c)
+		self.list = self.c.get_playlist()
 		return super(CommunityPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from music.forms import PlaylistForm
+
 		c = super(CommunityPrivateMusicView,self).get_context_data(**kwargs)
-		c["community"], c["form"] = self.c, CommunityPrivateMusicForm(instance=self.private_music)
+		c["community"], c["form"], c["list"] = self.c, PlaylistForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
+		from music.forms import PlaylistForm
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private_music, self.form = CommunityPrivateMusic.objects.get(community=self.c), CommunityPrivateMusicForm(request.POST, instance=self.private_music)
+		self.list = self.c.get_playlist()
+		self.form = PlaylistForm(request.POST, instance=self.list)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()

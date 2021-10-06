@@ -13,15 +13,6 @@ class CommunityNotificationsGoodInline(admin.TabularInline):
 class CommunityNotificationsVideoInline(admin.TabularInline):
     model = CommunityNotificationsVideo
 
-class CommunityPrivatePostInline(admin.TabularInline):
-    model = CommunityPrivatePost
-class CommunityPrivatePhotoInline(admin.TabularInline):
-    model = CommunityPrivatePhoto
-class CommunityPrivateGoodInline(admin.TabularInline):
-    model = CommunityPrivateGood
-class CommunityPrivateVideoInline(admin.TabularInline):
-    model = CommunityPrivateVideo
-
 class CommunityPrivateInline(admin.TabularInline):
     model = CommunityPrivate
 class CommunityInfoInline(admin.TabularInline):
@@ -41,11 +32,6 @@ class CommunityAdmin(admin.ModelAdmin):
         CommunityNotificationsPhotoInline,
         CommunityNotificationsGoodInline,
         CommunityNotificationsVideoInline,
-
-        CommunityPrivatePostInline,
-        CommunityPrivatePhotoInline,
-        CommunityPrivateGoodInline,
-        CommunityPrivateVideoInline,
 
         CommunityPrivateInline,
         CommunityInfoInline,
