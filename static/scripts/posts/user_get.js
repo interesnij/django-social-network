@@ -172,7 +172,7 @@ on('#ajax', 'click', '.u_item_comments', function() {
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
-    if (block.firstChild){
+    if (!block.firstChild){
       list_load(block, "/posts/user/comment/" + uuid + "/")
     };
     block.classList.add("show");
