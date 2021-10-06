@@ -341,7 +341,8 @@ function list_load(block, link) {
         }
     };
     request.send(null);
-}
+};
+
 function list_block_load(target_block, response_block, link) {
   // грузим блок response_block по ссылке link в блок target_block
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
