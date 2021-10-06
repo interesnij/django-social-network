@@ -65,7 +65,7 @@ function fullscreen_resize() {
     loader = fullscreen.querySelector("#fullscreen_loader");
 
     height = loader.scrollHeight*1 + 30;
-    if (height < 500 && !loader.querySelector(".data_display")) {
+    if (height < 500) {
       fullscreen.style.height = height + "px";
       loader.style.overflowY = "unset";
 
@@ -74,13 +74,9 @@ function fullscreen_resize() {
       prev_next_height = _height*1 + 50 + "px";
       try {loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
       try {loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
-    } else {
-      parent_div.style.height = "100%";
-      parent_div.style.top = "15px";
-      loader.style.overflowY = "auto";
-    };
+    }
   }
-}
+};
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
