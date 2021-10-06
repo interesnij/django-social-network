@@ -68,6 +68,8 @@ class LoadPost(TemplateView):
 			if request.user.is_authenticated:
 				if request.user.is_administrator_of_community(self.list.pk):
 					self.posts = self.list.get_staff_items()
+				else:
+					self.posts = self.list.get_items()
 			else:
 				self.posts = self.list.get_items()
 		else:
