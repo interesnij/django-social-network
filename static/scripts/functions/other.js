@@ -60,7 +60,7 @@ function create_gif_loading () {
 
 function fullscreen_resize() {
   container = document.body.querySelector("#fullscreens_container");
-  if (!container.innerHTML) {
+  if (container.innerHTML) {
     fullscreen = container.querySelector(".card_fullscreen");
     loader = fullscreen.querySelector("#fullscreen_loader");
 
