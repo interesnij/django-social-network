@@ -171,7 +171,6 @@ on('#ajax', 'click', '.u_item_comments', function() {
   block = parent.querySelector(".u_load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show");
-    fullscreen_resize()
   } else {
     if (!block.firstChild){
       list_load(block, "/posts/user/comment/" + uuid + "/")
