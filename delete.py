@@ -85,19 +85,15 @@ if words:
     _loop.append(text)
     for word in words:
         if "." in word:
-            print (word.strip(".,:;!_*-+()/#¤%&)"))
-
-            if word[-1] in ".,:;!_*-+()/#¤%&)":
-                _p = word[:-1]
-            else:
-                _p = word
+            _p = word.strip(".,:;!_*-+()/#¤%&)"))
+            if not "." in _p:
+                pass
             if "трезвый.рус" in _p:
                 a = ""
                 _loop.append(a)
                 this += 1
                 next += 1
                 _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + _p + '">' + _p + '</a>')
-                print ("трезвый.рус есть")
             else:
                 for zone in zons:
                     if zone in _p:
@@ -106,7 +102,6 @@ if words:
                         this += 1
                         next += 1
                         _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + _p + '">' + _p + '</a>')
-                        print ("зона: ", zone)
                         break
             _exlude.append(_p)
     print (_loop[next])
