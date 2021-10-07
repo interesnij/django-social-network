@@ -33,6 +33,6 @@ import json, requests
 from posts.models import PostList
 
 
-for list in PostList.objects.all:
+for list in PostList.objects.all():
     list.create_el = 7
     list.save(update_field=["create_el"])
