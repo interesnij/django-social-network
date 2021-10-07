@@ -148,23 +148,21 @@ def is_have_bad_words(text):
 
 def get_links_in_text(text):
     _text = text.replace("&nbsp;"," ")
-    links = re.findall(r'https?://[\S]+', _text)
+    words = _text.split(" ")
 
-    if links:
-        _loop, _exlude = [], []
+    if words:
+        _loop, _exlude, this, next = [], [], -1, 0
         _loop.append(_text)
-        this = -1
-        next = 0
-        for p in links:
-            if not p in _exlude:
+        for word in words:
+            if not word in _exlude and "." in word:
                 a = ""
                 _loop.append(a)
                 this += 1
                 next += 1
-                if "трезвый.рус" in p:
-                    _loop[next] = _loop[this].replace(p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + p + '">' + p + '</a>')
+                if "трезвый.рус" in word:
+                    _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
                 else:
-                    _loop[next] = _loop[this].replace(p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + p + '">' + p + '</a>')
+                    _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
             _exlude.append(p)
         return _loop[next]
     return _text
