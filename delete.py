@@ -96,7 +96,7 @@ if words:
                 _loop.append(a)
                 this += 1
                 next += 1
-                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
+                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + _p + '">' + _p + '</a>')
                 print ("трезвый.рус есть")
             else:
                 for zone in zons:
@@ -105,7 +105,7 @@ if words:
                         _loop.append(a)
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
+                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + _p + '">' + _p + '</a>')
                         print ("зона: ", zone)
                         break
             _exlude.append(_p)
