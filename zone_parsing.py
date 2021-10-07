@@ -80,8 +80,8 @@ def main():
         if a[0] == ".":
             pass
         else:
-            _a = "." + a
-        new_list.append(_a)
+            a = "." + a
+        new_list.append(a)
     print(new_list)
 
 if __name__ == '__main__':
