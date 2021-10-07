@@ -31,4 +31,14 @@ words = text.split(" ")
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
     for word in words:
-        print (word)
+        if not word in _exlude and "." in word:
+            a = ""
+            _loop.append(a)
+            this += 1
+            next += 1
+            if "трезвый.рус" in word:
+                _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
+            else:
+                _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
+        _exlude.append(p)
+    print (_loop[next])
