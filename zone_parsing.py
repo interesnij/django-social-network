@@ -23,7 +23,7 @@ def get_links(url):
     links = container.find_all('a')
     for a in links:
         list.append(a)
-    print list
+    print (list)
 
 
 def main():
