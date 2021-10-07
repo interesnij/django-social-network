@@ -95,7 +95,7 @@ if words:
             if "трезвый.рус" in word:
                 _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
             else:
-                for zone in zones:
+                for zone in zons:
                     if zone in word:
                         _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
         _exlude.append(word)
