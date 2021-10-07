@@ -106,7 +106,7 @@ class PostList(models.Model):
         else:
             if self.create_el == 1:
                 return True
-            elif self.create_el == 4:
+            elif self.create_el == 4 and user_id == self.creator.pk:
                 return True
             elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
                 return True
@@ -121,7 +121,6 @@ class PostList(models.Model):
         return self.create_el == self.ALL_CAN
 
     def get_ie_perm_for_user(self, user_id, type, value):
-        member = PostListPerm.objects.get(user_id=user_id)
         if value == 0:
             if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
                 ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
