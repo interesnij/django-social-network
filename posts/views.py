@@ -137,6 +137,36 @@ class LoadFixPost(TemplateView):
 		c = super(LoadFixPost,self).get_context_data(**kwargs)
 		c["object"] = self.post
 		c["community"] = self.community
-		c["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
-		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
+		if self.posts.filter(order=self.post.order + 1).exists():
+			c["next"] = self.posts.filter(order=self.post.order + 1)[0]
+		if self.posts.filter(order=self.post.order - 1).exists():
+			c["prev"] = self.posts.filter(order=self.post.order - 1)[0]
 		return c
+
+
+class LoadPostList(ListView):
+	template_name, community, paginate_by = None, None, 10
+
+	def get(self,request,*args,**kwargs):
+		self.list = PostList.objects.get(pk=self.kwargs["pk"])
+		if self.list.community:
+			self.community = self.list.community
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadPostList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(LoadPostList,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		context["community"] = self.community
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()

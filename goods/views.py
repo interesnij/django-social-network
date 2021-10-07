@@ -45,3 +45,48 @@ class LoadGoodList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class LoadGood(TemplateView):
+	template_name, community = None, None
+
+	def get(self,request,*args,**kwargs):
+		self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+		self.list = self.good.list
+
+		if self.list.community:
+			if request.user.is_authenticated:
+				if request.user.is_administrator_of_community(self.list.pk):
+					self.goods = self.list.get_staff_items()
+				else:
+					self.goods = self.list.get_items()
+			else:
+				self.goods = self.list.get_items()
+		else:
+			if request.user.pk == self.list.creator.pk:
+				self.goods = self.list.get_staff_items()
+			else:
+				self.goods = self.list.get_items()
+
+		if self.good.community:
+			self.community = self.good.community
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_item(self.good, "goods/user/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_item(self.good, "goods/user/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(LoadGood,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		c = super(LoadGood,self).get_context_data(**kwargs)
+		c["object"] = self.good
+		c["community"] = self.community
+		if self.goods.filter(order=self.good.order + 1).exists():
+			c["next"] = self.goods.filter(order=self.good.order + 1)[0]
+		if self.goods.filter(order=self.good.order - 1).exists():
+			c["prev"] = self.goods.filter(order=self.good.order - 1)[0]
+		return c

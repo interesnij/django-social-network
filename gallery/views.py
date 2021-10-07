@@ -48,8 +48,10 @@ class PhotoDetail(TemplateView):
 		context = super(PhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["list"] = self.list
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		if self.photos.filter(order=self.photo.order + 1).exists():
+			c["next"] = self.photos.filter(order=self.photo.order + 1)[0]
+		if self.photos.filter(order=self.photo.order - 1).exists():
+			c["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
@@ -87,8 +89,10 @@ class MessagePhotoDetail(TemplateView):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["message"] = self.message
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+		if self.photos.filter(order=self.photo.order + 1).exists():
+			c["next"] = self.photos.filter(order=self.photo.order + 1)[0]
+		if self.photos.filter(order=self.photo.order - 1).exists():
+			c["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
