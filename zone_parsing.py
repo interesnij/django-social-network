@@ -22,7 +22,7 @@ def get_links(url):
     container = soup.find('div', class_='_2JFxx view-container _31mcj _2s3Nk')
     links = container.find_all('a')
     for a in links:
-        list.append(a)
+        list.append(a.text)
     print (list)
 
 

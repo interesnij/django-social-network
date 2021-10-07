@@ -15,5 +15,7 @@ asgiref==3.2.0
 pandas
 python-magic
 python -m pip install django-redis
+BeautifulSoup4
+lxml
 
 Мы остановились на формировании программ при сохранении объектов, добавляя создание экземляра Wall и экземпляров Notify
