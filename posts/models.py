@@ -99,10 +99,10 @@ class PostList(models.Model):
                 return True
             elif self.create_el == self.MEMBERS and user_id in self.community.get_admins_ids():
                 return True
-            elif self.create_el == self.MEMBERS_BUT and self.get_ie_perm_for_user(user_id, 1, 0):
-                return True
-            elif self.create_el == self.SOME_MEMBERS and self.get_ie_perm_for_user(user_id, 1, 1):
-                return True
+            elif self.create_el == self.MEMBERS_BUT:
+                return self.get_ie_perm_for_user(user_id, 1, 0)
+            elif self.create_el == self.SOME_MEMBERS:
+                return self.get_ie_perm_for_user(user_id, 1, 1)
         else:
             if self.create_el == 1:
                 return True
@@ -112,10 +112,10 @@ class PostList(models.Model):
                 return True
             elif self.create_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
-            elif self.create_el == self.FRIENDS_BUT and self.get_ie_perm_for_user(user_id, 2, 0):
-                return True
-            elif self.create_el == self.SOME_FRIENDS and self.get_ie_perm_for_user(user_id, 2, 1):
-                return True
+            elif self.create_el == self.FRIENDS_BUT:
+                return self.get_ie_perm_for_user(user_id, 2, 0)
+            elif self.create_el == self.SOME_FRIENDS:
+                return self.get_ie_perm_for_user(user_id, 2, 1)
         return False
     def is_anon_user_can_create_item(self):
         return self.create_el == self.ALL_CAN
