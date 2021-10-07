@@ -98,6 +98,5 @@ if words:
                 for zone in zones:
                     if zone in word:
                         _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
-        _exlude.append(p)
         _exlude.append(word)
     print (_loop[next])
