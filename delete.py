@@ -86,6 +86,7 @@ if words:
     for word in words:
         if "." in word:
             print (". есть")
+            print (word.strip())
 
             if word[-1] in ".,:;!_*-+()/#¤%&)":
                 _p = word[:-1]
