@@ -87,26 +87,26 @@ if words:
         if "." in word:
             print (". есть")
 
-            #if word[-1] in ".,:;!_*-+()/#¤%&)":
-            #    _p = word[:-1]
-            #else:
-            if "трезвый.рус" in word:
+            if word[-1] in ".,:;!_*-+()/#¤%&)":
+                _p = word[:-1]
+            else:
+                _p = word
+            if "трезвый.рус" in _p:
                 a = ""
                 _loop.append(a)
                 this += 1
                 next += 1
-                _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
+                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
                 print ("трезвый.рус есть")
             else:
                 for zone in zons:
-                    if zone in word:
+                    if zone in _p:
                         a = ""
                         _loop.append(a)
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
+                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
                         print ("зона: ", zone)
                         break
-        _exlude.append(word)
-        ppp = _loop[next]
-    print (ppp)
+        _exlude.append(_p)
+    print (_loop[next])
