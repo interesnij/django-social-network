@@ -49,6 +49,6 @@ for list in VideoList.objects.all():
 for list in SoundList.objects.all():
     list.create_el = 7
     list.save(update_fields=["create_el"])
-for list in DocsList.objects.all():
+for list in DocList.objects.all():
     list.create_el = 7
     list.save(update_fields=["create_el"])
