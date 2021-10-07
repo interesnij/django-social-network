@@ -80,12 +80,12 @@ zons = [
     ]
 
 words = text.split(" ")
-print (list(map(str.strip, words)))
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
     for word in words:
         if "." in word:
+            print (map(str.strip, word))
             print (". есть")
 
             if word[-1] in ".,:;!_*-+()/#¤%&)":
