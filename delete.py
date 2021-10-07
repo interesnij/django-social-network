@@ -108,5 +108,5 @@ if words:
                         _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
                         print ("зона: ", zone)
                         break
-        _exlude.append(_p)
+            _exlude.append(_p)
     print (_loop[next])
