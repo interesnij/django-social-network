@@ -11,13 +11,24 @@ from django.db.models import Q
 
 class DocList(models.Model):
     MAIN, LIST, MANAGER, PROCESSING, DELETED, DELETED_MANAGER, CLOSED, CLOSED_MAIN, CLOSED_MANAGER = 'MAI','LIS','MAN','_PRO','_DEL','_DELM','_CLO','_CLOM','_CLOMA'
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = int(1),int(2),int(3),int(4),int(5),int(6)
+    ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
-    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
+    PERM = (
+            (ALL_CAN, 'Все пользователи'),
+            (FRIENDS, 'Друзья'),
+            (EACH_OTHER, 'Друзья,друзья друзей'),
+            (CREATOR, 'Только я'),
+            (FRIENDS_BUT, 'Друзья, кроме'),
+            (SOME_FRIENDS, 'Некоторые друзья'),
+            (MEMBERS, 'Подписчики'),
+            (ADMINS, 'Администраторы'),
+            (MEMBERS_BUT, 'Подписчики, кроме'),
+            (SOME_MEMBERS, 'Некоторые подписчики'),
+            )
 
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='doc_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -28,7 +39,7 @@ class DocList(models.Model):
     count = models.PositiveIntegerField(default=0)
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
-    create_el = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает документы и потом с этими документами работает")
+    create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')

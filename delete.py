@@ -24,7 +24,6 @@ from communities.models import Community
 from communities.model.settings import CommunityPrivate
 import re
 
-
 text = "Соцсеть #трезвый_рулит! @id7 трезвый.рус! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
 
 zons = [

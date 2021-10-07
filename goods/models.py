@@ -45,13 +45,25 @@ class GoodList(models.Model):
 	MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
 	DELETED, DELETED_MANAGER = '_DEL','_DELM'
 	CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
-	ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,2,3,4,5,6
+	ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
 	TYPE = (
 		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
 		(DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
 		(CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
-	PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья/подписчики'),(EACH_OTHER, 'Друзья,друзья друзей/None'),(YOU, 'Только я/админы'),(FRIENDS_BUT, 'Друзья/подписчики, кроме'),(SOME_FRIENDS, 'Некоторые друзья/подписчики'),)
+
+	PERM = (
+		(ALL_CAN, 'Все пользователи'),
+		(FRIENDS, 'Друзья'),
+		(EACH_OTHER, 'Друзья,друзья друзей'),
+		(CREATOR, 'Только я'),
+		(FRIENDS_BUT, 'Друзья, кроме'),
+		(SOME_FRIENDS, 'Некоторые друзья'),
+		(MEMBERS, 'Подписчики'),
+		(ADMINS, 'Администраторы'),
+		(MEMBERS_BUT, 'Подписчики, кроме'),
+		(SOME_MEMBERS, 'Некоторые подписчики'),
+	)
 
 	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -67,7 +79,7 @@ class GoodList(models.Model):
 
 	can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
 	can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
-	create_el = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+	create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
 	create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
 	copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
 

@@ -30,6 +30,7 @@ import soundcloud
 from music.models import *
 from datetime import datetime, date, time
 import json, requests
+from posts.models import PostList
 
 response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
 #data = "   " + str(response.json()) + "   "

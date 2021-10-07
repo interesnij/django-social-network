@@ -47,7 +47,7 @@ class PostList(models.Model):
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
-    create_el = models.PositiveSmallIntegerField(choices=PERM, default=4, verbose_name="Кто создает записи и потом с этими документами работает")
+    create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
 
@@ -106,7 +106,7 @@ class PostList(models.Model):
         else:
             if self.create_el == 1:
                 return True
-            elif self.create_el == CREATOR and user_id == self.creator.pk:
+            elif self.create_el == self.CREATOR and user_id == self.creator.pk:
                 return True
             elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
                 return True
