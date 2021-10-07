@@ -91,7 +91,7 @@ class PostList(models.Model):
 
     def is_user_can_create_el(self, user_id):
         if self.community:
-            if self.create_el == self.ALL_CAN:
+            if self.create_el == 1:
                 return True
             elif self.create_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
@@ -104,7 +104,7 @@ class PostList(models.Model):
             elif self.create_el == self.SOME_MEMBERS and self.get_ie_perm_for_user(user_id, 1, 1):
                 return True
         else:
-            if self.create_el == self.ALL_CAN:
+            if self.create_el == 1:
                 return True
             elif self.create_el == self.CREATOR and user_id == self.creator.pk:
                 return True
