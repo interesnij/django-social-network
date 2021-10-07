@@ -305,10 +305,10 @@ function send_message_sticker(url, value) {
 };
 
 on('#ajax', 'click', '.user_create_chat', function() {
-  create_fullscreen("/chat/user_progs/create_chat/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+  create_fullscreen("/chat/user_progs/create_chat/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_send_page_message', function() {
-  create_fullscreen("/chat/user_progs/send_page_message/" + this.getAttribute("data-pk") + "/", "item_fullscreen");
+  create_fullscreen("/chat/user_progs/send_page_message/" + this.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.u_chat_photo', function() {
