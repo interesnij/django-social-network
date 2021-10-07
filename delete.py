@@ -103,4 +103,5 @@ if words:
                         print ("зона: ", zone)
                         break
         _exlude.append(word)
-        print (_loop[next])
+        ppp = _loop[next]
+    print (ppp)
