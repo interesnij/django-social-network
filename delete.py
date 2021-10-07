@@ -24,5 +24,11 @@ from communities.models import Community
 from communities.model.settings import CommunityPrivate
 import re
 
-for c in Community.objects.all():
-    CommunityPrivate.objects.create(community=c)
+
+text = "Соцсеть трезвый.рус.... строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)."
+
+words = text.split(" ")
+if words:
+    _loop, _exlude, this, next = [], [], -1, 0
+    for word in words:
+        print (word)
