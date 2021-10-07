@@ -30,7 +30,7 @@ text = "Соцсеть трезвый.рус.... строится уже 24 ме
 words = text.split(" ")
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
-    _loop.append(words)
+    _loop.append(text)
     for word in words:
         if not word in _exlude and "." in word:
             a = ""
