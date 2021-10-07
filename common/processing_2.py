@@ -163,9 +163,8 @@ def get_links_in_text(text):
                     _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
                 else:
                     _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
-            _exlude.append(p)
+            _exlude.append(word)
         return _loop[next]
-    return _text
 
 def get_text_processing(text):
     is_have_bad_words(text)
