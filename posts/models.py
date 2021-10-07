@@ -89,7 +89,7 @@ class PostList(models.Model):
     def is_anon_user_can_see_el(self):
         return self.can_see_el == self.ALL_CAN
 
-    def is_user_can_create_el(self, user):
+    def is_user_can_create_el(self, user_id):
         if self.community:
             if self.create_el == self.ALL_CAN:
                 return True
