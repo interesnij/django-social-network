@@ -25,7 +25,7 @@ from communities.model.settings import CommunityPrivate
 import re
 
 
-text = "Соцсеть трезвый.рус! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
+text = "Соцсеть #трезвый_рулит!  трезвый.рус! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
 
 zons = [
         '.рф','.ru','.su','.net','.aero','.asia','.biz','.com','.info','.mobi','.name','.net','.org','.pro','.tel',
@@ -84,7 +84,9 @@ if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
     for word in words:
-        if "." in word:
+        if "#" in word[0]:
+            print("Обнаружен тег!")
+        elif "." in word:
             print(word)
             _p = word.strip(".,:;!_*-+()/#¤%&)")
             if not "." in _p:
