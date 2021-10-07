@@ -86,6 +86,8 @@ if words:
     for word in words:
         if "." in word:
             _p = word.strip(".,:;!_*-+()/#¤%&)"))
+            if not "." in _p:
+                pass
             if "трезвый.рус" in _p:
                 a = ""
                 _loop.append(a)
