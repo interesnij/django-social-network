@@ -85,8 +85,7 @@ if words:
     _loop.append(text)
     for word in words:
         if "." in word:
-            print (map(str.strip, word))
-            print (". есть")
+            print (word.strip())
 
             if word[-1] in ".,:;!_*-+()/#¤%&)":
                 _p = word[:-1]
