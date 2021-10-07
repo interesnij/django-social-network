@@ -32,7 +32,7 @@ if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
     for word in words:
-        if not word in _exlude and "." in word and not word[-1] != ".":
+        if not word in _exlude and "." in word and word[-1] != ".":
             a = ""
             _loop.append(a)
             this += 1
