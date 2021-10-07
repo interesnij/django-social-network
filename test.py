@@ -30,7 +30,7 @@ import soundcloud
 from music.models import *
 from datetime import datetime, date, time
 import json, requests
-from posts.models import PhotoList
+from gallery.models import PhotoList
 from goods.models import GoodList
 from video.models import VideoList
 from music.models import MusicList
