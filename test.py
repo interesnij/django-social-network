@@ -33,7 +33,7 @@ import json, requests
 from gallery.models import PhotoList
 from goods.models import GoodList
 from video.models import VideoList
-from music.models import MusicList
+from music.models import SoundList
 from survey.models import SurveyList
 from docs.models import DocList
 
@@ -46,7 +46,7 @@ for list in GoodList.objects.all():
 for list in VideoList.objects.all():
     list.create_el = 7
     list.save(update_fields=["create_el"])
-for list in MusicList.objects.all():
+for list in SoundList.objects.all():
     list.create_el = 7
     list.save(update_fields=["create_el"])
 for list in DocsList.objects.all():
