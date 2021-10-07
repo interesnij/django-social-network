@@ -85,6 +85,7 @@ if words:
     _loop.append(text)
     for word in words:
         if "." in word:
+            print (". есть")
             a = ""
             _loop.append(a)
             this += 1
@@ -94,9 +95,11 @@ if words:
             #else:
             if "трезвый.рус" in word:
                 _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + word + '">' + word + '</a>')
+                print ("трезвый.рус есть")
             else:
                 for zone in zons:
                     if zone in word:
                         _loop[next] = _loop[this].replace(word, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + word + '">' + word + '</a>')
+                        print ("зона: ", zone)
         _exlude.append(word)
     print (_loop[next])
