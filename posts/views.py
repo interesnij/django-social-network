@@ -95,8 +95,10 @@ class LoadPost(TemplateView):
 		c = super(LoadPost,self).get_context_data(**kwargs)
 		c["object"] = self.post
 		c["community"] = self.community
-		c["next"] = self.posts.get(order=self.post.order + 1)
-		c["prev"] = self.posts.get(order=self.post.order - 1)
+		if self.posts.filter(order=self.post.order + 1).exists():
+			c["next"] = self.posts.get(order=self.post.order + 1)
+		if self.posts.filter(order=self.post.order - 1).exists():
+			c["prev"] = self.posts.get(order=self.post.order - 1)
 		return c
 
 
