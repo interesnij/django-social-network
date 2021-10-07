@@ -62,7 +62,7 @@ class PostList(models.Model):
         if self.community:
             if self.can_see_el == self.ALL_CAN:
                 return True
-            elif self.can_see_el == self.YOU and user_id == self.community.creator.pk:
+            elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
             elif private.can_see_el == self.ADMINS and user_id in self.get_admins_ids():
                 return True
@@ -75,7 +75,7 @@ class PostList(models.Model):
         else:
             if self.can_see_el == self.ALL_CAN:
                 return True
-            elif self.can_see_el == self.YOU and user_id == self.creator.pk:
+            elif self.can_see_el == self.CREATOR and user_id == self.creator.pk:
                 return True
             elif self.can_see_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
                 return True
@@ -93,7 +93,7 @@ class PostList(models.Model):
         if self.community:
             if self.create_el == self.ALL_CAN:
                 return True
-            elif self.create_el == self.YOU and user_id == self.community.creator.pk:
+            elif self.create_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
             elif private.create_el == self.ADMINS and user_id in self.get_admins_ids():
                 return True
@@ -106,7 +106,7 @@ class PostList(models.Model):
         else:
             if self.create_el == self.ALL_CAN:
                 return True
-            elif self.create_el == self.YOU and user_id == self.creator.pk:
+            elif self.create_el == self.CREATOR and user_id == self.creator.pk:
                 return True
             elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
                 return True
