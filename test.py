@@ -35,4 +35,4 @@ from posts.models import PostList
 
 for list in PostList.objects.all():
     list.create_el = 7
-    list.save(update_field=["create_el"])
+    list.save(update_fields=["create_el"])
