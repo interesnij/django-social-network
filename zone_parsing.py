@@ -73,7 +73,7 @@ def main():
         new_list.append(a)
 
     file = open("test.txt", "w")
-    file.write(new_list)
+    file.write(str(new_list))
     file.close()
     #print(new_list)
 
