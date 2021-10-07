@@ -19,8 +19,8 @@ def get_html(url):
 def get_links(url):
     soup = BeautifulSoup(url, 'lxml')
     list = []
-    container = soup.find('div', class_='view-container')
-    links = container.find_all('a')
+    #container = soup.find('div', class_='view-container')
+    links = soup.find_all('a')
     for a in links:
         list.append(a.text)
     print (list)
