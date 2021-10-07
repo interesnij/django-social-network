@@ -96,9 +96,9 @@ class LoadPost(TemplateView):
 		c["object"] = self.post
 		c["community"] = self.community
 		if self.posts.filter(order=self.post.order + 1).exists():
-			c["next"] = self.posts.get(order=self.post.order + 1)
+			c["next"] = self.posts.filter(order=self.post.order + 1)[0]
 		if self.posts.filter(order=self.post.order - 1).exists():
-			c["prev"] = self.posts.get(order=self.post.order - 1)
+			c["prev"] = self.posts.filter(order=self.post.order - 1)[0]
 		return c
 
 
