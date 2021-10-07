@@ -32,11 +32,7 @@ from datetime import datetime, date, time
 import json, requests
 from posts.models import PostList
 
-response = requests.get(url= "https://api.soundcloud.com/playlists?url=https://soundcloud.com/eliana-cogine/sets/musicas-relaxantes&client_id=dce5652caa1b66331903493735ddd64d")
-#data = "   " + str(response.json()) + "   "
-#data.replace("   [", "").replace("   ]", "")
 
-data = response.json()
-
-for track in data[0]['tracks']:
-    print(track)
+for list in PostList.objects.all:
+    list.create_el = 7
+    list.save(update_field=["create_el"])
