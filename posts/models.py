@@ -104,6 +104,7 @@ class PostList(models.Model):
             elif self.create_el == self.SOME_MEMBERS:
                 return self.get_ie_perm_for_user(user_id, 1, 1)
         else:
+            return False
             if self.create_el == 1:
                 return True
             elif self.create_el == 4 and user_id == self.creator.pk:
