@@ -78,20 +78,18 @@ if words:
             print("Обнаружено упоминание!")
         elif "." in word:
             print(word)
-            _p = word.strip(".,:;!_*-+()/#¤%&)").lower
+            _p = word.strip(".,:;!_*-+()/#¤%&)").lower()
             if not "." in _p:
                 pass
             if "трезвый.рус" in _p:
-                a = ""
-                _loop.append(a)
+                _loop.append("")
                 this += 1
                 next += 1
                 _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>').lower()
             else:
                 for zone in zons:
                     if zone in _p:
-                        a = ""
-                        _loop.append(a)
+                        _loop.append("")
                         this += 1
                         next += 1
                         _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>').lower()
