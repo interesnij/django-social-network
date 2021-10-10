@@ -28,10 +28,12 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
 .border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+}
+
 body {
   background-color: #065fb7;
-  font-size: 1em;
-  line-height: 1.4em;
   color: #ffffff;
 }
 .header-color-primary {
@@ -59,23 +61,10 @@ body {
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: rgba(255, 255, 255, 0.7);
-}
-.loader {
-  background: #065fb7;
 }
 .main-header {
   background-color: #3c99f5;
@@ -83,39 +72,7 @@ body {
 .search-header .input-group .form-control {
   background-color: rgba(6, 95, 183, 0.5);
 }
-.sidebar {
-  background: #2382e0;
-  color: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #2382e0;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #bfdbf6;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #2382e0;
-  color: #ffffff;
-}
-.sidebar .nav {
-  background: rgba(35, 130, 224, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: #398fe3;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #ffffff;
-  background: #398fe3;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #2382e0;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: #bfdbf6;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #1d75cd;
-}
+
 .card, .mobile_naw, .card_fullscreen {
   background-color: #0774df;
 }
@@ -142,9 +99,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #065fb7;
 }
-.close-setting-sidebar {
-  background: #0879e8;
-}
+
 .chat-window .card .card-body {
   background: #065fb7;
 }

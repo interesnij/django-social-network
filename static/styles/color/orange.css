@@ -25,6 +25,9 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
 .border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+}
 body {
   background-color: #e87e13;
   font-size: 1em;
@@ -56,62 +59,17 @@ body {
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: rgba(255, 255, 255, 0.7);
 }
-.loader {
-  background: #e87e13;
-}
+
 .main-header {
   background-color: #fda600;
 }
 .search-header .input-group .form-control {
   background-color: rgba(232, 126, 19, 0.5);
-}
-.sidebar {
-  background: #ff9300;
-  color: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #ff9300;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #ffdfb3;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #ff9300;
-  color: #ffffff;
-}
-.sidebar .nav {
-  background: rgba(255, 147, 0, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: #ff9e1a;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #ffffff;
-  background: #ff9e1a;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #ff9300;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: #ffdfb3;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #e68400;
 }
 .card, .mobile_naw, .card_fullscreen {
   background-color: #ee9235;
@@ -142,9 +100,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #e87e13;
 }
-.close-setting-sidebar {
-  background: #ef973f;
-}
+
 .chat-window .card .card-body {
   background: #e87e13;
 }
