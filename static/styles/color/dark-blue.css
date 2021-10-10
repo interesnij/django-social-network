@@ -28,6 +28,9 @@ a:hover{
 .border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+}
 body {
   background-color: #0f152f;
   font-size: 1em;
@@ -59,62 +62,16 @@ body {
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: rgba(255, 255, 255, 0.7);
-}
-.loader {
-  background: #0f152f;
 }
 .main-header {
   background-color: #233160;
 }
 .search-header .input-group .form-control {
   background-color: rgba(15, 21, 47, 0.5);
-}
-.sidebar {
-  background: #192345;
-  color: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #192345;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #516ac0;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #192345;
-  color: #ffffff;
-}
-.sidebar .nav {
-  background: rgba(25, 35, 69, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: #202c58;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #ffffff;
-  background: #202c58;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #192345;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: #516ac0;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #121a32;
 }
 .card, .mobile_naw, .card_fullscreen {
   background-color: #19234e;
@@ -145,9 +102,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #0f152f;
 }
-.close-setting-sidebar {
-  background: #1b2656;
-}
+
 .chat-window .card .card-body {
   background: #0f152f;
 }

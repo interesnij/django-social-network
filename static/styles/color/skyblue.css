@@ -48,6 +48,9 @@ body {
 .border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+}
 .bg-light-opac {
   background-color: #009fda;
 }
@@ -57,62 +60,17 @@ body {
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.9);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: rgba(255, 255, 255, 0.9);
 }
-.loader {
-  background: #0094cb;
-}
+
 .main-header {
   background-color: #19b8ff;
 }
 .search-header .input-group .form-control {
   background-color: rgba(0, 148, 203, 0.5);
-}
-.sidebar {
-  background: #13abf0;
-  color: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #13abf0;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #bbe7fb;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #13abf0;
-  color: #ffffff;
-}
-.sidebar .nav {
-  background: rgba(19, 171, 240, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: #2bb4f2;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #ffffff;
-  background: #2bb4f2;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #13abf0;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: #bbe7fb;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #0e9bdc;
 }
 .card, .mobile_naw, .card_fullscreen {
   background-color: #00b2f4;
@@ -143,9 +101,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #0094cb;
 }
-.close-setting-sidebar {
-  background: #00b9fe;
-}
+
 .chat-window .card .card-body {
   background: #0094cb;
 }

@@ -32,6 +32,9 @@ box-shadow: inset 2px -2px 0 1px black !important;
 .border-bottom {
   border-bottom: 1px solid rgba(127,127,127, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(127, 127, 127, 0.7) !important;
+}
 .form-control::placeholder{color:rgba(0, 0, 0, 0.6);font-style: italic;}
 
 body {
@@ -65,61 +68,17 @@ body {
 .content-color-secondary {
   color: rgba(0, 0, 0, 0.7);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
+
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(0, 0, 0, 0.06) !important;
 }
-.loader {
-  background: #f0f2f6;
-}
+
 .main-header {
   background-color: #ffffff;
 }
 .search-header .input-group .form-control {
   background-color: rgba(240, 242, 246, 0.5);
-}
-.sidebar {
-  background: #ffffff;
-  color: #000000;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: white;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #ffffff;
-  color: #000000;
-}
-.sidebar .nav {
-  background: rgba(255, 255, 255, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: white;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #000000;
-  background: white;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: white;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #f2f2f2;
 }
 .card, .mobile_naw, .card_fullscreen {
   background-color: white;
@@ -150,9 +109,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #f0f2f6;
 }
-.close-setting-sidebar {
-  background: white;
-}
+
 .chat-window .card .card-body {
   background: #f0f2f6;
 }

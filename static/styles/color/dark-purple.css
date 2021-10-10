@@ -25,6 +25,9 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
 .border-bottom {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
+.text_support a {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+}
 body {
 background-color: #271531;
   font-size: 1em;
@@ -56,62 +59,17 @@ background-color: #271531;
 .content-color-secondary {
   color: rgba(255, 255, 255, 0.65);
 }
-.list-group-item.new {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.list-group-item.link-media .media:hover {
-  background-color: rgba(121, 121, 255, 0.05);
-}
-.popover.tour-tour .popover-title {
-  background-color: #7979ff;
-  color: #fff;
-}
 .card .card-footer.bg-light-secondary,
 .bg-light-secondary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: rgba(255, 255, 255, 0.65);
 }
-.loader {
-  background: #271531;
-}
+
 .main-header {
   background-color: #582a72;
 }
 .search-header .input-group .form-control {
   background-color: rgba(39, 21, 49, 0.5);
-}
-.sidebar {
-  background: #432753;
-  color: #ffffff;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-track {
-  background: #432753;
-}
-.sidebar.sidebar-right > div::-webkit-scrollbar-thumb {
-  background: #a170bc;
-}
-.sidebar.sidebar-right .close-sidebar {
-  background: #432753;
-  color: #ffffff;
-}
-.sidebar .nav {
-  background: rgba(67, 39, 83, 0.65);
-}
-.sidebar .nav .nav-item .nav-link:hover {
-  background: #512f64;
-}
-.sidebar .nav .nav-item .nav-link.active.dropdwown-toggle, .sidebar .nav .nav-item .nav-link.router-link-active.dropdwown-toggle {
-  color: #ffffff;
-  background: #512f64;
-}
-.sidebar::-webkit-scrollbar-track {
-  background: #432753;
-}
-.sidebar::-webkit-scrollbar-thumb {
-  background: #a170bc;
-}
-.iconsibarbar .sidebar-left .nav .nav-item .nav-link.dropdwown-toggle + .nav {
-  background: #351f42;
 }
 .card, .mobile_naw, .card_fullscreen {
   background-color: #3e214e;
@@ -142,9 +100,7 @@ a.media:hover {
 .line-control-menu-bar, .line-control-status-bar {
   background: #271531;
 }
-.close-setting-sidebar {
-  background: #432455;
-}
+
 .chat-window .card .card-body {
   background: #271531;
 }
