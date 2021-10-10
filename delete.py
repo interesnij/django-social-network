@@ -77,16 +77,16 @@ if words:
             this += 1
             next += 1
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            _p = "#" + _p
-            _loop[next] = _loop[this].replace(word, '<a class="ajax" href="/search/?tag=' + _p + '">' + _p + '</a>')
+            p_2 = "#" + _p
+            _loop[next] = _loop[this].replace(word, '<a class="ajax" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
             print("Обнаружен тег - ", _loop[next])
         if word[0] == "@":
             _loop.append("")
             this += 1
             next += 1
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            _p = "@" + _p
-            _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info" href="' + _p + '">' + _p + '</a>')
+            p_2 = "@" + _p
+            _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info" data-id="' + _p + '">' + p_2 + '</a>')
             print("Обнаружено упоминание - ", _loop[next])
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
