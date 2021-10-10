@@ -200,7 +200,7 @@ def is_have_bad_words(text):
 
 def get_links_in_text(text):
     #_text = text.replace("&nbsp;"," ")
-    words = text.replace("&nbsp;"," ").split(" ")
+    words = text.replace("www.","").replace("&nbsp;"," ").split(" ")
 
     if words:
         _loop, _exlude, this, next = [], [], -1, 0
@@ -220,7 +220,7 @@ def get_links_in_text(text):
                 next += 1
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info" data-id="' + _p + '">' + p_2 + '</a>')
+                _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
                 print("Обнаружено упоминание - ", _loop[next])
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
@@ -238,7 +238,7 @@ def get_links_in_text(text):
                             _loop.append("")
                             this += 1
                             next += 1
-                            _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>')
+                            _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="www.' + _p + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
         return _loop[next]
