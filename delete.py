@@ -13,7 +13,7 @@ import django, json, requests
 django.setup()
 import re
 
-text = "Соцсеть #тРезвый_рулит! @iD7 трезвый.рус! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
+text = "Соцсеть #тРезвый_рулит! @iD7 трезвый.рус/wallmart/instance/! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
 
 zons = [
         '.рф','.ru','.su','.net','.aero','.asia','.biz','.com','.info','.mobi','.name','.net','.org','.pro','.tel',
@@ -73,9 +73,21 @@ if words:
     _loop.append(text)
     for word in words:
         if word[0] == "#":
-            print("Обнаружен тег!")
+            _loop.append("")
+            this += 1
+            next += 1
+            _p = word.strip(".,:;!_*-+()/#¤%&)").lower()
+            _p = "#" + _p
+            _loop[next] = _loop[this].replace(_p, '<a class="ajax" href="/search/?tag=' + _p + '">' + _p + '</a>')
+            print("Обнаружен тег - ", _p)
         if word[0] == "@":
-            print("Обнаружено упоминание!")
+            _loop.append("")
+            this += 1
+            next += 1
+            _p = word.strip(".,:;!_*-+()/#¤%&)").lower()
+            _p = "@" + _p
+            _loop[next] = _loop[this].replace(_p, '<a class="ajax show_mention_info" href="' + _p + '">' + _p + '</a>')
+            print("Обнаружено упоминание - ", _p)
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/#¤%&)").lower()
             if not "." in _p:
@@ -85,14 +97,14 @@ if words:
                 _loop.append("")
                 this += 1
                 next += 1
-                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>').lower()
+                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>')
             else:
                 for zone in zons:
                     if zone in _p:
                         _loop.append("")
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>').lower()
+                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>')
                         break
             _exlude.append(_p)
     print (_loop[next])
