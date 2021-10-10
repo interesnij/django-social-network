@@ -11,17 +11,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import django, json, requests
 
 django.setup()
-
-from django.conf import settings
-from docs.models import DocList
-from music.models import SoundList, Music
-from video.models import VideoList
-from docs.models import Doc
-from chat.models import Message
-from gallery.models import PhotoList
-from chat.models import Message
-from communities.models import Community
-from communities.model.settings import CommunityPrivate
 import re
 
 text = "Соцсеть #трезвый_рулит! @id7 трезвый.рус! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
@@ -89,7 +78,7 @@ if words:
             print("Обнаружено упоминание!")
         elif "." in word:
             print(word)
-            _p = word.strip(".,:;!_*-+()/#¤%&)")
+            _p = word.strip(".,:;!_*-+()/#¤%&)").lower
             if not "." in _p:
                 pass
             if "трезвый.рус" in _p:
@@ -97,7 +86,7 @@ if words:
                 _loop.append(a)
                 this += 1
                 next += 1
-                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax underline" href="' + _p + '">' + _p + '</a>')
+                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>').lower()
             else:
                 for zone in zons:
                     if zone in _p:
@@ -105,7 +94,7 @@ if words:
                         _loop.append(a)
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="underline" target="_blank" href="' + _p + '">' + _p + '</a>')
+                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>').lower()
                         break
             _exlude.append(_p)
     print (_loop[next])
