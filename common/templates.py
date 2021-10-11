@@ -626,3 +626,7 @@ def get_detect_main_template(template, request_user, user_agent):
     elif request_user.is_anonymous:
         template_name = "main/auth/auth.html"
     return get_folder(user_agent) + template_name
+
+def render_for_platform(request, template, data):
+    from django.shortcuts import render
+    return render(request, get_folder(request.META['HTTP_USER_AGENT']) + template, data)
