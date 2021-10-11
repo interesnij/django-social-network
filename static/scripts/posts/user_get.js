@@ -65,8 +65,10 @@ on('#ajax', 'click', '#holder_article_image', function() {
   get_image_priview(this, img);
 });
 
-on('#ajax', 'click', '.fullscreen', function() {
+on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
+  console.log(this);
+  console.log(e);
   create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', 'a', function(e) {
