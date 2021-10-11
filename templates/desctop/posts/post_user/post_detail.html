@@ -2,7 +2,9 @@
 
     {% include 'desctop/posts/post_user/card_header.html' %}
 
-    {{ object.text|safe }}
+    <div class="text_support">
+      {{ object.text|safe }}
+    </div>
 
     {% include 'base_block/post.html' %}
 
