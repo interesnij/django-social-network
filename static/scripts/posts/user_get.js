@@ -67,8 +67,11 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
-  console.log(e.target);
-  create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
+  if (!e.target.classList.contains("ajax")) {
+    toast_info("Нажата ссылка!")
+  } else {
+    create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen")
+  }
 });
 on('#ajax', 'click', 'a', function(e) {
   if (this.parentElement.classList.contains(".fullscreen")) {
