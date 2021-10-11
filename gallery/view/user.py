@@ -14,14 +14,14 @@ class UserPhotosList(ListView):
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_template_user_item, get_template_anon_user_item
-        
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator_id=self.user.pk, type=PhotoList.MAIN, community__isnull=True)
         if request.is_ajax():
             if request.user.is_authenticated:
-    			self.template_name = get_template_user_item(self.photo, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-    		else:
-    			self.template_name = get_template_anon_user_item(self.photo, "users/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_user_item(self.photo, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_anon_user_item(self.photo, "users/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 
@@ -47,7 +47,10 @@ class UserPhotosAlbumList(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            if request.user.is_authenticated:
+                self.template_name = get_template_user_item(self.photo, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_anon_user_item(self.photo, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if self.user == request.user:
@@ -99,10 +102,10 @@ class UserPostPhoto(TemplateView):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
-		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -123,10 +126,10 @@ class UserCommentPhoto(TemplateView):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.photo, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.photo, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -147,10 +150,10 @@ class UserFirstAvatar(TemplateView):
 		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
 		self.photos = self.list.get_items()
 		self.photo = self.list.get_first_photo()
-		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -197,10 +200,10 @@ class UserChatPhoto(TemplateView):
 		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.photos = self.chat.get_attach_photos()
-		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.photo, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/anon_u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.photo, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/anon_u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatPhoto,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
