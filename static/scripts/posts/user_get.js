@@ -67,8 +67,8 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
-  if (e.target.classList.contains("ajax")) {
-    toast_info("Нажата ссылка!")
+  if (e.target.classList.contains("action")) {
+    toast_info("action!")
   } else {
     create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen")
   }
