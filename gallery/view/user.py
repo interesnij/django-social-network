@@ -194,7 +194,7 @@ class UserChatPhoto(TemplateView):
         from chat.models import Chat
         from common.templates import get_template_user_item, get_template_anon_user_item
 
-        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"]
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         self.chat = Chat.objects.get(pk=self.kwargs["pk"])
         self.photos = self.chat.get_attach_photos()
         if request.user.is_authenticated:
