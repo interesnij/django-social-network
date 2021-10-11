@@ -614,3 +614,15 @@ def get_detect_platform_template(template, request_user, user_agent):
         template = "main/phone_verification.html"
 
     return get_folder(user_agent) + template
+
+def get_detect_main_template(template, request_user, user_agent):
+    """ получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
+    if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
+        if request_user.type[0] == "_":
+            template_name = get_fine_request_user(request_user)
+        else:
+            template_name = template
+    elif request_user.is_anonymous:
+        template_name = "main/auth/auth.html"
+    return get_folder(user_agent) + template_name
