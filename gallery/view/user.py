@@ -119,60 +119,57 @@ class UserPostPhoto(TemplateView):
         return context
 
 class UserCommentPhoto(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		from posts.models import PostComment
-		from common.templates import get_template_user_item, get_template_anon_user_item
+    def get(self,request,*args,**kwargs):
+        from posts.models import PostComment
+        from common.templates import get_template_user_item, get_template_anon_user_item
 
-		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "gallery/u_photo/comment_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/comment_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserCommentPhoto,self).get(request,*args,**kwargs)
+        return super(UserCommentPhoto,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserCommentPhoto,self).get_context_data(**kwargs)
-		context["object"] = self.photo
-		context["user"] = self.request.user
-		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserCommentPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["user"] = self.request.user
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
 
 
 class UserFirstAvatar(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_item, get_template_anon_user_item
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_template_user_item, get_template_anon_user_item
 
-		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
-		self.photos = self.list.get_items()
-		self.photo = self.list.get_first_photo()
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.list = PhotoList.objects.get(creator=self.user, type=PhotoList.AVATAR, community__isnull=True)
+        self.photos = self.list.get_items()
+        self.photo = self.list.get_first_photo()
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserFirstAvatar,self).get(request,*args,**kwargs)
+        return super(UserFirstAvatar,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserFirstAvatar,self).get_context_data(**kwargs)
-		context["object"] = self.photo
-		try:
-			context["prev"] = self.photos.filter(pk__lt=self.photo.pk, type="PUB").order_by('-pk').first()
-		except:
-			pass
-		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		context["list"] = self.list
-		context["user"] = self.user
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserFirstAvatar,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        try:
+            context["prev"] = self.photos.filter(pk__lt=self.photo.pk, type="PUB").order_by('-pk').first()
+        except:
+            pass
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        context["list"] = self.list
+        context["user"] = self.user
+        return context
 
 
 class GetUserPhoto(TemplateView):
-    """
-    страница отдельного фото. Для уведомлений и тому подобное
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
