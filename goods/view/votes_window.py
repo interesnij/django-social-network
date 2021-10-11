@@ -55,9 +55,9 @@ class GoodUserCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.good, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.comment.good, "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.comment.get_item(), "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,9 +74,9 @@ class GoodUserCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.good, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.comment.good, "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.comment.get_item(), "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -133,9 +133,9 @@ class GoodCommunityCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Сommunity.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.good, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.comment.good, "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.comment.get_item(), "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -151,9 +151,9 @@ class GoodCommunityCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Сommunity.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.good, "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "goods/good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.comment.good, "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.comment.get_item(), "goods/good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -217,9 +217,9 @@ class AllGoodUserCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.good, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.comment.good, "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.comment.get_item(), "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -239,9 +239,9 @@ class AllGoodUserCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.good, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.comment.good, "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.comment.get_item(), "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -309,9 +309,9 @@ class AllGoodCommunityCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.good, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.comment.good, "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.comment.get_item(), "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -331,9 +331,9 @@ class AllGoodCommunityCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment, self.community = GoodComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.good, "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "goods/all_good_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.comment.good, "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.comment.get_item(), "goods/all_good_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllGoodCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

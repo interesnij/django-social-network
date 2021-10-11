@@ -55,9 +55,9 @@ class PostUserCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.item, "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.item.get_item(), "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.item, "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.item.get_item(), "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -74,9 +74,9 @@ class PostUserCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.item, "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.item.get_item(), "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.item, "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.item.get_item(), "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -132,9 +132,9 @@ class PostCommunityCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.item, "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.item.get_item(), "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.item, "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.item.get_item(), "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -150,9 +150,9 @@ class PostCommunityCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.item, "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.item.get_item(), "posts/post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.item, "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.item.get_item(), "posts/post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -216,9 +216,9 @@ class AllPostUserCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.item, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.item.get_item(), "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.item, "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.item.get_item(), "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -238,9 +238,9 @@ class AllPostUserCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.item, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.item.get_item(), "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.item, "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.item.get_item(), "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -308,9 +308,9 @@ class AllPostCommunityCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.item, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.item.get_item(), "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.item, "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.item.get_item(), "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -330,9 +330,9 @@ class AllPostCommunityCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.item, "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.item.get_item(), "posts/all_post_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.item, "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.item.get_item(), "posts/all_post_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPostCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
