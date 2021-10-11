@@ -33,7 +33,7 @@ box-shadow: inset 2px -2px 0 1px black !important;
   border-bottom: 1px solid rgba(127,127,127, 0.7) !important;
 }
 .text_support a {
-  border-bottom: 1px dotted rgba(127, 127, 127, 0.7) !important;
+  color: #2a5885;
 }
 .form-control::placeholder{color:rgba(0, 0, 0, 0.6);font-style: italic;}
 
