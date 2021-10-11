@@ -219,7 +219,7 @@ def get_links_in_text(text):
                 next += 1
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="ajax action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
+                _loop[next] = _loop[this].replace(word, '<a class="action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 if not "." in _p:
