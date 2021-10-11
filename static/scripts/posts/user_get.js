@@ -67,8 +67,7 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
-  console.log(this);
-  console.log(e);
+  console.log(e.target);
   create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', 'a', function(e) {
