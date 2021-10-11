@@ -10,7 +10,7 @@ from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import repost_message_send
-from common.template.user import get_detect_platform_template
+from common.templates import get_detect_platform_template
 
 
 class UUCMGoodWindow(TemplateView):

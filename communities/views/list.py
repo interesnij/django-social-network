@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityCategory
-from common.template.user import get_default_template, get_detect_platform_template
+from common.templates import get_default_template, get_detect_platform_template
 
 
 class CommunityMembersView(ListView):

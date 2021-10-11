@@ -1,15 +1,12 @@
 from django.views.generic.base import TemplateView
 from users.models import User
 from video.models import Video, VideoComment, VideoList
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
-from users.models import User
 from django.views.generic import ListView
 from video.forms import VideoListForm, VideoForm, CommentForm
 from rest_framework.exceptions import PermissionDenied
-from common.template.video import get_permission_user_video
-from django.http import Http404
-from common.template.user import get_settings_template, render_for_platform
+from common.templates import get_settings_template, render_for_platform
 
 
 class AddVideoListInUserCollections(View):
@@ -91,7 +88,7 @@ class VideoUserCommentEdit(TemplateView):
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

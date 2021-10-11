@@ -4,7 +4,7 @@ from survey.models import Survey, Answer, SurveyList
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.user import check_user_can_get_list
-from common.template.user import get_settings_template, render_for_platform, get_detect_platform_template
+from common.templates import get_settings_template, render_for_platform, get_detect_platform_template
 
 
 class SurveyUserCreate(TemplateView):
@@ -22,7 +22,7 @@ class SurveyUserCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from survey.forms import SurveyForm
-        
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.form = SurveyForm(request.POST,request.FILES)
         if request.is_ajax() and self.form.is_valid():

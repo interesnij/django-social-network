@@ -1,12 +1,10 @@
 from gallery.models import PhotoList, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists
 from communities.models import Community
-from common.template.user import render_for_platform
-from common.template.community import get_community_manage_template
-from django.http import Http404
+from common.templates import render_for_platform, get_community_manage_template
 from django.views.generic.base import TemplateView
 
 
@@ -150,7 +148,7 @@ class PhotoCommunityCommentEdit(TemplateView):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

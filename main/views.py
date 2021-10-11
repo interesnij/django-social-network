@@ -2,7 +2,7 @@ import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
-from common.template.user import get_detect_main_template
+from common.templates import get_detect_main_template, get_default_template
 from communities.models import Community
 from users.models import User
 from django.http import Http404
@@ -48,6 +48,20 @@ class MainPhoneSend(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/phone_verification.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MainPhoneSend,self).get(request,*args,**kwargs)
+
+class LoadCustomLink(TemplateView):
+	template_name, get_buttons_block, common_frends, common_friends_count, user, c = None, None, None, None, None, None
+
+	def get(self,request,*args,**kwargs):
+		from common.model.other import CustomLink
+		try:
+			self.custom_link = CustomLink.objects.get(link=self.kwargs["slug"])
+		except:
+			raise Http404
+		if self.custom_link.user:
+			self.user = self.custom_link.user
+
+		return super(LoadCustomLink,self).get(request,*args,**kwargs)
 
 
 class SwitchView(TemplateView):

@@ -2,12 +2,10 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import PhotoList, Photo
 from django.views.generic import ListView
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
-from common.template.photo import get_template_user_photo, get_permission_user_photo, get_permission_user_photo_detail
-from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
-from common.template.user import get_detect_platform_template
+from common.templates import get_detect_platform_template
 
 
 class UserPhotosList(ListView):
@@ -15,10 +13,15 @@ class UserPhotosList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
+        from common.templates import get_template_user_item, get_template_anon_user_item
+        
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator_id=self.user.pk, type=PhotoList.MAIN, community__isnull=True)
         if request.is_ajax():
-            self.template_name = get_permission_user_photo(self.list, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            if request.user.is_authenticated:
+    			self.template_name = get_template_user_item(self.photo, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+    		else:
+    			self.template_name = get_template_anon_user_item(self.photo, "users/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 

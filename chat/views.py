@@ -5,7 +5,7 @@ class MessagesListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 
 		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
 		return super(MessagesListView,self).get(request,*args,**kwargs)
@@ -25,7 +25,7 @@ class ChatDetailView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 		from asgiref.sync import async_to_sync
 		from channels.layers import get_channel_layer
 
@@ -71,7 +71,7 @@ class ChatFixedMessagesView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 		from chat.models import Chat
 
 		self.template_name, self.chat = get_settings_template("chat/chat/fixed_list.html", request.user, request.META['HTTP_USER_AGENT']), Chat.objects.get(pk=self.kwargs["pk"])
@@ -91,7 +91,7 @@ class ChatMembers(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 
 		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatMembers,self).get(request,*args,**kwargs)

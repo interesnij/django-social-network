@@ -1,17 +1,15 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from django.views import View
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from posts.forms import PostForm
 from posts.models import Post
 from video.models import Video, VideoList
 from users.models import User
-from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
 from common.processing.post import get_post_processing, repost_message_send
-from common.template.user import get_detect_platform_template
-from common.notify.notify import *
+from common.templates import get_detect_platform_template
 
 
 class UUCMVideoWindow(TemplateView):

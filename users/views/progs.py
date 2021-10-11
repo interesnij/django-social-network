@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse
 from django.http import Http404
-from common.template.user import render_for_platform
+from common.templates import render_for_platform
 
 
 class GetUserGender(View):

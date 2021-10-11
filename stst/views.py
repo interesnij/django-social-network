@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from common.template.user import get_detect_platform_template
+from common.templates import get_detect_platform_template
 from posts.models import Post
 
 

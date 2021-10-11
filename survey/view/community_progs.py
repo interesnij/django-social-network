@@ -4,8 +4,7 @@ from survey.models import Survey, Answer, SurveyList
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists
-from common.template.user import get_detect_platform_template
-from common.template.user import render_for_platform
+from common.templates import get_detect_platform_template, render_for_platform
 
 
 class SurveyCommunityCreate(TemplateView):

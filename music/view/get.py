@@ -1,6 +1,6 @@
 from music.models import *
 from django.views.generic.base import TemplateView
-from common.template.user import get_settings_template
+from common.templates import get_settings_template
 
 
 class TagMusicGet(TemplateView):

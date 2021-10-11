@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from quan.models import Question, QuestionsCategory
-from common.template.user import get_default_template
+from common.templates import get_default_template
 
 
 class QuanView(TemplateView):

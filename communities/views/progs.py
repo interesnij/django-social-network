@@ -9,7 +9,7 @@ class CommunityCreate(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 
 		self.template_name = get_settings_template("communities/manage/create_community.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityCreate,self).get(request,*args,**kwargs)
@@ -23,7 +23,7 @@ class CommunityCreate(TemplateView):
 		return c
 
 	def post(self,request,*args,**kwargs):
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 		from communities.forms import CommunityForm
 
 		self.form = CommunityForm(request.POST)

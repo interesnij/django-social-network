@@ -45,7 +45,7 @@ class PostCommunityCreate(View):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
 
                 attach = request.POST.getlist('attach_items')
                 new_post = post.create_post(
@@ -148,7 +148,7 @@ class PostCommunityEdit(TemplateView):
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community_pk):
             post = form_post.save(commit=False)
             if post.text or attach:
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
                 new_post = post.edit_post(text=post.text,category=post.category,list=post.list,attach=attach,comments_enabled=post.comments_enabled,is_signature=post.is_signature,votes_on=post.votes_on)
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
@@ -177,7 +177,7 @@ class PostCommunityCommentEdit(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:
@@ -206,7 +206,7 @@ class PostOfferCommunityCreate(View):
             if request.POST.get('text') or request.POST.getlist('attach_items'):
                 from common.notify.notify import community_notify
                 from common.processing.post import get_post_offer_processing
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
 
                 lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
                 new_post = post.create_offer_post(
@@ -235,7 +235,7 @@ class PostCommunityCommentCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/c_post_comment/parent.html',{'comment': new_comment, 'community': community})
             else:
@@ -256,7 +256,7 @@ class PostCommunityReplyCreate(View):
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=parent.post, community=community, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/c_post_comment/reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
             else:
@@ -410,7 +410,7 @@ class CommunityPostListCreate(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
+        from common.templates import get_community_manage_template
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("posts/post_community/add_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
@@ -424,7 +424,7 @@ class CommunityPostListCreate(TemplateView):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             list = self.form.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c,is_public=request.POST.get("is_public"))
             return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': new_list})
@@ -440,7 +440,7 @@ class CommunityPostListEdit(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
+        from common.templates import get_community_manage_template
 
         self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
         self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
