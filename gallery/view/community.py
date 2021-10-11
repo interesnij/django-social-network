@@ -18,9 +18,9 @@ class CommunityPhotosList(ListView):
         self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
         if request.is_ajax():
             if request.user.is_authenticated:
-    			self.template_name = get_template_community_item(self.photo, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-    		else:
-    			self.template_name = get_template_anon_community_item(self.photo, "communities/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_anon_community_item(self.photo, "communities/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -47,9 +47,9 @@ class CommunityAlbumPhotosList(ListView):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             if request.user.is_authenticated:
-    			self.template_name = get_template_community_item(self.photo, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-    		else:
-    			self.template_name = get_template_anon_community_item(self.photo, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_anon_community_item(self.photo, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -108,8 +108,8 @@ class CommunityFirstAvatar(TemplateView):
 		self.form_image = PhotoDescriptionForm(request.POST,instance=self.photo)
 		self.photos = self.list.get_items()
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
+            self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
 			self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityFirstAvatar,self).get(request,*args,**kwargs)
 
