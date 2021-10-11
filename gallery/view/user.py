@@ -188,26 +188,26 @@ class GetUserPhoto(TemplateView):
 
 
 class UserChatPhoto(TemplateView):
-	template_name = None
+    template_name = None
 
-	def get(self,request,*args,**kwargs):
-		from chat.models import Chat
-		from common.templates import get_template_user_item, get_template_anon_user_item
+    def get(self,request,*args,**kwargs):
+        from chat.models import Chat
+        from common.templates import get_template_user_item, get_template_anon_user_item
 
-		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.photos = self.chat.get_attach_photos()
+        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"]
+        self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+        self.photos = self.chat.get_attach_photos()
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/anon_u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserChatPhoto,self).get(request,*args,**kwargs)
+        return super(UserChatPhoto,self).get(request,*args,**kwargs)
 
-	def get_context_data(self,**kwargs):
-		context = super(UserChatPhoto,self).get_context_data(**kwargs)
-		context["object"] = self.photo
-		context["chat"] = self.chat
-		context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-		context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-		context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-		return context
+    def get_context_data(self,**kwargs):
+        context = super(UserChatPhoto,self).get_context_data(**kwargs)
+        context["object"] = self.photo
+        context["chat"] = self.chat
+        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
+        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
+        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
+        return context
