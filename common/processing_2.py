@@ -212,7 +212,7 @@ def get_links_in_text(text):
                 next += 1
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "#" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="ajax" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
+                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
                 print("Обнаружен тег - ", _loop[next])
             if word[0] == "@":
                 _loop.append("")
@@ -220,7 +220,7 @@ def get_links_in_text(text):
                 next += 1
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
+                _loop[next] = _loop[this].replace(word, '<a class="ajax action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
                 print("Обнаружено упоминание - ", _loop[next])
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
@@ -231,14 +231,14 @@ def get_links_in_text(text):
                     _loop.append("")
                     this += 1
                     next += 1
-                    _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>')
+                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
                 else:
                     for zone in zons:
                         if zone in _p:
                             _loop.append("")
                             this += 1
                             next += 1
-                            _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="//' + _p + '">' + _p + '</a>')
+                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="//' + _p + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
         return _loop[next]
