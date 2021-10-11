@@ -28,7 +28,7 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
 .text_support a {
-  color: #2a5885 !important;
+  color: #73B9F5 !important;
   font-weight: 400;
 }
 .text_support a:hover {
@@ -38,7 +38,7 @@ body {
   background-color: #111111;
   font-size: 1em;
   line-height: 1.4em;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 .header-color-primary {
   color: rgba(255, 255, 255, 0.7);
