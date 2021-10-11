@@ -213,7 +213,6 @@ def get_links_in_text(text):
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "#" + _p
                 _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
-                print("Обнаружен тег - ", _loop[next])
             if word[0] == "@":
                 _loop.append("")
                 this += 1
@@ -221,12 +220,14 @@ def get_links_in_text(text):
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 p_2 = "@" + _p
                 _loop[next] = _loop[this].replace(word, '<a class="ajax action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
-                print("Обнаружено упоминание - ", _loop[next])
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 if not "." in _p:
                     pass
-                print(_p)
+                if _p[0] == "h":
+                    p_2 = _p
+                else:
+                    p_2 = "//" + _p
                 if "трезвый.рус" in _p:
                     _loop.append("")
                     this += 1
@@ -238,7 +239,7 @@ def get_links_in_text(text):
                             _loop.append("")
                             this += 1
                             next += 1
-                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="//' + _p + '">' + _p + '</a>')
+                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
         return _loop[next]
