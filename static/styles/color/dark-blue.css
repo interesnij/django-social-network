@@ -33,7 +33,8 @@ a:hover{
   font-weight: 400;
 }
 .text_support a:hover {
-  border-bottom: 1px solid rgba(127,127,127, 0.7) !important;
+  border-bottom: 1px solid #73B9F5 !important;
+  color: #73B9F5 !important;
 }
 body {
   background-color: #0f152f;
