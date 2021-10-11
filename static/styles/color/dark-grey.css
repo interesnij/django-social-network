@@ -28,7 +28,11 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
 .text_support a {
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+  color: #2a5885 !important;
+  font-weight: 400;
+}
+.text_support a:hover {
+  border-bottom: 1px solid rgba(127,127,127, 0.7) !important;
 }
 body {
   background-color: #111111;
