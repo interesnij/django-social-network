@@ -92,12 +92,11 @@ class CommunityPostVideoList(TemplateView):
 		from posts.models import Post
 		from common.templates import get_template_community_item, get_template_anon_community_item
 
-		if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-
 		self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -112,11 +111,11 @@ class CommunityPostCommentVideoList(TemplateView):
 		from posts.models import PostComment
 		from common.templates import get_template_community_item, get_template_anon_community_item
 
-		if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.comment, self.community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
