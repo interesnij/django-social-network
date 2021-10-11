@@ -605,3 +605,12 @@ def get_community_moders_template(template, request_user, community, user_agent)
     else:
         raise PermissionDenied('Ошибка доступа.')
     return get_folder(user_agent) + template_name
+
+def get_detect_platform_template(template, request_user, user_agent):
+    """ получаем шаблон для зарегистрированного пользователя. Анонимов не пускаем."""
+    if request_user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
+    elif request_user.is_no_phone_verified():
+        template = "main/phone_verification.html"
+
+    return get_folder(user_agent) + template
