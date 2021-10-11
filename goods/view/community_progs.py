@@ -5,7 +5,7 @@ from django.views import View
 from common.check.community import check_can_get_lists
 from goods.forms import CommentForm, GoodForm, GoodListForm
 from communities.models import Community
-from common.template.user import render_for_platform
+from common.templates import render_for_platform
 
 
 class AddGoodListInCommunityCollections(View):
@@ -115,7 +115,7 @@ class GoodCommunityCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
+        from common.templates import get_community_manage_template
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
@@ -194,7 +194,7 @@ class GoodListCommunityCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
+        from common.templates import get_community_manage_template
 
         self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
@@ -224,7 +224,7 @@ class CommunityGoodListEdit(TemplateView):
     form = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.community import get_community_manage_template
+        from common.templates import get_community_manage_template
 
         self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
@@ -333,7 +333,7 @@ class GoodCommunityCommentEdit(TemplateView):
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

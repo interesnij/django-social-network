@@ -5,7 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
-from common.template.user import render_for_platform
+from common.templates import render_for_platform
 
 
 class TempListOn(View):

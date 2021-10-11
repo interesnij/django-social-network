@@ -2,11 +2,9 @@ from communities.models import Community
 from django.views import View
 from follows.models import Follow, CommunityFollow
 from users.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.generic import ListView
-from common.template.user import get_template_user
-from django.http import Http404
-from common.template.user import get_settings_template
+from common.templates import get_settings_template, get_template_user
 
 
 class FollowsView(ListView):

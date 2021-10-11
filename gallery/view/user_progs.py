@@ -1,12 +1,11 @@
 from users.models import User
 from gallery.models import PhotoList, Photo, PhotoComment
 from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.user import check_user_can_get_list
 from users.models import User
-from django.http import Http404
-from common.template.user import get_settings_template, render_for_platform
+from common.templates import get_settings_template, render_for_platform
 from django.views.generic.base import TemplateView
 
 
@@ -150,7 +149,7 @@ class PhotoUserCommentEdit(TemplateView):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

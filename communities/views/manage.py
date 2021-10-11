@@ -4,7 +4,7 @@ from communities.model.settings import *
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from communities.forms import *
-from common.template.community import get_community_manage_template
+from common.templates import get_community_manage_template, get_community_moders_template
 
 
 class CommunityGeneralView(TemplateView):
@@ -201,7 +201,7 @@ class CommunityPrivatePostView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		from posts.forms import PostListForm
-		
+
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_post_list()
 		self.form = PostListForm(request.POST, instance=self.list)
@@ -385,8 +385,6 @@ class CommunityBlackListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.template.community import get_community_moders_template
-
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_moders_template("communities/manage/moders.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
 		return super(CommunityBlackListView,self).get(request,*args,**kwargs)

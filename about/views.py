@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from common.template.user import get_default_template
+from common.templates import get_default_template
 
 
 class AboutView(TemplateView):

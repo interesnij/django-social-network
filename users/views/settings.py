@@ -4,7 +4,7 @@ from users.model.settings import *
 from users.forms import *
 from django.http import HttpResponse, HttpResponseBadRequest
 from users.models import User
-from common.template.user import get_settings_template
+from common.templates import get_settings_template
 
 
 class UserGeneralChange(TemplateView):
@@ -254,7 +254,7 @@ class UserPrivatePostView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		from posts.forms import PostListForm
-		
+
 		self.list = request.user.get_post_list()
 		self.form = PostListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():

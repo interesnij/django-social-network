@@ -34,7 +34,7 @@ class CreateUserChat(TemplateView):
 		return c
 
 	def post(self,request,*args,**kwargs):
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 		from users.models import User
 		from chat.models import ChatUsers
 		from chat.forms import ChatForm
@@ -73,7 +73,7 @@ class UserSendPageMessage(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 
 		if request.user.get_6_friends():
 			self.template_name = get_settings_template("chat/message/add_friend_message.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -193,7 +193,7 @@ from django.views import View
 
 class UserSendMessage(View):
 	def post(self,request,*args,**kwargs):
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 		from chat.models import Message, Chat
 		from chat.forms import MessageForm
 
@@ -246,7 +246,7 @@ class UserMessageEdit(TemplateView):
 
 	def post(self, request, *args, **kwargs):
 		from chat.models import Message
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 
 		_message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
@@ -263,7 +263,7 @@ class UserMessageFixed(View):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
 		from django.http import Http404
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		check_can_send_message(request.user, message.chat)
@@ -278,7 +278,7 @@ class UserMessageUnFixed(View):
 		from common.check.message import check_can_send_message
 		from chat.models import Message
 		from django.http import Http404
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax():
@@ -344,7 +344,7 @@ class UserMessageRecover(View):
 class PhotoAttachInChatUserCreate(View):
 	def post(self, request, *args, **kwargs):
 		from gallery.models import Photo
-		from common.template.user import render_for_platform
+		from common.templates import render_for_platform
 
 		photos = []
 		if request.is_ajax():
@@ -430,7 +430,7 @@ class InviteMembersInChat(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
-		from common.template.user import get_settings_template
+		from common.templates import get_settings_template
 
 		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
@@ -458,7 +458,7 @@ class InviteMembersInChat(ListView):
 
 	def post(self,request,*args,**kwargs):
 		if request.is_ajax():
-			from common.template.user import render_for_platform
+			from common.templates import render_for_platform
 
 			list = request.POST.getlist('chat_users')
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])

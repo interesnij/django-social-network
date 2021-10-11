@@ -7,7 +7,7 @@ from posts.models import Post, PostList
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.template.user import get_detect_platform_template
+from common.templates import get_detect_platform_template
 
 
 class UUCMPostWindow(TemplateView):

@@ -5,7 +5,6 @@ from django.views.generic import ListView
 from goods.models import Good, GoodList
 from users.models import User
 from stst.models import GoodNumbers
-from common.template.good import get_template_user_good, get_permission_user_good
 from django.http import Http404
 
 

@@ -2,12 +2,10 @@ from django.views.generic.base import TemplateView
 from communities.models import Community
 from gallery.models import PhotoList, Photo
 from django.views.generic import ListView
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from rest_framework.exceptions import PermissionDenied
-from common.template.photo import get_template_community_photo, get_permission_community_photo
 from common.check.community import check_can_get_lists
-from django.http import Http404
 from gallery.forms import PhotoDescriptionForm
 
 
@@ -19,7 +17,10 @@ class CommunityPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.list, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            if request.user.is_authenticated:
+    			self.template_name = get_template_community_item(self.photo, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+    		else:
+    			self.template_name = get_template_anon_community_item(self.photo, "communities/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
@@ -45,7 +46,10 @@ class CommunityAlbumPhotosList(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
-            self.template_name = get_permission_community_photo(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            if request.user.is_authenticated:
+    			self.template_name = get_template_community_item(self.photo, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+    		else:
+    			self.template_name = get_template_anon_community_item(self.photo, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):

@@ -1,12 +1,8 @@
 from django.views.generic.base import TemplateView
 from music.models import *
 from django.views.generic import ListView
-from common.template.user import get_detect_platform_template
 from common.templates import (
-								get_template_community_item,
-								get_template_anon_community_item,
-								get_template_user_item,
-								get_template_anon_user_item,
+								get_detect_platform_template,
 								get_template_community_list,
 								get_template_anon_community_list,
 								get_template_user_list,

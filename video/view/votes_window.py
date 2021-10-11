@@ -6,7 +6,7 @@ from video.models import Video, VideoComment
 from communities.models import Community
 from common.model.votes import VideoVotes, VideoCommentVotes
 from rest_framework.exceptions import PermissionDenied
-from common.template.video import get_permission_community_video, get_permission_user_video
+from common.templates import get_template_user_item, get_template_anon_user_item, get_template_community_item, get_template_anon_community_item
 
 
 class VideoUserLikeWindow(TemplateView):
@@ -16,7 +16,10 @@ class VideoUserLikeWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_video(self.video.creator, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -33,7 +36,10 @@ class VideoUserDislikeWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_video(self.video.creator, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -49,7 +55,10 @@ class VideoUserCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_video(self.comment.commenter, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(VideoUserCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -67,7 +76,10 @@ class VideoUserCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_video(self.comment.commenter, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -84,7 +96,10 @@ class VideoCommunityLikeWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_community_video(self.video.community, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -101,7 +116,10 @@ class VideoCommunityDislikeWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_community_video(self.video.community, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -116,7 +134,10 @@ class VideoCommunityCommentLikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_video(self.comment.community, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -131,7 +152,10 @@ class VideoCommunityCommentDislikeWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_video(self.comment.community, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -150,7 +174,10 @@ class AllVideoUserLikeWindow(ListView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_video(self.video.creator, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -171,7 +198,10 @@ class AllVideoUserDislikeWindow(ListView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_user_video(self.video.creator, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -191,7 +221,10 @@ class AllVideoUserCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_video(self.comment.commenter, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -211,7 +244,10 @@ class AllVideoUserCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_user_video(self.comment.commenter, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -233,7 +269,10 @@ class AllVideoCommunityLikeWindow(ListView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_community_video(self.video.community, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -254,7 +293,10 @@ class AllVideoCommunityDislikeWindow(ListView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
-        self.template_name = get_permission_community_video(self.video.community, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -274,7 +316,10 @@ class AllVideoCommunityCommentLikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_video(self.comment.video.community, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -294,7 +339,10 @@ class AllVideoCommunityCommentDislikeWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        self.template_name = get_permission_community_video(self.comment.video.community, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -314,7 +362,10 @@ class AllVideoCommunityRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_community_video(self.video.community, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -333,7 +384,10 @@ class AllVideoUserRepostWindow(ListView):
 
     def get(self,request,*args,**kwargs):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_permission_user_video(self.video.creator, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserRepostWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

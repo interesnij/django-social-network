@@ -35,7 +35,7 @@ class PostUserCreate(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if post.text or attach:
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
                 new_post = post.create_post(
                                             creator=request.user,
                                             text=post.text,
@@ -118,7 +118,7 @@ class PostUserEdit(TemplateView):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if post.text or attach:
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
                 new_post = post.edit_post(
                                             text=post.text,
                                             category=post.category,
@@ -181,7 +181,7 @@ class PostCommentUserCreate(View):
 
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=None, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/u_post_comment/parent.html', {'comment': new_comment})
@@ -202,7 +202,7 @@ class PostReplyUserCreate(View):
 
                 check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.template.user import render_for_platform
+                from common.templates import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, post=parent.post, text=comment.text, community=None, sticker=request.POST.get('sticker'))
             else:
@@ -231,7 +231,7 @@ class PostUserCommentEdit(TemplateView):
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:
@@ -385,7 +385,7 @@ class UserPostListCreate(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.template.user import get_detect_platform_template
+        from common.templates import get_detect_platform_template
 
         self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostListCreate,self).get(request,*args,**kwargs)
@@ -398,7 +398,7 @@ class UserPostListCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = PostListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
 
             list = self.form.save(commit=False)
             new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
@@ -415,7 +415,7 @@ class UserPostListEdit(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.template.user import get_detect_platform_template
+        from common.templates import get_detect_platform_template
 
         self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostListEdit,self).get(request,*args,**kwargs)

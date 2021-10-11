@@ -557,3 +557,51 @@ def get_detect_platform_template(template, request_user, user_agent):
     else:
         template_name = template
     return get_folder(user_agent) + template_name
+
+
+def get_default_template(folder, template, request_user, user_agent):
+    if request_user.type[0] == "_":
+        template_name = get_fine_request_user(request_user)
+    if request_user.is_authenticated:
+        template_name = folder + template
+    elif request_user.is_anonymous:
+        template_name = folder + "anon_" + template
+    return get_folder(user_agent) + template_name
+
+
+def get_settings_template(template, request_user, user_agent):
+    if request_user.is_authenticated:
+        update_activity(request_user, user_agent)
+        if request_user.is_no_phone_verified():
+            template_name = "main/phone_verification.html"
+        elif request_user.is_suspended():
+            template_name = "generic/u_template/you_suspended.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
+        elif request_user.is_closed():
+            template_name = "generic/u_template/you_closed.html"
+        else:
+            template_name = template
+    elif request_user.is_anonymous:
+        raise PermissionDenied("Ошибка доступа")
+    return get_folder(user_agent) + template_name
+
+def get_community_manage_template(template, request_user, community, user_agent):
+    if community.type[0] == "_":
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated and request_user.is_administrator_of_community(community.pk):
+        template_name = template
+        update_activity(request_user, user_agent)
+    else:
+        raise PermissionDenied('Ошибка доступа.')
+    return get_folder(user_agent) + template_name
+
+def get_community_moders_template(template, request_user, community, user_agent):
+    if community.type[0] == "_":
+        raise PermissionDenied('Ошибка доступа')
+    elif request_user.is_authenticated and request_user.is_staff_of_community(community.pk):
+        template_name = template
+        update_activity(request_user, user_agent)
+    else:
+        raise PermissionDenied('Ошибка доступа.')
+    return get_folder(user_agent) + template_name

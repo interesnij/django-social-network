@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 from common.user_progs.timelines_post import *
-from common.template.user import get_settings_template, get_detect_main_template
+from common.templates import get_settings_template, get_detect_main_template
 
 
 class PhotosView(ListView):

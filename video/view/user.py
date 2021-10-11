@@ -5,25 +5,7 @@ from users.models import User
 from video.models import VideoList, Video
 from django.views.generic import ListView
 from video.forms import VideoForm
-from common.template.video import get_template_user_video
-
-
-class UserLoadVideoList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_template_user_video(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserLoadVideoList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		c = super(UserLoadVideoList,self).get_context_data(**kwargs)
-		c['user'], c['list'] = self.list.creator, self.list
-		return c
-
-	def get_queryset(self):
-		list = self.list.get_queryset()
-		return list
+from common.templates import get_template_user_item, get_template_anon_user_item
 
 
 class UserVideoList(ListView):
@@ -36,7 +18,11 @@ class UserVideoList(ListView):
 			self.video_list = self.list.get_staff_items()
 		else:
 			self.video_list = self.list.get_items()
-		self.template_name = get_template_user_video(self.list, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -78,10 +64,13 @@ class UserPostVideoList(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import Post
-		from common.template.post import get_template_user_post
 
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-		self.video_list, self.template_name = self.post.get_attach_videos(), get_template_user_post(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list = self.post.get_attach_videos()
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.post, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -94,10 +83,13 @@ class UserMessageVideoList(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
-		from common.template.post import get_template_user_post
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-		self.video_list, self.template_name = self.message.get_attach_videos(), get_template_user_post(self.message, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list = self.message.get_attach_videos()
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMessageVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -111,14 +103,17 @@ class UserPostCommentVideoList(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostComment
-		from common.template.post import get_template_user_post
 
 		self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
 		if self.comment.parent:
 			post = self.comment.parent.post
 		else:
 			post = self.comment.post
-		self.video_list, self.template_name = self.comment.get_attach_videos(), get_template_user_post(post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.video, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video_list = self.comment.get_attach_videos()
 		return super(UserPostCommentVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -132,7 +127,6 @@ class UserVideoInfo(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from stst.models import VideoNumbers
-		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.video = Video.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:

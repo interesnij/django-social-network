@@ -4,11 +4,9 @@ from django.views import View
 from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
 from music.forms import PlaylistForm, TrackForm
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.parsing_soundcloud.add_playlist import add_playlist
-from django.http import Http404
-from common.template.user import render_for_platform
-from common.template.community import get_community_manage_template
+from common.templates import render_for_platform, get_community_manage_template
 from common.check.community import check_can_get_lists
 
 

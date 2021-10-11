@@ -5,8 +5,7 @@ from django.views.generic.base import TemplateView
 from docs.forms import DoclistForm, DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
-from common.template.user import render_for_platform
-from common.template.community import get_community_manage_template
+from common.templates import render_for_platform, get_community_manage_template
 from common.check.community import check_can_get_lists
 
 

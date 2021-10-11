@@ -6,8 +6,7 @@ from django.views import View
 from video.forms import VideoListForm, VideoForm, CommentForm
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
-from common.template.video import get_permission_community_video
-from common.template.user import render_for_platform
+from common.templates import render_for_platform
 
 
 class AddVideoListInCommunityCollections(View):
@@ -95,7 +94,7 @@ class VideoCommunityCommentEdit(TemplateView):
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         self.form = CommentForm(request.POST,instance=self.comment)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.template.user import render_for_platform
+            from common.templates import render_for_platform
             _comment = self.form.save(commit=False)
             new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
             if self.comment.parent:

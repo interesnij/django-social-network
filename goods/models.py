@@ -767,7 +767,7 @@ class GoodComment(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
 	text = models.TextField(blank=True,null=True)
-	comment = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 	type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
 	sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")

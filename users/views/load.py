@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from common.template.user import get_settings_template
+from common.templates import get_settings_template
 
 
 class UserLoadPhoto(ListView):

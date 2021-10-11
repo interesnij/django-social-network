@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from communities.models import Community
 from stst.models import CommunityNumbers, PostNumbers
 from users.models import User
-from common.template.community import get_community_manage_template
+from common.templates import get_community_manage_template
 from common.utils import get_mf_ages
 
 

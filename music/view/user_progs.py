@@ -7,7 +7,7 @@ from music.forms import PlaylistForm, TrackForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.parsing_soundcloud.add_playlist import add_playlist
 from django.http import Http404
-from common.template.user import get_settings_template, render_for_platform
+from common.templates import get_settings_template, render_for_platform
 from common.check.user import check_user_can_get_list
 
 

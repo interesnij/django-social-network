@@ -6,7 +6,7 @@ class ArticleUserDetailView(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.template.post import get_permission_user_post
+        from common.templates import get_permission_user_post
         from users.models import User
         from article.models import Article
 
@@ -25,7 +25,7 @@ class ArticleCommunityDetailView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from communities.models import Community
-        from common.template.post import get_permission_community_post
+        from common.templates import get_permission_community_post
         from article.models import Article
 
         self.community, self.article = Community.objects.get(pk=self.kwargs["pk"]), Article.objects.get(uuid=self.kwargs["uuid"])
@@ -44,7 +44,7 @@ from django.views import View
 
 class ArticleUserCreate(View):
     def get(self,request,*args,**kwargs):
-        from common.template.user import get_settings_template
+        from common.templates import get_settings_template
         from users.models import User
 
         self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("article/u_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -58,7 +58,7 @@ class ArticleUserCreate(View):
         return context
 
     def post(self,request,*args,**kwargs):
-        from common.template.user import render_for_platform
+        from common.templates import render_for_platform
         from article.forms import ArticleForm
 
         self.form, self.user = ArticleForm(request.POST,request.FILES), User.objects.get(pk=self.kwargs["pk"])
@@ -73,7 +73,7 @@ class ArticleUserCreate(View):
 
 class ArticleCommunityCreate(View):
     def get(self,request,*args,**kwargs):
-        from common.template.user import get_settings_template
+        from common.templates import get_settings_template
 
         self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_settings_template("article/c_article_add/create_article.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ArticleCommunityCreate,self).get(request,*args,**kwargs)
@@ -87,7 +87,7 @@ class ArticleCommunityCreate(View):
 
     def post(self,request,*args,**kwargs):
         from communities.models import Community
-        from common.template.user import render_for_platform
+        from common.templates import render_for_platform
         from article.forms import ArticleForm
 
         self.form, self.community = ArticleForm(request.POST,request.FILES), Community.objects.get(pk=self.kwargs["pk"])

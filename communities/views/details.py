@@ -149,10 +149,13 @@ class CommunityPhotoList(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
-        from common.template.photo import get_template_community_photo
 
         self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_template_community_photo(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_anonymous:
+            self.template_name = get_template_anon_community(self.list, "communities/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_community(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+
         return super(CommunityPhotoList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

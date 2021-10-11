@@ -1,10 +1,8 @@
 from users.models import User
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.generic import ListView
-from common.template.user import get_template_user
-from django.http import Http404
-from common.template.user import get_settings_template
+from common.templates import get_template_user, get_settings_template
 
 
 class FrendsListView(ListView):

@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from stst.models import UserNumbers, PostNumbers
 from users.models import User
-from common.template.user import get_settings_template
+from common.templates import get_settings_template
 from common.utils import get_mf_ages
 
 
