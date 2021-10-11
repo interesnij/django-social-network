@@ -56,9 +56,9 @@ class VideoUserCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.video.get_item(), "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.video.get_item(), "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
             self.template_name = "mob_" + self.template_name
         return super(VideoUserCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -77,9 +77,9 @@ class VideoUserCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.video.get_item(), "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.video.get_item(), "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -135,9 +135,9 @@ class VideoCommunityCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.video.get_item(), "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.video.get_item(), "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -153,9 +153,9 @@ class VideoCommunityCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.video, "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.video.get_item(), "video/video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.video, "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.video.get_item(), "video/video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -222,9 +222,9 @@ class AllVideoUserCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.video.get_item(), "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.video.get_item(), "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -245,9 +245,9 @@ class AllVideoUserCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.video.get_item(), "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_user_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user_item(self.video.get_item(), "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -317,9 +317,9 @@ class AllVideoCommunityCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.video.get_item(), "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.video.get_item(), "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -340,9 +340,9 @@ class AllVideoCommunityCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.video.get_item(), "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_anon_community_item(self.video, "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_item(self.video.get_item(), "video/all_video_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllVideoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

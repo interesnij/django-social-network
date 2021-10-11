@@ -1009,3 +1009,9 @@ class PhotoComment(models.Model):
     def get_edit_attach(self, user):
         from common.attach.comment_attach import get_comment_edit
         return get_comment_edit(self, user)
+
+    def get_item(self):
+        if self.parent:
+            return self.parent.photo
+        else:
+            return self.photo

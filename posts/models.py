@@ -1428,6 +1428,12 @@ class PostComment(models.Model):
         else:
             return "files_null"
 
+    def get_item(self):
+        if self.parent:
+            return self.parent.post
+        else:
+            return self.post
+
 
 class PostListPerm(models.Model):
     """ включения и исключения для пользователей касательно конкретного списка записей

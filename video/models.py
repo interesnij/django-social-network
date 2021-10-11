@@ -690,6 +690,12 @@ class VideoComment(models.Model):
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
+    def get_item(self):
+        if self.parent:
+            return self.parent.video
+        else:
+            return self.video
+
     def all_visits_count(self):
         from stst.models import VideoNumbers
         return VideoNumbers.objects.filter(video=self.pk).values('pk').count()
