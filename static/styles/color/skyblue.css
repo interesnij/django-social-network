@@ -21,7 +21,7 @@ body {
   background-color: #0094cb;
   font-size: 1em;
   line-height: 1.4em;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 .header-color-primary {
   color: #ffffff;
@@ -49,7 +49,12 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
 }
 .text_support a {
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.7) !important;
+  color: #282C34 !important;
+  font-weight: 400;
+}
+.text_support a:hover {
+  border-bottom: 1px solid #282C34 !important;
+  color: #282C34 !important;
 }
 .bg-light-opac {
   background-color: #009fda;
