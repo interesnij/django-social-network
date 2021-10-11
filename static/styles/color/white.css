@@ -37,8 +37,10 @@ box-shadow: inset 2px -2px 0 1px black !important;
   font-weight: 400;
 }
 .text_support a:hover {
-  border-bottom: 1px solid rgba(127,127,127, 0.7) !important;
+  border-bottom: 1px solid #2a5885 !important;
+  color: #2a5885 !important;
 }
+
 .form-control::placeholder{color:rgba(0, 0, 0, 0.6);font-style: italic;}
 
 body {
