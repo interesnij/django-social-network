@@ -26,7 +26,7 @@ on('#ajax', 'keydown', '.new_element_text', function(e) {
   }
   else if (e.keyCode == 13) {
     e.preventDefault();
-    this.append("<br><br>");
+    this.append("\n\n");
   }
 });
 
