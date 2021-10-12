@@ -119,7 +119,7 @@ if words:
 
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            if not "." in _p:
+            if not "." in _p or not ".png" in _p:
                 pass
             if _p[0] == "h":
                 p_2 = _p
