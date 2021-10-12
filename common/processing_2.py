@@ -213,7 +213,7 @@ def create_mention_and_socket(self, recipient, socket_name):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 def get_formatted_text(text, is_message=False):
-    words = text.replace("&nbsp;"," ").split(" ")
+    words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 
     if words:
         _loop, _exlude, this, next = [], [], -1, 0
