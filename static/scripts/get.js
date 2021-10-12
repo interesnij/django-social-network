@@ -18,6 +18,12 @@ on('#ajax', 'click', '.load_next_list_comments', function() {
     ajax_link.send()
 });
 
+on('#ajax', 'keydown', '.new_element_text', function(e) {
+  if (e.keyCode === 13) {
+    this.append("\n");
+  }
+});
+
 on('#ajax', 'click', '.u_add_survey', function() {
   create_fullscreen('/survey/user_progs/add/', "worker_fullscreen");
 });
