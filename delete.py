@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '<img src="/media/smiles/heart.png" data-pk="1" style="width: auto;">@id7'
+text = '<img src="/media/smiles/heart.png" data-pk="1" style="width: auto;"> @id7'
 words = text.split(" ")
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 
