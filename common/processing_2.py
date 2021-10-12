@@ -234,23 +234,31 @@ def get_formatted_text(text, is_message=False):
                 if _p[:2] == "id":
                     from users.models import User
                     if User.objects.filter(id=_p[2:]).exists():
-                        exists = True
+                        user = User.objects.get(id=_p[2:])
+                        exists, name = True, user.get_full_name()
                 elif _p[:6] == "public":
                     from communities.models import Community
                     if Community.objects.filter(id=_p[6:]).exists():
-                        exists = True
+                        community = Community.objects.get(id=_p[6:])
+                        exists, name = True, community.name
                 elif _p[:4] == "chat":
                     from chat.models import Chat
                     if Chat.objects.filter(id=_p[4:]).exists():
-                        exists = True
+                        chat = Chat.objects.get(id=_p[4:])
+                        exists, name = True, chat.name
                 elif CustomLink.objects.filter(link=_p).exists():
                     exists = True
+                    link = CustomLink.objects.get(link=_p)
+                    if link.community:
+                        name = link.community.name
+                    else:
+                        name = link.user.get_full_name()
                 if exists:
                     _loop.append("")
                     this += 1
                     next += 1
                     p_2 = "@" + _p
-                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + p_2 + '</a>')
+                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a>')
                     if not is_message:
                         pass
 
