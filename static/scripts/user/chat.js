@@ -144,7 +144,7 @@ on('#ajax', 'input', '.smile_supported', function() {
   for (var i = 0; i < img_list.length; i++){
     if (!img_list[i].getAttribute("src").indexOf("/media/smiles/") != -1) {
       console.log(img_list[i].getAttribute("src"));
-      console.log(img_list[i].getAttribute("src"));
+      console.log("/media/smiles/");
       console.log(!img_list[i].getAttribute("src").indexOf("/media/smiles/") != -1);
       console.log(img_list[i].getAttribute("src").indexOf("/media/smiles/") != -1);
       img_list[i].remove()
