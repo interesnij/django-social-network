@@ -116,8 +116,6 @@ if words:
                 next += 1
                 p_2 = "@" + _p
                 _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a>')
-                if not is_message:
-                    pass
 
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
