@@ -198,8 +198,21 @@ def is_have_bad_words(text):
                 raise PermissionDenied(bad_text)
     return False
 
-def get_links_in_text(text):
-    #_text = text.replace("&nbsp;"," ")
+def create_mention_and_socket(self, recipient, socket_name):
+    from asgiref.sync import async_to_sync
+    from channels.layers import get_channel_layer
+
+    channel_layer = get_channel_layer()
+    payload = {
+        'type': 'receive',
+        'key': 'notification',
+        'recipient_id': str(recipient.id),
+        'name': socket_name,
+        'beep': beep_on,
+    }
+    async_to_sync(channel_layer.group_send)('notification', payload)
+
+def get_links_in_text(text, is_message=False):
     words = text.replace("&nbsp;"," ").split(" ")
 
     if words:
@@ -214,12 +227,33 @@ def get_links_in_text(text):
                 p_2 = "#" + _p
                 _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
             if word[0] == "@":
-                _loop.append("")
-                this += 1
-                next += 1
+                from common.model.other import CustomLink
+                exists = False
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-                p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
+
+                if _p[:2] == "id":
+                    from users.models import User
+                    if User.objects.filter(id=_p[2:]).exists():
+                        exists = True
+                elif _p[:6] == "public":
+                    from communities.models import Community
+                    if Community.objects.filter(id=_p[6:]).exists():
+                        exists = True
+                elif _p[:4] == "chat":
+                    from chat.models import Chat
+                    if Chat.objects.filter(id=_p[4:]).exists():
+                        exists = True
+                elif CustomLink.objects.filter(link=_p).exists():
+                    exists = True
+                if exists:
+                    _loop.append("")
+                    this += 1
+                    next += 1
+                    p_2 = "@" + _p
+                    _loop[next] = _loop[this].replace(word, '<a class="action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
+                    if not is_message:
+                        pass
+
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 if not "." in _p:
@@ -244,6 +278,6 @@ def get_links_in_text(text):
                 _exlude.append(_p)
         return _loop[next]
 
-def get_text_processing(text):
+def get_text_processing(text, is_message=False):
     is_have_bad_words(text)
-    return get_links_in_text(text)
+    return get_links_in_text(text, is_message=False)
