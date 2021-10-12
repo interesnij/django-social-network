@@ -66,7 +66,6 @@ zons = [
     ]
 
 text = '<img src="/media/smiles/heart.png"> @id7'
-words = text.split(" ")
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 
 if words:
