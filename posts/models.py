@@ -64,7 +64,7 @@ class PostList(models.Model):
                 return True
             elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
-            elif private.can_see_el == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.can_see_el == self.ADMINS and user_id in self.get_admins_ids():
                 return True
             elif self.can_see_el == self.MEMBERS and user_id in self.community.get_admins_ids():
                 return True
@@ -95,7 +95,7 @@ class PostList(models.Model):
                 return True
             elif self.create_el == 4 and user_id == self.community.creator.pk:
                 return True
-            elif private.create_el == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.create_el == self.ADMINS and user_id in self.get_admins_ids():
                 return True
             elif self.create_el == self.MEMBERS and user_id in self.community.get_admins_ids():
                 return True
