@@ -49,9 +49,9 @@ class PhotoDetail(TemplateView):
 		context["object"] = self.photo
 		context["list"] = self.list
 		if self.photos.filter(order=self.photo.order + 1).exists():
-			c["next"] = self.photos.filter(order=self.photo.order + 1)[0]
+			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
 		if self.photos.filter(order=self.photo.order - 1).exists():
-			c["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
+			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
@@ -90,9 +90,9 @@ class MessagePhotoDetail(TemplateView):
 		context["object"] = self.photo
 		context["message"] = self.message
 		if self.photos.filter(order=self.photo.order + 1).exists():
-			c["next"] = self.photos.filter(order=self.photo.order + 1)[0]
+			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
 		if self.photos.filter(order=self.photo.order - 1).exists():
-			c["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
+			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
