@@ -266,26 +266,25 @@ def get_formatted_text(text, is_message=False):
 
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-                if not "." in _p:
-                    pass
-                if _p[0] == "h":
-                    p_2 = _p
-                else:
-                    p_2 = "//" + _p
-                if "трезвый.рус" in _p:
-                    _loop.append("")
-                    this += 1
-                    next += 1
-                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
-                else:
-                    for zone in zons:
-                        if zone in _p:
-                            _loop.append("")
-                            this += 1
-                            next += 1
-                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
-                            break
-                _exlude.append(_p)
+                if "." in _p and not ".png" in _p:
+                    if _p[0] == "h":
+                        p_2 = _p
+                    else:
+                        p_2 = "//" + _p
+                    if "трезвый.рус" in _p:
+                        _loop.append("")
+                        this += 1
+                        next += 1
+                        _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
+                    else:
+                        for zone in zons:
+                            if zone in _p:
+                                _loop.append("")
+                                this += 1
+                                next += 1
+                                _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
+                                break
+                    _exlude.append(_p)
         return _loop[next]
 
 def get_text_processing(text, is_message=False):
