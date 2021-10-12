@@ -13,7 +13,7 @@ import django, json, requests
 django.setup()
 import re
 
-text = "Соцсеть #тРезвый_рулит! @iD7 трезвый.рус/wallmart/instance/! boroda.fm, https://street.company строится уже 24 месяцев. Сейчас она в состоянии почти завершенном. Проводятся последние работы, достраиваются нужные разделы (остается режим супер-управленцев, рекламная площадка)./."
+text = '<img src="/media/smiles/heart.png" data-pk="1" style="width: auto;">@id7'
 
 zons = [
         '.рф','.ru','.su','.net','.aero','.asia','.biz','.com','.info','.mobi','.name','.net','.org','.pro','.tel',
@@ -68,43 +68,78 @@ zons = [
     ]
 
 words = text.split(" ")
-if words:
-    _loop, _exlude, this, next = [], [], -1, 0
-    _loop.append(text)
-    for word in words:
-        if word[0] == "#":
-            _loop.append("")
-            this += 1
-            next += 1
-            _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            p_2 = "#" + _p
-            _loop[next] = _loop[this].replace(word, '<a class="ajax" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
-            print("Обнаружен тег - ", _loop[next])
-        if word[0] == "@":
-            _loop.append("")
-            this += 1
-            next += 1
-            _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            p_2 = "@" + _p
-            _loop[next] = _loop[this].replace(word, '<a class="ajax show_mention_info" data-id="' + _p + '">' + p_2 + '</a>')
-            print("Обнаружено упоминание - ", _loop[next])
-        elif "." in word:
-            _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
-            if not "." in _p:
+def get_formatted_text(text, is_message=False):
+    words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
+
+    if words:
+        _loop, _exlude, this, next = [], [], -1, 0
+        _loop.append(text)
+        for word in words:
+            if not word:
                 pass
-            print(_p)
-            if "трезвый.рус" in _p:
+            if word[0] == "#":
                 _loop.append("")
                 this += 1
                 next += 1
-                _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" class="ajax" href="' + _p + '">' + _p + '</a>')
-            else:
-                for zone in zons:
-                    if zone in _p:
-                        _loop.append("")
-                        this += 1
-                        next += 1
-                        _loop[next] = _loop[this].replace(_p, '<a onclick="return stop_load_fullscreen(this);" target="_blank" href="' + _p + '">' + _p + '</a>')
-                        break
-            _exlude.append(_p)
-    print (_loop[next])
+                _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
+                p_2 = "#" + _p
+                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + p_2 + '</a>')
+            if word[0] == "@":
+                from common.model.other import CustomLink
+                exists = False
+                _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
+
+                if _p[:2] == "id":
+                    from users.models import User
+                    if User.objects.filter(id=_p[2:]).exists():
+                        user = User.objects.get(id=_p[2:])
+                        exists, name = True, user.get_full_name()
+                elif _p[:6] == "public":
+                    from communities.models import Community
+                    if Community.objects.filter(id=_p[6:]).exists():
+                        community = Community.objects.get(id=_p[6:])
+                        exists, name = True, community.name
+                elif _p[:4] == "chat":
+                    from chat.models import Chat
+                    if Chat.objects.filter(id=_p[4:]).exists():
+                        chat = Chat.objects.get(id=_p[4:])
+                        exists, name = True, chat.name
+                elif CustomLink.objects.filter(link=_p).exists():
+                    exists = True
+                    link = CustomLink.objects.get(link=_p)
+                    if link.community:
+                        name = link.community.name
+                    else:
+                        name = link.user.get_full_name()
+                if exists:
+                    _loop.append("")
+                    this += 1
+                    next += 1
+                    p_2 = "@" + _p
+                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a>')
+                    if not is_message:
+                        pass
+
+            elif "." in word:
+                _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
+                if not "." in _p:
+                    pass
+                if _p[0] == "h":
+                    p_2 = _p
+                else:
+                    p_2 = "//" + _p
+                if "трезвый.рус" in _p:
+                    _loop.append("")
+                    this += 1
+                    next += 1
+                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
+                else:
+                    for zone in zons:
+                        if zone in _p:
+                            _loop.append("")
+                            this += 1
+                            next += 1
+                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
+                            break
+                _exlude.append(_p)
+        return _loop[next]
