@@ -142,7 +142,7 @@ on('#ajax', 'input', '.smile_supported', function() {
     br_list[i].removeAttribute("style")
   };
   for (var i = 0; i < img_list.length; i++){
-    if (!"/media/smiles/" in img_list[i].getAttribute("src")) {
+    if (!img_list[i].getAttribute("src").indexOf("/media/smiles/") {
       img_list[i].remove()
     };
   };
