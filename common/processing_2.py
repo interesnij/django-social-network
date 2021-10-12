@@ -212,7 +212,7 @@ def create_mention_and_socket(self, recipient, socket_name):
     }
     async_to_sync(channel_layer.group_send)('notification', payload)
 
-def get_links_in_text(text, is_message=False):
+def get_formatted_text(text, is_message=False):
     words = text.replace("&nbsp;"," ").split(" ")
 
     if words:
@@ -250,7 +250,7 @@ def get_links_in_text(text, is_message=False):
                     this += 1
                     next += 1
                     p_2 = "@" + _p
-                    _loop[next] = _loop[this].replace(word, '<a class="action show_mention_info pointer" data-id="' + _p + '">' + p_2 + '</a>')
+                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="' + _p + '">' + p_2 + '</a>')
                     if not is_message:
                         pass
 
@@ -280,4 +280,4 @@ def get_links_in_text(text, is_message=False):
 
 def get_text_processing(text, is_message=False):
     is_have_bad_words(text)
-    return get_links_in_text(text, is_message=False)
+    return get_formatted_text(text, is_message=False)
