@@ -250,7 +250,7 @@ def get_formatted_text(text, is_message=False):
                     this += 1
                     next += 1
                     p_2 = "@" + _p
-                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="' + _p + '">' + p_2 + '</a>')
+                    _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + p_2 + '</a>')
                     if not is_message:
                         pass
 
