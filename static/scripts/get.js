@@ -19,7 +19,7 @@ on('#ajax', 'click', '.load_next_list_comments', function() {
 });
 
 on('#ajax', 'keydown', '.new_element_text', function(e) {
-  if (e.shiftKey && e.keyCode === 8) {
+  if (e.shiftKey && e.keyCode === 46) {
     e.preventDefault();
     console.log(e.previousElementSibling)
     e.remove();
