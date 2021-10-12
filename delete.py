@@ -143,3 +143,5 @@ def get_formatted_text(text, is_message=False):
                             break
                 _exlude.append(_p)
         return _loop[next]
+
+get_formatted_text(text)
