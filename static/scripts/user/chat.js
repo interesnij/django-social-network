@@ -569,7 +569,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   console.log(e.target.classList);
-  if (e.target.classList.contains("toggle_message") || e.target.classList.contains("media-body") ) {
+  if (e.target.classList.contains("t_f")) {
 
   if (this.classList.contains("message_checkbox")) {
     message = this.parentElement.parentElement;

@@ -7,7 +7,7 @@
 
 {% else %}
 <div class="
-    message toggle_message pointer media p-1 pag
+    message toggle_message t_f pointer media p-1 pag
     {% if request.user.pk == object.creator.pk %}
       {% if not object.is_copy_reed %}
         bg-light-secondary
@@ -18,17 +18,17 @@
       favourite
     {% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
     <span>
-      <input type="checkbox" class="toggle_message message_checkbox">
+      <input type="checkbox" class="toggle_message t_f message_checkbox">
     </span>
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax no_select">
         {{ object.creator.get_40_avatar|safe }}
       </a>
     </figure>
-    <div class="media-body">
+    <div class="media-body t_f">
       <h5 class="time-title mb-0">
         <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
-        <small class="float-right small text-muted">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
+        <small class="float-right small text-muted t_f">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
       </h5>
 
       {% if object.parent %}
@@ -43,7 +43,7 @@
       </div>
       {% else %}
 
-      <span class="text text_support">{{ object.text|safe }}</span>
+      <span class="text text_support t_f">{{ object.text|safe }}</span>
 
       {% if object.attach %}
         {{ object|get_attach:request.user|safe }}
