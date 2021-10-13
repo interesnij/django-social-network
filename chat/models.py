@@ -895,9 +895,20 @@ class Message(models.Model):
         import re
         count = 60
         images = re.findall(r'<img.*?>', self.text)
-        for image in images:
-            count += (len(image) -1)
-        return self.text[:count].replace("<br>", "  ")
+        links = re.findall(r'<a.*?>', self.text)
+        if images:
+            for image in images:
+                count += (len(image) -1)
+        if links:
+            _loop, _exlude, this, next = [text], [], -1, 0
+            for link in links:
+                _loop[next] = _loop[this].replace("href", "")
+                count += (len(link) -1)
+            link_text = _loop[next]
+        if link_text:
+            return link_text[:count].replace("<br>", "  ")
+        else:
+            return self.text[:count].replace("<br>", "  ")
 
     def get_type_text(self):
         if self.is_have_transfer():
