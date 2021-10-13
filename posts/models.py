@@ -685,12 +685,12 @@ class Post(models.Model):
 
     @classmethod
     def create_offer_post(cls, creator, text, list, attach, community):
-        from common.processing.post import get_post_offer_processing
+        from common.processing_2 import get_text_processing
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
-        post = cls.objects.create(creator=creator,list=list,text=text,community=community,attach=_attach,type=Post.C_OFFER)
-        get_post_offer_processing(post)
+        _text = get_text_processing(text)
+        post = cls.objects.create(creator=creator,list=list,text=_text,community=community,attach=_attach,type=Post.C_OFFER)
 
         if community:
             from common.notify.progs import community_send_notify, community_send_wall
@@ -778,23 +778,24 @@ class Post(models.Model):
         return post
 
     def edit_post(self, text, list, category, attach, comments_enabled, is_signature, votes_on):
-        from common.processing.post  import get_post_processing
+        from common.processing_2 import get_text_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        _text = get_text_processing(text)
+
         if self.list.pk != list:
             self.list.count -= 1
             self.list.save(update_fields=["count"])
             list.count += 1
             list.save(update_fields=["count"])
-        self.text = text
+        self.text = _text
         self.category = category
         self.attach = _attach
         self.comments_enabled = comments_enabled
         self.is_signature = is_signature
         self.list = list
         self.votes_on = votes_on
-        get_post_processing(self, self.type)
         self.save()
         return self
 
