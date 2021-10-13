@@ -902,7 +902,7 @@ class Message(models.Model):
         if links:
             _loop, _exlude, this, next = [self.text], [], -1, 0
             for link in links:
-                _loop[next] = '<span class="i_link">' + re.sub('<[A-Za-z\/][^>]*>', '', _loop[this]) + "</span>"
+                _loop[next] = '<span class="i_link">' + re.sub('<[A-Za-z\/][^>]*>', '', _loop[this])[:50] + "</span>"
                 count += (len(_loop[next]) -1)
             link_text = _loop[next]
         if link_text:
