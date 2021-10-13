@@ -1,7 +1,17 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
-function stop_load_fullscreen(el) {
-  el.preventDefault()
+function format_text(text) {
+  text.innerHTML = text.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "");
+  br_list = text.querySelectorAll("br");
+  img_list = text.querySelectorAll("img");
+  for (var i = 0; i < br_list.length; i++){
+    br_list[i].removeAttribute("style")
+  };
+  for (var i = 0; i < img_list.length; i++){
+    if (!img_list[i].getAttribute("src").indexOf("/media/smiles/") == -1) {
+      img_list[i].remove()
+    };
+  };
 };
 
 function setEndOfContenteditable(contentEditableElement) {
@@ -999,6 +1009,7 @@ function elementInViewport(el) {
 
 function send_comment(form, block, link) {
   _text = form.querySelector(".comment_text").innerHTML;
+  format_text(_text);
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form.querySelector(".img_block").innerHTML) {
     toast_error("Напишите или прикрепите что-нибудь");
     return
@@ -1008,7 +1019,7 @@ function send_comment(form, block, link) {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("type_hidden");
-  $input.value = form.querySelector(".comment_text").innerHTML;
+  $input.value = _text;
   form.append($input);
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

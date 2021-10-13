@@ -16,6 +16,7 @@ on('#ajax', 'click', '#community_article_add', function() {
 on('#ajax', 'click', '#c_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
+  format_text(_text);
 
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
@@ -25,7 +26,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
-  $input.value = form_post.querySelector(".smile_supported").innerHTML;
+  $input.value = _text;
   form_post.append($input);
   form_data = new FormData(form_post);
 
@@ -58,6 +59,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
+  format_text(_text);
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь")
   };

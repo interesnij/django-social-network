@@ -28,6 +28,7 @@ on('#ajax', 'click', '#u_add_article', function() {
 on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
+  format_text(_text);
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };
@@ -36,7 +37,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   $input.setAttribute("name", "text");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
-  $input.value = form_post.querySelector(".smile_supported").innerHTML;
+  $input.value = _text;
   form_post.append($input);
   form_data = new FormData(form_post);
 
@@ -77,6 +78,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
 on('#ajax', 'click', '#u_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   _text = form_post.querySelector(".smile_supported").innerHTML;
+  format_text(_text);
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".filtes_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   }
@@ -111,7 +113,6 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
       block.append(new_post.querySelector(".attach_container"))
     };
     block.append(new_post.querySelector(".card-footer"))
-
   }};
 
   link_.send(form_data);
