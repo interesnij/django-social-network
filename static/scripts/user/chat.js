@@ -371,8 +371,9 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 });
 
 function send_message (form_post, url) {
-  _text = form_post.querySelector(".message_text").innerHTML;
-  format_text(_text);
+  text_val = form_post.querySelector(".smile_supported");
+  _text = text_val.innerHTML;
+  format_text(text_val);
 
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0") && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
