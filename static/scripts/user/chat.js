@@ -160,7 +160,7 @@ on('#ajax', 'input', '.smile_supported', function() {
       }, 1000)
     }
   };
-  setEndOfContenteditable(_this);
+  //setEndOfContenteditable(_this);
 });
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
