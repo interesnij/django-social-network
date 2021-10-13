@@ -25,7 +25,7 @@
         {{ object.creator.get_40_avatar|safe }}
       </a>
     </figure>
-    <div class="media-body">
+    <div class="media-body toggle_message">
       <h5 class="time-title mb-0">
         <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
         <small class="float-right small text-muted">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
@@ -43,9 +43,7 @@
       </div>
       {% else %}
 
-        <div class="pointer toggle_message">
-          <span class="text text_support">{{ object.text|safe }}</span>
-        </div>
+      <span class="text text_support">{{ object.text|safe }}</span>
 
       {% if object.attach %}
         {{ object|get_attach:request.user|safe }}
