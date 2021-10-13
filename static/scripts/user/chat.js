@@ -569,10 +569,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   console.log(e.target.classList);
-  console.log(e.target.tagName);
-  if (!e.target.classList.contains("toggle_message") || !e.target.classList.contains("media-body") ) {
-    return
-  };
+  if (e.target.classList.contains("toggle_message") || e.target.classList.contains("media-body") ) {
+
   if (this.classList.contains("message_checkbox")) {
     message = this.parentElement.parentElement;
   } else {
@@ -605,7 +603,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     document.body.querySelector(".one_message").style.display = "none"
   } else {
     document.body.querySelector(".one_message").style.display = "unset"
-  };
+  }}
 });
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
