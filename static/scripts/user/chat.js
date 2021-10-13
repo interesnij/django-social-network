@@ -569,7 +569,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   console.log(e.target.classList);
-  if (e.target.classList.contains("ajax") || e.target.classList.contains("attach_container")) {
+  console.log(e.target.tagName);
+  if (e.target.tagName == "a" || e.target.classList.contains("photo")) {
     return
   };
   if (this.classList.contains("message_checkbox")) {
