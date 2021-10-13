@@ -893,7 +893,7 @@ class Message(models.Model):
 
     def get_text_60(self):
         import re
-        count = 60
+        count, link_text = 60, None
         images = re.findall(r'<img.*?>', self.text)
         links = re.findall(r'<a.*?>', self.text)
         if images:
