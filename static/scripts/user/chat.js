@@ -567,11 +567,14 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.toggle_message', function() {
+on('#ajax', 'click', '.toggle_message', function(e) {
+  if (e.target.classList.contains("ajax") || e.target.classList.contains("attach_container")) {
+    return
+  };
   if (this.classList.contains("message_checkbox")) {
     message = this.parentElement.parentElement;
   } else {
-    message = this; 
+    message = this;
   };
   checkbox = message.querySelector(".message_checkbox");
   is_toggle = false, is_favourite = false;
