@@ -135,17 +135,6 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
 
 on('#ajax', 'input', '.smile_supported', function() {
   _this = this;
-  _this.innerHTML = _this.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "");
-  br_list = _this.querySelectorAll("br");
-  img_list = _this.querySelectorAll("img");
-  for (var i = 0; i < br_list.length; i++){
-    br_list[i].removeAttribute("style")
-  };
-  for (var i = 0; i < img_list.length; i++){
-    if (!img_list[i].getAttribute("src").indexOf("/media/smiles/") == -1) {
-      img_list[i].remove()
-    };
-  };
 
   if (_this.classList.contains("chat_message_text")){
     if (document.body.querySelector(".chatlist")) {
@@ -172,7 +161,6 @@ on('#ajax', 'click', '.classic_smile_item', function() {
   input = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".smile_supported");
   $img = document.createElement("img");
   $img.src = this.getAttribute("src");
-  //$img.setAttribute("data-pk", this.getAttribute("data-pk"))
   input.append($img);
   if (document.body.querySelector(".chatlist")) {
   show_message_form_send_btn()
@@ -384,6 +372,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 function send_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
+  format_text(_text);
 
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0") && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
@@ -392,7 +381,7 @@ function send_message (form_post, url) {
     return
   };
   text = form_post.querySelector(".type_hidden");
-  text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
+  text.value = _text;
   form_data = new FormData(form_post);
   message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
