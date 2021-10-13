@@ -568,7 +568,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 });
 
 on('#ajax', 'click', '.toggle_message', function() {
-  message = this.parentElement.parentElement;
+  message = this.parentElement; 
   checkbox = message.querySelector(".message_checkbox");
   is_toggle = false, is_favourite = false;
   if (message.classList.contains("custom_color")) {
