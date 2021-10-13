@@ -214,13 +214,14 @@ def create_mention_and_socket(self, recipient, socket_name):
 
 def get_formatted_text(text, is_message=False):
     _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>"," <br> ").replace("&nbsp;"," ")
-    __words = _words.replace("  "," ").split(" ")
+    words = _words.replace("  "," ").split(" ")
 
-    if __words:
+    if words:
         _loop, _exlude, this, next = [], [], -1, 0
         _loop.append(text)
-        words = __words.strip()
         for word in words:
+            if word = "":
+                continue
             if word[0] == "#":
                 _loop.append("")
                 this += 1
