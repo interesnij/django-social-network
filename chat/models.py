@@ -634,7 +634,7 @@ class Message(models.Model):
         # Если такого чата нет, создаем приватный чат, создаем по сообщению на каждого участника чата.
 
         chat_list, current_chat = creator.get_all_chats(), None
-        _text = self.get_format_text(text)
+        _text = Message.get_format_text(text)
         for chat in chat_list:
             if user.pk in chat.get_members_ids() and chat.is_private():
                 current_chat = chat
@@ -664,7 +664,7 @@ class Message(models.Model):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
 
         chat = Chat.objects.create(creator=creator, type=Chat.GROUP)
-        _text = self.get_format_text(text)
+        _text = Message.get_format_text(text)
 
         if voice:
             creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice)
@@ -686,7 +686,7 @@ class Message(models.Model):
 
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
         # программа для отсылки сообщения в чате
-        _text = self.get_format_text(text)
+        _text = Message.get_format_text(text)
 
         if parent:
             parent_id = parent
