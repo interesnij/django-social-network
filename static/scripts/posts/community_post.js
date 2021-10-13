@@ -15,8 +15,9 @@ on('#ajax', 'click', '#community_article_add', function() {
 
 on('#ajax', 'click', '#c_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
-  _text = form_post.querySelector(".smile_supported").innerHTML;
-  format_text(_text);
+  text_val = form_post.querySelector(".smile_supported");
+  _text = text_val.innerHTML;
+  format_text(text_val);
 
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
@@ -58,8 +59,9 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
 
 on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
-  _text = form_post.querySelector(".smile_supported").innerHTML;
-  format_text(_text);
+  text_val = form_post.querySelector(".smile_supported");
+  _text = text_val.innerHTML;
+  format_text(text_val);
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь")
   };
