@@ -220,7 +220,7 @@ def get_formatted_text(text, is_message=False):
         _loop, _exlude, this, next = [], [], -1, 0
         _loop.append(text)
         for word in words:
-            if word = "":
+            if word == "":
                 continue
             if word[0] == "#":
                 _loop.append("")
