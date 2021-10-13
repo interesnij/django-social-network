@@ -7,7 +7,7 @@
 
 {% else %}
 <div class="
-    message media p-1 pag
+    message toggle_message pointer media p-1 pag
     {% if request.user.pk == object.creator.pk %}
       {% if not object.is_copy_reed %}
         bg-light-secondary
@@ -25,7 +25,7 @@
         {{ object.creator.get_40_avatar|safe }}
       </a>
     </figure>
-    <div class="media-body toggle_message">
+    <div class="media-body">
       <h5 class="time-title mb-0">
         <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
         <small class="float-right small text-muted">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
