@@ -900,7 +900,7 @@ class Message(models.Model):
             for image in images:
                 count += (len(image) -1)
         if links:
-            _loop, _exlude, this, next = [text], [], -1, 0
+            _loop, _exlude, this, next = [self.text], [], -1, 0
             for link in links:
                 _loop[next] = _loop[this].replace("href", "")
                 count += (len(link) -1)
