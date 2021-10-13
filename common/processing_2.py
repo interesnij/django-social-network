@@ -280,9 +280,10 @@ def get_formatted_text(text, is_message=False):
                         p_2 = "//" + _p
                     if "трезвый.рус" in _p:
                         _loop.append("")
+                        p_2 = _p.replace("трезвый.рус", "").replace("http://", "").replace("https://", "")
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
+                        _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + p_2 + '">' + _p + '</a>')
                     else:
                         for zone in zons:
                             if zone in _p:
