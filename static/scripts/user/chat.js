@@ -568,6 +568,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 });
 
 on('#ajax', 'click', '.toggle_message', function(e) {
+  console.log(e.target.classList);
   if (e.target.classList.contains("ajax") || e.target.classList.contains("attach_container")) {
     return
   };
