@@ -902,8 +902,8 @@ class Message(models.Model):
         if links:
             _loop, _exlude, this, next = [self.text], [], -1, 0
             for link in links:
-                _loop[next] = _loop[this].replace("href", "")
-                count += (len(link) -1)
+                _loop[next] = '<span class="i_link">' + re.sub('<[A-Za-z\/][^>]*>', '', _loop[this]) + "</span>"
+                count += (len(_loop[next]) -1)
             link_text = _loop[next]
         if link_text:
             return link_text[:count].replace("<br>", "  ")
