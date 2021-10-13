@@ -213,14 +213,13 @@ def create_mention_and_socket(self, recipient, socket_name):
     async_to_sync(channel_layer.group_send)('notification', payload)
 
 def get_formatted_text(text, is_message=False):
-    words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
+    _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>"," <br> ").replace("&nbsp;"," ")
+    words = _words.replace("  "," ").split(" ")
 
     if words:
         _loop, _exlude, this, next = [], [], -1, 0
         _loop.append(text)
         for word in words:
-            if not word and not "<" in word:
-                pass
             if word[0] == "#":
                 _loop.append("")
                 this += 1
@@ -285,7 +284,8 @@ def get_formatted_text(text, is_message=False):
                                 _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
                                 break
                     _exlude.append(_p)
-        return _loop[next]
+        result = _loop[next].replace(" |<imgsrc","<img src").replace('.png">| ','.png">').replace(" <br> ","<br>")
+        return result
 
 def get_text_processing(text, is_message=False):
     is_have_bad_words(text)
