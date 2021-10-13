@@ -2,7 +2,7 @@
 <form class="post_edit_form">
     {% csrf_token %}
 
-<div contenteditable="true" class="form-control new_element_text smile_supported">{{ post.text|safe }}</div>
+<div contenteditable="true" class="form-control new_element_text smile_supported text_support">{{ post.text|safe }}</div>
 
 <div class="card-footer border-top btn_default">
     <span class="{{ post.get_count_attach }} row attach_block">

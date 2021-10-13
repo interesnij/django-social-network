@@ -320,13 +320,14 @@ class GoodCommunityCommentEdit(TemplateView):
         from common.templates import get_my_template
 
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("goods/c_good_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(GoodCommunityCommentEdit,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         context["form_post"] = CommentForm(instance=self.comment)
+        context["btn_class"] = "c_good_edit_comment_btn"
         return context
 
     def post(self,request,*args,**kwargs):

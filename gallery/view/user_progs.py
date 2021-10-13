@@ -135,7 +135,7 @@ class PhotoUserCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
 
-        self.template_name = get_my_template("gallery/u_photo_comment/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         return super(PhotoUserCommentEdit,self).get(request,*args,**kwargs)
 
@@ -143,6 +143,7 @@ class PhotoUserCommentEdit(TemplateView):
         context = super(PhotoUserCommentEdit,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         context["form_post"] = CommentForm(instance=self.comment)
+        context["btn_class"] = "u_photo_edit_comment_btn"
         return context
 
     def post(self,request,*args,**kwargs):
