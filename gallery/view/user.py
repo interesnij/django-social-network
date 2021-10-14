@@ -13,15 +13,15 @@ class UserPhotosList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_template_user_item, get_template_anon_user_item
+        from common.templates import get_template_user_list, get_template_anon_user_list
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(creator_id=self.user.pk, type=PhotoList.MAIN, community__isnull=True)
         if request.is_ajax():
             if request.user.is_authenticated:
-                self.template_name = get_template_user_item(self.photo, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
             else:
-                self.template_name = get_template_anon_user_item(self.photo, "users/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
 
@@ -44,13 +44,15 @@ class UserPhotosAlbumList(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
+        from common.templates import get_template_user_list, get_template_anon_user_list
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             if request.user.is_authenticated:
-                self.template_name = get_template_user_item(self.photo, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_user_list(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
             else:
-                self.template_name = get_template_anon_user_item(self.photo, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         if self.user == request.user:
