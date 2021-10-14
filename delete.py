@@ -130,10 +130,11 @@ if words:
                     _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + p_2 + '">' + _p + '</a>')
                 else:
                     p_items = _p.split(".")
-                    p_zone = p_items[-1]
+                    p_zone = "." + p_items[-1]
                     print(p_zone)
                     for zone in zons:
                         if zone == p_zone:
+                            print(p_zone, " = ", zone)
                             _loop.append("")
                             this += 1
                             next += 1
