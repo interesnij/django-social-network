@@ -1,6 +1,6 @@
 on('#ajax', 'keydown', '.input_new_post_in_list', function(e) {
   if (e.keyCode == 13) {
-    this.append("\n");
+    document.execCommand('insertHTML', false, '<br/>');
 }});
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
