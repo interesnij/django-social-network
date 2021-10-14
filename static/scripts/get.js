@@ -22,6 +22,14 @@ on('#ajax', 'click', '.u_add_survey', function() {
   create_fullscreen('/survey/user_progs/add/', "worker_fullscreen");
 });
 
+on('#ajax', 'click', '.show_post_text', function() {
+  shower = this.parentElement.querySelector(".show_post_text");
+  shower.nextElementSibling.nextElementSibling.style.display = "unset";
+  shower.nextElementSibling.remove();
+  shower.previousElementSibling.remove();
+  shower.remove();
+});
+
 on('#ajax', 'click', '.hide_comment_form', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement
   block.querySelector(".col").style.display = "block";
