@@ -1006,6 +1006,10 @@ class PhotoComment(models.Model):
                     user_wall(user, None, self.pk, "PHOC", "u_photo_comment_notify", "DCO")
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
+    def get_format_text(self):
+        from common.utils import hide_text
+        return hide_text(self.text)
+
     def get_edit_attach(self, user):
         from common.attach.comment_attach import get_comment_edit
         return get_comment_edit(self, user)

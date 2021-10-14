@@ -959,3 +959,7 @@ class VideoComment(models.Model):
     def get_edit_attach(self, user):
         from common.attach.comment_attach import get_comment_edit
         return get_comment_edit(self, user)
+
+    def get_format_text(self):
+        from common.utils import hide_text
+        return hide_text(self.text)
