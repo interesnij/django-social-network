@@ -544,7 +544,7 @@ class Post(models.Model):
         if words_count < 30 and not "<br>" in text:
             return text
         elif "<br>" in text:
-            return text[text.find("<br>") + 1:] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text.partition('<br>')[0] + "</span>"
+            return text.partition('<br>')[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find("<br>") + 4:] + "</span>"
 
     def plus_likes(self, count):
         self.like += count
