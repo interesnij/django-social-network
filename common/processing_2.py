@@ -285,8 +285,10 @@ def get_formatted_text(text, is_message=False):
                         next += 1
                         _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + p_2 + '">' + _p + '</a>')
                     else:
+                        p_items = _p.split(".")
+                        p_zone = p_items[:-1]
                         for zone in zons:
-                            if zone in _p:
+                            if zone == p_zone:
                                 _loop.append("")
                                 this += 1
                                 next += 1
