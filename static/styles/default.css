@@ -2,10 +2,6 @@
   position: relative;
   display: inline-block;
   cursor: help;
-  border-color: #001331;
-  border-bottom: 1px dotted rgba(0, 19, 49, 0.9);
-  background-color: #EAEADE;
-  background-color: rgba(255, 255, 0, 0.05);
 }
 .tooltip_2:after {
   content: attr(_tooltip);
