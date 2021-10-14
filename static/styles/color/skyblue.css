@@ -56,6 +56,10 @@ body {
   border-bottom: 1px solid #282C34 !important;
   color: #282C34 !important;
 }
+.i_link :hover {
+  color: #282C34 !important;
+}
+
 .bg-light-opac {
   background-color: #009fda;
 }

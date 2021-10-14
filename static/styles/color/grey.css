@@ -33,6 +33,10 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
   border-bottom: 1px solid #282C34 !important;
   color: #282C34 !important;
 }
+.i_link :hover {
+  color: #282C34 !important;
+}
+
 body {
   background-color: #4b6977;
   font-size: 1em;
