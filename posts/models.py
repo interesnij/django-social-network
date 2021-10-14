@@ -540,11 +540,12 @@ class Post(models.Model):
 
     def get_formate_text(self):
         text = self.text
-        words_count = len(text.split(" "))
+        words = text.split(" ")
+        words_count = len(words)
         if words_count <= 30:
             return text
         elif words_count > 30:
-            word = words_count[30]
+            word = words[30]
             return text.partition(word)[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find(word) + len(word):] + "</span>"
         #elif "<br>" in text:
         #    return text.partition('<br>')[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find("<br>") + 4:] + "</span>"
