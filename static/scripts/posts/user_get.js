@@ -67,17 +67,19 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
-  if (e.target.classList.contains("action")) {
-    null
-  } else {
+  if (this.parentElement.querySelector(".show_post_text")) {
+    shower = this.parentElement.querySelector(".show_post_text");
+    shower.nextElementSibling.nextElementSibling.style.display = "block";
+    shower.nextElementSibling.remove();
+    shower.previousElementSibling.remove();
+    shower.remove();
+  }
+  else if (e.target.classList.contains("action")) {null}
+  else {
     create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen")
   }
 });
-on('#ajax', 'click', 'a', function(e) {
-  if (this.parentElement.classList.contains(".fullscreen")) {
-    e.stopPropagation();
-  }
-});
+
 on('#ajax', 'click', '.fix_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
