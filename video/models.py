@@ -767,7 +767,6 @@ class VideoComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
-        get_video_comment_processing(comment)
         return comment
 
     def edit_comment(self, attach, text):

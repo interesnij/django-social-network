@@ -841,7 +841,6 @@ class PhotoComment(models.Model):
             else:
                 user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
-        get_photo_comment_processing(comment)
         return comment
 
     def edit_comment(self, attach, text):
