@@ -242,7 +242,7 @@ def get_template_user(user, folder, template, request_user, user_agent):
             template_name = folder + template
     return get_folder(user_agent) + template_name
 
-def get_owner_template_user(list, folder, template, owner_user, request_user, user_agent, staff):
+def get_owner_template_user(list, folder, template, owner_user, request_user, user_agent, staff=False):
     """
         Если список пользователя. Чтобы мог удалять, например, посты не свои, но в своем списке.
     """
@@ -488,7 +488,7 @@ def get_template_community_list(list, folder, template, request_user, user_agent
 
     elif request_user.is_administrator_of_community(community.pk):
         template_name = folder + "admin_" + template
-        
+
     if list.can_see_el == 1:
         template_name = folder + template
     elif list.can_see_el == 2 and user.is_member_of_community(community.pk):
