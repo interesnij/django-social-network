@@ -1,3 +1,5 @@
+document.execCommand("defaultParagraphSeparator", false, "br");
+
 on('#ajax', 'click', '.load_next_list_comments', function() {
   _this = this;
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
