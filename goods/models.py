@@ -827,15 +827,14 @@ class GoodComment(models.Model):
 	@classmethod
 	def create_comment(cls, commenter, attach, good, parent, text, community, sticker):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
-		from django.utils import timezone
-		from common.processing.good import get_good_comment_processing
+		from common.processing_2 import get_text_processing
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 		if sticker:
 			comment = GoodComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, good=good)
 		else:
-			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=text)
+			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=get_text_processing(text))
 		good.comment += 1
 		good.save(update_fields=["comment"])
 		if comment.parent:
@@ -854,6 +853,20 @@ class GoodComment(models.Model):
 				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 		get_good_comment_processing(comment)
 		return comment
+
+	def edit_comment(self, attach, text):
+		from common.processing_2 import get_text_processing
+		if not text and not attach:
+			from rest_framework.exceptions import ValidationError
+			raise ValidationError("Нет текста или прикрепленных элементов")
+
+		_attach = str(attach)
+		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+		self.attach = _attach
+		self.text = get_text_processing(text)
+		self.type = GoodComment.EDITED
+		self.save()
+		return self
 
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime

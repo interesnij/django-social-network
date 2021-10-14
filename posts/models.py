@@ -1280,13 +1280,15 @@ class PostComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, post, parent, text, community, sticker):
-        from common.processing.post import get_post_comment_processing
+        from common.processing_2 import get_text_processing
+
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
         if sticker:
             comment = PostComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, post=post)
         else:
-            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=text)
+            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, post=post, text=get_text_processing(text))
         post.comment += 1
         post.save(update_fields=["comment"])
         if parent:
@@ -1311,7 +1313,7 @@ class PostComment(models.Model):
         return comment
 
     def edit_comment(self, attach, text):
-        from common.processing.post import get_post_comment_processing
+        from common.processing_2 import get_text_processing
         if not text and not attach:
             from rest_framework.exceptions import ValidationError
             raise ValidationError("Нет текста или прикрепленных элементов")
@@ -1319,8 +1321,8 @@ class PostComment(models.Model):
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         self.attach = _attach
-        self.text = text
-        get_post_comment_processing(self, PostComment.EDITED)
+        self.text = get_text_processing(text)
+        self.type = PostComment.EDITED
         self.save()
         return self
 
