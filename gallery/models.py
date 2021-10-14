@@ -816,16 +816,17 @@ class PhotoComment(models.Model):
     @classmethod
     def create_comment(cls, commenter, attach, photo, parent, text, community, sticker):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
-        from common.processing.photo import get_photo_comment_processing
+        from common.processing_2 import get_text_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        _text = get_text_processing(text)
         photo.comment += 1
         photo.save(update_fields=["comment"])
         if sticker:
             comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, photo=photo)
         else:
-            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=text)
+            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=_text)
         if comment.parent:
             if community:
                 community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
@@ -842,6 +843,21 @@ class PhotoComment(models.Model):
                 user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
         get_photo_comment_processing(comment)
         return comment
+
+    def edit_comment(self, attach, text):
+        from common.processing_2 import get_text_processing
+        if not text and not attach:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Нет текста или прикрепленных элементов")
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        _text = get_text_processing(text)
+        self.attach = _attach
+        self.text = _text
+        self.type = PhotoComment.EDITED
+        self.save()
+        return self
 
     def get_attach(self, user):
         from common.attach.comment_attach import get_comment_attach

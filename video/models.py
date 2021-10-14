@@ -739,14 +739,14 @@ class VideoComment(models.Model):
 
     @classmethod
     def create_comment(cls, commenter, attach, video, parent, text, community, sticker):
-        from common.processing.post import get_video_comment_processing
+        from common.processing_2 import get_text_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         if sticker:
             comment = VideoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, video=video)
         else:
-            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=text)
+            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=get_text_processing(text))
         video.comment += 1
         video.save(update_fields=["comment"])
         if parent:
@@ -769,6 +769,21 @@ class VideoComment(models.Model):
                 user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
         get_video_comment_processing(comment)
         return comment
+
+    def edit_comment(self, attach, text):
+        from common.processing_2 import get_text_processing
+        if not text and not attach:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Нет текста или прикрепленных элементов")
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+        _text = get_text_processing(text)
+        self.attach = _attach
+        self.text = _text
+        self.type = VideoComment.EDITED
+        self.save()
+        return self
 
     def count_replies_ru(self):
         count = self.count_replies()
