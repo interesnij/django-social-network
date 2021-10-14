@@ -65,14 +65,13 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '<img src="/media/smiles/heart.png"> @id7'
+text = 'google.com google.com.ru'
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
     for word in words:
-        print (word)
         if not word:
             pass
         if word[0] == "#":
@@ -125,12 +124,17 @@ if words:
                     p_2 = "//" + _p
                 if "трезвый.рус" in _p:
                     _loop.append("")
+                    p_2 = _p.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "")
                     this += 1
                     next += 1
-                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + _p + '">' + _p + '</a>')
+                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + p_2 + '">' + _p + '</a>')
                 else:
+                    p_items = _p.split(".")
+                    print(p_items)
+                    p_zone = p_items[:-1]
+                    print(p_zone)
                     for zone in zons:
-                        if zone in _p:
+                        if zone == p_zone:
                             _loop.append("")
                             this += 1
                             next += 1
