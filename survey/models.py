@@ -12,12 +12,12 @@ from django.db.models import Q
 
 
 class SurveyList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
+    MAIN, LIST, MANAGER = 'MAI','LIS','MAN'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
@@ -37,7 +37,7 @@ class SurveyList(models.Model):
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
+    type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип списка")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -326,11 +326,11 @@ class SurveyList(models.Model):
 
 
 class Survey(models.Model):
-    PROCESSING, MANAGER, PUBLISHED = '_PRO', 'PUB', 'MAN'
+    MANAGER, PUBLISHED = 'PUB','MAN'
     DELETED, DELETED_MANAGER = '_DEL', '_DELM'
     CLOSED, CLOSED_MANAGER = '_CLO', '_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
+        (MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
         (DELETED, 'Удалено'),(DELETED_MANAGER, 'Удален менеджерский'),
         (CLOSED, 'Закрыто модератором'),(CLOSED_MANAGER, 'Закрыт менеджерский'),
     )
@@ -342,7 +342,7 @@ class Survey(models.Model):
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
-    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     list = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
     community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")

@@ -42,12 +42,12 @@ class GoodSubCategory(models.Model):
 
 
 class GoodList(models.Model):
-	MAIN, LIST, MANAGER, PROCESSING = 'MAI','LIS','MAN','_PRO'
+	MAIN, LIST, MANAGER = 'MAI','LIS','MAN',
 	DELETED, DELETED_MANAGER = '_DEL','_DELM'
 	CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
 	ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
 	TYPE = (
-		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
 		(DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
 		(CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
 		)
@@ -68,7 +68,7 @@ class GoodList(models.Model):
 	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
-	type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+	type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип альбома")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -388,10 +388,10 @@ class GoodList(models.Model):
 
 
 class Good(models.Model):
-	PROCESSING, DRAFT, PUBLISHED, MANAGER, DELETED, CLOSED = '_PRO','_DRA','PUB','MAN','_DEL','_CLO'
+	DRAFT, PUBLISHED, MANAGER, DELETED, CLOSED = '_DRA','PUB','MAN','_DEL','_CLO'
 	DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
 	TYPE = (
-		(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+		(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
 		(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
 	)
 	title = models.CharField(max_length=200, verbose_name="Название")
@@ -401,7 +401,7 @@ class Good(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="good_creator", on_delete=models.CASCADE, verbose_name="Создатель")
 	image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 80}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_good_directory)
-	type = models.CharField(choices=TYPE, default=PROCESSING, max_length=6, verbose_name="Статус")
+	type = models.CharField(choices=TYPE, max_length=6, verbose_name="Статус")
 
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
@@ -755,11 +755,11 @@ class GoodImage(models.Model):
 
 
 class GoodComment(models.Model):
-	EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
+	EDITED, PUBLISHED, DRAFT = 'EDI','PUB','_DRA'
 	DELETED, EDITED_DELETED = '_DEL', '_DELE'
 	CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
 	TYPE = (
-		(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
+		(PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(DRAFT, 'Черновик'),
 		(DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
 		(CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
 	)
@@ -769,7 +769,7 @@ class GoodComment(models.Model):
 	text = models.TextField(blank=True,null=True)
 	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-	type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+	type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
 	sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
 	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")

@@ -13,12 +13,12 @@ from common.model.other import Stickers
 
 
 class PhotoList(models.Model):
-    MAIN, LIST, WALL, AVATAR, MANAGER, PROCESSING = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN', '_PRO'
+    MAIN, LIST, WALL, AVATAR, MANAGER = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN'
     DELETED, DELETED_MANAGER = '_DEL', '_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),(MANAGER, 'Созданный персоналом'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
     )
@@ -40,7 +40,7 @@ class PhotoList(models.Model):
     name = models.CharField(max_length=250, verbose_name="Название")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     cover_photo = models.ForeignKey('Photo', on_delete=models.SET_NULL, related_name='+', blank=True, null=True, verbose_name="Обожка")
-    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип альбома")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_list_creator', null=False, blank=False, verbose_name="Создатель")
 
@@ -399,10 +399,10 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    PROCESSING, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = '_PRO','PUB','MAN','_DEL','_CLO','_MES'
+    PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PUB','MAN','_DEL','_CLO','_MES'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),(MESSAGE, 'Загруженный в сообщениях'),
+        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),(MESSAGE, 'Загруженный в сообщениях'),
         (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
 
@@ -415,7 +415,7 @@ class Photo(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, max_length=5)
     community = models.ForeignKey('communities.Community', related_name='photo_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
@@ -729,11 +729,11 @@ class Photo(models.Model):
 
 
 class PhotoComment(models.Model):
-    EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
+    EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
     DELETED, EDITED_DELETED = '_DEL', '_DELE'
     CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(DRAFT, 'Черновик'),
         (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
         (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )
@@ -743,7 +743,7 @@ class PhotoComment(models.Model):
     text = models.TextField(blank=True,null=True)
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")

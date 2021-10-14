@@ -39,13 +39,13 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    PRIVATE, CLOSED, MANAGER, PROCESSING, PUBLIC = 'PRI', 'CLO', 'MAN', '_PRO', 'PUB'
+    PRIVATE, CLOSED, MANAGER, PUBLIC = 'PRI','CLO','MAN','PUB'
     DELETED, PRIVATE_DELETED, CLOSED_DELETED, MANAGER_DELETED = '_DELO', '_DELP', '_DELC', '_DELM'
     BANNER_OPEN, BANNER_PRIVATE, BANNER_CLOSED, BANNER_MANAGER = '_BANO', '_BANP', '_BANC', '_BANM'
     SUSPENDED_OPEN, SUSPENDED_PRIVATE, SUSPENDED_CLOSED, SUSPENDED_MANAGER = '_SUSO', '_SUSP', '_SUSC', '_SUSM'
     BLOCKED_OPEN, BLOCKED_PRIVATE, BLOCKED_CLOSED, BLOCKED_MANAGER = '_BLOO', '_BLOP', '_BLOC', '_BLOM'
     TYPE = (
-        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'), (PROCESSING, 'Обработка'),
+        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'),
         (DELETED, 'Открытый удалённый'),(PRIVATE_DELETED, 'Приватный удалённый'),(CLOSED_DELETED, 'Закрытый удалённый'),(MANAGER_DELETED, 'Менеджерский удалённый'),
         (BANNER_OPEN, 'Открытый баннер'),(BANNER_PRIVATE, 'Приватный баннер'),(BANNER_CLOSED, 'Закрытый баннер'),(BANNER_MANAGER, 'Менеджерский баннер'),
         (SUSPENDED_OPEN, 'Открытый замороженный'),(SUSPENDED_PRIVATE, 'Приватный замороженный'), (SUSPENDED_CLOSED, 'Закрытый замороженный'),(SUSPENDED_MANAGER, 'Менеджерский замороженный'),
@@ -62,7 +62,7 @@ class Community(models.Model):
     name = models.CharField(max_length=settings.COMMUNITY_NAME_MAX_LENGTH, blank=False, null=False, verbose_name="Название" )
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5)
+    type = models.CharField(choices=TYPE, max_length=5)
     perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)

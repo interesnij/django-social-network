@@ -11,13 +11,13 @@ from common.model.other import Stickers
 
 
 class PostList(models.Model):
-    MAIN, LIST, MANAGER, PROCESSING, FIXED, DRAFT, TEST = 'MAI','LIS','MAN','_PRO','_FIX','_DRA','_T'
+    MAIN, LIST, MANAGER, FIXED, DRAFT, TEST = 'MAI','LIS','MAN','_FIX','_DRA','_T'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
 
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PROCESSING, 'Обработка'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
+        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
     )
@@ -37,7 +37,7 @@ class PostList(models.Model):
     name = models.CharField(max_length=255)
     community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(max_length=6, choices=TYPE, default=PROCESSING, verbose_name="Тип списка")
+    type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип списка")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
@@ -498,10 +498,10 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    PROCESSING, C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PRO',"_COF","_UOF","_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
+    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = "_COF","_UOF","_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
     DELETED_C_OFFER, DELETED_U_OFFER, DELETED_MANAGER, CLOSED_MANAGER = '_DCOF','_DUOF','_DELM','_CLOM'
     TYPE = (
-        (PROCESSING, 'Обработка'),(C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
+        (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
         (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(MESSAGE, 'Репост в сообщения'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -512,7 +512,7 @@ class Post(models.Model):
     list = models.ForeignKey(PostList, blank=True, null=True, on_delete=models.SET_NULL, related_name='post_list')
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    type = models.CharField(choices=TYPE, default=PROCESSING, max_length=5, verbose_name="Статус статьи")
+    type = models.CharField(choices=TYPE, max_length=5, verbose_name="Статус статьи")
     text = models.TextField(max_length=settings.POST_MAX_LENGTH, blank=True, verbose_name="Текст")
 
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
@@ -1117,11 +1117,11 @@ class Post(models.Model):
 
 
 class PostComment(models.Model):
-    EDITED, PUBLISHED, PROCESSING, DRAFT = 'EDI', 'PUB', '_PRO', '_DRA'
+    EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
     DELETED, EDITED_DELETED = '_DEL', '_DELE'
     CLOSED, EDITED_CLOSED = '_CLO', '_CLOE'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(PROCESSING, 'Обработка'),(DRAFT, 'Черновик'),
+        (PUBLISHED, 'Опубликовано'),(EDITED, 'Изменённый'),(DRAFT, 'Черновик'),
         (DELETED, 'Удалённый'), (EDITED_DELETED, 'Удалённый изменённый'),
         (CLOSED, 'Закрытый менеджером'), (EDITED_CLOSED, 'Закрытый изменённый'),
     )
@@ -1131,7 +1131,7 @@ class PostComment(models.Model):
     text = models.TextField(blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    type = models.CharField(max_length=5, choices=TYPE, default=PROCESSING, verbose_name="Тип альбома")
+    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
