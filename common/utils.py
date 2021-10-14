@@ -5,6 +5,15 @@ def try_except(value):
     except:
         return False
 
+def hide_text(text):
+    words = text.split(" ")
+    words_count = len(words)
+    if words_count <= 30:
+        return text
+    elif words_count > 30:
+        word = words[30]
+        return text.partition(word)[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find(word):] + "</span>"
+
 def safe_json(data):
     import json
     from django.utils.safestring import mark_safe
@@ -178,4 +187,4 @@ def get_folder(user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
-        return "desctop/" 
+        return "desctop/"
