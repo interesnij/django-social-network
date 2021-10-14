@@ -123,7 +123,7 @@ class CommunityGallery(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_template_anon_community, get_template_community
+        from common.templates import get_template_anon_community_list, get_template_community_list
         from gallery.models import PhotoList
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -134,9 +134,9 @@ class CommunityGallery(TemplateView):
             self.get_lists = PhotoList.get_community_lists(self.c.pk)
         self.count_lists = PhotoList.get_community_lists_count(self.c.pk)
         if request.user.is_anonymous:
-            self.template_name = get_template_anon_community(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_list(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_community(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+            self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -149,12 +149,13 @@ class CommunityPhotoList(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
+        from common.templates import get_template_anon_community_list, get_template_community_list
 
         self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_anonymous:
-            self.template_name = get_template_anon_community(self.list, "communities/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_community(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
+            self.template_name = get_template_community_list(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_photo_manager())
 
         return super(CommunityPhotoList,self).get(request,*args,**kwargs)
 
