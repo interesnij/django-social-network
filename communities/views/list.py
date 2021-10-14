@@ -1,6 +1,11 @@
 from django.views.generic import ListView
 from communities.models import Community, CommunityCategory
-from common.templates import get_default_template, get_detect_platform_template
+from common.templates import (
+								get_default_template,
+								get_detect_platform_template,
+								get_template_anon_community_list,
+								get_template_community_list
+							)
 
 
 class CommunityMembersView(ListView):
@@ -88,7 +93,6 @@ class CommunityDocs(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.c, user = Community.objects.get(pk=self.kwargs["pk"]), request.user
 		self.list = DocList.objects.get(community_id=self.c.pk, type=DocList.MAIN)
@@ -100,9 +104,9 @@ class CommunityDocs(ListView):
 			self.get_lists = DocList.get_community_lists(self.c.pk)
 		self.count_lists = DocList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
-			self.template_name = get_template_anon_community(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_list(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.list, "communities/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
+			self.template_name = get_template_community_list(self.list, "communities/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -118,7 +122,6 @@ class CommunityDocsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
@@ -127,14 +130,14 @@ class CommunityDocsList(ListView):
 			self.doc_list = self.list.get_items()
 		if self.list.type == DocList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
+				self.template_name = get_template_community_list(self.list, "communities/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
+				self.template_name = get_template_community_list(self.list, "communities/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_doc_manager())
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -150,7 +153,6 @@ class CommunityGoods(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_anon_community, get_template_community
 		from goods.models import GoodList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -163,9 +165,9 @@ class CommunityGoods(ListView):
 			self.get_lists = GoodList.get_community_staff_lists(self.c.pk)
 		self.count_lists = GoodList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
-			self.template_name = get_template_anon_community(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_list(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.list, "communities/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
+			self.template_name = get_template_community_list(self.list, "communities/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -181,7 +183,6 @@ class CommunityGoodsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
@@ -191,14 +192,14 @@ class CommunityGoodsList(ListView):
 
 		if self.list.type == GoodList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
+				self.template_name = get_template_community_list(self.list, "communities/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
+				self.template_name = get_template_community_list(self.list, "communities/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_good_manager())
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -215,7 +216,6 @@ class CommunityMusic(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_playlist()
@@ -227,9 +227,9 @@ class CommunityMusic(ListView):
 			self.get_lists = SoundList.get_community_staff_lists(self.c.pk)
 		self.count_lists = SoundList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
-			self.template_name = get_template_anon_community(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_list(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+			self.template_name = get_template_community_list(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(CommunityMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -245,19 +245,18 @@ class CommunityMusicList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.c, self.play = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
 		if self.list.type == SoundList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_community_list(self.list, "communities/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.playlist, "communities/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
+				self.template_name = get_template_community_list(self.playlist, "communities/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_audio_manager())
 		return super(CommunityMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -273,7 +272,6 @@ class CommunityVideo(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_anon_community, get_template_community
 		from video.models import VideoList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -286,9 +284,9 @@ class CommunityVideo(ListView):
 			self.get_lists = VideoList.get_community_lists(self.c.pk)
 		self.count_lists = VideoList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
-			self.template_name = get_template_anon_community(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_list(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_community(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+			self.template_name = get_template_community_list(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -305,7 +303,6 @@ class CommunityVideoList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoList
-		from common.templates import get_template_anon_community, get_template_community
 
 		self.community,self.list = Community.objects.get(pk=self.kwargs["pk"]), VideoList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
@@ -314,14 +311,14 @@ class CommunityVideoList(ListView):
 			self.video_list = self.list.get_items()
 		if self.list.type == VideoList.MAIN:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+				self.template_name = get_template_community_list(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		else:
 			if request.user.is_anonymous:
-				self.template_name = get_template_anon_community(self.list, "communities/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_list(self.list, "communities/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_community(self.playlist, "communities/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
+				self.template_name = get_template_community_list(self.playlist, "communities/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_video_manager())
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -338,7 +335,6 @@ class CommunityPostsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import PostList
-		from common.templates import get_template_community, get_template_anon_community
 
 		self.c, self.post_list = Community.objects.get(pk=self.kwargs["pk"]), PostList.objects.get(pk=self.kwargs["list_pk"])
 		if request.user.is_authenticated:
@@ -361,13 +357,13 @@ class CommunityPostsListView(ListView):
 				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user.pk)
 				self.list = self.post_list.get_items()
 				self.post_lists = PostList.get_community_lists(self.c.pk)
-			self.template_name = get_template_community(self.post_list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
+			self.template_name = get_template_community_list(self.post_list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.user.is_post_manager())
 		else:
 			self.list = self.post_list.get_items()
 			self.post_lists = PostList.get_community_lists(self.c.pk)
 			self.is_user_can_see_post_section = self.c.is_anon_user_can_see_post()
 			self.is_user_can_see_post_list = self.post_list.is_anon_user_can_see_el()
-			self.template_name = get_template_anon_community(self.post_list, "communities/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_community_list(self.post_list, "communities/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

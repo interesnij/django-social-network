@@ -58,9 +58,20 @@ class LoadCustomLink(TemplateView):
 			self.custom_link = CustomLink.objects.get(link=self.kwargs["slug"])
 		except:
 			raise Http404
-		if self.custom_link.user:
-			self.user = self.custom_link.user
+		if request.user.is_authenticated:
+			if self.custom_link.user:
+				from common.templates import get_template_user, get_template_anon_user
 
+				self.user = self.custom_link.user
+				self.template_name = get_template_user(self.user, "main/tooltip/user/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+				if request.user.pk != self.user.pk:
+					self.get_buttons_block, self.common_frends, self.common_friends_count = request.user.get_buttons_profile(self.user.pk), self.user.get_common_friends_of_user(request.user)[0:5], request.user.get_common_friends_of_user_count_ru(self.user.pk)
+			if self.custom_link.community:
+				from common.templates import get_template_community, get_template_anon_community
+
+				self.c = self.custom_link.community
+				self.template_name = get_template_user(self.c, "main/tooltip/community/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
 		return super(LoadCustomLink,self).get(request,*args,**kwargs)
 
 

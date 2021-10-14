@@ -173,25 +173,20 @@ def get_admin_template(community, template, request_user, user_agent):
         raise PermissionDenied("Ошибка доступа")
     return get_folder(user_agent) + template_name
 
-def get_template_community(list, folder, template, request_user, user_agent, staff):
-    community = list.community
+def get_template_community(community, folder, template, request_user, user_agent):
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif community.type[0] == "_":
         template_name = get_fine_community(community, request_user)
-    elif list.type[0] == "_":
-        template_name = get_fine_community_item(request_user, community, list, folder, template)
     elif request_user.is_member_of_community(community.pk):
         if request_user.is_administrator_of_community(community.pk):
             template_name = folder + "admin_" + template
-        elif staff:
+        elif request_user.is_community_manager():
             template_name = folder + "staff_member_" + template
-        elif list.is_private():
-            template_name = folder + "private_" + template
         else:
             template_name = folder + template
-    elif staff:
+    elif request_user.is_community_manager():
         template_name = folder + "staff_" + template
     elif community.is_close():
         if request_user.is_follow_from_community(community.pk):
@@ -203,25 +198,18 @@ def get_template_community(list, folder, template, request_user, user_agent, sta
     elif request_user.is_banned_from_community(community.pk):
         template_name = "generic/c_template/block_community.html"
     elif community.is_public():
-        if list.is_private():
-            template_name = "generic/c_template/private_list.html"
-        elif request_user.is_child() and not community.is_verified():
+        if request_user.is_child() and not community.is_verified():
             template_name = "generic/c_template/no_child_safety.html"
         else:
             template_name = folder + "public_" + template
     return get_folder(user_agent) + template_name
 
-def get_template_anon_community(list, template, request_user, user_agent):
-    community = list.community
+def get_template_anon_community(community, template, request_user, user_agent):
     if community.type[0] == "_":
         template_name = get_anon_fine_community(community)
-    elif list.type[0] == "_":
-        template_name = get_anon_fine_community_item(community, list)
     elif community.is_public():
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
-        elif list.is_private():
-            template_name = "generic/c_template/anon_list_private.html"
         else:
             template_name = template
     elif community.is_close():
@@ -230,24 +218,19 @@ def get_template_anon_community(list, template, request_user, user_agent):
         template_name = "generic/c_template/anon_private_community.html"
     return get_folder(user_agent) + template_name
 
-def get_template_user(list, folder, template, request_user, user_agent, staff):
-    user = list.creator
+def get_template_user(user, folder, template, request_user, user_agent):
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
-    elif list.type[0] == "_":
-        template_name = get_fine_user_item(request_user, list, folder, template)
     elif user.pk == request_user.pk:
             template_name = folder + "my_" + template
     elif request_user.pk != user.pk:
         if user.type[0] == "_":
             template_name = get_fine_user(user)
-        elif staff:
+        elif request_user.is_user_manager():
             template_name = folder + "staff_" + template
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
-        elif list.is_private():
-            template_name = "generic/u_template/list_private.html"
         elif user.is_closed_profile():
             if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                 template_name = folder + template
@@ -260,6 +243,9 @@ def get_template_user(list, folder, template, request_user, user_agent, staff):
     return get_folder(user_agent) + template_name
 
 def get_owner_template_user(list, folder, template, owner_user, request_user, user_agent, staff):
+    """
+        Если список пользователя. Чтобы мог удалять, например, посты не свои, но в своем списке.
+    """
     user = list.creator
     update_activity(request_user, user_agent)
     if request_user.type[0] == "_":
@@ -275,8 +261,6 @@ def get_owner_template_user(list, folder, template, owner_user, request_user, us
             template_name = folder + "staff_" + template
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
-        elif list.is_private():
-            template_name = "generic/u_template/list_private.html"
         elif user.is_closed_profile():
             if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
                 template_name = folder + template
@@ -288,18 +272,13 @@ def get_owner_template_user(list, folder, template, owner_user, request_user, us
             template_name = folder + template
     return get_folder(user_agent) + template_name
 
-def get_template_anon_user(list, template, request_user, user_agent):
-    user = list.creator
+def get_template_anon_user(user, template, request_user, user_agent):
     if user.type[0] == "_":
         template_name = get_anon_fine_user(user)
-    elif list.type[0] == "_":
-        template_name = get_anon_fine_user_list(list)
     elif user.is_closed_profile():
         template_name = "generic/u_template/anon_close_user.html"
     elif not user.is_child_safety():
         template_name = "generic/u_template/anon_no_child_safety.html"
-    elif list.is_private():
-        template_name = "generic/u_template/anon_list_private.html"
     else:
         template_name = template
     return get_folder(user_agent) + template_name
