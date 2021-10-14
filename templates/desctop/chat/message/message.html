@@ -38,7 +38,7 @@
       {% if object.voice %}
         <audio class="audio" src="{{ object.voice.url }}"></audio>
       {% elif object.sticker %}
-      <div class="message_sticker mt-1">
+      <div class="message_sticker mt-1 t_f">
         <img src="{{ object.sticker.image.url }}" style="width: 128px;" tooltip="{{ object.sticker.category.name }}" flow="up">
       </div>
       {% else %}
