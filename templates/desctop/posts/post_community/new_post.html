@@ -3,7 +3,7 @@
   {% include 'desctop/posts/post_community/card_header.html' %}
 
   <div class="fullscreen text_support pointer">
-    {{ object.text|safe }}
+    {{ object.get_formate_text|safe }}
   </div>
 
   {% include 'base_block/post.html' %}

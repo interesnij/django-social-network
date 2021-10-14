@@ -49,6 +49,8 @@ on('#ajax', 'click', '.c_good_detail', function() {
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.getAttribute('data-uuid')
   pk = this.getAttribute('good-pk');
   create_fullscreen('/goods/community/good/' + pk + '/' + uuid + '/', "item_fullscreen");
+  container = document.body.querySelector("#fullscreens_container");
+  loader = container.querySelector(".card_fullscreen")
   setTimeout(function() {good_gallery(loader)}, 1000)
 });
 on('#ajax', 'click', '.c_all_good_comment_likes', function() {12
