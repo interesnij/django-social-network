@@ -69,7 +69,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   uuid = this.parentElement.getAttribute('data-uuid');
   if (this.parentElement.querySelector(".show_post_text")) {
     shower = this.parentElement.querySelector(".show_post_text");
-    shower.nextElementSibling.nextElementSibling.style.display = "block";
+    shower.nextElementSibling.nextElementSibling.style.display = "unset";
     shower.nextElementSibling.remove();
     shower.previousElementSibling.remove();
     shower.remove();
