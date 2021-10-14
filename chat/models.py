@@ -1140,17 +1140,17 @@ class MessageFixed(models.Model):
             return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
         elif message.is_have_transfer():
             if message.transfer.all().count() > 1:
-                return "<a class='i_link'>Пересланные сообщения</a>"
+                return "<b class='i_link'>Пересланные сообщения</b>"
             else:
-                return "<a class='i_link'>Пересланное сообщение</a>"
+                return "<b class='i_link'>Пересланное сообщение</b>"
         elif message.parent:
-            return "<a class='i_link'>Ответ на сообщение</a>"
+            return "<b class='i_link'>Ответ на сообщение</b>"
         elif message.attach:
-            return "<a class='i_link'>Вложения</a>"
+            return "<b class='i_link'>Вложения</b>"
         elif message.voice:
-            return "<a class='i_link'>Голосовое сообщение</a>"
+            return "<b class='i_link'>Голосовое сообщение</b>"
         elif message.sticker:
-            return "<a class='i_link'>Наклейка</a>"
+            return "<b class='i_link'>Наклейка</b>"
         elif message.text:
             import re
             count = 60
