@@ -541,10 +541,13 @@ class Post(models.Model):
     def get_formate_text(self):
         text = self.text
         words_count = len(text.split(" "))
-        if words_count < 30 and not "<br>" in text:
+        if words_count <= 30:
             return text
-        elif "<br>" in text:
-            return text.partition('<br>')[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find("<br>") + 4:] + "</span>"
+        elif words_count > 30:
+            word = words_count[30]
+            return text.partition(word)[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find(word) + len(word):] + "</span>"
+        #elif "<br>" in text:
+        #    return text.partition('<br>')[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find("<br>") + 4:] + "</span>"
 
     def plus_likes(self, count):
         self.like += count
