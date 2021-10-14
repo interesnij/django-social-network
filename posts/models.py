@@ -1309,7 +1309,6 @@ class PostComment(models.Model):
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-        get_post_comment_processing(comment, PostComment.PUBLISHED)
         return comment
 
     def edit_comment(self, attach, text):
