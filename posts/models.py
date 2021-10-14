@@ -546,7 +546,7 @@ class Post(models.Model):
             return text
         elif words_count > 30:
             word = words[30]
-            return text.partition(word)[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find(word) - len(word):] + "</span>"
+            return text.partition(word)[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find(word):] + "</span>"
         #elif "<br>" in text:
         #    return text.partition('<br>')[0] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text[text.find("<br>") + 4:] + "</span>"
 
