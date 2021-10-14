@@ -272,7 +272,7 @@ def get_formatted_text(text, is_message=False):
                         pass
 
             elif "." in word:
-                _p = word.strip(".,:;!_*-+()/@#¤%)").lower()
+                _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
                 if "." in _p and not ".png" in _p:
                     if _p[0] == "h":
                         p_2 = _p
