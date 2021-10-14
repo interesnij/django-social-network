@@ -1,4 +1,3 @@
-document.execCommand("defaultParagraphSeparator", false, "br");
 
 on('#ajax', 'click', '.load_next_list_comments', function() {
   _this = this;

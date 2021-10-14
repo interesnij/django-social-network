@@ -1,3 +1,8 @@
+on('#ajax', 'keydown', '.input_new_post_in_list', function(e) {
+  if (e.keyCode == 13) {
+    this.append("\n");
+}});
+
 on('#ajax', 'click', '.input_new_post_in_list', function() {
   this.parentElement.nextElementSibling.style.display = "block";
 });
