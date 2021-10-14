@@ -1010,8 +1010,8 @@ function elementInViewport(el) {
 
 function send_comment(form, block, link) {
   text_val = form.querySelector(".smile_supported");
-  _text = text_val.innerHTML;
-  format_text(text_val);
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form.querySelector(".img_block").innerHTML) {
     toast_error("Напишите или прикрепите что-нибудь");
     return

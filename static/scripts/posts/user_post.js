@@ -28,8 +28,8 @@ on('#ajax', 'click', '#u_add_article', function() {
 on('#ajax', 'click', '#u_add_post_btn', function() {
   form_post = this.parentElement.parentElement.parentElement.parentElement;
   text_val = form_post.querySelector(".smile_supported");
-  xxx = format_text(text_val);
-  _text = text_val.innerHTML;
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
   };

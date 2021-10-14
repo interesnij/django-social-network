@@ -372,8 +372,8 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
 
 function send_message (form_post, url) {
   text_val = form_post.querySelector(".smile_supported");
-  _text = text_val.innerHTML;
-  format_text(text_val);
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
 
   if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0") && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
