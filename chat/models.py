@@ -913,19 +913,19 @@ class Message(models.Model):
     def get_type_text(self):
         if self.is_have_transfer():
             if self.transfer.all().count() > 1:
-                return "Пересланные сообщения"
+                return "<b class='i_link'>Пересланные сообщения</b>"
             else:
-                return "Пересланное сообщение"
+                return "<b class='i_link'>Пересланное сообщение</b>"
         elif self.parent:
-            return "Ответ на сообщение"
+            return "<b class='i_link'>Ответ на сообщение</b>"
         elif self.sticker:
-            return "Стикер"
+            return "<b class='i_link'>Стикер</b>"
         elif self.voice:
-            return "Голосовое сообщение"
+            return "<b class='i_link'>Голосовое сообщение</b>"
         elif self.attach and self.text:
-            return "Текст и вложения"
+            return "<b class='i_link'>Текст и вложения</b>"
         elif self.attach and not self.text:
-            return "Вложения"
+            return "<b class='i_link'>Вложения</b>"
         elif self.text:
             return self.get_text_60()
 
