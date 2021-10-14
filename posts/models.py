@@ -538,7 +538,7 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
-    def get_formate_text(self):
+    def get_format_text(self):
         from common.utils import hide_text
         return hide_text(self.text)
 
@@ -1437,6 +1437,10 @@ class PostComment(models.Model):
             return self.parent.post
         else:
             return self.post
+
+    def get_format_text(self):
+        from common.utils import hide_text
+        return hide_text(self.text)
 
 
 class PostListPerm(models.Model):

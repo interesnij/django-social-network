@@ -1045,3 +1045,7 @@ class GoodComment(models.Model):
 			return self.parent.good
 		else:
 			return self.good
+
+	def get_format_text(self):
+		from common.utils import hide_text
+		return hide_text(self.text)
