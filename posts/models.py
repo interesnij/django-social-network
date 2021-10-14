@@ -538,6 +538,14 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def get_formate_text(self):
+        text = self.text
+        words_count = len(text.split(" "))
+        if words_count < 30 and not "<br>" in text:
+            return text
+        elif "<br>" in text:
+            return text[text.find("<br>") + 1:] + "<br><a class='pointer show_post_text'>Показать полностью...</a><br><span style='display:none'>" + text.partition('<br>')[0] + "</span>"
+
     def plus_likes(self, count):
         self.like += count
         return self.save(update_fields=['like'])
