@@ -235,12 +235,12 @@ def get_formatted_text(text, is_message=False):
                 if word[0] == "#":
                     _p = word.strip(".,:;!_*-+()/@#¤%&)")
                     tag = "#" + _p
-                    _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
+                    _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action"href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
                 else:
                     _p = word.strip(".,:;!_*-+()/@#¤%&)")
                     p_2 = _p[_p.find("#") + 1:]
                     tag = "#" + p_2
-                    _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
+                    _loop[next] = _loop[this].replace(tag, '<a class="ajax action"href="/search/?tag=' + p_2 + '">' + tag + '</a>')
             if word[0] == "@":
                 from common.model.other import CustomLink
                 exists = False
@@ -273,7 +273,7 @@ def get_formatted_text(text, is_message=False):
                     this += 1
                     next += 1
                     p_2 = "@" + _p
-                    _loop[next] = _loop[this].replace(indent + word, indent + '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a>')
+                    _loop[next] = _loop[this].replace(indent + word, indent + '<a class="action ajax show_mention_info pointer"href="/' + _p + '/">' + name + '</a>')
 
             elif "." in word:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
@@ -287,7 +287,7 @@ def get_formatted_text(text, is_message=False):
                         p_2 = _p.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "")
                         this += 1
                         next += 1
-                        _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action" href="' + p_2 + '">' + _p[:30] + '</a>')
+                        _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action"href="' + p_2 + '">' + _p[:30] + '</a>')
                     else:
                         p_items = _p.split(".")
                         p_zone = "." + p_items[-1]
@@ -297,7 +297,7 @@ def get_formatted_text(text, is_message=False):
                                 _loop.append("")
                                 this += 1
                                 next += 1
-                                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="action" target="_blank" href="' + p_2 + '">' + _p[:30] + '</a>')
+                                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="action"rel="nofollow"target="_blank"href="' + p_2 + '">' + _p[:30] + '</a>')
                                 break
                     _exlude.append(_p)
         result = _loop[next].replace(" |<imgsrc","<img src").replace('.png">| ','.png">').replace(" <br> ","<br>")
