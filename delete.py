@@ -72,7 +72,7 @@ vaccinated and unvaccinated and infringement of restrictions on the rights of an
 Defend voluntariness, counteract segregation!VK group "Zadobrovolnost": https://vk.com/zadobrovolnost \
 #Voluntary #Vaccination #Coronavirus'
 
-text = "#Voluntary #Vaccination #Coronavirus"
+text = " #Voluntary #Vaccination #Coronavirus"
 
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
