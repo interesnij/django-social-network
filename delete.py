@@ -86,9 +86,9 @@ if words:
     for word in words:
         count += 1
         if count == 1:
-            indent = " "
+            indent = ""
         else:
-            indent = " "
+            indent = ""
         if not word:
             pass
         if "#" in word:
