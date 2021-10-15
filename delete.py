@@ -155,7 +155,7 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
-
+                    print(p_zone)
                     for zone in zons:
                         if zone == p_zone:
                             print("Обнаружена зона!", zone)
