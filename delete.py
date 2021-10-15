@@ -82,7 +82,7 @@ if words:
             _loop.append("")
             this += 1
             next += 1
-            print("слово в тексте", text.partition(' ')[count] + text.partition(' ')[count + 1])
+            print("слово в тексте", text.partition(' ')[count])
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
