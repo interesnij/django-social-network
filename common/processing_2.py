@@ -297,7 +297,7 @@ def get_formatted_text(text, is_message=False):
                                 _loop.append("")
                                 this += 1
                                 next += 1
-                                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="action"rel="nofollow"target="_blank"href="' + p_2 + '">' + _p[:30] + '</a>')
+                                _loop[next] = _loop[this].replace(_p, '<a class="action"rel="nofollow"target="_blank"href="' + p_2 + '">' + _p[:30] + '</a>')
                                 break
                     _exlude.append(_p)
         result = _loop[next].replace(" |<imgsrc","<img src").replace('.png">| ','.png">').replace(" <br> ","<br>")
