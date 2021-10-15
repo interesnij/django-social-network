@@ -67,7 +67,7 @@ zons = [
 
 text = '#Сталинизм #Сталин #Ленин Калам#бур'
 print("текст", text)
-words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split("|||||")
+words = text.replace("<br>"," <br> ").replace("&nbsp;","|||||").split("|||||")
 print("новый текст", words)
 
 if words:
