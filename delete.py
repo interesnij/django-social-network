@@ -98,6 +98,7 @@ if words:
             indent = ""
         else:
             indent = " "
+        print("отступ", indent)
         if not word:
             pass
         if "#" in word:
