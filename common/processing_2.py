@@ -225,8 +225,8 @@ def get_formatted_text(text, is_message=False):
                 indent = ""
             else:
                 indent = " "
-            if not word:
-                pass
+            if word == "":
+                continue
             if "#" in word:
                 _loop.append("")
                 this += 1
