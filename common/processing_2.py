@@ -217,9 +217,10 @@ def get_formatted_text(text, is_message=False):
     words = _words.replace("  "," ").split(" ")
 
     if words:
-        _loop, _exlude, this, next = [], [], -1, 0
+        _loop, _exlude, this, next, count = [], [], -1, 0, 0
         _loop.append(text)
         for word in words:
+            count = 0
             if word == "":
                 continue
             if "#" in word:
