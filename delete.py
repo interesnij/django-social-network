@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '#Сталинизм. .foo#bar #Сталин google.com google.comp перед.рус @id7 @public1'
+text = '#Сталинизм. .foo#bar #Сталин. google.com google.comp перед.рус @id7 @public1'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
