@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '#Сталинизм. .foo#bar #Сталин google.com google.comp перед.рус @id7 @public1'
+text = 'PS Now deliberately push the foreheads of those who did not get vaccinated and those who, for various reasons, did. An alternative to bleaching and a unifying position is the voluntary nature of vaccination. Voluntariness implies the absence of segregation of the population into vaccinated and unvaccinated and infringement of restrictions on the rights of any category. Defend voluntariness, counteract segregation!VK group "Zadobrovolnost": https://vk.com/zadobrovolnost#Voluntary #Vaccination #Coronavirus'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
