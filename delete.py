@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'В.И.#Ленин Калам#бур'
+text = '#Сталин В.И.#Ленин Калам#бур'
 print("текст", text)
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 print("новый текст", words)
