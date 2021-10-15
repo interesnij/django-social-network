@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '#Сталинизм #Сталин google.com google.comp перед.рус передок.рус'
+text = '#Сталинизм. #Сталин google.com google.comp перед.рус передок.рус'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -84,15 +84,12 @@ if words:
     _loop, _exlude, this, next, count = [], [], -1, 0, 0
     _loop.append(text)
     for word in words:
-        print("слово", word)
         if not word:
             pass
         if "#" in word:
             _loop.append("")
             this += 1
             next += 1
-            count = text.count(word)
-            print("Всего вхождения", count)
 
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
@@ -100,7 +97,6 @@ if words:
                 _loop[next] = _loop[this].replace(word + " ", '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a> ')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
-                print("т#ег", word)
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
                 _loop[next] = _loop[this].replace(tag + " ", '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a> ')
@@ -157,7 +153,6 @@ if words:
 
                     for zone in zons:
                         if zone == p_zone:
-                            print("Зона", p_zone)
                             _loop.append("")
                             this += 1
                             next += 1
