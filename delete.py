@@ -99,7 +99,7 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 p_2 = _p[_p.find("#") + 1:]
@@ -166,6 +166,6 @@ if words:
                             break
                 _exlude.append(_p)
                 print("--------------")
-    for p in _loop[next].split(" "):
+    for p in _loop[next].split("a"):
         print(p)
     print(_loop[next])
