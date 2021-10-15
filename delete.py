@@ -80,10 +80,13 @@ if words:
             next += 1
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
+                print("#тег", word)
                 tag = "#" + _p
                 _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
+                print("т#ег", word)
+
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
                 _loop[next] = _p.partition('#')[0] + _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
@@ -137,10 +140,9 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
-                    print(p_zone)
+                    print("Зона", p_zone)
                     for zone in zons:
                         if zone == p_zone:
-                            print(p_zone, " = ", zone)
                             _loop.append("")
                             this += 1
                             next += 1
