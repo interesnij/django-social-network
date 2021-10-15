@@ -97,10 +97,7 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                if count == 1:
-                    _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
-                else:
-                    _loop[next] = _loop[this]
+                _loop[next] = _loop[this].replace(" " + word, ' <a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
