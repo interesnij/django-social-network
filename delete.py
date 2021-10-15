@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'В.И.Калам#бур #Ленин'
+text = 'В.И.#Ленин Калам#бур'
 print("текст", text)
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
 print("новый текст", words)
@@ -143,9 +143,10 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
-                    print("Зона", p_zone)
+
                     for zone in zons:
                         if zone == p_zone:
+                            print("Зона", p_zone)
                             _loop.append("")
                             this += 1
                             next += 1
