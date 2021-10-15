@@ -72,6 +72,7 @@ if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
     for word in words:
+        print("слово", word)
         if not word:
             pass
         if "#" in word:
