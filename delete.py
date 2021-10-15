@@ -72,7 +72,7 @@ print("новый текст", words)
 
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
-    _loop.append(words)
+    _loop.append(text)
     for word in words:
         print("слово", word)
         if not word:
@@ -81,18 +81,18 @@ if words:
             _loop.append("")
             this += 1
             next += 1
+            print("слово в тексте", text.partition(' ')[this] + text.partition(' ')[next])
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
-                print("#тег", word)
                 tag = "#" + _p
-                words[this] = '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>'
+                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
 
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                words[this] = '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>'
+                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
@@ -155,4 +155,3 @@ if words:
                 _exlude.append(_p)
                 print("--------------")
     print(_loop[next])
-    print(words)
