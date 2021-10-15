@@ -155,4 +155,4 @@ if words:
                 _exlude.append(_p)
                 print("--------------")
     print(_loop[next])
-    print(words.replace("|||||"," "))
+    print(words)
