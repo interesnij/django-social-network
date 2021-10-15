@@ -109,6 +109,8 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
+                print(" " + _p)
+                print(_loop[this])
                 _loop[next] = _loop[this].replace(" " + _p, ' <a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
