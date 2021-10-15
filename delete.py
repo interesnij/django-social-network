@@ -95,6 +95,7 @@ if words:
         count += 1
         if count == 1:
             indent = ""
+        print("проходка", count)
         else:
             indent = " "
         if not word:
