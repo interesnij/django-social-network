@@ -292,7 +292,7 @@ def get_formatted_text(text, is_message=False):
                                 _loop.append("")
                                 this += 1
                                 next += 1
-                                _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
+                                _loop[next] = _loop[this].replace(_p + " ", '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a> ')
                                 break
                     _exlude.append(_p)
         result = _loop[next].replace(" |<imgsrc","<img src").replace('.png">| ','.png">').replace(" <br> ","<br>")
