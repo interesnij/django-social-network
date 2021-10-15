@@ -71,17 +71,18 @@ words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
 
 if words:
-    _loop, _exlude, this, next = [], [], -1, 0
+    _loop, _exlude, this, next, count = [], [], -1, 0, 0
     _loop.append(text)
     for word in words:
         print("слово", word)
+        count += 1
         if not word:
             pass
         if "#" in word:
             _loop.append("")
             this += 1
             next += 1
-            print("слово в тексте", text.partition(' ')[this] + text.partition(' ')[next])
+            print("слово в тексте", text.partition(' ')[count] + text.partition(' ')[count + 1])
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
