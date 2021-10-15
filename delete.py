@@ -92,7 +92,7 @@ if words:
 
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _p.partition('#')[1] + _loop[this].replace(p_2, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
+                _loop[next] = _p.partition('#')[2] + _loop[this].replace(p_2, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
