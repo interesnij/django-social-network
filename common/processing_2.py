@@ -291,9 +291,10 @@ def get_formatted_text(text, is_message=False):
                     else:
                         p_items = _p.split(".")
                         p_zone = "." + p_items[-1]
-
+                        if "/" in p_zone:
+                            _zone = p_zone.partition('/')[0]
                         for zone in zons:
-                            if zone == p_zone:
+                            if zone == _zone:
                                 _loop.append("")
                                 this += 1
                                 next += 1
