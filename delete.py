@@ -84,6 +84,11 @@ if words:
     _loop, _exlude, this, next, count = [], [], -1, 0, 0
     _loop.append(text)
     for word in words:
+        count += 1
+        if count == 1:
+            indent = ""
+        else:
+            indent = " "
         if not word:
             pass
         if "#" in word:
