@@ -81,7 +81,7 @@ def find_word_index(text, word):
     return count
 
 if words:
-    _loop, _exlude, this, next = [], [], -1, 0
+    _loop, _exlude, this, next, count = [], [], -1, 0, 0
     _loop.append(text)
     for word in words:
         print("слово", word)
@@ -91,12 +91,16 @@ if words:
             _loop.append("")
             this += 1
             next += 1
-            print(word, "порядок слова в тексте", find_word_index(text, word))
+            count = text.count(word)
+            print("Всего вхождения", count)
+
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                word_index, index = find_word_index(text, word), 0
-                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
+                if count == 1:
+                    _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
+                else:
+                    _loop[next] = _loop[this]
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
