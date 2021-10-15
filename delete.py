@@ -70,6 +70,16 @@ print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
 
+def find_word_index(text, word):
+    start = -1
+    count = 0
+    while True:
+        start = text.find(word, start+1)
+        if start == -1:
+            break
+        count += 1
+    return count
+
 if words:
     _loop, _exlude, this, next, count = [], [], -1, 0, 0
     _loop.append(text)
@@ -86,14 +96,14 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
 
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>', find_word_index(text, word))
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
