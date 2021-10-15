@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '#Сталинизм. #Сталин google.com google.comp перед.рус передок.рус'
+text = '#Сталинизм. .foo#bar #Сталин google.com google.comp перед.рус @id7 @public1'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -94,12 +94,12 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(word + " ", '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a> ')
+                _loop[next] = _loop[this].replace(" " + _p, ' <a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _loop[this].replace(tag + " ", '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a> ')
+                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
@@ -132,7 +132,7 @@ if words:
                 this += 1
                 next += 1
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word + " ", '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a> ')
+                _loop[next] = _loop[this].replace(_p + " ", '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a> ')
 
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
@@ -163,3 +163,4 @@ if words:
                 print("--------------")
     for p in _loop[next].split(" "):
         print(p)
+    print(_loop[next])
