@@ -65,15 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-_text = 'PS Now deliberately push the foreheads of those who did not get vaccinated and those who, \
-for various reasons, did. An alternative to bleaching and a unifying position is the voluntary \
-nature of vaccination. Voluntariness implies the absence of segregation of the population into \
-vaccinated and unvaccinated and infringement of restrictions on the rights of any category. \
-Defend voluntariness, counteract segregation!VK group "Zadobrovolnost": https://vk.com/zadobrovolnost \
-#Voluntary #Vaccination #Coronavirus'
-
-text = "#Voluntary #Вакцинация #Coronavirus"
-
+text = '#Сталинизм. .foo#bar #Сталин google.com google.comp перед.рус @id7 @public1'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -93,12 +85,10 @@ if words:
     _loop.append(text)
     for word in words:
         count += 1
-        print("проходка", count)
         if count == 1:
             indent = ""
         else:
             indent = " "
-        print("отступ", indent)
         if not word:
             pass
         if "#" in word:
@@ -109,9 +99,7 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                print(" " + _p)
-                print(_loop[this])
-                _loop[next] = _loop[this].replace(" " + _p, ' <a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
+                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 p_2 = _p[_p.find("#") + 1:]
@@ -178,5 +166,6 @@ if words:
                             break
                 _exlude.append(_p)
                 print("--------------")
-
+    for p in _loop[next].split(" "):
+        print(p)
     print(_loop[next])
