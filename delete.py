@@ -72,7 +72,7 @@ print("новый текст", words)
 
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
-    _loop.append(text)
+    _loop.append(words)
     for word in words:
         print("слово", word)
         if not word:
