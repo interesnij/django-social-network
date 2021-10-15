@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'Стань учителем Трезвости: https://vk.cc/'
+text = 'Стань учителем Трезвости: https://vk.cc/bVwUK6 Освободись от алкоголя: https://vk.cc/aBA20a Освободись от табака: https://vk.cc/aBA26q'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
