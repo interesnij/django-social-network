@@ -91,6 +91,7 @@ if words:
             _loop.append("")
             this += 1
             next += 1
+            print(word, "порядок слова в тексте", find_word_index(text, word))
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
