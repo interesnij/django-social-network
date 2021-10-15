@@ -67,11 +67,11 @@ zons = [
 
 text = 'В.И.Калам#бур #Ленин'
 words = text.replace("<br>"," <br> ").replace("&nbsp;"," ").split(" ")
-
+print("текст", text)
 if words:
     _loop, _exlude, this, next = [], [], -1, 0
     _loop.append(text)
-    print("текст", text)
+    print("список", text)
     for word in words:
         print("слово", word)
         if not word:
