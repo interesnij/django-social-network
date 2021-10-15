@@ -93,9 +93,10 @@ if words:
     _loop.append(text)
     for word in words:
         count += 1
+        print("проходка", count)
         if count == 1:
             indent = ""
-        print("проходка", count)
+
         else:
             indent = " "
         if not word:
