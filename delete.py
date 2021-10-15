@@ -155,15 +155,14 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
-                    print(p_items)
-                    print(p_zone)
+
                     for zone in zons:
                         if zone == p_zone:
                             print("Обнаружена зона!", zone)
                             _loop.append("")
                             this += 1
                             next += 1
-                            _loop[next] = _loop[this].replace(_p + " ", '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a> ')
+                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
                 print("--------------")
