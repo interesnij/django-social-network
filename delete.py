@@ -174,6 +174,5 @@ if words:
                             break
                 _exlude.append(_p)
                 print("--------------")
-    for p in _loop[next].split(" "):
-        print(p)
+
     print(_loop[next])
