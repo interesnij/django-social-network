@@ -97,14 +97,14 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(" " + word, ' <a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
+                _loop[next] = _loop[this].replace(word + " ", '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a> ')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
 
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>', find_word_index(text, word))
+                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
