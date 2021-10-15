@@ -99,12 +99,12 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action"href="/search/?tag=' + _p + '">' + tag + '</a>')
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(tag, '<a class="ajax action"href="/search/?tag=' + p_2 + '">' + tag + '</a>')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
@@ -137,10 +137,10 @@ if words:
                 this += 1
                 next += 1
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(_p + " ", '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a> ')
+                _loop[next] = _loop[this].replace(_p + " ", '<a class="action ajax show_mention_info pointer"href="/' + _p + '/">' + name + '</a> ')
 
         elif "." in word:
-            _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
+            _p = word.strip(".,:;!_*-+()@#¤%&)").lower()
             if "." in _p and not ".png" in _p:
                 if _p[0] == "h":
                     p_2 = _p
@@ -151,7 +151,7 @@ if words:
                     p_2 = _p.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "")
                     this += 1
                     next += 1
-                    _loop[next] = _loop[this].replace(_p + " ", '<a class="ajax action" href="' + p_2 + '">' + _p + '</a> ')
+                    _loop[next] = _loop[this].replace(_p + " ", '<a class="ajax action"href="' + p_2 + '">' + _p + '</a> ')
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
@@ -162,7 +162,7 @@ if words:
                             _loop.append("")
                             this += 1
                             next += 1
-                            _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
+                            _loop[next] = _loop[this].replace(_p, '<a class="action"rel="nofollow"target="_blank"href="' + p_2 + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
                 print("--------------")
