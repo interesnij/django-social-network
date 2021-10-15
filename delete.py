@@ -97,10 +97,7 @@ if words:
                 tag = "#" + _p
                 word_index, index = find_word_index(text, word), 0
                 if find_word_index(text, word) > 1:
-                    while word_index > 0:
-                        word_index -= 1
-                        _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', 1).replace(word, ".....", word_index)
-                    _loop[next] = _loop[next].replace(word, ".....")
+                    _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', 1)         
                 else:
                     _loop[next] = _loop[this].replace(word, '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>', find_word_index(text, word))
             else:
