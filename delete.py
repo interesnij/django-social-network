@@ -153,6 +153,7 @@ if words:
 
                     for zone in zons:
                         if zone == p_zone:
+                            print("Обнаружена зона!", zone)
                             _loop.append("")
                             this += 1
                             next += 1
