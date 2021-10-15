@@ -88,7 +88,7 @@ if words:
         if count == 1:
             indent = ""
         else:
-            indent = ""
+            indent = " "
         if not word:
             pass
         if "#" in word:
@@ -99,7 +99,7 @@ if words:
             if word[0] == "#":
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 tag = "#" + _p
-                _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
+                _loop[next] = _loop[this].replace(_p, indent + '<a class="ajax action" href="/search/?tag=' + _p + '">' + tag + '</a>').replace("#<", "<")
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 p_2 = _p[_p.find("#") + 1:]
