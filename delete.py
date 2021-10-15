@@ -152,4 +152,5 @@ if words:
                             _loop[next] = _loop[this].replace(_p, '<a class="action" target="_blank" href="' + p_2 + '">' + _p + '</a>')
                             break
                 _exlude.append(_p)
+                print("--------------")
     print(_loop[next])
