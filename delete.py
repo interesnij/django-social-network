@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = '#Сталинизм #Сталин #Ленин Калам#бур'
+text = '#Сталинизм #Сталин google.com google.comp перед.рус передок.рус'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -101,10 +101,9 @@ if words:
             else:
                 _p = word.strip(".,:;!_*-+()/@#¤%&)")
                 print("т#ег", word)
-
                 p_2 = _p[_p.find("#") + 1:]
                 tag = "#" + p_2
-                _loop[next] = _loop[this].replace(tag, '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a>')
+                _loop[next] = _loop[this].replace(tag + " ", '<a class="ajax action" href="/search/?tag=' + p_2 + '">' + tag + '</a> ')
         if word[0] == "@":
             from common.model.other import CustomLink
             exists = False
@@ -137,7 +136,7 @@ if words:
                 this += 1
                 next += 1
                 p_2 = "@" + _p
-                _loop[next] = _loop[this].replace(word, '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a>')
+                _loop[next] = _loop[this].replace(word + " ", '<a class="action ajax show_mention_info pointer" href="/' + _p + '/">' + name + '</a> ')
 
         elif "." in word:
             _p = word.strip(".,:;!_*-+()/@#¤%&)").lower()
@@ -151,7 +150,7 @@ if words:
                     p_2 = _p.replace("трезвый.рус", "/").replace("http://", "").replace("https://", "")
                     this += 1
                     next += 1
-                    _loop[next] = _loop[this].replace(_p, '<a class="ajax action" href="' + p_2 + '">' + _p + '</a>')
+                    _loop[next] = _loop[this].replace(_p + " ", '<a class="ajax action" href="' + p_2 + '">' + _p + '</a> ')
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
@@ -166,4 +165,5 @@ if words:
                             break
                 _exlude.append(_p)
                 print("--------------")
-    print(_loop[next])
+    for p in _loop[next].split(" "):
+        print(p)
