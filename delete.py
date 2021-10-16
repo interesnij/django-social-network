@@ -156,9 +156,13 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
+
+                    if "?" in p_zone:
+                        p_zone = "." + p_items[-2]
                     print("зона", p_zone)
                     if "/" in p_zone:
                         p_zone = p_zone.partition('/')[0]
+                        if
                         print("partition", p_zone)
                     for zone in zons:
                         if zone == p_zone:
