@@ -71,9 +71,9 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
   card = this.parentElement.parentElement.parentElement.parentElement;
   if (card.classList.contains("u_post")) {
-    get_id = "user_id="
+    get_id = "?user_id="
   } else if (card.classList.contains("c_post")){
-    get_id = "community_id="
+    get_id = "?community_id="
   };
   document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/" + get_id + pk, "worker_fullscreen");
