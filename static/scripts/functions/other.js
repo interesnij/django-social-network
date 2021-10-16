@@ -2,9 +2,13 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 
 function format_text(text) {
   text.innerHTML = text.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "").replace(/\&nbsp;/g, '').replace(/style="[^"]*"/, "");
-  brs = text.querySelectorAll("br")
+  brs = text.querySelectorAll("br");
+  img = text.querySelectorAll("img")
   for (var i = 0; i < brs.length; i++){
     brs[i].removeAttribute("style")
+  };
+  for (var i = 0; i < img.length; i++){
+    img[i].removeAttribute("style")
   }
   return text
 };
