@@ -73,7 +73,7 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   uuid = card.getAttribute('data-uuid');
   document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
-  window.location.href += "?key=wall&?owner_id=" + pk + "&?post_uuid=" + uuid;
+  //window.location.href += "?key=wall&?owner_id=" + pk + "&?post_uuid=" + uuid;
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&?owner_id=" + pk + "&?post_uuid=" + uuid);
 });
 
