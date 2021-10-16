@@ -1,6 +1,8 @@
 import string
 from rest_framework.exceptions import PermissionDenied
 import re
+import urllib
+import mimetypes
 
 absolute_words = [
                 "пизда",
@@ -211,6 +213,12 @@ def create_mention_and_socket(self, recipient, socket_name):
         'beep': beep_on,
     }
     async_to_sync(channel_layer.group_send)('notification', payload)
+
+def is_html_link(link, strict=True):
+    link_type, _ = mimetypes.guess_type(link)
+    if link_type is None and strict:
+        return True
+    return False
 
 def get_formatted_text(text, is_message=False):
     _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>"," <br> ").replace("&nbsp;"," ")

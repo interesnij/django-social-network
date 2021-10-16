@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from locale import *
 import csv,sys,os
+import urllib
+import mimetypes
 
 project_dir = '../tr/tr/'
 
@@ -65,10 +67,16 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
+text = 'vk.com https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
+
+def is_html_link(link, strict=True):
+    link_type, _ = mimetypes.guess_type(link)
+    if link_type is None and strict:
+        return True
+    return False
 
 def find_word_index(text, word):
     start = -1
@@ -155,9 +163,10 @@ if words:
                     _loop[next] = _loop[this].replace(_p + " ", '<a class="ajax action"href="' + p_2 + '">' + _p + '</a> ')
                 else:
                     p_items = _p.split(".")
-                    p_zone = "." + p_items[-1]
 
-                    if "?" in p_zone:
+                    if is_html_link(_p):
+                        p_zone = "." + p_items[-1]
+                    else:
                         p_zone = "." + p_items[-2]
                     print("зона", p_zone)
                     if "/" in p_zone:
