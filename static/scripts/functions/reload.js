@@ -320,8 +320,12 @@ function if_list(block) {
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
         scrolled(lenta.querySelector('.list_pk'), target = 1);
+    };
+    params = window.location.search.replace( '?', '').split('&');
+    if (params) {
+      console.log(params);
     }
-}
+};
 
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
