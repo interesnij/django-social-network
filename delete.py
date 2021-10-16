@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
+text = 'https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -157,10 +157,10 @@ if words:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
                     if "/" in p_zone:
-                        _zone = p_zone.partition('/')[0]
-                        print("partition", _zone)
+                        p_zone = p_zone.partition('/')[0]
+                        print("partition", p_zone)
                     for zone in zons:
-                        if zone == _zone:
+                        if zone == p_zone:
                             print("Обнаружена зона!", zone)
                             _loop.append("")
                             this += 1
