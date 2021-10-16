@@ -101,6 +101,8 @@ if words:
         print("count", count)
         if count == 1:
             indent = ""
+        elif count == count("words"):
+            indent = " "
         else:
             indent = " "
         if not word:
