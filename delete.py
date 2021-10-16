@@ -140,7 +140,7 @@ if words:
                 _loop[next] = _loop[this].replace(_p + " ", '<a class="action ajax show_mention_info pointer"href="/' + _p + '/">' + name + '</a> ')
 
         elif "." in word:
-            _p = word.strip(".,:;!_*-+()@#¤%&)").lower()
+            _p = word.strip(".,:;!_*-+()@#¤%&)")
             if "." in _p:
                 print("Есть ссылка!", _p)
                 if _p[0] == "h":
@@ -169,6 +169,4 @@ if words:
                             break
                 _exlude.append(_p)
                 print("--------------")
-    for p in _loop[next].split(" "):
-        print(p)
     print(_loop[next])
