@@ -564,7 +564,6 @@ function close_fullscreen() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
   window.history.replaceState(null, null, window.location.pathname);
-  console.log("okkkkk")
 };
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
