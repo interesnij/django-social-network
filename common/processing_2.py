@@ -1,7 +1,7 @@
 import string
 from rest_framework.exceptions import PermissionDenied
 import re
-import urllib
+import urllib.request
 import mimetypes
 
 absolute_words = [
@@ -217,8 +217,9 @@ def create_mention_and_socket(self, recipient, socket_name):
 def is_html_link(link, strict=True):
     link_type, _ = mimetypes.guess_type(link)
     if link_type is None and strict:
-        return True
-    return False
+        u = urllib.request.urlopen(link)
+        link_type = u.headers.gettype()
+    return link_type
 
 def get_formatted_text(text, is_message=False):
     _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>"," <br> ").replace("&nbsp;"," ")
