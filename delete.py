@@ -67,9 +67,9 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'vk.com \
+text = 'https://e.mail.ru/inbox/1:9159c032cdf198d2:0/ \
 https://stackoverflow.com/questions/48200335/attributeerror-httpmessage-object-has-no-attribute-getparam \
-google.com \
+https://www.youtube.com/ \
 https://lapkins.ru/upload/uf/f79/f795e55cc07bda34c64a596af9ac28e1.jpg \
 https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
 print("текст", text)
