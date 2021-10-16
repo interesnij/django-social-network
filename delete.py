@@ -71,7 +71,7 @@ text = 'Группа ВК «ЗаДобровольность»: https://vk.com/z
 
 #ПКФ #Ефремов #будущее #футуризм #ОбразБудущего'
 print("текст", text)
-words = text.replace("<br>"," <br> ").split(" ")
+words = text.replace("<br>"," <br> ").replace("  "," ").split(" ")
 print("новый текст", words)
 
 def is_html_link(link, strict=True):
