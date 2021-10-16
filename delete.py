@@ -76,7 +76,7 @@ def is_html_link(link, strict=True):
     link_type, _ = mimetypes.guess_type(link)
     if link_type is None and strict:
         u = urllib.request.urlopen(link)
-        link_type = u.headers.gettype()
+        link_type = u.headers.get_content_charset()
     return link_type
 
 def find_word_index(text, word):
