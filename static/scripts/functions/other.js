@@ -209,7 +209,9 @@ function change_this_fullscreen(_this, type_class) {
           $parent_div.style.opacity = "1";
           if ($loader.querySelector(".data_display")) {
             $loader.style.overflowY = "unset";
-          }
+          };
+          params = window.location.search.replace( '?', '').split('&');
+          window.location.replace(params[2].split("=")[1], $loader.querySelector(".uuid_saver").getAttribute("data-uuid"));
       }
   };
   link.send();
@@ -223,16 +225,7 @@ on('body', 'click', '.this_mob_fullscreen_hide', function() {
 });
 
 on('body', 'click', '.body_overlay', function() {
-  container = document.body.querySelector("#fullscreens_container");
-  if (container.innerHTML) {
-    if (container.querySelector(".video_init")) {
-      container.querySelector(".video_init").remove();
-      video = document.body.querySelector("#video_loader");
-      video.innerHTML = "";
-      video.parentElement.style.display = "none";
-    } else {container.querySelector(".card_fullscreen").remove()};
-  };
-  if (!container.innerHTML) {get_document_opacity_1(document.body.querySelector(".main-container"));}
+  close_fullscreen()
 });
 
 function check_message_form_btn() {
@@ -569,7 +562,6 @@ function close_fullscreen() {
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
-  
   window.history.replaceState(null, null, window.location.pathname);
   console.log("okkkkk")
 };
