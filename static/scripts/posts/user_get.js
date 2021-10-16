@@ -70,14 +70,10 @@ on('#ajax', 'click', '#holder_article_image', function() {
 on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
   card = this.parentElement.parentElement.parentElement.parentElement;
-  if (card.classList.contains("u_post")) {
-    get_id = "?user_id="
-  } else if (card.classList.contains("c_post")){
-    get_id = "?community_id="
-  };
+  uuid = card.getAttribute('data-uuid');
   document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
-  create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/" + get_id + pk, "worker_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + get_id + pk);
+  create_fullscreen("/posts/post/" + uuid + "/" + get_id + pk, "worker_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?owner_id=" + pk + "&?post_uuid=" + uuid);
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
