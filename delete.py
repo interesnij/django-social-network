@@ -71,7 +71,7 @@ text = 'Презентация нашего проекта «Образ буду
 
 #ПКФ #Ефремов #будущее #футуризм #ОбразБудущего'
 print("текст", text)
-words = text.replace("<br>"," <br> ").split(" ")
+words = text.replace("<br>","<br> ").split(" ")
 print("новый текст", words)
 
 def is_html_link(link, strict=True):
