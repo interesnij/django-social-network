@@ -67,7 +67,11 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'vk.com https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
+text = 'vk.com \
+https://stackoverflow.com/questions/48200335/attributeerror-httpmessage-object-has-no-attribute-getparam \
+google.com \
+трезвый.рус \
+https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
@@ -77,7 +81,7 @@ def is_html_link(link, strict=True):
     if link_type is None and strict:
         u = urllib.request.urlopen(link)
         link_type = u.headers.get_content_charset()
-    print(link_type)
+    print("ссылка-", link, "   тип-", link_type)
     return link_type
 
 def find_word_index(text, word):
