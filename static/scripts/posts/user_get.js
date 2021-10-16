@@ -77,7 +77,7 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   };
   document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/" + get_id + pk, "worker_fullscreen");
-  window.history.pushState({route: window.location.href + get_id + pk}, "network", url);
+  window.history.pushState(null, "vfgffgfgf", window.location.href + get_id + pk);
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
