@@ -222,7 +222,7 @@ def is_html_link(link, strict=True):
     return link_type
 
 def get_formatted_text(text, is_message=False):
-    _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("\n"," <br> ").replace("<br>"," <br> ").replace("&nbsp;"," ") 
+    _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("\n"," <br> ").replace("<br>"," <br> ").replace("&nbsp;"," ")
     words = _words.replace("  "," ").split(" ")
 
     if words:
@@ -299,12 +299,14 @@ def get_formatted_text(text, is_message=False):
                         _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action"href="' + p_2 + '">' + _p[:30] + '</a>')
                     else:
                         p_items = _p.split(".")
-
-                        type = is_html_link(_p)
-                        if "text/html" in type or "x-msdos-program" in type:
-                            p_zone = "." + p_items[-1]
-                        else:
-                            p_zone = "." + p_items[-2]
+                        try:
+                            type = is_html_link(_p)
+                            if "text/html" in type or "x-msdos-program" in type:
+                                p_zone = "." + p_items[-1]
+                            else:
+                                p_zone = "." + p_items[-2]
+                        except:
+                            continue
                         if "/" in p_zone:
                             p_zone = p_zone.partition('/')[0]
                         for zone in zons:
