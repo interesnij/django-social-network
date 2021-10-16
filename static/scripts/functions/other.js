@@ -569,10 +569,7 @@ function close_fullscreen() {
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
-  params = window.location.search.replace( '?', '').split('&');
-  if (params) {
-    window.location.href.split('?')[0]
-  }
+  window.location.href.split('?')[0]
 };
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
