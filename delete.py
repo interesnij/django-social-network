@@ -65,7 +65,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'Стань учителем Трезвости: https://vk.cc/bVwUK6 Освободись от алкоголя: https://vk.cc/aBA20a Освободись от табака: https://vk.cc/aBA26q'
+text = 'https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
