@@ -97,6 +97,8 @@ if words:
     _loop.append(text)
     for word in words:
         count += 1
+        print("word", word)
+        print("count", count)
         if count == 1:
             indent = ""
         else:
