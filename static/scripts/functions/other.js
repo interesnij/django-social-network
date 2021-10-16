@@ -569,7 +569,7 @@ function close_fullscreen() {
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
-  window.location.href.replace(window.location.search,'');
+  window.location.replace(window.location.pathname)
   console.log("okkkkk")
 };
 
