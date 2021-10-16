@@ -169,8 +169,8 @@ if words:
                     _loop[next] = _loop[this].replace(_p + " ", '<a class="ajax action"href="' + p_2 + '">' + _p + '</a> ')
                 else:
                     p_items = _p.split(".")
-
-                    if "text/html" in is_html_link(_p):
+                    type = is_html_link(_p)
+                    if "text/html" in type or "x-msdos-program" in type:
                         p_zone = "." + p_items[-1]
                     else:
                         p_zone = "." + p_items[-2]
