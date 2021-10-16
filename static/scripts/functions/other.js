@@ -2,7 +2,11 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 
 function format_text(text) {
   text.innerHTML = text.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "").replace(/\&nbsp;/g, '');
+  console.log(text.innerHTML);
+  console.log(text.innerHTML.length);
   for (var i = 0; i < text.innerHTML.length; i++){
+
+    console.log(text.innerHTML[i]);
     text.innerHTML[i].removeAttribute("style");
     if (text.innerHTML[i].getAttribute("src").indexOf("/media/smiles/") == -1) {
       null
