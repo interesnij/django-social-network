@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from locale import *
 import csv,sys,os
-import urllib
+import urllib.request
 import mimetypes
 
 project_dir = '../tr/tr/'
@@ -75,7 +75,7 @@ print("новый текст", words)
 def is_html_link(link, strict=True):
     link_type, _ = mimetypes.guess_type(link)
     if link_type is None and strict:
-        u = urllib.urlopen(link)
+        u = urllib.request.urlopen(link)
         link_type = u.headers.gettype()
     return link_type
 
