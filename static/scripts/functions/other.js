@@ -2,12 +2,11 @@ function on(elSelector,eventName,selector,fn) {var element = document.querySelec
 
 function format_text(text) {
   text.innerHTML = text.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "").replace(/\&nbsp;/g, '');
-  words = text.innerHTML.split(" ");
-  for (var i = 0; i < words.length; i++){
-    words[i].removeAttribute("style");
-    if (words[i].getAttribute("src").indexOf("/media/smiles/") == -1) {
+  for (var i = 0; i < text.innerHTML.length; i++){
+    text.innerHTML[i].removeAttribute("style");
+    if (text.innerHTML[i].getAttribute("src").indexOf("/media/smiles/") == -1) {
       null
-    }  else { words[i].remove() };
+    }  else { text.innerHTML[i].remove() };
   }
   return text
 };
