@@ -75,8 +75,9 @@ print("новый текст", words)
 def is_html_link(link, strict=True):
     link_type, _ = mimetypes.guess_type(link)
     if link_type is None and strict:
-        return True
-    return False
+        u = urllib.urlopen(link)
+        link_type = u.headers.gettype()
+    return link_type
 
 def find_word_index(text, word):
     start = -1
@@ -164,7 +165,7 @@ if words:
                 else:
                     p_items = _p.split(".")
 
-                    if is_html_link(_p):
+                    if is_html_link(_p) == "text/html":
                         p_zone = "." + p_items[-1]
                     else:
                         p_zone = "." + p_items[-2]
