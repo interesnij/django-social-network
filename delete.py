@@ -70,7 +70,7 @@ zons = [
 text = 'vk.com \
 https://stackoverflow.com/questions/48200335/attributeerror-httpmessage-object-has-no-attribute-getparam \
 google.com \
-трезвый.рус \
+https://lapkins.ru/upload/uf/f79/f795e55cc07bda34c64a596af9ac28e1.jpg \
 https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
