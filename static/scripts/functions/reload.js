@@ -323,7 +323,9 @@ function if_list(block) {
     };
     params = window.location.search.replace( '?', '').split('&');
     if (params) {
-      console.log(params[0].split("=")[1]);
+      if (params[0].split("=")[1] == "wall") {
+        create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen");
+      }
     }
 };
 
