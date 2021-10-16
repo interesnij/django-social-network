@@ -67,8 +67,14 @@ on('#ajax', 'click', '#holder_article_image', function() {
   get_image_priview(this, img);
 });
 
+on('#ajax', 'click', '.fullscreen_2', function(e) {
+  e.preventDefault();
+  card = this.parentElement.parentElement.parentElement.parentElement;
+  create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/", "worker_fullscreen")
+});
+
 on('#ajax', 'click', '.fullscreen', function(e) {
-  uuid = this.parentElement.getAttribute('data-uuid');
+  card = this.parentElement;
   if (this.parentElement.querySelector(".show_post_text")) {
     shower = this.parentElement.querySelector(".show_post_text");
     shower.nextElementSibling.nextElementSibling.style.display = "unset";
@@ -78,7 +84,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   }
   else if (e.target.classList.contains("action")) {null}
   else {
-    create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen")
+    create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/", "worker_fullscreen")
   }
 });
 
