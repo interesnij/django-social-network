@@ -102,7 +102,7 @@ if words:
         if count == 1:
             indent = ""
         elif count == len(words):
-            indent = " "
+            indent = ""
         else:
             indent = " "
         if not word:
