@@ -570,7 +570,7 @@ function close_fullscreen() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
   window.location.replace(window.location.pathname)
-  return window.location.href.split('?')[0].split('&')[0].split('#')[0];
+  window.history.replaceState(null, null, window.location.pathname);
   console.log("okkkkk")
 };
 
