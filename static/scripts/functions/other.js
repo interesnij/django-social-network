@@ -569,7 +569,8 @@ function close_fullscreen() {
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
-  window.location.href.split('?')[0]
+  window.location.href.split('?')[0];
+  console.log("okkkkk")
 };
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
