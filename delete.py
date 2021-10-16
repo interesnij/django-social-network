@@ -101,7 +101,7 @@ if words:
         print("count", count)
         if count == 1:
             indent = ""
-        elif count == count("words"):
+        elif count == len(words):
             indent = " "
         else:
             indent = " "
