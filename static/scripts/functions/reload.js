@@ -323,7 +323,7 @@ function if_list(block) {
     };
     params = window.location.search.replace( '?', '').split('&');
     if (params) {
-      console.log(params);
+      console.log(params[0]["key"]);
     }
 };
 
