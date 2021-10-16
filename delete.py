@@ -162,7 +162,6 @@ if words:
                     print("зона", p_zone)
                     if "/" in p_zone:
                         p_zone = p_zone.partition('/')[0]
-                        if
                         print("partition", p_zone)
                     for zone in zons:
                         if zone == p_zone:
