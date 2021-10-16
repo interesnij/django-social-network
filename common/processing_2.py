@@ -218,7 +218,7 @@ def is_html_link(link, strict=True):
     link_type, _ = mimetypes.guess_type(link)
     if link_type is None and strict:
         u = urllib.request.urlopen(link)
-        link_type = u.headers.gettype()
+        link_type = u.headers["content-type"]
     return link_type
 
 def get_formatted_text(text, is_message=False):
@@ -299,7 +299,12 @@ def get_formatted_text(text, is_message=False):
                         _loop[next] = _loop[this].replace(indent + _p, indent + '<a class="ajax action"href="' + p_2 + '">' + _p[:30] + '</a>')
                     else:
                         p_items = _p.split(".")
-                        p_zone = "." + p_items[-1]
+
+                        type = is_html_link(_p)
+                        if "text/html" in type or "x-msdos-program" in type:
+                            p_zone = "." + p_items[-1]
+                        else:
+                            p_zone = "." + p_items[-2]
                         if "/" in p_zone:
                             p_zone = p_zone.partition('/')[0]
                         for zone in zons:
