@@ -67,11 +67,9 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'https//:vk.com \
-https://stackoverflow.com/questions/48200335/attributeerror-httpmessage-object-has-no-attribute-getparam \
-https://www.youtube.com/ \
-https://lapkins.ru/upload/uf/f79/f795e55cc07bda34c64a596af9ac28e1.jpg \
-https://sun9-88.userapi.com/impf/c845219/v845219309/3743e/7TVFvZfd0wA.jpg?size=2500x1637&quality=96&sign=96357bed2b22d3666f605d8ea4743503&type=album'
+text = 'Презентация нашего проекта «Образ будущего» на 22-ом Прикладном концептуальном форуме! #ПКФ #Ефремов #будущее #футуризм #ОбразБудущего'
+
+#ПКФ #Ефремов #будущее #футуризм #ОбразБудущего'
 print("текст", text)
 words = text.replace("<br>"," <br> ").split(" ")
 print("новый текст", words)
