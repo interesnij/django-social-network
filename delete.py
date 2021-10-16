@@ -156,10 +156,9 @@ if words:
                 else:
                     p_items = _p.split(".")
                     p_zone = "." + p_items[-1]
+                    print("partition", p_zone)
                     if "/" in p_zone:
                         p_zone = p_zone.partition('/')[0]
-                        if ".jpg" in p_zone:
-                            p_zone = p_zone.partition('.')[0]
                         print("partition", p_zone)
                     for zone in zons:
                         if zone == p_zone:
