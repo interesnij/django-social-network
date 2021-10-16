@@ -93,15 +93,13 @@ def find_word_index(text, word):
     return count
 
 if words:
-    _loop, _exlude, this, next, count = [], [], -1, 0, 0
+    _loop, _exlude, this, next, count, words_count = [], [], -1, 0, 0, len(words)
     _loop.append(text)
     for word in words:
         count += 1
         print("word", word)
         print("count", count)
-        if count == 1:
-            indent = ""
-        elif count == len(words):
+        if count == 1 or count == words_count:
             indent = ""
         else:
             indent = " "
