@@ -211,7 +211,7 @@ function change_this_fullscreen(_this, type_class) {
             $loader.style.overflowY = "unset";
           };
           params = window.location.search.replace( '?', '').split('&');
-          new_url = window.location.replace(params[2].split("=")[1], $loader.querySelector(".uuid_saver").getAttribute("data-uuid"))
+          new_url = window.location.href.replace(params[2].split("=")[1], $loader.querySelector(".uuid_saver").getAttribute("data-uuid"))
           window.history.replaceState(null, null, new_url);
       }
   };
