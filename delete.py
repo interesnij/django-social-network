@@ -67,7 +67,7 @@ zons = [
         '.world', '.wtf', '.xyz', '.yoga', '.zone', '.дети', '.москва', '.онлайн', '.орг', '.рус', '.сайт'
     ]
 
-text = 'https://e.mail.ru/inbox/1:9159c032cdf198d2:0/ \
+text = 'https//:vk.com \
 https://stackoverflow.com/questions/48200335/attributeerror-httpmessage-object-has-no-attribute-getparam \
 https://www.youtube.com/ \
 https://lapkins.ru/upload/uf/f79/f795e55cc07bda34c64a596af9ac28e1.jpg \
@@ -170,7 +170,7 @@ if words:
                 else:
                     p_items = _p.split(".")
 
-                    if is_html_link(_p) == "text/html":
+                    if "text/html" in is_html_link(_p):
                         p_zone = "." + p_items[-1]
                     else:
                         p_zone = "." + p_items[-2]
