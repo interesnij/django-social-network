@@ -568,6 +568,10 @@ function close_fullscreen() {
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
+  };
+  params = window.location.search.replace( '?', '').split('&');
+  if (params) {
+    window.location.href.split('?')[0]
   }
 };
 
