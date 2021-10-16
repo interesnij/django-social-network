@@ -222,7 +222,7 @@ def is_html_link(link, strict=True):
     return link_type
 
 def get_formatted_text(text, is_message=False):
-    _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>"," <br> ")
+    _words = text.replace("<img src"," |<imgsrc").replace('.png">','.png">| ').replace("<br>","<br> ")
     words = _words.replace("  "," ").split(" ")
 
     if words:
