@@ -299,6 +299,15 @@ function minus_new_followers() {
     }
 }
 
+function load_item_window() {
+  params = window.location.search.replace( '?', '').split('&');
+  if (params) {
+    if (params[0].split("=")[1] == "wall") {
+      setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000);
+    }
+  }
+};
+
 function if_list(block) {
     if (block.querySelector('.is_profile_post_paginate')) {
         _block = block.querySelector('.is_profile_post_paginate');
@@ -321,12 +330,7 @@ function if_list(block) {
         list_load(block.querySelector(".is_block_paginate"), link);
         scrolled(lenta.querySelector('.list_pk'), target = 1);
     };
-    params = window.location.search.replace( '?', '').split('&');
-    if (params) {
-      if (params[0].split("=")[1] == "wall") {
-        create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen");
-      }
-    }
+    load_item_window()
 };
 
 if_list(document.getElementById('ajax'));
