@@ -67,10 +67,18 @@ on('#ajax', 'click', '#holder_article_image', function() {
   get_image_priview(this, img);
 });
 
-on('#ajax', 'click', '.fullscreen_2', function(e) {
+on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
   card = this.parentElement.parentElement.parentElement.parentElement;
-  create_fullscreen("/posts/post/" + card.getAttribute('data-uuid') + "/", "worker_fullscreen")
+  if (card.classList.contains("u_post")) {
+    get_id = "user_id="
+  } else if (card.classList.contains("c_post")){
+    get_id = "community_id="
+  };
+  url = "/posts/post/" + card.getAttribute('data-uuid') + "/" + get_id + pk;
+  document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
+  create_fullscreen(url, "worker_fullscreen");
+  window.history.pushState({route: window.location.href + get_id + pk}, "network", url); 
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
