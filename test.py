@@ -46,6 +46,7 @@ from users.models import User
 
 UserDocsListPosition.objects.all().delete()
 CommunityDocsListPosition.objects.all().delete()
+DocsList.objects.all().delete()
 
 for c in Community.objects.all():
     doc_list = DocsList.objects.create(creator=c.creator, community=c, type=DocsList.MAIN, name="Документы")
