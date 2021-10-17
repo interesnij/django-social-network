@@ -23,6 +23,6 @@ class PostsListAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(PostsList, PostVotesListAdmin)
+admin.site.register(PostsList, PostsListAdmin)
 admin.site.register(PostCategory)
 admin.site.register(PostComment, PostCommentAdmin)
