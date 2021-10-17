@@ -37,7 +37,7 @@ class PostCommunityCreate(View):
             or (not list.community and request.user.pk == list.creator.pk):
             can_create = True
         else:
-            can_create = list.is_user_can_create_el(request.user.pk)        
+            can_create = list.is_user_can_create_el(request.user.pk)
 
         if request.is_ajax() and form_post.is_valid() and can_create:
             post = form_post.save(commit=False)
@@ -55,7 +55,7 @@ class PostCommunityCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
                                             votes_on=post.votes_on,
-                                            community=community
+                                            community=list.community
                                             )
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
