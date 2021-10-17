@@ -43,13 +43,13 @@
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
+      <span>
         {% if list.is_have_edit and community.pk == object.community.pk %}
-        <span>
           <a class="c_edit_post_list pointer">изменить список</a>
             &nbsp;
           <a class="c_delete_post_list pointer">удалить список</a>
-        </span>
         {% endif %}
+        </span>
         {% if is_user_can_create_posts %}
           {% include 'desctop/communities/detail_sections/create_post.html' %}
         {% elif is_user_can_create_offer_post %}
