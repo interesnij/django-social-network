@@ -44,12 +44,13 @@ from users.model.list import UserDocsListPosition
 from users.models import User
 
 
-Doc.objects.all().delete()
+UserDocsListPosition.objects.all().delete()
+CommunityDocsListPosition.objects.all().delete()
 
-#for c in Community.objects.all():
-#    doc_list = DocsList.objects.create(creator=c.creator, community=c, type=DocsList.MAIN, name="Документы")
-#    CommunityDocsListPosition.objects.create(community=c.pk, list=c.get_doc_list().pk, position=1)
+for c in Community.objects.all():
+    doc_list = DocsList.objects.create(creator=c.creator, community=c, type=DocsList.MAIN, name="Документы")
+    CommunityDocsListPosition.objects.create(community=c.pk, list=c.get_doc_list().pk, position=1)
 
-#for u in User.objects.all():
-#    doc_list = DocsList.objects.create(creator=u, type=DocsList.MAIN, name="Документы")
-#    UserDocsListPosition.objects.create(user=u, list=c.get_doc_list().pk, position=1)
+for u in User.objects.all():
+    doc_list = DocsList.objects.create(creator=u, type=DocsList.MAIN, name="Документы")
+    UserDocsListPosition.objects.create(user=u, list=c.get_doc_list().pk, position=1)
