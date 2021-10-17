@@ -58,7 +58,7 @@ class LoadPostsList(ListView):
 
 
 class LoadPost(TemplateView):
-	template_name, community, where_from, object_id = None, None, None, None
+	template_name, community, owner_wall, object_id = None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
