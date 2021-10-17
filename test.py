@@ -53,4 +53,4 @@ for c in Community.objects.all():
 
 for u in User.objects.all():
     doc_list = DocsList.objects.create(creator=u, type=DocsList.MAIN, name="Документы")
-    UserDocsListPosition.objects.create(user=u, list=c.get_doc_list().pk, position=1)
+    UserDocsListPosition.objects.create(user=u.pk, list=c.get_doc_list().pk, position=1)
