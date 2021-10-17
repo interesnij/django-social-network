@@ -165,7 +165,7 @@
                 request.send(null);
             });
             on('#ajax', 'click', '#code_send', function() {
-                var phone = document.getElementById('phone').value;
+                var phone = document.getElementById('id_first_number').value + document.getElementById('phone').value;
                 var code = document.getElementById('code').value;
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
