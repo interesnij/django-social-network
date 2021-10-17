@@ -36,7 +36,6 @@ class PostCommunityCreate(View):
         list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
 
-        check_private_post_exists(community)
         if request.is_ajax() and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
