@@ -26,7 +26,7 @@ import django, json, requests
 
 django.setup()
 
-response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + "91.239.184.244")
+response = requests.get(url= "http://api.sypexgeo.net/J5O6d/json/" + "91.239.184.244")
 data = response.json()
 
 sity = data['city']
