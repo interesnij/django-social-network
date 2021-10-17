@@ -37,11 +37,7 @@ class PostCommunityCreate(View):
         community = list.community
 
         check_private_post_exists(community)
-        if (community.is_wall_close() or community.is_staff_post_member_can()) and not request.user.is_staff_of_community(community.pk):
-            raise Http404
-        elif (community.is_member_post_all_can() or community.is_member_post()) and not request.user.is_member_of_community(community.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid():
+        if request.is_ajax() and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items'):

@@ -32,7 +32,7 @@ class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, list, attach = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid():
+        if request.is_ajax() and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
             post = form_post.save(commit=False)
             if post.text or attach:
                 from common.templates import render_for_platform
