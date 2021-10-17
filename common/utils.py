@@ -206,5 +206,5 @@ def create_user_models(user):
     music_list = SoundList.objects.create(creator=user, type=SoundList.MAIN, name="Основной список")
     UserPlayListPosition.objects.create(user=user.pk, list=music_list.pk, position=1)
 
-    video_list = VideoList.objects.create(user=user, type=VideoList.MAIN, name="Основной список")
+    video_list = VideoList.objects.create(creator=user, type=VideoList.MAIN, name="Основной список")
     UserVideoListPosition.objects.create(user=user.pk, list=video_list.pk, position=1)
