@@ -38,6 +38,7 @@ from survey.models import SurveyList
 from docs.models import DocList
 from posts.models import PostsList, Post
 from users.models import User
+from users.model.list import UserPostsListPosition
 
 for user in User.objects.all():
     post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
