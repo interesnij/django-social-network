@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
-
-@interesnij
-interesnij
-/
-rus
-Public
-1
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-rus/test.py /
-
-Serg J
-Latest commit 2d54834 3 hours ago
- History
- 0 contributors
-48 lines (34 sloc)  1.31 KB
 
 # -*- coding: utf-8 -*-
 from locale import *
