@@ -92,8 +92,7 @@ class PhoneVerify(View):
         if not request.is_ajax():
             raise Http404
         code = self.kwargs["code"]
-        _phone = self.kwargs["phone"]
-        phone = request.user.get_last_location().phone + _phone
+        phone = self.kwargs["phone"]
         try:
             obj = PhoneCodes.objects.get(phone=phone, code=code)
         except:
