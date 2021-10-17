@@ -36,7 +36,7 @@ from goods.models import GoodList
 from video.models import VideoList
 from music.models import SoundList
 from survey.models import SurveyList
-from docs.models import DocsList
+from docs.models import DocsList, Doc
 from posts.models import PostsList, Post
 from communities.models import Community
 from communities.model.list import CommunityDocsListPosition
