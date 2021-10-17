@@ -47,28 +47,24 @@ def get_first_location(request, user):
         ip = x_forwarded_for.split(',')[-1].strip()
     else:
         ip = request.META.get('REMOTE_ADDR')
-    try:
-        olds_ip = IPUser.objects.create(user=user, ip=ip)
-        response = requests.get(url= "http://api.sypexgeo.net/J5O6d/json/" + ip)
-        data = response.json()
-        loc = UserLocation.objects.create(user=user)
-        sity = data['city']
-        region = data['region']
-        country = data['country']
-        loc.city_ru = sity['name_ru']
-        loc.city_en = sity['name_en']
-        loc.city_lat = sity['lat']
-        loc.city_lon = sity['lon']
-        loc.region_ru = region['name_ru']
-        loc.region_en = region['name_en']
-        loc.country_ru = country['name_ru']
-        loc.country_en = country['name_en']
-        loc.phone = country['phone']
-        olds_ip.ip = ip
-        olds_ip.save()
-        loc.save()
-    except:
-        pass
+
+    olds_ip = IPUser.objects.create(user=user, ip=ip)
+    response = requests.get(url= "http://api.sypexgeo.net/J5O6d/json/" + ip)
+    data = response.json()
+    loc = UserLocation.objects.create(user=user)
+    sity = data['city']
+    region = data['region']
+    country = data['country']
+    loc.city_ru = sity['name_ru']
+    loc.city_en = sity['name_en']
+    loc.city_lat = sity['lat']
+    loc.city_lon = sity['lon']
+    loc.region_ru = region['name_ru']
+    loc.region_en = region['name_en']
+    loc.country_ru = country['name_ru']
+    loc.country_en = country['name_en']
+    loc.phone = country['phone']
+    loc.save()
 
 def get_location(request):
     import json, requests
