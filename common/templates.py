@@ -477,8 +477,6 @@ def get_template_community_list(list, folder, template, request_user, user_agent
         template_name = get_fine_community(community, request_user)
     elif list.type[0] == "_":
         template_name = get_fine_community_item(request_user, community, list, folder, template)
-    elif request_user.is_administrator_of_community(community.pk):
-        template_name = folder + "admin_" + template
     elif community.is_private() and not request_user.is_member_of_community(community.pk):
         template_name = "generic/c_template/private_community.html"
     elif request_user.is_banned_from_community(community.pk):
@@ -488,7 +486,9 @@ def get_template_community_list(list, folder, template, request_user, user_agent
     elif community.is_close() and not request_user.is_member_of_community(community.pk):
          template_name = "generic/c_template/close_community.html"
 
-    if list.can_see_el == 1:
+    if request_user.is_administrator_of_community(community.pk):
+        template_name = folder + "admin_" + template
+    elif list.can_see_el == 1:
         template_name = folder + template
     elif list.can_see_el == 2 and user.is_member_of_community(community.pk):
         template_name = folder + template
