@@ -123,9 +123,8 @@ class PhoneSend(View):
         if not request.is_ajax() and not request.user.is_no_phone_verified():
             raise Http404
         else:
-            _phone = self.kwargs["phone"]
-            if len(_phone) > 8:
-                phone = request.user.get_last_location().phone + _phone
+            phone = self.kwargs["phone"]
+            if len(phone) > 8:
                 try:
                     user = User.objects.get(phone=phone)
                     data = 'Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.'
