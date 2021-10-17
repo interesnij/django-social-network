@@ -89,7 +89,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   else if (e.target.classList.contains("action")) {null}
   else {
     create_fullscreen("/posts/post/" + uuid + "/", "worker_fullscreen");
-    document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
+    document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
   }
 });
