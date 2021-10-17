@@ -150,7 +150,7 @@
             }
 
             document.getElementById("phone_send").addEventListener("click", (e) => {
-                var phone = document.getElementById('phone').value;
+                var phone = document.getElementById('id_first_number').value + document.getElementById('phone').value; 
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
                 request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
