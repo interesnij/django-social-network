@@ -32,9 +32,12 @@ class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = PostForm(request.POST)
         list = PostsList.objects.get(pk=self.kwargs["pk"])
-        community = list.community
 
-        can_create = list.is_user_can_create_el(request.user.pk)
+        if (list.community and request.user.is_administrator_of_community(list.community.pk)) \
+            or (not list.community and request.user.pk == list.creator.pk):
+            can_create = True
+        else:
+            can_create = list.is_user_can_create_el(request.user.pk)        
 
         if request.is_ajax() and form_post.is_valid() and can_create:
             post = form_post.save(commit=False)
