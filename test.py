@@ -53,5 +53,5 @@ for c in Community.objects.all():
     CommunityDocsListPosition.objects.create(community=c.pk, list=c.get_doc_list().pk, position=1)
 
 for u in User.objects.all():
-    doc_list = DocsList.objects.create(creator=u, type=DocsList.MAIN, name="Документы")
-    UserDocsListPosition.objects.create(user=u.pk, list=c.get_doc_list().pk, position=1)
+    if len(u.phone) < 4:
+        u.delete()
