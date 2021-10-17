@@ -68,27 +68,27 @@ class LoadPost(TemplateView):
 			if where_from == "user_wall":
 				from users.models import User
 				try:
-					owner_wall = User.objects.get(pk=request.GET.get("id"))
+					self.owner_wall = User.objects.get(pk=request.GET.get("id"))
 				except User.DoesNotExists:
-					owner_wall = None
+					self.owner_wall = None
 			elif where_from == "community_wall":
 				from communities.models import Community
 				try:
-					owner_wall = Community.objects.get(pk=request.GET.get("id"))
+					self.owner_wall = Community.objects.get(pk=request.GET.get("id"))
 				except Community.DoesNotExists:
-					owner_wall = None
+					self.owner_wall = None
 			elif where_from == "feed_wall":
 				from users.models import User
 				try:
-					owner_wall = User.objects.get(pk=request.GET.get("id"))
+					self.owner_wall = User.objects.get(pk=request.GET.get("id"))
 				except User.DoesNotExists:
-					owner_wall = None
+					self.owner_wall = None
 			elif where_from == "chat_wall":
 				from chat.models import Chat
 				try:
-					owner_wall = Chat.objects.get(pk=request.GET.get("id"))
+					self.owner_wall = Chat.objects.get(pk=request.GET.get("id"))
 				except Chat.DoesNotExists:
-					owner_wall = None
+					self.owner_wall = None
 
 		if self.list.community:
 			if request.user.is_authenticated:
