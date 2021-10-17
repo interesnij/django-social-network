@@ -55,7 +55,7 @@
         {% elif is_user_can_create_offer_post %}
           {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
         {% endif %}
-
+        <span></span>
         <span class="post_stream is_post_paginate" owner-pk="{{ community.pk }}">
           {% for object in object_list %}
             {% include 'desctop/posts/post_community/admin_post.html' %}
