@@ -256,7 +256,7 @@ class UserPostsListView(ListView):
 			self.post_lists = PostsList.get_user_lists(user_pk)
 
 		if request.user.is_authenticated:
-			self.template_name =  get_owner_template_user(self.post_list, "users/lenta/", "list.html", self.user, request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name =  get_template_user_list(self.post_list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			""" Анонимный пользователь
 				Потому проверяем, может ли:
