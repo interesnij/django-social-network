@@ -69,36 +69,31 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
+  document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   block = document.body.querySelector(".main-container");
   if (block.classList.contains("user_container")) {
-    where_from = "user_wall"
+    where_from = "user_wall=1&id=" + pk
   } else if (block.classList.contains("community_container")) {
-    where_from = "community_wall"
+    where_from = "community_wall=1&id=" + pk
   } else if (block.classList.contains("feed_container")) {
-    where_from = "feed_wall"
-  }else if (block.classList.contains("chat_container")) {
-    where_from = "chat_wall"
+    where_from = "feed_wall=1"
+  } else if (block.classList.contains("chat_container")) {
+    where_from = "chat_wall=1&id=" + pk
+  } else if (block.classList.contains("search_container")) {
+    where_from = "search_wall=1"
+  } else if (block.classList.contains("featured_container")) {
+    where_from = "featured_wall=1"
   } else { where_from = "null" };
   card = this.parentElement.parentElement.parentElement.parentElement;
   uuid = card.getAttribute('data-uuid');
-  document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
-  create_fullscreen("/posts/post/" + uuid + "/?where_from=" + where_from + "&id=" + pk, "worker_fullscreen");
+  create_fullscreen("/posts/post/" + "/?" + where_from, "worker_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   card = this.parentElement;
   uuid = card.getAttribute('data-uuid');
-  block = document.body.querySelector(".main-container");
-  if (block.classList.contains("user_container")) {
-    where_from = "user_wall"
-  } else if (block.classList.contains("community_container")) {
-    where_from = "community_wall"
-  } else if (block.classList.contains("feed_container")) {
-    where_from = "feed_wall"
-  }else if (block.classList.contains("chat_container")) {
-    where_from = "chat_wall"
-  } else { where_from = "null" };
+
   if (this.parentElement.querySelector(".show_post_text")) {
     shower = this.parentElement.querySelector(".show_post_text");
     shower.nextElementSibling.nextElementSibling.style.display = "unset";
@@ -106,10 +101,25 @@ on('#ajax', 'click', '.fullscreen', function(e) {
     shower.previousElementSibling.remove();
     shower.remove();
   }
+
   else if (e.target.classList.contains("action")) {null}
   else {
     document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
-    create_fullscreen("/posts/post/" + uuid + "/?where_from=" + where_from + "&id=" + pk, "worker_fullscreen");
+    block = document.body.querySelector(".main-container");
+    if (block.classList.contains("user_container")) {
+      where_from = "user_wall=1&id=" + pk
+    } else if (block.classList.contains("community_container")) {
+      where_from = "community_wall=1&id=" + pk
+    } else if (block.classList.contains("feed_container")) {
+      where_from = "feed_wall=1&"
+    } else if (block.classList.contains("chat_container")) {
+      where_from = "chat_wall=1&id=" + pk
+    } else if (block.classList.contains("search_container")) {
+      where_from = "search_wall=1&id=" + pk
+    } else if (block.classList.contains("featured_container")) {
+      where_from = "featured_wall=1&id=" + pk
+    } else { where_from = "null" };
+    create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
   }
 });
