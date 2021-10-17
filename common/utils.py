@@ -172,7 +172,7 @@ def get_mf_ages(users):
     return ''.join(['<div><h5 class="mt-1 mb-2" style="margin:10px">Страны</h5>', _countries, '</div> <div><h5 class="mt-1 mb-2" style="margin:10px">Города</h5>', _sities, '</div> <div><h5 class="mt-4 mb-2" style="margin:10px">Охват устройств</h5><div class="stat_city"><span class="city">Просмотры с мобильного</span><span class="count">', str(mob), '</span></div><div class="stat_city"><span class="city">Просмотры с компьютера</span><span class="count">', str(comp), '</span></div></div> <div><h5 class="mt-4 mb-2" style="margin:10px">Возраст / Пол</h5><div class="stat_city"><span class="city">До 18 лет</span><span class="count">Муж. ', str(m_18), ' | Жен. ', str(f_18), '</span></div><div class="stat_city"><span class="city">От 18 до 21 года</span><span class="count">Муж. ', str(m_18_21), ' | Жен. ', str(f_18_21), '</span></div><div class="stat_city"><span class="city">От 21 до 24 лет</span><span class="count">Муж. ', str(m_21_24), ' | Жен. ', str(f_21_24), '</span></div><div class="stat_city"><span class="city">От 24 до 27 лет</span><span class="count">Муж. ', str(m_24_27), ' | Жен. ', str(f_24_27), '</span></div><div class="stat_city"><span class="city">От 27 до 30 лет</span><span class="count">Муж. ', str(m_27_30), ' | Жен. ', str(f_27_30), '</span></div><div class="stat_city"><span class="city">От 30 до 35 лет</span><span class="count">Муж. ', str(m_30_35), ' | Жен. ', str(f_30_35), '</span></div><div class="stat_city"><span class="city">От 35 до 45 лет</span><span class="count">Муж. ', str(m_35_45), ' | Жен. ', str(f_35_45), '</span></div><div class="stat_city"><span class="city">От 45 лет</span><span class="count">Муж. ', str(m_45), ' | Жен. ', str(f_45), '</span></div></div>'])
 
 def create_user_models(user):
-    from docs.models import DocList
+    from docs.models import DocsList
     from gallery.models import PhotoList
     from goods.models import GoodList
     from music.models import SoundList
@@ -183,11 +183,11 @@ def create_user_models(user):
                                     UserGoodListPosition,
                                     UserPlayListPosition,
                                     UserPostsListPosition,
-                                    UserDocListPosition,
+                                    UserDocsListPosition,
                                     UserVideoListPosition
                                 )
-    doc_list = DocList.objects.create(creator=user, type=DocList.MAIN, name="Основной список")
-    UserDocListPosition.objects.create(user=user.pk, list=doc_list.pk, position=1)
+    doc_list = DocsList.objects.create(creator=user, type=DocsList.MAIN, name="Основной список")
+    UserDocsListPosition.objects.create(user=user.pk, list=doc_list.pk, position=1)
 
     list_1 = PhotoList.objects.create(creator=user, type=PhotoList.MAIN, name="Основной альбом")
     list_2 = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы")

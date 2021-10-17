@@ -312,8 +312,8 @@ class Community(models.Model):
         from gallery.models import PhotoList
         return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
     def get_doc_list(self):
-        from docs.models import DocList
-        return DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
+        from docs.models import DocsList
+        return DocsList.objects.get(community_id=self.pk, type=DocsList.MAIN)
 
     def get_post_lists(self):
         from posts.models import PostsList
@@ -338,10 +338,10 @@ class Community(models.Model):
         return PhotoList.objects.filter(query)
 
     def get_doc_lists(self):
-        from docs.models import DocList
+        from docs.models import DocsList
         query = Q(community_id=self.id)
         query.add(~Q(type__contains="_"), Q.AND)
-        return DocList.objects.filter(query)
+        return DocsList.objects.filter(query)
 
     def get_video_lists(self):
         from video.models import VideoList

@@ -1,4 +1,4 @@
-from docs.models import DocList, Doc
+from docs.models import DocsList, Doc
 from django.views.generic import ListView
 from common.templates import (
 								get_template_community_item,
@@ -22,7 +22,7 @@ class LoadDocList(ListView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = DocList.objects.get(pk=self.kwargs["pk"])
+		self.list = DocsList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:

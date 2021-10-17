@@ -149,11 +149,11 @@ class UserLoadDoc(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
+		from docs.models import DocsList
 
 		self.list = request.user.get_doc_list()
 		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.get_lists = DocList.get_user_lists(request.user.pk)
+		self.get_lists = DocsList.get_user_lists(request.user.pk)
 		return super(UserLoadDoc,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -168,8 +168,8 @@ class UserLoadDocList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
-		self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+		from docs.models import DocsList
+		self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_settings_template("users/load/u_doc_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadDocList,self).get(request,*args,**kwargs)
 
@@ -210,7 +210,7 @@ class UserLoadSurveyList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
+		from docs.models import DocsList
 		self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_settings_template("users/load/u_survey_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserSurveyDocList,self).get(request,*args,**kwargs)

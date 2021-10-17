@@ -1209,7 +1209,7 @@ class User(AbstractUser):
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
         list = UserPostsListPosition.objects.filter(user=self.pk).first()
-        return list.list 
+        return list.list
 
     def get_survey_lists(self):
         from survey.models import SurveyList
@@ -1261,8 +1261,8 @@ class User(AbstractUser):
         from posts.models import PostsList
         return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.MAIN)
     def get_doc_list(self):
-        from docs.models import DocList
-        return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
+        from docs.models import DocsList
+        return DocsList.objects.get(creator_id=self.pk, community__isnull=True, type=DocsList.MAIN)
     def get_fix_list(self):
         from posts.models import PostsList
         return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.FIXED)
@@ -1328,8 +1328,8 @@ class User(AbstractUser):
         return self.get_doc_list().get_items()[:6]
 
     def get_doc_lists(self):
-        from docs.models import DocList
-        return DocList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
+        from docs.models import DocsList
+        return DocsList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
     def get_followers(self):
         query = Q(follows__followed_user_id=self.pk)

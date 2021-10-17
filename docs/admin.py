@@ -1,5 +1,5 @@
 from django.contrib import admin
-from docs.models import DocList, Doc
+from docs.models import DocsList, Doc
 
 
 class DocAdmin(admin.ModelAdmin):
@@ -9,11 +9,11 @@ class DocAdmin(admin.ModelAdmin):
     class Meta:
         model = Doc
 
-class DocListAdmin(admin.ModelAdmin):
+class DocsListAdmin(admin.ModelAdmin):
     list_display = ['name','community','type','creator']
     search_fields = ('name',)
     class Meta:
-        model = DocList
+        model = DocsList
 
 admin.site.register(Doc, DocAdmin)
-admin.site.register(DocList, DocListAdmin)
+admin.site.register(DocsList, DocsListAdmin)

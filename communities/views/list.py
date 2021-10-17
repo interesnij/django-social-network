@@ -92,17 +92,17 @@ class CommunityDocs(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
+		from docs.models import DocsList
 
 		self.c, user = Community.objects.get(pk=self.kwargs["pk"]), request.user
-		self.list = DocList.objects.get(community_id=self.c.pk, type=DocList.MAIN)
+		self.list = DocsList.objects.get(community_id=self.c.pk, type=DocsList.MAIN)
 		if user.is_authenticated and user.is_staff_of_community(self.c.pk):
 			self.doc_list = self.list.get_staff_items()
-			self.get_lists = DocList.get_community_staff_lists(self.c.pk)
+			self.get_lists = DocsList.get_community_staff_lists(self.c.pk)
 		else:
 			self.doc_list = self.list.get_items()
-			self.get_lists = DocList.get_community_lists(self.c.pk)
-		self.count_lists = DocList.get_community_lists_count(self.c.pk)
+			self.get_lists = DocsList.get_community_lists(self.c.pk)
+		self.count_lists = DocsList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community_list(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -121,14 +121,14 @@ class CommunityDocsList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from docs.models import DocList
+		from docs.models import DocsList
 
-		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), DocList.objects.get(uuid=self.kwargs["uuid"])
+		self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.doc_list = self.list.get_staff_items()
 		else:
 			self.doc_list = self.list.get_items()
-		if self.list.type == DocList.MAIN:
+		if self.list.type == DocsList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_community_list(self.list, "communities/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

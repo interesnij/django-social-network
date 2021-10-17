@@ -85,7 +85,7 @@ class CommunitySurveyListPosition(models.Model):
     def __str__(self):
         return '{} - {} :{}'.format(self.user, self.list, self.position)
 
-class CommunityDocListPosition(models.Model):
+class CommunityDocsListPosition(models.Model):
     community = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     list = models.PositiveIntegerField(default=0, verbose_name="Фотоальбом")
     position = models.PositiveSmallIntegerField(default=0, verbose_name="Порядок отображения")

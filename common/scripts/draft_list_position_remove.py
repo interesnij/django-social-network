@@ -15,7 +15,7 @@ django.setup()
 from music.models import SoundList
 from video.models import VideoList
 from posts.models import PostsList, Post
-from docs.models import DocList
+from docs.models import DocsList
 from gallery.models import PhotoList
 from survey.models import SurveyList
 from goods.models import GoodList
