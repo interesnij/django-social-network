@@ -20,7 +20,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   _text = _val.innerHTML;
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
-  }; 
+  };
 
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
@@ -47,11 +47,19 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     drops = form_post.querySelectorAll(".dropdown-menu");
     form_post.querySelector(".input_text").remove();
     form_post.querySelector(".smile_supported").innerHTML = "";
-    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")};
+    for (var i = 0; i < drops.length; i++){drops[i].classList.remove("show")}
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
-  }};
+  } else {
+        new_post = document.createElement("span");
+        new_post.innerHTML = link_.responseText;
+        if (new_post.querySelector(".exception_value")){
+          text = new_post.querySelector(".exception_value").innerHTML;
+          toast_info(text)
+        }
+    }
+  };
 
   link_.send(form_data);
 });
