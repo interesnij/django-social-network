@@ -58,37 +58,23 @@ class LoadPostsList(ListView):
 
 
 class LoadPost(TemplateView):
-	template_name, community, owner_wall, object_id = None, None, None, None
+	template_name, community, user_wall, community_wall, featured_wall, feed_wall, search_wall, chat_wall = None, None, None, None, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.list = self.post.list
-		where_from = request.GET.get("where_from")
-		if where_from:
-			if where_from == "user_wall":
-				from users.models import User
-				try:
-					self.owner_wall = User.objects.get(pk=request.GET.get("id"))
-				except User.DoesNotExists:
-					self.owner_wall = None
-			elif where_from == "community_wall":
-				from communities.models import Community
-				try:
-					self.owner_wall = Community.objects.get(pk=request.GET.get("id"))
-				except Community.DoesNotExists:
-					self.owner_wall = None
-			elif where_from == "feed_wall":
-				from users.models import User
-				try:
-					self.owner_wall = User.objects.get(pk=request.GET.get("id"))
-				except User.DoesNotExists:
-					self.owner_wall = None
-			elif where_from == "chat_wall":
-				from chat.models import Chat
-				try:
-					self.owner_wall = Chat.objects.get(pk=request.GET.get("id"))
-				except Chat.DoesNotExists:
-					self.owner_wall = None
+		if request.GET.get("user_wall"):
+			self.owner_wall = "пользователь"
+		elif request.GET.get("community_wall"):
+			self.owner_wall = "сообщество"
+		elif request.GET.get("feed_wall"):
+			self.owner_wall = "новости"
+		elif request.GET.get("chat_wall"):
+			self.owner_wall = "сообщения"
+		elif request.GET.get("search_wall"):
+			self.owner_wall = "поиск"
+		elif request.GET.get("featured_wall"):
+			self.owner_wall = "рекомендации"
 
 		if self.list.community:
 			if request.user.is_authenticated:
