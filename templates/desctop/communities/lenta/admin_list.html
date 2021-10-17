@@ -50,7 +50,7 @@
           <a class="c_delete_post_list pointer">удалить список</a>
         </span>
         {% endif %}
-        {% if is_user_can_create_posts %}{{ list.community }}
+        {% if is_user_can_create_posts %}
           {% include 'desctop/communities/detail_sections/create_post.html' %}
         {% elif is_user_can_create_offer_post %}
           {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
