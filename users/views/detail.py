@@ -116,17 +116,17 @@ class UserDocs(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from docs.models import DocList
+        from docs.models import DocsList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_doc_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = DocList.get_user_staff_lists(self.user.pk)
+            self.get_lists = DocsList.get_user_staff_lists(self.user.pk)
             self.get_items = self.list.get_staff_items()
         else:
-            self.get_lists = DocList.get_user_lists(self.user.pk)
+            self.get_lists = DocsList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
-        self.count_lists = DocList.get_user_lists_count(self.user.pk)
+        self.count_lists = DocsList.get_user_lists_count(self.user.pk)
 
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])

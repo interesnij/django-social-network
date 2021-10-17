@@ -15,7 +15,7 @@ django.setup()
 from music.models import SoundList
 from video.models import VideoList
 from posts.models import PostsList, Post
-from docs.models import DocList
+from docs.models import DocsList
 from gallery.models import PhotoList
 from survey.models import SurveyList
 from goods.models import GoodList
@@ -32,7 +32,7 @@ UserPlayListPosition.objects.all().delete()
 UserGoodListPosition.objects.all().delete()
 UserVideoListPosition.objects.all().delete()
 UserSurveyListPosition.objects.all().delete()
-UserDocListPosition.objects.all().delete()
+UserDocsListPosition.objects.all().delete()
 
 CommunityPhotoListPosition.objects.all().delete()
 CommunityPostsListPosition.objects.all().delete()
@@ -40,7 +40,7 @@ CommunityPlayListPosition.objects.all().delete()
 CommunityGoodListPosition.objects.all().delete()
 CommunityVideoListPosition.objects.all().delete()
 CommunitySurveyListPosition.objects.all().delete()
-CommunityDocListPosition.objects.all().delete()
+CommunityDocsListPosition.objects.all().delete()
 
 query = Q(Q(type="PUB")|Q(type="PRI"))
 
@@ -53,12 +53,12 @@ for list in post_lists:
     else:
         UserPostsListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-doc_lists = DocList.objects.all()
+doc_lists = DocsList.objects.all()
 for list in doc_lists:
     if list.community:
-        CommunityDocListPosition.objects.create(list=list.pk, community=list.community.pk)
+        CommunityDocsListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
-        UserDocListPosition.objects.create(list=list.pk, user=list.creator.pk)
+        UserDocsListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
 photo_lists = PhotoList.objects.all()
 for list in photo_lists:

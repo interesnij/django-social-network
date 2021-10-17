@@ -1,12 +1,12 @@
-from docs.models import DocList, Doc
+from docs.models import DocsList, Doc
 from django import forms
 from django.conf import settings
 
 
-class DoclistForm(forms.ModelForm):
+class DocslistForm(forms.ModelForm):
 
 	class Meta:
-		model = DocList
+		model = DocsList
 		fields = ['name', 'description',]
 
 class DocForm(forms.ModelForm):

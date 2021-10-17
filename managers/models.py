@@ -687,8 +687,8 @@ class Moderated(models.Model):
             return ''
     def get_doc_list(self):
         try:
-            from docs.models import DocList
-            list = DocList.objects.get(pk=self.object_id)
+            from docs.models import DocsList
+            list = DocsList.objects.get(pk=self.object_id)
             creator = list.creator
             image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
             add_svg = ''
@@ -993,8 +993,8 @@ class ModerationPenalty(models.Model):
             return ''
     def get_doc_list(self):
         try:
-            from docs.models import DocList
-            list = DocList.objects.get(pk=self.object_id)
+            from docs.models import DocsList
+            list = DocsList.objects.get(pk=self.object_id)
             creator = list.creator
             image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
             add_svg = ''

@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.staff_progs.doc import *
-from docs.models import Doc, DocList
+from docs.models import Doc, DocsList
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
 from common.templates import get_detect_platform_template, get_staff_template
@@ -222,7 +222,7 @@ class ListDocClaimCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from managers.models import ModerationReport
 
-        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 17, self.list.pk)
         self.template_name = get_detect_platform_template("managers/manage_create/doc/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ListDocClaimCreate,self).get(request,*args,**kwargs)
@@ -236,7 +236,7 @@ class ListDocClaimCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         from managers.models import ModerationReport
 
-        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 17, self.list.pk):
             description = request.POST.get('description')
             type = request.POST.get('type')
@@ -247,7 +247,7 @@ class ListDocClaimCreate(TemplateView):
 
 class ListDocRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        list = DocList.objects.get(pk=self.kwargs["pk"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_doc_manager():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=17)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
@@ -259,7 +259,7 @@ class ListDocRejectedCreate(View):
 
 class ListDocUnverify(View):
     def get(self,request,*args,**kwargs):
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=17)
         if request.is_ajax() and request.user.is_doc_manager():
             obj.unverify_moderation(list, manager_id=request.user.pk)
@@ -272,7 +272,7 @@ class ListDocCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_doc_manager():
             self.template_name = get_staff_template("managers/manage_create/doc/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -285,7 +285,7 @@ class ListDocCloseCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         form = ModeratedForm(request.POST)
         if form.is_valid() and request.user.is_doc_manager():
             mod = form.save(commit=False)
@@ -298,7 +298,7 @@ class ListDocCloseCreate(TemplateView):
 
 class ListDocCloseDelete(View):
     def get(self,request,*args,**kwargs):
-        list = DocList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_doc_manager():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=17)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
