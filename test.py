@@ -41,7 +41,7 @@ from communities.models import Community
 from communities.model.list import CommunityPostsListPosition
 
 
-UserPostsListPosition.objects.all().delete()
+CommunityPostsListPosition.objects.all().delete()
 for c in Community.objects.all():
     post_list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.MAIN, name="Записи")
     post_fix_list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.FIXED, name="Закреплённый список")
