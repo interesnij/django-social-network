@@ -36,7 +36,7 @@ from video.models import VideoList
 from music.models import SoundList
 from survey.models import SurveyList
 from docs.models import DocList
-from posts.models import PostsList, Posts
+from posts.models import PostsList, Post
 from users.models import User
 
 for user in User.objects.all():
