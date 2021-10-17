@@ -91,7 +91,13 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-4" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
+                            <span class="input-group-text">
+                              <select name="first_number" id="id_first_number" style="width: auto;padding: 0.650rem 1rem;">
+                                <option value="7" selected="">+7</option>
+                                <option value="375">+375</option>
+                                <option value="380">+380</option>
+                              </select>
+                            </span>
                         </div>
                         <input type="number" id="phone" min="0" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
                         <hr class="my-0">
