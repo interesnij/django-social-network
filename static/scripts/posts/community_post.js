@@ -18,10 +18,9 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
   text_val = form_post.querySelector(".smile_supported");
   _val = format_text(text_val);
   _text = _val.innerHTML;
-
-  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0")) {
+  if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0")) {
     toast_error("Напишите или прикрепите что-нибудь"); return
-  };
+  }; 
 
   $input = document.createElement("input");
   $input.setAttribute("name", "text");
