@@ -37,12 +37,12 @@ from music.models import SoundList
 from survey.models import SurveyList
 from docs.models import DocList
 from posts.models import PostsList, Post
-from users.models import User
-from users.model.list import UserPostsListPosition
+from communities.models import Community
+from communities.model.list import CommunityPostsListPosition
 
 
 UserPostsListPosition.objects.all().delete()
-for user in User.objects.all():
-    post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
-    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
-    UserPostsListPosition.objects.create(user=user.pk, list=user.get_post_list().pk, position=1)
+for c in Community.objects.all():
+    post_list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.MAIN, name="Записи")
+    post_fix_list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.FIXED, name="Закреплённый список")
+    CommunityPostsListPosition.objects.create(community=c.pk, list=c.get_post_list().pk, position=1)
