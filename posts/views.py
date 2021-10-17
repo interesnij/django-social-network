@@ -75,6 +75,8 @@ class LoadPost(TemplateView):
 			self.owner_wall = "поиск"
 		elif request.GET.get("featured_wall"):
 			self.owner_wall = "рекомендации"
+		else:
+			self.owner_wall = "прямой переход"
 
 		if self.list.community:
 			if request.user.is_authenticated:
