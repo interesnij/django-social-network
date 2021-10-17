@@ -58,11 +58,37 @@ class LoadPostsList(ListView):
 
 
 class LoadPost(TemplateView):
-	template_name, community = None, None
+	template_name, community, where_from, object_id = None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.list = self.post.list
+		where_from = request.GET.get("where_from")
+		if where_from:
+			if where_from == "user_wall":
+				from users.models import User
+				try:
+					owner_wall = User.objects.get(pk=request.GET.get("id"))
+				except User.DoesNotExists:
+					owner_wall = None
+			elif where_from == "community_wall":
+				from communities.models import Community
+				try:
+					owner_wall = Community.objects.get(pk=request.GET.get("id"))
+				except Community.DoesNotExists:
+					owner_wall = None
+			elif where_from == "feed_wall":
+				from users.models import User
+				try:
+					owner_wall = User.objects.get(pk=request.GET.get("id"))
+				except User.DoesNotExists:
+					owner_wall = None
+			elif where_from == "chat_wall":
+				from chat.models import Chat
+				try:
+					owner_wall = Chat.objects.get(pk=request.GET.get("id"))
+				except Chat.DoesNotExists:
+					owner_wall = None
 
 		if self.list.community:
 			if request.user.is_authenticated:
@@ -99,6 +125,7 @@ class LoadPost(TemplateView):
 			c["next"] = self.posts.filter(order=self.post.order + 1)[0]
 		if self.posts.filter(order=self.post.order - 1).exists():
 			c["prev"] = self.posts.filter(order=self.post.order - 1)[0]
+		c["owner_wall"] = self.owner_wall
 		return c
 
 

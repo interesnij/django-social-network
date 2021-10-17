@@ -3,6 +3,12 @@
     {% include 'desctop/posts/post_user/card_header.html' %}
 
     <div class="text_support">
+      Открыто со стены
+      {% if owner_wall.gender %}
+        {{ owner_wall.get_full_name_genitive }}<br>
+      {% elif owner_wall.category %}
+        {{ owner_wall.name }}<br>
+      {% endif %}
       {{ object.text|safe }}
     </div>
 
