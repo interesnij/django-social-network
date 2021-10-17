@@ -17,12 +17,12 @@ class PostCommentAdmin(admin.ModelAdmin):
     list_display = ['commenter','created']
 
 
-class PostListAdmin(admin.ModelAdmin):
+class PostsListAdmin(admin.ModelAdmin):
     search_fields = ('creator',)
     list_display = ['name','community','type','creator']
 
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(PostList, PostListAdmin)
+admin.site.register(PostsList, PostVotesListAdmin)
 admin.site.register(PostCategory)
 admin.site.register(PostComment, PostCommentAdmin)

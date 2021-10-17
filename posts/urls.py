@@ -4,7 +4,7 @@ from posts.views import *
 
 urlpatterns = [
     url(r'^$', PostsView.as_view()),
-    url(r'^load_list/(?P<pk>\d+)/$', LoadPostList.as_view(), name="load_post_list"),
+    url(r'^load_list/(?P<pk>\d+)/$', LoadPostsList.as_view(), name="load_post_list"),
     url(r'^post/(?P<uuid>[0-9a-f-]+)/$', LoadPost.as_view(), name="load_post"),
     url(r'^fix_post/(?P<uuid>[0-9a-f-]+)/$', LoadFixPost.as_view(), name="load_fix_post"),
 

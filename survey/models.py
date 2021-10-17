@@ -81,12 +81,6 @@ class SurveyList(models.Model):
             list = SurveyList.objects.create(community=instance, type=SurveyList.MAIN, name="Основной список", creator=instance.creator)
             from communities.model.list import CommunitySurveyListPosition
             CommunitySurveyListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            list = SurveyList.objects.create(creator=instance, type=SurveyList.MAIN, name="Основной список")
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.survey_list.filter(pk=item_id).values("pk").exists()

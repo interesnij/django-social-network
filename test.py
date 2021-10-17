@@ -36,19 +36,12 @@ from video.models import VideoList
 from music.models import SoundList
 from survey.models import SurveyList
 from docs.models import DocList
+from posts.models import PostsList, Posts
+from users.models import User
 
-for list in PhotoList.objects.all():
-    list.create_el = 7
-    list.save(update_fields=["create_el"])
-for list in GoodList.objects.all():
-    list.create_el = 7
-    list.save(update_fields=["create_el"])
-for list in VideoList.objects.all():
-    list.create_el = 7
-    list.save(update_fields=["create_el"])
-for list in SoundList.objects.all():
-    list.create_el = 7
-    list.save(update_fields=["create_el"])
-for list in DocList.objects.all():
-    list.create_el = 7
-    list.save(update_fields=["create_el"])
+for user in User.objects.all():
+    post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
+    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
+    UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
+
+Post.objects.all().delete()

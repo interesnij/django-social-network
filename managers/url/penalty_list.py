@@ -5,7 +5,7 @@ from managers.view.penalty_list import *
 urlpatterns = [
     url(r'^user/$', PenaltyUserList.as_view()),
     url(r'^community/$', PenaltyCommunityList.as_view()),
-    url(r'^post/$', PenaltyPostList.as_view()),
+    url(r'^post/$', PenaltyPostsList.as_view()),
     url(r'^photo/$', PenaltyPhotoList.as_view()),
     url(r'^good/$', PenaltyGoodList.as_view()),
     url(r'^audio/$', PenaltyAudioList.as_view()),

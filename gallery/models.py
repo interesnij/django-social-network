@@ -93,16 +93,6 @@ class PhotoList(models.Model):
             from communities.model.list import CommunityPhotoListPosition
             CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
             CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_2.pk, position=2)
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            list_1 = PhotoList.objects.create(creator=instance, type=PhotoList.MAIN, name="Основной альбом")
-            list_2 = PhotoList.objects.create(creator=instance, type=PhotoList.AVATAR, name="Фото со страницы")
-            list_3 = PhotoList.objects.create(creator=instance, type=PhotoList.WALL, name="Фото со стены")
-            from users.model.list import UserPhotoListPosition
-            UserPhotoListPosition.objects.create(user=instance.pk, list=list_1.pk, position=1)
-            UserPhotoListPosition.objects.create(user=instance.pk, list=list_2.pk, position=2)
-            UserPhotoListPosition.objects.create(user=instance.pk, list=list_3.pk, position=3)
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")

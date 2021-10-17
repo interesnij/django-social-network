@@ -9,18 +9,18 @@ from common.check.community import check_can_get_lists
 from django.views.generic.base import TemplateView
 
 
-class AddPostListInCommunityCollections(View):
+class AddPostsListInCommunityCollections(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
             list.add_in_community_collections(community)
         return HttpResponse()
 
-class RemovePostListFromCommunityCollections(View):
+class RemovePostsListFromCommunityCollections(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_delete_list(community.pk):
@@ -33,7 +33,7 @@ class PostCommunityCreate(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
 
         check_private_post_exists(community)
@@ -71,7 +71,7 @@ class CommunitySaveCreatorDraftPost(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
 
         check_private_post_exists(community)
@@ -98,7 +98,7 @@ class CommunitySaveOfferDraftPost(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
 
         check_private_post_exists(community)
@@ -193,7 +193,7 @@ class PostOfferCommunityCreate(View):
         from common.check.community import check_private_post_exists
 
         form_post = PostForm(request.POST)
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
         check_private_post_exists(community)
 
@@ -407,23 +407,23 @@ def post_update_interactions(request):
     return JsonResponse(data)
 
 
-class CommunityPostListCreate(TemplateView):
+class CommunityPostsListCreate(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("posts/post_community/add_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-        return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
+        return super(CommunityPostsListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        c = super(CommunityPostListCreate,self).get_context_data(**kwargs)
-        c["form"], c["community"] = PostListForm(), self.c
+        c = super(CommunityPostsListCreate,self).get_context_data(**kwargs)
+        c["form"], c["community"] = PostsListForm(), self.c
         return c
 
     def post(self,request,*args,**kwargs):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.form = PostListForm(request.POST)
+        self.form = PostsListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.templates import render_for_platform
             list = self.form.save(commit=False)
@@ -431,10 +431,10 @@ class CommunityPostListCreate(TemplateView):
             return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': new_list})
         else:
             return HttpResponse()
-        return super(CommunityPostListCreate,self).get(request,*args,**kwargs)
+        return super(CommunityPostsListCreate,self).get(request,*args,**kwargs)
 
 
-class CommunityPostListEdit(TemplateView):
+class CommunityPostsListEdit(TemplateView):
     """
     изменение списка записей сообщества
     """
@@ -443,39 +443,39 @@ class CommunityPostListEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
 
-        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
-        return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
+        return super(CommunityPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(CommunityPostListEdit,self).get_context_data(**kwargs)
-        context["list"] = PostList.objects.get(pk=self.kwargs["list_pk"])
+        context=super(CommunityPostsListEdit,self).get_context_data(**kwargs)
+        context["list"] = PostsList.objects.get(pk=self.kwargs["list_pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        self.form = PostListForm(request.POST,instance=self.list)
+        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.c.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(CommunityPostListEdit,self).get(request,*args,**kwargs)
+        return super(CommunityPostsListEdit,self).get(request,*args,**kwargs)
 
 
-class CommunityPostListDelete(View):
+class CommunityPostsListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.type != PostList.MAIN and request.user.is_administrator_of_community(list.c.pk):
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and list.type != PostsList.MAIN and request.user.is_administrator_of_community(list.c.pk):
             list.delete_item()
             return HttpResponse()
         else:
             raise Http404
 
-class CommunityPostListRecover(View):
+class CommunityPostsListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.restore_item()
             return HttpResponse()
@@ -486,7 +486,7 @@ class CommunityPostListRecover(View):
 class AddPostInCommunityList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.post_list.add(post)
@@ -497,7 +497,7 @@ class AddPostInCommunityList(View):
 class RemovePostFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.post_list.remove(post)
             return HttpResponse()
@@ -517,15 +517,15 @@ class CommunityChangePostPosition(View):
                 post.save(update_fields=["order"])
         return HttpResponse()
 
-class CommunityChangePostListPosition(View):
+class CommunityChangePostsListPosition(View):
     def post(self,request,*args,**kwargs):
         import json
-        from communities.model.list import CommunityPostListPosition
+        from communities.model.list import CommunityPostsListPosition
 
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.user.is_administrator_of_community(community.pk):
             for item in json.loads(request.body):
-                list = CommunityPostListPosition.objects.get(list=item['key'], community=community.pk)
+                list = CommunityPostsListPosition.objects.get(list=item['key'], community=community.pk)
                 list.position=item['value']
                 list.save(update_fields=["position"])
         return HttpResponse()

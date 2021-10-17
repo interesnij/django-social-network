@@ -10,7 +10,7 @@ from communities.models import Community
 from common.model.other import Stickers
 
 
-class PostList(models.Model):
+class PostsList(models.Model):
     MAIN, LIST, MANAGER, FIXED, DRAFT, TEST = 'MAI','LIS','MAN','_FIX','_DRA','_T'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
@@ -35,8 +35,8 @@ class PostList(models.Model):
             )
 
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='community_postlist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postlist', on_delete=models.CASCADE, verbose_name="Создатель")
+    community = models.ForeignKey('communities.Community', related_name='community_postslist', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Сообщество")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_postslist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип списка")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -122,8 +122,8 @@ class PostList(models.Model):
 
     def get_ie_perm_for_user(self, user_id, type, value):
         if value == 0:
-            if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
-                ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
+            if PostsListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
+                ie = PostsListPerm.objects.get(list_id=self.pk, user_id=user_id)
                 if type == 1:
                     return ie.can_see_el != 2
                 elif type == 2:
@@ -137,8 +137,8 @@ class PostList(models.Model):
             else:
                  return True
         elif value == 1:
-            if PostListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
-                ie = PostListPerm.objects.get(list_id=self.pk, user_id=user_id)
+            if PostsListPerm.objects.filter(list_id=self.pk, user_id=user_id).exists():
+                ie = PostsListPerm.objects.get(list_id=self.pk, user_id=user_id)
                 if type == 1:
                     return ie.can_see_el == 1
                 elif type == 2:
@@ -153,40 +153,25 @@ class PostList(models.Model):
                  return False
 
     def get_order(self):
-        from users.model.list import UserPostListPosition
-        return UserPostListPosition.objects.get(list=self.pk)
+        from users.model.list import UserPostsListPosition
+        return UserPostsListPosition.objects.get(list=self.pk)
 
     def add_in_community_collections(self, community):
-        from communities.model.list import CommunityPostListPosition
-        CommunityPostListPosition.objects.create(community=community.pk, list=self.pk, position=PostList.get_community_lists_count(community.pk))
+        from communities.model.list import CommunityPostsListPosition
+        CommunityPostsListPosition.objects.create(community=community.pk, list=self.pk, position=PostsList.get_community_lists_count(community.pk))
         self.communities.add(community)
     def remove_in_community_collections(self, community):
-        from communities.model.list import CommunityPostListPosition
-        CommunityPostListPosition.objects.get(community=community.pk, list=self.pk).delete()
+        from communities.model.list import CommunityPostsListPosition
+        CommunityPostsListPosition.objects.get(community=community.pk, list=self.pk).delete()
         self.communities.remove(user)
     def add_in_user_collections(self, user):
-        from users.model.list import UserPostListPosition
-        UserPostListPosition.objects.create(user=user.pk, list=self.pk, position=PostList.get_user_lists_count(user.pk))
+        from users.model.list import UserPostsListPosition
+        UserPostsListPosition.objects.create(user=user.pk, list=self.pk, position=PostsList.get_user_lists_count(user.pk))
         self.users.add(user)
     def remove_in_user_collections(self, user):
-        from users.model.list import UserPostListPosition
-        UserPostListPosition.objects.get(user=user.pk, list=self.pk).delete()
+        from users.model.list import UserPostsListPosition
+        UserPostsListPosition.objects.get(user=user.pk, list=self.pk).delete()
         self.users.remove(user)
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list_1 = PostList.objects.create(community=instance, type=PostList.MAIN, name="Записи", creator=instance.creator)
-            PostList.objects.create(community=instance, type=PostList.FIXED, name="Закреплённый список", creator=instance.creator)
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            list_1 = PostList.objects.create(creator=instance, type=PostList.MAIN, name="Записи")
-            PostList.objects.create(creator=instance, type=PostList.FIXED, name="Закреплённый список")
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.create(user=instance.pk, list=list_1.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()
@@ -258,9 +243,9 @@ class PostList(models.Model):
     @classmethod
     def get_user_staff_lists(cls, user_pk):
         try:
-            from users.model.list import UserPostListPosition
+            from users.model.list import UserPostsListPosition
             query = []
-            lists = UserPostListPosition.objects.filter(user=user_pk).values("list")
+            lists = UserPostsListPosition.objects.filter(user=user_pk).values("list")
             for list_id in [i['list'] for i in lists]:
                 list = cls.objects.get(pk=list_id)
                 if list.type[0] != "_":
@@ -273,9 +258,9 @@ class PostList(models.Model):
     @classmethod
     def get_user_lists(cls, user_pk):
         try:
-            from users.model.list import UserPostListPosition
+            from users.model.list import UserPostsListPosition
             query = []
-            lists = UserPostListPosition.objects.filter(user=user_pk).values("list")
+            lists = UserPostsListPosition.objects.filter(user=user_pk).values("list")
             for list_id in [i['list'] for i in lists]:
                 list = cls.objects.get(pk=list_id)
                 if list.is_have_get():
@@ -294,9 +279,9 @@ class PostList(models.Model):
     @classmethod
     def get_community_staff_lists(cls, community_pk):
         try:
-            from communities.model.list import CommunityPostListPosition
+            from communities.model.list import CommunityPostsListPosition
             query = []
-            lists = CommunityPostListPosition.objects.filter(community=community_pk).values("list")
+            lists = CommunityPostsListPosition.objects.filter(community=community_pk).values("list")
             for list_id in [i['list'] for i in lists]:
                 list = cls.objects.get(pk=list_id)
                 if list.type[0] != "_":
@@ -309,9 +294,9 @@ class PostList(models.Model):
     @classmethod
     def get_community_lists(cls, community_pk):
         try:
-            from communities.model.list import CommunityPostListPosition
+            from communities.model.list import CommunityPostsListPosition
             query = []
-            lists = CommunityPostListPosition.objects.filter(community=community_pk).values("list")
+            lists = CommunityPostsListPosition.objects.filter(community=community_pk).values("list")
             for list_id in [i['list'] for i in lists]:
                 list = cls.objects.get(pk=list_id)
                 if list.is_have_get():
@@ -334,8 +319,8 @@ class PostList(models.Model):
 
         list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.create(community=community.pk, list=list.pk, position=PostList.get_community_lists_count(community.pk))
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.create(community=community.pk, list=list.pk, position=PostsList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POL", object_id=list.pk, verb="ITE")
@@ -344,8 +329,8 @@ class PostList(models.Model):
                     Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_post_list_notify")
         else:
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.create(user=creator.pk, list=list.pk, position=PostList.get_user_lists_count(creator.pk))
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.create(user=creator.pk, list=list.pk, position=PostsList.get_user_lists_count(creator.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
@@ -353,7 +338,7 @@ class PostList(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_post_list_notify")
-        get_post_list_processing(list, PostList.LIST)
+        get_post_list_processing(list, PostsList.LIST)
         return list
 
     def edit_list(self, name, description, is_public):
@@ -363,16 +348,16 @@ class PostList(models.Model):
         self.description = description
         self.save()
         if is_public:
-            get_post_list_processing(self, PostList.LIST)
+            get_post_list_processing(self, PostsList.LIST)
             self.make_publish()
         else:
-            get_post_list_processing(self, PostList.PRIVATE)
+            get_post_list_processing(self, PostsList.PRIVATE)
             self.make_private()
         return self
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.type = PostList.PRIVATE
+        self.type = PostsList.PRIVATE
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
@@ -380,7 +365,7 @@ class PostList(models.Model):
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.type = PostList.LIST
+        self.type = PostsList.LIST
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
@@ -391,16 +376,16 @@ class PostList(models.Model):
         from notify.models import Notify, Wall
 
         if self.type == "LIS":
-            self.type = PostList.DELETED
+            self.type = PostsList.DELETED
         elif self.type == "MAN":
-            self.type = PostList.DELETED_MANAGER
+            self.type = PostsList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
         else:
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -408,16 +393,16 @@ class PostList(models.Model):
     def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
-            self.type = PostList.LIST
+            self.type = PostsList.LIST
         elif self.type == "_DELM":
-            self.type = PostList.MANAGER
+            self.type = PostsList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
         else:
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -426,20 +411,20 @@ class PostList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = PostList.CLOSED
+            self.type = PostsList.CLOSED
         elif self.type == "MAI":
-            self.type = PostList.CLOSED_MAIN
+            self.type = PostsList.CLOSED_MAIN
         elif self.type == "FIX":
-            self.type = PostList.CLOSED_FIXED
+            self.type = PostsList.CLOSED_FIXED
         elif self.type == "MAN":
-            self.type = PostList.CLOSED_MANAGER
+            self.type = PostsList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
         else:
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -447,20 +432,20 @@ class PostList(models.Model):
     def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
-            self.type = PostList.LIST
+            self.type = PostsList.LIST
         elif self.type == "_CLOM":
-            self.type = PostList.MAIN
+            self.type = PostsList.MAIN
         elif self.type == "_CLOF":
-            self.type = PostList.FIXED
+            self.type = PostsList.FIXED
         elif self.type == "_CLOM":
-            self.type = PostList.MANAGER
+            self.type = PostsList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
-            from communities.model.list import CommunityPostListPosition
-            CommunityPostListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
         else:
-            from users.model.list import UserPostListPosition
-            UserPostListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
         if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
@@ -509,7 +494,7 @@ class Post(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
-    list = models.ForeignKey(PostList, blank=True, null=True, on_delete=models.SET_NULL, related_name='post_list')
+    list = models.ForeignKey(PostsList, blank=True, null=True, on_delete=models.SET_NULL, related_name='post_list')
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     type = models.CharField(choices=TYPE, max_length=5, verbose_name="Статус статьи")
@@ -929,10 +914,10 @@ class Post(models.Model):
         return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
     def is_fixed_in_community(self):
-        list = PostList.objects.get(community_id=self.community.pk, type=PostList.FIXED)
+        list = PostsList.objects.get(community_id=self.community.pk, type=PostsList.FIXED)
         return list.is_item_in_list(self.pk)
     def is_fixed_in_user(self):
-        list = PostList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostList.FIXED)
+        list = PostsList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostsList.FIXED)
         return list.is_item_in_list(self.pk)
 
     def is_can_fixed_in_community(self):
@@ -943,7 +928,7 @@ class Post(models.Model):
         return self.is_full_list()
 
     def fixed_user_post(self, user_id):
-        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.FIXED)
+        list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
         if not list.is_full_list():
             self.list.add(list)
             self.type = Post.FIXED
@@ -952,7 +937,7 @@ class Post(models.Model):
             return ValidationError("Список уже заполнен.")
 
     def unfixed_user_post(self, user_id):
-        list = PostList.objects.get(creator_id=user_id, community__isnull=True, type=PostList.FIXED)
+        list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
         if list.is_item_in_list(self.pk):
             self.list.remove(list)
             self.type = Post.PUBLISHED
@@ -961,7 +946,7 @@ class Post(models.Model):
             return ValidationError("Запись и так не в списке.")
 
     def fixed_community_post(self, community_id):
-        list = PostList.objects.get(community_id=community_id, type=PostList.FIXED)
+        list = PostsList.objects.get(community_id=community_id, type=PostsList.FIXED)
         if not list.is_full_list():
             self.list.add(list)
             self.type = Post.FIXED
@@ -970,7 +955,7 @@ class Post(models.Model):
             return ValidationError("Список уже заполнен.")
 
     def unfixed_community_post(self, community_id):
-        list = PostList.objects.get(community_id=community_id, type=PostList.FIXED)
+        list = PostsList.objects.get(community_id=community_id, type=PostsList.FIXED)
         if list.is_item_in_list(self.pk):
             self.list.remove(list)
             self.type = Post.PUBLISHED
@@ -1444,7 +1429,7 @@ class PostComment(models.Model):
         return hide_text(self.text)
 
 
-class PostListPerm(models.Model):
+class PostsListPerm(models.Model):
     """ включения и исключения для пользователей касательно конкретного списка записей
         1. YES_ITEM - может соверщать описанные действия
         2. NO_ITEM - не может соверщать описанные действия
@@ -1456,7 +1441,7 @@ class PostListPerm(models.Model):
         (TEST, 'TEST'),
     )
 
-    list = models.ForeignKey(PostList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
+    list = models.ForeignKey(PostsList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Пользователь")
 
     can_see_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит список/записи")

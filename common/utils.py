@@ -170,21 +170,40 @@ def get_mf_ages(users):
         _sities = ''.join([_sities, '<div class="stat_city"><span class="city">' , key, '</span><span class="count">' , str(value), '</span></div>'])
     return ''.join(['<div><h5 class="mt-1 mb-2" style="margin:10px">Страны</h5>', _countries, '</div> <div><h5 class="mt-1 mb-2" style="margin:10px">Города</h5>', _sities, '</div> <div><h5 class="mt-4 mb-2" style="margin:10px">Охват устройств</h5><div class="stat_city"><span class="city">Просмотры с мобильного</span><span class="count">', str(mob), '</span></div><div class="stat_city"><span class="city">Просмотры с компьютера</span><span class="count">', str(comp), '</span></div></div> <div><h5 class="mt-4 mb-2" style="margin:10px">Возраст / Пол</h5><div class="stat_city"><span class="city">До 18 лет</span><span class="count">Муж. ', str(m_18), ' | Жен. ', str(f_18), '</span></div><div class="stat_city"><span class="city">От 18 до 21 года</span><span class="count">Муж. ', str(m_18_21), ' | Жен. ', str(f_18_21), '</span></div><div class="stat_city"><span class="city">От 21 до 24 лет</span><span class="count">Муж. ', str(m_21_24), ' | Жен. ', str(f_21_24), '</span></div><div class="stat_city"><span class="city">От 24 до 27 лет</span><span class="count">Муж. ', str(m_24_27), ' | Жен. ', str(f_24_27), '</span></div><div class="stat_city"><span class="city">От 27 до 30 лет</span><span class="count">Муж. ', str(m_27_30), ' | Жен. ', str(f_27_30), '</span></div><div class="stat_city"><span class="city">От 30 до 35 лет</span><span class="count">Муж. ', str(m_30_35), ' | Жен. ', str(f_30_35), '</span></div><div class="stat_city"><span class="city">От 35 до 45 лет</span><span class="count">Муж. ', str(m_35_45), ' | Жен. ', str(f_35_45), '</span></div><div class="stat_city"><span class="city">От 45 лет</span><span class="count">Муж. ', str(m_45), ' | Жен. ', str(f_45), '</span></div></div>'])
 
-def update_activity(user, user_agent):
-    from datetime import datetime
-    import re
-    MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-    if MOBILE_AGENT_RE.match(user_agent):
-        user.last_activity, user.device = datetime.now(), "Ph"
-        user.save(update_fields=['last_activity', 'device'])
-    else:
-        user.last_activity, user.device = datetime.now(), "De"
-        user.save(update_fields=['last_activity', 'device'])
+def create_user_models(user):
+    from docs.models import DocList
+    from gallery.models import PhotoList
+    from goods.models import GoodList
+    from music.models import SoundList
+    from posts.models import PostsList
+    from video.models import VideoList
+    from users.model.list import (
+                                    UserPhotoListPosition,
+                                    UserGoodListPosition,
+                                    UserPlayListPosition,
+                                    UserPostsListPosition,
+                                    UserDocListPosition,
+                                    UserVideoListPosition
+                                )
+    doc_list = DocList.objects.create(creator=user, type=DocList.MAIN, name="Основной список")
+    UserDocListPosition.objects.create(user=user.pk, list=doc_list.pk, position=1)
 
-def get_folder(user_agent):
-    import re
-    MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
-    if MOBILE_AGENT_RE.match(user_agent):
-        return "mobile/"
-    else:
-        return "desctop/"
+    list_1 = PhotoList.objects.create(creator=user, type=PhotoList.MAIN, name="Основной альбом")
+    list_2 = PhotoList.objects.create(creator=user, type=PhotoList.AVATAR, name="Фото со страницы")
+    list_3 = PhotoList.objects.create(creator=user, type=PhotoList.WALL, name="Фото со стены")
+    UserPhotoListPosition.objects.create(user=user.pk, list=list_1.pk, position=1)
+    UserPhotoListPosition.objects.create(user=user.pk, list=list_2.pk, position=2)
+    UserPhotoListPosition.objects.create(user=user.pk, list=list_3.pk, position=3)
+
+    good_list = GoodList.objects.create(creator=user, type=GoodList.MAIN, name="Основной список")
+    UserGoodListPosition.objects.create(user=user.pk, list=good_list.pk, position=1)
+
+    post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
+    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
+    UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
+
+    music_list = SoundList.objects.create(creator=user, type=SoundList.MAIN, name="Основной список")
+    UserPlayListPosition.objects.create(user=user.pk, list=music_list.pk, position=1)
+
+    video_list = VideoList.objects.create(user=user, type=VideoList.MAIN, name="Основной список")
+    UserVideoListPosition.objects.create(user=user.pk, list=video_list.pk, position=1)

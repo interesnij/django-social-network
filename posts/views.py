@@ -1,4 +1,4 @@
-from posts.models import PostList, Post
+from posts.models import PostsList, Post
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from common.templates import (
@@ -20,11 +20,11 @@ class PostsView(ListView):
 		return Post.objects.only("pk")
 
 
-class LoadPostList(ListView):
+class LoadPostsList(ListView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = PostList.objects.get(pk=self.kwargs["pk"])
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
@@ -45,10 +45,10 @@ class LoadPostList(ListView):
 				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(LoadPostList,self).get(request,*args,**kwargs)
+		return super(LoadPostsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(LoadPostList,self).get_context_data(**kwargs)
+		context = super(LoadPostsList,self).get_context_data(**kwargs)
 		context["list"] = self.list
 		context["community"] = self.community
 		return context
@@ -144,11 +144,11 @@ class LoadFixPost(TemplateView):
 		return c
 
 
-class LoadPostList(ListView):
+class LoadPostsList(ListView):
 	template_name, community, paginate_by = None, None, 10
 
 	def get(self,request,*args,**kwargs):
-		self.list = PostList.objects.get(pk=self.kwargs["pk"])
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
@@ -160,10 +160,10 @@ class LoadPostList(ListView):
 				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(LoadPostList,self).get(request,*args,**kwargs)
+		return super(LoadPostsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(LoadPostList,self).get_context_data(**kwargs)
+		context = super(LoadPostsList,self).get_context_data(**kwargs)
 		context["list"] = self.list
 		context["community"] = self.community
 		return context

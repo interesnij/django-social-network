@@ -105,12 +105,6 @@ class VideoList(models.Model):
             list = VideoList.objects.create(community=instance, type=VideoList.MAIN, name="Основной список", creator=instance.creator)
             from communities.model.list import CommunityVideoListPosition
             CommunityVideoListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            list = VideoList.objects.create(creator=instance, type=VideoList.MAIN, name="Основной список")
-            from users.model.list import UserVideoListPosition
-            UserVideoListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_not_empty(self):
         return self.video_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()

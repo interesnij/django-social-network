@@ -55,9 +55,9 @@ class User(AbstractUser):
         return UserLocation.objects.filter(user=self)[0]
 
     def is_can_fixed_post(self):
-        from posts.models import PostList
+        from posts.models import PostsList
         try:
-            list = PostList.objects.get(creator_id=self.pk, type=PostList.FIXED)
+            list = PostsList.objects.get(creator_id=self.pk, type=PostsList.FIXED)
             return list.count_fix_items() < 10
         except:
             return None
@@ -1201,14 +1201,14 @@ class User(AbstractUser):
         return query
 
     def get_post_lists(self):
-        from posts.models import PostList
+        from posts.models import PostsList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PostList.objects.filter(query)
+        return PostsList.objects.filter(query)
 
     def get_selected_post_list_pk(self):
-        from users.model.list import UserPostListPosition
-        list = UserPostListPosition.objects.filter(user=self.pk).first()
+        from users.model.list import UserPostsListPosition
+        list = UserPostsListPosition.objects.filter(user=self.pk).first()
         return list.list
 
     def get_survey_lists(self):
@@ -1258,14 +1258,14 @@ class User(AbstractUser):
         from gallery.models import PhotoList
         return PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.MAIN)
     def get_post_list(self):
-        from posts.models import PostList
-        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.MAIN)
+        from posts.models import PostsList
+        return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.MAIN)
     def get_doc_list(self):
         from docs.models import DocList
         return DocList.objects.get(creator_id=self.pk, community__isnull=True, type=DocList.MAIN)
     def get_fix_list(self):
-        from posts.models import PostList
-        return PostList.objects.get(creator_id=self.pk, community__isnull=True, type=PostList.FIXED)
+        from posts.models import PostsList
+        return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.FIXED)
     def get_survey_list(self):
         from survey.models import SurveyList
         return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
@@ -1884,7 +1884,7 @@ class User(AbstractUser):
     def get_special_perm_copy(self, user_id, type, value):
         """
         Проверка касается и верхнего уровня и уровня списка. Ведь пользователь может
-        разрешить кому то копировать персонально все свои списки, однако в отношении отдельного 
+        разрешить кому то копировать персонально все свои списки, однако в отношении отдельного
         списка выставить свои условия! Потому нужно брать и список тоже.
         Сначала проверяется верхний уровень, затем нижний.
         type 1 - can_copy_post,

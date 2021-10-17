@@ -2,7 +2,7 @@ from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from common.staff_progs.post import *
-from posts.models import PostList, Post, PostComment
+from posts.models import PostsList, Post, PostComment
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
@@ -310,7 +310,7 @@ class ListPostClaimCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from managers.models import ModerationReport
 
-        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 8, self.list.pk)
         self.template_name = get_detect_platform_template("managers/manage_create/post/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ListPostClaimCreate,self).get(request,*args,**kwargs)
@@ -324,7 +324,7 @@ class ListPostClaimCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         from managers.models import ModerationReport
 
-        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 8, self.list.pk):
             description = request.POST.get('description')
             type = request.POST.get('type')
@@ -335,7 +335,7 @@ class ListPostClaimCreate(TemplateView):
 
 class ListPostRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_post_manager():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=8)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
@@ -347,7 +347,7 @@ class ListPostRejectedCreate(View):
 
 class ListPostUnverify(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=8)
         if request.is_ajax() and request.user.is_post_manager():
             obj.unverify_moderation(list, manager_id=request.user.pk)
@@ -360,7 +360,7 @@ class ListPostCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_post_manager():
             self.template_name = get_staff_template("managers/manage_create/post/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -373,7 +373,7 @@ class ListPostCloseCreate(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         form = ModeratedForm(request.POST)
         if form.is_valid() and request.user.is_post_manager():
             mod = form.save(commit=False)
@@ -386,7 +386,7 @@ class ListPostCloseCreate(TemplateView):
 
 class ListPostCloseDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_post_manager():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=8)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
