@@ -26,23 +26,20 @@ import django, json, requests
 
 django.setup()
 
-import soundcloud
-from music.models import *
-from datetime import datetime, date, time
-import json, requests
-from gallery.models import PhotoList
-from goods.models import GoodList
-from video.models import VideoList
-from music.models import SoundList
-from survey.models import SurveyList
-from docs.models import DocList
-from posts.models import PostsList, Post
-from communities.models import Community
-from communities.model.list import CommunityPostsListPosition
+response = requests.get(url= "http://api.sypexgeo.net/8Dbm8/json/" + "91.239.184.244")
+data = response.json()
 
-#PostsList.objects.filter(community__isnull=False).delete()
+sity = data['city']
+region = data['region']
+country = data['country']
+loc.city_ru = sity['name_ru']
+loc.city_en = sity['name_en']
+loc.city_lat = sity['lat']
+loc.city_lon = sity['lon']
+loc.region_ru = region['name_ru']
+loc.region_en = region['name_en']
+loc.country_ru = country['name_ru']
+loc.country_en = country['name_en']
+loc.phone = country['phone']
 
-#for c in Community.objects.all():
-#    post_list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.MAIN, name="Записи")
-#    _list = PostsList.objects.create(creator=c.creator, community=c, type=PostsList.FIXED, name="Закреплённый")
-#    CommunityPostsListPosition.objects.create(community=c.pk, list=c.get_post_list().pk, position=1)
+print(data)
