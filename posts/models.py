@@ -58,6 +58,9 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    def is_suspended(self):
+        return False
+
     def is_user_can_see_el(self, user_id):
         if self.community:
             if self.can_see_el == self.ALL_CAN:
