@@ -49,7 +49,7 @@
           {% elif is_user_can_create_offer_post %}
             {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
           {% endif %}
-
+          <span></span>
         <span class="post_stream is_post_paginate" owner-pk="{{ community.pk }}">
           {% for object in object_list %}
             {% include 'mobile/posts/post_community/admin_post.html' %}
