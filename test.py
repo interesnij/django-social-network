@@ -39,9 +39,9 @@ from docs.models import DocList
 from posts.models import PostsList, Post
 from users.models import User
 
-#for user in User.objects.all():
-#    post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
-#    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
-#    UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
+for user in User.objects.all():
+    post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
+    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
+    UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
 
 Post.objects.all().delete()
