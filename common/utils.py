@@ -47,8 +47,8 @@ def get_first_location(request, user):
         ip = x_forwarded_for.split(',')[-1].strip()
     else:
         ip = request.META.get('REMOTE_ADDR')
-    olds_ip = IPUser.objects.create(user=user)
     try:
+        olds_ip = IPUser.objects.create(user=user)
         response = requests.get(url= "http://api.sypexgeo.net/J5O6d/json/" + ip)
         data = response.json()
         loc = UserLocation.objects.create(user=user)
