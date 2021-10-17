@@ -87,6 +87,7 @@ class UserColorChange(View):
 class PhoneVerify(View):
     def get(self,request,*args,**kwargs):
         from common.model.other import PhoneCodes
+        from common.utils import create_user_models
 
         if not request.is_ajax():
             raise Http404
@@ -102,6 +103,7 @@ class PhoneVerify(View):
             user.type = User.STANDART
             user.phone = obj.phone
             user.save()
+            create_user_models(user)
             obj.delete()
             data = 'ok'
             response = render_for_platform(request,'generic/response/phone.html',{'response_text':data})

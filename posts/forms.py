@@ -15,7 +15,7 @@ class CommentForm(forms.ModelForm):
 		fields = ['text']
 
 
-class PostListForm(forms.ModelForm):
+class PostsListForm(forms.ModelForm):
 	class Meta:
-		model = PostList
+		model = PostsList
 		fields = ['name', 'description','can_see_el','can_see_comment','create_el','create_comment', 'copy_el']

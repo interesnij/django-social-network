@@ -114,12 +114,6 @@ class GoodList(models.Model):
 			list = GoodList.objects.create(community=instance, type=GoodList.MAIN, name="Основной список", creator=instance.creator)
 			from communities.model.list import CommunityGoodListPosition
 			CommunityGoodListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
-	@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-	def create_u_model(sender, instance, created, **kwargs):
-		if created:
-			list = GoodList.objects.create(creator=instance, type=GoodList.MAIN, name="Основной список")
-			from users.model.list import UserGoodListPosition
-			UserGoodListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
 	def is_main(self):
 		return self.type == self.MAIN

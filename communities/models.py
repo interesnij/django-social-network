@@ -258,16 +258,16 @@ class Community(models.Model):
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
     def get_fix_list(self):
-        from posts.models import PostList
-        return PostList.objects.get(community_id=self.pk, type=PostList.FIXED)
+        from posts.models import PostsList
+        return PostsList.objects.get(community_id=self.pk, type=PostsList.FIXED)
 
     def get_draft_posts(self):
-        from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="_DRA")
+        from posts.models import PostsList
+        list = PostsList.objects.get(community_id=self.pk, type="_DRA")
         return list.get_items()
     def get_count_draft_posts(self):
-        from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="_DRA")
+        from posts.models import PostsList
+        list = PostsList.objects.get(community_id=self.pk, type="_DRA")
         return list.count_items()
 
     def get_count_articles(self):
@@ -277,13 +277,13 @@ class Community(models.Model):
         return self.get_count_draft_posts() > 0
 
     def get_draft_posts_for_user(self, user_pk):
-        from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="_DRA")
+        from posts.models import PostsList
+        list = PostsList.objects.get(community_id=self.pk, type="_DRA")
         posts_query = list.get_items()
         return list.get_items().filter(creator_id=user_pk)
     def get_count_draft_posts_for_user(self, user_pk):
-        from posts.models import PostList
-        list = PostList.objects.get(community_id=self.pk, type="_DRA")
+        from posts.models import PostsList
+        list = PostsList.objects.get(community_id=self.pk, type="_DRA")
         posts_query = list.get_items()
         return list.get_items().filter(creator_id=user_pk).values("pk").count()
 
@@ -300,8 +300,8 @@ class Community(models.Model):
         from goods.models import GoodList
         return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)
     def get_post_list(self):
-        from posts.models import PostList
-        return PostList.objects.get(community_id=self.pk, type=PostList.MAIN)
+        from posts.models import PostsList
+        return PostsList.objects.get(community_id=self.pk, type=PostsList.MAIN)
     def get_playlist(self):
         from music.models import SoundList
         return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
@@ -316,13 +316,13 @@ class Community(models.Model):
         return DocList.objects.get(community_id=self.pk, type=DocList.MAIN)
 
     def get_post_lists(self):
-        from posts.models import PostList
+        from posts.models import PostsList
         query = Q(community_id=self.id)
         query.add(~Q(type__contains="_"), Q.AND)
-        return PostList.objects.filter(query)
+        return PostsList.objects.filter(query)
     def get_selected_post_list_pk(self):
-        from communities.model.list import CommunityPostListPosition
-        list = CommunityPostListPosition.objects.filter(community=self.pk).first()
+        from communities.model.list import CommunityPostsListPosition
+        list = CommunityPostsListPosition.objects.filter(community=self.pk).first()
         return list.list
 
     def get_survey_lists(self):
@@ -949,9 +949,9 @@ class Community(models.Model):
         return UserTempSoundList.objects.filter(tag=None, community=self, genre=None).exists()
 
     def is_can_fixed_post(self):
-        from posts.models import PostList
+        from posts.models import PostsList
         try:
-            list = PostList.objects.get(community_id=self.pk, type=PostList.FIXED)
+            list = PostsList.objects.get(community_id=self.pk, type=PostsList.FIXED)
             return list.count_fix_items() < 10
         except:
             return None

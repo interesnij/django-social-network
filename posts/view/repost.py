@@ -3,7 +3,7 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post, PostList
+from posts.models import Post, PostsList
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -47,42 +47,42 @@ class CUCMPostWindow(TemplateView):
         context["community"] = self.community
         return context
 
-class UUCMPostListWindow(TemplateView):
+class UUCMPostsListWindow(TemplateView):
     """
     форма репоста списка записей пользователя к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         self.template_name = get_detect_platform_template("posts/repost/u_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UUCMPostListWindow,self).get(request,*args,**kwargs)
+        return super(UUCMPostsListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMPostListWindow,self).get_context_data(**kwargs)
+        context = super(UUCMPostsListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
         context["user"] = self.user
         return context
 
-class CUCMPostListWindow(TemplateView):
+class CUCMPostsListWindow(TemplateView):
     """
     форма репоста списка записей сообщества к себе на стену, в свои сообщества, в несколько сообщений
     """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CUCMPostListWindow,self).get(request,*args,**kwargs)
+        return super(CUCMPostsListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMPostListWindow,self).get_context_data(**kwargs)
+        context = super(CUCMPostsListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
         context["community"] = self.community
@@ -245,12 +245,12 @@ class CMPostRepost(View):
         return HttpResponse()
 
 
-class UUPostListRepost(View):
+class UUPostsListRepost(View):
     """
     создание репоста списка записей пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -264,12 +264,12 @@ class UUPostListRepost(View):
         else:
             return HttpResponseBadRequest()
 
-class CUPostListRepost(View):
+class CUPostsListRepost(View):
     """
     создание репоста списка записей сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -283,12 +283,12 @@ class CUPostListRepost(View):
             return HttpResponseBadRequest()
 
 
-class UCPostListRepost(View):
+class UCPostsListRepost(View):
     """
     создание репоста списка записей пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -306,12 +306,12 @@ class UCPostListRepost(View):
         return HttpResponse()
 
 
-class CCPostListRepost(View):
+class CCPostsListRepost(View):
     """
     создание репоста списка записей сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -328,12 +328,12 @@ class CCPostListRepost(View):
         return HttpResponse()
 
 
-class UMPostListRepost(View):
+class UMPostsListRepost(View):
     """
     создание репоста списка записей пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -341,12 +341,12 @@ class UMPostListRepost(View):
         return HttpResponse()
 
 
-class CMPostListRepost(View):
+class CMPostsListRepost(View):
     """
     создание репоста списка записей сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(list, "lpo"+str(list.pk), community, request, "Репост списка записей сообщества")

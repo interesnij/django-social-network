@@ -7,21 +7,21 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
-class AddPostListInUserCollections(View):
+class AddPostsListInUserCollections(View):
     def get(self,request,*args,**kwargs):
         from common.check.user import check_user_can_get_list
 
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
         return HttpResponse()
 
-class RemovePostListFromUserCollections(View):
+class RemovePostsListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
         from common.check.user import check_user_can_get_list
 
-        list = PostList.objects.get(pk=self.kwargs["pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -30,7 +30,7 @@ class RemovePostListFromUserCollections(View):
 
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, list, attach = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
+        form_post, list, attach = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -57,7 +57,7 @@ class PostUserCreate(View):
 
 class UserSaveCreatorDraftPost(View):
     def post(self,request,*args,**kwargs):
-        form_post, list = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"])
+        form_post, list = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -76,7 +76,7 @@ class UserSaveCreatorDraftPost(View):
 
 class UserSaveOfferDraftPost(View):
     def post(self,request,*args,**kwargs):
-        form_post, list = PostForm(request.POST), PostList.objects.get(pk=self.kwargs["pk"])
+        form_post, list = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"])
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -382,22 +382,22 @@ class PostGetVotes(View):
         return JsonResponse(data)
 
 
-class UserPostListCreate(TemplateView):
+class UserPostsListCreate(TemplateView):
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
         self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPostListCreate,self).get(request,*args,**kwargs)
+        return super(UserPostsListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserPostListCreate,self).get_context_data(**kwargs)
-        context["form"] = PostListForm()
+        context=super(UserPostsListCreate,self).get_context_data(**kwargs)
+        context["form"] = PostsListForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = PostListForm(request.POST)
+        self.form = PostsListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.templates import render_for_platform
 
@@ -406,10 +406,10 @@ class UserPostListCreate(TemplateView):
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
-        return super(UserPostListCreate,self).get(request,*args,**kwargs)
+        return super(UserPostsListCreate,self).get(request,*args,**kwargs)
 
 
-class UserPostListEdit(TemplateView):
+class UserPostsListEdit(TemplateView):
     """
     изменение списка записей пользователя
     """
@@ -419,37 +419,37 @@ class UserPostListEdit(TemplateView):
         from common.templates import get_detect_platform_template
 
         self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPostListEdit,self).get(request,*args,**kwargs)
+        return super(UserPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context=super(UserPostListEdit,self).get_context_data(**kwargs)
-        context["list"] = PostList.objects.get(pk=self.kwargs["list_pk"])
+        context=super(UserPostsListEdit,self).get_context_data(**kwargs)
+        context["list"] = PostsList.objects.get(pk=self.kwargs["list_pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        self.form = PostListForm(request.POST,instance=self.list)
+        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk:
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-        return super(UserPostListEdit,self).get(request,*args,**kwargs)
+        return super(UserPostsListEdit,self).get(request,*args,**kwargs)
 
 
-class UserPostListDelete(View):
+class UserPostsListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.type != PostList.MAIN and list.creator.pk == request.user.pk:
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax() and list.type != PostsList.MAIN and list.creator.pk == request.user.pk:
             list.delete_item()
             return HttpResponse()
         else:
             raise Http404
 
-class UserPostListRecover(View):
+class UserPostsListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PostList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.restore_item()
             return HttpResponse()
@@ -460,7 +460,7 @@ class UserPostListRecover(View):
 class AddPostInUserList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_item_in_list(post.pk):
             list.post_list.add(post)
@@ -471,7 +471,7 @@ class AddPostInUserList(View):
 class RemovePostFromUserList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_item_in_list(post.pk):
             list.post_list.remove(post)
             return HttpResponse()
@@ -491,15 +491,15 @@ class UserChangePostPosition(View):
                 post.save(update_fields=["order"])
         return HttpResponse()
 
-class UserChangePostListPosition(View):
+class UserChangePostsListPosition(View):
     def post(self,request,*args,**kwargs):
         import json
-        from users.model.list import UserPostListPosition
+        from users.model.list import UserPostsListPosition
 
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.pk == user.pk:
             for item in json.loads(request.body):
-                list = UserPostListPosition.objects.get(list=item['key'], user=user.pk)
+                list = UserPostsListPosition.objects.get(list=item['key'], user=user.pk)
                 list.position=item['value']
                 list.save(update_fields=["position"])
         return HttpResponse()

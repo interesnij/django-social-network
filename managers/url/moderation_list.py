@@ -4,7 +4,7 @@ from managers.view.moderation_list import *
 urlpatterns = [
     url(r'^user/$', ModerationUserList.as_view()),
     url(r'^community/$', ModerationCommunityList.as_view()),
-    url(r'^post/$', ModerationPostList.as_view()),
+    url(r'^post/$', ModerationPostsList.as_view()),
     url(r'^photo/$', ModerationPhotoList.as_view()),
     url(r'^good/$', ModerationGoodList.as_view()),
     url(r'^audio/$', ModerationAudioList.as_view()),

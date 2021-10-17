@@ -32,13 +32,13 @@ urlpatterns = [
 	url(r'^add_post_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddPostInUserList.as_view()),
     url(r'^remove_post_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovePostFromUserList.as_view()),
 
-	url(r'^add_list/$', UserPostListCreate.as_view()),
-    url(r'^edit_list/(?P<list_pk>\d+)/$', UserPostListEdit.as_view()),
-    url(r'^delete_list/(?P<list_pk>\d+)/$', UserPostListDelete.as_view()),
-    url(r'^restore_list/(?P<list_pk>\d+)/$', UserPostListRecover.as_view()),
-	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostListFromUserCollections.as_view()),
+	url(r'^add_list/$', UserPostsListCreate.as_view()),
+    url(r'^edit_list/(?P<list_pk>\d+)/$', UserPostsListEdit.as_view()),
+    url(r'^delete_list/(?P<list_pk>\d+)/$', UserPostsListDelete.as_view()),
+    url(r'^restore_list/(?P<list_pk>\d+)/$', UserPostsListRecover.as_view()),
+	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInUserCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromUserCollections.as_view()),
 
 	url(r'^change_position/(?P<pk>\d+)/$', UserChangePostPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangePostListPosition.as_view()),
+	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangePostsListPosition.as_view()),
 ]

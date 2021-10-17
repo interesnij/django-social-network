@@ -244,19 +244,19 @@ class UserPrivatePostView(TemplateView):
 		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		from posts.forms import PostListForm
+		from posts.forms import PostsListForm
 
 		context = super(UserPrivatePostView,self).get_context_data(**kwargs)
 		context["user"] = self.request.user
-		context["form"] = PostListForm(instance=self.list)
+		context["form"] = PostsListForm(instance=self.list)
 		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
-		from posts.forms import PostListForm
+		from posts.forms import PostsListForm
 
 		self.list = request.user.get_post_list()
-		self.form = PostListForm(instance=self.list)
+		self.form = PostsListForm(instance=self.list)
 		if request.is_ajax() and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()

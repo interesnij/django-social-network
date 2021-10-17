@@ -193,18 +193,18 @@ class CommunityPrivatePostView(TemplateView):
 		return super(CommunityPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		from posts.forms import PostListForm
+		from posts.forms import PostsListForm
 
 		c = super(CommunityPrivatePostView,self).get_context_data(**kwargs)
-		c["community"], c["form"], c["list"] = self.c, PostListForm(instance=self.list), self.list
+		c["community"], c["form"], c["list"] = self.c, PostsListForm(instance=self.list), self.list
 		return c
 
 	def post(self,request,*args,**kwargs):
-		from posts.forms import PostListForm
+		from posts.forms import PostsListForm
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_post_list()
-		self.form = PostListForm(request.POST, instance=self.list)
+		self.form = PostsListForm(request.POST, instance=self.list)
 		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()

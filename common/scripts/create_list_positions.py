@@ -14,7 +14,7 @@ django.setup()
 
 from music.models import SoundList
 from video.models import VideoList
-from posts.models import PostList, Post
+from posts.models import PostsList, Post
 from docs.models import DocList
 from gallery.models import PhotoList
 from survey.models import SurveyList
@@ -27,7 +27,7 @@ from django.db.models import Q
 
 """ стираем все таблицы порядков списков и пересохраняем заново, но не трогаем manytomany связи """
 UserPhotoListPosition.objects.all().delete()
-UserPostListPosition.objects.all().delete()
+UserPostsListPosition.objects.all().delete()
 UserPlayListPosition.objects.all().delete()
 UserGoodListPosition.objects.all().delete()
 UserVideoListPosition.objects.all().delete()
@@ -35,7 +35,7 @@ UserSurveyListPosition.objects.all().delete()
 UserDocListPosition.objects.all().delete()
 
 CommunityPhotoListPosition.objects.all().delete()
-CommunityPostListPosition.objects.all().delete()
+CommunityPostsListPosition.objects.all().delete()
 CommunityPlayListPosition.objects.all().delete()
 CommunityGoodListPosition.objects.all().delete()
 CommunityVideoListPosition.objects.all().delete()
@@ -44,14 +44,14 @@ CommunityDocListPosition.objects.all().delete()
 
 query = Q(Q(type="PUB")|Q(type="PRI"))
 
-post_lists = PostList.objects.exclude(type="_FIX").exclude(type="_DRA")
+post_lists = PostsList.objects.exclude(type="_FIX").exclude(type="_DRA")
 for list in post_lists:
     list.communities.clear()
     list.users.clear()
     if list.community:
-        CommunityPostListPosition.objects.create(list=list.pk, community=list.community.pk)
+        CommunityPostsListPosition.objects.create(list=list.pk, community=list.community.pk)
     else:
-        UserPostListPosition.objects.create(list=list.pk, user=list.creator.pk)
+        UserPostsListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
 doc_lists = DocList.objects.all()
 for list in doc_lists:

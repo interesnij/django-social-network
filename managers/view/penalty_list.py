@@ -34,7 +34,7 @@ class PenaltyCommunityList(ListView):
         list = self.user.get_penalty_communities()
         return list
 
-class PenaltyPostList(ListView):
+class PenaltyPostsList(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
@@ -43,7 +43,7 @@ class PenaltyPostList(ListView):
             self.template_name = get_staff_template("managers/penalty_list/post_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        return super(PenaltyPostList,self).get(request,*args,**kwargs)
+        return super(PenaltyPostsList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
         list = self.user.get_penalty_posts()

@@ -75,12 +75,6 @@ class DocList(models.Model):
             list = DocList.objects.create(community=instance, type=DocList.MAIN, name="Основной список", creator=instance.creator)
             from communities.model.list import CommunityDocListPosition
             CommunityDocListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_u_model(sender, instance, created, **kwargs):
-        if created:
-            list = DocList.objects.create(creator=instance, type=DocList.MAIN, name="Основной список")
-            from users.model.list import UserDocListPosition
-            UserDocListPosition.objects.create(user=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.doc_list.filter(pk=item_id).values("pk").exists()
