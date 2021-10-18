@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from gallery.views import PhotoDetail, MessagePhotoDetail, LoadPhotoList
+from gallery.views import *
 
 urlpatterns=[
 	url(r'^photo/(?P<pk>\d+)/$', PhotoDetail.as_view(), name="photo_detail"),
