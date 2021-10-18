@@ -402,14 +402,17 @@ function this_page_reload(url) {
 
 $serf_history = [];
 
-addEventListener("popstate",function(e){
-    alert('yeees!');
-},false);
+window.addEventListener('popstate', function (e) {
+  e.preventDefault();
+  //$serf_history.pop()
+  //ajax_get_reload(document.referrer);
+});
 
 function ajax_get_reload(url) {
   console.log($serf_history);
   $serf_history.push(document.title + "," + document.location.href);
   console.log($serf_history);
+  console.log($serf_history[-1]);
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', url, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

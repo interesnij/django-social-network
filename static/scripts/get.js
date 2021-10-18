@@ -208,10 +208,6 @@ on('body', 'click', '.notify_ajax', function(event) {
   ajax_link.send()
 })
 
-window.addEventListener('popstate', function (e) {
-  e.preventDefault();
-  ajax_get_reload(document.referrer);
-});
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
