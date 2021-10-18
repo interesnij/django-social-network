@@ -397,7 +397,7 @@ function ajax_get_reload(url) {
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
             serf_history = document.getElementById("#serf_history");
-            console.log(serf_history.history)
+            console.log(serf_history)
         }
     }
     ajax_link.send()
