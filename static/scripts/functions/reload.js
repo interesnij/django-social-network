@@ -405,7 +405,29 @@ $serf_history = [];
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
   $serf_history.pop();
-  ajax_get_reload($serf_history.slice(-1));
+
+  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  ajax_link.open('GET', $serf_history.slice(-1), true);
+  ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem_ = document.createElement('span');
+          elem_.innerHTML = ajax_link.responseText;
+          ajax = elem_.querySelector("#reload_block");
+          rtr = document.getElementById('ajax');
+          rtr.innerHTML = ajax.innerHTML;
+          window.scrollTo(0, 0);
+          title = elem_.querySelector('title').innerHTML;
+          window.history.pushState(null, "vfgffgfgf", url);
+          document.title = title;
+          if_list(rtr);
+          create_pagination(rtr);
+          get_dragula(".drag_container");
+          get_dragula(".drag_list");
+          get_document_opacity_1(rtr);
+      }
+  }
+  ajax_link.send()
 });
 
 function ajax_get_reload(url) {
