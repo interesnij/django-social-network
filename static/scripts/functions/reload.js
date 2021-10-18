@@ -581,8 +581,10 @@ function change_this_fullscreen(_this, type_class) {
           if ($loader.querySelector(".data_display")) {
             $loader.style.overflowY = "unset";
           };
+          url_split = url.split("/");
+          new_uuid = url_split[url_split.length - 1]
           params = window.location.search.replace( '?', '').split('&');
-          new_url = window.location.href.replace(params[2].split("=")[1], $loader.querySelector(".uuid_saver").getAttribute("data-uuid"))
+          new_url = window.location.href.replace(params[2].split("=")[1], new_uuid)
           window.history.replaceState(null, null, new_url);
       }
   };
@@ -606,7 +608,4 @@ function close_fullscreen() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
   window.history.replaceState(null, null, window.location.pathname);
-  try {
-    $serf_history.pop();
-  } catch { null }
 };
