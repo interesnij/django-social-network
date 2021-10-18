@@ -34,7 +34,8 @@ on('#ajax', 'click', '.detail_photo', function() {
   } else if (block.classList.contains("featured_container")) {
     where_from = "featured_wall=1&id=" + pk
   } else { where_from = "null" };
-  create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen")
+  create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_uuid=" + photo_pk);
 });
 
 on('#ajax', 'click', '.u_avatar_detail', function() {
