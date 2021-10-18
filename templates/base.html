@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}" media="all" />
     <link rel="stylesheet" href="{% static 'styles/default.css' %}" />
     <link class="my_color_settings" rel="stylesheet" href="/static/styles/color/{{ request.user.get_color_background }}.css" />
-
     <link rel="stylesheet" href="{% static 'styles/video.css' %}" media="none" onload="if(media!='all')media='all'" />
     <link rel="stylesheet" href="{% static 'styles/load.css' %}" media="none" onload="if(media!='all')media='all'" />
-
+    <script id="serf_history">
+      // 1 - название, 2 - ссылка
+      history = []
+    </script>
 </head>
   <body class="fixed-header" data-video="first_player" data-csrf="{{ csrf_token }}">
      <div class="wrapper">

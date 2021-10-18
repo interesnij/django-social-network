@@ -395,7 +395,9 @@ function ajax_get_reload(url) {
             create_pagination(rtr);
             get_dragula(".drag_container");
             get_dragula(".drag_list");
-            get_document_opacity_1(rtr)
+            get_document_opacity_1(rtr);
+            serf_history = document.getElementById("#serf_history");
+            console.log(serf_history.history)
         }
     }
     ajax_link.send()
