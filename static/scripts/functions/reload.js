@@ -589,6 +589,16 @@ function change_this_fullscreen(_this, type_class) {
   link.send();
 };
 
+function create_gif_loading () {
+  $load_gif = document.createElement("img");
+  $load_gif.setAttribute("src", "/static/images/preloader.gif");
+  $load_gif.style.width = "40px";
+  $load_div = document.createElement("div");
+  $load_div.classList.add("centered", "m-1");
+  $load_div.append($load_gif);
+  return $load_div
+};
+
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
