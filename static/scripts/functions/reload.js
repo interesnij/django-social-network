@@ -403,6 +403,9 @@ function this_page_reload(url) {
 $serf_history = [];
 
 function ajax_get_reload(url) {
+  console.log($serf_history);
+  $serf_history.push(",");
+  console.log($serf_history);
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', url, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -422,7 +425,6 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
-            serf_history = document.getElementById("#serf_history");
         }
     }
     ajax_link.send()
