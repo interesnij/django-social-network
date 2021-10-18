@@ -404,8 +404,8 @@ $serf_history = [];
 
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
-  //$serf_history.pop()
-  //ajax_get_reload(document.referrer);
+  $serf_history.pop();
+  ajax_get_reload($serf_history.slice(-1));
 });
 
 function ajax_get_reload(url) {
