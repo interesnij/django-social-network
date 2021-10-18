@@ -131,6 +131,8 @@ class PostPhotoDetail(TemplateView):
 	template_name, community, user_form = None, None, None
 
 	def get(self,request,*args,**kwargs):
+		from posts.models import Post
+		
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
