@@ -77,19 +77,19 @@ class DocsList(models.Model):
             CommunityDocsListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
-        return self.doc_list.filter(pk=item_id).values("pk").exists()
+        return self.docs_list.filter(pk=item_id).values("pk").exists()
 
     def is_not_empty(self):
-        return self.doc_list.exclude(type__contains="_").values("pk").exists()
+        return self.docs_list.exclude(type__contains="_").values("pk").exists()
 
     def get_staff_items(self):
-        return self.doc_list.exclude(type__contains="_")
+        return self.docs_list.exclude(type__contains="_")
     def get_items(self):
-        return self.doc_list.filter(type="PUB")
+        return self.CommunityDocsListPosition_list.filter(type="PUB")
     def get_manager_items(self):
-        return self.doc_list.filter(type="MAN")
+        return self.docs_list.filter(type="MAN")
     def count_items(self):
-        return self.doc_list.exclude(type__contains="_").values("pk").count()
+        return self.docs_list.exclude(type__contains="_").values("pk").count()
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
