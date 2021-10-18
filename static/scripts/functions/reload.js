@@ -404,7 +404,7 @@ $serf_history = [];
 
 function ajax_get_reload(url) {
   console.log($serf_history);
-  $serf_history.push(document.title + "," + document.location.href);
+  $serf_history.push(document.title + ",");
   console.log($serf_history);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
