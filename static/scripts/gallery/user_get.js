@@ -15,7 +15,26 @@ on('#ajax', 'click', '.load_attach_photo_list', function() {
 
 on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
-  create_fullscreen("/gallery/photo/" + photo_pk + "/", "photo_fullscreen")
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
+  block = document.body.querySelector(".main-container");
+  if (block.classList.contains("user_container")) {
+    where_from = "user_wall=1&id=" + pk
+  } else if (block.classList.contains("community_container")) {
+    where_from = "community_wall=1&id=" + pk
+  } else if (block.classList.contains("user_container")) {
+    where_from = "user_gallery=1&id=" + pk
+  } else if (block.classList.contains("community_container")) {
+    where_from = "community_gallery=1&id=" + pk
+  } else if (block.classList.contains("feed_container")) {
+    where_from = "feed_wall=1&"
+  } else if (block.classList.contains("chat_container")) {
+    where_from = "chat_wall=1&id=" + pk
+  } else if (block.classList.contains("search_container")) {
+    where_from = "search_wall=1&id=" + pk
+  } else if (block.classList.contains("featured_container")) {
+    where_from = "featured_wall=1&id=" + pk
+  } else { where_from = "null" };
+  create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen")
 });
 
 on('#ajax', 'click', '.u_avatar_detail', function() {
