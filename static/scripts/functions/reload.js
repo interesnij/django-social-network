@@ -582,9 +582,9 @@ function change_this_fullscreen(_this, type_class) {
             $loader.style.overflowY = "unset";
           };
           url_split = url.split("/");
-          new_uuid = url_split.slice(-2).replace(',', '');
+          new_uuid = url_split.slice(-2);
           params = window.location.search.replace( '?', '').split('&');
-          new_url = window.location.href.replace(params[2].split("=")[1], new_uuid)
+          new_url = window.location.href.replace(params[2].split("=")[1], new_uuid.replace(',', ''))
           window.history.replaceState(null, null, new_url);
       }
   };
