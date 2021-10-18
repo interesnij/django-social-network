@@ -49,7 +49,6 @@ on('#ajax', 'click', '.post_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
 
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   block = document.body.querySelector(".main-container");
   if (block.classList.contains("user_container")) {
     where_from = "user=1&id=" + pk
