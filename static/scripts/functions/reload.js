@@ -305,10 +305,15 @@ function load_item_window() {
     if (params[0].split("=")[1] == "wall") {
       // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
       if (params[2].split("=")[0] == "post_uuid") {
-        // post_uuid
         setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "photo_uuid") {
-        // post_uuid
+        setTimeout(create_fullscreen("/gallery/post_photo/" + params[2].split("=")[1] + "/" + params[3].split("=")[1] + "/", "photo_fullscreen"), 3000)
+      } 
+    }
+
+    else if (params[0].split("=")[1] == "big_page") {
+      // если есть параметр big_page, значит открыта страница пользователя или сообщества
+      if (params[2].split("=")[0] == "photo_uuid") {
         setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
     }

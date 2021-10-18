@@ -18,24 +18,22 @@ on('#ajax', 'click', '.detail_photo', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   block = document.body.querySelector(".main-container");
   if (block.classList.contains("user_container")) {
-    where_from = "user_wall=1&id=" + pk
+    where_from = "user=1&id=" + pk
   } else if (block.classList.contains("community_container")) {
-    where_from = "community_wall=1&id=" + pk
-  } else if (block.classList.contains("user_container")) {
+    where_from = "community=1&id=" + pk
+  } else if (block.classList.contains("user_gallery_container")) {
     where_from = "user_gallery=1&id=" + pk
-  } else if (block.classList.contains("community_container")) {
+  } else if (block.classList.contains("community_gallery_container")) {
     where_from = "community_gallery=1&id=" + pk
   } else if (block.classList.contains("feed_container")) {
     where_from = "feed_wall=1&"
-  } else if (block.classList.contains("chat_container")) {
-    where_from = "chat_wall=1&id=" + pk
   } else if (block.classList.contains("search_container")) {
     where_from = "search_wall=1&id=" + pk
   } else if (block.classList.contains("featured_container")) {
     where_from = "featured_wall=1&id=" + pk
   } else { where_from = "null" };
   create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_uuid=" + photo_pk);
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&photo_uuid=" + photo_pk);
 });
 
 on('#ajax', 'click', '.u_avatar_detail', function() {
@@ -47,10 +45,30 @@ on('#ajax', 'click', '.comment_photo', function() {
   pk = this.getAttribute('photo-pk');
   create_fullscreen("/gallery/user/comment_photo/" + pk + "/", "photo_fullscreen");
 });
-on('#ajax', 'click', '.u_post_photo', function() {
+on('#ajax', 'click', '.post_photo', function() {
   pk = this.getAttribute('photo-pk');
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
+
+  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
+  block = document.body.querySelector(".main-container");
+  if (block.classList.contains("user_container")) {
+    where_from = "user=1&id=" + pk
+  } else if (block.classList.contains("community_container")) {
+    where_from = "community=1&id=" + pk
+  } else if (block.classList.contains("user_gallery_container")) {
+    where_from = "user_gallery=1&id=" + pk
+  } else if (block.classList.contains("community_gallery_container")) {
+    where_from = "community_gallery=1&id=" + pk
+  } else if (block.classList.contains("feed_container")) {
+    where_from = "feed_wall=1&"
+  } else if (block.classList.contains("search_container")) {
+    where_from = "search_wall=1&id=" + pk
+  } else if (block.classList.contains("featured_container")) {
+    where_from = "featured_wall=1&id=" + pk
+  } else { where_from = "null" };
+
   create_fullscreen("/gallery/user/post_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid + "&photo_uuid=" + photo_pk);
 });
 on('#ajax', 'click', '.message_photo', function() {
   pk = this.getAttribute('photo-pk');

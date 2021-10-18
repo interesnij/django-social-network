@@ -93,33 +93,6 @@ class PhotoUserCommentList(ListView):
 	def get_queryset(self):
 		return self.photo.get_comments()
 
-
-class UserPostPhoto(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from posts.models import Post
-        from common.templates import get_template_user_item, get_template_anon_user_item
-
-        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.photos = self.post.get_attach_photos()
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserPostPhoto,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserPostPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["post"] = self.post
-        context["user"] = self.request.user
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
-
 class UserCommentPhoto(TemplateView):
     template_name = None
 
@@ -185,31 +158,5 @@ class GetUserPhoto(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(GetUserPhoto,self).get_context_data(**kwargs)
         context["object"] = self.photo
-        context["user_form"] = PhotoDescriptionForm(instance=self.photo)
-        return context
-
-
-class UserChatPhoto(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from chat.models import Chat
-        from common.templates import get_template_user_item, get_template_anon_user_item
-
-        self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-        self.photos = self.chat.get_attach_photos()
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.photo, "chat/attach/photo/", "u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/anon_u_detail.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserChatPhoto,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserChatPhoto,self).get_context_data(**kwargs)
-        context["object"] = self.photo
-        context["chat"] = self.chat
-        context["next"] = self.photos.filter(pk__gt=self.photo.pk).order_by('pk').first()
-        context["prev"] = self.photos.filter(pk__lt=self.photo.pk).order_by('-pk').first()
         context["user_form"] = PhotoDescriptionForm(instance=self.photo)
         return context
