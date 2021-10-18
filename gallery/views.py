@@ -132,7 +132,7 @@ class PostPhotoDetail(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
 
 		if self.post.community:
