@@ -68,7 +68,7 @@ on('#ajax', 'click', '.post_photo', function() {
   } else { where_from = "null" };
 
   create_fullscreen("/gallery/post_photo/" + uuid + "/" + photo_pk + "/", "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid + "&photo_uuid=" + photo_pk);
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_uuid=" + uuid + "&photo_uuid=" + photo_pk);
 });
 on('#ajax', 'click', '.message_photo', function() {
   pk = this.getAttribute('photo-pk');
