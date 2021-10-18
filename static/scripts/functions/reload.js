@@ -309,7 +309,7 @@ function load_item_window() {
         setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "photo_uuid") {
         // post_uuid
-        setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
+        setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
     }
   }
