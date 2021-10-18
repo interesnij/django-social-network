@@ -404,7 +404,6 @@ $serf_history = [];
 
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
-  $serf_history.pop();
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   ajax_link.open('GET', $serf_history.slice(-1), true);
@@ -425,6 +424,7 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_container");
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
+          $serf_history.pop();
       }
   }
   ajax_link.send()
