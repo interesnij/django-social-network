@@ -67,7 +67,7 @@ on('#ajax', 'click', '.post_photo', function() {
     where_from = "featured_wall=1&id=" + pk
   } else { where_from = "null" };
 
-  create_fullscreen("/gallery/user/post_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
+  create_fullscreen("/gallery/post_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid + "&photo_uuid=" + photo_pk);
 });
 on('#ajax', 'click', '.message_photo', function() {
