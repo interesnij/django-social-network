@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ list.name }} - мой альбом{% endblock %}
 {% block content %}
+
+<div class="main-container mt-3 pk_saver user_gallery_container" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
 <span class="load_block">
 <div class="media mt-3" style="padding-left: 7px;">
   <form id="add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
@@ -22,4 +24,5 @@
   <div class="row is_block_paginate no-gutters drag_container" data-uuid="{{ list.uuid }}" id="u_list_photos_container"  data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/"></div>
 </div>
 </span>
+</div>
 {% endblock %}

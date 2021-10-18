@@ -1,9 +1,4 @@
 
-on('#ajax', 'click', '.c_post_photo', function() {
-  pk = this.getAttribute('photo-pk');
-  this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/gallery/community/post_photo/" + uuid + "/" + pk + "/", "photo_fullscreen");
-});
 
 on('#ajax', 'click', '.c_photo_priview', function() {
   pk = this.getAttribute('photo-pk');

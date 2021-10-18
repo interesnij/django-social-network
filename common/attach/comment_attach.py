@@ -245,9 +245,9 @@ def get_comment_edit(comment, user):
                 if photo.type[0] == "_":
                     pass
                 if photo.community:
-                    el = ''.join(['<div class="progressive replace image_fit_200 c_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(comment.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
+                    el = ''.join(['<div class="progressive replace image_fit_200 post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(comment.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
                 else:
-                    el = ''.join(['<div class="progressive replace image_fit_200 u_post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(comment.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
+                    el = ''.join(['<div class="progressive replace image_fit_200 post_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '" data-uuid="', str(comment.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div>'])
                 block = ''.join([block, '<div class="photo"><span class="photo_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="pho', str(photo.pk), '"></span>', el, '</div>'])
             except:
                 pass

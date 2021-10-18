@@ -125,3 +125,44 @@ class LoadPhotoList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class PostPhotoDetail(TemplateView):
+	template_name, community, user_form = None, None, None
+
+	def get(self,request,*args,**kwargs):
+		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
+        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.photos = self.post.get_attach_photos()
+
+		if self.post.community:
+			self.community = self.post.community
+			if request.user.is_administrator_of_community(self.community.pk):
+				from gallery.forms import PhotoDescriptionForm
+				self.user_form = PhotoDescriptionForm(instance=self.photo)
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			if request.user.pk == self.post.creator.pk:
+				from gallery.forms import PhotoDescriptionForm
+				self.user_form = PhotoDescriptionForm(instance=self.photo)
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostPhotoDetail,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(PostPhotoDetail,self).get_context_data(**kwargs)
+		context["object"] = self.photo
+		context["list"] = self.photo.list
+		if self.photos.filter(order=self.photo.order + 1).exists():
+			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
+		if self.photos.filter(order=self.photo.order - 1).exists():
+			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
+		context["avatar"] = self.photo.is_avatar(self.request.user)
+		context["user_form"] = self.user_form
+		context["community"] = self.community
+		return context

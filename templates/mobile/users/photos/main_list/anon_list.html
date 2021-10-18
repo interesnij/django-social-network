@@ -2,7 +2,7 @@
 {% block title %}Фотографии {{ user.get_full_name_genitive }}{% endblock %}
 {% block content %}
 
-<div class="container main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
+<div class="container main-container mt-3 pk_saver user_gallery_container" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
 {% include 'mobile/users/photos/main_list/lists.html' %}
 
 <span class="load_block">
