@@ -304,7 +304,7 @@ function load_item_window() {
   if (params) {
     if (params[0].split("=")[1] == "wall") {
       // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
-      if (params[2].split("=")[0]) {
+      if (params[2].split("=")[0] == "post_uuid") {
         // post_uuid
         setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       }
@@ -582,9 +582,7 @@ function change_this_fullscreen(_this, type_class) {
             $loader.style.overflowY = "unset";
           };
           url_split = url.split("/");
-          console.log(url_split);
           new_uuid = url_split.slice(-2);
-          console.log(new_uuid);
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
           window.history.replaceState(null, null, new_url);
