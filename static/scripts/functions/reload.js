@@ -402,6 +402,10 @@ function this_page_reload(url) {
 
 $serf_history = [];
 
+addEventListener("popstate",function(e){
+    alert('yeees!');
+},false);
+
 function ajax_get_reload(url) {
   console.log($serf_history);
   $serf_history.push(document.title + "," + document.location.href);
