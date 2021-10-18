@@ -515,7 +515,6 @@ function create_fullscreen(url, type_class) {
           }
 
           get_document_opacity_0();
-          $serf_history.push(url);
 
           if ($loader.querySelector(".next_page_list")) {
             $loader.onscroll = function() {
@@ -585,7 +584,6 @@ function change_this_fullscreen(_this, type_class) {
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], $loader.querySelector(".uuid_saver").getAttribute("data-uuid"))
           window.history.replaceState(null, null, new_url);
-          $serf_history.push(url);
       }
   };
   link.send();
