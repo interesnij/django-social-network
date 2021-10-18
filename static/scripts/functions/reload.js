@@ -303,7 +303,11 @@ function load_item_window() {
   params = window.location.search.replace( '?', '').split('&');
   if (params) {
     if (params[0].split("=")[1] == "wall") {
-      setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000);
+      // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
+      if (params[2].split("=")[0]) {
+        // post_uuid
+        setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
+      }
     }
   }
 };
