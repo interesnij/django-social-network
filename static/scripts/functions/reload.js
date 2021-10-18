@@ -307,6 +307,9 @@ function load_item_window() {
       if (params[2].split("=")[0] == "post_uuid") {
         // post_uuid
         setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
+      } else if (params[2].split("=")[0] == "photo_uuid") {
+        // post_uuid
+        setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       }
     }
   }
