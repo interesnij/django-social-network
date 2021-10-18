@@ -582,7 +582,8 @@ function change_this_fullscreen(_this, type_class) {
             $loader.style.overflowY = "unset";
           };
           url_split = url.split("/");
-          new_uuid = url_split[url_split.length - 1]
+          new_uuid = url_split[url_split.length - 1];
+          console.log(new_uuid);
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], new_uuid)
           window.history.replaceState(null, null, new_url);
