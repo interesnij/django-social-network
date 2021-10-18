@@ -132,7 +132,7 @@ class PostPhotoDetail(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from posts.models import Post
-		
+
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.photos = self.post.get_attach_photos()
@@ -159,7 +159,7 @@ class PostPhotoDetail(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(PostPhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
-		context["list"] = self.photo.list
+		context["post"] = self.post
 		if self.photos.filter(order=self.photo.order + 1).exists():
 			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
 		if self.photos.filter(order=self.photo.order - 1).exists():
