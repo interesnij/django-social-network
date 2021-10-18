@@ -376,7 +376,37 @@ function list_block_load(target_block, response_block, link) {
     request.send( null );
 }
 
+// Работаем с историей, создавая свою! Всё, что меняет адреса, отправляем сюда!
+
+function this_page_reload(url) {
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    ajax_link.open('GET', url, true);
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            elem_ = document.createElement('span');
+            elem_.innerHTML = ajax_link.responseText;
+            ajax = elem_.querySelector("#reload_block");
+            rtr = document.getElementById('ajax');
+            rtr.innerHTML = ajax.innerHTML;
+            window.scrollTo(0, 0);
+            if_list(rtr);
+            loaded = false;
+            create_pagination(rtr);
+
+        }
+    }
+    ajax_link.send()
+};
+
+
+$serf_history = [];
+
 function ajax_get_reload(url) {
+  console.log($serf_history);
+  $serf_history.push(document.title + "," + document.location.href);
+  console.log($serf_history);
+
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', url, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -397,27 +427,6 @@ function ajax_get_reload(url) {
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
             serf_history = document.getElementById("#serf_history");
-            console.log(serf_history)
-        }
-    }
-    ajax_link.send()
-}
-
-function this_page_reload(url) {
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url, true);
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            elem_ = document.createElement('span');
-            elem_.innerHTML = ajax_link.responseText;
-            ajax = elem_.querySelector("#reload_block");
-            rtr = document.getElementById('ajax');
-            rtr.innerHTML = ajax.innerHTML;
-            window.scrollTo(0, 0);
-            if_list(rtr);
-            loaded = false;
-            create_pagination(rtr)
         }
     }
     ajax_link.send()
