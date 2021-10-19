@@ -65,7 +65,12 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
 })
 
 on('#ajax', 'click', '.load_photo_list', function() {
-  create_fullscreen("/gallery/load_list/" + this.parentElement.parentElement.getAttribute("photolist-pk") + "/", "item_fullscreen")
+  card = this.parentElement.parentElement;
+  photolist_pk = card.getAttribute("photolist-pk");
+  owner_pk = card.getAttribute("owner-pk"); 
+  where_from = get_open_object_target(owner_pk);
+  create_fullscreen("/gallery/load_list/" + photolist_pk + "/?" + where_from, "item_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&photolist=" + photolist_pk);
 });
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
