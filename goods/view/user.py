@@ -15,7 +15,7 @@ class UserGood(TemplateView):
 		from common.templates import get_template_user_item, get_template_anon_user_item
 
 		self.good, self.list = Good.objects.get(pk=self.kwargs["pk"]), GoodList.objects.get(uuid=self.kwargs["uuid"])
-		self.goods, self.user, user_agent = self.list.get_goods(), self.list.creator, request.META['HTTP_USER_AGENT']
+		self.goods, self.user, user_agent = self.list.get_items(), self.list.creator, request.META['HTTP_USER_AGENT']
 		try:
 			GoodNumbers.objects.get(user=request.user.pk, good=self.good.pk)
 		except:
