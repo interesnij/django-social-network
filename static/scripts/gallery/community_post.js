@@ -227,12 +227,12 @@ on('#ajax', 'click', '.u_remove_photo_from_list', function() {
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {
   mob_send_change(this, "/gallery/community_progs/off_comment/", "mob_c_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_photo_comments").style.display = "none"
+  post.querySelector(".load_photo_comments").style.display = "none"
 })
 on('#ajax', 'click', '.mob_c_photo_on_comment', function() {
   mob_send_change(this, "/gallery/community_progs/on_comment/", "mob_c_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_photo_comments").style.display = "unset"
+  post.querySelector(".load_photo_comments").style.display = "unset"
 })
 on('#ajax', 'click', '.mob_c_photo_off_private', function() {
   mob_send_change(this, "/gallery/community_progs/off_private/", "mob_c_photo_on_private", "Вкл. приватность")

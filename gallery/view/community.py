@@ -72,30 +72,6 @@ class CommunityAlbumPhotosList(ListView):
         photo_list = self.photo_list
         return photo_list
 
-class PhotoCommunityCommentList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_comments
-
-		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-		self.community = self.photo.community
-		if not request.is_ajax() or not self.photo.comments_enabled:
-			raise Http404
-		self.template_name = get_template_user_comments(self.photo, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PhotoCommunityCommentList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super(PhotoCommunityCommentList, self).get_context_data(**kwargs)
-		context['parent'] = self.photo
-		context['community'] = self.community
-		return context
-
-	def get_queryset(self):
-		check_can_get_lists(self.request.user, self.community)
-		comments = self.photo.get_comments()
-		return comments
-
 
 class CommunityFirstAvatar(TemplateView):
     template_name = None
