@@ -185,3 +185,27 @@ class LoadPostsList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class PostCommentList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_comments, get_template_community_comments
+
+		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		if not request.is_ajax() or not self.post.comments_enabled:
+			raise Http404
+		if self.post.community:
+			self.template_name = get_template_user_comments(self.post, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_user_comments(self.post, "posts/u_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostCommentList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(PostCommentList, self).get_context_data(**kwargs)
+		context['parent'] = self.post
+		return context
+
+	def get_queryset(self):
+		return self.post.get_comments()

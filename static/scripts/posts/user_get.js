@@ -214,7 +214,7 @@ on('#ajax', 'click', '.u_all_item_reposts', function() {
   create_fullscreen("/posts/item_window/all_user_reposts/" + pk + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.u_item_comments', function() {
+on('#ajax', 'click', '.load_item_comments', function() {
   clear_comment_dropdown();
   parent = this.parentElement.parentElement.parentElement.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -223,10 +223,9 @@ on('#ajax', 'click', '.u_item_comments', function() {
     block.classList.remove("show");
   } else {
     if (!block.firstChild){
-      list_load(block, "/posts/user/comment/" + uuid + "/")
+      list_load(block, "/posts/comments/" + uuid + "/")
     };
     block.classList.add("show");
-
   }
 });
 

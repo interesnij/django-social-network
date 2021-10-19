@@ -74,7 +74,7 @@ on('#ajax', 'click', '.u_all_good_reposts', function() {
   create_fullscreen("/goods/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.u_good_comments', function() {
+on('#ajax', 'click', '.load_item_comments', function() {
   clear_comment_dropdown();
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   good_pk = block.getAttribute("good-pk");
@@ -82,7 +82,7 @@ on('#ajax', 'click', '.u_good_comments', function() {
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
   } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/goods/user/comment/" + uuid + "/");
+    block_comments.firstChild ? null : list_load(block_comments, "/goods/comments/" + uuid + "/");
     block_comments.classList.add("show")
   }
 });

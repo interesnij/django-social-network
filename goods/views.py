@@ -91,3 +91,27 @@ class LoadGood(TemplateView):
 		if self.goods.filter(order=self.good.order - 1).exists():
 			c["prev"] = self.goods.filter(order=self.good.order - 1)[0]
 		return c
+
+
+class GoodCommentList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_comments, get_template_community_comments
+
+		self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+		if not request.is_ajax() or not self.good.comments_enabled:
+			raise Http404
+		if self.good.community:
+			self.template_name = get_template_user_comments(self.good, "goods/c_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_user_comments(self.good, "goods/u_good_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(GoodCommentList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(GoodCommentList, self).get_context_data(**kwargs)
+		context['parent'] = self.good
+		return context
+
+	def get_queryset(self):
+		return self.good.get_comments()

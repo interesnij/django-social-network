@@ -74,7 +74,7 @@ on('#video_loader', 'click', '.u_all_video_reposts', function() {
   create_fullscreen("/video/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#video_loader', 'click', '.u_video_comments', function() {
+on('#video_loader', 'click', '.load_item_comments', function() {
   clear_comment_dropdown();
   video_display = this.parentElement.parentElement.parentElement;
   uuid = video_display.getAttribute("data-uuid");
@@ -82,7 +82,7 @@ on('#video_loader', 'click', '.u_video_comments', function() {
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
   } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/video/user/comment/" + uuid + "/");
+    block_comments.firstChild ? null : list_load(block_comments, "/video/comments/" + uuid + "/");
     block_comments.classList.add("show")
   }
 });

@@ -5,28 +5,6 @@ from posts.models import Post, PostComment
 from django.http import Http404
 
 
-class PostUserCommentList(ListView):
-    template_name, paginate_by = None, 15
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_user_comments
-        self.item = Post.objects.get(uuid=self.kwargs["uuid"])
-        self.user = self.item.creator
-        if not request.is_ajax() or not self.item.comments_enabled:
-            raise Http404
-        self.template_name = get_template_user_comments(self.item, "posts/u_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(PostUserCommentList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(PostUserCommentList, self).get_context_data(**kwargs)
-        context['parent'] = self.item
-        context['user'] = self.user
-        return context
-
-    def get_queryset(self):
-        comments = self.item.get_comments()
-        return comments
-
 class PostUserDetail(TemplateView):
     template_name = None
 

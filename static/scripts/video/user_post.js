@@ -35,12 +35,12 @@ on('#ajax', 'click', '.u_video_edit_comment_btn', function() {
 on('#video_loader', 'click', '.u_video_off_comment', function() {
   send_photo_change(this, "/video/user_progs/off_comment/", "u_video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_video_comments").style.display = "none"
+  post.querySelector(".load_item_comments").style.display = "none"
 })
 on('#video_loader', 'click', '.u_video_on_comment', function() {
   send_photo_change(this, "/video/user_progs/on_comment/", "u_video_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".u_video_comments").style.display = "unset"
+  post.querySelector(".load_item_comments").style.display = "unset"
 })
 
 on('#video_loader', 'click', '.u_video_comment_delete', function() {
