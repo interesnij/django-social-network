@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from video.views import AllVideoView, LoadVideoList
+from video.views import *
 
 
 urlpatterns = [
