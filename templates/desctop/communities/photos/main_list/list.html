@@ -6,7 +6,9 @@
 <div class="main-container mt-3 community_gallery_container">
 
 <div class="container mt-4">
-  {% include 'desctop/communities/photos/main_list/lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'desctop/communities/photo/main_list/lists.html' %}
+  {% endif %}
 </div>
 
 <span class="load_block">

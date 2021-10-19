@@ -9,7 +9,9 @@
               <button class="btn border" type="button">Искать</button>
             </div>
           </div>
-          {% include 'mobile/users/video/main_list/lists.html' %}
+          {% if count_lists > 1 %}
+            {% include 'mobile/users/video/main_list/lists.html' %}
+          {% endif %}
           <span class="load_block">
 
           <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">

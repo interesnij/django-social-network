@@ -11,7 +11,9 @@
         </div>
     </div>
 
-    {% include 'desctop/communities/docs/main_list/lists.html' %}
+    {% if count_lists > 1 %}
+      {% include 'desctop/communities/docs/main_list/lists.html' %}
+    {% endif %}
     <span class="load_block">
 
     <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px">

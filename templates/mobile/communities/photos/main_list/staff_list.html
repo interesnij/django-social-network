@@ -11,7 +11,9 @@
       </div>
     </div>
   </div>
-{% include 'mobile/communities/gallery/phoh_lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'mobile/communities/photo/main_list/lists.html' %}
+  {% endif %}
 
 <div class="media mt-3" style="padding-left: 7px;">
   <h5 class="mt-1" style="flex: 1;">Фото</h5>

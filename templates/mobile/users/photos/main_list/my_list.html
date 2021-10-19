@@ -4,7 +4,9 @@
 
 <div class="container main-container mt-3 pk_saver user_gallery_container" data-pk="{{ user.pk }}">
 
-{% include 'mobile/users/photos/main_list/my_lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'mobile/users/photo/main_list/my_lists.html' %}
+  {% endif %}
 
 <span class="load_block">
   <div class="media mt-3" style="padding-left: 7px;">
@@ -15,6 +17,7 @@
 
         <input type="file" id="u_gallery_photo_add" name="file" style="display:none" multiple="multiple">
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
+        <span class="pointer badge badge-light-success u_photo_list_add">Создать список</span>
     </h5>
     </form>
   </div>

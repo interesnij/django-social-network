@@ -3,7 +3,9 @@
 {% block content %}
 
 <div class="container main-container pk_saver mt-3" data-pk="{{ community.pk }}">
-  {% include 'mobile/communities/music/main_list/lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'mobile/communities/music/main_list/lists.html' %}
+  {% endif %}
   <span class="load_block">
 
   <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px">

@@ -10,7 +10,9 @@
               <button class="btn border" type="button">Искать</button>
             </div>
           </div>
-          {% include 'desctop/users/music/main_list/my_lists.html' %}
+          {% if count_lists > 1 %}
+            {% include 'desctop/users/music/main_list/my_lists.html' %}
+          {% endif %}
           <span class="load_block">
             <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
               <h5 class="mt-1">
@@ -18,6 +20,7 @@
                 <span class="pointer badge badge-light-success u_track_add">Добавить аудиозапись</span>
                 <span class="u_soundcloud_set_list badge badge-light-success pointer">Добавить треки списком</span>
                 <span class="u_soundcloud_set_create badge badge-light-success pointer">Закачать новый список</span>
+                <span class="pointer badge badge-light-success u_playlist_add">Создать список</span>
               </h5>
             </div>
           <div class="card mb-2">
