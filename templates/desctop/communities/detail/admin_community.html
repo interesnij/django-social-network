@@ -69,7 +69,7 @@
             <div class="card">
               <figure class="mx-auto mb-3 avatar_figure">
                 {% if community.get_b_avatar %}
-                  <img src="{{ community.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}">
+                  <img src="{{ community.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ community.get_avatar_pk }}">
                   <form id="add_community_avatar">
                     {% csrf_token %}
                     <input type="file" id="community_avatar_upload" name="file" style="display:none">

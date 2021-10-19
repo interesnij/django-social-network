@@ -57,7 +57,7 @@
           <div class="card">
               <figure style="padding-left:10px;padding-right:10px" class="avatar_figure">
                   {% if community.get_b_avatar %}
-                  <img src="{{ community.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}">
+                  <img src="{{ community.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ community.get_avatar_pk }}">
                   {% else %}
                   <svg fill="currentColor" class="svg_default" style="width:100%" viewBox="0 0 24 24">
                       <path d="M0 0h24v24H0z" fill="none" />
