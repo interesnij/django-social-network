@@ -9,12 +9,15 @@
               <button class="btn border" type="button">Искать</button>
             </div>
           </div>
-          {% include 'desctop/communities/video/main_list/admin_lists.html' %}
+          {% if count_lists > 1 %}
+            {% include 'desctop/communities/video/main_list/admin_lists.html' %}
+          {% endif %}
           <span class="load_block">
             <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
               <h5 class="mt-1">
                 <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                 <span class="pointer badge badge-light-success c_video_add">Добавить видеоролик</span>
+                <span class="pointer badge badge-light-success c_video_list_add">Создать список</span>
               </h5>
             </div>
           <div class="card mb-2">

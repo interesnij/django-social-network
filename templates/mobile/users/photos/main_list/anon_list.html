@@ -3,7 +3,9 @@
 {% block content %}
 
 <div class="container main-container mt-3 pk_saver user_gallery_container" data-pk="{{ user.pk }}" data-uuid="{{ list.uuid }}">
-{% include 'mobile/users/photos/main_list/lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'mobile/users/photo/main_list/lists.html' %}
+  {% endif %}
 
 <span class="load_block">
 <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">

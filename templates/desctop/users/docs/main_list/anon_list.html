@@ -18,7 +18,9 @@
                 <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
               </h5>
             </div>
-          {% include 'desctop/users/docs/main_list/lists.html' %}
+            {% if count_lists > 1 %}
+              {% include 'desctop/users/docs/main_list/lists.html' %}
+            {% endif %}
 
           <div class="card mb-2">
               <div class="card-body">

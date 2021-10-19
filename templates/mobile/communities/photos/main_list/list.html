@@ -5,7 +5,9 @@
 
 <div class="container main-container mt-3 pk_saver community_gallery_container" data-pk="{{ community.pk }}">
 
-{% include 'mobile/communities/photos/main_list/lists.html' %}
+  {% if count_lists > 1 %}
+    {% include 'mobile/communities/photo/main_list/lists.html' %}
+  {% endif %}
 
 <span class="load_block">
   <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
