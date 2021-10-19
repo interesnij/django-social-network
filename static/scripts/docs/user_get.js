@@ -36,7 +36,7 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {
-  card = this.parentElement.parentElement.parentElement.getAttribute("doclist-pk");
+  card = this.parentElement.parentElement.parentElement;
   doclist_pk = card.getAttribute("doclist-pk");
   owner_pk = card.getAttribute("owner-pk");
 
