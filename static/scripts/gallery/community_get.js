@@ -22,7 +22,22 @@ on('#ajax', 'click', '.c_ucm_photo_list_repost', function() {
 
 on('#ajax', 'click', '.c_avatar_detail', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
+
+  block = document.body.querySelector(".main-container");
+  if (block.classList.contains("user_container")) {
+    where_from = "user=1&id=" + pk
+  } else if (block.classList.contains("community_container")) {
+    where_from = "community=1&id=" + pk
+  } else if (block.classList.contains("user_gallery_container")) {
+    where_from = "user_gallery=1&id=" + pk
+  } else if (block.classList.contains("community_gallery_container")) {
+    where_from = "community_gallery=1&id=" + pk
+  } else if (block.classList.contains("feed_container")) {
+    where_from = "feed_wall=1&"
+  } else { where_from = "null" };
+
   create_fullscreen("/gallery/community/avatar/" + pk + "/", "photo_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&ava_photo_uuid=" + pk + "&target=community");
 });
 
 on('#ajax', 'click', '.c_photos_add', function() {
