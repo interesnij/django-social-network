@@ -35,30 +35,6 @@ class CommunityVideoList(ListView):
 		return self.video_list
 
 
-class VideoCommunityCommentList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_comments
-
-		self.video = Video.objects.get(uuid=self.kwargs["uuid"])
-		self.community = self.video.community
-		if not request.is_ajax() or not self.video.comments_enabled:
-			raise Http404
-		self.template_name = get_template_user_comments(self.video, "video/c_video_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(VideoCommunityCommentList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super(VideoCommunityCommentList, self).get_context_data(**kwargs)
-		context['parent'] = self.video
-		context['community'] = self.community
-		return context
-
-	def get_queryset(self):
-		comments = self.video.get_comments()
-		return comments
-
-
 class CommunityVideoDetail(TemplateView):
 	template_name = None
 
