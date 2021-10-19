@@ -131,48 +131,48 @@ def get_post_attach(post, user):
             except:
                 pass
         elif item[:3] == "ldo":
-            #try:
-            from docs.models import DocsList
-            list = DocsList.objects.get(pk=item[3:])
-            if list.type[0] == "_":
+            try:
+                from docs.models import DocsList
+                list = DocsList.objects.get(pk=item[3:])
+                if list.type[0] == "_":
+                    pass
+                    if list.community:
+                        creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_doc_list", "c_remove_doc_list", "c_ucm_doc_list_repost"
+                else:
+                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_doc_list", "u_remove_doc_list", "u_ucm_doc_list_repost"
+                image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+                repost_svg, add_svg = '', ''
+                if user.is_authenticated:
+                    if list.is_not_empty():
+                        repost_svg = '<span title="Поделиться" class="' + repost + ' repost_svg btn_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>'
+                    if list.is_user_can_add_list(user.pk):
+                        add_svg = '<span title="Добавить список документов" class="' + add + ' btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
+                    elif user.pk in list.get_users_ids():
+                        add_svg = '<span title="Удалить список документов" class="' + remove + ' btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" doclist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_doc_list pointer">', list.name, '</h6><p>Список документов <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+            except:
                 pass
-            if list.community:
-                creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_doc_list", "c_remove_doc_list", "c_ucm_doc_list_repost"
-            else:
-                creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_doc_list", "u_remove_doc_list", "u_ucm_doc_list_repost"
-            image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
-            repost_svg, add_svg = '', ''
-            if user.is_authenticated:
-                if list.is_not_empty():
-                    repost_svg = '<span title="Поделиться" class="' + repost + ' repost_svg btn_default"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span>'
-                if list.is_user_can_add_list(user.pk):
-                    add_svg = '<span title="Добавить список документов" class="' + add + ' btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>'
-                elif user.pk in list.get_users_ids():
-                    add_svg = '<span title="Удалить список документов" class="' + remove + ' btn_default"><svg fill="currentColor" class="svg_default add_svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>'
-            block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" doclist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_doc_list pointer">', list.name, '</h6><p>Список документов <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
-            #except:
-            #    pass
         elif item[:3] == "lph":
-            #try:
-            from gallery.models import PhotoList
-            list = PhotoList.objects.get(pk=item[3:])
-            if list.type[0] == "_":
+            try:
+                from gallery.models import PhotoList
+                list = PhotoList.objects.get(pk=item[3:])
+                if list.type[0] == "_":
+                    pass
+                if list.community:
+                    creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
+                else:
+                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
+                    share_svg, add_svg = '', ''
+                if user.is_authenticated:
+                    if list.is_not_empty():
+                        share_svg = '<a class="col pointer ' + repost + ' ">Поделиться</a>'
+                    if list.is_user_can_add_list(user.pk):
+                        add_svg = '<a class="col pointer ' + add + '">В коллекцию</a>'
+                    elif user.pk in list.get_users_ids():
+                        add_svg = '<a class="col pointer ' + remove + '">Удалить</a>'
+                block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
+            except:
                 pass
-            if list.community:
-                creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
-            else:
-                creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
-            share_svg, add_svg = '', ''
-            if user.is_authenticated:
-                if list.is_not_empty():
-                    share_svg = '<a class="col pointer ' + repost + ' ">Поделиться</a>'
-                if list.is_user_can_add_list(user.pk):
-                    add_svg = '<a class="col pointer ' + add + '">В коллекцию</a>'
-                elif user.pk in list.get_users_ids():
-                    add_svg = '<a class="col pointer ' + remove + '">Удалить</a>'
-            block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
-            #except:
-            #    pass
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodList

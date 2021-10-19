@@ -41,7 +41,7 @@ def post(user, value):
             else:
                 window_dislikes = ''
             if post.attach:
-                attach = post.get_c_attach(user)
+                attach = post.get_attach(user)
             else:
                 attach = ''
             community = post.community
@@ -89,7 +89,7 @@ def post(user, value):
             else:
                 window_dislikes = ''
             if post.attach:
-                attach = post.get_u_attach(user)
+                attach = post.get_attach(user)
             else:
                 attach = ''
             creator = post.creator
