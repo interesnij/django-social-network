@@ -18,7 +18,7 @@
                   <a class="col">
                     <figure class="mx-auto mb-3 avatar_figure">
                       {% if user.b_avatar %}
-                        <img src="{{ user.get_b_avatar }}" class="u_avatar_detail pointer">
+                        <img src="{{ user.get_b_avatar }}" class="detail_photo pointer" data-pk="{{ user.get_avatar_pk }}">
                       {% else %}
                         <img src="{{ user.get_b_avatar }}">
                       {% endif %}
