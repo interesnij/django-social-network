@@ -21,9 +21,9 @@ class UserGood(TemplateView):
 		except:
 			GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, device=request.user.get_device())
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.good, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user_item(self.post, "goods/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.good, "goods/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGood,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
