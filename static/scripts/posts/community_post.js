@@ -313,13 +313,13 @@ on('#ajax', 'click', '.c_post_unfixed', function() {
 on('#ajax', 'click', '.c_post_off_comment', function() {
   send_change(this, "/posts/community_progs/off_comment/", "c_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments") ? post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".c_news_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_post_on_comment', function() {
   send_change(this, "/posts/community_progs/on_comment/", "c_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments") ? post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".c_news_item_comments").style.display = "unset"
 })
 

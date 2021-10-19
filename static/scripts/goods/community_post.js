@@ -47,12 +47,12 @@ on('#ajax', 'click', '.c_good_edit_comment_btn', function() {
 on('#ajax', 'click', '.c_good_off_comment', function() {
   send_good_change(this, "/goods/community_progs/off_comment/", "c_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "none"
+  post.querySelector(".load_good_comments").style.display = "none"
 })
 on('#ajax', 'click', '.c_good_on_comment', function() {
   send_good_change(this, "/goods/community_progs/on_comment/", "c_good_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_good_comments").style.display = "unset"
 })
 
 on('#ajax', 'click', '.c_good_comment_delete', function() {
@@ -290,12 +290,12 @@ on('#ajax', 'click', '.c_remove_good_from_list', function() {
 on('#ajax', 'click', '.mob_c_good_off_comment', function() {
   send_mob_good_change(this, "/goods/community_progs/off_comment/", "mob_c_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "none"
+  post.querySelector(".load_good_comments").style.display = "none"
 })
 on('#ajax', 'click', '.mob_c_good_on_comment', function() {
   send_mob_good_change(this, "/goods/community_progs/on_comment/", "mob_c_good_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_good_comments").style.display = "unset"
 })
 on('#ajax', 'click', '.mob_c_good_off_votes', function() {
   send_mob_good_change(this, "/goods/community_progs/off_votes/", "mob_c_good_on_votes", "Вкл. реакции");
