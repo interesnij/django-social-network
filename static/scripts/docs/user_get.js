@@ -36,11 +36,13 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {
-  block = document.body.querySelector(".main-container");
-  where_from = get_open_object_target(block, 0);
-  doclist_pk = this.parentElement.parentElement.parentElement.getAttribute("doclist-pk");
+  card = this.parentElement.parentElement.parentElement.getAttribute("doclist-pk");
+  doclist_pk = this.getAttribute("doclist-pk");
+  owner_pk = this.getAttribute("owner-pk");
+  
+  where_from = get_open_object_target(owner_pk);
   create_fullscreen("/docs/load_list/" + doclist_pk + "/?" + where_from, "item_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + 0 + "&doclist=" + doclist_pk);
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk);
 });
 
 on('#ajax', 'click', '.u_ucm_doc_repost', function() {
