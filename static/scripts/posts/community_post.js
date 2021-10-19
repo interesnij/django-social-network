@@ -315,7 +315,7 @@ on('#ajax', 'click', '.c_post_off_comment', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".c_news_item_comments").style.display = "none"
-})
+});
 on('#ajax', 'click', '.c_post_on_comment', function() {
   send_change(this, "/posts/community_progs/on_comment/", "c_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
