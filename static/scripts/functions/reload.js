@@ -320,7 +320,7 @@ function load_item_window() {
         setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
       else if (params[3].split("=")[0] == "ava_photo_uuid") {
-        setTimeout(create_fullscreen("/gallery/" + params[1].split("=")[1] + "/avatar/" + params[2].split("=")[2] + "/", "photo_fullscreen"), 3000)
+        setTimeout(create_fullscreen("/gallery/" + params[1].split("=")[1] + "/avatar/" + params[3].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
     }
   }
