@@ -53,7 +53,7 @@ on('#ajax', 'click', '.u_avatar_detail', function() {
   } else { where_from = "null" };
 
   create_fullscreen("/gallery/user/avatar/" + pk + "/", "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&ava_photo_uuid=" + pk + "&target=user");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&target=user&owner_id=" + pk + "&ava_photo_uuid=" + pk);
 });
 
 on('#ajax', 'click', '.comment_photo', function() {
