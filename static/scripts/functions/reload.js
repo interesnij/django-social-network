@@ -319,7 +319,7 @@ function load_item_window() {
       if (params[2].split("=")[0] == "photo_uuid") {
         setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
-      else if (params[3].split("=")[0] == "ava_photo_uuid") {
+      else if (params[2].split("=")[0] == "ava_photo_uuid") {
         if (params[1].split("=")[0] == "user_id") {
           folder = "user"
         } else { folder = "community" };
