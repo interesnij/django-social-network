@@ -326,13 +326,13 @@ on('#ajax', 'click', '.u_post_unfixed', function() {
 on('#ajax', 'click', '.u_post_off_comment', function() {
   send_change(this, "/posts/user_progs/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments") ? post.querySelector(".load_item_comments").style.display = "none"
+  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "none"
   : post.querySelector(".u_news_item_comments").style.display = "none"
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
   send_change(this, "/posts/user_progs/on_comment/", "u_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments") ? post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".u_news_item_comments").style.display = "unset"
 })
 

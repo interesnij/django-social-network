@@ -316,12 +316,12 @@ on('body', 'click', '.u_good_list_abort_remove', function() {
 on('#ajax', 'click', '.mob_u_good_off_comment', function() {
   send_mob_good_change(this, "/goods/user_progs/off_comment/", "mob_u_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "none"
+  post.querySelector(".load_good_comments").style.display = "none"
 })
 on('#ajax', 'click', '.mob_u_good_on_comment', function() {
   send_mob_good_change(this, "/goods/user_progs/on_comment/", "mob_u_good_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  post.querySelector(".load_item_comments").style.display = "unset"
+  post.querySelector(".load_good_comments").style.display = "unset"
 })
 on('#ajax', 'click', '.mob_u_good_off_votes', function() {
   send_mob_good_change(this, "/goods/user_progs/off_votes/", "mob_u_good_on_votes", "Вкл. реакции");
