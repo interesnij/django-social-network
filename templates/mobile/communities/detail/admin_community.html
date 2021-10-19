@@ -9,7 +9,7 @@
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
       <figure>
         {% if community.s_avatar %}
-          <img src="{{ community.s_avatar.url }}" class="c_avatar_detail pointer" style="border-radius:80px" alt="image">
+          <img src="{{ community.s_avatar.url }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}" style="border-radius:80px" alt="image">
           <form id="add_community_avatar">
             {% csrf_token %}
             <input type="file" id="community_avatar_upload" name="file" style="display:none">

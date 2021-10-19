@@ -311,6 +311,10 @@ class Community(models.Model):
     def get_photo_list(self):
         from gallery.models import PhotoList
         return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
+    def get_avatar_pk(self):
+        from gallery.models import PhotoList
+        list = PhotoList.objects.get(community_id=self.pk, type=PhotoList.AVATAR)
+        return list.get_items().first().pk
     def get_doc_list(self):
         from docs.models import DocsList
         return DocsList.objects.get(community_id=self.pk, type=DocsList.MAIN)
