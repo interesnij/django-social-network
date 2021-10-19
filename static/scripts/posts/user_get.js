@@ -96,7 +96,7 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   } else { where_from = "null" };
   card = this.parentElement.parentElement.parentElement.parentElement;
   uuid = card.getAttribute('data-uuid');
-  create_fullscreen("/posts/post/" + "/?" + where_from, "worker_fullscreen");
+  create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
 });
 
