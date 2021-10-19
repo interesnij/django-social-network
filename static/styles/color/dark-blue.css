@@ -146,7 +146,7 @@ a.media:hover {
 .btn_default button{
   background-color: #273058 !important;
 }
-.svg_default, .btn{color: rgba(255, 255, 255, 0.6) !important}
+.svg_default {color: rgba(255, 255, 255, 0.6) !important}
 .btn_default svg:hover, .svg_default span:hover, .svg_default_30:hover{
   color: rgba(255, 255, 255, 0.8) !important;
 }
