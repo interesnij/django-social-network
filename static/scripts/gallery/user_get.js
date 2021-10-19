@@ -162,7 +162,7 @@ on('#ajax', 'click', '.load_photo_comments', function() {
   clear_comment_dropdown();
   data = document.body.querySelector(".data_display");
   uuid = data.getAttribute("data-uuid");
-  block = data.querySelector(".load_photo_comments");
+  block = data.querySelector(".load_comments");
   if (block.classList.contains("show")){
     block.classList.remove("show")
   } else {
