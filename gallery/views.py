@@ -168,3 +168,27 @@ class PostPhotoDetail(TemplateView):
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
+
+
+class PhotoCommentList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_comments, get_template_community_comments
+
+		self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+		if not request.is_ajax() or not self.photo.comments_enabled:
+			raise Http404
+		if self.photo.community:
+			self.template_name = get_template_user_comments(self.photo, "gallery/c_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_user_comments(self.photo, "gallery/u_photo_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PhotoCommentList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(PhotoCommentList, self).get_context_data(**kwargs)
+		context['parent'] = self.photo
+		return context
+
+	def get_queryset(self):
+		return self.photo.get_comments()
