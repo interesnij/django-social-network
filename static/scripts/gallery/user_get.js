@@ -17,21 +17,7 @@ on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   block = document.body.querySelector(".main-container");
-  if (block.classList.contains("user_container")) {
-    where_from = "user=1&id=" + pk
-  } else if (block.classList.contains("community_container")) {
-    where_from = "community=1&id=" + pk
-  } else if (block.classList.contains("user_gallery_container")) {
-    where_from = "user_gallery=1&id=" + pk
-  } else if (block.classList.contains("community_gallery_container")) {
-    where_from = "community_gallery=1&id=" + pk
-  } else if (block.classList.contains("feed_container")) {
-    where_from = "feed_wall=1&"
-  } else if (block.classList.contains("search_container")) {
-    where_from = "search_wall=1&id=" + pk
-  } else if (block.classList.contains("featured_container")) {
-    where_from = "featured_wall=1&id=" + pk
-  } else { where_from = "null" };
+  where_from = get_open_object_target(block);
   create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&photo_uuid=" + photo_pk);
 });
@@ -46,21 +32,7 @@ on('#ajax', 'click', '.post_photo', function() {
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
 
   block = document.body.querySelector(".main-container");
-  if (block.classList.contains("user_container")) {
-    where_from = "user=1&id=" + pk
-  } else if (block.classList.contains("community_container")) {
-    where_from = "community=1&id=" + pk
-  } else if (block.classList.contains("user_gallery_container")) {
-    where_from = "user_gallery=1&id=" + pk
-  } else if (block.classList.contains("community_gallery_container")) {
-    where_from = "community_gallery=1&id=" + pk
-  } else if (block.classList.contains("feed_container")) {
-    where_from = "feed_wall=1&"
-  } else if (block.classList.contains("search_container")) {
-    where_from = "search_wall=1&id=" + pk
-  } else if (block.classList.contains("featured_container")) {
-    where_from = "featured_wall=1&id=" + pk
-  } else { where_from = "null" };
+  where_from = get_open_object_target(block);
 
   create_fullscreen("/gallery/post_photo/" + uuid + "/" + photo_pk + "/", "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_uuid=" + photo_pk + "&post_uuid=" + uuid);

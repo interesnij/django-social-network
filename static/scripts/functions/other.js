@@ -1,5 +1,26 @@
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function get_open_object_target(block) {
+  pk = block.getAttribute("data-pk");
+  if (block.classList.contains("user_container")) {
+    return "user=1&id=" + pk
+  } else if (block.classList.contains("community_container")) {
+    where_from = "community=1&id=" + pk
+  } else if (block.classList.contains("user_gallery_container")) {
+    where_from = "user_folder=1&id=" + pk
+  } else if (block.classList.contains("community_gallery_container")) {
+    where_from = "community_folder=1&id=" + pk
+  } else if (block.classList.contains("feed_container")) {
+    where_from = "feed_wall=1&"
+  } else if (block.classList.contains("chat_container")) {
+    where_from = "chat_wall=1&"
+  } else if (block.classList.contains("search_container")) {
+    where_from = "search_wall=1&id=" + pk
+  } else if (block.classList.contains("featured_container")) {
+    where_from = "featured_wall=1&id=" + pk
+  } else { where_from = "null" };
+};
+
 function format_text(text) {
   text.innerHTML = text.innerHTML.replace(/<(?!img)(?!br)\/?[a-z][^>]*(>|$)/gi, "").replace(/\&nbsp;/g, ' ');
   brs = text.querySelectorAll("br");
