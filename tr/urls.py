@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^notify/', include('notify.urls')),
     url(r'^docs/', include('docs.urls')),
     url(r'^survey/', include('survey.urls')),
+    url(r'^search/', include('search.urls')),
 
     url(r'^public(?P<pk>\d+)/$', CommunityDetail.as_view(), name='community_detail'),
     url(r'^id(?P<pk>\d+)/$', ProfileUserView.as_view(), name='user'),
