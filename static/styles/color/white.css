@@ -145,7 +145,7 @@ a.media:hover {
 }
 
 .svg_default {color:rgba(0, 0, 0, 0.5) !important}
-.btn {color:rgba(0, 0, 0, 0.9) !important}
+
 .btn_default svg{color:rgba(0, 0, 0, 0.5) !important}
 .btn_default .active{
   color: rgba(0, 0, 0, 1) !important;

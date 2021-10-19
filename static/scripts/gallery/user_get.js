@@ -36,26 +36,6 @@ on('#ajax', 'click', '.detail_photo', function() {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&photo_uuid=" + photo_pk);
 });
 
-on('#ajax', 'click', '.u_avatar_detail', function() {
-  document.body.querySelector(".avatar_figure") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.getAttribute('data-pk');
-
-  block = document.body.querySelector(".main-container");
-  if (block.classList.contains("user_container")) {
-    where_from = "user=1&id=" + pk
-  } else if (block.classList.contains("community_container")) {
-    where_from = "community=1&id=" + pk
-  } else if (block.classList.contains("user_gallery_container")) {
-    where_from = "user_gallery=1&id=" + pk
-  } else if (block.classList.contains("community_gallery_container")) {
-    where_from = "community_gallery=1&id=" + pk
-  } else if (block.classList.contains("feed_container")) {
-    where_from = "feed_wall=1&"
-  } else { where_from = "null" };
-
-  create_fullscreen("/gallery/user/avatar/" + pk + "/", "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&user_id=" + pk + "&ava_photo_uuid=" + pk);
-});
-
 on('#ajax', 'click', '.comment_photo', function() {
   pk = this.getAttribute('photo-pk');
   create_fullscreen("/gallery/user/comment_photo/" + pk + "/", "photo_fullscreen");
