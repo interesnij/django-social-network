@@ -1,4 +1,15 @@
-
+on('#ajax', 'click', '.load_post_comments', function() {
+  clear_comment_dropdown();
+  block = this.parentElement.parentElement.parentElement.parentElement;
+  good_pk = block.getAttribute("good-pk");
+  block_comments = block.querySelector(".u_load_comments");
+  if (block_comments.classList.contains("show")){
+    block_comments.classList.remove("show")
+  } else {
+    block_comments.firstChild ? null : list_load(block_comments, "/posts/comments/" + uuid + "/");
+    block_comments.classList.add("show")
+  }
+});
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
   this.parentElement.nextElementSibling.style.display = "block";
