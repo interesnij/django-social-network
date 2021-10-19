@@ -37,7 +37,7 @@ on('#ajax', 'click', '.c_avatar_detail', function() {
   } else { where_from = "null" };
 
   create_fullscreen("/gallery/community/avatar/" + pk + "/", "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&ava_photo_uuid=" + pk + "&target=community");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&community_id=" + pk + "&ava_photo_uuid=" + pk);
 });
 
 on('#ajax', 'click', '.c_photos_add', function() {
