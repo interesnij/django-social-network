@@ -28,6 +28,7 @@ on('#ajax', 'click', '.comment_photo', function() {
 });
 on('#ajax', 'click', '.post_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
+  card = this.parentElement.parentElement.parentElement;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
 
