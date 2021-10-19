@@ -1260,7 +1260,7 @@ class User(AbstractUser):
     def get_avatar_pk(self):
         from gallery.models import PhotoList
         list = PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.AVATAR)
-        return list[0].pk
+        return list.get_items().first().pk
     def get_post_list(self):
         from posts.models import PostsList
         return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.MAIN)
