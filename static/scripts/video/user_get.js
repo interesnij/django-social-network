@@ -74,7 +74,7 @@ on('#video_loader', 'click', '.u_all_video_reposts', function() {
   create_fullscreen("/video/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#video_loader', 'click', '.load_item_comments', function() {
+on('#video_loader', 'click', '.load_video_comments', function() {
   clear_comment_dropdown();
   video_display = this.parentElement.parentElement.parentElement;
   uuid = video_display.getAttribute("data-uuid");

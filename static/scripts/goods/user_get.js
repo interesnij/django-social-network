@@ -74,7 +74,7 @@ on('#ajax', 'click', '.u_all_good_reposts', function() {
   create_fullscreen("/goods/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.load_item_comments', function() {
+on('#ajax', 'click', '.load_good_comments', function() {
   clear_comment_dropdown();
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   good_pk = block.getAttribute("good-pk");

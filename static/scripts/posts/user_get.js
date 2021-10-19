@@ -214,21 +214,6 @@ on('#ajax', 'click', '.u_all_item_reposts', function() {
   create_fullscreen("/posts/item_window/all_user_reposts/" + pk + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.load_item_comments', function() {
-  clear_comment_dropdown();
-  parent = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  block = parent.querySelector(".u_load_comments");
-  if (block.classList.contains("show")){
-    block.classList.remove("show");
-  } else {
-    if (!block.firstChild){
-      list_load(block, "/posts/comments/" + uuid + "/")
-    };
-    block.classList.add("show");
-  }
-});
-
 on('#ajax', 'click', '.u_load_comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;
