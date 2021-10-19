@@ -17,7 +17,7 @@ on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   block = document.body.querySelector(".main-container");
-  where_from = get_open_object_target(block);
+  where_from = get_open_object_target(block, pk);
   create_fullscreen("/gallery/photo/" + photo_pk + "/?" + where_from, "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=big_page&owner_id=" + pk + "&photo_uuid=" + photo_pk);
 });
@@ -32,7 +32,7 @@ on('#ajax', 'click', '.post_photo', function() {
   this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.parentElement.getAttribute('data-uuid');
 
   block = document.body.querySelector(".main-container");
-  where_from = get_open_object_target(block);
+  where_from = get_open_object_target(block, pk);
 
   create_fullscreen("/gallery/post_photo/" + uuid + "/" + photo_pk + "/", "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_uuid=" + photo_pk + "&post_uuid=" + uuid);
