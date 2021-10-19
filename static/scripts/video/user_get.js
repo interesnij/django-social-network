@@ -23,7 +23,13 @@ on('#ajax', 'click', '.load_attach_video_list', function() {
 });
 
 on('#ajax', 'click', '.load_video_list', function() {
-  create_fullscreen("/video/load_list/" + this.parentElement.parentElement.parentElement.getAttribute("videolist-pk") + "/", "item_fullscreen")
+  card = this.parentElement.parentElement.parentElement;
+  videolist_pk = card.getAttribute("videolist-pk");
+  owner_pk = card.getAttribute("owner-pk");
+
+  where_from = get_open_object_target(owner_pk);
+  create_fullscreen("/video/load_list/" + videolist + "/?" + where_from, "item_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
 });
 
 on('#ajax', 'click', '.u_ucm_video_repost', function() {

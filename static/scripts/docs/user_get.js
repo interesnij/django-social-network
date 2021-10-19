@@ -38,7 +38,7 @@ on('#ajax', 'click', '.u_doc_list_edit', function() {
 on('#ajax', 'click', '.load_doc_list', function() {
   card = this.parentElement.parentElement.parentElement;
   doclist_pk = card.getAttribute("doclist-pk");
-  owner_pk = card.getAttribute("owner-pk");
+  owner_pk = card.getAttribute("owner-pk"); 
 
   where_from = get_open_object_target(owner_pk);
   create_fullscreen("/docs/load_list/" + doclist_pk + "/?" + where_from, "item_fullscreen");

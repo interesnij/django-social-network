@@ -34,7 +34,13 @@ on('#ajax', 'click', '.u_playlist_edit', function() {
 });
 
 on('#ajax', 'click', '.load_music_list', function() {
-  create_fullscreen("/music/load_list/" + this.parentElement.parentElement.parentElement.getAttribute("playlist-pk") + "/", "item_fullscreen");
+  card = this.parentElement.parentElement.parentElement;
+  playlist_pk = card.getAttribute("playlist-pk");
+  owner_pk = card.getAttribute("owner-pk");
+
+  where_from = get_open_object_target(owner_pk);
+  create_fullscreen("/music/load_list/" + playlist_pk + "/?" + where_from, "item_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&playlist=" + playlist_pk);
 });
 
 on('#ajax', 'click', '.u_ucm_music_repost', function() {
