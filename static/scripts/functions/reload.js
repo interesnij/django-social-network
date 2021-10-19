@@ -312,6 +312,7 @@ function load_item_window() {
       } else if (params[2].split("=")[0] == "photo_uuid") {
         setTimeout(create_fullscreen("/gallery/post_photo/" + params[3].split("=")[1] + "/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "doclist") {
+        console.log("doclist");
         setTimeout(create_fullscreen("/docs/load_list/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
       }
     }
