@@ -14,7 +14,7 @@ class CommunityGood(TemplateView):
 		from common.templates import get_template_community_item, get_template_anon_community_item
 
 		self.list, self.good = GoodList.objects.get(uuid=self.kwargs["uuid"]), Good.objects.get(pk=self.kwargs["pk"])
-		self.goods = self.list.get_goods()
+		self.goods = self.list.get_items()
 		check_can_get_lists(self.request.user, self.list.community)
 
 		if request.user.is_authenticated:
