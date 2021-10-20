@@ -200,7 +200,7 @@ on('body', 'click', '.search_ajax', function(event) {
       items[i].classList.remove("active")
     };
     if (this.getAttribute("data-left-a")) {
-      search_panel.querySelector("." + this.getAttribute("data-left-a"))
+      search_panel.querySelector("." + this.getAttribute("data-left-a").classList.add("active"))
     } else {this.classList.add("active")}
   }
   else {toast_info("Список уже получен...")}
