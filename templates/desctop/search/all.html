@@ -44,8 +44,20 @@
 {% endif %}
 
 {% if communities %}
+<div class="card">
+  <div class="card-header">
+    <a class="search_ajax" href="/search/?s=people&q={{ q }}">
+      <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Люди </h6>
+          </div>
+          {{ users_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
 {% load liked_user %}
-  {% for user in users %}
+  {% for community in communities %}
     <div class="media">
         {% include 'desctop/generic/community/figure.html' %}
         <div class="media-body">
@@ -54,6 +66,8 @@
         </div>
     </div>
   {% endfor %}
+  </div>
+</div>
 {% endif %}
 
 
