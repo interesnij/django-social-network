@@ -4,7 +4,7 @@
 
 <div class="main-container search_container">
     <div class="row">
-        <div class="col-md-8 mt-3">
+        <div class="col-md-9 mt-3">
           <div class="input-group mb-3">
             <input type="text" value="{{ q }}" class="form-control" placeholder="Поиск">
             <div class="input-group-append">
@@ -21,7 +21,7 @@
                   <div class="row align-items-center no-gutters">
                     <a href="{{ user.get_link }}" class="ajax">
                       <figure class="avatar avatar-120 mx-auto mb-3">
-                        <img src="img/user1.png" alt="">
+                        <img src="{{ user.get_avatar }}" alt="">
                       </figure>
                     </a>
                   </div>
