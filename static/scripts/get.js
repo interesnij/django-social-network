@@ -199,7 +199,9 @@ on('body', 'click', '.search_ajax', function(event) {
     for (var i = 0; i < items.length; i++){
       items[i].classList.remove("active")
     };
-    this.classList.add("active");
+    if (this.getAttribute("data-left-a")) {
+      search_panel.querySelector("." + this.getAttribute("data-left-a"))
+    } else {this.classList.add("active")}
   }
   else {toast_info("Список уже получен...")}
 });
