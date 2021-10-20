@@ -16,7 +16,10 @@ class SearchView(ListView):
         from communities.models import Community
         from posts.models import Post
 
-        self.q = request.GET.get('q').replace("#", "%23")
+        if request.GET.get('q'):
+            self.q = request.GET.get('q').replace("#", "%23")
+        else:
+            self.q = ""
         self.sections = request.GET.get('s')
 
         if self.sections == "all" or not self.sections:
