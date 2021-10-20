@@ -5,8 +5,8 @@ from common.templates import get_default_template
 
 
 class SearchView(ListView):
-    template_name, paginate_by, users, communities, goods, musics, videos, \
-    users_count, communities_count, goods_count, musics_count, videos_count, posts_count = None, 20, None, None, None, None, None, None, None, None, None, None, None
+    template_name, section, paginate_by, users, communities, goods, musics, videos, \
+    users_count, communities_count, goods_count, musics_count, videos_count, posts_count = None, "", 20, None, None, None, None, None, None, None, None, None, None, None
 
     def get(self,request,*args,**kwargs):
         from users.models import User
@@ -43,30 +43,37 @@ class SearchView(ListView):
                 self.videos = _videos[:4]
             if self.list:
                 self.posts_count = self.list.count()
+            self.section = 1
         elif self.sections == "people":
             self.list = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
             if self.list:
                 users_count = self.list.count()
+            self.section = 2
         elif self.sections == "news":
             self.list = Post.objects.filter(text__icontains=self.q)
             if self.list:
                 posts_count = self.list.count()
+            self.section = 3
         elif self.sections == "communities":
             self.list = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
                 communities_count = self.list.count()
+            self.section = 4
         elif self.sections == "music":
             self.list = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
                 musics_count = self.list.count()
+            self.section = 5
         elif self.sections == "video":
             self.list = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
                 videos_count = self.list.count()
+            self.section = 6
         elif self.sections == "goods":
             self.list = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
                 goods_count = self.list.count()
+            self.section = 7
         self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SearchView,self).get(request,*args,**kwargs)
 
@@ -84,6 +91,7 @@ class SearchView(ListView):
         context["musics_count"] = self.musics_count
         context["videos_count"] = self.videos_count
         context["posts_count"] = self.posts_count
+        context["section"] = self.section
         return context
 
     def get_queryset(self):
