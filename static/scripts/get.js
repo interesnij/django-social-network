@@ -8,10 +8,9 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
     left_panel_options = left_panel.querySelectorAll(".search_ajax");
     for (var i = 0; i < left_panel_options.length; i++){
       url = left_panel_options[i].getAttribute("href");
-      console.log("url", url);
       params = url.replace( '?', '').split('&');
       new_url = url.replace(params[1].split("=")[1], value);
-      console.log("new_url", new_url);
+      left_panel_options[i].setAttribute("href", new_url);
       if (left_panel_options[i].classList.contains(".active")) {
         section = params[0].split("=")[1];
       }
