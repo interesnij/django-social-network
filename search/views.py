@@ -32,13 +32,13 @@ class SearchView(ListView):
             if _communities:
                 communities_count = _communities.count()
                 self.communities = _communities[:4]
-            if self._goods:
+            if _goods:
                 goods_count = _goods.count()
                 self.goods = _goods[:4]
-            if self._musics:
+            if _musics:
                 musics_count = _musics.count()
                 self.musics = _musics[:4]
-            if self._videos:
+            if _videos:
                 videos_count = _videos.count()
                 self.videos = _videos[:4]
             if self.list:
