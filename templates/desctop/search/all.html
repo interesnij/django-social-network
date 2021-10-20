@@ -16,7 +16,6 @@
 
     <div class="card-body" style="padding:7px;">
       {% for user in users %}
-      {{ user.pk }} ? {{ request.user.pk }}
         <div class="media mb-2">
           <a href="{{ user.get_link }}" class="ajax">
             <figure style="width:50px;">
@@ -31,7 +30,7 @@
             <h6 class="mb-0" style="padding-top: 2px;">
               <a href="{{ user.get_link }}" class="ajax">{{ user.get_full_name }}</a>
             </h6>
-            {% if user.pk == request.user.pk %}
+            {% if user.pk != request.user.pk %}
               <a class="small user_send_page_message pointer" data-pk="{{ user.pk }}">Написать сообщение</a>
             {% else %}
               <span class="small">Это Вы</span>
