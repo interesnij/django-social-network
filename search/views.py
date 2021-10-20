@@ -50,32 +50,32 @@ class SearchView(ListView):
         elif self.sections == "people":
             self.list = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
             if self.list:
-                users_count = self.list.count()
+                self.users_count = self.list.count()
             self.section = "people"
         elif self.sections == "news":
             self.list = Post.objects.filter(text__icontains=self.q)
             if self.list:
-                posts_count = self.list.count()
+                self.posts_count = self.list.count()
             self.section = "news"
         elif self.sections == "communities":
             self.list = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
-                communities_count = self.list.count()
+                self.communities_count = self.list.count()
             self.section = "communities"
         elif self.sections == "music":
             self.list = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
-                musics_count = self.list.count()
+                self.musics_count = self.list.count()
             self.section = "music"
         elif self.sections == "video":
             self.list = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
-                videos_count = self.list.count()
+                self.videos_count = self.list.count()
             self.section = "video"
         elif self.sections == "goods":
             self.list = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             if self.list:
-                goods_count = self.list.count()
+                self.goods_count = self.list.count()
             self.section = "goods"
         self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SearchView,self).get(request,*args,**kwargs)
