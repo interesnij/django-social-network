@@ -8,7 +8,6 @@ from django.conf import settings
 
 class CommunityInfo(models.Model):
     community = models.OneToOneField(Community, primary_key=True, related_name="community_info", verbose_name="Сообщество", on_delete=models.CASCADE)
-    description = models.TextField(max_length=settings.COMMUNITY_DESCRIPTION_MAX_LENGTH, blank=True, null=True, verbose_name="Описание" )
     banned_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='banned_of_communities', verbose_name="Черный список")
     posts = models.PositiveIntegerField(default=0, verbose_name="Кол-во постов")
     views_post = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров постов")
