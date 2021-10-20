@@ -17,6 +17,7 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
         section = params[0].split("=")[1];
       }
     };
+    window.history.replaceState(null, null, new_url);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', '/search/?s=' + section + '&q=' + value, true);
@@ -27,8 +28,6 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
             elem_.innerHTML = ajax_link.responseText;
             container = document.body.querySelector(".load_search_container");
             container.innerHTML = elem_.querySelector(".load_search_container").innerHTML;
-
-            window.history.replaceState(null, null, new_url);
         }
     }
     ajax_link.send()
