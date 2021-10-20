@@ -83,11 +83,11 @@
     </a>
   </div>
   <div class="card-body" style="padding:7px;">
-  {% for object in goods %}
     <div class="row">
-      {% include 'desctop/users/goods/main_list/good.html' %}
+      {% for object in goods %}
+        {% include 'desctop/users/goods/main_list/good.html' %}
+      {% endfor %}
     </div>
-  {% endfor %}
   </div>
 </div>
 {% endif %}
