@@ -32,6 +32,11 @@ class SearchView(ListView):
     def get_context_data(self,**kwargs):
         context=super(SearchView,self).get_context_data(**kwargs)
         context["q"] = self.q
+        context["users"] = self.users
+        context["communities"] = self.communities
+        context["goods"] = self.goods
+        context["musics"] = self.musics
+        context["videos"] = self.videos
         return context
 
     def get_queryset(self):
