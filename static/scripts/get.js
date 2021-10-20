@@ -195,7 +195,7 @@ on('body', 'click', '.user_nav_button', function() {
 on('body', 'click', '.search_ajax', function(event) {
   event.preventDefault();
   var url = this.getAttribute('href');
-  if (url != window.location.pathname){
+  if (url != window.location.href){
     search_ajax_get_reload(url);
     search_panel = document.body.querySelector(".search_panel");
     items = search_panel.querySelectorAll(".search_ajax");
