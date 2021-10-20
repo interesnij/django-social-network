@@ -15,11 +15,23 @@
           </div>
           <div class="load_search_container">
           {% if object_list %}
-          
+
             {% if users %}
-              {% for user in users %}
+
               <div class="card">
+                <div class="card-header">
+                  <a href="/search/?s=people&q={{ q }}">
+                    <div class="media">
+                        <div class="media-body">
+                            <h6 class="content-color-primary mb-0">Люди </h6>
+                        </div>
+                        {{ users.count }}
+                    </div>
+                  </a>
+                </div>
+
                   <div class="card-body" style="padding:7px;">
+                    {% for user in users %}
                       <div class="media">
                         <a href="{{ user.get_link }}" class="ajax">
                           <figure style="width:50px;">
@@ -41,9 +53,9 @@
                           {% endif %}
                         </div>
                       </div>
+                      {% endfor %}
                   </div>
               </div>
-              {% endfor %}
 
             {% endif %}
 
