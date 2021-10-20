@@ -46,7 +46,7 @@
 {% if communities %}
 <div class="card">
   <div class="card-header">
-    <a class="search_ajax" href="/search/?s=people&q={{ q }}">
+    <a class="search_ajax" href="/search/?s=communities&q={{ q }}">
       <div class="media">
           <div class="media-body">
               <h6 class="content-color-primary mb-0">Сообщества </h6>
@@ -70,5 +70,64 @@
 </div>
 {% endif %}
 
+{% if goods %}
+<div class="card">
+  <div class="card-header">
+    <a class="search_ajax" href="/search/?s=goods&q={{ q }}">
+      <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Товары </h6>
+          </div>
+          {{ goods_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+  {% for object in goods %}
+    {% include 'desctop/users/goods/main_list/good.html' %}
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if musics %}
+<div class="card">
+  <div class="card-header">
+    <a class="search_ajax" href="/search/?s=music&q={{ q }}">
+      <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Аудиозаписи </h6>
+          </div>
+          {{ musics_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+  {% for object in musics %}
+    {% include 'desctop/users/music/track.html' %}
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if videos %}
+<div class="card">
+  <div class="card-header">
+    <a class="search_ajax" href="/search/?s=video&q={{ q }}">
+      <div class="media">
+          <div class="media-body">
+              <h6 class="content-color-primary mb-0">Видеозаписи </h6>
+          </div>
+          {{ videos_count }}
+      </div>
+    </a>
+  </div>
+  <div class="card-body" style="padding:7px;">
+  {% for object in videos %}
+    {% include 'desctop/users/video/main_list/video.html' %}
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
 
 {% endif %}

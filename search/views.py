@@ -34,7 +34,7 @@ class SearchView(ListView):
                 self.communities = _communities[:4]
             if _goods:
                 self.goods_count = _goods.count()
-                self.goods = _goods[:4]
+                self.goods = _goods[:2]
             if _musics:
                 self.musics_count = _musics.count()
                 self.musics = _musics[:4]
