@@ -123,9 +123,11 @@
     </a>
   </div>
   <div class="card-body" style="padding:7px;">
-  {% for object in videos %}
-    {% include 'desctop/users/video/main_list/video.html' %}
-  {% endfor %}
+    <div class="row">
+      {% for object in videos %}
+        {% include 'desctop/users/video/main_list/video.html' %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endif %}
