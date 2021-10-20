@@ -244,12 +244,12 @@ def get_formatted_text(text, is_message=False):
                 if word[0] == "#":
                     _p = word.strip(".,:;!_*-+()/@#¤%&)")
                     tag = "#" + _p
-                    _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action"href="/search/?tag=' + tag + '">' + tag + '</a>', 1).replace("#<", "<")
+                    _loop[next] = _loop[this].replace(indent + tag, indent + '<a class="ajax action"href="/search/?q=' + tag + '">' + tag + '</a>', 1).replace("#<", "<")
                 else:
                     _p = word.strip(".,:;!_*-+()/@#¤%&)")
                     p_2 = _p[_p.find("#") + 1:]
                     tag = "#" + p_2
-                    _loop[next] = _loop[this].replace(tag, '<a class="ajax action"href="/search/?tag=' + tag + '">' + tag + '</a>', 1)
+                    _loop[next] = _loop[this].replace(tag, '<a class="ajax action"href="/search/?q=' + tag + '">' + tag + '</a>', 1)
             if word[0] == "@":
                 from common.model.other import CustomLink
                 exists = False
