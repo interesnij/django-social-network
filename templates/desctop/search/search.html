@@ -14,9 +14,9 @@
             <input type="text" value="{{ q }}" class="form-control search_main_form" placeholder="Поиск">
           </div>
           <div class="load_search_container">
-            {% if section == 1 %}
+            {% if section == "all" %}
               {% include 'desctop/search/all.html' %}
-            {% elif section == 2 %}
+            {% elif section == "people" %}
               {% include 'desctop/search/users.html' %}
           {% else %}
           <div class="card mb-3 items_empty centered">
