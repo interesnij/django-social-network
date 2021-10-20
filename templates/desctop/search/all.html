@@ -44,7 +44,7 @@
 {% endif %}
 
 {% if communities %}
-<div class="card">
+<div class="card mb-2">
   <div class="card-header">
     <a class="search_ajax" href="/search/?s=communities&q={{ q }}">
       <div class="media">
@@ -71,7 +71,7 @@
 {% endif %}
 
 {% if goods %}
-<div class="card">
+<div class="card mb-2">
   <div class="card-header">
     <a class="search_ajax" href="/search/?s=goods&q={{ q }}">
       <div class="media">
@@ -84,14 +84,16 @@
   </div>
   <div class="card-body" style="padding:7px;">
   {% for object in goods %}
-    {% include 'desctop/users/goods/main_list/good.html' %}
+    <div class="row">
+      {% include 'desctop/users/goods/main_list/good.html' %}
+    </div>
   {% endfor %}
   </div>
 </div>
 {% endif %}
 
 {% if musics %}
-<div class="card">
+<div class="card mb-2">
   <div class="card-header">
     <a class="search_ajax" href="/search/?s=music&q={{ q }}">
       <div class="media">
@@ -103,15 +105,17 @@
     </a>
   </div>
   <div class="card-body" style="padding:7px;">
-  {% for object in musics %}
-    {% include 'desctop/users/music/track.html' %}
-  {% endfor %}
+    <ul>
+      {% for object in musics %}
+        {% include 'desctop/users/music/track.html' %}
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {% endif %}
 
 {% if videos %}
-<div class="card">
+<div class="card mb-2">
   <div class="card-header">
     <a class="search_ajax" href="/search/?s=video&q={{ q }}">
       <div class="media">
