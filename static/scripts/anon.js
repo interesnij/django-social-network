@@ -762,7 +762,14 @@ on('body', 'click', '.search_ajax', function(event) {
   var url = this.getAttribute('href');
   if (url != window.location.pathname){
     search_ajax_get_reload(url);
-  } else {toast_info("Список уже получен...")}
+    search_panel = document.body.querySelector(".search_panel");
+    items = search_panel.querySelectorAll(".search_ajax");
+    for (var i = 0; i < items.length; i++){
+      items[i].classList.remove("active")
+    };
+    this.classList.add("active");
+  }
+  else {toast_info("Список уже получен...")}
 });
 
 if_list(document.getElementById('ajax'));
