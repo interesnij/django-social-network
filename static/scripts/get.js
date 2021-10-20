@@ -4,7 +4,7 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
     e.preventDefault();
 
     value = this.value.replace("#", "%23");
-    left_panel = document.body.querySelectorAll(".search_panel");
+    left_panel = document.body.querySelector(".search_panel"); 
     left_panel_options = left_panel.querySelectorAll(".search_panel");
     for (var i = 0; i < left_panel_options.length; i++){
       url = left_panel_options[i].getAttribute("href");
