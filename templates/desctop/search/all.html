@@ -157,6 +157,11 @@
           {% include 'desctop/posts/post_user/post.html' %}
         {% endif %}
       {% endfor %}
+      {% if page_obj.has_next %}
+      <div class="load centered m-1 next_page_list" data-link="/search/?{{section}}=goods&q={{q}}&page={{ page_obj.next_page_number }}">
+          <img src="/static/images/preloader.gif">
+      </div>
+      {% endif %}
   </div>
 {% endif %}
 
