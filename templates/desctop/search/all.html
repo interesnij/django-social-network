@@ -16,7 +16,7 @@
 
     <div class="card-body" style="padding:7px;">
       {% for user in users %}
-        <div class="media">
+        <div class="media mb-1">
           <a href="{{ user.get_link }}" class="ajax">
             <figure style="width:50px;">
               {% if user.s_avatar %}
@@ -49,16 +49,16 @@
     <a class="search_ajax" href="/search/?s=people&q={{ q }}">
       <div class="media">
           <div class="media-body">
-              <h6 class="content-color-primary mb-0">Люди </h6>
+              <h6 class="content-color-primary mb-0">Сообщества </h6>
           </div>
-          {{ users_count }}
+          {{ communities_count }}
       </div>
     </a>
   </div>
   <div class="card-body" style="padding:7px;">
 {% load liked_user %}
   {% for community in communities %}
-    <div class="media">
+    <div class="media mb-1">
         {% include 'desctop/generic/community/figure.html' %}
         <div class="media-body">
             <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
