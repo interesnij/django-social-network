@@ -138,13 +138,14 @@
     <a class="search_ajax" href="/search/?s=news&q={{ q }}">
       <div class="media">
           <div class="media-body">
-              <h6 class="content-color-primary mb-0">Нлвости </h6>
+              <h6 class="content-color-primary mb-0">Новости </h6>
           </div>
           {{ posts_count }}
       </div>
     </a>
   </div>
-  <div class="card-body is_post_paginate" style="padding:7px;">
+</div>
+  <div class="is_post_paginate" style="padding:7px;">
       {% for object in object_list %}
         {% if object.community %}
           {% include 'desctop/posts/post_community/post.html' %}
