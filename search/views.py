@@ -5,7 +5,8 @@ from common.templates import get_default_template
 
 
 class SearchView(ListView):
-    template_name, paginate_by, users, communities, goods, musics, videos = None, 20, None, None, None, None, None
+    template_name, paginate_by, users, communities, goods, musics, videos, \
+    users_count, communities_count, goods_count, musics_count, videos_count, posts_count = None, 20, None, None, None, None, None, None, None, None, None, None, None
 
     def get(self,request,*args,**kwargs):
         from users.models import User
@@ -13,19 +14,54 @@ class SearchView(ListView):
         from music.models import Music
         from video.models import Video
         from communities.models import Community
-
-        if request.user.is_authenticated:
-            self.template_name = "search/search.html"
-        else:
-            self.template_name = "search/anon_search.html"
+        from posts.models import Post
 
         self.q = request.GET.get('q').replace("#", "%23")
-        self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))[:4]
-        self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))[:4]
-        self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:3]
-        self.musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:6]
-        self.videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:2]
+        self.sections = request.GET.get('s')
 
+        if self.sections == "all" or not self.sections:
+            self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))[:4]
+            self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))[:4]
+            self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:3]
+            self.musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:6]
+            self.videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:2]
+            self.list = Post.objects.filter(text__icontains=self.q)
+            if self.users:
+                users_count = self.users.count()
+            if self.communities:
+                communities_count = self.communities.count()
+            if self.goods:
+                goods_count = self.goods.count()
+            if self.musics:
+                musics_count = self.musics.count()
+            if self.videos:
+                videos_count = self.videos.count()
+            if self.list:
+                posts_count = self.list.count()
+        elif self.sections == "people":
+            self.list = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
+            if self.list:
+                users_count = self.list.count()
+        elif self.sections == "news":
+            self.list = Post.objects.filter(text__icontains=self.q)
+            if self.list:
+                posts_count = self.list.count()
+        elif self.sections == "communities":
+            self.list = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
+            if self.list:
+                communities_count = self.list.count()
+        elif self.sections == "music":
+            self.list = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            if self.list:
+                musics_count = self.list.count()
+        elif self.sections == "video":
+            self.list = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            if self.list:
+                videos_count = self.list.count()
+        elif self.sections == "goods":
+            self.list = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            if self.list:
+                goods_count = self.list.count()
         self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SearchView,self).get(request,*args,**kwargs)
 
@@ -37,10 +73,12 @@ class SearchView(ListView):
         context["goods"] = self.goods
         context["musics"] = self.musics
         context["videos"] = self.videos
+        context["users_count"] = self.users_count
+        context["communities_count"] = self.communities_count
+        context["goods_count"] = self.goods_count
+        context["musics_count"] = self.musics_count
+        context["videos_count"] = self.videos_count
         return context
 
     def get_queryset(self):
-        if self.q:
-            from posts.models import Post
-            query = Q(text__icontains=self.q)
-            return Post.objects.filter(query)
+        return self.list
