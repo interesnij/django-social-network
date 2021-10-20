@@ -511,7 +511,7 @@ function search_ajax_get_reload(url) {
         }
     }
     ajax_link.send()
-}
+};
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
