@@ -45,7 +45,7 @@
 
 {% if communities %}
 {% load liked_user %}
-<li class="list-group-item">
+  {% for user in users %}
     <div class="media">
         {% include 'desctop/generic/community/figure.html' %}
         <div class="media-body">
@@ -53,7 +53,7 @@
             <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
         </div>
     </div>
-</li>
+  {% endfor %}
 {% endif %}
 
 
