@@ -43,5 +43,18 @@
 
 {% endif %}
 
+{% if communities %}
+{% load liked_user %}
+<li class="list-group-item">
+    <div class="media">
+        {% include 'desctop/generic/community/figure.html' %}
+        <div class="media-body">
+            <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
+            <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+        </div>
+    </div>
+</li>
+{% endif %}
+
 
 {% endif %}
