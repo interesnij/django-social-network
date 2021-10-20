@@ -2,15 +2,29 @@
 on('#ajax', 'keydown', '.search_main_form', function(e) {
   if (e.keyCode == 13) {
     e.preventDefault();
+
+    value = this.value.replace("#", "%23");
+    left_panel = document.body.querySelectorAll(".search_panel");
+    for (var i = 0; i < left_panel.length; i++){
+      url = left_panel[i].getAttribute("href");
+      params = url.replace( '?', '').split('&');
+      new_url = url.replace(params[1].split("=")[1], value);
+      if (left_panel[i].querySelector(".active")) {
+        section = params[0].split("=")[1];
+      }
+    };
+
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', '/search/?q=' + this.value.replace("#", "%23"), true);
+    ajax_link.open('GET', '/search/?s=' + section + '&q=' + value, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
-            container = document.querySelector(".load_search_container");
-            container.innerHTML = elem_.querySelector(".load_search_container").innerHTML
+            container = document.body.querySelector(".load_search_container");
+            container.innerHTML = elem_.querySelector(".load_search_container").innerHTML;
+
+            window.history.replaceState(null, null, new_url);
         }
     }
     ajax_link.send()
