@@ -3,7 +3,7 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
   if (e.keyCode == 13) {
     e.preventDefault();
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', '/search/?q=' + this.value, true);
+    ajax_link.open('GET', '/search/?q=' + this.value.replace("#", "%23"), true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
