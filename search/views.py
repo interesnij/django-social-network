@@ -31,7 +31,7 @@ class SearchView(ListView):
 
     def get_context_data(self,**kwargs):
         context=super(SearchView,self).get_context_data(**kwargs)
-        context["q"] = self.q
+        context["q"] = self.q.replace("%23","#")
         context["users"] = self.users
         context["communities"] = self.communities
         context["goods"] = self.goods
