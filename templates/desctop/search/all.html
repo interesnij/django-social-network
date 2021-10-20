@@ -2,7 +2,7 @@
 
 {% if users %}
 
-<div class="card">
+<div class="card mb-3">
   <div class="card-header">
     <a class="search_ajax" href="/search/?s=people&q={{ q }}">
       <div class="media">
@@ -16,7 +16,7 @@
 
     <div class="card-body" style="padding:7px;">
       {% for user in users %}
-        <div class="media mb-1">
+        <div class="media mb-2">
           <a href="{{ user.get_link }}" class="ajax">
             <figure style="width:50px;">
               {% if user.s_avatar %}
@@ -58,7 +58,7 @@
   <div class="card-body" style="padding:7px;">
 {% load liked_user %}
   {% for community in communities %}
-    <div class="media mb-1">
+    <div class="media mb-2">
         {% include 'desctop/generic/community/figure.html' %}
         <div class="media-body">
             <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
