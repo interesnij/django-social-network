@@ -37,10 +37,10 @@ class SearchView(ListView):
                 self.goods = _goods[:2]
             if _musics:
                 self.musics_count = _musics.count()
-                self.musics = _musics[:4]
+                self.musics = _musics[:6]
             if _videos:
                 self.videos_count = _videos.count()
-                self.videos = _videos[:4]
+                self.videos = _videos[:2]
             if self.list:
                 self.posts_count = self.list.count()
             self.section = 1
