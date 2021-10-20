@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
 from django.db.models import Q
+from common.templates import get_default_template
 
 
 class SearchView(ListView):
@@ -19,11 +20,13 @@ class SearchView(ListView):
             self.template_name = "search/anon_search.html"
 
         self.q = request.GET.get('q')
-        self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
-        self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
-        self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
-        self.musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
-        self.videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+        self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))[:4]
+        self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))[:4]
+        self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:3]
+        self.musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:6]
+        self.videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:2]
+
+        self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SearchView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
