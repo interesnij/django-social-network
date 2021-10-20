@@ -498,7 +498,7 @@ function search_ajax_get_reload(url) {
         if (this.readyState == 4 && this.status == 200) {
             elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
-            ajax = elem_.body.querySelector(".load_search_container");
+            ajax = elem_.querySelector(".load_search_container");
             rtr = document.body.querySelector(".load_search_container");
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
