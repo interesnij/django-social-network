@@ -174,6 +174,12 @@ on('body', 'click', '.user_nav_button', function() {
   document.body.querySelector(".settings_block_hide") ? (settings_block = document.body.querySelector(".settings_block_hide"),settings_block.classList.add("settings_block_show"),settings_block.classList.remove("settings_block_hide"))
   : (settings_block = document.body.querySelector(".settings_block_show"),settings_block.classList.add("settings_block_hide"),settings_block.classList.remove("settings_block_show"))
 });
+on('body', 'click', '.search_ajax', function(event) {
+  event.preventDefault();
+  if (url != window.location.pathname){
+    search_ajax_get_reload(url);
+  } else {toast_info("Список уже получен...")}
+});
 
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
