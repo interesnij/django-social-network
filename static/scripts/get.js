@@ -2,7 +2,7 @@
 on('#ajax', 'keydown', '.search_main_form', function(e) {
   if (e.keyCode == 13) {
     e.preventDefault();
-
+    section = "";
     value = this.value.replace("#", "%23");
     left_panel = document.body.querySelector(".search_panel");
     left_panel_options = left_panel.querySelectorAll(".search_ajax");
