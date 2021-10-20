@@ -176,6 +176,7 @@ on('body', 'click', '.user_nav_button', function() {
 });
 on('body', 'click', '.search_ajax', function(event) {
   event.preventDefault();
+  var url = this.getAttribute('href');
   if (url != window.location.pathname){
     search_ajax_get_reload(url);
   } else {toast_info("Список уже получен...")}

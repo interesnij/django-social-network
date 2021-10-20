@@ -722,7 +722,32 @@ function ajax_get_reload(url) {
       }
     }
     ajax_link.send();
-}
+};
+
+function search_ajax_get_reload(url) {
+  $serf_history.push(document.location.href);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    ajax_link.open('GET', url, true);
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            elem_ = document.createElement('span');
+            elem_.innerHTML = ajax_link.responseText;
+            ajax = elem_.body.querySelector(".load_search_container");
+            rtr = document.body.querySelector(".load_search_container");
+            rtr.innerHTML = ajax.innerHTML;
+            window.scrollTo(0, 0);
+            title = elem_.querySelector('title').innerHTML;
+            window.history.pushState(null, "vfgffgfgf", url);
+            document.title = title;
+            if_list(rtr);
+            create_pagination(rtr);
+            get_document_opacity_1(rtr);
+        }
+    }
+    ajax_link.send()
+};
 
 
 on('body', 'click', '.ajax', function(event) {
@@ -731,7 +756,14 @@ on('body', 'click', '.ajax', function(event) {
   if (url != window.location.pathname){
     ajax_get_reload(url);
   } else {toast_info("Вы уже на этой странице")}
-})
+});
+on('body', 'click', '.search_ajax', function(event) {
+  event.preventDefault();
+  var url = this.getAttribute('href');
+  if (url != window.location.pathname){
+    search_ajax_get_reload(url);
+  } else {toast_info("Список уже получен...")}
+});
 
 if_list(document.getElementById('ajax'));
 
