@@ -2250,20 +2250,6 @@ fieldset:disabled a.btn {
     border-color: #6c757d
 }
 
-.btn-secondary:not(:disabled):not(.disabled):active,
-.btn-secondary:not(:disabled):not(.disabled).active,
-.show>.btn-secondary.dropdown-toggle {
-    color: #fff !important;
-    background-color: #545b62;
-    border-color: #4e555b
-}
-
-.btn-secondary:not(:disabled):not(.disabled):active:focus,
-.btn-secondary:not(:disabled):not(.disabled).active:focus,
-.show>.btn-secondary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 .2rem rgba(108, 117, 125, 0.5)
-}
-
 .btn-success {
     color: #fff !important;
     background-color: #0fd793;
