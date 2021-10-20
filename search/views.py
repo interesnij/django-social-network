@@ -27,22 +27,22 @@ class SearchView(ListView):
             _videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             self.list = Post.objects.filter(text__icontains=self.q)
             if _users:
-                users_count = _users.count()
+                self.users_count = _users.count()
                 self.users = _users[:4]
             if _communities:
-                communities_count = _communities.count()
+                self.communities_count = _communities.count()
                 self.communities = _communities[:4]
             if _goods:
-                goods_count = _goods.count()
+                self.goods_count = _goods.count()
                 self.goods = _goods[:4]
             if _musics:
-                musics_count = _musics.count()
+                self.musics_count = _musics.count()
                 self.musics = _musics[:4]
             if _videos:
-                videos_count = _videos.count()
+                self.videos_count = _videos.count()
                 self.videos = _videos[:4]
             if self.list:
-                posts_count = self.list.count()
+                self.posts_count = self.list.count()
         elif self.sections == "people":
             self.list = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
             if self.list:
@@ -83,6 +83,7 @@ class SearchView(ListView):
         context["goods_count"] = self.goods_count
         context["musics_count"] = self.musics_count
         context["videos_count"] = self.videos_count
+        context["posts_count"] = self.posts_count
         return context
 
     def get_queryset(self):
