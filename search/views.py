@@ -20,22 +20,27 @@ class SearchView(ListView):
         self.sections = request.GET.get('s')
 
         if self.sections == "all" or not self.sections:
-            self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))[:4]
-            self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))[:4]
-            self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:3]
-            self.musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:6]
-            self.videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:2]
+            _users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
+            _communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
+            _goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            _musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            _videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             self.list = Post.objects.filter(text__icontains=self.q)
-            if self.users:
-                users_count = self.users.count()
-            if self.communities:
-                communities_count = self.communities.count()
-            if self.goods:
-                goods_count = self.goods.count()
-            if self.musics:
-                musics_count = self.musics.count()
-            if self.videos:
-                videos_count = self.videos.count()
+            if _users:
+                users_count = _users.count()
+                self.users = _users[:4]
+            if _communities:
+                communities_count = _communities.count()
+                self.communities = _communities[:4]
+            if self._goods:
+                goods_count = _goods.count()
+                self.goods = _goods[:4]
+            if self._musics:
+                musics_count = _musics.count()
+                self.musics = _musics[:4]
+            if self._videos:
+                videos_count = _videos.count()
+                self.videos = _videos[:4]
             if self.list:
                 posts_count = self.list.count()
         elif self.sections == "people":
