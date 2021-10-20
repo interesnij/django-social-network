@@ -4,13 +4,13 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
     e.preventDefault();
 
     value = this.value.replace("#", "%23");
-    left_panel = document.body.querySelector(".search_panel"); 
+    left_panel = document.body.querySelector(".search_panel");
     left_panel_options = left_panel.querySelectorAll(".search_panel");
     for (var i = 0; i < left_panel_options.length; i++){
       url = left_panel_options[i].getAttribute("href");
       params = url.replace( '?', '').split('&');
       new_url = url.replace(params[1].split("=")[1], value);
-      if (left_panel_options[i].querySelector(".active")) {
+      if (left_panel_options[i].classList.contains(".active")) {
         section = params[0].split("=")[1];
       }
     };
