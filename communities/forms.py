@@ -18,12 +18,6 @@ class GeneralCommunityForm(forms.ModelForm):
 		fields = ['name', 'status', 'category',]
 
 
-class CoverCommunityForm(forms.ModelForm):
-	class Meta:
-		model = CommunityInfo
-		fields = ['cover', ]
-
-
 class CatCommunityForm(forms.ModelForm):
 	class Meta:
 		model = Community
