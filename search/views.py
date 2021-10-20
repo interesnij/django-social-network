@@ -19,7 +19,7 @@ class SearchView(ListView):
         else:
             self.template_name = "search/anon_search.html"
 
-        self.q = request.GET.get('q')
+        self.q = request.GET.get('q').replace("#", "%23")
         self.users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))[:4]
         self.communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))[:4]
         self.goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))[:3]
