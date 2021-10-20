@@ -13,9 +13,9 @@
             </div>
             <input type="text" value="{{ q }}" class="form-control search_main_form" placeholder="Поиск">
           </div>
-          {% if object_list %}
-
           <div class="load_search_container">
+          {% if object_list %}
+          
             {% if users %}
               {% for user in users %}
               <div class="card">
