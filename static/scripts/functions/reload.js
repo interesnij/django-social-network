@@ -186,7 +186,11 @@ function scrolled(_block, target) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
-      $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2)
+      $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
+      setTimeout(
+        $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
+        $serf_stat[3] += 3
+        , 3000);
       console.log($serf_stat);
 
         try {
