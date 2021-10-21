@@ -395,8 +395,13 @@ function this_page_reload(url) {
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
 
+  get_link = "?stat=" + $serf_stat
+  if ($posts_view) {
+    get_link = get_link + "&posts_view=" + $posts_view
+  };
+
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  ajax_link.open('GET', $serf_history.slice(-1), true);
+  ajax_link.open('GET', $serf_history.slice(-1) + get_link, true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -415,6 +420,8 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
+          $posts_view = [];
+          $serf_stat = [$serf_history.slice(-1), title, 0, 0]
       }
   }
   ajax_link.send()
@@ -422,9 +429,12 @@ window.addEventListener('popstate', function (e) {
 
 function ajax_get_reload(url) {
   $serf_history.push(document.location.href);
-
+  get_link = "?stat=" + $serf_stat
+  if ($posts_view) {
+    get_link = get_link + "&posts_view=" + $posts_view
+  };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url + "?test=hahaha&v=not_visibility", true);
+    ajax_link.open('GET', url + get_link, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -442,6 +452,9 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
+
+            $posts_view = [];
+            $serf_stat = [url, title, 0, 0]
         }
     }
     ajax_link.send()
@@ -449,9 +462,12 @@ function ajax_get_reload(url) {
 
 function search_ajax_get_reload(url) {
   $serf_history.push(document.location.href);
-
+  get_link = "?stat=" + $serf_stat
+  if ($posts_view) {
+    get_link = get_link + "&posts_view=" + $posts_view
+  };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url, true);
+    ajax_link.open('GET', url + get_link, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -467,6 +483,9 @@ function search_ajax_get_reload(url) {
             if_list(rtr);
             create_pagination(rtr);
             get_document_opacity_1(rtr);
+
+            $posts_view = [];
+            $serf_stat = [url, title, 0, 0]
         }
     }
     ajax_link.send()
