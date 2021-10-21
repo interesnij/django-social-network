@@ -19,7 +19,7 @@ class SearchView(ListView):
         if request.GET.get('q'):
             _q = request.GET.get('q').replace("#", "%23")
             if "?stat" in _q:
-                self.q = _q[_q.find("?") + 1:]
+                self.q = _q[:_q.find("?") - 1:]
             else:
                 self.q = _q
         else:
