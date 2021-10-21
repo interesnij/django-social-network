@@ -465,7 +465,7 @@ function ajax_get_reload(url) {
   $serf_history.push(document.location.href);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url, true);
+    ajax_link.open('GET', url + "?test=hahaha&v=not_visibility", true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -637,7 +637,7 @@ function change_this_fullscreen(_this, type_class) {
           new_uuid = url_split.slice(-2);
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
-          window.history.replaceState(null, null, new_url); 
+          window.history.replaceState(null, null, new_url);
       }
   };
   link.send();
