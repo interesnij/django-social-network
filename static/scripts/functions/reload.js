@@ -186,8 +186,8 @@ function scrolled(_block, target) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
-      $posts_view[2] = parseFloat(offset * 0.000264).toFixed(2)
-      console.log($posts_view);
+      $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2)
+      console.log($serf_stat);
 
         try {
             box = _block.querySelector('.next_page_list');
