@@ -277,6 +277,8 @@ class ProfileUserView(TemplateView):
             self.is_friend_open = self.user.is_anon_user_can_see_friend()
             self.is_good_open = self.user.is_anon_user_can_see_good()
 
+        self.template_name = get_folder(request.META['HTTP_USER_AGENT']) + self.template_name
+
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
