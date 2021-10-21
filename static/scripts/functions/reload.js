@@ -172,6 +172,7 @@ $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 $posts_view = [];
 // $serf_stat = [link, title, height, time]
 $serf_stat = [window.location.href, document.title, $window_height, 0];
+console.log($window_height);
 
 setInterval(() => $serf_stat[3] += 5, 5000);
 
