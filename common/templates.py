@@ -11,7 +11,7 @@ def update_activity(user, user_agent, link=None, title=None, height=None, time=N
         profile.height += height
     if time:
         profile.time += timedelta(minutes = time)
-    user.save(update_fields=['height', 'time'])
+    profile.save(update_fields=['height', 'time'])
     if MOBILE_AGENT_RE.match(user_agent):
         user.last_activity, user.device = datetime.now(), "Ph"
         user.save(update_fields=['last_activity', 'device'])
