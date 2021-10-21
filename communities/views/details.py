@@ -7,8 +7,7 @@ class CommunityDetail(TemplateView):
     template_name,common_friends,common_friends_count, is_photo_open,is_post_open,is_members_open,is_doc_open,is_video_open,is_music_open,is_good_open = None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
-        import re
-        MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+        from common.templates import update_activity, get_folder
 
         self.c, user_agent, r_user_pk = Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], request.user.pk
 
@@ -67,12 +66,6 @@ class CommunityDetail(TemplateView):
                 self.template_name = "communities/detail/close_community.html"
             elif self.c.is_private():
                 self.template_name = "generic/c_template/private_community.html"
-
-            from stst.models import CommunityNumbers
-            if MOBILE_AGENT_RE.match(user_agent):
-                CommunityNumbers.objects.create(user=r_user_pk, community=self.c.pk, device=CommunityNumbers.PHONE)
-            else:
-                CommunityNumbers.objects.create(user=r_user_pk, community=self.c.pk, device=CommunityNumbers.DESCTOP)
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
             self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
             self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
@@ -81,6 +74,8 @@ class CommunityDetail(TemplateView):
             self.is_doc_open = self.c.is_user_can_see_doc(r_user_pk)
             self.is_member_open = self.c.is_user_can_see_member(r_user_pk)
             self.is_good_open = self.c.is_user_can_see_good(r_user_pk)
+
+            update_activity(request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         elif request.user.is_anonymous:
             if self.c.type[0] == "_":
                 if self.c.is_suspended():
@@ -107,10 +102,7 @@ class CommunityDetail(TemplateView):
             self.is_good_open = self.c.is_anon_user_can_see_good()
             self.is_post_open = self.c.is_anon_user_can_see_post()
 
-        if MOBILE_AGENT_RE.match(user_agent):
-            self.template_name = "mobile/" + self.template_name
-        else:
-            self.template_name = "desctop/" + self.template_name
+        self.template_name = get_folder(request.META['HTTP_USER_AGENT']) + self.template_name
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
