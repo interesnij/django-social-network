@@ -28,12 +28,12 @@ class LoadSurveyList(ListView):
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_list(self.list, "survey/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_community_list(self.list, "survey/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 			else:
 				self.template_name = get_template_anon_community_list(self.list, "survey/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_list(self.list, "survey/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_user_list(self.list, "survey/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 			else:
 				self.template_name = get_template_anon_user_list(self.list, "survey/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadSurveyList,self).get(request,*args,**kwargs)

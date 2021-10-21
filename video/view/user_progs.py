@@ -74,7 +74,7 @@ class VideoUserCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
 
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
         return super(VideoUserCommentEdit,self).get(request,*args,**kwargs)
 
@@ -207,7 +207,7 @@ class VideoWallCommentUserDelete(View):
 class UserVideoCreate(TemplateView):
     template_name, form_post  = None, None
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("video/user_create/create_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserVideoCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -235,7 +235,7 @@ class UserVideoEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("video/user_create/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("video/user_create/edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserVideoEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -293,7 +293,7 @@ class UserVideolistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("video/user_create/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("video/user_create/edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

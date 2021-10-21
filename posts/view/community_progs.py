@@ -126,7 +126,7 @@ class PostCommunityEdit(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         self.community = self.post.community
         if request.user.is_administrator_of_community(self.community.pk):
-            self.template_name = get_admin_template(self.community, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_admin_template(self.community, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             raise Http404
         return super(PostCommunityEdit,self).get(request,*args,**kwargs)
@@ -161,7 +161,7 @@ class PostCommunityCommentEdit(TemplateView):
         from common.templates import get_my_template
 
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(PostCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -441,7 +441,7 @@ class CommunityPostsListEdit(TemplateView):
         from common.templates import get_community_manage_template
 
         self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
-        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CommunityPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

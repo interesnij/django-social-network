@@ -20,7 +20,7 @@ class CommunityPhotosList(ListView):
         self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
         if request.is_ajax():
             if request.user.is_authenticated:
-                self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_list(self.list, "communities/photos/main_list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -51,7 +51,7 @@ class CommunityAlbumPhotosList(ListView):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             if request.user.is_authenticated:
-                self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -82,7 +82,7 @@ class CommunityAlbumPhotoList(TemplateView):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.photo, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.photo, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/list_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         if request.user.is_authenticated and request.user.is_administrator_of_community(self.list.community.pk):
@@ -110,7 +110,7 @@ class GetCommunityPhoto(TemplateView):
 
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax():
-            self.template_name = get_detect_platform_template("gallery/c_photo/preview/admin_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("gallery/c_photo/preview/admin_photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             raise Http404
         return super(GetCommunityPhoto,self).get(request,*args,**kwargs)

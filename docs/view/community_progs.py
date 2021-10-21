@@ -54,7 +54,7 @@ class CommunityDocCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_create_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CommunityDocCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -79,7 +79,7 @@ class CommunityDocEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         self.doc = Doc.objects.get(pk=self.kwargs["doc_pk"])
         self.community = self.doc.community
-        self.template_name = get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_edit_doc.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CommunityDocEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -131,7 +131,7 @@ class CommunityDocListEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
         self.c = self.list.community
-        self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CommunityDocListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -81,7 +81,7 @@ class SearchView(ListView):
             if self.list:
                 self.goods_count = self.list.count()
             self.section = "goods"
-        self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_default_template("search/", "search.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(SearchView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

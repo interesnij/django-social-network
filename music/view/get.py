@@ -40,16 +40,3 @@ class ListMusicGet(TemplateView):
         context = super(ListMusicGet,self).get_context_data(**kwargs)
         context["list"] = self.list.get_items()[0:50]
         return context
-
-
-class MusicPlaylistPreview(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.playlist, self.template_name = SoundList.objects.get(pk=self.kwargs["pk"]), get_settings_template("music/playlist_preview.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(MusicPlaylistPreview,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(MusicPlaylistPreview,self).get_context_data(**kwargs)
-		context["playlist"] = self.playlist
-		return context

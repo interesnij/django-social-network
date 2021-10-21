@@ -11,7 +11,7 @@ class SurveyCommunityCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("survey/community/add.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("survey/community/add.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(SurveyCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -52,7 +52,7 @@ class SurveyCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
-        self.template_name = get_detect_platform_template("survey/community/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("survey/community/edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(SurveyCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -116,7 +116,7 @@ class SurveyCommunityDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         self.survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_detect_platform_template("survey/community/survey.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("survey/community/survey.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(SurveyCommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -147,7 +147,7 @@ class CommunitySurveyListCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("survey/community/create_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("survey/community/create_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CommunitySurveyListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -170,7 +170,7 @@ class CommunitySurveyListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.template_name = get_settings_template("survey/community/edit_list.html", request.user, request.META['HTTP_USER_AGENT']), SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        self.list, self.template_name = get_settings_template("survey/community/edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), SurveyList.objects.get(uuid=self.kwargs["uuid"])
         return super(CommunitySurveyListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

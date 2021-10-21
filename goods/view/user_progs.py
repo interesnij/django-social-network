@@ -113,7 +113,7 @@ class GoodUserCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("goods/u_good/add.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/u_good/add.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(GoodUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -150,7 +150,7 @@ class GoodUserEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("goods/u_good/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("goods/u_good/edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(GoodUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -189,7 +189,7 @@ class GoodListUserCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_base/u_add_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/good_base/u_add_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(GoodListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -216,7 +216,7 @@ class UserGoodListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("goods/good_base/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("goods/good_base/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -297,7 +297,7 @@ class GoodUserCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
 
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
         return super(GoodUserCommentEdit,self).get(request,*args,**kwargs)
 
