@@ -17,7 +17,11 @@ class SearchView(ListView):
         from posts.models import Post
 
         if request.GET.get('q'):
-            self.q = request.GET.get('q').replace("#", "%23")
+            _q = request.GET.get('q').replace("#", "%23")
+            if "?stat" in _q:
+                self.q = _q[_q.find("?") + 1:]
+            else:
+                self.q = _q
         else:
             self.q = ""
         self.sections = request.GET.get('s')
