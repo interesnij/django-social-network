@@ -182,7 +182,7 @@ function scrolled(_block, target) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
-      console.log(offset * 0.000264, "м");
+      console.log(parseFloat(offset * 0.000264).toFixed(2), "м");
 
         try {
             box = _block.querySelector('.next_page_list');
