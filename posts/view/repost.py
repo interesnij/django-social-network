@@ -17,7 +17,7 @@ class UUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.user, self.template_name = User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPostWindow,self).get(request,*args,**kwargs)
@@ -36,7 +36,7 @@ class CUCMPostWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.community, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.community, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("posts/repost/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         check_can_get_lists(request.user, self.community)
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
 
@@ -58,7 +58,7 @@ class UUCMPostsListWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("posts/repost/u_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("posts/repost/u_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UUCMPostsListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -78,7 +78,7 @@ class CUCMPostsListWindow(TemplateView):
         self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CUCMPostsListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

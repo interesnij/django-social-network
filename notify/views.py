@@ -9,7 +9,7 @@ class AllNotifyView(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("notify/all_notify.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("notify/all_notify.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         self.user, self.all_notify = request.user, request.user.get_user_notify()
         return super(AllNotifyView,self).get(request,*args,**kwargs)
 
@@ -26,7 +26,7 @@ class UserNotifyView(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.user, self.template_name, self.all_notify = request.user, get_settings_template("notify/user_notify.html", request.user, request.META['HTTP_USER_AGENT']), request.user.get_user_notify()
+        self.user, self.template_name, self.all_notify = request.user, get_settings_template("notify/user_notify.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.get_user_notify()
         request.user.read_user_notify()
         return super(UserNotifyView,self).get(request,*args,**kwargs)
 
@@ -46,7 +46,7 @@ class CommunityNotifyView(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
+        self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), self.community.get_community_notify()
         self.community.read_community_notify(self.user.pk)
         return super(CommunityNotifyView,self).get(request,*args,**kwargs)
 

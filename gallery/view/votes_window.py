@@ -14,7 +14,7 @@ class PhotoUserLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.photo, "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoUserLikeWindow,self).get(request,*args,**kwargs)
@@ -32,7 +32,7 @@ class PhotoUserDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.photo, "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoUserDislikeWindow,self).get(request,*args,**kwargs)
@@ -51,7 +51,7 @@ class PhotoUserCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.comment.get_item(), "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoUserCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -70,7 +70,7 @@ class PhotoUserCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.comment.get_item(), "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
@@ -89,7 +89,7 @@ class PhotoCommunityLikeWindow(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_item(self.photo, "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -110,7 +110,7 @@ class PhotoCommunityDislikeWindow(TemplateView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_item(self.photo, "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -130,7 +130,7 @@ class PhotoCommunityCommentLikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.comment.get_item(), "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -148,7 +148,7 @@ class PhotoCommunityCommentDislikeWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.comment.get_item(), "gallery/photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
@@ -169,7 +169,7 @@ class AllPhotoUserLikeWindow(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_user_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -194,7 +194,7 @@ class AllPhotoUserDislikeWindow(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_user_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -219,7 +219,7 @@ class AllPhotoUserCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.comment.get_item(), "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoUserCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -242,7 +242,7 @@ class AllPhotoUserCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.comment.get_item(), "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoUserCommentDislikeWindow,self).get(request,*args,**kwargs)
@@ -266,7 +266,7 @@ class AllPhotoCommunityLikeWindow(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -291,7 +291,7 @@ class AllPhotoCommunityDislikeWindow(ListView):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
-                self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+                self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
             else:
                 self.template_name = get_template_anon_community_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -316,7 +316,7 @@ class AllPhotoCommunityCommentLikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.comment.get_item(), "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoCommunityCommentLikeWindow,self).get(request,*args,**kwargs)
@@ -339,7 +339,7 @@ class AllPhotoCommunityCommentDislikeWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.comment.get_item(), "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.comment.get_item(), "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoCommunityCommentDislikeWindow,self).get(request,*args,**kwargs)
@@ -362,7 +362,7 @@ class AllPhotoCommunityRepostWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoCommunityRepostWindow,self).get(request,*args,**kwargs)
@@ -384,7 +384,7 @@ class AllPhotoUserRepostWindow(ListView):
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_user_item(self.photo, "gallery/all_photo_votes/anon_page.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(AllPhotoUserRepostWindow,self).get(request,*args,**kwargs)

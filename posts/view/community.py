@@ -12,7 +12,7 @@ class PostCommunityDetail(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_template_community_item, get_template_anon_community_item
         if request.user.is_authenticated:
-            self.template_name = get_template_community_item(self.post, "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_community_item(self.post, "posts/post_community/", "detail.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         else:
             self.template_name = get_template_anon_community_item(self.post, "posts/post_community/", "anon_detail.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostCommunityDetail,self).get(request,*args,**kwargs)

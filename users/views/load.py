@@ -8,7 +8,7 @@ class UserLoadPhoto(ListView):
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 
-		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = PhotoList.get_user_lists(request.user.pk)
 		return super(UserLoadPhoto,self).get(request,*args,**kwargs)
 
@@ -27,7 +27,7 @@ class UserLoadPhotoList(ListView):
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 
-		self.list, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_photo_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserLoadPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -43,7 +43,7 @@ class UserLoadPhotoComment(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
-		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_comments_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = PhotoList.get_user_lists(request.user.pk)
 		return super(UserLoadPhotoComment,self).get(request,*args,**kwargs)
 
@@ -60,7 +60,7 @@ class UserLoadPhotoMessage(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
-		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_message_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_photo_list(), get_settings_template("users/load/u_photo_message_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = PhotoList.get_user_lists(request.user.pk)
 		return super(UserLoadPhotoMessage,self).get(request,*args,**kwargs)
 
@@ -79,7 +79,7 @@ class UserLoadVideo(ListView):
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoList
 
-		self.list, self.template_name = request.user.get_video_list(), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = request.user.get_video_list(), get_settings_template("users/load/u_video_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = VideoList.get_user_lists(request.user.pk)
 		return super(UserLoadVideo,self).get(request,*args,**kwargs)
 
@@ -97,7 +97,7 @@ class UserLoadVideoList(ListView):
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoList
 
-		self.list, self.template_name = VideoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list, self.template_name = VideoList.objects.get(uuid=self.kwargs["uuid"]), get_settings_template("users/load/u_video_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserLoadVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -115,7 +115,7 @@ class UserLoadMusic(ListView):
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
 		self.list = request.user.get_playlist()
-		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = SoundList.get_user_lists(request.user.pk)
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
@@ -133,7 +133,7 @@ class UserLoadMusicList(ListView):
 	def get(self,request,*args,**kwargs):
 		from music.models import SoundList
 		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_music_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_music_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserLoadMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -152,7 +152,7 @@ class UserLoadDoc(ListView):
 		from docs.models import DocsList
 
 		self.list = request.user.get_doc_list()
-		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_doc_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = DocsList.get_user_lists(request.user.pk)
 		return super(UserLoadDoc,self).get(request,*args,**kwargs)
 
@@ -170,7 +170,7 @@ class UserLoadDocList(ListView):
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocsList
 		self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_doc_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_doc_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserLoadDocList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -212,7 +212,7 @@ class UserLoadSurveyList(ListView):
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocsList
 		self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_survey_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_survey_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserSurveyDocList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -231,7 +231,7 @@ class UserLoadGood(ListView):
 		from goods.models import GoodList
 
 		self.list = request.user.get_good_list()
-		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_good_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.get_lists = GoodList.get_user_lists(request.user.pk)
 		return super(UserLoadGood,self).get(request,*args,**kwargs)
 
@@ -249,7 +249,7 @@ class UserLoadGoodList(ListView):
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodList
 		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-		self.template_name = get_settings_template("users/load/u_good_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/u_good_list_load.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserLoadGoodList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -265,7 +265,7 @@ class ChatItemsLoad(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/chat_items.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/chat_items.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.total_list = request.user.get_chats_and_connections()
 		return super(ChatItemsLoad,self).get(request,*args,**kwargs)
 
@@ -277,7 +277,7 @@ class CommunitiesLoad(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.list = request.user.get_staffed_communities()
 		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
 
@@ -289,7 +289,7 @@ class FriendsLoad(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/friends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/friends.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.list = request.user.get_all_connection()
 		return super(FriendsLoad,self).get(request,*args,**kwargs)
 
@@ -303,7 +303,7 @@ class SmilesStickersLoad(TemplateView):
 	template_name, populate_smiles, populate_stickers = None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/smiles_stickers.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/smiles_stickers.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.is_have_populate_smiles = request.user.is_have_populate_smiles()
 		if self.is_have_populate_smiles:
 			self.populate_smiles = request.user.get_populate_smiles()
@@ -327,7 +327,7 @@ class SmilesLoad(TemplateView):
 	template_name, populate_smiles = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/smiles.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/smiles.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.is_have_populate_smiles = request.user.is_have_populate_smiles()
 		if self.is_have_populate_smiles:
 			self.populate_smiles = request.user.get_populate_smiles()
@@ -346,7 +346,7 @@ class ChatsLoad(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/chats.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/load/chats.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.list = request.user.get_all_chats()
 		return super(ChatsLoad,self).get(request,*args,**kwargs)
 

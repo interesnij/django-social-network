@@ -20,7 +20,7 @@ class UserVideoList(ListView):
 			self.video_list = self.list.get_items()
 
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
@@ -44,7 +44,7 @@ class UserPostVideoList(TemplateView):
 		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
 		self.video_list = self.post.get_attach_videos()
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPostVideoList,self).get(request,*args,**kwargs)
@@ -63,7 +63,7 @@ class UserMessageVideoList(TemplateView):
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.video_list = self.message.get_attach_videos()
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.video, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMessageVideoList,self).get(request,*args,**kwargs)
@@ -86,7 +86,7 @@ class UserPostCommentVideoList(TemplateView):
 		else:
 			post = self.comment.post
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.video, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.video_list = self.comment.get_attach_videos()
@@ -111,7 +111,7 @@ class UserVideoInfo(TemplateView):
 			except:
 				VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, device=request.user.get_device())
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.video, "video/u_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoInfo,self).get(request,*args,**kwargs)
@@ -139,7 +139,7 @@ class UserVideoDetail(TemplateView):
 				else:
 					VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.video, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_user_item(self.video, "video/u_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 

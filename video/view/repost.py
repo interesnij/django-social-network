@@ -23,7 +23,7 @@ class UUCMVideoWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("video/repost/u_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/repost/u_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UUCMVideoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -43,7 +43,7 @@ class CUCMVideoWindow(TemplateView):
         self.video = Video.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("video/repost/c_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/repost/c_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CUCMVideoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -65,7 +65,7 @@ class UUCMVideoListWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("video/repost/u_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/repost/u_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UUCMVideoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -85,7 +85,7 @@ class CUCMVideoListWindow(TemplateView):
         self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("video/repost/c_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("video/repost/c_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CUCMVideoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

@@ -11,7 +11,7 @@ class UserGeneralChange(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/general.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/general.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserGeneralChange,self).get(request,*args,**kwargs)
 
 
@@ -19,7 +19,7 @@ class UserInfoChange(TemplateView):
 	template_name, form, profile = None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/info.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/info.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserInfoChange,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -43,7 +43,7 @@ class UserDesign(TemplateView):
 			self.color = UserColorSettings.objects.get(user=request.user)
 		except:
 			self.color = UserColorSettings.objects.create(user=request.user)
-		self.template_name = get_settings_template("users/settings/design.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/design.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserDesign,self).get(request,*args,**kwargs)
 
 
@@ -52,7 +52,7 @@ class UserNotifyView(TemplateView):
 	form = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify = UserNotifications.objects.get(user=request.user)
 		except:
@@ -79,7 +79,7 @@ class UserNotifyPostView(TemplateView):
 	form = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify_post.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify_post = UserNotificationsPost.objects.get(user=request.user)
 		except:
@@ -107,7 +107,7 @@ class UserNotifyPhotoView(TemplateView):
 	notify_photo = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify_photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify_photo = UserNotificationsPhoto.objects.get(user=request.user)
 		except:
@@ -135,7 +135,7 @@ class UserNotifyGoodView(TemplateView):
 	notify_good = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify_good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify_good = UserNotificationsGood.objects.get(user=request.user)
 		except:
@@ -163,7 +163,7 @@ class UserNotifyVideoView(TemplateView):
 	notify_video = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify_video = UserNotificationsVideo.objects.get(user=request.user)
 		except:
@@ -190,7 +190,7 @@ class UserNotifyMusicView(TemplateView):
 	form = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/notify_music.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/notify_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		try:
 			self.notify_music = UserNotificationsMusic.objects.get(user=request.user)
 		except:
@@ -219,7 +219,7 @@ class UserPrivateView(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.private = UserPrivate.objects.get(user=request.user)
 		self.form = UserPrivateForm(instance=self.private)
-		self.template_name = get_settings_template("users/settings/private.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -240,7 +240,7 @@ class UserPrivatePostView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = request.user.get_post_list()
-		self.template_name = get_settings_template("users/settings/private_post.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -266,7 +266,7 @@ class UserPrivateGoodView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = request.user.get_good_list()
-		self.template_name = get_settings_template("users/settings/private_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private_good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivateGoodView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -292,7 +292,7 @@ class UserPrivateVideoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = request.user.get_video_list()
-		self.template_name = get_settings_template("users/settings/private_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivateVideoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -318,7 +318,7 @@ class UserPrivatePhotoView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = request.user.get_photo_list()
-		self.template_name = get_settings_template("users/settings/private_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private_photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivatePhotoView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -344,7 +344,7 @@ class UserPrivateMusicView(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = request.user.get_playlist()
-		self.template_name = get_settings_template("users/settings/private_music.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/private_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserPrivateMusicView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -370,7 +370,7 @@ class UserEditName(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/edit_name.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/edit_name.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserEditName,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -392,7 +392,7 @@ class UserEditPassword(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/edit_password.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/edit_password.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserEditPassword,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -414,7 +414,7 @@ class UserEditEmail(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/edit_email.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/edit_email.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserEditEmail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -436,7 +436,7 @@ class UserEditPhone(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/edit_phone.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/edit_phone.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserEditPhone,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -458,7 +458,7 @@ class UserEditLink(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/edit_link.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/edit_link.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserEditLink,self).get(request,*args,**kwargs)
 
 	def post(self,request,*args,**kwargs):
@@ -477,21 +477,21 @@ class UserVerifySend(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/verify_send.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/verify_send.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserVerifySend,self).get(request,*args,**kwargs)
 
 class UserIdentifySend(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/identify_send.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/identify_send.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserIdentifySend,self).get(request,*args,**kwargs)
 
 class UserRemoveProfile(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/settings/remove_profile.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/remove_profile.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserRemoveProfile,self).get(request,*args,**kwargs)
 
 	def post(self,request,*args,**kwargs):

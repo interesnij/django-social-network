@@ -16,7 +16,7 @@ class CommunityVideoList(ListView):
 		self.list = self.video.list
 		self.community = self.list.community
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_staff_of_community(self.community.pk):
@@ -44,7 +44,7 @@ class CommunityVideoDetail(TemplateView):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
 		self.video = Video.objects.get(uuid=self.kwargs["uuid"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "video/c_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.post, "video/c_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_detail/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		if request.user.is_authenticated:
@@ -70,7 +70,7 @@ class CommunityPostVideoList(TemplateView):
 
 		self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostVideoList,self).get(request,*args,**kwargs)
@@ -89,7 +89,7 @@ class CommunityPostCommentVideoList(TemplateView):
 
 		self.comment, self.community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/", "anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPostCommentVideoList,self).get(request,*args,**kwargs)
@@ -119,7 +119,7 @@ class CommunityVideoInfo(TemplateView):
 				else:
 					VideoNumbers.objects.create(user=request.user.pk, video=self.video.pk, platform=0)
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "video/c_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_community_item(self.post, "video/c_video_info/", "video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_info/anon_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoInfo,self).get(request,*args,**kwargs)

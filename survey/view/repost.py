@@ -24,7 +24,7 @@ class UUCMSurveyWindow(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("survey/repost/u_ucm_survey.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("survey/repost/u_ucm_survey.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UUCMSurveyWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -44,7 +44,7 @@ class CUCMSurveyWindow(TemplateView):
         self.survey = Survey.objects.get(uuid=self.kwargs["uuid"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("survey/repost/c_ucm_survey.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("survey/repost/c_ucm_survey.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(CUCMSurveyWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

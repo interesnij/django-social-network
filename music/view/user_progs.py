@@ -15,7 +15,7 @@ class UserSoundcloudSetPlaylistWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music/music_create/u_soundcloud_add_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_soundcloud_add_playlist.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserSoundcloudSetPlaylistWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -28,7 +28,7 @@ class UserSoundcloudSetWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -111,7 +111,7 @@ class UserPlaylistCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music/music_create/u_create_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_create_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserPlaylistCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -138,7 +138,7 @@ class UserPlaylistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -197,7 +197,7 @@ class UserTrackCreate(TemplateView):
     form_post = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music/music_create/u_create_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_create_track.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserTrackCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -220,7 +220,7 @@ class UserTrackEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("music/music_create/u_edit_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_settings_template("music/music_create/u_edit_track.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         return super(UserTrackEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

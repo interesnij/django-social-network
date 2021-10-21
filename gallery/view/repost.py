@@ -19,7 +19,7 @@ class UUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.user, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.photo, self.user, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
@@ -38,7 +38,7 @@ class CUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.c, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.photo, self.c, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         check_can_get_lists(request.user, self.community)
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
@@ -58,7 +58,7 @@ class UUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoListWindow,self).get(request,*args,**kwargs)
@@ -78,7 +78,7 @@ class CUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         check_can_get_lists(request.user, self.c)
         return super(CUCMPhotoListWindow,self).get(request,*args,**kwargs)
 

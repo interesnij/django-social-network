@@ -7,5 +7,4 @@ urlpatterns = [
     url(r'^tag/(?P<pk>\d+)/$', login_required(TagMusicGet.as_view())),
     url(r'^genre/(?P<pk>\d+)/$', login_required(GenreMusicGet.as_view())),
     url(r'^list/(?P<pk>\d+)/$', login_required(ListMusicGet.as_view())),
-    url(r'^playlist_preview/(?P<pk>\d+)/$', login_required(MusicPlaylistPreview.as_view())),
 ]

@@ -17,13 +17,13 @@ class CreateUserChat(TemplateView):
 			self.member = self.user
 
 		if self.user == request.user and not request.user.get_6_friends():
-			self.template_name = get_my_template("chat/chat/create_chat_empty.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_my_template("chat/chat/create_chat_empty.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		elif self.user == request.user and request.user.get_6_friends():
-			self.template_name = get_my_template("chat/chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_my_template("chat/chat/create_chat_with_members.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		elif self.user != request.user and not request.user.get_6_friends():
-			self.template_name = get_my_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_my_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		elif self.user != request.user and request.user.get_6_friends():
-			self.template_name = get_my_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_my_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(CreateUserChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -76,9 +76,9 @@ class UserSendPageMessage(TemplateView):
 		from common.templates import get_settings_template
 
 		if request.user.get_6_friends():
-			self.template_name = get_settings_template("chat/message/add_friend_message.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/message/add_friend_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		else:
-			self.template_name = get_settings_template("chat/message/add_message.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/message/add_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		return super(UserSendPageMessage,self).get(request,*args,**kwargs)
 
@@ -123,7 +123,7 @@ class LoadUserChatMessage(TemplateView):
 		from common.templates import get_my_template
 		from chat.models import Message
 
-		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.message.unread = False
 		self.message.save(update_fields=["unread"])
 		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
@@ -145,7 +145,7 @@ class LoadUserMessage(TemplateView):
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
-		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(request.user.pk), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(request.user.pk), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		if self.chat.is_private():
 			member = self.chat.get_chat_member(user_id)
 			if self.chat.image:
@@ -233,7 +233,7 @@ class UserMessageEdit(TemplateView):
 		from common.templates import get_my_template
 		from chat.models import Message
 
-		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/edit_message.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/edit_message.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(UserMessageEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -432,7 +432,7 @@ class InviteMembersInChat(ListView):
 		from chat.models import Chat
 		from common.templates import get_settings_template
 
-		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		return super(InviteMembersInChat,self).get(request,*args,**kwargs)
 

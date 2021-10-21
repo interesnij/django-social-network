@@ -10,7 +10,7 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 
 		#self.common_users=self.user.get_common_friends_of_user(request.user)
 		return super(FrendsListView,self).get(request,*args,**kwargs)
@@ -30,7 +30,7 @@ class OnlineFrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -47,7 +47,7 @@ class CommonFrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_settings_template("frends/frends_common/frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("frends/frends_common/frends.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
 		return super(CommonFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
