@@ -167,10 +167,11 @@ function get_post_view() {
     }
 };
 
-// $serf_stat = [link, title, height, time]
-$serf_stat = [window.location.href, document.title, window.innerHeight, 0];
+$window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 // $posts_view = записи, которые в ленте просмотрел пользователь
 $posts_view = [];
+// $serf_stat = [link, title, height, time]
+$serf_stat = [window.location.href, document.title, $window_height, 0];
 
 setInterval(() => $serf_stat[3] += 5, 5000);
 
@@ -421,7 +422,7 @@ window.addEventListener('popstate', function (e) {
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
           $posts_view = [];
-          $serf_stat = [$serf_history.slice(-1), title, window.innerHeight, 0]
+          $serf_stat = [$serf_history.slice(-1), title, $window_height, 0]
       }
   }
   ajax_link.send()
@@ -454,7 +455,7 @@ function ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, window.innerHeight, 0];
+            $serf_stat = [url, title, $window_height, 0];
             document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
             document.getElementById("user_time").innerHTML = elem_.querySelector("#user_time").innerHTML
         }
@@ -487,7 +488,7 @@ function search_ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, window.innerHeight, 0];
+            $serf_stat = [url, title, $window_height, 0];
 
             try{
               document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
