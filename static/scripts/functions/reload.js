@@ -152,7 +152,9 @@ function get_post_view() {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
-                      uuid = list[i].getAttribute('data-uuid')
+                      uuid = list[i].getAttribute('data-uuid');
+                      console.log(uuid);
+                      console.log($posts_view);
                       if ($posts_view.indexOf(uuid) != -1) {
                         $posts_view.push(uuid);
                       }
