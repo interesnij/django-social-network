@@ -1,4 +1,4 @@
-// url, title, height, time
+
 $serf_history = [];
 
 function create_fullscreen(url, type_class) {
@@ -171,6 +171,10 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
+// $serf_stat = [link, title, height, time]
+$serf_stat = [window.location.href, window.title, 0, 0];
+// $posts_view = записи, которые в ленте просмотрел пользователь
+$posts_view = [];
 
 function scrolled(_block, target) {
     offset = 0
@@ -182,7 +186,8 @@ function scrolled(_block, target) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
-      console.log(parseFloat(offset * 0.000264).toFixed(2), "м");
+      $posts_view[2] = parseFloat(offset * 0.000264).toFixed(2)
+      console.log($posts_view);
 
         try {
             box = _block.querySelector('.next_page_list');
