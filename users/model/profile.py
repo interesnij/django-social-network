@@ -28,7 +28,7 @@ class UserProfile(models.Model):
     videos = models.PositiveIntegerField(default=0, verbose_name="Кол-во видеозаписей")
     articles = models.PositiveIntegerField(default=0, verbose_name="Кол-во статей")
     time = models.DurationField(verbose_name="Общее проведенное время")
-    height = models.FloatField(verbose_name="Общая высота экранов")
+    height = models.FloatField(default=0, verbose_name="Общая высота в метрах")
 
     def __str__(self):
         return self.user.last_name
