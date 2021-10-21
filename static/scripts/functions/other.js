@@ -1125,3 +1125,144 @@ function get_image_priview(ggg, img) {
         }, 1000)
     }
 };
+
+/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
+function change_position(block, el) {
+  // функция инициирует смену порядка элементов,учитывая их класс.
+  if (el.classList.contains("u_list")) {send_change_u_post_list(el)} else if (el.classList.contains("c_list")) {send_change_c_post_list(el)} else if (el.classList.contains("u_post")) {send_change_u_post(el)} else if (el.classList.contains("c_post")) {send_change_c_post(el)}
+  else if (el.classList.contains("u_doc_list")) {send_change_u_doc_list(el)} else if (el.classList.contains("c_doc_list")) {send_change_c_doc_list(el)} else if (el.classList.contains("u_doc")) {send_change_u_doc(el)} else if (el.classList.contains("c_doc")) {send_change_c_doc(el)}
+  else if (el.classList.contains("u_photo_list")) {send_change_u_photo_list(el)} else if (el.classList.contains("c_photo_list")) {send_change_c_photo_list(el)} else if (el.classList.contains("u_photo")) {send_change_u_photo(el)} else if (el.classList.contains("c_photo")) {send_change_c_photo(el)}
+  else if (el.classList.contains("u_good_list")) {send_change_u_good_list(el)} else if (el.classList.contains("c_good_list")) {send_change_c_good_list(el)} else if (el.classList.contains("u_good")) {send_change_u_good(el)} else if (el.classList.contains("c_good")) {send_change_c_good(el)}
+  else if (el.classList.contains("u_music_list")) {send_change_u_music_list(el)} else if (el.classList.contains("c_music_list")) {send_change_c_music_list(el)} else if (el.classList.contains("u_music")) {send_change_u_music(el)} else if (el.classList.contains("c_music")) {send_change_c_music(el)}
+  else if (el.classList.contains("u_survey_list")) {send_change_u_survey_list(el)} else if (el.classList.contains("c_survey_list")) {send_change_c_survey_list(el)} else if (el.classList.contains("u_survey")) {send_change_u_survey(el)} else if (el.classList.contains("c_survey")) {send_change_c_survey(el)}
+  else if (el.classList.contains("u_video_list")) {send_change_u_video_list(el)} else if (el.classList.contains("c_video_list")) {send_change_c_video_list(el)} else if (el.classList.contains("u_video")) {send_change_u_video(el)} else if (el.classList.contains("c_video")) {send_change_c_video(el)}
+};
+
+function send_change_u_post(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_post"), "/posts/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_post(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_post_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_post_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_doc(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_doc"), "/docs/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_doc(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_doc"), "/docs/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_doc_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_doc_list"), "/docs/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_doc_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_doc_list"), "/docs/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_photo(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_photo"), "/gallery/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_photo(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_photo"), "/gallery/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_photo_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_photo_list"), "/gallery/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_photo_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_photo_list"), "/gallery/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_good(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_good"), "/goods/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_good(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_good"), "/goods/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_good_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_good_list"), "/goods/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_good_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_good_list"), "/goods/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_music(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_music"), "/music/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_music(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_music"), "/music/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_music_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_music_list"), "/music/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_music_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_music_list"), "/music/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_survey(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_survey"), "/survey/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_survey(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_survey"), "/survey/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_survey_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_survey_list"), "/survey/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_survey_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_survey_list"), "/survey/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function send_change_u_video(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_video"), "/video/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_c_video(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_video"), "/video/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+};
+function send_change_u_video_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_video_list"), "/video/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+function send_change_c_video_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_video_list"), "/video/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+};
+
+function scrollToBottom(id) {
+    document.querySelector(id).scrollIntoView(false);
+};
+
+function minus_one_chat() {
+    if (document.body.querySelector(".new_unread_chats")) {
+        unread_chats = document.body.querySelector(".new_unread_chats"),
+            count = unread_chats.innerHTML,
+            count * 1,
+            count -= 1,
+            count > 0 ? unread_chats.innerHTML = count : unread_chats.innerHTML = ""
+    }
+};
+
+function minus_new_followers() {
+    if (document.body.querySelector(".new_followers_bagde")) {
+        new_followers = document.body.querySelector(".new_followers_bagde"),
+            count = new_followers.innerHTML,
+            count * 1,
+            count -= 1,
+            count > 0 ? new_followers.innerHTML = count : new_followers.innerHTML = ""
+    }
+};

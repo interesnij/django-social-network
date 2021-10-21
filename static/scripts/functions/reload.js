@@ -1,3 +1,4 @@
+// url, title, height, time
 $serf_history = [];
 
 function create_fullscreen(url, type_class) {
@@ -155,7 +156,7 @@ function get_post_view() {
             }
         }
     }
-}
+};
 
 function get_dragula(block) {
   // функция инициирует библиотеку dragula.js
@@ -168,33 +169,16 @@ function get_dragula(block) {
     .on('drop', function (el) {console.log(el); change_position(_block, el)})
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
-}
+};
 
-/// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
-function block_scrolled(_block) {
-  window.onscroll = function() {
-    console.log("paginate")
-      try {
-          box = _block.querySelector('.next_page_list');
-          if (box && box.classList.contains("next_page_list")) {
-              inViewport = elementInViewport(box);
-              if (inViewport) {
-                  box.classList.remove("next_page_list");
-                  paginate(box, target);
-              }
-          };
-          if (target == 1) {
-              get_post_view()
-          }
-      } catch {return}
-  }
-}
+
 function scrolled(_block, target) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     window.onscroll = function() {
+      console.log(window.innerHeight);
         try {
             box = _block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
@@ -211,28 +195,6 @@ function scrolled(_block, target) {
     }
 }
 
-function top_paginate(block, target) {
-    // работа с прокруткой для подгрузки сообщений вверх страницы:
-    // 1. Ссылка на страницу с пагинацией
-    // 2. id блока, куда нужно грузить следующие страницы
-        var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
-        link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-        link_3.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var elem = document.createElement('span');
-                elem.innerHTML = link_3.responseText;
-                if (target == 1) {
-                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
-                } else {
-                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                };
-                block.remove()
-            }
-        }
-        link_3.send();
-};
 
 function open_video_fullscreen(url) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -291,31 +253,8 @@ function create_pagination(block) {
   }
 };
 
-function scrollToBottom(id) {
-    document.querySelector(id).scrollIntoView(false);
-};
-
-function minus_one_chat() {
-    if (document.body.querySelector(".new_unread_chats")) {
-        unread_chats = document.body.querySelector(".new_unread_chats"),
-            count = unread_chats.innerHTML,
-            count * 1,
-            count -= 1,
-            count > 0 ? unread_chats.innerHTML = count : unread_chats.innerHTML = ""
-    }
-}
-
-function minus_new_followers() {
-    if (document.body.querySelector(".new_followers_bagde")) {
-        new_followers = document.body.querySelector(".new_followers_bagde"),
-            count = new_followers.innerHTML,
-            count * 1,
-            count -= 1,
-            count > 0 ? new_followers.innerHTML = count : new_followers.innerHTML = ""
-    }
-}
-
 function load_item_window() {
+  // подгружаем окно при загрузке страницы, если есть параметры ссылки на него
   params = window.location.search.replace( '?', '').split('&');
   if (params) {
     if (params[0].split("=")[1] == "wall") {
@@ -421,7 +360,7 @@ function list_block_load(target_block, response_block, link) {
       alert( 'конец работы!' );
     };
     request.send( null );
-}
+};
 
 // Работаем с историей, создавая свою! Всё, что меняет адреса, отправляем сюда!
 
@@ -440,7 +379,6 @@ function this_page_reload(url) {
             if_list(rtr);
             loaded = false;
             create_pagination(rtr);
-
         }
     }
     ajax_link.send()
@@ -468,7 +406,7 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_container");
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
-          $serf_history.pop();
+          $serf_history.push(document.location.href);
       }
   }
   ajax_link.send()
@@ -544,120 +482,3 @@ function close_fullscreen() {
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
-
-/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
-function change_position(block, el) {
-  // функция инициирует смену порядка элементов,учитывая их класс.
-  if (el.classList.contains("u_list")) {send_change_u_post_list(el)} else if (el.classList.contains("c_list")) {send_change_c_post_list(el)} else if (el.classList.contains("u_post")) {send_change_u_post(el)} else if (el.classList.contains("c_post")) {send_change_c_post(el)}
-  else if (el.classList.contains("u_doc_list")) {send_change_u_doc_list(el)} else if (el.classList.contains("c_doc_list")) {send_change_c_doc_list(el)} else if (el.classList.contains("u_doc")) {send_change_u_doc(el)} else if (el.classList.contains("c_doc")) {send_change_c_doc(el)}
-  else if (el.classList.contains("u_photo_list")) {send_change_u_photo_list(el)} else if (el.classList.contains("c_photo_list")) {send_change_c_photo_list(el)} else if (el.classList.contains("u_photo")) {send_change_u_photo(el)} else if (el.classList.contains("c_photo")) {send_change_c_photo(el)}
-  else if (el.classList.contains("u_good_list")) {send_change_u_good_list(el)} else if (el.classList.contains("c_good_list")) {send_change_c_good_list(el)} else if (el.classList.contains("u_good")) {send_change_u_good(el)} else if (el.classList.contains("c_good")) {send_change_c_good(el)}
-  else if (el.classList.contains("u_music_list")) {send_change_u_music_list(el)} else if (el.classList.contains("c_music_list")) {send_change_c_music_list(el)} else if (el.classList.contains("u_music")) {send_change_u_music(el)} else if (el.classList.contains("c_music")) {send_change_c_music(el)}
-  else if (el.classList.contains("u_survey_list")) {send_change_u_survey_list(el)} else if (el.classList.contains("c_survey_list")) {send_change_c_survey_list(el)} else if (el.classList.contains("u_survey")) {send_change_u_survey(el)} else if (el.classList.contains("c_survey")) {send_change_c_survey(el)}
-  else if (el.classList.contains("u_video_list")) {send_change_u_video_list(el)} else if (el.classList.contains("c_video_list")) {send_change_c_video_list(el)} else if (el.classList.contains("u_video")) {send_change_u_video(el)} else if (el.classList.contains("c_video")) {send_change_c_video(el)}
-}
-
-function send_change_u_post(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_post"), "/posts/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_post(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_post_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_post_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_doc(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_doc"), "/docs/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_doc(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_doc"), "/docs/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_doc_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_doc_list"), "/docs/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_doc_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_doc_list"), "/docs/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_photo(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_photo"), "/gallery/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_photo(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_photo"), "/gallery/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_photo_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_photo_list"), "/gallery/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_photo_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_photo_list"), "/gallery/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_good(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_good"), "/goods/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_good(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_good"), "/goods/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_good_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_good_list"), "/goods/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_good_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_good_list"), "/goods/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_music(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_music"), "/music/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_music(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_music"), "/music/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_music_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_music_list"), "/music/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_music_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_music_list"), "/music/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_survey(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_survey"), "/survey/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_survey(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_survey"), "/survey/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_survey_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_survey_list"), "/survey/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_survey_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_survey_list"), "/survey/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_video(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_video"), "/video/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_video(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_video"), "/video/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_video_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_video_list"), "/video/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_video_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_video_list"), "/video/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
