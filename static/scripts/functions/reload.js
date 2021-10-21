@@ -1,3 +1,135 @@
+$serf_history = [];
+
+function create_fullscreen(url, type_class) {
+  container = document.body.querySelector("#fullscreens_container");
+  try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
+
+  $parent_div = document.createElement("div");
+  $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
+  $parent_div.style.zIndex = 100 + count_items;
+  $parent_div.style.opacity = "0";
+
+  if (document.body.querySelector(".desctop_nav")) {
+    hide_svg = '<svg class="svg_default" style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
+  } else { hide_svg = "" };
+  $hide_span = document.createElement("span");
+  $hide_span.classList.add("this_fullscreen_hide");
+  $loader = document.createElement("div");
+
+  $loader.setAttribute("id", "fullscreen_loader");
+  $hide_span.innerHTML = hide_svg;
+  $parent_div.append($hide_span);
+  $parent_div.append($loader);
+  $parent_div.append(create_gif_loading ());
+  container.prepend($parent_div);
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link.open('GET', url, true);
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          $load_div.remove();
+          elem = link.responseText;
+
+          $loader.innerHTML = elem;
+          height = $loader.scrollHeight*1 + 30;
+          if (height < 500 && !$loader.querySelector(".data_display")) {
+            $parent_div.style.height = height + "px";
+            $loader.style.overflowY = "unset";
+
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height*1 + 50 + "px";
+            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+          } else {
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
+          };
+          $parent_div.style.opacity = "1";
+          if ($loader.querySelector(".data_display")) {
+            $loader.style.overflowY = "unset";
+          }
+
+          get_document_opacity_0();
+
+          if ($loader.querySelector(".next_page_list")) {
+            $loader.onscroll = function() {
+              box = $loader.querySelector('.next_page_list');
+              if (box && box.classList.contains("next_page_list")) {
+                  inViewport = elementInViewport(box);
+                  if (inViewport) {
+                      box.remove();
+                      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                      link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
+                      link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                      link_3.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                              var elem = document.createElement('span');
+                              elem.innerHTML = link_3.responseText;
+                              $loader.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                            }
+                      }
+                      link_3.send();
+                  }
+              };
+            }
+          }
+      }
+  };
+  link.send();
+};
+
+
+function change_this_fullscreen(_this, type_class) {
+  _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
+  $loader.innerHTML = "";
+  $parent_div.style.opacity = "0";
+  $parent_div.style.height = "35px";
+  url = _this.getAttribute("href");
+  $serf_history.push(url);
+
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link.open('GET', url, true);
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link.responseText;
+          $loader.innerHTML = elem;
+          height = $loader.scrollHeight*1 + 30;
+          $parent_div = $loader.parentElement
+          if (height < 500 && !$loader.querySelector(".data_display")){
+            $parent_div.style.height = height + "px";
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height*1 + 50 + "px";
+            $loader.style.overflowY = "unset";
+            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
+            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
+          } else {
+            $parent_div.style.height = "100%";
+            $parent_div.style.top = "15px";
+            $loader.style.overflowY = "auto";
+          };
+          $parent_div.style.opacity = "1";
+          $parent_div.style.opacity = "1";
+          if ($loader.querySelector(".data_display")) {
+            $loader.style.overflowY = "unset";
+          };
+          url_split = url.split("/");
+          new_uuid = url_split.slice(-2);
+          params = window.location.search.replace( '?', '').split('&');
+          new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
+          window.history.replaceState(null, null, new_url);
+      }
+  };
+  link.send();
+};
+
 function get_post_view() {
     if (document.body.querySelector(".post_view_generator")) {
         container = document.body.querySelector(".post_view_generator");
@@ -38,122 +170,6 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 }
 
-/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
-function change_position(block, el) {
-  // функция инициирует смену порядка элементов,учитывая их класс.
-  if (el.classList.contains("u_list")) {send_change_u_post_list(el)} else if (el.classList.contains("c_list")) {send_change_c_post_list(el)} else if (el.classList.contains("u_post")) {send_change_u_post(el)} else if (el.classList.contains("c_post")) {send_change_c_post(el)}
-  else if (el.classList.contains("u_doc_list")) {send_change_u_doc_list(el)} else if (el.classList.contains("c_doc_list")) {send_change_c_doc_list(el)} else if (el.classList.contains("u_doc")) {send_change_u_doc(el)} else if (el.classList.contains("c_doc")) {send_change_c_doc(el)}
-  else if (el.classList.contains("u_photo_list")) {send_change_u_photo_list(el)} else if (el.classList.contains("c_photo_list")) {send_change_c_photo_list(el)} else if (el.classList.contains("u_photo")) {send_change_u_photo(el)} else if (el.classList.contains("c_photo")) {send_change_c_photo(el)}
-  else if (el.classList.contains("u_good_list")) {send_change_u_good_list(el)} else if (el.classList.contains("c_good_list")) {send_change_c_good_list(el)} else if (el.classList.contains("u_good")) {send_change_u_good(el)} else if (el.classList.contains("c_good")) {send_change_c_good(el)}
-  else if (el.classList.contains("u_music_list")) {send_change_u_music_list(el)} else if (el.classList.contains("c_music_list")) {send_change_c_music_list(el)} else if (el.classList.contains("u_music")) {send_change_u_music(el)} else if (el.classList.contains("c_music")) {send_change_c_music(el)}
-  else if (el.classList.contains("u_survey_list")) {send_change_u_survey_list(el)} else if (el.classList.contains("c_survey_list")) {send_change_c_survey_list(el)} else if (el.classList.contains("u_survey")) {send_change_u_survey(el)} else if (el.classList.contains("c_survey")) {send_change_c_survey(el)}
-  else if (el.classList.contains("u_video_list")) {send_change_u_video_list(el)} else if (el.classList.contains("c_video_list")) {send_change_c_video_list(el)} else if (el.classList.contains("u_video")) {send_change_u_video(el)} else if (el.classList.contains("c_video")) {send_change_c_video(el)}
-}
-
-function send_change_u_post(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_post"), "/posts/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_post(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_post_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_post_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_doc(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_doc"), "/docs/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_doc(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_doc"), "/docs/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_doc_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_doc_list"), "/docs/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_doc_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_doc_list"), "/docs/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_photo(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_photo"), "/gallery/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_photo(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_photo"), "/gallery/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_photo_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_photo_list"), "/gallery/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_photo_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_photo_list"), "/gallery/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_good(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_good"), "/goods/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_good(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_good"), "/goods/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_good_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_good_list"), "/goods/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_good_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_good_list"), "/goods/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_music(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_music"), "/music/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_music(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_music"), "/music/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_music_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_music_list"), "/music/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_music_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_music_list"), "/music/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_survey(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_survey"), "/survey/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_survey(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_survey"), "/survey/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_survey_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_survey_list"), "/survey/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_survey_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_survey_list"), "/survey/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-
-function send_change_u_video(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".u_video"), "/video/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_c_video(el) {
-  parent = el.parentElement;
-  send_change_items(parent.querySelectorAll(".c_video"), "/video/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
-}
-function send_change_u_video_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".u_video_list"), "/video/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
-function send_change_c_video_list(el) {
-  send_change_items(el.parentElement.querySelectorAll(".c_video_list"), "/video/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
-}
 /// КОНЕЦ ФУНКЦИЙ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function block_scrolled(_block) {
   window.onscroll = function() {
@@ -430,9 +446,6 @@ function this_page_reload(url) {
     ajax_link.send()
 };
 
-
-$serf_history = [];
-
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
 
@@ -513,136 +526,6 @@ function search_ajax_get_reload(url) {
     ajax_link.send()
 };
 
-function create_fullscreen(url, type_class) {
-  container = document.body.querySelector("#fullscreens_container");
-  try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
-
-  $parent_div = document.createElement("div");
-  $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
-  $parent_div.style.zIndex = 100 + count_items;
-  $parent_div.style.opacity = "0";
-
-  if (document.body.querySelector(".desctop_nav")) {
-    hide_svg = '<svg class="svg_default" style="position:fixed;" width="30" height="30" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
-  } else { hide_svg = "" };
-  $hide_span = document.createElement("span");
-  $hide_span.classList.add("this_fullscreen_hide");
-  $loader = document.createElement("div");
-
-  $loader.setAttribute("id", "fullscreen_loader");
-  $hide_span.innerHTML = hide_svg;
-  $parent_div.append($hide_span);
-  $parent_div.append($loader);
-  $parent_div.append(create_gif_loading ());
-  container.prepend($parent_div);
-
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link.open('GET', url, true);
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          $load_div.remove();
-          elem = link.responseText;
-
-          $loader.innerHTML = elem;
-          height = $loader.scrollHeight*1 + 30;
-          if (height < 500 && !$loader.querySelector(".data_display")) {
-            $parent_div.style.height = height + "px";
-            $loader.style.overflowY = "unset";
-
-            _height = (window.innerHeight - height - 50) / 2;
-            $parent_div.style.top = _height + "px";
-            prev_next_height = _height*1 + 50 + "px";
-            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
-            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
-          } else {
-            $parent_div.style.height = "100%";
-            $parent_div.style.top = "15px";
-            $loader.style.overflowY = "auto";
-          };
-          $parent_div.style.opacity = "1";
-          if ($loader.querySelector(".data_display")) {
-            $loader.style.overflowY = "unset";
-          }
-
-          get_document_opacity_0();
-
-          if ($loader.querySelector(".next_page_list")) {
-            $loader.onscroll = function() {
-              box = $loader.querySelector('.next_page_list');
-              if (box && box.classList.contains("next_page_list")) {
-                  inViewport = elementInViewport(box);
-                  if (inViewport) {
-                      box.remove();
-                      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                      link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
-                      link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-                      link_3.onreadystatechange = function() {
-                          if (this.readyState == 4 && this.status == 200) {
-                              var elem = document.createElement('span');
-                              elem.innerHTML = link_3.responseText;
-                              $loader.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
-                            }
-                      }
-                      link_3.send();
-                  }
-              };
-            }
-          }
-      }
-  };
-  link.send();
-};
-
-
-function change_this_fullscreen(_this, type_class) {
-  _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
-  $loader.innerHTML = "";
-  $parent_div.style.opacity = "0";
-  $parent_div.style.height = "35px";
-  url = _this.getAttribute("href");
-  $serf_history.push(url);
-
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link.open('GET', url, true);
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          elem = link.responseText;
-          $loader.innerHTML = elem;
-          height = $loader.scrollHeight*1 + 30;
-          $parent_div = $loader.parentElement
-          if (height < 500 && !$loader.querySelector(".data_display")){
-            $parent_div.style.height = height + "px";
-            _height = (window.innerHeight - height - 50) / 2;
-            $parent_div.style.top = _height + "px";
-            prev_next_height = _height*1 + 50 + "px";
-            $loader.style.overflowY = "unset";
-            try {$loader.querySelector(".prev_item").style.top = "-" + prev_next_height}catch {null};
-            try {$loader.querySelector(".next_item").style.top = "-" + prev_next_height}catch {null}
-          } else {
-            $parent_div.style.height = "100%";
-            $parent_div.style.top = "15px";
-            $loader.style.overflowY = "auto";
-          };
-          $parent_div.style.opacity = "1";
-          $parent_div.style.opacity = "1";
-          if ($loader.querySelector(".data_display")) {
-            $loader.style.overflowY = "unset";
-          };
-          url_split = url.split("/");
-          new_uuid = url_split.slice(-2);
-          params = window.location.search.replace( '?', '').split('&');
-          new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
-          window.history.replaceState(null, null, new_url);
-      }
-  };
-  link.send();
-};
-
 function create_gif_loading () {
   $load_gif = document.createElement("img");
   $load_gif.setAttribute("src", "/static/images/preloader.gif");
@@ -661,3 +544,120 @@ function close_fullscreen() {
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
+
+/// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
+function change_position(block, el) {
+  // функция инициирует смену порядка элементов,учитывая их класс.
+  if (el.classList.contains("u_list")) {send_change_u_post_list(el)} else if (el.classList.contains("c_list")) {send_change_c_post_list(el)} else if (el.classList.contains("u_post")) {send_change_u_post(el)} else if (el.classList.contains("c_post")) {send_change_c_post(el)}
+  else if (el.classList.contains("u_doc_list")) {send_change_u_doc_list(el)} else if (el.classList.contains("c_doc_list")) {send_change_c_doc_list(el)} else if (el.classList.contains("u_doc")) {send_change_u_doc(el)} else if (el.classList.contains("c_doc")) {send_change_c_doc(el)}
+  else if (el.classList.contains("u_photo_list")) {send_change_u_photo_list(el)} else if (el.classList.contains("c_photo_list")) {send_change_c_photo_list(el)} else if (el.classList.contains("u_photo")) {send_change_u_photo(el)} else if (el.classList.contains("c_photo")) {send_change_c_photo(el)}
+  else if (el.classList.contains("u_good_list")) {send_change_u_good_list(el)} else if (el.classList.contains("c_good_list")) {send_change_c_good_list(el)} else if (el.classList.contains("u_good")) {send_change_u_good(el)} else if (el.classList.contains("c_good")) {send_change_c_good(el)}
+  else if (el.classList.contains("u_music_list")) {send_change_u_music_list(el)} else if (el.classList.contains("c_music_list")) {send_change_c_music_list(el)} else if (el.classList.contains("u_music")) {send_change_u_music(el)} else if (el.classList.contains("c_music")) {send_change_c_music(el)}
+  else if (el.classList.contains("u_survey_list")) {send_change_u_survey_list(el)} else if (el.classList.contains("c_survey_list")) {send_change_c_survey_list(el)} else if (el.classList.contains("u_survey")) {send_change_u_survey(el)} else if (el.classList.contains("c_survey")) {send_change_c_survey(el)}
+  else if (el.classList.contains("u_video_list")) {send_change_u_video_list(el)} else if (el.classList.contains("c_video_list")) {send_change_c_video_list(el)} else if (el.classList.contains("u_video")) {send_change_u_video(el)} else if (el.classList.contains("c_video")) {send_change_c_video(el)}
+}
+
+function send_change_u_post(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_post"), "/posts/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_post(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_post"), "/posts/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_post_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_list"), "/posts/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_post_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_list"), "/posts/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_doc(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_doc"), "/docs/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_doc(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_doc"), "/docs/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_doc_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_doc_list"), "/docs/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_doc_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_doc_list"), "/docs/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_photo(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_photo"), "/gallery/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_photo(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_photo"), "/gallery/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_photo_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_photo_list"), "/gallery/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_photo_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_photo_list"), "/gallery/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_good(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_good"), "/goods/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_good(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_good"), "/goods/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_good_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_good_list"), "/goods/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_good_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_good_list"), "/goods/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_music(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_music"), "/music/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_music(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_music"), "/music/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_music_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_music_list"), "/music/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_music_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_music_list"), "/music/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_survey(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_survey"), "/survey/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_survey(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_survey"), "/survey/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_survey_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_survey_list"), "/survey/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_survey_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_survey_list"), "/survey/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+
+function send_change_u_video(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".u_video"), "/video/user_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_c_video(el) {
+  parent = el.parentElement;
+  send_change_items(parent.querySelectorAll(".c_video"), "/video/community_progs/change_position/" + parent.getAttribute("owner-pk") + "/")
+}
+function send_change_u_video_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".u_video_list"), "/video/user_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
+function send_change_c_video_list(el) {
+  send_change_items(el.parentElement.querySelectorAll(".c_video_list"), "/video/community_progs/change_list_position/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/")
+}
