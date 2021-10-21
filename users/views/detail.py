@@ -207,12 +207,10 @@ class ProfileUserView(TemplateView):
     is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,common_friends_count,common_frends,get_buttons_block = None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
-        from stst.models import UserNumbers
-        import re
+        from common.templates import update_activity, get_folder
 
         user_pk, r_user_pk = int(self.kwargs["pk"]), request.user.pk
         self.user = User.objects.get(pk=user_pk)
-        user_agent, MOBILE_AGENT_RE = request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():
                 self.template_name = "main/phone_verification.html"
@@ -259,10 +257,7 @@ class ProfileUserView(TemplateView):
                     self.template_name = "users/account/no_child_safety.html"
                 else:
                     self.template_name = "users/account/user.html"
-                if MOBILE_AGENT_RE.match(user_agent):
-                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.PHONE)
-                else:
-                    UserNumbers.objects.create(visitor=r_user_pk, target=user_pk, device=UserNumbers.DESCTOP)
+            update_activity(request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
         elif request.user.is_anonymous:
             if self.user.is_suspended():
                 self.template_name = "generic/u_template/anon_user_suspended.html"
@@ -281,10 +276,7 @@ class ProfileUserView(TemplateView):
             self.is_community_open = self.user.is_anon_user_can_see_community()
             self.is_friend_open = self.user.is_anon_user_can_see_friend()
             self.is_good_open = self.user.is_anon_user_can_see_good()
-        if MOBILE_AGENT_RE.match(user_agent):
-            self.template_name = "mobile/" + self.template_name
-        else:
-            self.template_name = "desctop/" + self.template_name
+
         return super(ProfileUserView,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):

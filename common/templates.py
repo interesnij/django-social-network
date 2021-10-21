@@ -4,14 +4,15 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
 
 
-def update_activity(user, user_agent, link=None, title=None, height=None, time=None):
+def update_activity(user, user_agent, stat=None):
     from datetime import datetime, timedelta
-    profile = user.profile
-    if height:
-        profile.height += height
-    if time:
-        profile.time += timedelta(minutes = time)
-    profile.save(update_fields=['height', 'time'])
+    if stat:
+        profile = user.profile
+        if stat[2]:
+            profile.height += stat[2]
+        if stat[3]:
+            profile.time += timedelta(minutes = stat[3])
+        profile.save(update_fields=['height', 'time'])
     if MOBILE_AGENT_RE.match(user_agent):
         user.last_activity, user.device = datetime.now(), "Ph"
         user.save(update_fields=['last_activity', 'device'])
@@ -157,7 +158,7 @@ def get_anon_fine_user_list(list):
 
 def get_my_template(template, request_user, user_agent):
     if request_user.is_authenticated:
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
         if request_user.type[0] == "_":
             template_name = get_fine_request_user(request_user)
         else:
@@ -168,7 +169,7 @@ def get_my_template(template, request_user, user_agent):
 
 def get_admin_template(community, template, request_user, user_agent):
     if request_user.is_authenticated:
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
         if request_user.type[0] == "_":
             template_name = get_fine_request_user(request_user)
         elif community.type[0] == "_":
@@ -180,7 +181,7 @@ def get_admin_template(community, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 def get_template_community(community, folder, template, request_user, user_agent):
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif community.type[0] == "_":
@@ -225,7 +226,7 @@ def get_template_anon_community(community, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 def get_template_user(user, folder, template, request_user, user_agent):
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif user.pk == request_user.pk:
@@ -253,7 +254,7 @@ def get_owner_template_user(list, folder, template, owner_user, request_user, us
         Если список пользователя. Чтобы мог удалять, например, посты не свои, но в своем списке.
     """
     user = list.creator
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif list.type[0] == "_":
@@ -328,7 +329,7 @@ def get_template_community_comments(item, folder, template, request_user, user_a
 
 def get_template_user_item(item, folder, template, request_user, user_agent):
     user, list = item.creator, item.list
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif item.type[0] == "_" or list.type[0] == "_":
@@ -377,7 +378,7 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
 
 def get_template_user_list(list, folder, template, request_user, user_agent):
     user = list.creator
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif list.type[0] == "_":
@@ -426,7 +427,7 @@ def get_template_anon_user_list(list, template, request_user, user_agent):
 
 def get_template_community_item(item, folder, template, request_user, user_agent):
     community, list = item.community, item.list
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif community.type[0] == "_":
@@ -476,7 +477,7 @@ def get_template_anon_community_item(item, template, request_user, user_agent):
 
 def get_template_community_list(list, folder, template, request_user, user_agent):
     community = list.community
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif community.type[0] == "_":
@@ -524,7 +525,7 @@ def get_template_anon_community_list(list, template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 def get_staff_template(template, request_user, user_agent):
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
 
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
@@ -535,7 +536,7 @@ def get_staff_template(template, request_user, user_agent):
     return get_folder(user_agent) + template_name
 
 def get_detect_platform_template(template, request_user, user_agent):
-    update_activity(request_user, user_agent)
+    update_activity(request_user, user_agent, stat=None)
 
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
@@ -556,7 +557,7 @@ def get_default_template(folder, template, request_user, user_agent):
 
 def get_settings_template(template, request_user, user_agent):
     if request_user.is_authenticated:
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
         if request_user.is_no_phone_verified():
             template_name = "main/phone_verification.html"
         elif request_user.is_suspended():
@@ -576,7 +577,7 @@ def get_community_manage_template(template, request_user, community, user_agent)
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated and request_user.is_administrator_of_community(community.pk):
         template_name = template
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
     else:
         raise PermissionDenied('Ошибка доступа.')
     return get_folder(user_agent) + template_name
@@ -586,7 +587,7 @@ def get_community_moders_template(template, request_user, community, user_agent)
         raise PermissionDenied('Ошибка доступа')
     elif request_user.is_authenticated and request_user.is_staff_of_community(community.pk):
         template_name = template
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
     else:
         raise PermissionDenied('Ошибка доступа.')
     return get_folder(user_agent) + template_name
@@ -603,7 +604,7 @@ def get_detect_platform_template(template, request_user, user_agent):
 def get_detect_main_template(template, request_user, user_agent):
     """ получаем название шаблона для новостей и рекомендаций. Направляем или в новости, или на страницу входа, исходя из платформы пользователя """
     if request_user.is_authenticated:
-        update_activity(request_user, user_agent)
+        update_activity(request_user, user_agent, stat=None)
         if request_user.type[0] == "_":
             template_name = get_fine_request_user(request_user)
         else:
