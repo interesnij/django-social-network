@@ -176,6 +176,8 @@ $serf_stat = [window.location.href, document.title, 0, 0];
 // $posts_view = записи, которые в ленте просмотрел пользователь
 $posts_view = [];
 
+setTimeout($serf_stat[2] += 5, 5000);
+
 function scrolled(_block, target) {
     offset = 0
     // работа с прокруткой:
@@ -186,11 +188,7 @@ function scrolled(_block, target) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
-      //$serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
-      setTimeout(
-        $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2),
-        $serf_stat[3] += 3
-        , 3000);
+      $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
       console.log($serf_stat);
 
         try {
