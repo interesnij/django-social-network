@@ -176,7 +176,7 @@ $serf_stat = [window.location.href, document.title, 0, 0];
 // $posts_view = записи, которые в ленте просмотрел пользователь
 $posts_view = [];
 
-setTimeout($serf_stat[2] += 5, 5000);
+setTimeout($serf_stat[3] += 5, 5000);
 
 function scrolled(_block, target) {
     offset = 0
