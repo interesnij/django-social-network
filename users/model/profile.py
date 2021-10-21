@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import timedelta
 
 
 class UserProfile(models.Model):
@@ -27,7 +28,7 @@ class UserProfile(models.Model):
     tracks = models.PositiveIntegerField(default=0, verbose_name="Кол-во аудиозаписей")
     videos = models.PositiveIntegerField(default=0, verbose_name="Кол-во видеозаписей")
     articles = models.PositiveIntegerField(default=0, verbose_name="Кол-во статей")
-    time = models.DurationField(verbose_name="Общее проведенное время")
+    time = models.DurationField(default=timedelta(), verbose_name="Общее проведенное время")
     height = models.FloatField(default=0, verbose_name="Общая высота в метрах")
 
     def __str__(self):
