@@ -1,3 +1,15 @@
+function get_dragula(block) {
+  // функция инициирует библиотеку dragula.js
+  _block = document.querySelector(block)
+  dragula([_block], {
+    moves: function (el, container, handle) {
+      return handle.classList.contains('handle')
+    }})
+    //.on('drag', function (el) {console.log("drag!");})
+    .on('drop', function (el) {console.log(el); change_position(_block, el)})
+    //.on('over', function (el, container) {console.log("over!"); over = true;})
+    //.on('out', function (el, container) {console.log("over!");;});
+};
 
 $serf_history = [];
 
@@ -134,41 +146,23 @@ function change_this_fullscreen(_this, type_class) {
 function get_post_view() {
     if (document.body.querySelector(".post_view_generator")) {
         container = document.body.querySelector(".post_view_generator");
-        link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
             if (!list[i].classList.contains("showed") && list[i].classList.contains("post")) {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
-                      list[i].getAttribute('data-uuid') ? uuid = list[i].getAttribute('data-uuid') : uuid = list[i].querySelector(".post").getAttribute('data-uuid');
-                        if (list[i].querySelector(".reklama")) {
-                            link.open('GET', '/posts/user_progs/post_market_view/' + uuid + "/", true)
-                        } else if (!list[i].querySelector(".reklama")) {
-                            link.open('GET', '/posts/user_progs/post_view/' + uuid + "/", true)
-                        }
+                      uuid = list[i].getAttribute('data-uuid')
+                      if (!uuid in $posts_view) {
+                        $posts_view.push(uuid);
+                      }
                     } catch {null}
-                    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                    link.send();
                     list[i].classList.add("showed");
-                    console.log(i + " получил класс showed")
+                    console.log(i + " проверен")
                 }
             }
         }
     }
-};
-
-function get_dragula(block) {
-  // функция инициирует библиотеку dragula.js
-  _block = document.querySelector(block)
-  dragula([_block], {
-    moves: function (el, container, handle) {
-      return handle.classList.contains('handle')
-    }})
-    //.on('drag', function (el) {console.log("drag!");})
-    .on('drop', function (el) {console.log(el); change_position(_block, el)})
-    //.on('over', function (el, container) {console.log("over!"); over = true;})
-    //.on('out', function (el, container) {console.log("over!");;});
 };
 
 // $serf_stat = [link, title, height, time]
@@ -190,8 +184,7 @@ function scrolled(_block, target) {
       }
       $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
       console.log($serf_stat);
-
-
+      console.log($posts_view);
         try {
             box = _block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
