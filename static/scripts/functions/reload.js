@@ -172,7 +172,7 @@ function get_dragula(block) {
 };
 
 // $serf_stat = [link, title, height, time]
-$serf_stat = [window.location.href, window.title, 0, 0];
+$serf_stat = [window.location.href, document.title, 0, 0];
 // $posts_view = записи, которые в ленте просмотрел пользователь
 $posts_view = [];
 
