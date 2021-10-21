@@ -13,7 +13,7 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
       left_panel_options[i].setAttribute("href", new_url);
       if (left_panel_options[i].classList.contains(".active")) {
         section = params[0].split("=")[1];
-      }
+      } 
     };
     window.history.replaceState(null, null, new_url);
 
