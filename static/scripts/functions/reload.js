@@ -177,7 +177,7 @@ $serf_stat = [window.location.href, document.title, 0, 0];
 $posts_view = [];
 
 setTimeout(
-  a = $serf_stat[3];
+  a = $serf_stat[3],
   $serf_stat[3] = a+5,
 5000);
 
