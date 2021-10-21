@@ -7,11 +7,12 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 def update_activity(user, user_agent, stat=None):
     from datetime import datetime, timedelta
     if stat:
+        _stat = stat.split(",")
         profile = user.profile
-        if stat[2]:
-            profile.height += float(stat[2])
-        if stat[3]:
-            profile.time += timedelta(minutes = stat[3])
+        if _stat[2]:
+            profile.height += float(_stat[2])
+        if _stat[3]:
+            profile.time += timedelta(minutes = _stat[3])
         profile.save(update_fields=['height', 'time'])
     if MOBILE_AGENT_RE.match(user_agent):
         user.last_activity, user.device = datetime.now(), "Ph"
