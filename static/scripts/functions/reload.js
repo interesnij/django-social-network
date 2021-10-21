@@ -455,8 +455,8 @@ function ajax_get_reload(url) {
 
             $posts_view = [];
             $serf_stat = [url, title, window.innerHeight, 0];
-            document.getElementById("user_height").innerHTML = rtr.getElementById("user_height").innerHTML;
-            document.getElementById("user_time").innerHTML = rtr.getElementById("user_time").innerHTML
+            document.getElementById("user_height").innerHTML = rtr.querySelector("#user_height").innerHTML;
+            document.getElementById("user_time").innerHTML = rtr.querySelector("#user_time").innerHTML
         }
     }
     ajax_link.send()
@@ -490,8 +490,8 @@ function search_ajax_get_reload(url) {
             $serf_stat = [url, title, window.innerHeight, 0];
 
             try{
-              document.getElementById("user_height").innerHTML = rtr.getElementById("user_height").innerHTML;
-              document.getElementById("user_time").innerHTML = rtr.getElementById("user_time").innerHTML
+              document.getElementById("user_height").innerHTML = rtr.querySelector("#user_height").innerHTML;
+              document.getElementById("user_time").innerHTML = rtr.querySelector("#user_time").innerHTML
             } catch{null}
         }
     }
