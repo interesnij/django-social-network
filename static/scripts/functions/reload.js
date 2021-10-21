@@ -168,7 +168,7 @@ function get_post_view() {
 };
 
 // $serf_stat = [link, title, height, time]
-$serf_stat = [window.location.href, document.title, 0, 0];
+$serf_stat = [window.location.href, document.title, window.innerHeight, 0];
 // $posts_view = записи, которые в ленте просмотрел пользователь
 $posts_view = [];
 
@@ -421,7 +421,7 @@ window.addEventListener('popstate', function (e) {
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
           $posts_view = [];
-          $serf_stat = [$serf_history.slice(-1), title, 0, 0]
+          $serf_stat = [$serf_history.slice(-1), title, window.innerHeight, 0]
       }
   }
   ajax_link.send()
@@ -454,7 +454,7 @@ function ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, 0, 0]
+            $serf_stat = [url, title, window.innerHeight, 0]
         }
     }
     ajax_link.send()
@@ -485,7 +485,7 @@ function search_ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, 0, 0]
+            $serf_stat = [url, title, window.innerHeight, 0]
         }
     }
     ajax_link.send()

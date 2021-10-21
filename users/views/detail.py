@@ -211,7 +211,7 @@ class ProfileUserView(TemplateView):
         import re
 
         user_pk, r_user_pk = int(self.kwargs["pk"]), request.user.pk
-        self.user = User.objects.select_related('profile').get(pk=user_pk)
+        self.user = User.objects.get(pk=user_pk)
         user_agent, MOBILE_AGENT_RE = request.META['HTTP_USER_AGENT'], re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
         if request.user.is_authenticated:
             if request.user.is_no_phone_verified():

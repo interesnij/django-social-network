@@ -1,9 +1,17 @@
 from rest_framework.exceptions import PermissionDenied
+import re
+MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
-def update_activity(user, user_agent):
-    from datetime import datetime
-    import re
-    MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+
+def update_activity(user, user_agent, link=None, title=None, height=None, time=None):
+    from datetime import datetime, timedelta
+    profile = user.profile
+    if height:
+        profile.height += height
+    if time:
+        profile.time += timedelta(minutes = time)
+    user.save(update_fields=['height', 'time'])
     if MOBILE_AGENT_RE.match(user_agent):
         user.last_activity, user.device = datetime.now(), "Ph"
         user.save(update_fields=['last_activity', 'device'])
@@ -12,8 +20,6 @@ def update_activity(user, user_agent):
         user.save(update_fields=['last_activity', 'device'])
 
 def get_folder(user_agent):
-    import re
-    MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
