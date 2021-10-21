@@ -11,7 +11,8 @@ def update_activity(user, user_agent, stat=None):
         profile = user.profile
         if _stat[2]:
             flo = float(_stat[2])
-            profile.height += round(flo,2)
+            profile.height += float(_stat[2])
+            round(profile.height,2)
         if _stat[3]:
             profile.time += timedelta(seconds = float(_stat[3]))
         profile.save(update_fields=['height', 'time'])
