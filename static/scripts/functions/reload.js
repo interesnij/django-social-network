@@ -173,14 +173,16 @@ function get_dragula(block) {
 
 
 function scrolled(_block, target) {
+    offset = 0
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     window.onscroll = function() {
-      offset = window.innerHeight += 150
-      console.log("1", offset);
-      console.log("2", window.innerHeight + window.pageYOffset);
+      if ((window.innerHeight + window.pageYOffset) > offset) {
+        offset = window.innerHeight + window.pageYOffset;
+      }
+      console.log(offset);
 
         try {
             box = _block.querySelector('.next_page_list');
