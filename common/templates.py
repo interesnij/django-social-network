@@ -380,7 +380,7 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
 
 def get_template_user_list(list, folder, template, request_user, user_agent, stat=None):
     user = list.creator
-    update_activity(request_user, user_agent, stat=None)
+    update_activity(request_user, user_agent, stat)
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif list.type[0] == "_":
