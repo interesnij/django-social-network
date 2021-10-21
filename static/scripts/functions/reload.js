@@ -179,7 +179,8 @@ function scrolled(_block, target) {
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     window.onscroll = function() {
       offset = window.innerHeight += 1
-      console.log(offset);
+      console.log("1", offset);
+      console.log("1", window.innerHeight + window.pageYOffset);
 
         try {
             box = _block.querySelector('.next_page_list');
