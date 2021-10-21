@@ -9,7 +9,7 @@ def update_activity(user, user_agent, stat=None):
     if stat:
         profile = user.profile
         if stat[2]:
-            profile.height += stat[2]
+            profile.height += float(stat[2])
         if stat[3]:
             profile.time += timedelta(minutes = stat[3])
         profile.save(update_fields=['height', 'time'])
