@@ -178,9 +178,9 @@ function scrolled(_block, target) {
     // 2. id блока, куда нужно грузить следующие страницы
     // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     window.onscroll = function() {
-      offset = window.innerHeight += 1
+      offset = window.innerHeight += 2
       console.log("1", offset);
-      console.log("1", window.innerHeight + window.pageYOffset);
+      console.log("2", window.innerHeight + window.pageYOffset);
 
         try {
             box = _block.querySelector('.next_page_list');
