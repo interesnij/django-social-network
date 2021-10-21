@@ -454,7 +454,9 @@ function ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, window.innerHeight, 0]
+            $serf_stat = [url, title, window.innerHeight, 0];
+            document.getElementById("user_height").innerHTML = rtr.getElementById("user_height").innerHTML;
+            document.getElementById("user_time").innerHTML = rtr.getElementById("user_time").innerHTML
         }
     }
     ajax_link.send()
@@ -485,7 +487,12 @@ function search_ajax_get_reload(url) {
             get_document_opacity_1(rtr);
 
             $posts_view = [];
-            $serf_stat = [url, title, window.innerHeight, 0]
+            $serf_stat = [url, title, window.innerHeight, 0];
+
+            try{
+              document.getElementById("user_height").innerHTML = rtr.getElementById("user_height").innerHTML;
+              document.getElementById("user_time").innerHTML = rtr.getElementById("user_time").innerHTML
+            } catch{null}
         }
     }
     ajax_link.send()
