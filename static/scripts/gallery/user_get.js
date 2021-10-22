@@ -34,7 +34,7 @@ on('#ajax', 'click', '.post_photo', function() {
   where_from = get_open_object_target(pk);
 
   create_fullscreen("/gallery/post_photo/" + post_pk + "/" + photo_pk + "/", "photo_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_pk=" + photo_pk + "&post_pk=" + pk);
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_pk=" + photo_pk + "&post_pk=" + post_pk);
 });
 on('#ajax', 'click', '.message_photo', function() {
   pk = this.getAttribute('photo-pk');
