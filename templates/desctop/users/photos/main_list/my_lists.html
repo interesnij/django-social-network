@@ -12,7 +12,7 @@
         <ul class="drag_list" style="width:max-content;list-style: none;">
             {% for object in get_lists %}
             {% if object.community %}
-            <li class="list_item c_photo_list mr-2" data-pk="{{ object.pk }}">
+            <li class="list_item c_photo_list mr-2 pag" data-type="photo_list" data-pk="{{ object.pk }}">
                 <div class="text-center bg-dark position-relative border community" data-uuid="{{ object.uuid }}" data-pk="{{ object.community.pk }}">
                     <figure class="background-img">
                         <img class="image_fit_200" src="{{ object.get_cover_photo }}">
@@ -31,7 +31,7 @@
                 </div>
             </li>
             {% else %}
-            <li class="list_item u_photo_list mr-2" data-pk="{{ object.pk }}">
+            <li class="list_item u_photo_list mr-2 pag" data-type="photo_list" data-pk="{{ object.pk }}">
                 <div class="text-center bg-dark position-relative border" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
                     <figure class="background-img">
                         <img class="image_fit_200" src="{{ object.get_cover_photo }}">
