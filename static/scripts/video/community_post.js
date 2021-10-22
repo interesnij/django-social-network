@@ -29,16 +29,16 @@ on('#video_loader', 'click', '.c_video_off_comment', function() {
   send_photo_change(this, "/video/community_progs/off_comment/", "c_video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_video_comments").style.display = "none"
-})
+});
 on('#video_loader', 'click', '.c_video_on_comment', function() {
   send_photo_change(this, "/video/community_progs/on_comment/", "c_video_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_video_comments").style.display = "unset"
-})
+});
 
 on('#video_loader', 'click', '.c_video_comment_delete', function() {
   comment_delete(this, "/video/community_progs/delete_comment/", "c_video_comment_restore")
-})
+});
 on('#video_loader', 'click', '.c_video_comment_restore', function() {
   comment_restore(this, "/video/community_progs/restore_comment/")
 });
@@ -46,23 +46,23 @@ on('#video_loader', 'click', '.c_video_comment_restore', function() {
 
 on('#video_loader', 'click', '.u_video_off_private', function() {
   send_photo_change(this, "/video/community_progs/off_private/", "c_video_on_private", "Вкл. приватность")
-})
+});
 on('#video_loader', 'click', '.c_video_on_private', function() {
   send_photo_change(this, "/video/community_progs/on_private/", "c_video_off_private", "Выкл. приватность")
-})
+});
 
 on('#video_loader', 'click', '.c_video_off_votes', function() {
   send_photo_change(this, "/video/community_progs/off_votes/", "c_video_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#video_loader', 'click', '.c_video_on_votes', function() {
   send_photo_change(this, "/video/community_progs/on_votes/", "c_video_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
-})
+});
 
 on('body', 'click', '.community_video_remove', function() {
   send_photo_change(this, "/video/community_progs/delete/", "community_video_restore", "Отмена");
@@ -71,14 +71,14 @@ on('body', 'click', '.community_video_remove', function() {
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
-})
+});
 on('body', 'click', '.community_video_restore', function() {
   send_photo_change(this, "/video/community_progs/restore/", "community_video_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-})
+});
 
 on('#video_loader', 'click', '.c_video_like', function() {
   video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -138,7 +138,7 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
 
 on('#ajax', 'click', '.c_add_video_in_list', function() {
   add_item_in_list(this, '/video/community_progs/add_video_in_list/', "c_add_video_in_list", "c_remove_video_from_list")
-})
+});
 on('#ajax', 'click', '.c_remove_video_from_list', function() {
   remove_item_from_list(this, '/video/community_progs/remove_video_from_list/', "c_remove_video_from_list", "c_add_video_in_list")
-})
+});

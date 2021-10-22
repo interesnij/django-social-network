@@ -116,7 +116,7 @@ function case_u_post_create(uuid) {
           lenta.prepend(new_post);
           document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
   link_.send()
-}}
+}};
 
 function case_u_message_create(chat_id, message_uuid, beep) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -171,7 +171,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
     audio.volume = 0.5;
     audio.play()
   }
-}
+};
 
 
 request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
@@ -263,4 +263,4 @@ event.creator_id != request_user_id
       console.log('error: ', event);
       break;
   }
-})
+});

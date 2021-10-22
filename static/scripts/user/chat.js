@@ -27,7 +27,7 @@ function hide_chat_console() {
   _console.parentElement.parentElement.querySelector("h5").style.display = "unset"
 };
 
-on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")})
+on('#ajax', 'click', '.message_dropdown', function() {this.nextElementSibling.classList.toggle("show")});
 on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block = this.nextElementSibling;
   if (!block.querySelector(".card")) {
@@ -92,7 +92,7 @@ on('#ajax', 'click', '.remove_friend_input', function() {
     btn.disabled = true;
   };
   btn.innerHTML = btn_text;
-})
+});
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
@@ -149,7 +149,6 @@ on('#ajax', 'input', '.smile_supported', function() {
       }, 1000)
     }
   };
-  //setEndOfContenteditable(_this);
 });
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {

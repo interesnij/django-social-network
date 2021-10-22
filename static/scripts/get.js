@@ -174,7 +174,7 @@ on('#ajax', 'click', '.tab_stickers', function() {
 
 on('#ajax', 'click', '.previous_click', function() {
   this.previousElementSibling.click();
-})
+});
 on('body', 'click', '.menu_drop', function() {
   block = this.nextElementSibling;
   if (block.classList.contains("show")) { block.classList.remove("show") }
@@ -213,7 +213,7 @@ on('body', 'click', '.ajax', function(event) {
   if (url != window.location.pathname){
     ajax_get_reload(url);
   } else {toast_info("Вы уже на этой странице")}
-})
+});
 on('body', 'click', '.notify_ajax', function(event) {
   event.preventDefault();
   _this = this;
@@ -255,14 +255,14 @@ on('body', 'click', '.notify_ajax', function(event) {
       }
   }
   ajax_link.send()
-})
+});
 
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
   change_this_fullscreen(this, document.getElementById('item_loader'));
-})
+});
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
@@ -301,7 +301,7 @@ on('body', 'click', '.reply_comment', function() {
   input.innerHTML = this.previousElementSibling.innerHTML + ',&nbsp;';
   div.style.display = "block";
   focus_block(input)
-})
+});
 function focus_block(value) {
   range = document.createRange();
   range.selectNodeContents(value);
@@ -309,7 +309,7 @@ function focus_block(value) {
   sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
-}
+};
 
 
 on('#ajax', 'click', '.tag_item', function() {

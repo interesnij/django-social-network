@@ -187,9 +187,6 @@ window.onbeforeunload = function() {
 
 function scrolled(_block) {
     offset = 0
-    // работа с прокруткой:
-    // 1. Ссылка на страницу с пагинацией
-    // 2. id блока, куда нужно грузить следующие страницы
     window.onscroll = function() {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
@@ -207,8 +204,7 @@ function scrolled(_block) {
             };
         } catch {return}
     }
-}
-
+};
 
 function open_video_fullscreen(url) {
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -251,7 +247,7 @@ function paginate(block, target) {
             }
         }
         link_3.send();
-}
+};
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
@@ -305,7 +301,6 @@ function load_item_window() {
     }
   }
 };
-
 
 function if_list(block) {
   // прога подгружает списки чего либо при подгрузке страницы, а также подтягивает окна

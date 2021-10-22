@@ -6,7 +6,7 @@ function check_photo_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_photo_list_in_block(block, _this, pk) {
     if (block.querySelector('[photolist-pk=' + '"' + pk + '"' + ']')) {
         toats_info("Альбом уже прикреплён")
@@ -14,7 +14,7 @@ function check_photo_list_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_video_in_block(block, _this, pk) {
     if (block.querySelector('[video-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Видеоролик уже выбран");
@@ -23,7 +23,7 @@ function check_video_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_video_list_in_block(block, _this, pk) {
     if (block.querySelector('[videolist-pk=' + '"' + pk + '"' + ']')) {
         toats_info("Видеоальбом уже прикреплён")
@@ -31,7 +31,7 @@ function check_video_list_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_music_in_block(block, _this, counter) {
     if (block.querySelector('[music-counter=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Аудиозапись уже выбрана");
@@ -40,7 +40,7 @@ function check_music_in_block(block, _this, counter) {
     } else {
         return false
     }
-}
+};
 function check_playlist_in_block(block, _this, pk) {
     if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
         toats_info("Плейлист уже прикреплён")
@@ -48,7 +48,7 @@ function check_playlist_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_doc_in_block(block, _this, pk) {
     if (block.querySelector('[doc-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.parentElement.setAttribute("tooltip", "Документ уже выбран");
@@ -57,7 +57,7 @@ function check_doc_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_doc_list_in_block(block, _this, pk) {
     if (block.querySelector('[doclist-pk=' + '"' + pk + '"' + ']')) {
         toats_info("Список документов уже прикреплён")
@@ -65,7 +65,7 @@ function check_doc_list_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_good_in_block(block, _this, pk) {
     if (block.querySelector('[good-pk=' + '"' + pk + '"' + ']')) {
         _this.parentElement.setAttribute("tooltip", "Товар уже выбран");
@@ -74,7 +74,7 @@ function check_good_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 function check_good_list_in_block(block, _this, pk) {
     if (block.querySelector('[goodlist-pk=' + '"' + pk + '"' + ']')) {
         toats_info("Список товаров уже прикреплён")
@@ -82,7 +82,7 @@ function check_good_list_in_block(block, _this, pk) {
     } else {
         return false
     }
-}
+};
 
 function photo_preview_delete(){
   $span = document.createElement("span");
@@ -91,7 +91,7 @@ function photo_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 function list_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("list_preview_delete");
@@ -99,7 +99,7 @@ function list_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 
 function video_preview_delete(){
   $span = document.createElement("span");
@@ -108,7 +108,7 @@ function video_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 function music_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("music_preview_delete");
@@ -116,7 +116,7 @@ function music_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 function doc_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("doc_preview_delete");
@@ -124,7 +124,7 @@ function doc_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 function good_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("good_preview_delete");
@@ -132,7 +132,7 @@ function good_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 function article_preview_delete(){
   $span = document.createElement("span");
   $span.classList.add("article_preview_delete");
@@ -140,7 +140,7 @@ function article_preview_delete(){
   $span.setAttribute("tooltip", "Не прикреплять");
   $span.setAttribute("flow", "up");
   return $span
-}
+};
 
 function create_preview_commmunity(_this){
   $name = _this.querySelector("h6").innerHTML;
@@ -167,7 +167,7 @@ function create_preview_commmunity(_this){
   $div.append($input);
   $div.append($div_flex);
   return $div
-}
+};
 function create_preview_chat_item(_this){
   $name = _this.querySelector("p").innerHTML;
 
@@ -200,7 +200,7 @@ function create_preview_chat_item(_this){
   $div.append($input);
   $div.append($div_flex);
   return $div
-}
+};
 
 function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
@@ -216,7 +216,7 @@ function create_preview_photo(img_src, photo_pk, user_pk){
   $div.append($input);
   $div.append($img);
   return $div
-}
+};
 function create_preview_message_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
   $div.classList.add("col-md-4", "photo");
@@ -231,7 +231,7 @@ function create_preview_message_photo(img_src, photo_pk, user_pk){
   $div.append($input);
   $div.append($img);
   return $div
-}
+};
 function create_preview_photo_list(src, title, pk, count){
   $div = document.createElement("div");
   $div.classList.add("col-sm-6", "col-md-4", "bg-dark", "position-relative", "text-center", "big_mobile_element", "col-md-6");
@@ -272,7 +272,7 @@ function create_preview_photo_list(src, title, pk, count){
 
   $div.append($figure); $div.append($container); $div.append($input);
   return $div
-}
+};
 
 function create_preview_video(img_src, pk, counter){
   $div = document.createElement("div");
@@ -292,7 +292,7 @@ function create_preview_video(img_src, pk, counter){
   $div.append($img);
   $div.append($icon_div);
   return $div
-}
+};
 
 function create_preview_video_list(name, pk, count){
   $div = document.createElement("div");
@@ -306,7 +306,7 @@ function create_preview_video_list(name, pk, count){
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
-}
+};
 
 function create_preview_music(img_src, pk, counter){
   $div = document.createElement("div");
@@ -341,7 +341,7 @@ function create_preview_music(img_src, pk, counter){
   $div.append($figure);
   $div.append($media);
   return $div
-}
+};
 function create_preview_playlist(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
@@ -354,7 +354,7 @@ function create_preview_playlist(name, pk, count){
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
-}
+};
 
 function create_preview_doc(media_body, pk){
   $div = document.createElement("div");
@@ -386,7 +386,7 @@ function create_preview_doc(media_body, pk){
   $div.append($figure);
   $div.append($media);
   return $div
-}
+};
 function create_preview_doc_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
@@ -399,7 +399,7 @@ function create_preview_doc_list(name, pk, count){
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
-}
+};
 
 function create_preview_good(img_src, pk, uuid, title){
   $div = document.createElement("div");
@@ -421,7 +421,7 @@ function create_preview_good(img_src, pk, uuid, title){
   $div.append($title);
   $div.append($img);
   return $div
-}
+};
 function create_preview_good_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
@@ -434,7 +434,7 @@ function create_preview_good_list(name, pk, count){
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
-}
+};
 
 function create_preview_article(img_src, pk, title){
   $div = document.createElement("div");
@@ -462,7 +462,7 @@ function create_preview_article(img_src, pk, title){
   $div.append($figure);
   $div.append($title);
   return $div
-}
+};
 function create_preview_article_list(name, pk, count){
   $div = document.createElement("div");
   $div.style.flexBasis = "100%";
@@ -475,7 +475,7 @@ function create_preview_article_list(name, pk, count){
   $div.append($input);
   $div.append(list_preview_delete());
   return $div
-}
+};
 
 on('#ajax', 'click', '.photo_preview_delete', function() {
   parent = this.parentElement;
@@ -642,7 +642,7 @@ function like_reload(like_block, dislike_block, _class){
   }
     console.log("удаляем пользователя из дизлайков")
   }
-}
+};
 function dislike_reload(like_block, dislike_block, _class){
   userpic = document.body.querySelector(".userpic");
   userpic.querySelector("img") ? (user_src = userpic.querySelector("img").getAttribute("src"),$img = document.createElement("img"),$img.src = user_src,$img.style.borderRadius = "50%",$img.style.width = "50px") : $img = document.createElement("span"), $img.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
@@ -714,7 +714,7 @@ function dislike_reload(like_block, dislike_block, _class){
   }
   console.log("удаляем пользователя из дизлайков")
   }
-}
+};
 
 on('body', 'click', '.photo_attach_list', function() {
   _this = this;

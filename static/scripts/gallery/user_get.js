@@ -62,7 +62,7 @@ on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   pk = parent.getAttribute("data-pk");
   create_fullscreen("/gallery/window/u_ucm_photo_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 
 on('#ajax', 'click', '.load_photo_list', function() {
   card = this.parentElement.parentElement;
@@ -79,11 +79,11 @@ on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
   parent.getAttribute('data-uuid') ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid')
   create_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 
 on('#ajax', 'click', '.u_photos_add', function() {
   document.querySelector('#photos_add_window').style.display =="none";
-})
+});
 
 on('#ajax', 'click', '.u_photo_list_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
@@ -96,7 +96,7 @@ on('#ajax', 'click', '.u_photo_list_edit', function() {
 
 on('#ajax', 'click', '.u_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
-})
+});
 
 on('#ajax', 'click', '.u_all_photo_comment_likes', function() {
   container = this.parentElement.parentElement.parentElement;

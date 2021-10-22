@@ -5,7 +5,7 @@ function clear_attach_block(){
     a_b.classList = "";
     a_b.classList.add("files_0");
   }
-}
+};
 
 function is_full_attach(){
   files_block = document.body.querySelector(".attach_block");
@@ -29,7 +29,7 @@ function add_file_attach(){
   else if (files_block.classList.contains("files_7")){ files_block.classList.add("files_8"), files_block.classList.remove("files_7")}
   else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_9"), files_block.classList.remove("files_8")}
   else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_10"), files_block.classList.remove("files_9")}
-}
+};
 function remove_file_attach(){
   files_block = document.body.querySelector(".attach_block");
   if (files_block.classList.contains("files_1")){ files_block.classList.add("files_0"), files_block.classList.remove("files_1")}
@@ -42,7 +42,7 @@ function remove_file_attach(){
   else if (files_block.classList.contains("files_8")){ files_block.classList.add("files_7"), files_block.classList.remove("files_8")}
   else if (files_block.classList.contains("files_9")){ files_block.classList.add("files_8"), files_block.classList.remove("files_9")}
   else if (files_block.classList.contains("files_10")){ files_block.classList.add("files_9"), files_block.classList.remove("files_10")}
-}
+};
 
 function photo_list_post_attach(block, src, title, pk, count) {
   is_full_attach();
@@ -50,14 +50,14 @@ function photo_list_post_attach(block, src, title, pk, count) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 function doc_list_post_attach(block, title, pk, count) {
   is_full_attach();
   div = create_preview_doc_list(title, pk, count);
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 function playlist_post_attach(block, title, pk, count) {
   is_full_attach();
   div = create_preview_playlist(title, pk, count);
@@ -71,7 +71,7 @@ function video_list_post_attach(block, title, pk, count) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function photo_post_attach(block, photo_pk, user_pk, src) {
   is_full_attach();
@@ -79,7 +79,7 @@ function photo_post_attach(block, photo_pk, user_pk, src) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function photo_post_upload_attach(photo_list, block){
   is_full_attach();
@@ -99,7 +99,7 @@ function video_post_attach(block, pk, counter, src) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function music_post_attach(block, pk, counter, src) {
   is_full_attach();
@@ -107,7 +107,7 @@ function music_post_attach(block, pk, counter, src) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function doc_post_attach(block, media_block, pk) {
   is_full_attach();
@@ -115,7 +115,7 @@ function doc_post_attach(block, media_block, pk) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function good_post_attach(block, src, pk, uuid, title) {
   is_full_attach();
@@ -123,7 +123,7 @@ function good_post_attach(block, src, pk, uuid, title) {
   block.append(div);
   add_file_attach();
   is_full_attach();
-}
+};
 
 function article_post_attach(_this, block) {
   is_full_attach();
@@ -133,7 +133,7 @@ function article_post_attach(_this, block) {
   block.append(div);
   add_file_attach()
   is_full_attach();
-}
+};
 
 function commmunity_form_selected(_this, block) {
   pk = _this.getAttribute('data-pk');
@@ -145,7 +145,7 @@ function commmunity_form_selected(_this, block) {
 
   div = create_preview_commmunity(_this);
   block.append(div);
-}
+};
 function chat_item_form_selected(_this, block) {
   pk = _this.getAttribute('data-pk');
   member_pk = _this.parentElement.parentElement.getAttribute("data-pk");
@@ -157,4 +157,4 @@ function chat_item_form_selected(_this, block) {
   div = create_preview_chat_item(_this);
   block.append(div);
   _this.parentElement.parentElement.style.display = "none"
-}
+};
