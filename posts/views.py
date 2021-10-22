@@ -61,7 +61,7 @@ class LoadPost(TemplateView):
 	template_name, community, user_wall, community_wall, featured_wall, feed_wall, search_wall, chat_wall = None, None, None, None, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.list = self.post.list
 		if request.GET.get("user_wall"):
 			self.owner_wall = "пользователь"
@@ -121,7 +121,7 @@ class LoadFixPost(TemplateView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.list = self.post.list
 
 		if self.list.community:
