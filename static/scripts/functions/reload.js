@@ -191,7 +191,7 @@ var scrollStopper = delayedExec(3000, function() {
                         type = list[i].getAttribute('data-type');
                         if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
                           $el_view.push(type + " " + pk);
-                          setTimeout(() => { type + " " + pk + " добавлен"; }, 3000);
+                          console.log(type + " " + pk + " добавлен")
                         };
                       list[i].classList.add("showed");
           //        }
