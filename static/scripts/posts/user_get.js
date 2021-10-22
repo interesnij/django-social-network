@@ -79,10 +79,10 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
-  document.body.querySelector(".pk_saver").getAttribute('data-pk') ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   where_from = get_open_object_target(pk);
   card = this.parentElement.parentElement.parentElement.parentElement;
   uuid = card.getAttribute('data-uuid');
+  pk = card.getAttribute('data-pk');
   create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
 });
