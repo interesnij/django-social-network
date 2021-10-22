@@ -155,7 +155,7 @@ function get_page_view_elements() {
                       type = list[i].getAttribute('data-type');
                       if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
                         $el_view.push(type + " " + pk);
-                        console.log(type + " " + pk + " добавлен")
+                        setTimeout(() => { type + " " + pk + " добавлен"; }, 3000);
                       };
                     list[i].classList.add("showed");
                 }
