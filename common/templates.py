@@ -6,7 +6,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
 def update_activity(user, user_agent, stat=None):
     from datetime import datetime, timedelta
-    if stat:
+    if "stat" in stat:
         _stat = stat.split(",")
         profile = user.profile
         if _stat[2]:
@@ -22,17 +22,12 @@ def update_activity(user, user_agent, stat=None):
         user.last_activity, user.device = datetime.now(), "De"
         user.save(update_fields=['last_activity', 'device'])
 
+
 def get_folder(user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
         return "desctop/"
-
-"""
-    кончаются на item - шаблоны для списков и элементов в полную страницу
-    кончаются на window - шаблоны для списков и элементов в открывающемся окне,
-    в этом случае при проблемных случаях возвращаем таблицу "Ощибка доступа".
-"""
 
 def get_fine_request_user(request_user):
     if request_user.is_no_phone_verified():
