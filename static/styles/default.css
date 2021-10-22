@@ -2,6 +2,10 @@
   font-weight: bold;
 }
 
+._post .card-footer {
+    padding: 1px 15px !important;
+}
+
 .tooltip_2 {
   position: relative;
   display: inline-block;
