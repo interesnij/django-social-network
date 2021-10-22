@@ -333,6 +333,10 @@ p .small_badge {
   .audio_div {
     width:90%
   }
+  .row_item {
+    flex: 0 0 33.3333%;
+    max-width:33.3333%;
+  }
 }
 
 .gallery_ul li {
@@ -966,11 +970,14 @@ ul{
 }
 
 .u_list_photo_detail,
-.u_photo_detail,
 .c_list_photo_detail,
-.c_photo_detail,
-.photo_load_one{
+.row_item,
+.photo_load_one {
   cursor:pointer;
+  flex: 0 0 50%;
+  max-width:50%;
+  padding:5px;
+  position: relative;
 }
 
 .attach_container{
