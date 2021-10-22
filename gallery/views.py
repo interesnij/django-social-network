@@ -134,7 +134,7 @@ class PostPhotoDetail(TemplateView):
 		from posts.models import Post
 
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.post = Post.objects.get(pk=self.kwargs["post_pk"])
 		self.photos = self.post.get_attach_photos()
 
 		if self.post.community:
