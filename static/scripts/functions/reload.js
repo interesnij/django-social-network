@@ -176,7 +176,14 @@ $serf_stat = [window.location.href, document.title, $window_height, 0];
 // GET-параметр для окон $serf_stat = [link, title, height, time]
 $window_stat = ['', '', $window_height, 0];
 
-setInterval(() => $serf_stat[3] += 1, 1000);
+function get_view_time(count) {
+  i = 0;
+  if (i < count) {
+    setInterval(() => $serf_stat[3] += 1, 1000);
+    i += 1
+  }
+};
+get_view_time(120);
 
 window.onbeforeunload = function() {
   console.log($serf_stat);
