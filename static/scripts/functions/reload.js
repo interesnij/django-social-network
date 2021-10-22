@@ -163,7 +163,7 @@ function get_page_view_elements() {
                         $el_view.push(type + " " + pk);
                         console.log(type + " " + pk + " добавлен")
                       }
-                    } catch {null}ж
+                    } catch {null};
                     list[i].classList.add("showed");
                     console.log(i + " проверен")
                 }
