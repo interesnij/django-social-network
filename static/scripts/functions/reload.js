@@ -178,6 +178,11 @@ $window_stat = ['', '', $window_height, 0];
 
 setInterval(() => $serf_stat[3] += 1, 1000);
 
+window.onbeforeunload = function() {
+  console.log($serf_stat);
+  console.log($window_stat);
+};
+
 function scrolled(_block) {
     offset = 0
     // работа с прокруткой:
