@@ -4,7 +4,7 @@ from gallery.views import *
 urlpatterns=[
 	url(r'^photo/(?P<pk>\d+)/$', PhotoDetail.as_view(), name="photo_detail"),
 	url(r'^message_photo/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', MessagePhotoDetail.as_view(), name="message_photo_detail"),
-	url(r'^post_photo/(?P<uuid>[0-9a-f-]+)/(?P<pk>\d+)/$', PostPhotoDetail.as_view(), name="post_photo_detail"),
+	url(r'^post_photo/(?P<post_pk>\d+)/(?P<pk>\d+)/$', PostPhotoDetail.as_view(), name="post_photo_detail"),
 	url(r'^load_list/(?P<pk>\d+)/$', LoadPhotoList.as_view(), name="load_photo_list"),
 	url(r'^comments/(?P<uuid>[0-9a-f-]+)/$', PhotoCommentList.as_view()),
 
