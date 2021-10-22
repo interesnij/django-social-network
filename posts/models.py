@@ -50,6 +50,7 @@ class PostsList(models.Model):
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
+    is_post_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
@@ -516,6 +517,7 @@ class Post(models.Model):
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     order = models.PositiveIntegerField(default=0)
+    is_post = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Запись"

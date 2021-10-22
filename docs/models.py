@@ -44,6 +44,7 @@ class DocsList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    is_doc_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -343,6 +344,7 @@ class Doc(models.Model):
     TYPE_2 = (
         (BOOK, 'Книга'),(ARTICLE, 'Статья'),(PUBLIC, 'Заметка'),(FILE, 'Файл'),(OTHER, 'Другое'),
     )
+    
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
@@ -352,6 +354,7 @@ class Doc(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     order = models.PositiveIntegerField(default=0)
+    is_doc = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-order"]

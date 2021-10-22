@@ -74,6 +74,7 @@ class VideoList(models.Model):
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
+    is_video_list = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -393,6 +394,7 @@ class Video(models.Model):
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     order = models.PositiveIntegerField(default=0)
+    is_video = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Видео-ролики"
