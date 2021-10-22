@@ -151,7 +151,6 @@ function get_page_view_elements() {
             if (!list[i].classList.contains("showed")) {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
-                    try {
                       pk = list[i].getAttribute('data-pk');
                       type = list[i].getAttribute('data-type');
                       if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
@@ -162,7 +161,7 @@ function get_page_view_elements() {
                 }
             }
         }
-  }} catch {null};
+  } catch {null};
 };
 
 $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
