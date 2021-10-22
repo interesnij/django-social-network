@@ -12,7 +12,7 @@ on('#ajax', 'click', '.c_post_edit', function() {
 
     list_load(div, "/posts/community_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
   }
-})
+});
 
 on('#ajax', 'click', '.c_copy_post_list', function() {
   on_off_list_in_collections(this, "/posts/community_progs/add_list_in_collections/", "c_uncopy_post_list", "c_copy_post_list", "Удалить")
@@ -46,10 +46,9 @@ on('#ajax', 'click', '.c_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  //document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = parent.getAttribute('data-pk');
   create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('data-uuid');

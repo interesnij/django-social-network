@@ -122,10 +122,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
 
 on('#ajax', 'click', '.u_add_post_in_list', function() {
   add_item_in_list(this, '/posts/user_progs/add_post_in_list/', "u_add_post_in_list", "u_remove_post_from_list")
-})
+});
 on('#ajax', 'click', '.u_remove_post_from_list', function() {
   remove_item_from_list(this, '/posts/user_progs/remove_post_from_list/', "u_remove_post_from_list", "u_add_post_in_list")
-})
+});
 
 on('#ajax', 'click', '#u_add_post_list_btn', function() {
   form = this.parentElement.parentElement.parentElement
@@ -318,10 +318,10 @@ on('#ajax', 'click', '.u_post_wall_restore', function() {
 
 on('#ajax', 'click', '.u_post_fixed', function() {
   send_change(this, "/posts/user_progs/fixed/", "u_post_unfixed", "Открепить")
-})
+});
 on('#ajax', 'click', '.u_post_unfixed', function() {
   send_change(this, "/posts/user_progs/unfixed/", "u_post_fixed", "Закрепить")
-})
+});
 
 on('#ajax', 'click', '.u_post_off_comment', function() {
   send_change(this, "/posts/user_progs/off_comment/", "u_post_on_comment", "Вкл. комментарии");
@@ -334,14 +334,14 @@ on('#ajax', 'click', '.u_post_on_comment', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
   : post.querySelector(".u_news_item_comments").style.display = "unset"
-})
+});
 
 on('#ajax', 'click', '.u_post_off_votes', function() {
   send_change(this, "/posts/user_progs/off_votes/", "u_post_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#ajax', 'click', '.u_post_on_votes', function() {
   send_change(this, "/posts/user_progs/on_votes/", "u_post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -383,7 +383,7 @@ on('#ajax', 'click', '.u_dislike2', function() {
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
   comment_delete(this, "/posts/user_progs/delete_comment/", "u_post_comment_restore")
-})
+});
 
 on('#ajax', 'click', '.u_post_comment_restore', function() {
   comment_restore(this, "/posts/user_progs/restore_comment/")
@@ -391,7 +391,7 @@ on('#ajax', 'click', '.u_post_comment_restore', function() {
 
 on('#ajax', 'click', '.u_post_owner_comment_delete', function() {
   comment_owner_delete(this, "/posts/user_progs/delete_owner_comment/", "u_post_owner_comment_restore")
-})
+});
 
 on('#ajax', 'click', '.u_post_owner_comment_restore', function() {
   comment_owner_restore(this, "/posts/user_progs/restore_owner_comment/")
@@ -616,7 +616,7 @@ on('#ajax', 'click', '.survey_attach_remove', function() {
   block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
   remove_file_attach();
-})
+});
 
 on('#ajax', 'click', '.good_load_one', function() {
   _this = this;

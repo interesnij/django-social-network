@@ -6,7 +6,7 @@ function msToTime(duration) {
   minutes = (minutes < 10) ? "0" + minutes : minutes;
   seconds = (seconds < 10) ? "0" + seconds : seconds;
   return minutes + ":" + seconds;
-}
+};
 
 function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
@@ -18,7 +18,7 @@ function get_video_dop(){
     settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
-}
+};
 function get_audio_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style = styles[styles.length- 1];
@@ -29,7 +29,7 @@ function get_audio_dop(){
     settings += ["images/audio_dark",'#000000','#000000']
   }
   return settings.split(',')
-}
+};
 
 function load_video_playlist(video_saver_id) {
   video_saver = document.body.querySelector("#video_id_saver");
@@ -260,18 +260,18 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-}
+};
 
 function get_resize_screen(){
   video_player.maxWidth = 360;
   video_player.maxHeight = 270;
   video_player.showPlaylist();
-}
+};
 function get_normal_screen(){
   video_player.maxWidth = 1170;
   video_player.maxHeight = 659;
   video_player.hidePlaylist();
-}
+};
 
 music_player = new FWDMSP({
     //main settings

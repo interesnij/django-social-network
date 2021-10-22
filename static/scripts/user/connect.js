@@ -11,7 +11,7 @@ on('#ajax', 'click', '.follow_create', function() {
      : (a = document.createElement("a"), a.classList.add("small", "follow_delete", "pointer"), a.innerHTML = 'Отписаться', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
-})
+});
 on('#ajax', 'click', '.follow_delete', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute("data-pk")
@@ -30,7 +30,7 @@ on('#ajax', 'click', '.follow_delete', function() {
 
   function _loadstart() {console.log("Запрос начат")}
   link_.send();
-})
+});
 on('#ajax', 'click', '.follow_view', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : null
@@ -44,7 +44,7 @@ on('#ajax', 'click', '.follow_view', function() {
     minus_new_followers();
   }};
   link_.send();
-})
+});
 
 on('#ajax', 'click', '.connect_create', function() {
   _this = this;
@@ -61,7 +61,7 @@ on('#ajax', 'click', '.connect_create', function() {
         : (a = document.createElement("a"), a.classList.add("small", "connect_delete", "pointer"), a.innerHTML = 'Убрать из друзей', _this.parentElement.append(a), _this.remove())
   }}
   link_.send();
-})
+});
 on('#ajax', 'click', '.connect_delete', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
@@ -74,7 +74,7 @@ on('#ajax', 'click', '.connect_delete', function() {
       : (a = document.createElement("a"), a.classList.add("small", "connect_create", "pointer"), a.innerHTML = 'Добавить в друзья', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
-})
+});
 on('#ajax', 'click', '.user_block', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
@@ -87,7 +87,7 @@ on('#ajax', 'click', '.user_block', function() {
     : (a = document.createElement("a"), a.classList.add("small", "user_unblock", "pointer"), a.innerHTML = 'Разблокировать', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
-})
+});
 on('#ajax', 'click', '.user_unblock', function() {
   _this = this;
   document.body.querySelector(".pk_saver") ?  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk") : pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
@@ -100,4 +100,4 @@ on('#ajax', 'click', '.user_unblock', function() {
     : (a = document.createElement("a"), a.classList.add("small", "user_block", "pointer"), a.innerHTML = 'Заблокировать', _this.parentElement.append(a), _this.remove())
   }};
   link_.send();
-})
+});

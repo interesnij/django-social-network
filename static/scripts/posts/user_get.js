@@ -110,20 +110,20 @@ on('#ajax', 'click', '.fix_fullscreen', function() {
   uuid = this.parentElement.getAttribute('data-uuid');
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   create_fullscreen("/posts/fix_post/" + uuid + "/", "item_fullscreen");
-})
+});
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   create_fullscreen("/posts/repost/u_ucm_post_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 on('#ajax', 'click', '.repost_for_wall', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector("#chat_items_append").style.display = "none";
   current_block.querySelector("#community_append").style.display = "none";
-})
+});
 on('#ajax', 'click', '#u_repost_for_community', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
@@ -133,7 +133,7 @@ on('#ajax', 'click', '#u_repost_for_community', function() {
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/communities/")
   }
-})
+});
 on('#ajax', 'click', '#repost_for_message', function() {
   this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
@@ -143,7 +143,7 @@ on('#ajax', 'click', '#repost_for_message', function() {
   if (!block.querySelector(".load_pag")){
   list_load(block, "/users/load/chat_items/")
   }
-})
+});
 
 on('#ajax', 'click', '.u_post_edit', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -159,7 +159,7 @@ on('#ajax', 'click', '.u_post_edit', function() {
 
     list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/");
   }
-})
+});
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
@@ -314,4 +314,4 @@ on('#ajax', 'click', '.delete_thumb', function(e) {
   block = document.createElement("div");
   this.parentElement.innerHTML = "<h4>Изображение</h4><i>(обязательно)</i>";
   this.remove();
-})
+});

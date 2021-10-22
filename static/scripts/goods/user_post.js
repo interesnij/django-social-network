@@ -86,7 +86,7 @@ function good_gallery(loader){
       thumb.src = image;
     });
   });
-}
+};
 
 on('#ajax', 'click', '.u_good_comment_edit', function() {
   get_edit_comment_form(this, "/goods/user_progs/edit_comment/")
@@ -105,35 +105,35 @@ on('#ajax', 'click', '.u_good_comment_restore', function() {
 
 on('#ajax', 'click', '.u_good_off_private', function() {
   send_good_change(this, "/goods/user_progs/off_private/", "u_good_on_private", "Вкл. приватность")
-})
+});
 on('#ajax', 'click', '.u_good_on_private', function() {
   send_good_change(this, "/goods/user_progs/on_private/", "u_good_off_private", "Выкл. приватность")
-})
+});
 
 on('#ajax', 'click', '.u_good_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
-})
+});
 
 on('#ajax', 'click', '.u_good_off_votes', function() {
   send_good_change(this, "/goods/user_progs/off_votes/", "u_good_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#ajax', 'click', '.u_good_on_votes', function() {
   send_good_change(this, "/goods/user_progs/on_votes/", "u_good_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
-})
+});
 on('#ajax', 'click', '.u_good_hide', function() {
   send_good_change(this, "/goods/user_progs/hide/", "u_good_unhide", "Товар не виден");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-})
+});
 on('#ajax', 'click', '.u_good_unhide', function() {
   send_good_change(this, "/goods/user_progs/unhide/", "u_good_hide", "Товар виден");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-})
+});
 
 on('#ajax', 'click', '.user_good_remove', function() {
   send_good_change(this, "/goods/user_progs/delete/", "user_good_restore", "Отмена");
@@ -142,14 +142,14 @@ on('#ajax', 'click', '.user_good_remove', function() {
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
-})
+});
 on('#ajax', 'click', '.user_good_restore', function() {
   send_good_change(this, "/goods/user_progs/restore/", "user_good_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-})
+});
 
 on('#ajax', 'click', '.u_good_like', function() {
   block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -322,35 +322,35 @@ on('#ajax', 'click', '.mob_u_good_on_comment', function() {
   send_mob_good_change(this, "/goods/user_progs/on_comment/", "mob_u_good_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_good_comments").style.display = "unset"
-})
+});
 on('#ajax', 'click', '.mob_u_good_off_votes', function() {
   send_mob_good_change(this, "/goods/user_progs/off_votes/", "mob_u_good_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#ajax', 'click', '.mob_u_good_on_votes', function() {
   send_mob_good_change(this, "/goods/user_progs/on_votes/", "mob_u_good_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
-})
+});
 on('#ajax', 'click', '.mob_u_good_hide', function() {
   send_mob_good_change(this, "/goods/user_progs/hide/", "mob_u_good_unhide", "Товар не виден");
-})
+});
 on('#ajax', 'click', '.mob_u_good_unhide', function() {
   send_mob_good_change(this, "/goods/user_progs/unhide/", "mob_u_good_hide", "Товар виден");
-})
+});
 on('#ajax', 'click', '.mob_user_good_remove', function() {
   send_mob_good_change(this, "/goods/user_progs/delete/", "mob_user_good_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".good_card").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
-})
+});
 on('#ajax', 'click', '.mob_user_good_restore', function() {
   send_mob_good_change(this, "/goods/user_progs/restore/", "mob_user_good_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".good_card").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-})
+});

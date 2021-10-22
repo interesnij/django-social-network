@@ -49,14 +49,14 @@ on('#ajax', 'click', '.u_ucm_music_repost', function() {
   parent.getAttribute('user-pk') ? pk = parent.getAttribute('user-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   create_fullscreen("/music/repost/u_ucm_music_window/" + pk + "/" + track_pk + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   create_fullscreen("/music/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 
 on('#ajax', 'click', '.u_track_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

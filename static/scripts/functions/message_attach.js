@@ -1,6 +1,6 @@
 function clear_message_attach_block(){
   document.body.querySelector(".message_attach_block") ? (a_b = document.body.querySelector(".message_attach_block"), a_b.innerHTML = "", a_b.classList = "", a_b.classList.add("files_0"), a_b.classList.remove("message_attach_block")) : null;
-}
+};
 
 function is_full_message_attach(){
   files_block = document.body.querySelector(".message_attach_block");
@@ -11,7 +11,7 @@ function is_full_message_attach(){
   else {
     files_block.parentElement.querySelector(".message_dropdown").style.display = "block"
 }
-}
+};
 function add_file_message_attach(){
   files_block = document.body.querySelector(".message_attach_block");
   if (files_block.classList.contains("files_0")){ files_block.classList.add("files_1"), files_block.classList.remove("files_0")}
@@ -28,7 +28,7 @@ function add_file_message_attach(){
     form = files_block.parentElement;
       send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
-}
+};
 function remove_file_message_attach(){
   files_block = document.body.querySelector(".message_attach_block");
   if (files_block.classList.contains("files_1")){ files_block.classList.add("files_0"), files_block.classList.remove("files_1")}
@@ -45,7 +45,7 @@ function remove_file_message_attach(){
     form = files_block.parentElement;
       send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
-}
+};
 
 function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
@@ -54,7 +54,7 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   add_file_message_attach()
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function photo_message_upload_attach(photo_list, block){
   is_full_message_attach();
@@ -66,7 +66,7 @@ function photo_message_upload_attach(photo_list, block){
     is_full_message_attach();
     show_message_form_send_btn()
   };
-  }
+};
 
 function photo_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
@@ -75,7 +75,7 @@ function photo_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function video_message_attach(block, pk, counter, src) {
   is_full_message_attach();
@@ -84,7 +84,7 @@ function video_message_attach(block, pk, counter, src) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 function video_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_video_list(title, pk, count);
@@ -92,7 +92,7 @@ function video_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function music_message_attach(block, pk, counter, src) {
   is_full_message_attach();
@@ -101,7 +101,7 @@ function music_message_attach(block, pk, counter, src) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 function playlist_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_playlist(title, pk, count);
@@ -109,7 +109,7 @@ function playlist_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function doc_message_attach(block, media_block, pk) {
   is_full_message_attach();
@@ -118,7 +118,7 @@ function doc_message_attach(block, media_block, pk) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 function doc_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_doc_list(title, pk, count);
@@ -126,7 +126,7 @@ function doc_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function good_message_attach(block, src, pk, uuid, title) {
   is_full_message_attach();
@@ -135,7 +135,7 @@ function good_message_attach(block, src, pk, uuid, title) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 function good_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_good_list(title, pk, count);
@@ -143,7 +143,7 @@ function good_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 
 function article_message_attach(_this, block) {
   is_full_message_attach();
@@ -152,7 +152,7 @@ function article_message_attach(_this, block) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};
 function article_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_article_list(title, pk, count);
@@ -160,4 +160,4 @@ function article_list_message_attach(block, title, pk, count) {
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
-}
+};

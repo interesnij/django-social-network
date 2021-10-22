@@ -75,11 +75,11 @@ on('#ajax', 'click', '.c_photo_on_comment', function() {
   send_photo_change(this, "/gallery/community_progs/on_comment/", "c_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
-})
+});
 
 on('#ajax', 'click', '.c_photo_comment_delete', function() {
   comment_delete(this, "/gallery/community_progs/delete_comment/", "c_photo_comment_restore")
-})
+});
 on('#ajax', 'click', '.c_photo_comment_restore', function() {
   comment_restore(this, "/gallery/community_progs/restore_comment/")
 });
@@ -87,14 +87,14 @@ on('#ajax', 'click', '.c_photo_comment_restore', function() {
 
 on('#ajax', 'click', '.c_photo_off_private', function() {
   send_photo_change(this, "/gallery/community_progs/off_private/", "c_photo_on_private", "Вкл. приватность")
-})
+});
 on('#ajax', 'click', '.c_photo_on_private', function() {
   send_photo_change(this, "/gallery/community_progs/on_private/", "c_photo_off_private", "Выкл. приватность")
-})
+});
 
 on('#ajax', 'click', '.c_photo_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
-})
+});
 
 on('#ajax', 'click', '.c_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
@@ -124,13 +124,13 @@ on('#ajax', 'click', '.c_photo_off_votes', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#ajax', 'click', '.c_photo_on_votes', function() {
   send_photo_change(this, "/gallery/community_progs/on_votes/", "c_photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
-})
+});
 
 on('#ajax', 'click', '.community_photo_remove', function() {
   send_photo_change(this, "/gallery/community_progs/delete/", "community_photo_restore", "Отмена");
@@ -139,14 +139,14 @@ on('#ajax', 'click', '.community_photo_remove', function() {
   post.querySelector(".order-2").style.display = "none";
   post.querySelector(".card").style.opacity = "0.5";
   this.style.color = "#FF0000";
-})
+});
 on('#ajax', 'click', '.community_photo_restore', function() {
   send_photo_change(this, "/gallery/community_progs/restore/", "community_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-})
+});
 
 on('#ajax', 'click', '.c_photo_like', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -219,48 +219,48 @@ on('#ajax', 'change', '#c_gallery_list_photo_add', function() {
 
 on('#ajax', 'click', '.c_add_photo_in_list', function() {
   add_item_in_list(this, '/gallery/community_progs/add_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
-})
+});
 on('#ajax', 'click', '.u_remove_photo_from_list', function() {
   remove_item_from_list(this, '/gallery/community_progs/remove_photo_from_list/', "c_remove_photo_from_list", "c_add_photo_in_list")
-})
+});
 
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {
   mob_send_change(this, "/gallery/community_progs/off_comment/", "mob_c_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "none"
-})
+});
 on('#ajax', 'click', '.mob_c_photo_on_comment', function() {
   mob_send_change(this, "/gallery/community_progs/on_comment/", "mob_c_photo_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
-})
+});
 on('#ajax', 'click', '.mob_c_photo_off_private', function() {
   mob_send_change(this, "/gallery/community_progs/off_private/", "mob_c_photo_on_private", "Вкл. приватность")
-})
+});
 on('#ajax', 'click', '.mob_c_photo_on_private', function() {
   mob_send_change(this, "/gallery/community_progs/on_private/", "mob_c_photo_off_private", "Выкл. приватность")
-})
+});
 on('#ajax', 'click', '.mob_c_photo_off_votes', function() {
   mob_send_change(this, "/gallery/community_progs/off_votes/", "mob_c_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
-})
+});
 on('#ajax', 'click', '.mob_c_photo_on_votes', function() {
   mob_send_change(this, "/gallery/community_progs/on_votes/", "mob_c_photo_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
-})
+});
 on('#ajax', 'click', '.mob_community_photo_remove', function() {
   mob_send_change(this, "/gallery/community_progs/delete/", "mob_community_photo_restore", "Отмена");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "none";
   post.querySelector(".image_card").style.opacity = "0.5";
-})
+});
 on('#ajax', 'click', '.mob_community_photo_restore', function() {
   mob_send_change(this, "/gallery/community_progs/restore/", "mob_community_photo_remove", "Удалить");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".content_block").style.display = "unset";
   post.querySelector(".image_card").style.opacity = "1";
-})
+});

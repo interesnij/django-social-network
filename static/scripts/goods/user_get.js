@@ -28,14 +28,14 @@ on('#ajax', 'click', '.u_ucm_good_repost', function() {
   parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   create_fullscreen("/goods/repost/u_ucm_good_window/" + pk + "/" + good_pk + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 on('#ajax', 'click', '.u_ucm_good_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
   create_fullscreen("/goods/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
   clear_attach_block();
-})
+});
 
 on('#ajax', 'click', '.u_good_list_add', function() {
   create_fullscreen("/goods/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", "worker_fullscreen");

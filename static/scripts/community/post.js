@@ -51,14 +51,14 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
 
 on('#ajax', 'click', '.member_create', function() {
   get_with_pk_and_reload("/communities/progs/add_member/")
-})
+});
 on('#ajax', 'click', '.member_delete', function() {
   get_with_pk_and_reload("/communities/progs/delete_member/")
-})
+});
 
 on('#ajax', 'click', '.member_follow_create', function() {
   get_with_pk_and_reload("/follows/add_member/")
-})
+});
 on('#ajax', 'click', '.member_follow_delete', function() {
   get_with_pk_and_reload("/follows/delete_member/")
-})
+});

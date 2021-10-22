@@ -157,14 +157,14 @@ function get_document_opacity_0() {
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "unset";
   overlay.style.opacity = "1";
-}
+};
 function get_document_opacity_1(block) {
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "hidden";
   overlay.style.opacity = "0";
-}
+};
 
 function profile_list_block_load(_this, block, url, actions_class) {
   // подгрузка списков в профиле пользователя
@@ -197,7 +197,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
        parent.classList.replace("border", "active_border");
     }};
     request.send( null );
-}
+};
 
 function addStyleSheets (href) {
   $head = document.head,
@@ -206,7 +206,7 @@ function addStyleSheets (href) {
   $link.classList.add("my_color_settings");
   $link.href = href;
   $head.appendChild($link);
-}
+};
 function get_video_dop(){
   styles = document.querySelectorAll(".my_color_settings");
   style= styles[styles.length- 1];
@@ -225,17 +225,17 @@ function get_video_dop(){
     settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
-}
+};
 function get_resize_screen(){
   video_player.maxWidth = 360;
   video_player.maxHeight = 270;
   video_player.showPlaylist();
-}
+};
 function get_normal_screen(){
   video_player.maxWidth = 1170;
   video_player.maxHeight = 659;
   video_player.hidePlaylist();
-}
+};
 function load_video_playlist(video_saver_id) {
   video_saver = document.body.querySelector("#video_id_saver");
   styles = document.querySelectorAll(".my_color_settings");
@@ -465,13 +465,13 @@ video_player = new FWDUVPlayer({
     contextMenuItemSelectedColor:"#000",
     contextMenuItemDisabledColor:"#BBB"
 });
-}
+};
 
 class ToastManager{constructor(){this.id=0;this.toasts=[];this.icons={'SUCCESS':"",'ERROR':'','INFO':'','WARNING':'',};var body=document.querySelector('#ajax');this.toastsContainer=document.createElement('div');this.toastsContainer.classList.add('toasts','border-0');body.appendChild(this.toastsContainer)}showSuccess(message){return this._showToast(message,'SUCCESS')}showError(message){return this._showToast(message,'ERROR')}showInfo(message){return this._showToast(message,'INFO')}showWarning(message){return this._showToast(message,'WARNING')}_showToast(message,toastType){var newId=this.id+1;var newToast=document.createElement('div');newToast.style.display='inline-block';newToast.classList.add(toastType.toLowerCase());newToast.classList.add('toast');newToast.innerHTML=`<progress max="100"value="0"></progress><h3>${message}</h3>`;var newToastObject={id:newId,message,type:toastType,timeout:4000,progressElement:newToast.querySelector('progress'),counter:0,timer:setInterval(()=>{newToastObject.counter+=1000/newToastObject.timeout;newToastObject.progressElement.value=newToastObject.counter.toString();if(newToastObject.counter>=100){newToast.style.display='none';clearInterval(newToastObject.timer);this.toasts=this.toasts.filter((toast)=>{return toast.id===newToastObject.id})}},10)};newToast.addEventListener('click',()=>{newToast.style.display='none';clearInterval(newToastObject.timer);this.toasts=this.toasts.filter((toast)=>{return toast.id===newToastObject.id})});this.toasts.push(newToastObject);this.toastsContainer.appendChild(newToast);return this.id++}}function toast_success(text){var toasts=new ToastManager();toasts.showSuccess(text)}function toast_error(text){var toasts=new ToastManager();toasts.showError(text)}function toast_info(text){var toasts=new ToastManager();toasts.showInfo(text)}function toast_warning(text){var toasts=new ToastManager();toasts.showWarning(text)}
 
 function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 function on(e,t,i,c){var l=document.querySelector(e);l.addEventListener(t,function(e){for(var t=l.querySelectorAll(i),n=e.target,r=0,o=t.length;r<o;r++)for(var a=n,d=t[r];a&&a!==l;){if(a===d)return c.call(d,e);a=a.parentNode}})}function loadScripts(r){var e=document.createElement("SCRIPT"),t=document.getElementsByTagName("head")[0],o=!1;function n(e,t,n){return t==r&&(o=!0,a()),!1}function a(){e.onreadystatechange=e.onload=e.onerror=null,window.removeEventListener?window.removeEventListener("error",n,!1):window.detachEvent("onerror",n)}e.type="text/javascript",e.onload=e.onreadystatechange=function(e){this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||o||a()},e.onerror=function(){o=!0,a()},window.addEventListener?window.addEventListener("error",n,!1):window.attachEvent("onerror",n),e.src=r,t.appendChild(e)}
-function good_gallery(loader){thumb_list = loader.querySelectorAll(".thumb_list li");thumb = loader.querySelector(".big_img");thumb_list.forEach((item) => {item.addEventListener("mouseover", function () {image = item.children[0].src;thumb.src = image;}); }); }
+function good_gallery(loader){thumb_list = loader.querySelectorAll(".thumb_list li");thumb = loader.querySelector(".big_img");thumb_list.forEach((item) => {item.addEventListener("mouseover", function () {image = item.children[0].src;thumb.src = image;}); }); };
 function clear_comment_dropdown(){
   try{
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
@@ -488,11 +488,11 @@ function clear_comment_dropdown(){
   for (var i = 0; i < img_blocks.length; i++) {
     img_blocks[i].innerHTML = "";
   }} catch { null }
-}
+};
 var ready = (callback) => {
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
-}
+};
 on('body', 'click', '#register_ajax', function() {
   form = document.querySelector("#signup");
   if (!form.querySelector("#id_first_name").value){
@@ -527,7 +527,7 @@ on('body', 'click', '#register_ajax', function() {
     window.location.href = "/phone_verify/"
     }};
   reg_link.send(form_data);
-})
+});
 on('body', 'click', '#logg', function() {
   form = document.querySelector("#login_form");
   if (!form.querySelector("#id_username").value){
@@ -677,7 +677,7 @@ function if_list(block) {
         create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen");
       }
     }
-}
+};
 
 function list_load(block, link) {
   // грузим что-то по ссылке link в блок block
@@ -685,7 +685,7 @@ function list_load(block, link) {
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
-}
+};
 function list_block_load(target_block, response_block, link) {
   // грузим блок response_block по ссылке link в блок target_block
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -699,7 +699,7 @@ function list_block_load(target_block, response_block, link) {
        create_pagination(target_block);
     }};
     request.send( null );
-}
+};
 
 function ajax_get_reload(url) {
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -790,7 +790,7 @@ function scrolled(_block) {
             };
         } catch {return}
     }
-}
+};
 
 function paginate(block, target) {
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -816,7 +816,7 @@ function paginate(block, target) {
             }
         }
         link_3.send();
-}
+};
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
@@ -835,13 +835,13 @@ function create_pagination(block) {
     console.log("Работает пагинация для списка в блоке")
     console.log(block);
   }
-}
+};
 
 on('body', 'click', '.next_item', function(event) {
   event.preventDefault();
   this.style.display = "none";
   change_this_fullscreen(this, "photo_fullscreen")
-})
+});
 on('body', 'click', '.prev_item', function(event) {
   event.preventDefault();
   this.style.display = "none";

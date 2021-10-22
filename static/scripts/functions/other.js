@@ -135,21 +135,21 @@ function check_message_form_btn() {
     btn_block.querySelector("#voice_start_btn").style.display = "none";
     btn_block.querySelector("#message_post_btn").style.display = "block";
   }
-}
+};
 function show_message_form_send_btn() {
   document.body.querySelector("#voice_start_btn").style.display = "none";
   document.body.querySelector("#message_post_btn").style.display = "block";
-}
+};
 function show_message_form_voice_btn() {
   document.body.querySelector("#voice_start_btn").style.display = "block";
   document.body.querySelector("#message_post_btn").style.display = "none";
-}
+};
 
 function remove_class_timeout(el) {
   setTimeout(function(){
     el.classList.remove("draft_created");
 }, 3000)
-}
+};
 
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -168,7 +168,7 @@ function remove_item_and_show_restore_block(item, url, _class, title) {
       }
     }
     ajax_link.send();
-}
+};
 
 function get_edit_comment_form(_this, url){
   clear_comment_dropdown();
@@ -190,7 +190,7 @@ function get_edit_comment_form(_this, url){
     parent.append(response);
   }};
   link.send( null );
-}
+};
 
 function post_edit_comment_form(_this, url) {
   form = _this.parentElement.parentElement.parentElement
@@ -225,7 +225,7 @@ function post_edit_comment_form(_this, url) {
       }
   };
   link_.send(form_comment)
-}
+};
 
 function send_change_items(array, link) {
   // функция передает новый порядок элементов, принимая их массив и ссылку, по которой нужно отправить изменения.
@@ -241,7 +241,7 @@ function send_change_items(array, link) {
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.setRequestHeader('X-CSRFToken', token);
   xmlhttp.send(JSON.stringify(post_array));
-}
+};
 
 function profile_list_block_attach(_this, block, url, actions_class) {
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -269,7 +269,7 @@ function profile_list_block_attach(_this, block, url, actions_class) {
        };
     }};
     request.send( null );
-}
+};
 function media_list_edit(_this, url) {
   form = _this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
@@ -293,7 +293,7 @@ function media_list_edit(_this, url) {
     toast_success("Список изменен")
   }}
   link_.send(form_data);
-}
+};
 function media_list_delete(_this, url, old_class, new_class) {
   uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -311,7 +311,7 @@ function media_list_delete(_this, url, old_class, new_class) {
     _this.innerHTML = "Восстановить список";
   }}
   link_.send();
-}
+};
 function media_list_recover(_this, url, old_class, new_class) {
   uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -331,13 +331,13 @@ function media_list_recover(_this, url, old_class, new_class) {
     _this.innerHTML = "Удалить список";
   }}
   link_.send();
-}
+};
 
 function check_span1(span1, uuid, response) {
   if (span1.classList.contains(uuid)){
     document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response)
   }
-}
+};
 function profile_list_block_load(_this, block, url, actions_class) {
   // подгрузка списков в профиле пользователя
   var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -369,7 +369,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
        parent.classList.replace("border", "active_border");
     }};
     request.send( null );
-}
+};
 
 function on_off_list_in_collections(_this, url, new_class, old_class, text) {
   pk = _this.parentElement.parentElement.getAttribute("data-uuid");
@@ -403,7 +403,7 @@ function add_item_in_list(_this, url, old_class, new_class) {
     _this.prepend(span)
   }};
   link.send( null );
-}
+};
 function remove_item_from_list(_this, url, old_class, new_class) {
   parent = _this.parentElement;
   uuid = parent.getAttribute("data-uuid");
@@ -419,7 +419,7 @@ function remove_item_from_list(_this, url, old_class, new_class) {
     _this.querySelector("svg").remove();
   }};
   link.send( null );
-}
+};
 
 function get_preview(response, type) {
   if (document.body.querySelector(".current_file_dropdown")){
@@ -487,7 +487,7 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
             document.getElementById("votes_loader").innerHTML = ""
         }
     }
-}
+};
 
 function attach_list_for_post(_this, url) {
     if (document.body.querySelector(".current_file_dropdown")) {
@@ -514,7 +514,7 @@ function attach_list_for_post(_this, url) {
             toast_error("Элемент не влезает, очистите панель прикрепленеия")
         }
     }
-}
+};
 
 function post_and_load_object_page(form, url_post, url_1, url_2) {
     form_data = new FormData(form);
@@ -536,7 +536,7 @@ function post_and_load_object_page(form, url_post, url_1, url_2) {
         }
     }
     ajax_link.send(form_data)
-}
+};
 
 function edit_and_load_object_page(form, url_post, url_1, url_2) {
     form_data = new FormData(form);
@@ -559,7 +559,7 @@ function edit_and_load_object_page(form, url_post, url_1, url_2) {
         }
     }
     ajax_link.send(form_data)
-}
+};
 
 function send_form_and_toast(url, form, toast) {
     form_data = new FormData(form);
@@ -572,7 +572,7 @@ function send_form_and_toast(url, form, toast) {
         }
     }
     ajax_link.send(form_data);
-}
+};
 
 function get_with_pk_and_reload(url) {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -585,7 +585,7 @@ function get_with_pk_and_reload(url) {
         }
     };
     link_.send();
-}
+};
 
 function post_with_pk_and_reload(parent, url) {
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -600,7 +600,7 @@ function post_with_pk_and_reload(parent, url) {
         }
     };
     link_.send(form_data);
-}
+};
 
 function comment_delete(_this, _link, _class) {
     data = _this.parentElement;
@@ -620,7 +620,7 @@ function comment_delete(_this, _link, _class) {
         }
     };
     link.send()
-}
+};
 
 function comment_owner_delete(_this, _link, _class) {
     data = _this.parentElement.parentElement;
@@ -641,7 +641,7 @@ function comment_owner_delete(_this, _link, _class) {
         }
     };
     link.send()
-}
+};
 
 function comment_restore(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
@@ -657,7 +657,7 @@ function comment_restore(_this, _link) {
         }
     };
     link.send()
-}
+};
 
 function comment_wall_restore(_this, _link) {
     comment = _this.parentElement.nextElementSibling;
@@ -674,7 +674,7 @@ function comment_wall_restore(_this, _link) {
         }
     };
     link.send()
-}
+};
 
 function send_change(span, _link, new_class, html) {
     parent = span.parentElement;
@@ -852,17 +852,17 @@ class ToastManager {
         this.toastsContainer.appendChild(newToast);
         return this.id++
     }
-}
+};
 
 function toast_success(text) {
     var toasts = new ToastManager();
     toasts.showSuccess(text)
-}
+};
 
 function toast_error(text) {
     var toasts = new ToastManager();
     toasts.showError(text)
-}
+};
 
 function toast_info(text) {
   toasts = document.body.querySelectorAll(".toasts")
@@ -872,17 +872,17 @@ function toast_info(text) {
     }
   };
   new ToastManager().showInfo(text)
-}
+};
 
 function toast_warning(text) {
     var toasts = new ToastManager();
     toasts.showWarning(text)
-}
+};
 
 function elementInViewport(el) {
     var bounds = el.getBoundingClientRect();
     return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));
-}
+};
 
 function send_comment(form, block, link) {
   text_val = form.querySelector(".smile_supported");
@@ -925,7 +925,7 @@ function send_comment(form, block, link) {
       }
   };
   link_.send(form_comment)
-}
+};
 
 function load_chart() {
     try {
@@ -991,7 +991,7 @@ function load_chart() {
     } catch {
         return
     }
-}
+};
 
 function addStyleSheets(href) {
     $head = document.head, $link = document.createElement('link');
@@ -999,7 +999,7 @@ function addStyleSheets(href) {
     $link.classList.add("my_color_settings");
     $link.href = href;
     $head.appendChild($link)
-}
+};
 
 function get_document_opacity_0() {
   document.body.style.overflow = "hidden";
@@ -1007,14 +1007,14 @@ function get_document_opacity_0() {
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "unset";
   overlay.style.opacity = "1";
-}
+};
 function get_document_opacity_1(block) {
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
   overlay = document.body.querySelector(".body_overlay");
   overlay.style.visibility = "hidden";
   overlay.style.opacity = "0";
-}
+};
 
 function stop_body_scroll() {
   body = document.body;
@@ -1041,7 +1041,7 @@ function post_update_votes(post, uuid) {
   };
 
   link_.send();
-}
+};
 
 function send_like(item, link) {
     like = item.querySelector(".like");
@@ -1064,7 +1064,7 @@ function send_like(item, link) {
         }
     };
     link__.send(null)
-}
+};
 
 function send_dislike(item, link) {
     like = item.querySelector(".like");
@@ -1087,7 +1087,7 @@ function send_dislike(item, link) {
         }
     };
     link__.send(null)
-}
+};
 
 function get_image_priview(ggg, img) {
     entrou = false;
