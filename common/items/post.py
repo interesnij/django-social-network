@@ -51,7 +51,7 @@ def post(user, value):
                 card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
-            return ''.join([block, '<span class="_post" data-pk="', str(community.pk), '"><div class="card-header">\
+            return ''.join([block, '<div class="pag _post card mb-3" data-pk="', str(post.pk), '"><div class="card-header">\
             <div class="media"><a href="', community.get_link(), '" class="ajax"><figure>', community.get_community_avatar(), '</figure></a><div class="media-body"><h6 class="mb-0"><a href="', community.get_link(), '" class="ajax">\
             ', community.name, '</a></h6><p class="mb-0 fullscreen_2 pointer">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
             <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
@@ -65,7 +65,7 @@ def post(user, value):
             <span title="Поделиться" class="u_ucm_post_repost btn_default pointer"><svg class="svg_info repost_style_btn" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"></path><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z"></path></svg><span class="repost_count">', str(post.count_reposts()), '</span></span></div><span class="col-auto" title="Просмотры" \
             ><svg fill="currentColor" class="svg_info svg_default" style="width:17px;padding-bottom: 3px;" \
             viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>\
-            </svg>', str(post.all_visits_count()), '</span></div><div class="load_comments"></div></div></span>'])
+            </svg>', str(post.all_visits_count()), '</span></div><div class="load_comments"></div></div></div>'])
 
         else:
             if post.is_have_likes():
@@ -99,7 +99,7 @@ def post(user, value):
                 card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
-            return ''.join([block, '<span class="_post" data-pk="', str(post.pk), '"><div class="card-header">\
+            return ''.join([block, '<div class="pag _post card mb-3" data-pk="', str(post.pk), '"><div class="card-header">\
             <div class="media"><a href="', creator.get_link(), '" class="ajax"><figure>', creator.get_my_avatar(), '</figure></a><div class="media-body"><h6 class="mb-0"><a href="', creator.get_link(), '" class="ajax">\
             ', creator.get_full_name(), '</a></h6><p class="mb-0 fullscreen_2 pointer">', post.get_created(), '</p></div><div class="dropdown"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">\
             <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>\
@@ -113,7 +113,7 @@ def post(user, value):
             <span title="Поделиться" class="u_ucm_post_repost btn_default pointer"><svg class="svg_info repost_style_btn" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"></path><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z"></path></svg><span class="repost_count">', str(post.count_reposts()), '</span></span></div><span class="col-auto" title="Просмотры" \
             ><svg fill="currentColor" class="svg_info svg_default" style="width:17px;padding-bottom: 3px;" \
             viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>\
-            </svg>', str(post.all_visits_count()), '</span></div><div class="load_comments"></div></div></span>'])
+            </svg>', str(post.all_visits_count()), '</span></div><div class="load_comments"></div></div></div>'])
     except:
         pass
 
