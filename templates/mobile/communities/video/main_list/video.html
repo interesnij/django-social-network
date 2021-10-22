@@ -1,4 +1,4 @@
-<div class="video_list_detail pointer pag" style="flex: 0 0 50%;max-width:50%;padding:5px" video-pk="{{ object.pk }}" video-counter="{{ object.order }}">
+<div class="video_list_detail pointer pag" data-type="video" style="flex: 0 0 50%;max-width:50%;padding:5px" video-pk="{{ object.pk }}" video-counter="{{ object.order }}">
   <div class="blog-header-img">
     {% if object.image %}
       <img style="width: 100%;object-fit: cover;height: 160px;" src="{{ object.image.url }}" alt="img">

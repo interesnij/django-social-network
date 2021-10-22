@@ -58,25 +58,11 @@ class LoadPostsList(ListView):
 
 
 class LoadPost(TemplateView):
-	template_name, community, user_wall, community_wall, featured_wall, feed_wall, search_wall, chat_wall = None, None, None, None, None, None, None, None
+	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.list = self.post.list
-		if request.GET.get("user_wall"):
-			self.owner_wall = "пользователь"
-		elif request.GET.get("community_wall"):
-			self.owner_wall = "сообщество"
-		elif request.GET.get("feed_wall"):
-			self.owner_wall = "новости"
-		elif request.GET.get("chat_wall"):
-			self.owner_wall = "сообщения"
-		elif request.GET.get("search_wall"):
-			self.owner_wall = "поиск"
-		elif request.GET.get("featured_wall"):
-			self.owner_wall = "рекомендации"
-		else:
-			self.owner_wall = "прямой переход"
 
 		if self.list.community:
 			if request.user.is_authenticated:
