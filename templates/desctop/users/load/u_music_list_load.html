@@ -2,8 +2,8 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 {% for object in object_list %}
-<div class="list-group-item pag">
-  <div style="display:flex" music-pk="{{ object.pk }}" music-counter="{{ forloop.counter0|add:page_obj.start_index }}">
+<div class="list-group-item">
+  <div style="display:flex" music-pk="{{ object.pk }}" music-counter="{{ object.order }}">
       <figure>
         <a class="pointer music_list_item">
         {% if object.artwork_url %}

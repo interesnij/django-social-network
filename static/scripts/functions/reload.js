@@ -144,6 +144,7 @@ function change_this_fullscreen(_this, type_class) {
 };
 
 function get_page_view_elements() {
+  try {
         container = document.body.querySelector(".main-container");
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
@@ -153,15 +154,15 @@ function get_page_view_elements() {
                     try {
                       pk = list[i].getAttribute('data-pk');
                       type = list[i].getAttribute('data-type');
-                      if ($el_view.indexOf(type + " " + pk) == -1) {
+                      if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
                         $el_view.push(type + " " + pk);
                         console.log(type + " " + pk + " добавлен")
-                      }
-                    } catch {null};
+                      };
                     list[i].classList.add("showed");
                 }
             }
         }
+  }} catch {null};
 };
 
 $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);

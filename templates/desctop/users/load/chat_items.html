@@ -2,7 +2,7 @@
 {% for object in object_list %}
 
 {% if object.type %}
-<div class="list-group-item pag pointer chat_item_load_one" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
+<div class="list-group-item pointer chat_item_load_one" data-pk="c{{ object.pk }}" style="padding-top: 5px;padding-bottom: 5px">
   <div style="display:flex" style="padding-top: 5px;padding-bottom: 5px;">
       <figure>
         {% if object.avatar %}
