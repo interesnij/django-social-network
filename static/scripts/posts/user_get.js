@@ -79,9 +79,9 @@ on('#ajax', 'click', '#holder_article_image', function() {
 
 on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
-  where_from = get_open_object_target(pk);
   card = this.parentElement.parentElement.parentElement.parentElement;
   pk = card.getAttribute('data-pk');
+  where_from = get_open_object_target(pk);
   create_fullscreen("/posts/post/" + pk + "/?" + where_from, "worker_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
 });
