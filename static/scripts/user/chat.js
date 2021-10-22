@@ -550,7 +550,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
-        scrolled(rtr.querySelector('.chat_container'), target = 0);
+        scrolled(rtr.querySelector('.chat_container'));
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
         chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
@@ -799,7 +799,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       objDiv = document.querySelector(".chat_container");
       objDiv.scrollTop = objDiv.scrollHeight;
       window.history.pushState(null, "vfgffgfgf", url);
-      scrolled(rtr.querySelector('.chat_container'), target = 0);
+      scrolled(rtr.querySelector('.chat_container'));
       block = rtr.querySelector(".parent_message_block");
       block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + preview + "</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div></div>";
       block.append(saver);

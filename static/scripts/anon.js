@@ -184,9 +184,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
          lenta = elem_.querySelector('.is_block_paginate');
          link = lenta.getAttribute("data-link");
          list_load(document.body.querySelector(".is_block_paginate"), link);
-         //scrolled(lenta.querySelector('.list_pk'), target = 0)
        };
-       //create_pagination(document.body.querySelector(block));
 
        class_to_add = _this.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".list_toggle")
        for (var i = 0; i < class_to_add.length; i++) {
@@ -655,22 +653,22 @@ function if_list(block) {
         _block = block.querySelector('.is_profile_post_paginate');
         link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'), target = 1);
+        scrolled(_block.querySelector('.list_pk'));
     } else if (block.querySelector('.is_community_post_paginate')) {
         _block = block.querySelector('.is_community_post_paginate');
         link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
         list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'), target = 1)
+        scrolled(_block.querySelector('.list_pk'))
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);
-        scrolled(lenta.querySelector('.list_pk'), target = 1)
+        scrolled(lenta.querySelector('.list_pk'))
     } else if (block.querySelector('.is_block_paginate')) {
         lenta = block.querySelector('.is_block_paginate');
         link = lenta.getAttribute("data-link");
         list_load(block.querySelector(".is_block_paginate"), link);
-        scrolled(lenta.querySelector('.list_pk'), target = 1);
+        scrolled(lenta.querySelector('.list_pk'));
     };
     params = window.location.search.replace( '?', '').split('&');
     if (params) {
@@ -776,11 +774,10 @@ if_list(document.getElementById('ajax'));
 
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
-function scrolled(_block, target) {
+function scrolled(_block) {
     // работа с прокруткой:
     // 1. Ссылка на страницу с пагинацией
     // 2. id блока, куда нужно грузить следующие страницы
-    // 3. Указатель на нужность работы просмотров элементов в ленте. Например, target=1 - просмотры постов в ленте
     onscroll = function() {
         try {
             box = _block.querySelector('.next_page_list');
@@ -823,18 +820,18 @@ function paginate(block, target) {
 
 function create_pagination(block) {
   if (block.querySelector('.chat_container')) {
-    scrolled(block.querySelector('.chat_container'), target = 0)
+    scrolled(block.querySelector('.chat_container'))
   }
   else if (block.querySelector('.is_paginate')) {
-    scrolled(block.querySelector('.is_paginate'), target = 0);
+    scrolled(block.querySelector('.is_paginate'));
     console.log("Работает пагинация для списка не постов")
   }
   else if (block.querySelector('.is_post_paginate')) {
-    scrolled(block.querySelector('.is_post_paginate'), target = 1);
+    scrolled(block.querySelector('.is_post_paginate'));
     console.log("Работает пагинация для списка постов")
   }
   else if (block.querySelector('.is_block_paginate')) {
-    scrolled(block.querySelector('.is_block_paginate'), target = 0);
+    scrolled(block.querySelector('.is_block_paginate'));
     console.log("Работает пагинация для списка в блоке")
     console.log(block);
   }
