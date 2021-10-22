@@ -144,25 +144,31 @@ function change_this_fullscreen(_this, type_class) {
 };
 
 function get_page_view_elements() {
-    if (document.body.querySelector(".post_view_generator")) {
-        container = document.body.querySelector(".post_view_generator");
+        container = document.body.querySelector(".main-container");
         list = container.querySelectorAll('.pag');
         for (var i = 0; i < list.length; i++) {
-            if (!list[i].classList.contains("showed") && list[i].classList.contains("post")) {
+            if (!list[i].classList.contains("showed")) {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
                       pk = list[i].getAttribute('data-pk');
+                      if (list[i].classList.contains("_post")) {
+                        type = "_post"
+                      } else if (list[i].classList.contains("_post_list")){
+                        type = "_post_list"
+                      } else {
+                        type = "_none"
+                      };
                       if ($el_view.indexOf(pk) == -1) {
-                        $el_view.push(pk);
+                        $el_view.push(type + " " + pk);
+                        console.log(type + " " + pk + " добавлен")
                       }
-                    } catch {null}
+                    } catch {null}ж
                     list[i].classList.add("showed");
                     console.log(i + " проверен")
                 }
             }
         }
-    }
 };
 
 $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
