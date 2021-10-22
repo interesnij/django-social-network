@@ -6,7 +6,7 @@ MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
 def update_activity(user, user_agent, stat=None):
     from datetime import datetime, timedelta
-    if stat and "stat" in stat:
+    if stat and "views" in stat:
         _stat = stat.split(",")
         profile = user.profile
         if _stat[2]:
