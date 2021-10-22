@@ -152,11 +152,9 @@ function get_page_view_elements() {
                 inViewport = elementInViewport(list[i]);
                 if (inViewport) {
                     try {
-                      uuid = list[i].getAttribute('data-uuid');
-                      console.log(uuid);
-                      console.log($posts_view);
-                      if ($posts_view.indexOf(uuid) == -1) {
-                        $posts_view.push(uuid);
+                      pk = list[i].getAttribute('data-pk');
+                      if ($el_view.indexOf(pk) == -1) {
+                        $el_view.push(pk);
                       }
                     } catch {null}
                     list[i].classList.add("showed");
@@ -397,8 +395,8 @@ window.addEventListener('popstate', function (e) {
   e.preventDefault();
 
   get_link = "?stat=" + $serf_stat
-  if ($posts_view) {
-    get_link = get_link + "&posts_view=" + $posts_view
+  if ($el_view) {
+    get_link = get_link + "&el_view=" + $el_view
   };
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -421,7 +419,7 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
-          $posts_view = [];
+          $el_view = [];
           $serf_stat = [$serf_history.slice(-1), title, $window_height, 0]
       }
   }
@@ -431,8 +429,8 @@ window.addEventListener('popstate', function (e) {
 function ajax_get_reload(url) {
   $serf_history.push(document.location.href);
   get_link = "?stat=" + $serf_stat
-  if ($posts_view) {
-    get_link = get_link + "&posts_view=" + $posts_view
+  if ($el_view) {
+    get_link = get_link + "&el_view=" + $el_view
   };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', url + get_link, true);
@@ -454,7 +452,7 @@ function ajax_get_reload(url) {
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
 
-            $posts_view = [];
+            $el_view = [];
             $serf_stat = [url, title, $window_height, 0];
             document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
             document.getElementById("user_time").innerHTML = elem_.querySelector("#user_time").innerHTML
@@ -466,8 +464,8 @@ function ajax_get_reload(url) {
 function search_ajax_get_reload(url) {
   $serf_history.push(document.location.href);
   get_link = "?stat=" + $serf_stat
-  if ($posts_view) {
-    get_link = get_link + "&posts_view=" + $posts_view
+  if ($el_view) {
+    get_link = get_link + "&el_view=" + $el_view
   };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', url + get_link, true);
@@ -487,7 +485,7 @@ function search_ajax_get_reload(url) {
             create_pagination(rtr);
             get_document_opacity_1(rtr);
 
-            $posts_view = [];
+            $el_view = [];
             $serf_stat = [url, title, $window_height, 0];
 
             try{
