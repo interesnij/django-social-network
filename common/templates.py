@@ -590,7 +590,7 @@ def get_community_moders_template(template, request_user, community, user_agent)
         raise PermissionDenied('Ошибка доступа.')
     return get_folder(user_agent) + template_name
 
-def get_detect_platform_template(template, request_user, user_agent):
+def get_detect_platform_template(template, request_user, user_agent, stat=None):
     """ получаем шаблон для зарегистрированного пользователя. Анонимов не пускаем."""
     if request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
