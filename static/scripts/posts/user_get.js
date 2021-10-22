@@ -81,15 +81,13 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   e.preventDefault();
   where_from = get_open_object_target(pk);
   card = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = card.getAttribute('data-uuid');
   pk = card.getAttribute('data-pk');
-  create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
+  create_fullscreen("/posts/post/" + pk + "/?" + where_from, "worker_fullscreen");
+  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
   card = this.parentElement;
-  uuid = card.getAttribute('data-uuid');
 
   if (this.parentElement.querySelector(".show_post_text")) {
     shower = this.parentElement.querySelector(".show_post_text");
@@ -103,8 +101,8 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   else {
     pk = card.getAttribute('data-pk');
     where_from = get_open_object_target(pk);
-    create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
+    create_fullscreen("/posts/post/" + pk + "/?" + where_from, "worker_fullscreen");
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
   }
 });
 

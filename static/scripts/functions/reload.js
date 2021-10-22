@@ -272,9 +272,9 @@ function load_item_window() {
       console.log(params[2]);
       console.log(params[3]);
       // если есть параметр wall, значит открыт элемент стены: пост, прикрепленный элемент, и т.д.
-      if (params[2].split("=")[0] == "post_uuid") {
+      if (params[2].split("=")[0] == "post_pk") {
         setTimeout(create_fullscreen("/posts/post/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
-      } else if (params[2].split("=")[0] == "photo_uuid") {
+      } else if (params[2].split("=")[0] == "photo_pk") {
         setTimeout(create_fullscreen("/gallery/post_photo/" + params[3].split("=")[1] + "/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       } else if (params[2].split("=")[0] == "doclist") {
         setTimeout(create_fullscreen("/docs/load_list/" + params[2].split("=")[1] + "/", "worker_fullscreen"), 3000)
@@ -289,10 +289,10 @@ function load_item_window() {
 
     else if (params[0].split("=")[1] == "big_page") {
       // если есть параметр big_page, значит открыта страница пользователя или сообщества
-      if (params[2].split("=")[0] == "photo_uuid") {
+      if (params[2].split("=")[0] == "photo_pk") {
         setTimeout(create_fullscreen("/gallery/photo/" + params[2].split("=")[1] + "/", "photo_fullscreen"), 3000)
       }
-      else if (params[2].split("=")[0] == "ava_photo_uuid") {
+      else if (params[2].split("=")[0] == "ava_photo_pk") {
         if (params[1].split("=")[0] == "user_id") {
           folder = "user"
         } else { folder = "community" };
