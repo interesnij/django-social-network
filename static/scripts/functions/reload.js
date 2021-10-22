@@ -180,7 +180,7 @@ var delayedExec = function(after, fn) {
 
 var scrollStopper = delayedExec(3000, function() {
     console.log('stopped it');
-    try {
+  //  try {
           container = document.body.querySelector(".main-container");
           list = container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
@@ -197,7 +197,7 @@ var scrollStopper = delayedExec(3000, function() {
                   }
               }
           }
-    } catch {null};
+  //  } catch {null};
 });
 
 function scrolled(_block) {
