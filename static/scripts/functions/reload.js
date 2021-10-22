@@ -199,7 +199,7 @@ var delayedExec = function(after, fn) {
     };
 };
 
-var scrollStopper = delayedExec(500, function() {
+var scrollStopper = delayedExec(3000, function() {
     console.log('stopped it');
 });
 
