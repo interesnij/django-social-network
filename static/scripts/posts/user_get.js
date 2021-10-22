@@ -101,7 +101,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
 
   else if (e.target.classList.contains("action")) {null}
   else {
-    document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
+    pk = card.getAttribute('data-pk');
     where_from = get_open_object_target(pk);
     create_fullscreen("/posts/post/" + uuid + "/?" + where_from, "worker_fullscreen");
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_uuid=" + uuid);
