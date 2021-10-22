@@ -26,7 +26,7 @@
               {% if object_list %}
                 <ul class="list-group is_paginate">
                     {% for user in object_list %}
-                    <li class="list-group-item li_{{user.pk }} pag" data-uuid="{{ user.uuid }}" data-pk="{{ community.pk }}">
+                    <li class="list-group-item li_{{user.pk }}" data-uuid="{{ user.uuid }}" data-pk="{{ community.pk }}">
                         <div class="media">
                           {% include 'desctop/generic/user/figure.html' %}
                           <div class="media-body">

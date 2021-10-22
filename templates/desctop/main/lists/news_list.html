@@ -14,7 +14,7 @@
           {% if object_list %}
 
           {% load notify %}
-            <span class="post_stream stream is_post_paginate">
+            <span class="post_stream stream is_paginate">
               {% for object in object_list %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}

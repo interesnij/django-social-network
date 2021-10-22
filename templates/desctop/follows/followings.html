@@ -22,7 +22,7 @@
 
               <ul class="list-group is_paginate">
                   {% for object in object_list %}
-                  <li class="list-group-item pag" data-pk="{{ object.pk }}">
+                  <li class="list-group-item" data-pk="{{ object.pk }}">
                       {% include 'desctop/generic/user/card_send_message.html' %}
                   </li>
                   {% endfor %}

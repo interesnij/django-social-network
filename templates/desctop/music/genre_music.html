@@ -28,7 +28,7 @@
                 <div class="genre_playlist" data-pk="{{ genre.pk }}" id="music_genre_container">
                     <ul class="is_paginate">
                       {% for object in object_list %}
-                      <li class="list-group-item pag" music-counter="{{ forloop.counter0 }}">
+                      <li class="list-group-item" music-counter="{{ object.order }}">
                           <div class="media">
                               <figure>
                                 <a class="genre_item pointer">

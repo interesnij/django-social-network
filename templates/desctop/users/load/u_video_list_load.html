@@ -2,10 +2,10 @@
 {% if object_list %}
 <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
 {% for object in object_list %}
-<div class="col-md-6 mb-3 pag" data-pk="{{ object.pk }}">
+<div class="col-md-6 mb-3" data-pk="{{ object.pk }}">
   <div>
       <img class="image_fit_200 video_load_one pointer"
-           video-counter="{{ forloop.counter0|add:page_obj.start_index }}"
+           video-counter="{{ object.order }}"
            video-pk="{{ object.pk }}"
            src="{{ object.get_image }}" alt="img">
   </div>

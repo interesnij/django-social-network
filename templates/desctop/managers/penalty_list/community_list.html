@@ -24,7 +24,7 @@
 
               <ul class="list-group is_paginate">
                   {% for object in object_list %}
-                  <li class="list-group-item pag" data-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
+                  <li class="list-group-item" data-pk="{{ object.community.pk }}" data-pk="{{ object.moderated_object.pk }}">
                       <div class="media">
                         <a href="{{ object.post.community.get_link }}" class="ajax">
                           <figure>

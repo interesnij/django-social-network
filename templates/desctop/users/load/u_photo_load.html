@@ -50,7 +50,7 @@
             {% if object_list %}
             <div style="margin-top: 20px;padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
                 {% for object in object_list %}
-                <div class="pointer u_load_photo_detail pag">
+                <div class="pointer u_load_photo_detail">
                     <div class="progressive replace" data-href="{{ object.file.url }}" photo-pk="{{ object.pk }}" data-pk="{{ request.user.pk }}">
                         <img class="image_fit_200 photo_load_one preview pointer" src="{{ object.get_preview }}" alt="img">
                     </div>

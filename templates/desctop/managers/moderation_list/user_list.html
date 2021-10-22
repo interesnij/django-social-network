@@ -27,7 +27,7 @@
 
               <ul class="list-group is_paginate">
                   {% for object in object_list %}
-                  <li class="list-group-item pag" user-pk="{{ object.user.pk }}">
+                  <li class="list-group-item" user-pk="{{ object.user.pk }}">
                       <div class="media">
                         {% include 'desctop/generic/user/user_figure.html' %}
                         <div class="media-body">
