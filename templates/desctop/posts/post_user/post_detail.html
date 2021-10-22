@@ -1,9 +1,9 @@
-<div class="card mb-3 post_detail uuid_saver" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 post_detail" data-pk="{{ object.pk }}">
 
     {% include 'desctop/posts/post_user/card_header.html' %}
 
     <div class="text_support">
-      <i> Тип раздела - {{ owner_wall }}</i><br> 
+      <i> Тип раздела - {{ owner_wall }}</i><br>
       {{ object.text|safe }}
     </div>
 

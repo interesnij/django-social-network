@@ -1,6 +1,6 @@
 {% load liked_user %}
 
-<div class="card mb-3 uuid_saver" data-uuid="{{ object.uuid }}">
+<div class="card mb-3 uuid_saver" data-pk="{{ object.pk }}">
     {% include 'desctop/posts/post_user/anon_card_header.html' %}
     <div class="text_support">
       {{ object.text|safe }}

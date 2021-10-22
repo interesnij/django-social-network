@@ -191,9 +191,22 @@ window.onbeforeunload = function() {
   };
 };
 
+var delayedExec = function(after, fn) {
+    var timer;
+    return function() {
+        timer && clearTimeout(timer);
+        timer = setTimeout(fn, after);
+    };
+};
+
+var scrollStopper = delayedExec(500, function() {
+    console.log('stopped it');
+});
+
 function scrolled(_block) {
     offset = 0
     window.onscroll = function() {
+      scrollStopper();
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
       }
