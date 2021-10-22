@@ -180,7 +180,9 @@ setInterval(() => $serf_stat[3] += 1, 1000);
 
 window.onbeforeunload = function() {
   console.log($serf_stat);
-  console.log($window_stat);
+  if (document.body.querySelector("#fullscreens_container").innerHTML) {
+    console.log($window_stat);
+  };
 };
 
 function scrolled(_block) {
