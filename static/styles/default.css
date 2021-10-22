@@ -193,9 +193,6 @@ button {
   border-radius: 50%;
 }
 
-.post .card-footer {
-  padding: 1px 17px !important;
-}
 .show_replies {
   cursor:pointer;
 }
