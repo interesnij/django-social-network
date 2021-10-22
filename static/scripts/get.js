@@ -1,4 +1,5 @@
 window.onbeforeunload = function() {
+  setInterval(() => console.log("wait 5 sec."), 5000);
   return "Данные не сохранены. Точно перейти?";
 };
 
