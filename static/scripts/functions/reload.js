@@ -185,8 +185,8 @@ var scrollStopper = delayedExec(3000, function() {
           list = container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
-                  inViewport = elementInViewport(list[i]);
-                  if (inViewport) {
+            //      inViewport = elementInViewport(list[i]);
+            //      if (inViewport) {
                         pk = list[i].getAttribute('data-pk');
                         type = list[i].getAttribute('data-type');
                         if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
@@ -194,7 +194,7 @@ var scrollStopper = delayedExec(3000, function() {
                           setTimeout(() => { type + " " + pk + " добавлен"; }, 3000);
                         };
                       list[i].classList.add("showed");
-                  }
+          //        }
               }
           }
   //  } catch {null};
