@@ -12,7 +12,7 @@
         <ul style="width:max-content;list-style: none;">
             {% for object in get_lists %}
             {% if object.community %}
-            <li class="list_item">
+            <li class="list_item pag" data-type="good_list" data-pk="{{ object.pk }}">
                 <div class="card file-manager-item folder border community" data-pk="{{ object.community.pk }}" data-uuid="{{ object.uuid }}">
                     <div class="card-img-top file-logo-wrapper">
                       <div class="d-flex align-items-center justify-content-center w-100">

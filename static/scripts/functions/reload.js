@@ -152,14 +152,8 @@ function get_page_view_elements() {
                 if (inViewport) {
                     try {
                       pk = list[i].getAttribute('data-pk');
-                      if (list[i].classList.contains("_post")) {
-                        type = "_post"
-                      } else if (list[i].classList.contains("_post_list")){
-                        type = "_post_list"
-                      } else {
-                        type = "_none"
-                      };
-                      if ($el_view.indexOf(pk) == -1) {
+                      type = list[i].getAttribute('data-type');
+                      if ($el_view.indexOf(type + " " + pk) == -1) {
                         $el_view.push(type + " " + pk);
                         console.log(type + " " + pk + " добавлен")
                       }

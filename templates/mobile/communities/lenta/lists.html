@@ -3,7 +3,7 @@
   <ul class="date-list drag_list border-top" style="width:max-content">
     {% for object in post_lists %}
         {% if object.community %}
-        <li class="date pointer post_list_change community list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
+        <li class="date pointer pag post_list_change community list u_list {% if forloop.first %}active{% endif %}" data-type="post_list" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <div class="media">
             <a href="{% url 'community_detail' pk=object.community.pk %}" class="ajax">
               <figure tooltip="{{ object.community.name }}" flow="right">{{ object.community.get_s_avatar|safe }}</figure>
@@ -14,7 +14,7 @@
           </div>
         </li>
         {% else %}
-          <li class="date pointer post_list_change list u_list {% if forloop.first %}tab_active{% endif %}" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
+          <li class="date pag pointer post_list_change list u_list {% if forloop.first %}active{% endif %}" data-type="post_list" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
             <div class="media">
               <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                 <figure tooltip="{{ object.creator.get_full_name }}" flow="right">{{ object.creator.get_s_avatar|safe }}</figure>
