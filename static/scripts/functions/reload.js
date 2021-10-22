@@ -165,7 +165,6 @@ function get_page_view_elements() {
                       }
                     } catch {null};
                     list[i].classList.add("showed");
-                    console.log(i + " проверен")
                 }
             }
         }
