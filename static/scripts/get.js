@@ -1,7 +1,3 @@
-window.onbeforeunload = function() {
-  console.log("wait 5 sec.");
-};
-
 
 on('#ajax', 'keydown', '.search_main_form', function(e) {
   if (e.keyCode == 13) {
