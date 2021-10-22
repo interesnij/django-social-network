@@ -194,7 +194,7 @@ var scrollStopper = delayedExec(3000, function() {
                           console.log(type + " " + pk + " добавлен")
                         };
                       list[i].classList.add("showed");
-                      list.style.border = "1px red solid"
+                      list[i].style.border = "1px red solid"
           //        }
               }
           }
