@@ -8,7 +8,7 @@
               {% for object in object_list %}
 
               {% load notify %}
-                <span class="post_stream is_post_paginate post_view_generator">
+                <span class="post_stream is_paginate post_view_generator">
                   {% for object in object_list %}
                     <div class="card mb-3 post">
                       {{ object|get_notify:request.user|safe }}
