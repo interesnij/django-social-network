@@ -251,12 +251,13 @@ var scrollStopper = delayedExec(3000, function() {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
                     if (i == 1) {
-                      get_el_view_time(120)
+                      get_el_view_time(120);
+                      if ($main_container.querySelector(".is_paginate") && $list_stat.length == 0) {
+                        pag_list = $main_container.querySelector(".is_paginate");
+                        $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
+                      };
                     };
-                    if ($main_container.querySelector(".is_paginate") && $list_stat.length == 0) {
-                      pag_list = $main_container.querySelector(".is_paginate");
-                      $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
-                    };
+
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
                     if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
