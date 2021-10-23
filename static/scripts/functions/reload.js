@@ -291,7 +291,7 @@ function scrolled(_block) {
       // программа останавливает отчет времени просмотра элементов, на которых остановился
       // пользователь, записывает его всем новым элементам pag, затем их добавляет в основной
       // список стата, обнуляет счетчик и очищает список новых элементов.
-      get_el_view_time(0, false);
+      get_el_view_time(1, false);
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
         $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
