@@ -158,9 +158,11 @@ init_stat_lists();
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
-  $page_stat[3] += 1;
   if ($list_stat.length) {
-    $list_stat[1] += 1;
+    $page_stat[3] += 1
+  };
+  if ($list_stat.length) {
+    $list_stat[1] += 1
   }
 };
 function init_stat_lists() {
@@ -173,7 +175,6 @@ function init_stat_lists() {
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
-    console.log($list_stat);
     el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5];
     $all_stat.push(el_list_stat);
   };
