@@ -213,6 +213,7 @@ function get_page_view_time(count) {
 get_page_view_time(120);
 
 $new_elements = [];
+console.log($new_elements);
 $new_time = 0;
 function get_el_view_time(count, action) {
   // $new_elements - новые элементы, для которых считаем время при отановки скролла.
