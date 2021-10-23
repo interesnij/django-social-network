@@ -243,6 +243,7 @@ var delayedExec = function(after, fn) {
 
 var scrollStopper = delayedExec(3000, function() {
   console.log($all_stat);
+  console.log($list_stat);
     try {
           list = $main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
@@ -274,6 +275,7 @@ var scrollStopper = delayedExec(3000, function() {
                   }
               }
           };
+          console.log($list_stat);
     } catch {null};
 });
 
