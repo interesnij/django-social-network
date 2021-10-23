@@ -152,6 +152,7 @@ $all_stat = [];
 $page_stat = [];
 $list_stat = [];
 $window_stat = [];
+console.log($all_stat);
 
 // инициализируем временные списки для сбора статистики
 init_stat_lists();
