@@ -169,7 +169,7 @@ function init_stat_lists() {
   // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
   // статистики элементы;
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6]
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
@@ -184,7 +184,7 @@ function init_stat_lists() {
   if ($main_container.getAttribute('data-page') == "big_page") {
     // если есть big_page в data-page, значит, это страница пользователя или сообщества
     // поэтому добавляем начальные данные в список $page_stat
-    $page_stat = [window.location.href, document.title, $window_height, 0, '', $main_container.getAttribute("data-type"), $request_user_id];
+    $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, '', $request_user_id, window.location.href, document.title];
   };
 
   fullscreens_container = document.body.querySelector('#fullscreens_container');
@@ -254,6 +254,7 @@ var scrollStopper = delayedExec(3000, function() {
                     if ($main_container.querySelector(".is_paginate") && !$list_stat) {
                       pag_list = $main_container.querySelector(".is_paginate");
                       $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
+                      console.log($list_stat);
                     };
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
