@@ -173,6 +173,7 @@ function init_stat_lists() {
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
+    console.log($list_stat);
     el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5]
     $all_stat.push(el_list_stat);
   };
@@ -252,7 +253,6 @@ var scrollStopper = delayedExec(3000, function() {
                       get_el_view_time(120)
                     };
                     if ($main_container.querySelector(".is_paginate") && !$list_stat.length) {
-                      console.log($list_stat);
                       pag_list = $main_container.querySelector(".is_paginate");
                       $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
                     };
