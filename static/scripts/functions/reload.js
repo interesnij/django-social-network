@@ -254,6 +254,7 @@ var scrollStopper = delayedExec(3000, function() {
             };
             $new_elements = [];
             $new_time = 0;
+            console.log($all_stat);
           };
 
           for (var i = 0; i < list.length; i++) {
