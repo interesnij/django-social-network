@@ -12,6 +12,7 @@ function get_dragula(block) {
 };
 
 $serf_history = [];
+$request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
@@ -96,7 +97,6 @@ function create_fullscreen(url, type_class) {
   link.send();
 };
 
-
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
@@ -143,31 +143,103 @@ function change_this_fullscreen(_this, type_class) {
   link.send();
 };
 
+$main_container = document.body.querySelector(".main-container");
+// высота экрана в переаводе на метры
 $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 
-// $el_view = элементы, которые на странице посмотрел пользователь
-$el_view = [];
+// $all_stat = список, в который попадают все элементы статистики для отправки на сервер
+$all_stat = [];
 
-// GET-параметр для всех страниц $serf_stat = [link, title, height, time]
-$serf_stat = [window.location.href, document.title, $window_height, 0];
+// инициализируем временные списки для сбора статистики
+init_stat_lists();
 
-// GET-параметр для окон $serf_stat = [link, title, height, time]
-$window_stat = ['', '', $window_height, 0];
-
-function get_view_time(count) {
-  i = 0;
-  if (i < count) {
-    setInterval(() => $serf_stat[3] += 1, 1000);
-    i += 1
+function append_page_time_in_lists() {
+  // добавляем секунды просмотра страницы и списка, если он есть
+  $all_stat[3] += 1;
+  if ($list_stat) {
+    $list_stat[1] += 1;
   }
 };
-get_view_time(120);
+function init_stat_lists() {
+  // функция добавляет основные списки статистики в главный список $all_stat. И обнуляет их.
+  // нужно при смене старницы, перезагрузке или закрытии вкладки, возвращении в истории назад.
+  // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
+  // статистики элементы;
+  if ($page_stat) {
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6]
+  $all_stat.push(el_page_stat);
+  };
+  if ($list_stat) {
+    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5]
+    $all_stat.push(el_list_stat);
+  };
+  if ($window_stat) {
+    window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6]
+    $all_stat.push(window_list_stat);
+  };
+
+  if ($main_container.getAttribute('data-page') == "big_page") {
+    // если есть big_page в data-page, значит, это страница пользователя или сообщества
+    // поэтому добавляем начальные данные в список $page_stat
+    $page_stat = [window.location.href, document.title, $window_height, 0, '', $main_container.getAttribute("data-type"), $request_user_id];
+  } else {$page_stat = []};
+
+  fullscreens_container = document.body.querySelector('#fullscreens_container');
+  if (fullscreens_container.querySelector('[data-page="list_page"]')) {
+    // есть гет атрибут list_page, значит открыт список в окне
+    // поэтому добавляем начальные данные в список $list_stat
+    $list_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
+  } else {$list_stat = []};
+  if (fullscreens_container.querySelector('[data-page="item_page"]')) {
+    // есть гет атрибут item_page, значит открыт элемент в окне
+    // поэтому добавляем начальные данные в список $window_stat
+    $window_stat = ['', 0, 0, '', $request_user_id]
+  } else {$window_stat = []};
+  console.log("Обнуляем списки и обновляем основной список стата");
+};
+
+function get_page_view_time(count) {
+  // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
+  console.log("Общее время страницы работает");
+  i = 0;
+  if (i < count) {
+    setInterval(() => append_page_time_in_lists(), 1000);
+    i += 1
+  };
+};
+get_page_view_time(120);
+
+$new_elements = [];
+$new_time = 0;
+function get_el_view_time(count, action) {
+  // $new_elements - новые элементы, для которых считаем время при отановки скролла.
+  // $new_time - время для элементов $new_elements.
+  // action - тип работы. При остановке скролла true, счетчик считает,
+  // при чкролле останавливает счетчик, добавляет это время в список основной, найдя элементы
+  // по списку $new_elements. Затем счетчик обнуляем и список тоже. И так каждый раз.
+  if (action) {
+    console.log("Счетчик времени элементов запущен");
+    t = 0;
+    if (t < count) {
+      setInterval(() => $new_time +=1 , 1000);
+      t += 1
+    }
+  } else {
+    console.log("Счетчик времени элементов остановлен, элемент добавлен в общий список");
+    for (var i = 0; i < $new_elements.length; i++){
+      $new_elements[i][2] = 3 + $new_time;
+      el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
+      $all_stat.push(el);
+      console.log("Добавлен элемент в общий список со временем", el);
+    };
+    $new_elements = [];
+    $new_time = 0;
+    console.log($all_stat)
+  }
+};
 
 window.onbeforeunload = function() {
-  console.log($serf_stat);
-  if (document.body.querySelector("#fullscreens_container").innerHTML) {
-    console.log($window_stat);
-  };
+  console.log($all_stat);
 };
 
 var delayedExec = function(after, fn) {
@@ -179,46 +251,65 @@ var delayedExec = function(after, fn) {
 };
 
 var scrollStopper = delayedExec(3000, function() {
-    console.log('stopped it');
-  //  try {
-          container = document.body.querySelector(".main-container");
-          list = container.querySelectorAll('.pag');
+    try {
+          list = $main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
-                        pk = list[i].getAttribute('data-pk');
-                        type = list[i].getAttribute('data-type');
-                        if ($el_view.indexOf(type + " " + pk) == -1 && type != null) {
-                          $el_view.push(type + " " + pk);
-                          console.log(type + " " + pk + " добавлен")
-                        };
-                      list[i].classList.add("showed");
-                      list[i].style.border = "1px red solid"
+                    if ($main_container.querySelector(".is_paginate") && !$list_stat) {
+                      pag_list = $main_container.querySelector(".is_paginate");
+                      $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
+                    };
+                    pk = list[i].getAttribute('data-pk');
+                    type = list[i].getAttribute('data-type');
+                    if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+                      // добавляем новые элементы в список, чтобы записать кол-во времени, которые их
+                      // просматривает пользователь, а затем, при скролле, добавить их с этим значением
+                      //в основной список стата.
+                      $new_elements.push(list[i]);
+                      // добавляем элемент: тип, id, время, раздел, id юзера
+                      $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
+                    };
+                    list[i].classList.add("showed");
                   }
               }
-          }
-  //  } catch {null};
+          };
+          // программа начинает отчет времени просмотра элементов, на которых остановился
+          // пользователь.
+          function get_el_view_time(120, true)
+    } catch {null};
 });
 
 function scrolled(_block) {
-    offset = 0
+    offset = 0;
     window.onscroll = function() {
+      // программа отслеживает окончание прокрутки
       scrollStopper();
+      // программа считает секунды для внесения в стат страницы и списка, если он есть.
+      get_page_view_time(120);
+      // программа останавливает отчет времени просмотра элементов, на которых остановился
+      // пользователь, записывает его всем новым элементам pag, затем их добавляет в основной
+      // список стата, обнуляет счетчик и очищает список новых элементов.
+      get_el_view_time(0, false);
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
-      }
-      $serf_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
-        try {
-            box = _block.querySelector('.next_page_list');
-            if (box && box.classList.contains("next_page_list")) {
-                inViewport = elementInViewport(box);
-                if (inViewport) {
-                    box.classList.remove("next_page_list");
-                    paginate(box);
-                }
-            };
-        } catch {return}
+        $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
+        if ($list_stat) {
+          $list_stat[1] = parseFloat(window.pageYOffset * 0.000264).toFixed(2);
+        };
+      };
+
+      try {
+          box = _block.querySelector('.next_page_list');
+          if (box && box.classList.contains("next_page_list")) {
+              inViewport = elementInViewport(box);
+              if (inViewport) {
+                  box.classList.remove("next_page_list");
+                  paginate(box);
+              }
+          };
+      } catch {return}
     }
 };
 
@@ -248,17 +339,9 @@ function paginate(block, target) {
             if (this.readyState == 4 && this.status == 200) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
-                if (elem.querySelector(".is_post_paginate")) {
-                  block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_post_paginate").innerHTML)
-                } else if (elem.querySelector(".is_paginate")){
+                if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
-                } else if (document.body.querySelector(".is_block_paginate")){
-                  block_paginate = document.body.querySelector(".is_block_paginate");
-                  if (elem.querySelector(".load_block")){
-                      block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML)
-                  } else {
-                    block.parentElement.insertAdjacentHTML('beforeend', elem.innerHTML)
-                  }};
+                };
                 block.remove()
             }
         }
@@ -266,16 +349,9 @@ function paginate(block, target) {
 };
 
 function create_pagination(block) {
-  if (block.querySelector('.chat_container')) {
-    scrolled(block.querySelector('.chat_container'))
-  }
-  else if (block.querySelector('.is_paginate')) {
+  if (block.querySelector('.is_paginate')) {
     scrolled(block.querySelector('.is_paginate'));
     console.log("Работает пагинация для списка не постов")
-  }
-  else if (block.querySelector('.is_post_paginate')) {
-    scrolled(block.querySelector('.is_post_paginate'));
-    console.log("Работает пагинация для списка постов")
   }
 };
 
@@ -374,7 +450,7 @@ function list_block_load(target_block, response_block, link) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
-       get_dragula(".is_post_paginate");
+       get_dragula(".is_block_paginate");
        get_dragula(".date-list");
        create_pagination(target_block);
     }};
@@ -402,8 +478,8 @@ function this_page_reload(url) {
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             if_list(rtr);
-            loaded = false;
             create_pagination(rtr);
+            init_stat_lists();
         }
     }
     ajax_link.send()
@@ -412,13 +488,8 @@ function this_page_reload(url) {
 window.addEventListener('popstate', function (e) {
   e.preventDefault();
 
-  get_link = "?stat=" + $serf_stat
-  if ($el_view) {
-    get_link = get_link + "&el_view=" + $el_view
-  };
-
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  ajax_link.open('GET', $serf_history.slice(-1) + get_link, true);
+  ajax_link.open('GET', $serf_history.slice(-1), true);
   ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   ajax_link.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -437,8 +508,7 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
-          $el_view = [];
-          $serf_stat = [$serf_history.slice(-1), title, $window_height, 0]
+          init_stat_lists();
       }
   }
   ajax_link.send()
@@ -446,12 +516,8 @@ window.addEventListener('popstate', function (e) {
 
 function ajax_get_reload(url) {
   $serf_history.push(document.location.href);
-  get_link = "?stat=" + $serf_stat
-  if ($el_view) {
-    get_link = get_link + "&el_view=" + $el_view
-  };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url + get_link, true);
+    ajax_link.open('GET', url, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -469,11 +535,12 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
+            init_stat_lists();
 
-            $el_view = [];
-            $serf_stat = [url, title, $window_height, 0];
-            document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
-            document.getElementById("user_time").innerHTML = elem_.querySelector("#user_time").innerHTML
+            try{
+              document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
+              document.getElementById("user_time").innerHTML = elem_.querySelector("#user_time").innerHTML
+            } catch{null}
         }
     }
     ajax_link.send()
@@ -481,12 +548,8 @@ function ajax_get_reload(url) {
 
 function search_ajax_get_reload(url) {
   $serf_history.push(document.location.href);
-  get_link = "?stat=" + $serf_stat
-  if ($el_view) {
-    get_link = get_link + "&el_view=" + $el_view
-  };
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    ajax_link.open('GET', url + get_link, true);
+    ajax_link.open('GET', url, true);
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -502,9 +565,7 @@ function search_ajax_get_reload(url) {
             if_list(rtr);
             create_pagination(rtr);
             get_document_opacity_1(rtr);
-
-            $el_view = [];
-            $serf_stat = [url, title, $window_height, 0];
+            init_stat_lists();
 
             try{
               document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;

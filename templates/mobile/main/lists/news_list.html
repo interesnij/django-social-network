@@ -10,7 +10,7 @@
           {% load notify %}
             <span class="post_stream is_post_paginate post_view_generator">
               {% for object in object_list %}
-                <div class="pag post card mb-3">
+                <div class="post card mb-3">
                   {{ object|get_notify:request.user|safe }}
                 </div>
               {% endfor %}

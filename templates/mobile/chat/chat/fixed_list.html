@@ -14,7 +14,7 @@
       {% if object_list %}
       {% for fix in object_list %}
       {% with object=fix.message %}
-          <div class="message media pb-0 pt-1 pag border-bottom" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}" style="display:block">
+          <div class="message media pb-0 pt-1 border-bottom" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}" style="display:block">
             <div class="media">
               <figure>
                 <a href="{{ object.creator.get_link }}" class="ajax">

@@ -40,8 +40,7 @@ on('#ajax', 'click', '.load_doc_list', function() {
   doclist_pk = card.getAttribute("doclist-pk");
   owner_pk = card.getAttribute("owner-pk");
 
-  where_from = get_open_object_target(owner_pk);
-  create_fullscreen("/docs/load_list/" + doclist_pk + "/?" + where_from, "item_fullscreen");
+  create_fullscreen("/docs/load_list/" + doclist_pk + "/", "item_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk);
 });
 
