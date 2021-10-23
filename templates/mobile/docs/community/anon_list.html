@@ -26,7 +26,7 @@
                 {% if object_list %}
                     <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/docs/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
                       {% for doc in object_list %}
-                      <li class="list-group-item pag" style="padding-bottom:10px">
+                      <li class="list-group-item" style="padding-bottom:10px">
                           <div class="media" style="position: relative;">
                               <div class="media-body doc_media_body" style="padding: 0">
                                   <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
