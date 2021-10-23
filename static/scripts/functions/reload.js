@@ -158,7 +158,7 @@ init_stat_lists();
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
-  $all_stat[3] += 1;
+  $page_stat[3] += 1;
   if ($list_stat) {
     $list_stat[1] += 1;
   }
@@ -168,15 +168,15 @@ function init_stat_lists() {
   // нужно при смене старницы, перезагрузке или закрытии вкладки, возвращении в истории назад.
   // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
   // статистики элементы;
-  if ($page_stat) {
+  if ($page_stat.length) {
   el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6]
   $all_stat.push(el_page_stat);
   };
-  if ($list_stat) {
+  if ($list_stat.length) {
     el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5]
     $all_stat.push(el_list_stat);
   };
-  if ($window_stat) {
+  if ($window_stat.length) {
     window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6]
     $all_stat.push(window_list_stat);
   };
