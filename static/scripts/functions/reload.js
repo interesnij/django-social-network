@@ -201,21 +201,27 @@ function init_stat_lists() {
   console.log("Обнуляем списки и обновляем основной список стата");
 };
 
+
+el_time = false, page_time = false, $new_time = 0, $new_elements = [];
+
 function get_page_view_time(count) {
   // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
+  if (page_time) {
+    return
+  }
   console.log("Общее время страницы работает");
   i = 0;
   if (i < count) {
     setInterval(() => append_page_time_in_lists(), 1000);
     i += 1
-  };
+  } else {page_time = false;};
 };
 get_page_view_time(120);
 
-$new_elements = [];
-console.log($new_elements);
-$new_time = 0;
 function get_el_view_time(count, action) {
+  if (el_time) {
+    return
+  };
   // $new_elements - новые элементы, для которых считаем время при отановки скролла.
   // $new_time - время для элементов $new_elements.
   // action - тип работы. При остановке скролла true, счетчик считает,
@@ -283,9 +289,12 @@ var scrollStopper = delayedExec(3000, function() {
           };
           // программа начинает отчет времени просмотра элементов, на которых остановился
           // пользователь.
-          get_el_view_time(120, true)
+          el_time = false;
+          get_el_view_time(120, true);
+          el_time = true;
     } catch {null};
 });
+
 
 function scrolled(_block) {
     offset = 0;
@@ -294,10 +303,12 @@ function scrolled(_block) {
       scrollStopper();
       // программа считает секунды для внесения в стат страницы и списка, если он есть.
       get_page_view_time(120);
+      page_time = true;
       // программа останавливает отчет времени просмотра элементов, на которых остановился
       // пользователь, записывает его всем новым элементам pag, затем их добавляет в основной
       // список стата, обнуляет счетчик и очищает список новых элементов.
-      get_el_view_time(1, false);
+      get_el_view_time(null, false);
+      el_time = true;
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
         $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
