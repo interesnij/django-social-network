@@ -284,6 +284,7 @@ var scrollStopper = delayedExec(3000, function() {
                       // добавляем элемент: тип, id, время, раздел, id юзера
                       $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
                     };
+                    console.log($new_elements.length)
                     list[i].classList.add("showed");
                   }
               }
