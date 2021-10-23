@@ -247,9 +247,9 @@ var scrollStopper = delayedExec(3000, function() {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
-                    if (i = 1) {
+                    if (i == 1) {
                       get_el_view_time(120)
-                    }
+                    };
                     if ($main_container.querySelector(".is_paginate") && !$list_stat) {
                       pag_list = $main_container.querySelector(".is_paginate");
                       $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
