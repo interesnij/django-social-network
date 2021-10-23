@@ -251,12 +251,12 @@ var scrollStopper = delayedExec(3000, function() {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
                     if (i == 1) {
-                      get_el_view_time(120);
                       if ($main_container.querySelector(".is_paginate")) {
                         pag_list = $main_container.querySelector(".is_paginate");
                         console.log(pag_list);
                         $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
                       };
+                      get_el_view_time(120);
                     };
 
                     pk = list[i].getAttribute('data-pk');
