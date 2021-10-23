@@ -268,14 +268,15 @@ var scrollStopper = delayedExec(3000, function() {
                     };
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
-                    if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+                  //  if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
                       // добавляем новые элементы в список, чтобы записать кол-во времени, которые их
                       // просматривает пользователь, а затем, при скролле, добавить их с этим значением
                       //в основной список стата.
                       $new_elements.push(list[i]);
+                      console.log(list[i]);
                       // добавляем элемент: тип, id, время, раздел, id юзера
                       $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
-                    };
+                  //  };
                     list[i].classList.add("showed");
                   }
               }
