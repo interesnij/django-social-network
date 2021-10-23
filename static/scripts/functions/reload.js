@@ -202,7 +202,7 @@ function init_stat_lists() {
 };
 
 
-el_time = false, page_time = false, $new_time = 0, $new_elements = [];
+$new_elements = [] ,age_time = false, $new_time = 0;
 
 function get_page_view_time(count) {
   // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
@@ -218,36 +218,12 @@ function get_page_view_time(count) {
 };
 get_page_view_time(120);
 
-function get_el_view_time(count, action) {
-  if (el_time) {
-    return
-  };
-  // $new_elements - новые элементы, для которых считаем время при отановки скролла.
-  // $new_time - время для элементов $new_elements.
-  // action - тип работы. При остановке скролла true, счетчик считает,
-  // при чкролле останавливает счетчик, добавляет это время в список основной, найдя элементы
-  // по списку $new_elements. Затем счетчик обнуляем и список тоже. И так каждый раз.
-  if (action) {
-    console.log("Счетчик времени элементов запущен");
-    t = 0;
-    if (t < count) {
-      setInterval(() => $new_time +=1 , 1000);
-      t += 1
-    }
-  } else {
-    console.log("Счетчик времени элементов остановлен, элемент добавлен в общий список");
-    console.log($new_elements.length)
-    for (var i = 0; i < $new_elements.length; i++){
-      $new_elements[i][2] = 3 + $new_time;
-      console.log($new_elements[i]);
-      el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
-      $all_stat.push(el);
-      console.log(el);
-      console.log("Добавлен элемент в общий список со временем", el);
-    };
-    $new_elements = [];
-    $new_time = 0;
-    //console.log($all_stat)
+function get_el_view_time(count) {
+  console.log("Счетчик времени элементов запущен");
+  t = 0;
+  if (t < count) {
+    setInterval(() => $new_time +=1 , 1000);
+    t += 1
   }
 };
 
@@ -266,6 +242,20 @@ var delayedExec = function(after, fn) {
 var scrollStopper = delayedExec(3000, function() {
     try {
           list = $main_container.querySelectorAll('.pag');
+
+          if ($new_elements) {
+            for (var i = 0; i < $new_elements.length; i++){
+              $new_elements[i][2] = 3 + $new_time;
+              console.log($new_elements[i]);
+              el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
+              $all_stat.push(el);
+              console.log(el);
+              console.log("Добавлен элемент в общий список со временем", el);
+            };
+            $new_elements = [];
+            $new_time = 0;
+          };
+
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
@@ -282,18 +272,16 @@ var scrollStopper = delayedExec(3000, function() {
                       //в основной список стата.
 
                       // добавляем элемент: тип, id, время, раздел, id юзера
+
                       $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
                     };
-                    console.log($new_elements.length)
                     list[i].classList.add("showed");
                   }
               }
           };
           // программа начинает отчет времени просмотра элементов, на которых остановился
           // пользователь.
-          el_time = false;
-          get_el_view_time(120, true);
-          el_time = true;
+          get_el_view_time(120);
     } catch {null};
 });
 
@@ -309,8 +297,6 @@ function scrolled(_block) {
       // программа останавливает отчет времени просмотра элементов, на которых остановился
       // пользователь, записывает его всем новым элементам pag, затем их добавляет в основной
       // список стата, обнуляет счетчик и очищает список новых элементов.
-      get_el_view_time(null, false);
-      el_time = true;
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
         $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
