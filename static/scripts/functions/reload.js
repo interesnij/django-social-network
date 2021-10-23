@@ -243,9 +243,7 @@ var scrollStopper = delayedExec(3000, function() {
     try {
           list = $main_container.querySelectorAll('.pag');
 
-          if ($new_elements) {
-            console.log($new_elements);
-            console.log($new_elements.length);
+          if ($new_elements.length) {
             for (var i = 0; i < $new_elements.length; i++){
               $new_elements[i][2] = 3 + $new_time;
               el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
