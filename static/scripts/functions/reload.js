@@ -246,10 +246,9 @@ var scrollStopper = delayedExec(3000, function() {
           if ($new_elements) {
             for (var i = 0; i < $new_elements.length; i++){
               $new_elements[i][2] = 3 + $new_time;
-              console.log($new_elements[i]);
               el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
-              $all_stat.push(el);
-              console.log(el);
+              $all_stat.push($new_elements[i]);
+              console.log($new_elements[i]);
               console.log("Добавлен элемент в общий список со временем", el);
             };
             $new_elements = [];
