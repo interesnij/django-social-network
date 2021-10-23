@@ -158,7 +158,7 @@ init_stat_lists();
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
-  if ($list_stat.length) {
+  if ($page_stat.length) {
     $page_stat[3] += 1
   };
   if ($list_stat.length) {
