@@ -76,7 +76,7 @@
 
         <span></span>
 
-        <span class="post_stream is_post_paginate" id="post_container" owner-pk="{{ user.pk }}" data-type="post_list">
+        <span class="post_stream is_paginate" id="post_container" owner-pk="{{ user.pk }}" data-type="post_list">
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}

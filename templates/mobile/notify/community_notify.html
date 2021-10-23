@@ -16,7 +16,7 @@
     </div>
   </div>
           {% if object_list %}
-            <span class="is_post_paginate">
+            <span class="is_paginate">
               {% for object in object_list %}
                   {% if object.community_creator %}
                     {% include 'mobile/notify/items/community.html' %}
