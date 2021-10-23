@@ -171,7 +171,7 @@ function init_stat_lists() {
   // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
   // статистики элементы;
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7];
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6]
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
@@ -186,7 +186,7 @@ function init_stat_lists() {
   if ($main_container.getAttribute('data-page') == "big_page") {
     // если есть big_page в data-page, значит, это страница пользователя или сообщества
     // поэтому добавляем начальные данные в список $page_stat
-    $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, '', $request_user_id, window.location.href, document.title];
+    $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, window.location.href, document.title];
   };
 
   fullscreens_container = document.body.querySelector('#fullscreens_container');
@@ -205,7 +205,7 @@ function init_stat_lists() {
 };
 
 
-$new_elements = [] ,page_time = false, $new_time = 0;
+$new_elements = [], page_time = false, $new_time = 0;
 
 function get_page_view_time(count) {
   // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
@@ -245,7 +245,7 @@ var delayedExec = function(after, fn) {
 var scrollStopper = delayedExec(3000, function() {
     try {
           list = $main_container.querySelectorAll('.pag');
-
+          console.log($list_stat);
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
