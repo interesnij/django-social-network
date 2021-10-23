@@ -250,8 +250,8 @@ var scrollStopper = delayedExec(3000, function() {
               console.log(el);
               console.log("Добавлен элемент в общий список со временем", el);
             };
-            $new_elements = [];
-            $new_time = 0;
+            //$new_elements = [];
+            //$new_time = 0;
             console.log($all_stat);
             get_el_view_time(120);
           };
@@ -287,6 +287,8 @@ var scrollStopper = delayedExec(3000, function() {
 function scrolled(_block) {
     offset = 0;
     window.onscroll = function() {
+      $new_elements = [];
+      $new_time = 0;
       // программа отслеживает окончание прокрутки
       scrollStopper();
       // программа считает секунды для внесения в стат страницы и списка, если он есть.
