@@ -280,7 +280,6 @@ var scrollStopper = delayedExec(3000, function() {
                   }
               }
           };
-          get_el_view_time(120);
     } catch {null};
 });
 
