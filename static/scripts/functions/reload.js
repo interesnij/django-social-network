@@ -149,6 +149,8 @@ $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 
 // $all_stat = список, в который попадают все элементы статистики для отправки на сервер
 $all_stat = [];
+$page_stat = [];
+$list_stat = [];
 
 // инициализируем временные списки для сбора статистики
 init_stat_lists();
@@ -182,14 +184,14 @@ function init_stat_lists() {
     // если есть big_page в data-page, значит, это страница пользователя или сообщества
     // поэтому добавляем начальные данные в список $page_stat
     $page_stat = [window.location.href, document.title, $window_height, 0, '', $main_container.getAttribute("data-type"), $request_user_id];
-  } else {$page_stat = []};
+  };
 
   fullscreens_container = document.body.querySelector('#fullscreens_container');
   if (fullscreens_container.querySelector('[data-page="list_page"]')) {
     // есть гет атрибут list_page, значит открыт список в окне
     // поэтому добавляем начальные данные в список $list_stat
     $list_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
-  } else {$list_stat = []};
+  };
   if (fullscreens_container.querySelector('[data-page="item_page"]')) {
     // есть гет атрибут item_page, значит открыт элемент в окне
     // поэтому добавляем начальные данные в список $window_stat
