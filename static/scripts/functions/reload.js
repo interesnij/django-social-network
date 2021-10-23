@@ -236,6 +236,7 @@ function get_el_view_time(count, action) {
     }
   } else {
     console.log("Счетчик времени элементов остановлен, элемент добавлен в общий список");
+    console.log($new_elements.length)
     for (var i = 0; i < $new_elements.length; i++){
       $new_elements[i][2] = 3 + $new_time;
       console.log($new_elements[i]);
