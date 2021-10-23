@@ -242,7 +242,6 @@ var delayedExec = function(after, fn) {
 var scrollStopper = delayedExec(3000, function() {
     try {
           list = $main_container.querySelectorAll('.pag');
-          console.log($new_elements.length);
           if ($new_elements.length) {
             for (var i = 0; i < $new_elements.length; i++){
               $new_elements[i][2] = 3 + $new_time;
@@ -254,6 +253,7 @@ var scrollStopper = delayedExec(3000, function() {
             $new_elements = [];
             $new_time = 0;
             console.log($all_stat);
+            get_el_view_time(120);
           };
 
           for (var i = 0; i < list.length; i++) {
@@ -280,8 +280,6 @@ var scrollStopper = delayedExec(3000, function() {
                   }
               }
           };
-          // программа начинает отчет времени просмотра элементов, на которых остановился
-          // пользователь.
           get_el_view_time(120);
     } catch {null};
 });
