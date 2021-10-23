@@ -242,24 +242,14 @@ var delayedExec = function(after, fn) {
 var scrollStopper = delayedExec(3000, function() {
     try {
           list = $main_container.querySelectorAll('.pag');
-          if ($new_elements.length) {
-            for (var i = 0; i < $new_elements.length; i++){
-              $new_elements[i][2] = 3 + $new_time;
-              el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
-              $all_stat.push(el);
-              console.log(el);
-              console.log("Добавлен элемент в общий список со временем", el);
-            };
-            //$new_elements = [];
-            //$new_time = 0;
-            console.log($all_stat);
-            get_el_view_time(120);
-          };
 
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
+                    console.log(i)
+                  //  get_el_view_time(120);
+
                     if ($main_container.querySelector(".is_paginate") && !$list_stat) {
                       pag_list = $main_container.querySelector(".is_paginate");
                       $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
@@ -287,13 +277,24 @@ var scrollStopper = delayedExec(3000, function() {
 function scrolled(_block) {
     offset = 0;
     window.onscroll = function() {
-      $new_elements = [];
-      $new_time = 0;
       // программа отслеживает окончание прокрутки
       scrollStopper();
       // программа считает секунды для внесения в стат страницы и списка, если он есть.
       get_page_view_time(120);
       page_time = true;
+
+      if ($new_elements.length) {
+        for (var i = 0; i < $new_elements.length; i++){
+          $new_elements[i][2] = 3 + $new_time;
+          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
+          $all_stat.push(el);
+          console.log(el);
+          console.log("Добавлен элемент в общий список со временем", el);
+        };
+        $new_elements = [];
+        $new_time = 0;
+      };
+
       // программа останавливает отчет времени просмотра элементов, на которых остановился
       // пользователь, записывает его всем новым элементам pag, затем их добавляет в основной
       // список стата, обнуляет счетчик и очищает список новых элементов.
