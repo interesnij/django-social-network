@@ -202,7 +202,7 @@ function init_stat_lists() {
 };
 
 
-$new_elements = [] ,age_time = false, $new_time = 0;
+$new_elements = [] ,page_time = false, $new_time = 0;
 
 function get_page_view_time(count) {
   // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
