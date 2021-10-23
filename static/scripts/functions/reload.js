@@ -277,7 +277,7 @@ var scrollStopper = delayedExec(3000, function() {
           };
           // программа начинает отчет времени просмотра элементов, на которых остановился
           // пользователь.
-          function get_el_view_time(120, true)
+          get_el_view_time(120, true)
     } catch {null};
 });
 
