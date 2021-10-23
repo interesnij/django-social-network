@@ -201,7 +201,6 @@ function init_stat_lists() {
     $window_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
   };
   console.log("Обнуляем списки и обновляем основной список стата");
-  console.log($all_stat);
 };
 
 
