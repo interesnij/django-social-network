@@ -244,6 +244,7 @@ var scrollStopper = delayedExec(3000, function() {
           list = $main_container.querySelectorAll('.pag');
 
           if ($new_elements) {
+            console.log($new_elements.length);
             for (var i = 0; i < $new_elements.length; i++){
               $new_elements[i][2] = 3 + $new_time;
               el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
@@ -274,6 +275,7 @@ var scrollStopper = delayedExec(3000, function() {
                       // добавляем элемент: тип, id, время, раздел, id юзера
 
                       $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
+                      console.log($new_elements);
                     };
                     list[i].classList.add("showed");
                   }
