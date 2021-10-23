@@ -233,11 +233,12 @@ function get_el_view_time(count, action) {
       $new_elements[i][2] = 3 + $new_time;
       el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
       $all_stat.push(el);
+      console.log(el);
       console.log("Добавлен элемент в общий список со временем", el);
     };
     $new_elements = [];
     $new_time = 0;
-    console.log($all_stat)
+    //console.log($all_stat)
   }
 };
 
