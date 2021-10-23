@@ -169,16 +169,16 @@ function init_stat_lists() {
   // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
   // статистики элементы;
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7];
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
     console.log($list_stat);
-    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5]
+    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5];
     $all_stat.push(el_list_stat);
   };
   if ($window_stat.length) {
-    window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6]
+    window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6];
     $all_stat.push(window_list_stat);
   };
 
@@ -303,7 +303,7 @@ function scrolled(_block) {
       if ((window.innerHeight + window.pageYOffset) > offset) {
         offset = window.innerHeight + window.pageYOffset;
         $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
-        if ($list_stat) {
+        if ($list_stat.length) {
           $list_stat[1] = parseFloat(window.pageYOffset * 0.000264).toFixed(2);
         };
       };
