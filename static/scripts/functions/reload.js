@@ -151,6 +151,7 @@ $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 $all_stat = [];
 $page_stat = [];
 $list_stat = [];
+$window_stat = [];
 
 // инициализируем временные списки для сбора статистики
 init_stat_lists();
@@ -195,8 +196,8 @@ function init_stat_lists() {
   if (fullscreens_container.querySelector('[data-page="item_page"]')) {
     // есть гет атрибут item_page, значит открыт элемент в окне
     // поэтому добавляем начальные данные в список $window_stat
-    $window_stat = ['', 0, 0, '', $request_user_id]
-  } else {$window_stat = []};
+    $window_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
+  };
   console.log("Обнуляем списки и обновляем основной список стата");
 };
 
