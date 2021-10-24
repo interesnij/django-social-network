@@ -60,7 +60,7 @@ class UserDocListCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -105,7 +105,7 @@ class UserDocCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_settings_template("docs/doc_create/u_create_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -127,7 +127,7 @@ class UserDocEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_settings_template("docs/doc_create/u_edit_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), get_settings_template("docs/doc_create/u_edit_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

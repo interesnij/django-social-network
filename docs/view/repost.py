@@ -20,7 +20,7 @@ class UUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.user, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.doc, self.user, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocWindow,self).get(request,*args,**kwargs)
@@ -39,7 +39,7 @@ class CUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.community, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.doc, self.community, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMDocWindow,self).get(request,*args,**kwargs)
 
@@ -57,7 +57,7 @@ class UUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.user, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.list, self.user, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocListWindow,self).get(request,*args,**kwargs)
@@ -76,7 +76,7 @@ class CUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.community, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.list, self.community, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMDocListWindow,self).get(request,*args,**kwargs)
 

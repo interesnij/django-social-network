@@ -117,7 +117,7 @@ class GoodCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("goods/c_good/add.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -154,7 +154,7 @@ class GoodCommunityEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.community = self.good.community
-        self.template_name = get_community_manage_template("goods/c_good/edit.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("goods/c_good/edit.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -196,7 +196,7 @@ class GoodListCommunityCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
 
-        self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("goods/good_base/c_add_list.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(GoodListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -227,7 +227,7 @@ class CommunityGoodListEdit(TemplateView):
         from common.templates import get_community_manage_template
 
         self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -320,7 +320,7 @@ class GoodCommunityCommentEdit(TemplateView):
         from common.templates import get_my_template
 
         self.comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(GoodCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

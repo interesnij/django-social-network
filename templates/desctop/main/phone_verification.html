@@ -27,7 +27,7 @@
 
                       <div class="dropdown text-hide-xs d-inline-block" style="margin-left: auto;">
                           <a class="btn header-color-secondary username drop">
-                             <figure class="userpic" data-pk="{{ request.user.pk }}" data-name="{{ request.user.get_full_name }}">
+                             <figure class="userpic" data-device="comp" data-pk="{{ request.user.pk }}" data-name="{{ request.user.get_full_name }}">
                                {% if request.user.s_avatar %}
                                  <img src="{{ request.user.s_avatar.url }}" alt="">
                                {% else %}

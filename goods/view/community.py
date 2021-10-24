@@ -18,7 +18,7 @@ class CommunityGood(TemplateView):
 		check_can_get_lists(self.request.user, self.list.community)
 
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_template_community_item(self.post, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "goods/c_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGood,self).get(request,*args,**kwargs)
@@ -41,7 +41,7 @@ class GoodCommunityDetail(TemplateView):
 
 		self.good, self.c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_community_item(self.post, "goods/c_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_template_community_item(self.post, "goods/c_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "goods/c_good/anon_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodCommunityDetail,self).get(request,*args,**kwargs)

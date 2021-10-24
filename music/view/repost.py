@@ -22,7 +22,7 @@ class UUCMMusicWindow(TemplateView):
         self.track, self.user = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("music/repost/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("music/repost/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMMusicWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -41,7 +41,7 @@ class CUCMMusicWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.track, self.community = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("music/repost/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("music/repost/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -61,7 +61,7 @@ class UUCMMusicListWindow(TemplateView):
         self.playlist, self.user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
-        self.template_name = get_detect_platform_template("music/repost/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("music/repost/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMMusicListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -80,7 +80,7 @@ class CUCMMusicListWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         self.playlist, self.community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
-        self.template_name = get_detect_platform_template("music/repost/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("music/repost/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

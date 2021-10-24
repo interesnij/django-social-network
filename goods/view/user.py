@@ -21,7 +21,7 @@ class UserGood(TemplateView):
 		except:
 			GoodNumbers.objects.create(user=request.user.pk, good=self.good.pk, device=request.user.get_device())
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.good, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_template_user_item(self.good, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.good, "goods/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGood,self).get(request,*args,**kwargs)
@@ -44,7 +44,7 @@ class GoodUserDetail(TemplateView):
 
 		self.good, self.user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "goods/u_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_template_user_item(self.post, "goods/u_good/", "detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_user_item(self.post, "goods/u_good/anon_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodUserDetail,self).get(request,*args,**kwargs)
