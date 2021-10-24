@@ -164,7 +164,7 @@ function append_page_time_in_lists() {
     $page_stat[3] += 1
   };
   if ($list_stat.length) {
-    $list_stat[1] += 1
+    $list_stat[2] += 1
   }
 };
 function init_stat_lists() {
