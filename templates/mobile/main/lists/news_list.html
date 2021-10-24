@@ -8,7 +8,7 @@
           {% if object_list %}
 
           {% load notify %}
-            <span class="post_stream is_paginate post_view_generator">
+            <span class="is_paginate">
               {% for object in object_list %}
                 <div class="post card mb-3">
                   {{ object|get_notify:request.user|safe }}
