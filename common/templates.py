@@ -1,4 +1,4 @@
-statfrom rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied
 import re
 MOBILE_AGENT_RE = re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
 
