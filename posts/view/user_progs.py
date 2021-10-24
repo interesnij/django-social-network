@@ -102,7 +102,7 @@ class PostUserEdit(TemplateView):
         self.post = Post.objects.get(uuid=self.kwargs["uuid"])
         if request.user.pk != self.post.creator.pk:
             raise Http404
-        self.template_name = get_my_template("posts/post_user/edit_post.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("posts/post_user/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PostUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
@@ -217,7 +217,7 @@ class PostUserCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
 
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
         return super(PostUserCommentEdit,self).get(request,*args,**kwargs)
 
@@ -388,7 +388,7 @@ class UserPostsListCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("posts/post_user/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostsListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -418,7 +418,7 @@ class UserPostsListEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("posts/post_user/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

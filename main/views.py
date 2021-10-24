@@ -219,7 +219,7 @@ class NewsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -233,7 +233,7 @@ class FeaturedListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/lists/featured_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+		self.template_name = get_detect_main_template("main/lists/featured_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FeaturedListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

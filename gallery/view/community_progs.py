@@ -135,7 +135,7 @@ class PhotoCommunityCommentEdit(TemplateView):
         from common.templates import get_my_template
 
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -316,7 +316,7 @@ class PhotoListCommunityCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("communities/photos/list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("communities/photos/list/add_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -348,7 +348,7 @@ class PhotoListCommunityEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.community = self.list.community
-        self.template_name = get_community_manage_template("communities/photos/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_community_manage_template("communities/photos/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

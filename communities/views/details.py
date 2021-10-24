@@ -75,7 +75,7 @@ class CommunityDetail(TemplateView):
             self.is_member_open = self.c.is_user_can_see_member(r_user_pk)
             self.is_good_open = self.c.is_user_can_see_good(r_user_pk)
 
-            update_activity(request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+            update_activity(request.user, request.META['HTTP_USER_AGENT'])
         elif request.user.is_anonymous:
             if self.c.type[0] == "_":
                 if self.c.is_suspended():
@@ -128,7 +128,7 @@ class CommunityGallery(TemplateView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community_list(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+            self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -147,7 +147,7 @@ class CommunityPhotoList(TemplateView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            self.template_name = get_template_community_list(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+            self.template_name = get_template_community_list(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
         return super(CommunityPhotoList,self).get(request,*args,**kwargs)
 

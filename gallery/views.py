@@ -28,7 +28,7 @@ class PhotoDetail(TemplateView):
 			else:
 				self.photos = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -39,7 +39,7 @@ class PhotoDetail(TemplateView):
 			else:
 				self.photos = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PhotoDetail,self).get(request,*args,**kwargs)
@@ -72,7 +72,7 @@ class MessagePhotoDetail(TemplateView):
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.photo, "chat/attach/photo/c/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_item(self.photo, "chat/attach/photo/c/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "chat/attach/photo/c/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -80,7 +80,7 @@ class MessagePhotoDetail(TemplateView):
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.photo, "chat/attach/photo/u/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_item(self.photo, "chat/attach/photo/u/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/u/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(MessagePhotoDetail,self).get(request,*args,**kwargs)
@@ -107,12 +107,12 @@ class LoadPhotoList(ListView):
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_list(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_list(self.list, "gallery/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_list(self.list, "gallery/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_list(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_list(self.list, "gallery/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_list(self.list, "gallery/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadPhotoList,self).get(request,*args,**kwargs)
@@ -143,7 +143,7 @@ class PostPhotoDetail(TemplateView):
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -151,7 +151,7 @@ class PostPhotoDetail(TemplateView):
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/post_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.photo, "gallery/u_photo/post_photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(PostPhotoDetail,self).get(request,*args,**kwargs)

@@ -81,7 +81,7 @@ class VideoCommunityCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
         self.comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(VideoCommunityCommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -210,7 +210,7 @@ class CommunityVideoListCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_template_community_video(self.community, "video/community_create/", "create_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoListCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -235,7 +235,7 @@ class CommunityVideoCreate(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+		self.template_name = get_template_community_video(self.community, "video/community_create/", "create_video.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoCreate,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -267,7 +267,7 @@ class CommunityVideoEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("video/community_create/edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_detect_platform_template("video/community_create/edit.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideoEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -305,7 +305,7 @@ class CommunityVideolistEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-        self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

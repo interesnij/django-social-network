@@ -135,7 +135,7 @@ class PhotoUserCommentEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
 
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         return super(PhotoUserCommentEdit,self).get(request,*args,**kwargs)
 
@@ -315,7 +315,7 @@ class PhotoListUserCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("users/photos/list/add_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_settings_template("users/photos/list/add_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -340,7 +340,7 @@ class PhotoListUserEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("users/photos/list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+        self.template_name = get_settings_template("users/photos/list/edit_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(PhotoListUserEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

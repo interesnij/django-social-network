@@ -28,12 +28,12 @@ class LoadGoodList(ListView):
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_list(self.list, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_list(self.list, "goods/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_list(self.list, "goods/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_list(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_list(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_list(self.list, "goods/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadGoodList,self).get(request,*args,**kwargs)
@@ -72,12 +72,12 @@ class LoadGood(TemplateView):
 		if self.good.community:
 			self.community = self.good.community
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_community_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.good, "goods/user/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+				self.template_name = get_template_user_item(self.good, "goods/user/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.good, "goods/user/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadGood,self).get(request,*args,**kwargs)

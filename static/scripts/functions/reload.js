@@ -11,8 +11,10 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-$serf_history = [];
-$request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
+var $serf_history = [];
+var user_info = document.body.querySelector(".userpic");
+var $request_user_id = user_info.getAttribute("data-pk");
+var $user_device = user_info.getAttribute("data-device");
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
@@ -171,36 +173,33 @@ function init_stat_lists() {
   // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
   // статистики элементы;
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6]
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
-    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5];
+    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6];
     $all_stat.push(el_list_stat);
   };
   if ($window_stat.length) {
-    window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6];
+    window_list_stat = $window_stat[0] + " " + $window_stat[1] + " " + $window_stat[2] + " " + $window_stat[3] + " " + $window_stat[4] + " " + $window_stat[5] + " " + $window_stat[6] + " " + $window_stat[7];
     $all_stat.push(window_list_stat);
   };
 
-  if ($main_container.getAttribute('data-page') == "big_page") {
-    // если есть big_page в data-page, значит, это страница пользователя или сообщества
-    // поэтому добавляем начальные данные в список $page_stat
-    $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, window.location.href, document.title];
-  };
+  $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, window.location.href, document.title, $user_device];
 
   fullscreens_container = document.body.querySelector('#fullscreens_container');
   if (fullscreens_container.querySelector('[data-page="list_page"]')) {
     // есть гет атрибут list_page, значит открыт список в окне
     // поэтому добавляем начальные данные в список $list_stat
-    $list_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
+    $list_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id, $user_device]
   };
   if (fullscreens_container.querySelector('[data-page="item_page"]')) {
     // есть гет атрибут item_page, значит открыт элемент в окне
     // поэтому добавляем начальные данные в список $window_stat
-    $window_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id]
+    $window_stat = ['', 0, 0, '', $main_container.getAttribute("data-type"), $request_user_id, $user_device]
   };
   console.log("Обнуляем списки и обновляем основной список стата");
+  console.log($all_stat);
 };
 
 
@@ -242,8 +241,6 @@ var delayedExec = function(after, fn) {
 };
 
 var scrollStopper = delayedExec(3000, function() {
-  console.log($all_stat);
-  console.log($list_stat);
     try {
           list = $main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
@@ -254,7 +251,7 @@ var scrollStopper = delayedExec(3000, function() {
                       if ($main_container.querySelector(".is_paginate") && !$list_stat.length) {
                         pag_list = $main_container.querySelector(".is_paginate");
                         console.log($main_container);
-                        $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id];
+                        $list_stat = [pag_list.getAttribute("data-type"), 0, 0, pag_list.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
                      };
                       get_el_view_time(120);
                     };
@@ -268,7 +265,7 @@ var scrollStopper = delayedExec(3000, function() {
 
                       // добавляем элемент: тип, id, время, раздел, id юзера
 
-                      $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id]);
+                      $new_elements.push([type,pk,0,$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
                       console.log($new_elements);
                     };
                     list[i].classList.add("showed");
@@ -292,10 +289,8 @@ function scrolled(_block) {
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
           $new_elements[i][2] = 3 + $new_time;
-          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4]
+          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5]
           $all_stat.push(el);
-          console.log(el);
-          console.log("Добавлен элемент в общий список со временем", el);
         };
         $new_elements = [];
         $new_time = 0;

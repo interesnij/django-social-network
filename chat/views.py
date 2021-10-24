@@ -7,7 +7,7 @@ class MessagesListView(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_settings_template
 
-		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user
+		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
 		return super(MessagesListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -32,12 +32,12 @@ class ChatDetailView(ListView):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
 		if self.chat.is_private():
-			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_group():
-			self.template_name = get_settings_template("chat/chat/detail/group_chat.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_settings_template("chat/chat/detail/group_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.can_add_members_in_chat = self.chat.is_user_can_add_members(request.user)
 		elif self.chat.is_manager():
-			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 		self.get_messages = self.chat.get_messages_for_recipient(self.pk)
@@ -74,7 +74,7 @@ class ChatFixedMessagesView(ListView):
 		from common.templates import get_settings_template
 		from chat.models import Chat
 
-		self.template_name, self.chat = get_settings_template("chat/chat/fixed_list.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), Chat.objects.get(pk=self.kwargs["pk"])
+		self.template_name, self.chat = get_settings_template("chat/chat/fixed_list.html", request.user, request.META['HTTP_USER_AGENT']), Chat.objects.get(pk=self.kwargs["pk"])
 		return super(ChatFixedMessagesView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -93,7 +93,7 @@ class ChatMembers(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_settings_template
 
-		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatMembers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

@@ -9,7 +9,7 @@ class UserCoberturaYear(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.years, self.template_name = [], PostNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat"))
+		self.views, self.years, self.template_name = [], PostNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/cobertura_year.html", request.user, request.META['HTTP_USER_AGENT'])
 		for i in self.years:
 			view = request.user.get_post_views_for_year(i.year)
 			self.views += [view]
@@ -31,7 +31,7 @@ class UserCoberturaMonth(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.months, self.template_name, pk = [], UserNumbers.objects.dates('created', 'month')[0:10], get_settings_template("users/user_stat/cobertura_month.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.months, self.template_name, pk = [], UserNumbers.objects.dates('created', 'month')[0:10], get_settings_template("users/user_stat/cobertura_month.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.months:
 			view = request.user.get_post_views_for_month(i.month)
 			self.views += [view]
@@ -56,7 +56,7 @@ class UserCoberturaWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 
-		self.range, self.views, self.weeks, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'week')[0:10], get_settings_template("users/user_stat/cobertura_week.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.range, self.views, self.weeks, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'week')[0:10], get_settings_template("users/user_stat/cobertura_week.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.weeks:
 			view = request.user.get_post_views_for_week([i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6])
 			i6 = i + datetime.timedelta(days=7)
@@ -81,7 +81,7 @@ class UserCoberturaDay(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.days, self.template_name, pk = [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/cobertura_day.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.days, self.template_name, pk = [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/cobertura_day.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.days:
 			view = request.user.get_post_views_for_day(i.day)
 			self.views += [view]
@@ -103,7 +103,7 @@ class UserTrafficYear(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.un_views, self.years, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/traffic_year.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.un_views, self.years, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'year')[0:10], get_settings_template("users/user_stat/traffic_year.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.years:
 			view = UserNumbers.objects.filter(created__year=i.year, target=pk).count()
 			self.views += [view]
@@ -130,7 +130,7 @@ class UserTrafficMonth(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.un_views, self.months, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'month')[0:10], get_settings_template("users/user_stat/traffic_month.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.un_views, self.months, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'month')[0:10], get_settings_template("users/user_stat/traffic_month.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.months:
 			view = UserNumbers.objects.filter(created__month=i.month, target=pk).count()
 			self.views += [view]
@@ -159,7 +159,7 @@ class UserTrafficWeek(TemplateView):
 	def get(self,request,*args,**kwargs):
 		import datetime
 
-		self.views, self.range, self.un_views, self.weeks, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'week')[0:10], get_settings_template("users/user_stat/traffic_week.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.range, self.un_views, self.weeks, self.template_name, pk = [], [], [], UserNumbers.objects.dates('created', 'week')[0:10], get_settings_template("users/user_stat/traffic_week.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.weeks:
 			days = [i.day, i.day + 1, i.day + 2, i.day + 3, i.day + 4, i.day + 5, i.day + 6]
 			view = UserNumbers.objects.filter(created__day__in=days, target=pk).count()
@@ -190,7 +190,7 @@ class UserTrafficDay(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.views, self.un_views, self.days, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/traffic_day.html", request.user, request.META['HTTP_USER_AGENT'], request.GET.get("stat")), request.user.pk
+		self.views, self.un_views, self.days, self.template_name, pk = [], [], UserNumbers.objects.dates('created', 'day')[0:10], get_settings_template("users/user_stat/traffic_day.html", request.user, request.META['HTTP_USER_AGENT']), request.user.pk
 		for i in self.days:
 			view = UserNumbers.objects.filter(created__day=i.day, target=pk).count()
 			self.views += [view]
