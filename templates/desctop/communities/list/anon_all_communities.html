@@ -1,6 +1,12 @@
 {% extends "base_anon.html" %}
 {% load liked_user %}
 {% block title %}Все сообщества{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/all-communities/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="трезвый.рус - все сообщества" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/static/images/meta.jpg"/>
+{% endblock %}
 {% block content %}
 
 <div class="row main-container">

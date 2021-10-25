@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load liked_user %}
-{% block title %}{{ community.name }} | Товары - {{ list.name }}{% endblock %}
+{% block title %}Товары сообщества {{ community.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/goods/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Товары сообщества {{ community.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="main-container mt-3 pk_saver" data-pk="{{ community.pk }}">

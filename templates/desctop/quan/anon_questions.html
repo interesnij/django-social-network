@@ -1,5 +1,11 @@
 {% extends "base_anon.html" %}
 {% block title %}Вопросы - {{ category.name_ru }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/quan/{{ category.name_ru }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Вопросы - {{ category.name_ru }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/static/images/meta.jpg"/>
+{% endblock %}
 {% block content %}
 
 <div class="container mt-4 main-container">

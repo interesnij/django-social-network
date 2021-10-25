@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
+{% block title %}Аудиозаписи сообщества {{ community.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/music/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Аудиозаписи сообщества {{ community.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% load get_key %}
 {% block content %}
 

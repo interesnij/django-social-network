@@ -1,5 +1,11 @@
 {% extends "base_anon_mobile.html" %}
 {% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/photo_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Фотографии сообщества {{ community.name }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="container main-container mt-3 pk_saver community_gallery_container" data-pk="{{ community.pk }}">
