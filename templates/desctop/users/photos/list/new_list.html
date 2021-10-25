@@ -2,7 +2,7 @@
 {% block title %}{{ list.name }} - мой альбом{% endblock %}
 {% block content %}
 
-<div class="container-fluid mt-3 pk_saver" data-pk="{{ user.pk }}">
+<div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_photo_list">
   <span class="load_block">
   <div class="media mt-3" style="padding-left: 7px;">
     <form id="add_photos" data-uuid="{{ list.uuid }}">

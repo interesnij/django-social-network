@@ -2,7 +2,7 @@
 {% block title %}Сообщения{% endblock %}
 {% load message %}
 {% block content %}
-<div class="container chat_list_container pk_saver mt-3" data-pk="{{ request.user.pk }}">
+<div class="container chat_list_container main-container pk_saver mt-3" data-pk="{{ request.user.pk }}" data-type="page_chat_list">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск сообщений">
             <div class="input-group-append">

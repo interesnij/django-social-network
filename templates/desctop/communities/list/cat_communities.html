@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load liked_user %}
-{% block title %}Сообщества категории "{{ category.name}}"{% endblock %}
+{% block title %}Сообщества категории "{{ category.name }}"{% endblock %}
 {% block meta %}
 <meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/all-communities/" />
 <meta property="og:type" content="website" />
@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
 
-<div class="row main-container">
+<div class="row main-container"data-type="community_cat">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск по категории" aria-label="Recipient's username">
