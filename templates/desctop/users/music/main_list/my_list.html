@@ -1,6 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Моя музыка - {{ list.name }} {% endblock %}
+{% block title %}Моя музыка{% endblock %}
 {% load get_key %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/music/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Музыка {{ user.get_full_name_genitive }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ user.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="main-container pk_saver mt-3" data-pk="{{ user.pk }}">

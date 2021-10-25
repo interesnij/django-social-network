@@ -1,6 +1,12 @@
 {% extends "base_anon_mobile.html" %}
-{% block title %}{{ community.name }} - {{ list.name }}{% endblock %}
+{% block title %}Аудиозаписи сообщества {{ community.name }} - {{ list.name }}{% endblock %}
 {% load get_key %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/music_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Аудиозаписи сообщества {{ community.name }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="container main-container pk_saver mt-3" data-pk="{{ community.pk }}">

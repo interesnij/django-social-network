@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load get_key %}
 {% block title %}Товары {{ user.get_full_name_genitive }} - {{ list.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/good_list/{{ list.uuid }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Товары {{ user.get_full_name_genitive }} - {{ list.name }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ user.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}">

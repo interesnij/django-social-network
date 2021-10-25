@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ community.name }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_link }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ community.name }} - трезвый.рус" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 {% if community.cover %}

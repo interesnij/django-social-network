@@ -1,5 +1,11 @@
 {% extends "base_anon_mobile.html" %}
-{% block title %}{{ list.name }} : Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
+{% block title %}Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
+{% block meta %}
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/video/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Видеоролики {{ user.get_full_name_genitive }}" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ user.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="main-container container mt-3 pk_saver" data-pk="{{ user.pk }}">

@@ -1,14 +1,14 @@
 {% extends "base_mobile.html" %}
 {% block title %}{{ user.get_full_name }}{% endblock %}
 {% block meta %}
-<meta property="og:url" content="dvizhenie.tv" />
+<meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/{{ user.get_link }}" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="" />
-<meta property="og:image" content="{% if user.profile.avatar %}http://xn--b1afgj5al1e.xn--p1acf/{{ user.profile.avatar }}{% else %}/static/images/user.png{% endif %}"/>
+<meta property="og:title" content="{{ user.get_full_name }} - трезвый.рус" />
+<meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf/{{ user.get_b_avatar }}"/>
 {% endblock %}
 {% block content %}
 
-<div class="container main-container pk_saver mt-3 user_container" data-pk="{{ user.pk }}">
+<div class="container main-container pk_saver mt-3" data-pk="{{ user.pk }}" data-type="user">
   <div class="card mb-3 avatar_figure" style="padding:10px">
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
       {% if user.s_avatar %}

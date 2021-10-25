@@ -1,5 +1,11 @@
-{% extends "base_mobile.html" %}
+{% extends "base_anon_mobile.html" %}
 {% block title %}"{{ community.name }}" - подписчики сообщества{% endblock %}
+{% block meta %}
+<meta property="og:url" content="http://xn--b1afgj5al1e.xn--p1acf/members/{{ community.get_link }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ community.name }} - подписчики сообщества" />
+<meta property="og:image" content="http://xn--b1afgj5al1e.xn--p1acf/{{ community.get_b_avatar }}"/>
+{% endblock %}
 {% block content %}
 
 <div class="container main-container mt-3">
@@ -28,7 +34,7 @@
                     {% if object_list %}
                     {% for object in object_list %}
                     <li class="list-group-item border-top">
-                        {% include 'mobile/generic/user/card_send_message.html' %}
+                        {% include 'mobile/generic/user/card_go_user.html' %}
                     </li>
                     {% endfor %}
 
