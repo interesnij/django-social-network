@@ -8,8 +8,8 @@
 {% endblock %}
 {% block content %}
 
-<div class="container main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_photo_list">
-  <span class="load_block">
+<div class="container main-container mt-3" data-pk="{{ list.pk }}" data-type="user_photo_list">
+  <span class="load_block pk_saver" data-pk="{{ user.pk }}">
   <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
       {{ list.name }} ({{ list.count_items }})

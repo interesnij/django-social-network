@@ -9,14 +9,14 @@
 {% endblock %}
 {% block content %}
 
-<div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_docs_list">
+<div class="main-container mt-3" data-pk="{{ list.pk }}" data-type="user_docs_list">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск документов">
             <div class="input-group-append">
               <button class="btn border" type="button">Искать</button>
             </div>
           </div>
-          <span class="load_block">
+          <span class="load_block pk_saver" data-pk="{{ user.pk }}">
 
           <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
             <h5 class="mt-1">
