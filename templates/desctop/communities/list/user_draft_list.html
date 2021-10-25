@@ -2,7 +2,7 @@
 {% block title %}{{ community.name }} | Мои предложенные записи{% endblock %}
 {% block content %}
 
-<div class="main-container row pk_saver" data-pk="{{ request.user.pk }}">
+<div class="main-container row pk_saver" data-pk="{{ community.pk }}" data-type="community_user_draft_list">
     <div class="col-md-8 mt-3">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск записей">

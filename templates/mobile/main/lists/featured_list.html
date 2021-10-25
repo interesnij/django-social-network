@@ -2,7 +2,7 @@
 {% block title %}Рекомендации {% endblock %}
 {% block content %}
 
-<div class="main-container container mt-3 feed_featured_container">
+<div class="main-container container mt-3" data-type="page_featured">
   {% include 'mobile/main/lists/menu.html' %}
           {% if object_list %}
               {% for object in object_list %}

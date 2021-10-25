@@ -2,7 +2,7 @@
 {% block title %}{{ user.get_full_name }} | Общие друзья{% endblock %}
 {% block content %}
 
-<div class="container main-container mt-3">
+<div class="container main-container mt-3" data-type="user_common_friends" data-pk="{{ user.pk }}">
     <div class="card-header p-0">
       <div class="row no-gutters">
         <div style="flex: 0 0 20%;max-width:20%;padding:5px;">
