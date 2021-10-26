@@ -143,7 +143,31 @@ var delayedExec = function(after, fn) {
         timer = setTimeout(fn, after);
     };
 };
+var window_scrollStopper = delayedExec(3000, function() {
+  console.log("$new_window_elements")
+    try {
+      fullscreen = document.body.querySelector("#fullscreen_loader");
+      fullscreen_list = fullscreen.querySelectorAll('.pag');
+          for (var i = 0; i < fullscreen_list.length; i++) {
+              if (!fullscreen_list[i].classList.contains("showed")) {
+                  inViewport = elementInViewport(fullscreen_list[i]);
+                  if (inViewport) {
+                    if (i == 1) {
+                      get_el_view_time(120);
+                    };
 
+                    pk = fullscreen_list[i].getAttribute('data-pk');
+                    type = fullscreen_list[i].getAttribute('data-type');
+                    if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+                      $new_window_elements.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
+                      console.log($new_window_elements);
+                    };
+                    fullscreen_list[i].classList.add("showed");
+                  }
+              }
+          };
+    } catch {null};
+});
 
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
