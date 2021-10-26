@@ -39,6 +39,8 @@ function get_window_page_view_time(count, time_total) {
     $new_window_elements[2] += time_total
   };
   while (i < count) {
+    console.log(i);
+    console.log(count);
     setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1;
     if (i > 30) {
