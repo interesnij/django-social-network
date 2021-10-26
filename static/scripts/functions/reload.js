@@ -24,7 +24,7 @@ function create_window_stat_list(block) {
     item = block.querySelector(".card");
     list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
-  $new_window_elements.push(list)
+  $new_window_elements = list
   console.log($new_window_elements)
 };
 function get_window_page_view_time(count) {
