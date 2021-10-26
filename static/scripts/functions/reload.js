@@ -44,7 +44,7 @@ function close_fullscreen() {
 function view_timer(count, field) {
   var i = 0;
   setInterval(() => {
-    if (this.i == count) {
+    if (i == 10) {
       document.body.querySelector(".card_fullscreen").classList.add("count_done");
       return;
     }
