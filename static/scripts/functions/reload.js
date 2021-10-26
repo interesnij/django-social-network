@@ -157,7 +157,7 @@ function append_items_in_stat_list(block, list) {
 
             pk = _list[i].getAttribute('data-pk');
             type = _list[i].getAttribute('data-type');
-            if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+            if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
               list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
               console.log(list);
             };
