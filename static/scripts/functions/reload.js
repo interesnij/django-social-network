@@ -43,9 +43,9 @@ function close_fullscreen() {
 };
 
 function view_timer(count, field) {
-  if (count == 0) {
+  if (field == null) {
     return
-  }
+  };
   var i = 0;
   setInterval(() => {
     if (i == count) {
