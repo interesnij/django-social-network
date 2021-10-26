@@ -34,14 +34,11 @@ function create_window_stat_list(block) {
 
 function get_window_page_view_time(count) {
   console.log("Время последнего окна работает");
-  a = 0;
-  for (var i = 0; i < count; i++){
-    setTimeout(() => { $new_window_elements[2] += 1; }, 1000);
-    console.log($new_window_elements[2]);
-    if (i == 199) {
-      console.log("фсе");
-    }
-  };
+  setTimeout(() => { $new_window_elements[2] += 1; }, 1000);
+  console.log($new_window_elements[2]);
+  if ($new_window_elements[2] == 20) {
+    console.log("фсе");
+  }
 };
 
 function create_fullscreen(url, type_class) {
