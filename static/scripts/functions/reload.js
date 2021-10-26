@@ -31,7 +31,7 @@ function get_window_page_view_time(count) {
   console.log("Время последнего окна работает");
   i = 0;
   if (i < count) {
-    setInterval(() => $new_window_elements[$new_window_elements.length - 1][2] += 1, 1000);
+    setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1
   };
 };
