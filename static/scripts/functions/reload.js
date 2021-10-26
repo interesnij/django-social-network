@@ -103,6 +103,7 @@ function create_fullscreen(url, type_class) {
             if ($new_window_elements.length) {
                 el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
                 $all_stat.push(el);
+                console.log($all_stat);
               $new_window_elements = [];
               $new_time = 0;
             };
@@ -244,7 +245,7 @@ function init_stat_lists() {
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, window.location.href, document.title, $user_device];
+  $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, "prev_page_type", "prev_page_pk", $user_device];
   $list_stat = [];
 
   console.log("Обнуляем списки и обновляем основной список стата");
