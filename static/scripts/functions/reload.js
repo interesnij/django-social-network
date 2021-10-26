@@ -49,7 +49,9 @@ function view_timer(count, field) {
       if (i == count) {
         document.body.querySelector(".card_fullscreen").classList.add("count_done");
         return;
-      }
+      } else if (count == 0) {
+        return;
+      };
     console.log(i++);
     field += 1;
     }, 1000);
