@@ -32,7 +32,7 @@ function create_window_stat_list(block) {
   console.log($new_window_elements)
 };
 
-function get_window_page_view_time(count, time_total) {
+function get_window_page_view_time(count) {
   console.log("Время последнего окна работает");
   for (var i = 0; i < count; i++){
     setInterval(() => ($new_window_elements[2] += 1, console.log(i)), 1000);
@@ -108,7 +108,7 @@ function create_fullscreen(url, type_class) {
               $loader.parentElement.classList.remove("count_done");
               _page_time = false;
               time_total += 120;
-              get_window_page_view_time(120, time_total);
+              get_window_page_view_time(120);
               _page_time = true;
             };
             if ($new_window_elements.length) {
