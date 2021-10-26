@@ -146,7 +146,7 @@ var delayedExec = function(after, fn) {
 var window_scrollStopper = delayedExec(3000, function() {
   console.log("$new_window_elements")
     //try {
-      fullscreen = document.body.querySelector("#fullscreen_loader");
+      fullscreen = document.body.querySelector(".card_fullscreen"); 
       fullscreen_list = fullscreen.querySelectorAll('.pag');
           for (var i = 0; i < fullscreen_list.length; i++) {
               if (!fullscreen_list[i].classList.contains("showed")) {
