@@ -36,7 +36,8 @@ function get_window_page_view_time(count) {
   i = 0;
   if (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
-    i += 1
+    i += 1;
+    console.log(i)
   } else {console.log("фсе")};
 };
 
