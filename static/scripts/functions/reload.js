@@ -36,9 +36,11 @@ function get_window_page_view_time(count) {
   console.log("Время последнего окна работает");
   a = 0;
   for (var i = 0; i < count; i++){
-    $new_window_elements[2] += 1;
-    sleep(1000);
+    setTimeout(() => { $new_window_elements[2] += 1; }, 1000);
     console.log($new_window_elements[2]);
+    if (i == 199) {
+      console.log("фсе");
+    }
   };
 };
 
