@@ -40,10 +40,12 @@ function get_window_page_view_time(count, time_total) {
   };
   while (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
-    i += 1
+    i += 1;
+    if (i == 119) {
+      block = container.querySelector(".card_fullscreen");
+      block.classList.add("count_done");
+    }
   };
-  block = container.querySelector(".card_fullscreen");
-  block.classList.add("count_done");
 };
 
 function create_fullscreen(url, type_class) {
@@ -117,6 +119,7 @@ function create_fullscreen(url, type_class) {
               _page_time = false;
               time_total += 120;
               get_window_page_view_time(120, time_total);
+              _page_time = true;
             };
             if ($new_window_elements.length) {
                 el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
