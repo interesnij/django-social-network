@@ -98,13 +98,11 @@ function create_fullscreen(url, type_class) {
           };
           _page_time = true;
 
-          $loader.onscroll = function() {
+          $loader.onscrsoll = function() {
             window_scrollStopper();
             if ($new_window_elements.length) {
-              for (var i = 0; i < $new_window_elements.length; i++){
-                el = $new_window_elements[i][0] + " " + $new_window_elements[i][1] + " " + $new_window_elements[i][2] + " " + $new_window_elements[i][3] + " " + $new_window_elements[i][4] + " " + $new_window_elements[i][5] + " " + $new_window_elements[i][6]
+                el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
                 $all_stat.push(el);
-              };
               $new_window_elements = [];
               $new_time = 0;
             };
