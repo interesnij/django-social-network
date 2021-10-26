@@ -99,7 +99,6 @@ class LoadPost(TemplateView):
 			c["next"] = self.posts.filter(order=self.post.order + 1)[0]
 		if self.posts.filter(order=self.post.order - 1).exists():
 			c["prev"] = self.posts.filter(order=self.post.order - 1)[0]
-		c["owner_wall"] = self.owner_wall
 		return c
 
 
