@@ -37,7 +37,7 @@ function get_window_page_view_time(count) {
   if (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1
-  } else {console.log("фсе");};
+  } else {console.log("фсе")};
 };
 
 function create_fullscreen(url, type_class) {
