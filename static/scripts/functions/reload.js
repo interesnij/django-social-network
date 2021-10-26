@@ -50,6 +50,9 @@ function close_fullscreen() {
 };
 
 function view_timer(count, list) {
+    if (0 == count && !document.body.querySelector(".card_fullscreen")) {
+      return
+    };
     var i = 0;
     setInterval(() => {
       if (i == count && document.body.querySelector(".card_fullscreen")) {
@@ -57,7 +60,6 @@ function view_timer(count, list) {
         return;
       };
     list[2] += 1;
-    console.log(list);
     }, 1000);
 };
 
