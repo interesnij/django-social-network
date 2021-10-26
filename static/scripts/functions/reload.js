@@ -34,8 +34,10 @@ function create_window_stat_list(block) {
 
 function get_window_page_view_time(count) {
   console.log("Время последнего окна работает");
+  a = 0;
   for (var i = 0; i < count; i++){
-    setInterval(() => ($new_window_elements[2] += 1, console.log(count[i])), 1000);
+    a += 1;
+    setInterval(() => ($new_window_elements[2] += 1, console.log(a)), 1000);
   };
 };
 
