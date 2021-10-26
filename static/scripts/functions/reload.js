@@ -22,17 +22,17 @@ function create_window_stat_list(block) {
     push_window_stat_list()
   };
   if (block.querySelector(".is_block_paginate")) {
-    pag_list = block.querySelector(".is_stat_list");
-    $new_window_list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+    item = block.querySelector(".is_stat_list");
+    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   } else {
     item = block.querySelector(".card");
-    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
+    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
   console.log($new_window_list)
 };
 
 function push_window_stat_list() {
-  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6];
+  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6] + " " + $new_window_list[7];
   $all_stat.push(el_list_stat);
   $new_window_list = [];
 };
@@ -50,9 +50,6 @@ function close_fullscreen() {
 };
 
 function view_timer(count, list) {
-    if (0 == count && !document.body.querySelector(".card_fullscreen")) {
-      return
-    };
     var i = 0;
     setInterval(() => {
       if (i == count && document.body.querySelector(".card_fullscreen")) {
@@ -275,7 +272,7 @@ function init_stat_lists() {
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
-    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6];
+    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6] + " " + $list_stat[7];
     $all_stat.push(el_list_stat);
   };
 
@@ -336,13 +333,14 @@ var scrollStopper = delayedExec(3000, function() {
                         console.log($main_container);
                         // заполняем список на странице (не в окне):
                         // 1. тип листа ("post_list")
-                        // 2. высота в метрах (0)
-                        // 3. время просмотра в секундах (0)
-                        // 4. pk владельца/группы стены (из $main_container)
-                        // 5. тип страницы, где он расположен (из $main_container)
-                        // 6. pk текущего пользователя
-                        // 7. девайс текущего пользователя
-                        $list_stat = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+                        // 2. id листа
+                        // 3. высота в метрах (0)
+                        // 4. время просмотра в секундах (0)
+                        // 5. pk владельца/группы стены (из $main_container)
+                        // 6. тип страницы, где он расположен (из $main_container)
+                        // 7. pk текущего пользователя
+                        // 8. девайс текущего пользователя
+                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
                      };
                       get_el_view_time(120);
                     };
@@ -362,7 +360,7 @@ var scrollStopper = delayedExec(3000, function() {
                       // 6. pk текущего пользователя
                       // 7. девайс текущего пользователя
 
-                      $new_elements.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
+                      $new_elements.push([type,pk,0,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
                       console.log($new_elements);
                     };
                     list[i].classList.add("showed");
@@ -388,7 +386,7 @@ function scrolled(_block) {
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
           $new_elements[i][2] = 3 + $new_time;
-          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5]
+          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5] + " " + $new_elements[i][6]
           $all_stat.push(el);
         };
         $new_elements = [];
