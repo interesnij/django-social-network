@@ -21,13 +21,8 @@ function create_window_stat_list(block) {
   if ($new_window_list.length) {
     push_window_stat_list()
   };
-  if (block.querySelector(".is_block_paginate")) {
-    item = block.querySelector(".is_stat_list");
-    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
-  } else {
-    item = block.querySelector(".card");
-    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
-  };
+  item = block.querySelector(".is_stat_list");
+  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   console.log($new_window_list)
 };
 
