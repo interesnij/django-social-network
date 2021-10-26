@@ -24,7 +24,7 @@
     </form>
   </div>
   <div class="container-fluid mt-1 pk_saver">
-    <div class="row is_block_paginate no-gutters drag_container" data-uuid="{{ list.uuid }}" id="u_list_photos_container"  data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/">
+    <div class="row is_block_paginate no-gutters drag_container" data-type="user_photo_list" data-pk="{{ list.creator.pk }}">
       {% if object_list %}
       {% for object in object_list %}
         <div class="col-md-6 p-1 pointer hide_shower col-lg-4 detail_photo pag" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
