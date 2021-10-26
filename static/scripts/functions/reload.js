@@ -44,7 +44,6 @@ function get_window_page_view_time(count, time_total) {
   };
   block = container.querySelector(".card_fullscreen");
   block.classList.add("count_done");
-  };
 };
 
 function create_fullscreen(url, type_class) {
