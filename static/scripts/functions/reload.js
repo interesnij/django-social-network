@@ -39,12 +39,13 @@ function close_fullscreen() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
   window.history.replaceState(null, null, window.location.pathname);
+  view_timer(0, null)
 };
 
 function view_timer(count, field) {
   var i = 0;
   setInterval(() => {
-    if (i == 10) {
+    if (i == count) {
       document.body.querySelector(".card_fullscreen").classList.add("count_done");
       return;
     }
