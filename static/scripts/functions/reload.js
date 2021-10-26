@@ -43,19 +43,17 @@ function close_fullscreen() {
 };
 
 function view_timer(count, field) {
-  if (count == 0) {
-    console.log("0000000");
-    return
-  };
-  var i = 0;
-  setInterval(() => {
-    if (i == count) {
-      document.body.querySelector(".card_fullscreen").classList.add("count_done");
-      return;
-    }
-  console.log(i++);
-  field += 1;
-  }, 1000);
+  if (count > 0) {
+    var i = 0;
+    setInterval(() => {
+      if (i == count) {
+        document.body.querySelector(".card_fullscreen").classList.add("count_done");
+        return;
+      }
+    console.log(i++);
+    field += 1;
+    }, 1000);
+  }
 };
 
 function create_fullscreen(url, type_class) {
