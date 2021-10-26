@@ -41,7 +41,7 @@ function get_window_page_view_time(count, time_total) {
   while (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1;
-    if (i > 198) {
+    if (i > 10) {
       block = container.querySelector(".card_fullscreen");
       block.classList.add("count_done");
     }
