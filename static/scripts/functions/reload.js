@@ -99,7 +99,6 @@ function create_fullscreen(url, type_class) {
           };
 
           $loader.onscroll = function() {
-            console.log("//////");
             window_scrollStopper();
             if ($new_window_elements.length) {
                 el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
@@ -143,29 +142,32 @@ var delayedExec = function(after, fn) {
         timer = setTimeout(fn, after);
     };
 };
-var window_scrollStopper = delayedExec(3000, function() {
-  console.log("$new_window_elements")
-    //try {
-      fullscreen = document.body.querySelector(".card_fullscreen");
-      fullscreen_list = fullscreen.querySelectorAll('.pag');
-          for (var i = 0; i < fullscreen_list.length; i++) {
-              if (!fullscreen_list[i].classList.contains("showed")) {
-                  inViewport = elementInViewport(fullscreen_list[i]);
-                  if (inViewport) {
-                    if (i == 1) {
-                      get_el_view_time(120);
-                    };
 
-                    pk = fullscreen_list[i].getAttribute('data-pk');
-                    type = fullscreen_list[i].getAttribute('data-type');
-                    if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
-                      $new_window_elements.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
-                      console.log($new_window_elements);
-                    };
-                    fullscreen_list[i].classList.add("showed");
-                  }
-              }
-          };
+function append_items_in_stat_list(block, list) {
+  _list = block.querySelectorAll('.pag');
+  for (var i = 0; i < _list.length; i++) {
+      if (!_list[i].classList.contains("showed")) {
+          inViewport = elementInViewport(_list[i]);
+          if (inViewport) {
+            if (i == 1) {
+              get_el_view_time(120);
+            };
+
+            pk = _list[i].getAttribute('data-pk');
+            type = _list[i].getAttribute('data-type');
+            if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
+              console.log(list);
+            };
+            _list[i].classList.add("showed");
+          }
+      }
+  };
+};
+
+var window_scrollStopper = delayedExec(3000, function() {
+    //try {
+      append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_window_elements)
   //  } catch {null};
 });
 
