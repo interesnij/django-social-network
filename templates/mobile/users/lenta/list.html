@@ -51,7 +51,7 @@
         {% endif %}
         <span></span>
 
-        <span class="post_stream is_paginate is_stat_list" data-type="post_list" data-pk="{{ list.pk }}">
+        <span class="post_stream is_paginate is_stat_list" data-type="user_post_list" data-pk="{{ list.pk }}">
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/post.html' %}
           {% endfor %}
