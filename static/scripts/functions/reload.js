@@ -21,6 +21,8 @@ function create_window_stat_list(block) {
   if ($new_window_list.length) {
     el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6];
     $all_stat.push(el_list_stat);
+    console.log(el_list_stat);
+    console.log($all_stat);
     $new_window_list = [];
   };
   if (block.querySelector(".is_paginate")) {
@@ -171,9 +173,6 @@ var delayedExec = function(after, fn) {
 };
 
 function append_items_in_stat_list(block, list) {
-  pag_list = block.querySelector(".is_stat_list");
-  $new_window_list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
-
   _list = block.querySelectorAll('.pag');
   for (var i = 0; i < _list.length; i++) {
       if (!_list[i].classList.contains("showed")) {
