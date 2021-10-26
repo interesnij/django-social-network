@@ -33,14 +33,20 @@ function create_window_stat_list(block) {
 };
 
 function plus_count(obj) {
-  setInterval(() => obj += 1, 1000);
+  var i=120;
+function coundown(){
+   setInterval(() => {
+  if (this.i == 120) {
+    return;
+  }
+  console.log(this.i++);
+  $new_window_elements[2] += 1;
+}, 1000);
 }
+};
 
 function get_window_page_view_time(count) {
-  i = 0;
-  for (var i = 0; i < count; i++){
-    setInterval(() => plus_count($new_window_elements[2]), 1000);
-    console.log(i)
+    plus_count($new_window_elements[2]);
   }
 };
 
