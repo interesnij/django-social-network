@@ -42,7 +42,6 @@ function close_fullscreen() {
     create_window_stat_list(container.querySelector(".card_fullscreen"));
   };
   window.history.replaceState(null, null, window.location.pathname);
-  view_timer(0, null);
 };
 
 function view_timer(count, field) {
