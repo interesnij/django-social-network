@@ -39,10 +39,13 @@ function close_fullscreen() {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   };
   window.history.replaceState(null, null, window.location.pathname);
-  view_timer(0, null)
+  view_timer(null, null)
 };
 
 function view_timer(count, field) {
+  if (!count) {
+    return
+  }
   var i = 0;
   setInterval(() => {
     if (i == count) {
