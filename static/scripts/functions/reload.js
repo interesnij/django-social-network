@@ -25,6 +25,7 @@ function create_window_stat_list(block) {
     list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
   $new_window_elements.push(list)
+  console.log($new_window_elements)
 };
 
 function create_fullscreen(url, type_class) {
@@ -91,7 +92,6 @@ function create_fullscreen(url, type_class) {
 
           $loader.onscroll = function() {
             window_scrollStopper();
-
             if ($new_window_elements.length) {
               for (var i = 0; i < $new_window_elements.length; i++){
                 el = $new_window_elements[i][0] + " " + $new_window_elements[i][1] + " " + $new_window_elements[i][2] + " " + $new_window_elements[i][3] + " " + $new_window_elements[i][4] + " " + $new_window_elements[i][5] + " " + $new_window_elements[i][6]
