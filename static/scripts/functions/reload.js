@@ -110,11 +110,6 @@ function create_fullscreen(url, type_class) {
 
           get_document_opacity_0();
           create_window_stat_list($loader);
-          time_total = 0
-          if (!_page_time) {
-            get_window_page_view_time(120, time_total);
-            _page_time = true;
-          };
           append_items_in_stat_list($loader, $new_elements)
 
           $loader.onscroll = function() {
@@ -154,7 +149,12 @@ function create_fullscreen(url, type_class) {
                       link_3.send();
                   }
               };
-            }
+            };
+            time_total = 0
+            if (!_page_time) {
+              get_window_page_view_time(120, time_total);
+              _page_time = true;
+            };
           }
       }
   };
