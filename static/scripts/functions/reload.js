@@ -350,8 +350,10 @@ function scrolled(_block) {
       // программа отслеживает окончание прокрутки
       scrollStopper();
       // программа считает секунды для внесения в стат страницы и списка, если он есть.
-      get_page_view_time(120);
-      page_time = true;
+      if (!page_time) {
+        get_page_view_time(120);
+        page_time = true;
+      };
 
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
