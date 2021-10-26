@@ -33,12 +33,11 @@ function create_window_stat_list(block) {
 };
 
 function get_window_page_view_time(count) {
-  console.log("Время последнего окна работает");
-  setTimeout(() => { $new_window_elements[2] += 1; }, 1000);
-  console.log($new_window_elements[2]);
-  if ($new_window_elements[2] == 20) {
-    console.log("фсе");
-  }
+  i = 0;
+  if (i < count) {
+    setInterval(() => $new_window_elements[2] += 1, 1000);
+    i += 1
+  } else {console.log("фсе");};
 };
 
 function create_fullscreen(url, type_class) {
