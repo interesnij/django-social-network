@@ -31,22 +31,25 @@ function create_window_stat_list(block) {
   };
   console.log($new_window_elements)
 };
+
+function second_timer(i) {
+  console.log(i);
+  console.log(count);
+  $new_window_elements[2] += 1;
+  if (i > 30) {
+    block = container.querySelector(".card_fullscreen");
+    block.classList.add("count_done");
+  };
+}
 function get_window_page_view_time(count, time_total) {
   console.log("Время последнего окна работает");
   i = 0;
-  console.log("time_total", time_total);
   if (time_total > 0) {
     $new_window_elements[2] += time_total
   };
+  console.log("time_total", time_total);
   while (i < count) {
-    console.log(i);
-    console.log(count);
-    setInterval(() => $new_window_elements[2] += 1, 1000);
-    i += 1;
-    if (i > 30) {
-      block = container.querySelector(".card_fullscreen");
-      block.classList.add("count_done");
-    }
+    setInterval(() => second_timer(i), 1000);
   };
 };
 
