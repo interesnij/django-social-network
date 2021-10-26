@@ -92,13 +92,13 @@ function create_fullscreen(url, type_class) {
           }
 
           get_document_opacity_0();
-          //create_window_stat_list($loader);
-        //  if (!_page_time) {
-        //    get_window_page_view_time(120);
-        //    _page_time = true;
-        //  };
+          create_window_stat_list($loader);
+          if (!_page_time) {
+            get_window_page_view_time(120);
+            _page_time = true;
+          };
 
-          $loader.onscrsoll = function() {
+          $loader.onscroll = function() {
             console.log("//////");
             window_scrollStopper();
             if ($new_window_elements.length) {
