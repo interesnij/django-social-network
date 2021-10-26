@@ -45,10 +45,21 @@ function coundown(){
 }
 };
 
+function view_timer(count, field) {
+  setInterval(() => {
+    if (this.i == count) {
+      return;
+    }
+  console.log(this.i++);
+  field += 1;
+  }, 1000);
+};
+
 function get_window_page_view_time(count) {
   var i=120;
    setInterval(() => {
   if (this.i == 120) {
+    document.body.querySelector(".card_fullscreen").classList.add("count_done");
     return;
   }
   console.log(this.i++);
@@ -115,7 +126,7 @@ function create_fullscreen(url, type_class) {
           create_window_stat_list($loader);
           append_items_in_stat_list($loader, $new_elements);
           if (!_page_time) {
-            get_window_page_view_time(120);
+            view_timer(120, $new_window_elements[2])
             _page_time = true;
           };
 
@@ -124,7 +135,7 @@ function create_fullscreen(url, type_class) {
             if ($loader.parentElement.classList.contains("count_done")) {
               $loader.parentElement.classList.remove("count_done");
               _page_time = false;
-              get_window_page_view_time(120);
+              view_timer(120, $new_window_elements[2])
               _page_time = true;
             };
             if ($new_window_elements.length) {
