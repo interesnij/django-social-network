@@ -21,7 +21,7 @@ function create_window_stat_list(block) {
   if ($new_window_list.length) {
     push_window_stat_list()
   };
-  if (block.querySelector(".is_paginate")) {
+  if (block.querySelector(".is_block_paginate")) {
     pag_list = block.querySelector(".is_stat_list");
     $new_window_list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
   } else {
