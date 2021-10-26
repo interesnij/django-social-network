@@ -117,6 +117,13 @@ function create_fullscreen(url, type_class) {
   link.send();
 };
 
+var delayedExec = function(after, fn) {
+    var timer;
+    return function() {
+        timer && clearTimeout(timer);
+        timer = setTimeout(fn, after);
+    };
+};
 var window_scrollStopper = delayedExec(3000, function() {
     try {
       fullscreen = document.body.querySelector("#fullscreen_loader");
@@ -285,14 +292,6 @@ function get_el_view_time(count) {
 
 window.onbeforeunload = function() {
   console.log($all_stat);
-};
-
-var delayedExec = function(after, fn) {
-    var timer;
-    return function() {
-        timer && clearTimeout(timer);
-        timer = setTimeout(fn, after);
-    };
 };
 
 var scrollStopper = delayedExec(3000, function() {
