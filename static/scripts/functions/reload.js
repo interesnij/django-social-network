@@ -38,7 +38,7 @@ function get_window_page_view_time(count, time_total) {
   if (time_total > 0) {
     $new_window_elements[2] += time_total
   };
-  if (i < count) {
+  while (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1
   } else {
