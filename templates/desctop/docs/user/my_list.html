@@ -1,8 +1,8 @@
 {% load get_key %}
 
-<span class="load_block is_stat_list" data-type="user_photo_list" data-pk="{{ list.creator.pk }}">
+<span class="load_block is_stat_list" data-type="user_photo_list" data-pk="{{ list.pk }}">
   <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
-    <h5 class="mt-1"> 
+    <h5 class="mt-1">
       <p>
         <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - документы
         <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
