@@ -97,6 +97,7 @@ function create_fullscreen(url, type_class) {
             get_window_page_view_time(120);
             _page_time = true;
           };
+          append_items_in_stat_list($loader, $new_window_elements)
 
           $loader.onscroll = function() {
             window_scrollStopper();
