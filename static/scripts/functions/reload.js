@@ -11,25 +11,26 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-var $serf_history = [], $new_window_elements = [];
+var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
 var $user_device = user_info.getAttribute("data-device");
 $new_elements = [], page_time = false, $new_time = 0;
 
 function create_window_stat_list(block) {
-  if ($new_window_elements.length) {
-    el_list_stat = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6];
+  if ($new_window_list.length) {
+    el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6];
     $all_stat.push(el_list_stat);
+    $new_window_list = [];
   };
   if (block.querySelector(".is_paginate")) {
-    pag_list = block.querySelector(".card");
-    $new_window_elements = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+    pag_list = block.querySelector(".");
+    $new_window_list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
   } else {
     item = block.querySelector(".card");
-    $new_window_elements = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
+    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
-  console.log($new_window_elements)
+  console.log($new_window_list)
 };
 
 function close_fullscreen() {
@@ -37,25 +38,23 @@ function close_fullscreen() {
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
+  } else {
+    create_window_stat_list(container.querySelector(".card_fullscreen"));
   };
   window.history.replaceState(null, null, window.location.pathname);
-  view_timer(0, null)
+  view_timer(0, null);
 };
 
 function view_timer(count, field) {
-  if (count > 0) {
     var i = 0;
     setInterval(() => {
       if (i == count) {
         document.body.querySelector(".card_fullscreen").classList.add("count_done");
         return;
-      } else if (count == 0) {
-        return;
       };
     console.log(i++);
     field += 1;
     }, 1000);
-  }
 };
 
 function create_fullscreen(url, type_class) {
@@ -117,7 +116,7 @@ function create_fullscreen(url, type_class) {
           create_window_stat_list($loader);
           append_items_in_stat_list($loader, $new_elements);
           if (!_page_time) {
-            view_timer(120, $new_window_elements[2])
+            view_timer(120, $new_window_list[2])
             _page_time = true;
           };
 
@@ -126,14 +125,14 @@ function create_fullscreen(url, type_class) {
             if ($loader.parentElement.classList.contains("count_done")) {
               $loader.parentElement.classList.remove("count_done");
               _page_time = false;
-              view_timer(120, $new_window_elements[2])
+              view_timer(120, $new_window_list[2])
               _page_time = true;
             };
-            if ($new_window_elements.length) {
-                el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
+            if ($new_window_list.length) {
+                el = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6]
                 $all_stat.push(el);
                 console.log($all_stat);
-              $new_window_elements = [];
+              $new_window_list = [];
               $new_time = 0;
             };
 
@@ -173,6 +172,9 @@ var delayedExec = function(after, fn) {
 };
 
 function append_items_in_stat_list(block, list) {
+  pag_list = block.querySelector(".is_stat_list");
+  $new_window_list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+
   _list = block.querySelectorAll('.pag');
   for (var i = 0; i < _list.length; i++) {
       if (!_list[i].classList.contains("showed")) {
@@ -195,9 +197,9 @@ function append_items_in_stat_list(block, list) {
 };
 
 var window_scrollStopper = delayedExec(3000, function() {
-    //try {
+    try {
       append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_elements)
-  //  } catch {null};
+    } catch {null};
 });
 
 function change_this_fullscreen(_this, type_class) {
