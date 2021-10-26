@@ -47,24 +47,13 @@ function coundown(){
 
 function view_timer(count, field) {
   setInterval(() => {
-    if (this.i == count) {
+    if (this.i == 10) {
+      document.body.querySelector(".card_fullscreen").classList.add("count_done");
       return;
     }
   console.log(this.i++);
   field += 1;
   }, 1000);
-};
-
-function get_window_page_view_time(count) {
-  var i=120;
-   setInterval(() => {
-  if (this.i == 120) {
-    document.body.querySelector(".card_fullscreen").classList.add("count_done");
-    return;
-  }
-  console.log(this.i++);
-  $new_window_elements[2] += 1;
-}, 1000);
 };
 
 function create_fullscreen(url, type_class) {
