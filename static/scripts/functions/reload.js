@@ -99,7 +99,7 @@ function create_fullscreen(url, type_class) {
           _page_time = true;
 
           $loader.onscrsoll = function() {
-            window_scrollStopper();
+            //window_scrollStopper();
             if ($new_window_elements.length) {
                 el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
                 $all_stat.push(el);
