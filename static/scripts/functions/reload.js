@@ -56,7 +56,7 @@ function view_timer(count, field) {
         document.body.querySelector(".card_fullscreen").classList.add("count_done");
         return;
       };
-    field += 1;
+    field[2] += 1;
     console.log(field);
     }, 1000);
 };
@@ -133,7 +133,7 @@ function create_fullscreen(url, type_class) {
             if ($loader.parentElement.classList.contains("count_done")) {
               $loader.parentElement.classList.remove("count_done");
               _page_time = false;
-              view_timer(120, $new_window_list[2])
+              view_timer(120, $new_window_list)
               _page_time = true;
             };
             if ($new_window_list.length) {
