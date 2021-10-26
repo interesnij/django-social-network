@@ -46,8 +46,14 @@ function coundown(){
 };
 
 function get_window_page_view_time(count) {
-    plus_count($new_window_elements[2]);
+  var i=120;
+   setInterval(() => {
+  if (this.i == 120) {
+    return;
   }
+  console.log(this.i++);
+  $new_window_elements[2] += 1;
+}, 1000);
 };
 
 function create_fullscreen(url, type_class) {
