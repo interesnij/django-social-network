@@ -16,6 +16,17 @@ var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
 var $user_device = user_info.getAttribute("data-device");
 
+function create_window_stat_list(block) {
+  if (block.querySelector(".is_paginate")) {
+    pag_list = block.querySelector(".card");
+    list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+  } else {
+    item = block.querySelector(".card");
+    list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
+  };
+  $new_window_elements.push(list)
+};
+
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
   try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
@@ -258,17 +269,6 @@ function get_window_page_view_time(count) {
     setInterval(() => $new_elements[$new_elements.length - 1][2] += 1, 1000);
     i += 1
   };
-};
-
-function create_window_stat_list(block) {
-  if (block.querySelector(".is_paginate")) {
-    pag_list = block.querySelector(".card");
-    list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
-  } else {
-    item = block.querySelector(".card");
-    list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
-  };
-  $new_window_elements.push(list[0] + " " + list[1] + " " + list[2] + " " + list[3] + " " + list[4] + " " + list[5] + " " + list[6] + " " + list[6])
 };
 
 function append_page_time_in_lists() {
