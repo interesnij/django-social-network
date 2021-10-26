@@ -49,15 +49,15 @@ function close_fullscreen() {
   window.history.replaceState(null, null, window.location.pathname);
 };
 
-function view_timer(count, field) {
+function view_timer(count, list) {
     var i = 0;
     setInterval(() => {
       if (i == count && document.body.querySelector(".card_fullscreen")) {
         document.body.querySelector(".card_fullscreen").classList.add("count_done");
         return;
       };
-    field[2] += 1;
-    console.log(field);
+    list[2] += 1;
+    console.log(list);
     }, 1000);
 };
 
@@ -124,7 +124,7 @@ function create_fullscreen(url, type_class) {
           // добавляем все элементы списка, как и все на основной странице, таким же путем
           append_items_in_stat_list($loader, $new_elements);
           if (!_page_time) {
-            view_timer(120, $new_window_list[2])
+            view_timer(120, $new_window_list)
             _page_time = true;
           };
 
@@ -135,13 +135,6 @@ function create_fullscreen(url, type_class) {
               _page_time = false;
               view_timer(120, $new_window_list)
               _page_time = true;
-            };
-            if ($new_window_list.length) {
-                el = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6]
-                $all_stat.push(el);
-                console.log($all_stat);
-              $new_window_list = [];
-              $new_time = 0;
             };
 
             if ($loader.querySelector(".next_page_list")) {
