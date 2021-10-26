@@ -37,7 +37,7 @@ function get_window_page_view_time(count) {
   a = 0;
   for (var i = 0; i < count; i++){
     a += 1;
-    setInterval(() => ($new_window_elements[2] += 1, console.log(a)), 1000);
+    setInterval(() => ($new_window_elements[2] += 1, console.log($new_window_elements[2])), 1000);
   };
 };
 
