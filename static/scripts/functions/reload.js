@@ -95,8 +95,8 @@ function create_fullscreen(url, type_class) {
           create_window_stat_list($loader);
           if (!_page_time) {
             get_window_page_view_time(120);
+            _page_time = true;
           };
-          _page_time = true;
 
           $loader.onscrsoll = function() {
             console.log("//////");
