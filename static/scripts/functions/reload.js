@@ -126,6 +126,7 @@ function create_fullscreen(url, type_class) {
             view_timer(120, $new_window_list)
             _page_time = true;
           };
+          offset = 0;
 
           $loader.onscroll = function() {
             window_scrollStopper();
@@ -157,6 +158,12 @@ function create_fullscreen(url, type_class) {
                   }
               };
             };
+
+            if (($loader.innerHeight + window.pageYOffset) > offset) {
+              offset = $loader.innerHeight + window.pageYOffset;
+              $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
+            };
+            console.log(offset)
           }
       }
   };
