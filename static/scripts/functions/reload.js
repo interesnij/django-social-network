@@ -15,6 +15,7 @@ var $serf_history = [], $new_window_elements = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
 var $user_device = user_info.getAttribute("data-device");
+$new_elements = [], page_time = false, $new_time = 0;
 
 function create_window_stat_list(block) {
   if (block.querySelector(".is_paginate")) {
@@ -97,7 +98,7 @@ function create_fullscreen(url, type_class) {
             get_window_page_view_time(120);
             _page_time = true;
           };
-          append_items_in_stat_list($loader, $new_window_elements)
+          append_items_in_stat_list($loader, $new_elements)
 
           $loader.onscroll = function() {
             window_scrollStopper();
@@ -168,7 +169,7 @@ function append_items_in_stat_list(block, list) {
 
 var window_scrollStopper = delayedExec(3000, function() {
     //try {
-      append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_window_elements)
+      append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_elements)
   //  } catch {null};
 });
 
@@ -255,9 +256,6 @@ function init_stat_lists() {
   console.log("Обнуляем списки и обновляем основной список стата");
   console.log($all_stat);
 };
-
-
-$new_elements = [], page_time = false, $new_time = 0;
 
 function get_page_view_time(count) {
   // считаем время нахождения на странице, до 2х минут. При скролле перезапускаем.
