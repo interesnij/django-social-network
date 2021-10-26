@@ -92,11 +92,11 @@ function create_fullscreen(url, type_class) {
           }
 
           get_document_opacity_0();
-          create_window_stat_list($loader);
-          if (!_page_time) {
-            get_window_page_view_time(120);
-            _page_time = true;
-          };
+          //create_window_stat_list($loader);
+        //  if (!_page_time) {
+        //    get_window_page_view_time(120);
+        //    _page_time = true;
+        //  };
 
           $loader.onscrsoll = function() {
             console.log("//////");
@@ -146,7 +146,7 @@ var delayedExec = function(after, fn) {
 var window_scrollStopper = delayedExec(3000, function() {
   console.log("$new_window_elements")
     //try {
-      fullscreen = document.body.querySelector(".card_fullscreen"); 
+      fullscreen = document.body.querySelector(".card_fullscreen");
       fullscreen_list = fullscreen.querySelectorAll('.pag');
           for (var i = 0; i < fullscreen_list.length; i++) {
               if (!fullscreen_list[i].classList.contains("showed")) {
