@@ -262,7 +262,7 @@ function create_window_stat_list(block) {
     list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
   $new_window_elements.push(list[0] + " " + list[1] + " " + list[2] + " " + list[3] + " " + list[4] + " " + list[5] + " " + list[6] + " " + list[6])
-);
+};
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
