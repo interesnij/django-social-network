@@ -1540,6 +1540,7 @@ h6,
 
 .btn {
   font-size: 1em;
+  color: inherit;
 }
 
 .btn-sm, .btn-group-sm > .btn {
