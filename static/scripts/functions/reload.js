@@ -136,6 +136,7 @@ var delayedExec = function(after, fn) {
     };
 };
 var window_scrollStopper = delayedExec(3000, function() {
+  console.log("$new_window_elements")
     try {
       fullscreen = document.body.querySelector("#fullscreen_loader");
       list = fullscreen.querySelectorAll('.pag');
