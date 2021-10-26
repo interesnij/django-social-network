@@ -159,8 +159,8 @@ function create_fullscreen(url, type_class) {
               };
             };
 
-            if (($loader.clientHeight + window.pageYOffset) > offset) {
-              offset = $loader.clientHeight + window.pageYOffset;
+            if ($loader.scrollHeight  > offset) {
+              offset = $loader.scrollHeight;
               $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
             };
             console.log(offset)
