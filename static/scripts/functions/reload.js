@@ -43,7 +43,8 @@ function close_fullscreen() {
 };
 
 function view_timer(count, field) {
-  if (field == null) {
+  if (count == 0) {
+    console.log("0000000");
     return
   };
   var i = 0;
