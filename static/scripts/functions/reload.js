@@ -19,11 +19,7 @@ $new_elements = [], page_time = false, $new_time = 0;
 
 function create_window_stat_list(block) {
   if ($new_window_list.length) {
-    el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6];
-    $all_stat.push(el_list_stat);
-    console.log(el_list_stat);
-    console.log($all_stat);
-    $new_window_list = [];
+    push_window_stat_list()
   };
   if (block.querySelector(".is_paginate")) {
     pag_list = block.querySelector(".");
@@ -35,9 +31,16 @@ function create_window_stat_list(block) {
   console.log($new_window_list)
 };
 
+function push_window_stat_list() {
+  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6];
+  $all_stat.push(el_list_stat);
+  $new_window_list = [];
+};
+
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
+  push_window_stat_list();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   } else {
@@ -114,7 +117,11 @@ function create_fullscreen(url, type_class) {
           }
 
           get_document_opacity_0();
+
+          // создаем временный список или элемент окна
           create_window_stat_list($loader);
+
+          // добавляем все элементы списка, как и все на основной странице, таким же путем
           append_items_in_stat_list($loader, $new_elements);
           if (!_page_time) {
             view_timer(120, $new_window_list[2])
