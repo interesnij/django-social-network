@@ -18,22 +18,32 @@ var $user_device = user_info.getAttribute("data-device");
 $new_elements = [], page_time = false, $new_time = 0;
 
 function create_window_stat_list(block) {
+  if ($new_window_elements.length) {
+    el_list_stat = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6];
+    $all_stat.push(el_list_stat);
+  };
   if (block.querySelector(".is_paginate")) {
     pag_list = block.querySelector(".card");
-    list = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+    $new_window_elements = [pag_list.getAttribute("data-type"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
   } else {
     item = block.querySelector(".card");
-    list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
+    $new_window_elements = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
   };
-  $new_window_elements = list
   console.log($new_window_elements)
 };
-function get_window_page_view_time(count) {
+function get_window_page_view_time(count, time_total) {
   console.log("Время последнего окна работает");
   i = 0;
+  console.log("time_total", time_total);
+  if (time_total > 0) {
+    $new_window_elements[2] += time_total
+  };
   if (i < count) {
     setInterval(() => $new_window_elements[2] += 1, 1000);
     i += 1
+  } else {
+    block = container.querySelectorAll(".card_fullscreen");
+    block.classList.add("count_done");
   };
 };
 
@@ -94,14 +104,21 @@ function create_fullscreen(url, type_class) {
 
           get_document_opacity_0();
           create_window_stat_list($loader);
+          time_total = 0
           if (!_page_time) {
-            get_window_page_view_time(120);
+            get_window_page_view_time(120, time_total);
             _page_time = true;
           };
           append_items_in_stat_list($loader, $new_elements)
 
           $loader.onscroll = function() {
             window_scrollStopper();
+            if ($loader.parentElement.classList.contains("count_done")) {
+              $loader.parentElement.classList.remove("count_done");
+              _page_time = false;
+              time_total += 120;
+              get_window_page_view_time(120, time_total);
+            }
             if ($new_window_elements.length) {
                 el = $new_window_elements[0] + " " + $new_window_elements[1] + " " + $new_window_elements[2] + " " + $new_window_elements[3] + " " + $new_window_elements[4] + " " + $new_window_elements[5] + " " + $new_window_elements[6]
                 $all_stat.push(el);
