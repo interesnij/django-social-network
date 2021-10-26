@@ -27,6 +27,14 @@ function create_window_stat_list(block) {
   $new_window_elements.push(list)
   console.log($new_window_elements)
 };
+function get_window_page_view_time(count) {
+  console.log("Время последнего окна работает");
+  i = 0;
+  if (i < count) {
+    setInterval(() => $new_window_elements[$new_window_elements.length - 1][2] += 1, 1000);
+    i += 1
+  };
+};
 
 function create_fullscreen(url, type_class) {
   container = document.body.querySelector("#fullscreens_container");
@@ -261,16 +269,6 @@ function get_page_view_time(count) {
   } else {page_time = false;};
 };
 get_page_view_time(120);
-
-function get_window_page_view_time(count) {
-  // считаем время нахождения в окне, до 2х минут. При скролле перезапускаем.
-  console.log("Время последнего окна работает");
-  i = 0;
-  if (i < count) {
-    setInterval(() => $new_window_elements[$new_elements.length - 1][2] += 1, 1000);
-    i += 1
-  };
-};
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
