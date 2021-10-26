@@ -32,24 +32,13 @@ function create_window_stat_list(block) {
   console.log($new_window_elements)
 };
 
-function second_timer(i) {
-  console.log(i);
-  console.log(count);
-  $new_window_elements[2] += 1;
-  if (i > 30) {
-    block = container.querySelector(".card_fullscreen");
-    block.classList.add("count_done");
-  };
-}
 function get_window_page_view_time(count, time_total) {
   console.log("Время последнего окна работает");
   i = 0;
-  if (time_total > 0) {
-    $new_window_elements[2] += time_total
-  };
   console.log("time_total", time_total);
-  while (i < count) {
-    setInterval(() => second_timer(i), 1000);
+  for (var i = 0; i < count; i++){
+    setInterval(() => $new_window_elements[2] += 1, 1000);
+    console.log(i);
   };
 };
 
@@ -110,7 +99,11 @@ function create_fullscreen(url, type_class) {
 
           get_document_opacity_0();
           create_window_stat_list($loader);
-          append_items_in_stat_list($loader, $new_elements)
+          append_items_in_stat_list($loader, $new_elements);
+          if (!_page_time) {
+            get_window_page_view_time(120);
+            _page_time = true;
+          };
 
           $loader.onscroll = function() {
             window_scrollStopper();
@@ -149,11 +142,6 @@ function create_fullscreen(url, type_class) {
                       link_3.send();
                   }
               };
-            };
-            time_total = 0
-            if (!_page_time) {
-              get_window_page_view_time(120, time_total);
-              _page_time = true;
             };
           }
       }
