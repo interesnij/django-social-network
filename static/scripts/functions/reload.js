@@ -11,7 +11,7 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-console.log(new Date().toLocaleString().replace(", ", "|"));
+console.log(new Date().toLocaleString().replace(",", ""));
 
 var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
@@ -24,12 +24,12 @@ function create_window_stat_list(block) {
     push_window_stat_list()
   };
   item = block.querySelector(".is_stat_list");
-  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]
+  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
   console.log($new_window_list)
 };
 
 function push_window_stat_list() {
-  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6] + " " + $new_window_list[7];
+  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6] + " " + $new_window_list[7] + " " + $new_window_list[8];
   $all_stat.push(el_list_stat);
   $new_window_list = [];
 };
@@ -188,7 +188,7 @@ function append_items_in_stat_list(block, list) {
             pk = _list[i].getAttribute('data-pk');
             type = _list[i].getAttribute('data-type');
             if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
-              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
+              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
               console.log(list);
             };
             _list[i].classList.add("showed");
@@ -268,15 +268,15 @@ init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAt
 
 function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
+  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7] + " " + $page_stat[8]
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
-    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6] + " " + $list_stat[7];
+    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6] + " " + $list_stat[7] + " " + $list_stat[8];
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString()];
+  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString().replace(",", "")];
   $list_stat = [];
 
   append_items_in_stat_list($main_container, $new_elements);
@@ -342,7 +342,7 @@ var scrollStopper = delayedExec(3000, function() {
                         // 6. тип страницы, где он расположен (из $main_container)
                         // 7. pk текущего пользователя
                         // 8. девайс текущего пользователя
-                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device];
+                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
                      };
                       get_el_view_time(120);
                     };
@@ -362,7 +362,7 @@ var scrollStopper = delayedExec(3000, function() {
                       // 6. pk текущего пользователя
                       // 7. девайс текущего пользователя
 
-                      $new_elements.push([type,pk,0,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device]);
+                      $new_elements.push([type,pk,0,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
                       console.log($new_elements);
                     };
                     list[i].classList.add("showed");
@@ -389,7 +389,7 @@ function scrolled(_block) {
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
           $new_elements[i][2] = 3 + $new_time;
-          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5] + " " + $new_elements[i][6]
+          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5] + " " + $new_elements[i][6] + " " + $new_elements[i][7]
           $all_stat.push(el);
         };
         $new_elements = [];
