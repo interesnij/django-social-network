@@ -11,6 +11,8 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
+console.log(new Date());
+
 var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
