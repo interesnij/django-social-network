@@ -279,7 +279,7 @@ function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
   $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString().replace(",", "")];
   $list_stat = [];
 
-  append_items_in_stat_list($main_container, $new_elements);
+  append_items_in_stat_list(document.body.querySelector(".main-container"), $new_elements);
 
   console.log("Обнуляем списки и обновляем основной список стата");
 };
