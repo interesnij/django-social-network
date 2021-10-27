@@ -643,6 +643,8 @@ function ajax_get_reload(url) {
 
             prev = rtr.querySelector(".main_container");
             next = ajax.querySelector(".main_container");
+            console.log(prev);
+            console.log(next);
             init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
 
             rtr.innerHTML = ajax.innerHTML;
