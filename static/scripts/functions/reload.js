@@ -281,6 +281,8 @@ function init_stat_lists() {
   $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, "prev_page_type", "prev_page_pk", $user_device];
   $list_stat = [];
 
+  append_items_in_stat_list($main_container, $new_elements);
+
   console.log("Обнуляем списки и обновляем основной список стата");
   console.log($all_stat);
 };
@@ -384,6 +386,7 @@ function scrolled(_block) {
         get_page_view_time(120);
         page_time = true;
       };
+
 
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
