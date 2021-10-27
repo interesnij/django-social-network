@@ -298,7 +298,6 @@ function get_page_view_time(count) {
     i += 1
   } else {page_time = false;};
 };
-get_page_view_time(120);
 
 function append_page_time_in_lists() {
   // добавляем секунды просмотра страницы и списка, если он есть
@@ -325,15 +324,16 @@ window.onbeforeunload = function() {
 
 var scrollStopper = delayedExec(3000, function() {
     try {
-          list = $main_container.querySelectorAll('.pag');
+        main_container = document.body.querySelector(".main-container");
+          list = main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
                     if (i == 1) {
-                      if ($main_container.querySelector(".is_stat_list") && !$list_stat.length) {
-                        pag_list = $main_container.querySelector(".is_stat_list");
-                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
+                      if (main_container.querySelector(".is_stat_list") && !$list_stat.length) {
+                        pag_list = main_container.querySelector(".is_stat_list");
+                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
                      };
                       get_el_view_time(120);
                     };
@@ -341,7 +341,7 @@ var scrollStopper = delayedExec(3000, function() {
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
                     if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
-                      $new_elements.push([type,pk,0,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
+                      $new_elements.push([type,pk,0,0,main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
                       console.log($new_elements);
                     };
                     list[i].classList.add("showed");
