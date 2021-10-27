@@ -264,7 +264,7 @@ $list_stat = [];
 // инициализируем временные списки для сбора статистики
 init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), '', '');
 
-function init_stat_lists(type, pk, prev_type, prev_pk) {
+function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
   if ($page_stat.length) {
   el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
   $all_stat.push(el_page_stat);
@@ -274,7 +274,7 @@ function init_stat_lists(type, pk, prev_type, prev_pk) {
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [main_container.getAttribute("data-type"), main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device];
+  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device];
   $list_stat = [];
 
   append_items_in_stat_list($main_container, $new_elements);
