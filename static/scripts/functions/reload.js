@@ -11,7 +11,7 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-console.log(new Date());
+console.log(new Date().toLocaleString());
 
 var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
