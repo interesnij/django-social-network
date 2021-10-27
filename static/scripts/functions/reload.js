@@ -266,7 +266,7 @@ $list_stat = [];
 // инициализируем временные списки для сбора статистики
 init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), '', '');
 
-function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
+function init_stat_lists(next_block, prev_type, prev_pk) {
   if ($page_stat.length) {
   el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8]
   $all_stat.push(el_page_stat);
@@ -276,7 +276,7 @@ function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString().replace(",", "")];
+  $page_stat = [next_block.getAttribute("data-type"), next_block.getAttribute("data-pk"), $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString().replace(",", "")];
   $list_stat = [];
 
   append_items_in_stat_list(document.body.querySelector(".main-container"), $new_elements);
@@ -621,8 +621,7 @@ function ajax_get_reload(url) {
             rtr = document.getElementById('ajax');
 
             prev = rtr.querySelector(".main-container");
-            next = ajax.querySelector(".main-container");
-            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+            init_stat_lists(ajax.querySelector(".main-container"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
             console.log($page_stat);
 
             rtr.innerHTML = ajax.innerHTML;
