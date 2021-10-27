@@ -641,8 +641,8 @@ function ajax_get_reload(url) {
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
 
-            prev = rtr.querySelector(".main-container");
-            next = ajax.querySelector(".main-container");
+            next = rtr.querySelector(".main-container");
+            prev = ajax.querySelector(".main-container");
             init_stat_lists(prev.getAttribute("data-type"), prev.getAttribute("data-pk"), next.getAttribute("data-type"), next.getAttribute("data-pk"));
             console.log($page_stat);
 
