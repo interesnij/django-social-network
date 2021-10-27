@@ -11,7 +11,7 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-console.log(new Date().toLocaleString().replace(", "), "|");
+console.log(new Date().toLocaleString());
 
 var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
@@ -276,7 +276,7 @@ function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device];
+  $page_stat = [next_type, next_pk, $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device, new Date().toLocaleString()];
   $list_stat = [];
 
   append_items_in_stat_list($main_container, $new_elements);
