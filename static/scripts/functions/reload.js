@@ -11,8 +11,6 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-console.log(new Date().toLocaleString().replace(",", ""));
-
 var $serf_history = [], $new_window_list = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
@@ -264,7 +262,7 @@ $page_stat = [];
 $list_stat = [];
 
 // инициализируем временные списки для сбора статистики
-init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), '', '');
+init_stat_lists($main_container, '', '');
 
 function init_stat_lists(next_block, prev_type, prev_pk) {
   if ($page_stat.length) {
