@@ -332,16 +332,6 @@ var scrollStopper = delayedExec(3000, function() {
                     if (i == 1) {
                       if ($main_container.querySelector(".is_stat_list") && !$list_stat.length) {
                         pag_list = $main_container.querySelector(".is_stat_list");
-                        console.log($main_container);
-                        // заполняем список на странице (не в окне):
-                        // 1. тип листа ("post_list")
-                        // 2. id листа
-                        // 3. высота в метрах (0)
-                        // 4. время просмотра в секундах (0)
-                        // 5. pk владельца/группы стены (из $main_container)
-                        // 6. тип страницы, где он расположен (из $main_container)
-                        // 7. pk текущего пользователя
-                        // 8. девайс текущего пользователя
                         $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, $main_container.getAttribute("data-pk"), $main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
                      };
                       get_el_view_time(120);
@@ -350,18 +340,6 @@ var scrollStopper = delayedExec(3000, function() {
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
                     if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
-                      // добавляем новые элементы в список $new_elements, чтобы записать кол-во времени, которые их
-                      // просматривает пользователь, а затем, при скролле, добавить их с этим значением
-                      //в основной список $all_stat.
-
-                      // 1. тип элемента ("post")
-                      // 2. pk элемента
-                      // 3. время просмотра в секундах (0)
-                      // 4. pk владельца/группы стены (из $main_container)
-                      // 5. тип страницы, где он расположен (из $main_container)
-                      // 6. pk текущего пользователя
-                      // 7. девайс текущего пользователя
-
                       $new_elements.push([type,pk,0,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
                       console.log($new_elements);
                     };
@@ -389,7 +367,7 @@ function scrolled(_block) {
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
           $new_elements[i][2] = 3 + $new_time;
-          el = $new_elements[i][0] + ";" + $new_elements[i][1] + ";" + $new_elements[i][2] + ";" + $new_elements[i][3] + ";" + $new_elements[i][4] + ";" + $new_elements[i][5] + ";" + $new_elements[i][6] + ";" + $new_elements[i][7]
+          el = $new_elements[i][0] + ";" + $new_elements[i][1] + ";" + $new_elements[i][2] + ";" + $new_elements[i][3] + ";" + $new_elements[i][4] + ";" + $new_elements[i][5] + ";" + $new_elements[i][6] + ";" + $new_elements[i][7] + ";" + $new_elements[i][8]
           $all_stat.push(el);
         };
         $new_elements = [];
