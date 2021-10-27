@@ -262,13 +262,9 @@ $page_stat = [];
 $list_stat = [];
 
 // инициализируем временные списки для сбора статистики
-init_stat_lists();
+init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), '', '');
 
-function init_stat_lists() {
-  // функция добавляет основные списки статистики в главный список $all_stat. И обнуляет их.
-  // нужно при смене старницы, перезагрузке или закрытии вкладки, возвращении в истории назад.
-  // также переопределяем списки временные, если страница загрузилась и в ней есть нужные для
-  // статистики элементы;
+function init_stat_lists(type, pk, prev_type, prev_pk) {
   if ($page_stat.length) {
   el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7]
   $all_stat.push(el_page_stat);
@@ -278,7 +274,7 @@ function init_stat_lists() {
     $all_stat.push(el_list_stat);
   };
 
-  $page_stat = [$main_container.getAttribute("data-type"), $main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, "prev_page_type", "prev_page_pk", $user_device];
+  $page_stat = [main_container.getAttribute("data-type"), main_container.getAttribute("data-pk"), $window_height, 0, $request_user_id, prev_type, prev_pk, $user_device];
   $list_stat = [];
 
   append_items_in_stat_list($main_container, $new_elements);
@@ -584,6 +580,11 @@ function this_page_reload(url) {
             elem_.innerHTML = ajax_link.responseText;
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
+
+            prev = rtr.querySelector(".main_container");
+            next = ajax.querySelector(".main_container");
+            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             if_list(rtr);
@@ -606,6 +607,11 @@ window.addEventListener('popstate', function (e) {
           elem_.innerHTML = ajax_link.responseText;
           ajax = elem_.querySelector("#reload_block");
           rtr = document.getElementById('ajax');
+
+          prev = rtr.querySelector(".main_container");
+          next = ajax.querySelector(".main_container");
+          init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+
           rtr.innerHTML = ajax.innerHTML;
           window.scrollTo(0, 0);
           title = elem_.querySelector('title').innerHTML;
@@ -617,7 +623,7 @@ window.addEventListener('popstate', function (e) {
           get_dragula(".drag_list");
           get_document_opacity_1(rtr);
           $serf_history.push(document.location.href);
-          init_stat_lists();
+
       }
   }
   ajax_link.send()
@@ -634,6 +640,11 @@ function ajax_get_reload(url) {
             elem_.innerHTML = ajax_link.responseText;
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
+
+            prev = rtr.querySelector(".main_container");
+            next = ajax.querySelector(".main_container");
+            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
@@ -644,7 +655,6 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
-            init_stat_lists();
 
             try{
               document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
@@ -666,6 +676,11 @@ function search_ajax_get_reload(url) {
             elem_.innerHTML = ajax_link.responseText;
             ajax = elem_.querySelector(".load_search_container");
             rtr = document.body.querySelector(".load_search_container");
+
+            prev = document.body.querySelector(".main_container");
+            next = ajax.querySelector(".main_container");
+            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
