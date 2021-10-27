@@ -644,7 +644,7 @@ function ajax_get_reload(url) {
             prev = rtr.querySelector(".main-container");
             next = ajax.querySelector(".main-container");
             init_stat_lists(prev.getAttribute("data-type"), prev.getAttribute("data-pk"), next.getAttribute("data-type"), next.getAttribute("data-pk"));
-            console.log($all_stat);
+            console.log($page_stat);
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
