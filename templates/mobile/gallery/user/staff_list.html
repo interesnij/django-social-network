@@ -34,7 +34,7 @@
     <span>{{ list.count_items_ru }}</span>
   </div>
 
-<div class="row is_load_paginate no-gutters" data-link="/gallery/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
+<div class="row is_load_paginate no-gutters is_stat_list" data-type="user_photo_list" data-pk="{{ list.pk }}">
 {% for object in object_list %}
   <div class="pointer detail_photo pag" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
     <div class="progressive replace" data-href="{{ object.file.url }}">
