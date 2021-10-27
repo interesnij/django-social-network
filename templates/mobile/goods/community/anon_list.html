@@ -8,22 +8,22 @@
       </a>
     </div>
   </div>
-
-  <div class="media mt-3" style="display:flex;align-items: flex-start">
-    <h5 class="mt-1" style="flex: 1;">{{ list.name }} - альбом | {{ list.community.name }}</h5>
-    <span>{{ list.count_items_ru }}</span>
+  <div class="card mb-3">
+      <div class="card-body">
+          <div class="media">
+              <div class="media-body">
+                  <p class="mb-0">Товары - {{ list.community.name }}</p>
+                  <h4 class="mb-0">{{ list.name }} ({{ list.count_items }})</h4>
+              </div>
+          </div>
+      </div>
   </div>
-
-<div class="row is_load_paginate no-gutters is_stat_list" data-type="community_good_list" data-pk="{{ list.pk }}">
+  {% if object_list %}
+<div class="row is_load_paginate no-gutters">
 {% for object in object_list %}
-  <div class="pointer detail_photo pag" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
-    <div class="progressive replace" data-href="{{ object.file.url }}">
-      {% if object.preview %}
-        <img class="preview image_fit_160" src="{{ object.preview.url }}" alt="img">
-      {% else %}
-        <svg class="svg_default image_fit_160" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
+  {% include 'mobile/communities/goods/good.html' %}
+{% endfor %}
 </div>
+{% else %}
+  {% include 'mobile/communities/goods/main_list/no_goods.html' %}
+{% endif %}
