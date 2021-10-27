@@ -281,8 +281,10 @@ function init_stat_lists(next_block, prev_type, prev_pk) {
 
   console.log("Обнуляем списки и обновляем основной список стата");
   console.log($all_stat);
-  get_page_view_time(120);
-  page_time = false;
+  if (!page_time) {
+    get_page_view_time(120);
+    page_time = true;
+  }
 };
 
 function get_page_view_time(count) {
