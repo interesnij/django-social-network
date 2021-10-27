@@ -282,7 +282,6 @@ function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
   append_items_in_stat_list($main_container, $new_elements);
 
   console.log("Обнуляем списки и обновляем основной список стата");
-  console.log($all_stat);
 };
 
 function get_page_view_time(count) {
