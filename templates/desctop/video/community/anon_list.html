@@ -11,7 +11,7 @@
     </h5>
   </div>
   {% if object_list %}
-  <div class="row is_load_paginate is_stat_list" data-type="community_video_list" data-pk="{{ list.pk }}">
+  <div class="row is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_video_list">
                       {% for object in object_list %}
                         {% include 'desctop/communities/video/main_list/video.html' %}
                       {% endfor %}

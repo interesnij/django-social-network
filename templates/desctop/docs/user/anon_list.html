@@ -11,7 +11,7 @@
     </h5>
   </div>
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_load_paginate">
+                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_doc_list">
                       {% for doc in object_list %}
                         {% include 'desctop/users/docs/anon_doc.html' %}
                       {% endfor %}

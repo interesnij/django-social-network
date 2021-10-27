@@ -17,7 +17,7 @@
     </h5>
   </div>
                 {% if object_list %}
-                    <ul class="is_load_paginate is_stat_list" data-type="community_music_list" data-pk="{{ list.pk }}">
+                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_music_list">
                       {% for object in object_list %}
                         {% include 'desctop/communities/music/anon_track.html' %}
                       {% endfor %}

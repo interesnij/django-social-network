@@ -24,8 +24,9 @@
     </form>
   </div>
   <div class="container-fluid mt-3 pk_saver">
-    <div class="row is_block_paginate no-gutters drag_container" data-uuid="{{ list.uuid }}" id="c_list_photos_container"  data-link="/gallery/community/list_photos/{{ community.pk }}/{{ list.uuid }}/">
-      {% if object_list %}
+    {% if object_list %}
+    <div class="row is_block_paginate no-gutters drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
+
       {% for object in object_list %}
         <div class="col-md-6 p-1 pointer hide_shower col-lg-4 detail_photo pag" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <p class="handle" style="display:none; color:white !important">
@@ -41,11 +42,11 @@
             <img src="/static/images/preloader.gif">
         </div>
       {% endif %}
-      
-      {% else %}
-        {% include 'desctop/communities/photos/main_list/no_photos.html' %}
-      {% endif %}
+
     </div>
+    {% else %}
+      {% include 'desctop/communities/photos/main_list/no_photos.html' %}
+    {% endif %}
   </div>
   </span>
 </div>

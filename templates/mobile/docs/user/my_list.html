@@ -31,33 +31,16 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul class="is_load_paginate is_stat_list" data-type="user_doc_list" data-pk="{{ list.pk }}">
-                      {% for doc in object_list %}
-                      <li class="list-group-item pag" style="padding-bottom:10px">
-                          <div class="media" style="position: relative;">
-                            <svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24">
-                              <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-                            </svg>
-                              <div class="media-body doc_media_body" style="padding: 0">
-                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
-                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-                                    <span class='span_btn' data-pk="{{ doc.pk }}">
-                                      {% include 'mobile/users/user_docs/add_dropdown.html' %}
-                                      <div class="dropdown" style="position: inherit;">
-                                        <a class="btn_default drop pointer">
-                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                        </a>
-                                          <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                                              <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
-                                          </div>
-                                      </div>
-                                    </span>
-                              </div>
-                          </div>
-                      </li>
-                      {% endfor %}
-                    </ul>
+                <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_doc_list">
+                  {% for doc in object_list %}
+                    {% include 'desctop/users/docs/doc.html' %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <div class="load centered m-1 next_page_list" data-link="{% url 'load_doc_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+                      <img src="/static/images/preloader.gif">
+                  </div>
+                  {% endif %}
+                </ul>
 
                 {% else %}
                 <div class="card centered">
