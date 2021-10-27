@@ -16,7 +16,7 @@
       <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
     </h5>
   </div>
-  <div class="row is_load_paginate">
+  <div class="row is_load_paginate is_stat_list" data-type="user_video_list" data-pk="{{ list.pk }}">
                 {% if object_list %}
                       {% for object in object_list %}
                         {% include 'desctop/users/video/main_list/video.html' %}

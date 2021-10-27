@@ -47,7 +47,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/music/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
+                    <ul class="is_load_paginate is_stat_list" data-type="user_music_list" data-pk="{{ list.pk }}">
                       {% for object in object_list %}
                       <li class="load_pag" style="padding-bottom:10px">
                           <div class="media" music-counter="{{ forloop.counter0|add:page_obj.start_index }}" style="align-items: unset;position: relative;">

@@ -44,7 +44,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/docs/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
+                    <ul class="is_load_paginate is_stat_list" data-type="user_doc_list" data-pk="{{ list.pk }}">
                       {% for doc in object_list %}
                       <li class="list-group-item pag" style="padding-bottom:10px">
                           <div class="media" style="position: relative;">

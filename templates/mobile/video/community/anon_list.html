@@ -25,7 +25,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_load_paginate" data-link="/video/community/load/{{ list.community.pk }}/{{ list.uuid }}/">
+                    <ul class="is_load_paginate is_stat_list" data-type="community_video_list" data-pk="{{ list.pk }}">
                       {% for object in object_list %}
                         {% include 'mobile/communities/video/video.html' %}
                       {% endfor %}

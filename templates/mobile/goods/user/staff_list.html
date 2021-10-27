@@ -39,7 +39,7 @@
       </div>
   </div>
 
-<div class="row is_load_paginate no-gutters" data-link="/goods/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
+<div class="row is_load_paginate no-gutters is_stat_list" data-type="user_good_list" data-pk="{{ list.pk }}">
 {% for object in object_list %}
   {% include 'mobile/users/user_goods/good.html' %}
 {% endfor %}

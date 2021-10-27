@@ -10,8 +10,8 @@
       <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
     </h5>
   </div>
-  <div class="row is_load_paginate">
-                {% if object_list %}
+  {% if object_list %}
+  <div class="row is_load_paginate is_stat_list" data-type="community_video_list" data-pk="{{ list.pk }}">
                       {% for object in object_list %}
                         {% include 'desctop/communities/video/main_list/video.html' %}
                       {% endfor %}
@@ -20,7 +20,8 @@
                           <img src="/static/images/preloader.gif">
                       </div>
                       {% endif %}
-                {% else %}
+  </div>
+  {% else %}
                 <div class="card items_empty centered">
                   <div class="card-body" style="margin-top: 10%;">
                   <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'>
@@ -29,6 +30,5 @@
                   </div>
                   <h6 style="margin: 20px;text-align: center;">В списке нет видео.</h6>
                 </div>
-                {% endif %}
-      </div>
+  {% endif %}
 </span>
