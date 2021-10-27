@@ -14,7 +14,7 @@
           {% if object_list %}
 
           {% load notify %}
-            <span class="is_paginate is_stat_list" data-type="post_list" data-pk="{{ list.pk }}">
+            <span class="is_paginate">
               {% for object in object_list %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}
