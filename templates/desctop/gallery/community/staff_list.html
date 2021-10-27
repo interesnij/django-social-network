@@ -19,8 +19,9 @@
     </h5>
   </div>
   <div class="container-fluid mt-3 pk_saver">
-    <div class="row is_block_paginate no-gutters drag_container" data-uuid="{{ list.uuid }}" id="u_list_photos_container"  data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.uuid }}/">
-      {% if object_list %}
+    {% if object_list %}
+    <div class="row is_block_paginate no-gutters drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
+
       {% for object in object_list %}
         <div class="col-md-6 p-1 pointer hide_shower col-lg-4 detail_photo pag" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
           <p class="handle" style="display:none; color:white !important">
@@ -30,16 +31,17 @@
             <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
           </div>
         </div>
-        {% endfor %}
-        {% if page_obj.has_next %}
+      {% endfor %}
+      {% if page_obj.has_next %}
         <div class="load centered m-1 next_page_list" data-link="{% url 'load_photo_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
             <img src="/static/images/preloader.gif">
         </div>
-        {% endif %}
-        {% else %}
-          {% include 'desctop/communities/photos/main_list/no_photos.html' %}
-        {% endif %}
+      {% endif %}
+
     </div>
+    {% else %}
+      {% include 'desctop/communities/photos/main_list/no_photos.html' %}
+    {% endif %}
   </div>
   </span>
 </div>

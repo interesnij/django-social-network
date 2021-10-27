@@ -10,18 +10,18 @@
       <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
     </h5>
   </div>
-  <div class="row is_load_paginate is_stat_list" data-type="user_video_list" data-pk="{{ list.pk }}">
-                {% if object_list %}
-                      {% for object in object_list %}
-                        {% include 'desctop/users/video/main_list/video.html' %}
-                      {% endfor %}
-                      {% if page_obj.has_next %}
-                      <div class="load centered m-1 next_page_list" data-link="{% url 'load_video_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
-                          <img src="/static/images/preloader.gif">
-                      </div>
-                      {% endif %}
-                {% else %}
-                  {% include 'desctop/users/video/main_list/no_videos.html' %}
-                {% endif %}
-                </div>
+  {% if object_list %}
+  <div class="row is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_video_list">
+    {% for object in object_list %}
+      {% include 'desctop/users/video/main_list/video.html' %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <div class="load centered m-1 next_page_list" data-link="{% url 'load_video_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+        <img src="/static/images/preloader.gif">
+      </div>
+    {% endif %}
+  </div>
+  {% else %}
+    {% include 'desctop/users/video/main_list/no_videos.html' %}
+  {% endif %}
 </span>

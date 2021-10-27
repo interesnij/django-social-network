@@ -25,10 +25,15 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul class="is_load_paginate is_stat_list" data-type="community_video_list" data-pk="{{ list.pk }}">
+                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_video_list">
                       {% for object in object_list %}
                         {% include 'mobile/communities/video/video.html' %}
                       {% endfor %}
+                      {% if page_obj.has_next %}
+                      <div class="load centered m-1 next_page_list" data-link="{% url 'load_video_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
+                          <img src="/static/images/preloader.gif">
+                      </div>
+                      {% endif %}
                     </ul>
 
                 {% else %}
