@@ -18,9 +18,12 @@
           </div>
       </div>
   </div>
-
+  {% if object_list %}
 <div class="row is_load_paginate no-gutters" data-link="/goods/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
 {% for object in object_list %}
-  {% include 'mobile/users/user_goods/good.html' %}
+  {% include 'mobile/users/goods/good.html' %}
 {% endfor %}
 </div>
+{% else %}
+  {% include 'mobile/users/goods/main_list/no_goods.html' %}
+{% endif %}

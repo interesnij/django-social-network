@@ -14,6 +14,7 @@
     <span>{{ list.count_items_ru }}</span>
   </div>
 
+{% if object_list %}
 <div class="row is_load_paginate no-gutters" data-link="/gallery/user/load/{{ list.creator.pk }}/{{ list.uuid }}/">
 {% for object in object_list %}
   <div class="pointer detail_photo pag" photo-pk="{{ object.pk }}" style="flex: 0 0 50%;max-width:50%;padding:5px">
@@ -23,3 +24,6 @@
   </div>
   {% endfor %}
 </div>
+{% else %}
+  {% include 'mobile/users/photos/main_list/no_photos.html' %}
+{% endif %}
