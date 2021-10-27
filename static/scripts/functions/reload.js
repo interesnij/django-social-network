@@ -29,7 +29,7 @@ function create_window_stat_list(block) {
 };
 
 function push_window_stat_list() {
-  el_list_stat = $new_window_list[0] + " " + $new_window_list[1] + " " + $new_window_list[2] + " " + $new_window_list[3] + " " + $new_window_list[4] + " " + $new_window_list[5] + " " + $new_window_list[6] + " " + $new_window_list[7] + " " + $new_window_list[8];
+  el_list_stat = $new_window_list[0] + ";" + $new_window_list[1] + ";" + $new_window_list[2] + ";" + $new_window_list[3] + ";" + $new_window_list[4] + ";" + $new_window_list[5] + ";" + $new_window_list[6] + ";" + $new_window_list[7] + ";" + $new_window_list[8];
   $all_stat.push(el_list_stat);
   $new_window_list = [];
 };
@@ -268,11 +268,11 @@ init_stat_lists($main_container.getAttribute("data-type"), $main_container.getAt
 
 function init_stat_lists(next_type, next_pk, prev_type, prev_pk) {
   if ($page_stat.length) {
-  el_page_stat = $page_stat[0] + " " + $page_stat[1] + " " + $page_stat[2] + " " + $page_stat[3] + " " + $page_stat[4] + " " + $page_stat[5] + " " + $page_stat[6] + " " + $page_stat[7] + " " + $page_stat[8]
+  el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8]
   $all_stat.push(el_page_stat);
   };
   if ($list_stat.length) {
-    el_list_stat = $list_stat[0] + " " + $list_stat[1] + " " + $list_stat[2] + " " + $list_stat[3] + " " + $list_stat[4] + " " + $list_stat[5] + " " + $list_stat[6] + " " + $list_stat[7] + " " + $list_stat[8];
+    el_list_stat = $list_stat[0] + ";" + $list_stat[1] + ";" + $list_stat[2] + ";" + $list_stat[3] + ";" + $list_stat[4] + ";" + $list_stat[5] + ";" + $list_stat[6] + ";" + $list_stat[7] + ";" + $list_stat[8];
     $all_stat.push(el_list_stat);
   };
 
@@ -389,7 +389,7 @@ function scrolled(_block) {
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
           $new_elements[i][2] = 3 + $new_time;
-          el = $new_elements[i][0] + " " + $new_elements[i][1] + " " + $new_elements[i][2] + " " + $new_elements[i][3] + " " + $new_elements[i][4] + " " + $new_elements[i][5] + " " + $new_elements[i][6] + " " + $new_elements[i][7]
+          el = $new_elements[i][0] + ";" + $new_elements[i][1] + ";" + $new_elements[i][2] + ";" + $new_elements[i][3] + ";" + $new_elements[i][4] + ";" + $new_elements[i][5] + ";" + $new_elements[i][6] + ";" + $new_elements[i][7]
           $all_stat.push(el);
         };
         $new_elements = [];
