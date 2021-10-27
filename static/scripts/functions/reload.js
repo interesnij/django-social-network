@@ -581,8 +581,8 @@ function this_page_reload(url) {
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
 
-            prev = rtr.querySelector(".main_container");
-            next = ajax.querySelector(".main_container");
+            prev = rtr.querySelector(".main-container");
+            next = ajax.querySelector(".main-container");
             init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
 
             rtr.innerHTML = ajax.innerHTML;
@@ -608,8 +608,8 @@ window.addEventListener('popstate', function (e) {
           ajax = elem_.querySelector("#reload_block");
           rtr = document.getElementById('ajax');
 
-          prev = rtr.querySelector(".main_container");
-          next = ajax.querySelector(".main_container");
+          prev = rtr.querySelector(".main-container");
+          next = ajax.querySelector(".main-container");
           init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
 
           rtr.innerHTML = ajax.innerHTML;
@@ -678,8 +678,8 @@ function search_ajax_get_reload(url) {
             ajax = elem_.querySelector(".load_search_container");
             rtr = document.body.querySelector(".load_search_container");
 
-            prev = document.body.querySelector(".main_container");
-            next = ajax.querySelector(".main_container");
+            prev = rtr.querySelector(".main-container");
+            next = ajax.querySelector(".main-container");
             init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
 
             rtr.innerHTML = ajax.innerHTML;
