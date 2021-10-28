@@ -115,3 +115,42 @@ class GoodCommentList(ListView):
 
 	def get_queryset(self):
 		return self.good.get_comments()
+
+
+class GoodDetail(TemplateView):
+	template_name, community, user_form = None, None, None
+
+	def get(self,request,*args,**kwargs):
+		self.good = Photo.objects.get(pk=self.kwargs["pk"])
+		self.list = self.good.list
+		if self.good.community:
+			self.community = self.good.community
+			if request.user.is_administrator_of_community(self.community.pk):
+				self.goods = self.list.get_staff_items()
+			else:
+				self.goods = self.list.get_items()
+			if request.user.is_authenticated:
+				self.template_name = get_template_community_item(self.good, "good/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_community_item(self.good, "good/c_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			if request.user.pk == self.good.creator.pk:
+				self.goods = self.list.get_staff_items()
+			else:
+				self.goods = self.list.get_items()
+			if request.user.is_authenticated:
+				self.template_name = get_template_user_item(self.good, "good/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+			else:
+				self.template_name = get_template_anon_user_item(self.good, "good/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(GoodDetail,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(GoodDetail,self).get_context_data(**kwargs)
+		context["object"] = self.good
+		context["list"] = self.list
+		if self.goods.filter(order=self.good.order + 1).exists():
+			context["next"] = self.goods.filter(order=self.good.order + 1)[0]
+		if self.goods.filter(order=self.good.order - 1).exists():
+			context["prev"] = self.goods.filter(order=self.good.order - 1)[0]
+		context["community"] = self.community
+		return context
