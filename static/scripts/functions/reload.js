@@ -662,11 +662,7 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
-
-            try{
-              document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;
-              document.getElementById("user_time").innerHTML = elem_.querySelector("#user_time").innerHTML
-            } catch{null}
+            alert($all_stat);
         }
     }
     ajax_link.send()
