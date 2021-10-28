@@ -264,7 +264,7 @@ function media_list_edit(_this, url) {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    close_fullscreen();
+    close_work_fullscreen();
     name = form.querySelector('#id_name').value;
     list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
@@ -485,7 +485,7 @@ function attach_list_for_post(_this, url) {
                     response = document.createElement("span");
                     response.innerHTML = elem;
                     attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-                    close_fullscreen();
+                    close_work_fullscreen();
                 }
             };
             link_.send()

@@ -71,7 +71,7 @@ on('#ajax', 'click', '#u_edit_name_btn', function() {
   };
   send_form_and_toast('/users/settings/edit_name/', form, "Имя / фамилия изменены!");
   document.body.querySelector(".user_full_name").innerHTML = field1.value + " " + field2.value;
-  close_fullscreen()
+  close_work_fullscreen()
 });
 on('#ajax', 'click', '#u_edit_password_btn', function() {
   form = document.body.querySelector("#u_edit_password_form");
@@ -87,7 +87,7 @@ on('#ajax', 'click', '#u_edit_password_btn', function() {
     toast_error("Пароли не совпадают!"); return
   };
   send_form_and_toast('/rest-auth/password/change/', form, "Пароль изменён!");
-  close_fullscreen()
+  close_work_fullscreen()
 });
 
 on('#ajax', 'click', '.edit_user_name', function() {

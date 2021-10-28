@@ -11,7 +11,7 @@ function is_full_attach(){
   files_block = document.body.querySelector(".attach_block");
   if (files_block.classList.contains("files_10")){
     files_block.parentElement.querySelector(".attach_panel").style.display = "none";
-    close_fullscreen();
+    close_work_fullscreen();
   }
   else {
     files_block.parentElement.querySelector(".attach_panel").style.display = "block"
@@ -90,7 +90,7 @@ function photo_post_upload_attach(photo_list, block){
     block.append(div);
     is_full_attach();
   };
-  close_fullscreen();
+  close_work_fullscreen();
 };
 
 function video_post_attach(block, pk, counter, src) {

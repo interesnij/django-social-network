@@ -115,7 +115,7 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
       toast_info("Документ создан!")
     };
     toast_info("Документ создан!");
-    close_fullscreen();
+    close_work_fullscreen();
   }};
 
   link_.send(form_data);

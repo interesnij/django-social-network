@@ -363,7 +363,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             toast_success("Сообщение отправлено");
-            close_work_fullscreen()
+            close_work_fullscreen();
         } else {this.disabled = false}
       }
       ajax_link.send(form_data);
@@ -692,13 +692,13 @@ on('#ajax', 'change', '#u_photo_message_attach', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    photo_list = response.querySelectorAll(".pag");
-    photo_message_upload_attach(photo_list, document.body.querySelector(".message_attach_block"));
-    }
-    close_fullscreen()
+      elem = link_.responseText;
+      response = document.createElement("span");
+      response.innerHTML = elem;
+      photo_list = response.querySelectorAll(".pag");
+      photo_message_upload_attach(photo_list, document.body.querySelector(".message_attach_block"));
+    };
+    close_work_fullscreen();
     show_message_form_send_btn();
   }
   link_.send(form_data);

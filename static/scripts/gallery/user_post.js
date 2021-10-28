@@ -236,7 +236,7 @@ on('#ajax', 'change', '#u_photo_attach', function() {
     photo_list = response.querySelectorAll(".pag");
     photo_post_upload_attach(photo_list, document.body.querySelector(".attach_block"));
     }
-    close_fullscreen();
+    close_work_fullscreen();
   }
   link_.send(form_data);
 });
@@ -258,7 +258,7 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
     photo_list = response.querySelectorAll(".pag");
     photo_comment_upload_attach(photo_list, document.body.querySelector(".current_file_dropdown").parentElement.parentElement);
     }
-    close_fullscreen();
+    close_work_fullscreen();
   }
   link_.send(form_data);
 });
