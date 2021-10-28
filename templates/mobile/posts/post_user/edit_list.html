@@ -1,6 +1,5 @@
 
-<div class="">
-    <form id="post_list_form" data-pk="{{ list.pk }}">
+    <form id="post_list_form" class="main-container" data-pk="{{ list.creator.pk }}" data-type="edit_user_post_list">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -28,4 +27,3 @@
             </div>
         </div>
     </form>
-</div>

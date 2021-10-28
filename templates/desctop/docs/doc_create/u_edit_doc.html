@@ -1,5 +1,5 @@
 {% load get_key %}
-    <form>
+    <form class="main-container" data-pk="{{ doc.pk }}" data-type="edit_user_doc">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">

@@ -13,7 +13,7 @@
 
 
 <div class="mb-3 data_display" data-uuid="{{ object.uuid }}" data-pk="{{ community.pk }}">
-  <div class="row">
+  <div class="row main-container" data-pk="{{ object.pk }}" data-type="community_photo">
     <div class="col-lg-8 col-md-7 col-sm-12 order-1">
       <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}

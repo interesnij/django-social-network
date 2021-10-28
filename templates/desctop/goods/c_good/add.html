@@ -3,7 +3,7 @@
 <h5 class="m-0">Добавление товара</h5>
 <br><br>
 
-<form id="c_add_good_form" enctype="multipart/form-data">
+<form class="main-container" data-pk="{{ community.pk }}" data-type="create_community_good" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group row">
       <div class="col-lg-6 col-md-6">

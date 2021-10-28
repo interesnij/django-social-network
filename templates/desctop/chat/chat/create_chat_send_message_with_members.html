@@ -1,6 +1,5 @@
 
-<div class="">
-    <form id="add_chat_form">
+    <form id="add_chat_form" class="main-container" data-pk="{{ user.pk }}" data-type="create_user_chat">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header">
@@ -34,5 +33,4 @@
                 <button type="button" class="btn btn-success float-right" data-pk="{{ user.pk }}" id="add_chat_btn">Создать</button>
             </div>
         </div>
-    </form>
-</div>
+      </form>

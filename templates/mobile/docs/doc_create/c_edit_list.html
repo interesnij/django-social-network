@@ -1,6 +1,5 @@
 
-<div class="">
-    <form id="c_edit_doclist_form" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
+    <form id="c_edit_doclist_form" class="main-container" data-pk="{{ list.pk }}" data-type="edit_community_doc_list" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
@@ -28,4 +27,3 @@
             </div>
         </div>
     </form>
-</div>
