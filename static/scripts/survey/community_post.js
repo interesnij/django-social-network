@@ -37,7 +37,7 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
         container.insertAdjacentHTML('afterBegin', _new.innerHTML);
         container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
   }
-  close_fullscreen();
+  close_work_fullscreen();
   toast_info("Товар создан!");
   }};
   link_.send(form_data);

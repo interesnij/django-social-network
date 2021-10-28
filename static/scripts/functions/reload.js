@@ -576,7 +576,7 @@ function this_page_reload(url) {
             window.scrollTo(0, 0);
             if_list(rtr);
             create_pagination(rtr);
-            init_stat_lists();
+            get_document_opacity_1(document.body.querySelector(".main-container"));
         }
     }
     ajax_link.send()
@@ -676,7 +676,6 @@ function search_ajax_get_reload(url) {
             if_list(rtr);
             create_pagination(rtr);
             get_document_opacity_1(rtr);
-            init_stat_lists();
 
             try{
               document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;

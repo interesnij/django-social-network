@@ -24,6 +24,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
             window.history.pushState(null, "vfgffgfgf", "/public" + pk + "/");
+            close_work_fullscreen()
         }
       }
       ajax_link.send(form_data);
@@ -41,7 +42,7 @@ on('#ajax', 'click', '.create_community_claim_btn', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Жалоба отправлена!");
-    close_fullscreen();
+    close_work_fullscreen();
   }};
 
   link_.send(form_data);

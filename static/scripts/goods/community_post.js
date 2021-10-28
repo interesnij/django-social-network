@@ -213,7 +213,7 @@ on('#ajax', 'click', '#c_add_good_btn', function() {
         container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
       }
   };
-  close_fullscreen();
+  close_work_fullscreen();
   toast_info("Товар создан!")
   }};
   link_.send(form_data);
@@ -266,7 +266,7 @@ on('#ajax', 'click', '#c_edit_good_list_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
         document.body.querySelector(".list_name").innerHTML = name;
-        close_fullscreen();
+        close_work_fullscreen();
         toast_success("Список товаров изменен")
       }
     }

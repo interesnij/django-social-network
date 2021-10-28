@@ -6,7 +6,7 @@ function is_full_message_attach(){
   files_block = document.body.querySelector(".message_attach_block");
   if (files_block.classList.contains("files_10")){
     files_block.parentElement.querySelector(".message_dropdown").style.display = "none";
-    close_fullscreen();
+    close_work_fullscreen();
   }
   else {
     files_block.parentElement.querySelector(".message_dropdown").style.display = "block"

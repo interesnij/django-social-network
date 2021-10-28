@@ -174,7 +174,7 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
     li.setAttribute("list-pk", new_post.querySelector(".list_pk").getAttribute("list-pk"));
 
     div = document.createElement("div");div.classList.add("media");_div = document.createElement("div");_div.classList.add("media-body");h6 = document.createElement("h6");h6.classList.add("mb-0");h6.innerHTML = name;_div.append(h6); div.append(_div);document.body.querySelector(".date-list").prepend(div);
-    close_fullscreen();
+    close_work_fullscreen();
   }};
 
   link_.send(form_data);
@@ -198,7 +198,7 @@ on('#ajax', 'click', '#c_edit_post_list_btn', function() {
         name = form.querySelector('#id_name').value;
         title = document.body.querySelector( '[list-pk=' + '"' + list_pk + '"' + ']' );
         title.querySelector(".list_name").innerHTML = name;
-        close_fullscreen();
+        close_work_fullscreen();
         toast_success("Список изменен")
       }
     }
@@ -437,7 +437,7 @@ on('#ajax', 'change', '#c_photo_post_comment_attach', function() {
     response.innerHTML = elem;
     photo_comment_attach(response.querySelectorAll(".c_photo_detail"), dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_list.length);
     }
-    close_fullscreen();
+    close_work_fullscreen();
   }
   link_.send(form_data);
 });

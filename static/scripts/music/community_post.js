@@ -44,8 +44,8 @@ on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
     form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
     toast_error("Ссылка - обязательное поле!"); return
   } else {this.disabled = true;}
-  close_fullscreen();
-  post_and_load_object_page(form, "/music/community_progs/create_soundcloud_set/", "/communities/", "/music_list/")
+  post_and_load_object_page(form, "/music/community_progs/create_soundcloud_set/", "/communities/", "/music_list/");
+  get_document_opacity_1(document.body.querySelector(".main-container"));
 });
 
 on('#ajax', 'click', '.c_add_music_list', function(e) {
@@ -95,7 +95,6 @@ on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        close_fullscreen();
         this_page_reload(document.location.href);
       } else {this.disabled = false}
     }
@@ -161,7 +160,7 @@ on('body', 'click', '#c_create_track_btn', function() {
       check_span1(response.querySelector('.span1'), uuid, response.innerHTML),
       document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null) : get_preview(response, "track");
     toast_info("Аудиозапись создана!")
-    close_fullscreen();
+    close_work_fullscreen();
   }};
 
   link_.send(form_data);
@@ -197,8 +196,8 @@ on('body', 'click', '#c_edit_track_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    toast_info("Документ изменен!")
-    close_fullscreen();
+    toast_info("Аудиозапись изменена!")
+    close_work_fullscreen();
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;

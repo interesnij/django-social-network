@@ -158,7 +158,7 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
     } else{
       toast_info("Видео создано!")
     }
-    close_fullscreen();
+    close_work_fullscreen();
   } else {this.disabled = false}};
   link_.send(form_data);
 });
