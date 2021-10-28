@@ -662,7 +662,7 @@ function ajax_get_reload(url) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             get_document_opacity_1(rtr);
-            alert($all_stat);
+            alert($all_stat.replace(",", "/n"));
         }
     }
     ajax_link.send()
