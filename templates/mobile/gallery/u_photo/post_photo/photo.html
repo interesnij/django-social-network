@@ -1,5 +1,5 @@
 <div class="data_display" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
-  <div class="row">
+  <div class="row main-container" data-pk="{{ object.pk }}" data-type="user_photo">
     {% if next %}
     <div class="col" style="padding:5px;">
       <a class="btn btn-sm border next_item" href="{% url 'post_photo_detail' photo_pk=next.pk post_pk=post.pk %}" style="width: -webkit-fill-available;position:static">

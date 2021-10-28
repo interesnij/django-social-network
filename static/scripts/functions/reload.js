@@ -17,6 +17,22 @@ var $request_user_id = user_info.getAttribute("data-pk");
 var $user_device = user_info.getAttribute("data-device");
 $new_elements = [], page_time = false, $new_time = 0;
 
+// type statistics item:
+// 1. "user..." - страницы пользователя
+// 2. "community..." - страницы сообщества
+// 3. "page..." - прочие страницы
+// 4. "create_user..." - создание объектов пользователя
+// 5. "edit_user..." - изменение объектов пользователя
+// 6. "delete_user..." - удаление объектов пользователя
+// 7. "create_community..." - создание объектов сообщества
+// 8. "edit_community..." - изменение объектов сообщества
+// 9. "delete_community..." - удаление объектов сообщества
+// 10. "manager..." - страницы менеджерские
+
+// Важно! юзер или админ может крепить только свои списки, потому по просмотру
+// его списков мы не должны писать owner-pk, ведь владелец страницы будет записан
+// и так. Это дата-пк и дата-тайп
+
 function create_window_stat_list(block) {
   if ($new_window_list.length) {
     push_window_stat_list()
