@@ -13,10 +13,9 @@ on('#ajax', 'click', '.load_attach_good_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_good_list_load/", "load_attach_good_list");
 });
 
-on('#ajax', 'click', '.u_good_detail', function() {
-  this.getAttribute('data-uuid') ? uuid = this.getAttribute('data-uuid') : uuid = this.parentElement.parentElement.getAttribute('data-uuid')
+on('#ajax', 'click', '.good_detail', function() {
   pk = this.getAttribute('good-pk');
-  create_fullscreen('/goods/user/good/' + pk + '/' + uuid + '/', "item_fullscreen");
+  create_fullscreen('/goods/good/' + pk + '/', "item_fullscreen");
   container = document.body.querySelector("#fullscreens_container");
   loader = container.querySelector(".card_fullscreen");
   setTimeout(function() {good_gallery(loader)}, 1000)
