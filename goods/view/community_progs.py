@@ -202,6 +202,7 @@ class GoodListCommunityCreate(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(GoodListCommunityCreate,self).get_context_data(**kwargs)
         context["form"] = GoodListForm()
+        context["community"] = Community.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
@@ -233,6 +234,7 @@ class CommunityGoodListEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityGoodListEdit,self).get_context_data(**kwargs)
         context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        context["community"] = list.community
         return context
 
     def post(self,request,*args,**kwargs):
@@ -272,13 +274,7 @@ class GoodCommentCommunityCreate(View):
         form_post = CommentForm(request.POST)
         c = Community.objects.get(pk=request.POST.get('pk'))
         good = Good.objects.get(pk=request.POST.get("good_pk"))
-        if not request.is_ajax() and not self.good.comments_enabled:
-            raise Http404
-        if not c.is_comment_good_send_all() and not request.user.is_member_of_community(c.pk):
-            raise Http404
-        elif c.is_comment_good_send_admin() and not request.user.is_staff_of_community(c.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid() and good.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and good.comments_enabled:
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, c)

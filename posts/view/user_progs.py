@@ -410,9 +410,6 @@ class UserPostsListCreate(TemplateView):
 
 
 class UserPostsListEdit(TemplateView):
-    """
-    изменение списка записей пользователя
-    """
     template_name, form = None, None
 
     def get(self,request,*args,**kwargs):

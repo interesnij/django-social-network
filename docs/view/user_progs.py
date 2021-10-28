@@ -66,6 +66,7 @@ class UserDocListCreate(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserDocListCreate,self).get_context_data(**kwargs)
         context["form"] = DocslistForm()
+        context["user"] = User.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):

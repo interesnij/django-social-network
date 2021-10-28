@@ -111,6 +111,7 @@ class CommunityDocListCreate(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityDocListCreate,self).get_context_data(**kwargs)
         context["form_post"] = DocslistForm()
+        context["community"] = Community.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
