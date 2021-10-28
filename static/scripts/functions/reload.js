@@ -43,6 +43,14 @@ function close_fullscreen() {
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
+function close_work_fullscreen() {
+  container = document.body.querySelector("#fullscreens_container");
+  container.querySelector(".card_fullscreen").remove();
+  if (!container.innerHTML) {
+    get_document_opacity_1(document.body.querySelector(".main-container"));
+  };
+  window.history.replaceState(null, null, window.location.pathname);
+};
 
 function view_timer(count, list) {
     var i = 0;
