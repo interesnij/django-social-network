@@ -403,9 +403,8 @@ function create_preview_doc_list(name, pk, count){
 
 function create_preview_good(img_src, pk, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "u_good_detail", "good");
+  $div.classList.add("col-md-4", "good_detail", "good");
   $div.setAttribute('good-pk', pk);
-  $div.setAttribute('data-uuid', uuid);
   $div.style.cursor = "pointer";
 
   $input = document.createElement("span");

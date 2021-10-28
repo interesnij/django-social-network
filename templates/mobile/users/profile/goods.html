@@ -10,10 +10,10 @@
       </div>
     </a>
   </div>
-  <div style="display: flex; flex-wrap: wrap;" data-uuid="{{ good_list.uuid }}">
+  <div style="display: flex; flex-wrap: wrap;">
     {% for object in good_list.get_3_goods %}
     <div class="mb-3" style="flex: 0 0 50%;max-width:50%;padding:5px;">
-            <div class="border u_good_detail pointer pag" good-pk="{{ object.pk }}">
+            <div class="border good_detail pointer pag" good-pk="{{ object.pk }}">
                 <div class="row align-items-center no-gutters">
                     <div class="col">
                             <div class="text-center">

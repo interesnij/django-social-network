@@ -244,9 +244,8 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
     elem = link_.responseText;
     new_good = document.createElement("div");
     new_good.innerHTML = elem;
-    good = new_good.querySelector(".u_good_detail");
+    good = new_good.querySelector(".good_detail");
     data_pk = good.getAttribute('good-pk');
-    data_uuid = good.getAttribute('good-uuid');
     src = good.querySelector("img").getAttribute('src');
     title = good.querySelector(".good_title").innerHTML;
 
@@ -298,7 +297,7 @@ on('#ajax', 'click', '#u_edit_good_list_btn', function() {
       if ( this.readyState == 4 && this.status == 200 ) {
         name = form.querySelector('#id_name').value;
         document.body.querySelector(".list_name").innerHTML = name;
-        close_work_fullscreen(); 
+        close_work_fullscreen();
         toast_success("Список товаров изменен")
       }
     }
