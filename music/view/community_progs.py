@@ -115,6 +115,7 @@ class CommunityPlaylistCreate(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistCreate,self).get_context_data(**kwargs)
         context["form_post"] = PlaylistForm()
+        context["community"] = Community.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
@@ -142,6 +143,7 @@ class CommunityPlaylistEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistEdit,self).get_context_data(**kwargs)
         context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        context["community"] = Community.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):

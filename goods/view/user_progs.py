@@ -121,6 +121,7 @@ class GoodUserCreate(TemplateView):
         context["form"] = GoodForm()
         context["sub_categories"] = GoodSubCategory.objects.only("id")
         context["categories"] = GoodCategory.objects.only("id")
+        context["user"] = User.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
@@ -159,6 +160,7 @@ class GoodUserEdit(TemplateView):
         context["sub_categories"] = GoodSubCategory.objects.only("id")
         context["categories"] = GoodCategory.objects.only("id")
         context["good"] = Good.objects.get(pk=self.kwargs["pk"])
+        context["user"] = good.creator
         return context
 
     def post(self,request,*args,**kwargs):

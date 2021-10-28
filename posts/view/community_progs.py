@@ -225,11 +225,7 @@ class PostCommunityCommentCreate(View):
         form_post = CommentForm(request.POST, request.FILES)
         community = Community.objects.get(pk=request.POST.get('pk'))
         post = Post.objects.get(uuid=request.POST.get('uuid'))
-        if not community.is_comment_post_send_all() and not request.user.is_member_of_community(community.pk):
-            raise Http404
-        elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid() and post.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
@@ -447,6 +443,7 @@ class CommunityPostsListEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(CommunityPostsListEdit,self).get_context_data(**kwargs)
         context["list"] = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        context["community"] = list.community
         return context
 
     def post(self,request,*args,**kwargs):

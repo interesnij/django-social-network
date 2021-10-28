@@ -88,12 +88,7 @@ class PhotoCommentCommunityCreate(View):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
         photo = Photo.objects.get(uuid=request.POST.get('uuid'))
-
-        if not community.is_comment_photo_send_all() and not request.user.is_member_of_community(community.pk):
-            raise Http404
-        elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
             comment=form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
@@ -111,12 +106,7 @@ class PhotoReplyCommunityCreate(View):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
         parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
-
-        if not community.is_comment_photo_send_all() and not request.user.is_member_of_community(community.pk):
-            raise Http404
-        elif community.is_comment_photo_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid() and parent.photo.comments_enabled:
+        if request.is_ajax() and form_post.is_valid() and parent.photo.comments_enabled:
             comment = form_post.save(commit=False)
 
             check_can_get_lists(request.user, community)
@@ -308,9 +298,6 @@ class PhotoWallCommentCommunityRecover(View):
 
 
 class PhotoListCommunityCreate(TemplateView):
-    """
-    создание альбома сообщества
-    """
     template_name = None
     form = None
 
