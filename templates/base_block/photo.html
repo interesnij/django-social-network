@@ -1,4 +1,4 @@
-<div class="row_item detail_photo pag" photo-pk="{{ object.pk }}" data-type="photo" data-pk="{{ object.pk }}">
+<div class="row_item detail_photo pag" photo-pk="{{ object.pk }}" data-type="{% if object.community %}community_{% else %}user_{% endif %}photo" data-pk="{{ object.pk }}">
   <div class="progressive replace" data-href="{{ object.file.url }}">
     {% if object.preview %}
       <img class="preview image_fit_200" src="{{ object.preview.url }}" alt="img">
