@@ -337,7 +337,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
             window.history.pushState(null, "vfgffgfgf", "/chat/" + pk + "/");
-            close_fullscreen()
+            close_work_fullscreen();
         }
       }
       ajax_link.send(form_data);
@@ -363,8 +363,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             toast_success("Сообщение отправлено");
-            document.querySelector(".create_fullscreen").style.display = "none";
-            document.getElementById("create_loader").innerHTML="";
+            close_work_fullscreen()
         } else {this.disabled = false}
       }
       ajax_link.send(form_data);
