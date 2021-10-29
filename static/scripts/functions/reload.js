@@ -398,6 +398,13 @@ window.onbeforeunload = function() {
   console.log($all_stat);
 };
 
+function reload_list_stat(block) {
+  el_list_stat = $list_stat[0] + ";" + $list_stat[1] + ";" + $list_stat[2] + ";" + $list_stat[3] + ";" + $list_stat[4] + ";" + $list_stat[5] + ";" + $list_stat[6] + ";" + $list_stat[7] + ";" + $list_stat[8];
+  $all_stat.push(el_list_stat);
+  list = block.querySelector(".is_stat_list");
+  $list_stat = [block.getAttribute("data-type"), block.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
+};
+
 var scrollStopper = delayedExec(3000, function() {
     try {
         main_container = document.body.querySelector(".main-container");
@@ -612,8 +619,9 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        get_dragula(".is_block_paginate");
-       get_dragula(".date-list");
+       //get_dragula(".date-list");
        create_pagination(target_block);
+       reload_list_stat(target_block);
     }};
     request.upload.onprogress = function(event) {
       console.log( 'начало работы');
