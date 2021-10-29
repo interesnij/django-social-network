@@ -23,14 +23,11 @@
     <div class="row is_block_paginate no-gutters drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
 
       {% for object in object_list %}
-        <div class="col-md-6 p-1 pointer hide_shower col-lg-4 detail_photo pag" data-type="community_photo" photo-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
-          <p class="handle" style="display:none; color:white !important">
-            <svg height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-          </p>
-          <div class="progressive replace" data-href="{{ object.file.url }}">
-            <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
-          </div>
+      <div class="row_item pointer hide_shower detail_photo" photo-pk="{{ object.pk }}">
+        <div class="progressive replace" data-href="{{ object.file.url }}">
+          <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
         </div>
+      </div>
       {% endfor %}
       {% if page_obj.has_next %}
         <div class="load centered m-1 next_page_list" data-link="{% url 'load_photo_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
