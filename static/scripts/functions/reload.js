@@ -186,7 +186,6 @@ function create_fullscreen(url, type_class) {
               offset = $loader.scrollHeight;
               $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
             };
-            console.log(offset)
           }
       }
   };
@@ -270,6 +269,56 @@ function change_this_fullscreen(_this, type_class) {
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
           window.history.replaceState(null, null, new_url);
+
+          get_document_opacity_0();
+
+          // создаем временный список или элемент окна
+          create_window_stat_list($loader);
+
+          // добавляем все элементы списка, как и все на основной странице, таким же путем
+          append_items_in_stat_list($loader, $new_elements);
+          if (!_page_time) {
+            view_timer(120, $new_window_list)
+            _page_time = true;
+          };
+          offset = 0;
+
+          $loader.onscroll = function() {
+            window_scrollStopper();
+            if ($loader.parentElement.classList.contains("count_done")) {
+              $loader.parentElement.classList.remove("count_done");
+              _page_time = false;
+              view_timer(120, $new_window_list)
+              _page_time = true;
+            };
+
+            if ($loader.querySelector(".next_page_list")) {
+              box = $loader.querySelector('.next_page_list');
+              if (box && box.classList.contains("next_page_list")) {
+                  inViewport = elementInViewport(box);
+                  if (inViewport) {
+                      box.remove();
+                      var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                      link_3.open('GET', location.protocol + "//" + location.host + box.getAttribute("data-link"), true);
+                      link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                      link_3.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                              var elem = document.createElement('span');
+                              elem.innerHTML = link_3.responseText;
+                              $loader.querySelector(".is_block_paginate").insertAdjacentHTML('beforeend', elem.querySelector(".is_block_paginate").innerHTML);
+                            }
+                      }
+                      link_3.send();
+                  }
+              };
+            };
+
+            if ($loader.scrollHeight  > offset) {
+              offset = $loader.scrollHeight;
+              $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
+            };
+          }
       }
   };
   link.send();
@@ -309,7 +358,6 @@ function init_stat_lists(next_block, prev_type, prev_pk) {
   append_items_in_stat_list(next_block, $new_elements);
 
   console.log("Обнуляем списки и обновляем основной список стата");
-  console.log($all_stat);
   get_page_view_time(120);
   page_time = true;
 };

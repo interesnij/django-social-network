@@ -20,7 +20,7 @@
     </div>
     <div class="container-fluid mt-3 pk_saver">
       {% if object_list %}
-      <div class="row is_block_paginate no-gutters drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
+      <div class="row is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
 
         {% for object in object_list %}
         <div class="row_item pointer hide_shower col-lg-4 detail_photo" data-pk="{{ object.pk }}">
