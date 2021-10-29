@@ -412,11 +412,12 @@ function reload_list_stat() {
 
 var scrollStopper = delayedExec(3000, function() {
     try {
+      main_container = document.body.querySelector(".main-container");
       if (main_container.querySelector(".is_stat_list") && !$list_stat.length) {
         pag_list = main_container.querySelector(".is_stat_list");
         $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
       };
-        main_container = document.body.querySelector(".main-container");
+
           list = main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
               if (!list[i].classList.contains("showed")) {
