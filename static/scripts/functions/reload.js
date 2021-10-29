@@ -404,7 +404,7 @@ function reload_list_stat(block) {
     $all_stat.push(el_list_stat)
   };
   list = block.querySelector(".is_stat_list");
-  $list_stat = [block.getAttribute("data-type"), block.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
+  $list_stat = [list.getAttribute("data-type"), list.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
 };
 
 var scrollStopper = delayedExec(3000, function() {
