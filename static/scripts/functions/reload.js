@@ -405,6 +405,7 @@ function reload_list_stat() {
   };
   block = document.body.querySelector(".main-container");
   list = block.querySelector(".is_stat_list");
+  console.log(block); 
   console.log(list);
   $list_stat = [list.getAttribute("data-type"), list.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
 };
