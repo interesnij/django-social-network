@@ -191,42 +191,6 @@ function create_fullscreen(url, type_class) {
   link.send();
 };
 
-var delayedExec = function(after, fn) {
-    var timer;
-    return function() {
-        timer && clearTimeout(timer);
-        timer = setTimeout(fn, after);
-    };
-};
-
-function append_items_in_stat_list(block, list) {
-  _list = block.querySelectorAll('.pag');
-  for (var i = 0; i < _list.length; i++) {
-      if (!_list[i].classList.contains("showed")) {
-          inViewport = elementInViewport(_list[i]);
-          if (inViewport) {
-            if (i == 1) {
-              get_el_view_time(120);
-            };
-
-            pk = _list[i].getAttribute('data-pk');
-            type = _list[i].getAttribute('data-type');
-            if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
-              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
-              console.log(list);
-            };
-            _list[i].classList.add("showed");
-          }
-      }
-  };
-};
-
-var window_scrollStopper = delayedExec(3000, function() {
-    try {
-      append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_elements)
-    } catch {null};
-});
-
 function change_this_fullscreen(_this, type_class) {
   _this.parentElement.classList.contains("col") ? $loader = _this.parentElement.parentElement.parentElement.parentElement : $loader = _this.parentElement.parentElement;
   $loader.innerHTML = "";
@@ -234,6 +198,8 @@ function change_this_fullscreen(_this, type_class) {
   $parent_div.style.height = "35px";
   url = _this.getAttribute("href");
   $serf_history.push(url);
+
+  _page_time = false;
 
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', url, true);
@@ -320,6 +286,42 @@ function change_this_fullscreen(_this, type_class) {
   };
   link.send();
 };
+
+var delayedExec = function(after, fn) {
+    var timer;
+    return function() {
+        timer && clearTimeout(timer);
+        timer = setTimeout(fn, after);
+    };
+};
+
+function append_items_in_stat_list(block, list) {
+  _list = block.querySelectorAll('.pag');
+  for (var i = 0; i < _list.length; i++) {
+      if (!_list[i].classList.contains("showed")) {
+          inViewport = elementInViewport(_list[i]);
+          if (inViewport) {
+            if (i == 1) {
+              get_el_view_time(120);
+            };
+
+            pk = _list[i].getAttribute('data-pk');
+            type = _list[i].getAttribute('data-type');
+            if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
+              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
+              console.log(list);
+            };
+            _list[i].classList.add("showed");
+          }
+      }
+  };
+};
+
+var window_scrollStopper = delayedExec(3000, function() {
+    try {
+      append_items_in_stat_list(document.body.querySelector(".card_fullscreen"), $new_elements)
+    } catch {null};
+});
 
 $main_container = document.body.querySelector(".main-container");
 // высота экрана в переаводе на метры
