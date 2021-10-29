@@ -30,7 +30,7 @@
     </h5>
   </div>
 
-<div class="row is_paginate is_block_paginate no-gutters" id="c_photos_container" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+<div class="row is_paginate is_block_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_photo_list" id="c_photos_container" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
 </span>
 </div>
 
