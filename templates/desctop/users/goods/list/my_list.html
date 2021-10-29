@@ -46,7 +46,7 @@
             </div>
         <div class="card mb-2">
             <div class="card-body">
-            <div class="row is_paginate drag_container" owner-pk="{{ user.pk }}">
+            <div class="row is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_good_list">
               {% if object_list %}
 
               {% for object in object_list %}

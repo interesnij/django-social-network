@@ -24,7 +24,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" owner-pk="{{ user.pk }}" class="is_paginate drag_container">
+                    <ul data-pk="{{ list.pk }}" class="is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_music_list">
                       {% for object in object_list %}
                         {% include 'mobile/communities/music/admin_track.html' %}
                       {% endfor %}

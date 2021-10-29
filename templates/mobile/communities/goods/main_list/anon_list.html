@@ -28,7 +28,7 @@
         </div>
         <div class="card mb-2">
             <div class="card-body">
-            <div class="row is_paginate">
+            <div class="row is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_good_list">
               {% if object_list %}
 
               {% for object in object_list %}
