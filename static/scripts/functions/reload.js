@@ -11,11 +11,11 @@ function get_dragula(block) {
     //.on('out', function (el, container) {console.log("over!");;});
 };
 
-var $serf_history = [], $new_window_list = [];
+var $serf_history = [], $new_window_list = [], $new_elements = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-pk");
 var $user_device = user_info.getAttribute("data-device");
-$new_elements = [], page_time = false, $new_time = 0;
+page_time = false, $new_time = 0;
 
 // type statistics item:
 // 1. "user..." - страницы пользователя
@@ -57,6 +57,7 @@ function close_fullscreen() {
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
+    push_window_stat_list()
   } else {
     create_window_stat_list(container.querySelector(".card_fullscreen"));
   };
