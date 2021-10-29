@@ -398,11 +398,12 @@ window.onbeforeunload = function() {
   console.log($all_stat);
 };
 
-function reload_list_stat(block) {
+function reload_list_stat() {
   if ($list_stat.length) {
     el_list_stat = $list_stat[0] + ";" + $list_stat[1] + ";" + $list_stat[2] + ";" + $list_stat[3] + ";" + $list_stat[4] + ";" + $list_stat[5] + ";" + $list_stat[6] + ";" + $list_stat[7] + ";" + $list_stat[8];
     $all_stat.push(el_list_stat)
   };
+  block = document.body.querySelector(".main-container");
   list = block.querySelector(".is_stat_list");
   console.log(list);
   $list_stat = [list.getAttribute("data-type"), list.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
