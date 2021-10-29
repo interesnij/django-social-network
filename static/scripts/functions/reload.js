@@ -405,7 +405,7 @@ function reload_list_stat() {
   };
   block = document.body.querySelector(".main-container");
   list = block.querySelector(".is_stat_list");
-  console.log(block); 
+  console.log(block);
   console.log(list);
   $list_stat = [list.getAttribute("data-type"), list.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
 };
@@ -469,7 +469,7 @@ function scrolled(_block) {
         offset = window.innerHeight + window.pageYOffset;
         $page_stat[2] = parseFloat(offset * 0.000264).toFixed(2);
         if ($list_stat.length) {
-          $list_stat[1] = parseFloat(window.pageYOffset * 0.000264).toFixed(2);
+          $list_stat[2] = parseFloat(window.pageYOffset * 0.000264).toFixed(2);
         };
       };
 
