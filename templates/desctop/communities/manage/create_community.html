@@ -1,5 +1,5 @@
 
-    <form id="add_community_form">
+    <form id="add_community_form" class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_user_community"> 
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
