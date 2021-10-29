@@ -33,7 +33,7 @@
 </div>
 
   <div class="container mt-4">
-      <div class="row is_paginate is_block_paginate no-gutters" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
+      <div class="row is_paginate is_block_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_photo_list" data-link="/gallery/community/photos/{{ community.pk }}/"></div>
   </div>
 </span>
 </div>
