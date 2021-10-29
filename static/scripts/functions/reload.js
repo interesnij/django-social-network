@@ -412,6 +412,10 @@ function reload_list_stat() {
 
 var scrollStopper = delayedExec(3000, function() {
     try {
+      if (main_container.querySelector(".is_stat_list") && !$list_stat.length) {
+        pag_list = main_container.querySelector(".is_stat_list");
+        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
+      };
         main_container = document.body.querySelector(".main-container");
           list = main_container.querySelectorAll('.pag');
           for (var i = 0; i < list.length; i++) {
@@ -419,10 +423,6 @@ var scrollStopper = delayedExec(3000, function() {
                   inViewport = elementInViewport(list[i]);
                   if (inViewport) {
                     if (i == 1) {
-                      if (main_container.querySelector(".is_stat_list") && !$list_stat.length) {
-                        pag_list = main_container.querySelector(".is_stat_list");
-                        $list_stat = [pag_list.getAttribute("data-type"), pag_list.getAttribute("data-pk"), 0, 0, main_container.getAttribute("data-pk"), main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
-                     };
                       get_el_view_time(120);
                     };
 
