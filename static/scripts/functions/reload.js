@@ -55,7 +55,6 @@ function push_window_stat_list() {
 function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
-  push_window_stat_list();
   if (!container.innerHTML) {
     get_document_opacity_1(document.body.querySelector(".main-container"));
   } else {
@@ -79,7 +78,7 @@ function view_timer(count, list) {
         document.body.querySelector(".card_fullscreen").classList.add("count_done");
         return;
       };
-    list[2] += 1;
+    list[3] += 1;
     }, 1000);
 };
 
@@ -272,11 +271,10 @@ function change_this_fullscreen(_this, type_class) {
 
           get_document_opacity_0();
 
-          // создаем временный список или элемент окна
+          push_window_stat_list();
           create_window_stat_list($loader);
-
-          // добавляем все элементы списка, как и все на основной странице, таким же путем
           append_items_in_stat_list($loader, $new_elements);
+
           if (!_page_time) {
             view_timer(120, $new_window_list)
             _page_time = true;
@@ -381,7 +379,7 @@ function append_page_time_in_lists() {
     $page_stat[3] += 1
   };
   if ($list_stat.length) {
-    $list_stat[2] += 1
+    $list_stat[3] += 1
   }
 };
 
@@ -417,6 +415,7 @@ var scrollStopper = delayedExec(3000, function() {
                     pk = list[i].getAttribute('data-pk');
                     type = list[i].getAttribute('data-type');
                     if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1 && type != null) {
+                      // "user_post", object.pk, height, time, owner_pk, owner_type, request.user.pk, mobile/desctop, datetime
                       $new_elements.push([type,pk,0,0,main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
                       console.log($new_elements);
                     };
@@ -441,7 +440,7 @@ function scrolled(_block) {
       };
       if ($new_elements.length) {
         for (var i = 0; i < $new_elements.length; i++){
-          $new_elements[i][2] = 3 + $new_time;
+          $new_elements[i][3] = 3 + $new_time;
           el = $new_elements[i][0] + ";" + $new_elements[i][1] + ";" + $new_elements[i][2] + ";" + $new_elements[i][3] + ";" + $new_elements[i][4] + ";" + $new_elements[i][5] + ";" + $new_elements[i][6] + ";" + $new_elements[i][7] + ";" + $new_elements[i][8]
           $all_stat.push(el);
         };
