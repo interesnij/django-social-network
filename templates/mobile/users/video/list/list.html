@@ -46,7 +46,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 <div class="video_playlist" id="movies_container">
-                  <div class="row movies_list_in_list is_paginate" data-list="/users/{{ user.pk }}/video">
+                  <div class="row movies_list_in_list is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_video_list" data-list="/users/{{ user.pk }}/video">
                     {% if object_list %}
                       {% for object in object_list %}
                         {% include 'mobile/users/video/main_list/video.html' %}

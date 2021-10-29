@@ -39,7 +39,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_paginate">
+                    <ul data-pk="{{ list.pk }}" class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_music_list">
                       {% for object in object_list %}
                         {% include 'desctop/communities/music/anon_track.html' %}
                       {% endfor %}
