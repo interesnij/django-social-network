@@ -622,7 +622,6 @@ function list_block_load(target_block, response_block, link) {
        get_dragula(".is_block_paginate");
        //get_dragula(".date-list");
        create_pagination(target_block);
-       reload_list_stat(target_block);
     }};
     request.upload.onprogress = function(event) {
       console.log( 'начало работы');
