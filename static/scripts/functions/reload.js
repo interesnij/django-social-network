@@ -271,7 +271,6 @@ function change_this_fullscreen(_this, type_class) {
 
           get_document_opacity_0();
 
-          push_window_stat_list();
           create_window_stat_list($loader);
           append_items_in_stat_list($loader, $new_elements);
 
