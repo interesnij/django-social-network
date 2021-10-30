@@ -5,7 +5,7 @@ from .models import *
 class MusicAdmin(admin.ModelAdmin):
     list_display = ['title']
     search_fields = ['title']
-    list_filter = ['tag', 'genre']
+    list_filter = ['genre']
     class Meta:
             model = Music
 
