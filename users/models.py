@@ -1306,7 +1306,7 @@ class User(AbstractUser):
         return self.get_video_list().get_items()[:2]
 
     def my_playlist_too(self):
-        from music.models import MusicList, UserTempMusicList, SoundTags, SoundGenres
+        from music.models import MusicList, UserTempMusicList, SoundGenres
 
         if UserTempMusicList.objects.filter(user_id=self.pk).exists():
             temp_list = UserTempMusicList.objects.get(user_id=self.pk)
@@ -1314,10 +1314,6 @@ class User(AbstractUser):
             return self.get_playlist().get_items()
         try:
             return MusicList.objects.get(pk=temp_list.list.pk).get_items()
-        except:
-            pass
-        try:
-            return SoundTags.objects.get(pk=temp_list.tag.pk).get_items()
         except:
             pass
         try:
