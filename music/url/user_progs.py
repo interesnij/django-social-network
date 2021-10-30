@@ -19,7 +19,7 @@ urlpatterns = [
 
     url(r'^add_track_in_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddTrackInUserList.as_view()),
     url(r'^remove_track_from_list/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemoveTrackFromUserList.as_view()),
-    url(r'^add_track/(?P<pk>\d+)/$', UserTrackCreate.as_view()),
+    url(r'^create_track/(?P<pk>\d+)/$', UserTrackCreate.as_view()),
     url(r'^edit_track/(?P<pk>\d+)/$', UserTrackEdit.as_view()),
     url(r'^delete_track/(?P<pk>\d+)/$', UserTrackRemove.as_view()),
     url(r'^restore_track/(?P<pk>\d+)/$', UserTrackAbortRemove.as_view()),
