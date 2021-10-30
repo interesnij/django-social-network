@@ -113,10 +113,10 @@ class UserLoadMusic(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import SoundList
+		from music.models import MusicList
 		self.list = request.user.get_playlist()
 		self.template_name = get_settings_template("users/load/u_music_load.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.get_lists = SoundList.get_user_lists(request.user.pk)
+		self.get_lists = MusicList.get_user_lists(request.user.pk)
 		return super(UserLoadMusic,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -131,8 +131,8 @@ class UserLoadMusicList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import SoundList
-		self.playlist = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		from music.models import MusicList
+		self.playlist = MusicList.objects.get(uuid=self.kwargs["uuid"])
 		self.template_name = get_settings_template("users/load/u_music_list_load.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserLoadMusicList,self).get(request,*args,**kwargs)
 

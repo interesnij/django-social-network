@@ -304,8 +304,8 @@ class Community(models.Model):
         from posts.models import PostsList
         return PostsList.objects.get(community_id=self.pk, type=PostsList.MAIN)
     def get_playlist(self):
-        from music.models import SoundList
-        return SoundList.objects.get(community_id=self.pk, type=SoundList.MAIN)
+        from music.models import MusicList
+        return MusicList.objects.get(community_id=self.pk, type=MusicList.MAIN)
     def get_video_list(self):
         from video.models import VideoList
         return VideoList.objects.get(community_id=self.pk, type=VideoList.MAIN)
@@ -355,10 +355,10 @@ class Community(models.Model):
         return VideoList.objects.filter(query)
 
     def get_playlists(self):
-        from music.models import SoundList
+        from music.models import MusicList
         query = Q(community_id=self.id)
         query.add(~Q(type__contains="_"), Q.AND)
-        return SoundList.objects.filter(query)
+        return MusicList.objects.filter(query)
 
     def get_good_lists(self):
         from goods.models import GoodList
@@ -950,8 +950,8 @@ class Community(models.Model):
             notify.delete()
 
     def is_community_playlist(self):
-        from music.models import UserTempSoundList
-        return UserTempSoundList.objects.filter(tag=None, community=self, genre=None).exists()
+        from music.models import UserTempMusicList
+        return UserTempMusicList.objects.filter(tag=None, community=self, genre=None).exists()
 
     def is_can_fixed_post(self):
         from posts.models import PostsList

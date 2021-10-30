@@ -174,8 +174,8 @@ def get_message_attach(message, user):
                 pass
         elif item[:3] == "lmu":
             try:
-                from music.models import SoundList
-                playlist = SoundList.objects.get(pk=item[3:])
+                from music.models import MusicList
+                playlist = MusicList.objects.get(pk=item[3:])
                 if playlist.type[0] == "_":
                     pass
                 if playlist.community:
@@ -365,8 +365,8 @@ def get_message_edit(message, user):
                 pass
         elif item[:3] == "lmu":
             try:
-                from music.models import SoundList
-                playlist = SoundList.objects.get(list_query, pk=item[3:])
+                from music.models import MusicList
+                playlist = MusicList.objects.get(list_query, pk=item[3:])
                 if playlist.type[0] == "_":
                     pass
                 block = ''.join([block, '<div class="folder" owner-pk="', str(creator.pk), '" playlist-pk="', str(playlist.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lmu', str(playlist.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 load_playlist pointer"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 load_playlist pointer"><a class="nowrap">', playlist.name, ' (', str(playlist.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])

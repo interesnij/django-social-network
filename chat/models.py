@@ -965,7 +965,7 @@ class Message(models.Model):
         from posts.models import Post
         return try_except(self.repost.type == Post.MUSIC_LIST_REPOST)
     def get_playlist_repost(self):
-        playlist = self.repost.parent.post_soundlist.exclude(type__contains="_")[0]
+        playlist = self.repost.parent.post_musiclist.exclude(type__contains="_")[0]
         return playlist
     def get_music_repost(self):
         music = self.repost.parent.item_music.exclude(type__contains="_")[0]

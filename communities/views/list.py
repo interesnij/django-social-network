@@ -215,17 +215,17 @@ class CommunityMusic(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import SoundList
+		from music.models import MusicList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.list = self.c.get_playlist()
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.get_items = self.list.get_staff_items()
-			self.get_lists = SoundList.get_community_staff_lists(self.c.pk)
+			self.get_lists = MusicList.get_community_staff_lists(self.c.pk)
 		else:
 			self.get_items = self.list.get_items()
-			self.get_lists = SoundList.get_community_staff_lists(self.c.pk)
-		self.count_lists = SoundList.get_community_lists_count(self.c.pk)
+			self.get_lists = MusicList.get_community_staff_lists(self.c.pk)
+		self.count_lists = MusicList.get_community_lists_count(self.c.pk)
 		if request.user.is_anonymous:
 			self.template_name = get_template_anon_community_list(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -244,10 +244,10 @@ class CommunityMusicList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import SoundList
+		from music.models import MusicList
 
-		self.c, self.play = Community.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
-		if self.list.type == SoundList.MAIN:
+		self.c, self.play = Community.objects.get(pk=self.kwargs["pk"]), MusicList.objects.get(uuid=self.kwargs["uuid"])
+		if self.list.type == MusicList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_community_list(self.list, "communities/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

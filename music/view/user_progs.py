@@ -27,7 +27,7 @@ class UserSoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_settings_template("music/music_create/u_soundcloud_set_playlist.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserSoundcloudSetWindow,self).get(request,*args,**kwargs)
 
@@ -50,7 +50,7 @@ class UserSoundcloudSetCreate(View):
 
         if request.is_ajax() and form_post.is_valid():
             list = form_post.save(commit=False)
-            new_list = SoundList.create_list(creator=request.user, name=list.name, description=list.description, community=None)
+            new_list = MusicList.create_list(creator=request.user, name=list.name, description=list.description, community=None)
             add_playlist(request.POST.get('permalink'), request.user, new_list)
             return render_for_platform(request, 'users/music/list/my_list.html',{'playlist': new_list, 'object_list': new_list.get_items(),'user': request.user})
         else:
@@ -58,7 +58,7 @@ class UserSoundcloudSetCreate(View):
 
 class UserSoundcloudSet(View):
     def post(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             add_playlist(request.POST.get('permalink'), request.user, list)
             return HttpResponse()
@@ -67,7 +67,7 @@ class UserSoundcloudSet(View):
 
 class AddPlayListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -77,7 +77,7 @@ class AddPlayListInUserCollections(View):
 
 class RemovePlayListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -88,7 +88,7 @@ class RemovePlayListFromUserCollections(View):
 class AddTrackInUserList(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
 
         if request.is_ajax() and not list.is_item_in_list(track.pk):
             list.playlist.add(track)
@@ -99,7 +99,7 @@ class AddTrackInUserList(View):
 class RemoveTrackFromUserList(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_item_in_list(track.pk):
             list.playlist.remove(track)
             return HttpResponse()
@@ -144,12 +144,12 @@ class UserPlaylistEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserPlaylistEdit,self).get_context_data(**kwargs)
-        context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = MusicList.objects.get(uuid=self.kwargs["uuid"])
         context["user"] = request.user
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
@@ -161,8 +161,8 @@ class UserPlaylistEdit(TemplateView):
 
 class UserPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and list.type != SoundList.MAIN:
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and list.type != MusicList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -170,7 +170,7 @@ class UserPlaylistDelete(View):
 
 class UserPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax():
             list.restore_item()
             return HttpResponse()

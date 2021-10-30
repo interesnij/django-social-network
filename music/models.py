@@ -58,7 +58,7 @@ class SoundSymbol(models.Model):
         verbose_name_plural = "буквы поиска музыки"
 
 
-class SoundList(models.Model):
+class MusicList(models.Model):
     MAIN, LIST, MANAGER = 'MAI','LIS','MAN',
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
     CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
@@ -108,7 +108,7 @@ class SoundList(models.Model):
 
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityPlayListPosition
-        CommunityPlayListPosition.objects.create(community=community.pk, list=self.pk, position=SoundList.get_community_lists_count(community.pk))
+        CommunityPlayListPosition.objects.create(community=community.pk, list=self.pk, position=MusicList.get_community_lists_count(community.pk))
         self.communities.add(community)
     def remove_in_community_collections(self, community):
         from communities.model.list import CommunityPlayListPosition
@@ -116,7 +116,7 @@ class SoundList(models.Model):
         self.communities.remove(user)
     def add_in_user_collections(self, user):
         from users.model.list import UserPlayListPosition
-        UserPlayListPosition.objects.create(user=user.pk, list=self.pk, position=SoundList.get_user_lists_count(user.pk))
+        UserPlayListPosition.objects.create(user=user.pk, list=self.pk, position=MusicList.get_user_lists_count(user.pk))
         self.users.add(user)
     def remove_in_user_collections(self, user):
         from users.model.list import UserPlayListPosition
@@ -126,7 +126,7 @@ class SoundList(models.Model):
     @receiver(post_save, sender=Community)
     def create_c_model(sender, instance, created, **kwargs):
         if created:
-            list = SoundList.objects.create(community=instance, type=SoundList.MAIN, name="Основной список", creator=instance.creator)
+            list = MusicList.objects.create(community=instance, type=MusicList.MAIN, name="Основной список", creator=instance.creator)
             from communities.model.list import CommunityPlayListPosition
             CommunityPlayListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
@@ -202,7 +202,7 @@ class SoundList(models.Model):
         list = cls.objects.create(creator=creator,name=name,description=description, community=community)
         if community:
             from communities.model.list import CommunityPlayListPosition
-            CommunityPlayListPosition.objects.create(community=community.pk, list=list.pk, position=SoundList.get_community_lists_count(community.pk))
+            CommunityPlayListPosition.objects.create(community=community.pk, list=list.pk, position=MusicList.get_community_lists_count(community.pk))
             if is_public:
                 from common.notify.progs import community_send_notify, community_send_wall
                 Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUL", object_id=list.pk, verb="ITE")
@@ -212,7 +212,7 @@ class SoundList(models.Model):
                     community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_music_list_notify")
         else:
             from users.model.list import UserPlayListPosition
-            UserPlayListPosition.objects.create(user=creator.pk, list=list.pk, position=SoundList.get_user_lists_count(creator.pk))
+            UserPlayListPosition.objects.create(user=creator.pk, list=list.pk, position=MusicList.get_user_lists_count(creator.pk))
             if is_public:
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="MUL", object_id=list.pk, verb="ITE")
@@ -220,7 +220,7 @@ class SoundList(models.Model):
                 for user_id in creator.get_user_news_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUL", object_id=list.pk, verb="ITE")
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_music_list_notify")
-        get_playlist_processing(list, SoundList.LIST)
+        get_playlist_processing(list, MusicList.LIST)
         return list
 
     def edit_list(self, name, description, is_public):
@@ -230,16 +230,16 @@ class SoundList(models.Model):
         self.description = description
         self.save()
         if is_public:
-            get_playlist_processing(self, SoundList.LIST)
+            get_playlist_processing(self, MusicList.LIST)
             self.make_publish()
         else:
-            get_playlist_processing(self, SoundList.PRIVATE)
+            get_playlist_processing(self, MusicList.PRIVATE)
             self.make_private()
         return self
 
     def make_private(self):
         from notify.models import Notify, Wall
-        self.type = SoundList.PRIVATE
+        self.type = MusicList.PRIVATE
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
@@ -247,7 +247,7 @@ class SoundList(models.Model):
             Wall.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="C")
     def make_publish(self):
         from notify.models import Notify, Wall
-        self.type = SoundList.LIST
+        self.type = MusicList.LIST
         self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUL", object_id=self.pk, verb="ITE").update(status="R")
@@ -257,9 +257,9 @@ class SoundList(models.Model):
     def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SoundList.DELETED
+            self.type = MusicList.DELETED
         elif self.type == "MAN":
-            self.type = SoundList.DELETED_MANAGER
+            self.type = MusicList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -274,9 +274,9 @@ class SoundList(models.Model):
     def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
-            self.type = SoundList.LIST
+            self.type = MusicList.LIST
         elif self.type == "_DELM":
-            self.type = SoundList.MANAGER
+            self.type = MusicList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -292,11 +292,11 @@ class SoundList(models.Model):
     def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "LIS":
-            self.type = SoundList.CLOSED
+            self.type = MusicList.CLOSED
         elif self.type == "MAI":
-            self.type = SoundList.CLOSED_MAIN
+            self.type = MusicList.CLOSED_MAIN
         elif self.type == "MAN":
-            self.type = SoundList.CLOSED_MANAGER
+            self.type = MusicList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -311,11 +311,11 @@ class SoundList(models.Model):
     def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
-            self.type = SoundList.LIST
+            self.type = MusicList.LIST
         elif self.type == "_CLOM":
-            self.type = SoundList.MAIN
+            self.type = MusicList.MAIN
         elif self.type == "_CLOM":
-            self.type = SoundList.MANAGER
+            self.type = MusicList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -437,9 +437,9 @@ class SoundTags(models.Model):
         verbose_name = "тег"
         verbose_name_plural = "теги"
 
-class UserTempSoundList(models.Model):
+class UserTempMusicList(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
-    list = models.ForeignKey(SoundList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
+    list = models.ForeignKey(MusicList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
     tag = models.ForeignKey(SoundTags, related_name='tag_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на тег")
     genre = models.ForeignKey(SoundGenres, related_name='genre_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на жанр")
 
@@ -459,7 +459,7 @@ class Music(models.Model):
     tag = models.ForeignKey(SoundTags, blank=True, null=True, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255, blank=True, null=True)
     uri = models.CharField(max_length=255, blank=True, null=True)
-    list = models.ForeignKey(SoundList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
+    list = models.ForeignKey(MusicList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
     type = models.CharField(choices=TYPE, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")

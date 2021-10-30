@@ -1,11 +1,11 @@
-from music.models import SoundList, Music
+from music.models import MusicList, Music
 from django import forms
 
 
 class PlaylistForm(forms.ModelForm):
 
 	class Meta:
-		model = SoundList
+		model = MusicList
 		fields = ['name', 'description']
 
 class TrackForm(forms.ModelForm):

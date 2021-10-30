@@ -12,7 +12,7 @@ import django, json, requests
 
 django.setup()
 
-from music.models import SoundList
+from music.models import MusicList
 from video.models import VideoList
 from posts.models import PostsList, Post
 from docs.models import DocsList
@@ -67,7 +67,7 @@ for list in photo_lists:
     else:
         UserPhotoListPosition.objects.create(list=list.pk, user=list.creator.pk)
 
-music_lists = SoundList.objects.all()
+music_lists = MusicList.objects.all()
 for list in music_lists:
     if list.community:
         CommunityPlayListPosition.objects.create(list=list.pk, community=list.community.pk)

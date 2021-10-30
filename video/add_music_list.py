@@ -30,7 +30,7 @@ if data:
     img.thumbnail((300, 300), Image.ANTIALIAS)
     thumb_io = BytesIO()
     img.save(thumb_io, img.format, quality=60)
-    list = SoundList.objects.get(uuid='2759b12e-20ba-4214-85a6-0f303da28276')
+    list = MusicList.objects.get(uuid='2759b12e-20ba-4214-85a6-0f303da28276')
     image = img.save(img.filename, quality=90)
     list.image.save(img.filename, ContentFile(thumb_io.getvalue()), save=False)
     list.save()
