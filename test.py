@@ -40,7 +40,7 @@ from docs.models import DocsList, Doc
 from posts.models import PostsList, Post
 from communities.models import Community
 from communities.model.list import CommunityDocsListPosition
-from users.model.list import UserDocsListPosition
+from users.model.list import UserPlayListPosition
 from users.models import User
 
 
