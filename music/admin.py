@@ -17,5 +17,4 @@ class MusicListAdmin(admin.ModelAdmin):
 admin.site.register(Music, MusicAdmin)
 admin.site.register(SoundGenres)
 admin.site.register(MusicList, MusicListAdmin)
-admin.site.register(SoundSymbol)
 admin.site.register(UserTempMusicList)
