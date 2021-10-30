@@ -454,7 +454,7 @@ class Music(models.Model):
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     duration = models.CharField(max_length=255, blank=True, null=True)
-    genre = models.ForeignKey(SoundGenres, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
+    genre = models.ForeignKey(SoundGenres, blank=True, null=True, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
     tag = models.ForeignKey(SoundTags, blank=True, null=True, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255)
     #uri = models.CharField(max_length=255, blank=True, null=True)
