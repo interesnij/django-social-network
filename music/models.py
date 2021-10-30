@@ -507,7 +507,7 @@ class Music(models.Model):
         self.save()
 
     @classmethod
-    def create_track(cls, creator, title, file, list, community):
+    def create_track(cls, creator, title, file, list, community=None):
         from common.processing.music import get_music_processing
 
         list.count += 1
@@ -518,25 +518,24 @@ class Music(models.Model):
         else:
             user.plus_tracks(1)
         get_music_processing(track, Track.PUBLISHED)
-        if not list.is_private():
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
+        #if not list.is_private():
+        #    if community:
+        #        from common.notify.progs import community_send_notify, community_send_wall
+        #        from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
-                community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-                    community_send_notify(track.pk, creator.pk, user_id, community.pk, None, "create_c_track_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
+        #        Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
+        #        community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
+        #        for user_id in community.get_member_for_notify_ids():
+        #            Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
+        #            community_send_notify(track.pk, creator.pk, user_id, community.pk, None, "create_c_track_notify")
+        #        from common.notify.progs import user_send_notify, user_send_wall
+        #        from notify.models import Notify, Wall
 
-                Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
-                user_send_wall(track.pk, None, "create_u_track_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-                    user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
+        #        Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
+        #        user_send_wall(track.pk, None, "create_u_track_wall")
+        #        for user_id in creator.get_user_news_notify_ids():
+        #            Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
+        #            user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
         return track
 
     def edit_track(self, title, file, list):

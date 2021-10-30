@@ -210,7 +210,7 @@ class CommunityTrackCreate(TemplateView):
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(self.kwargs["pk"]):
             track = form_post.save(commit=False)
-            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, list=track.list, is_public=request.POST.get("is_public"), community=community)
+            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, list=track.list, community=community)
             return render_for_platform(request, 'music/music_create/c_new_track.html',{'object': new_track})
         else:
             return HttpResponseBadRequest()
