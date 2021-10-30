@@ -44,6 +44,7 @@ from users.model.list import UserDocsListPosition
 from users.models import User
 
 
+UserPlayListPosition.objects.all().delete()
 for u in User.objects.all():
-    if len(u.phone) < 4:
-        u.delete()
+    music_list = MusicList.objects.create(creator=u, type=MusicList.MAIN, name="Основной список")
+    UserPlayListPosition.objects.create(user=u.pk, list=music_list.pk, position=1)
