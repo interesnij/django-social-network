@@ -480,8 +480,8 @@ class Music(models.Model):
     def __str__(self):
         return self.title
 
-    def get_lists(self):
-        return self.list.only("pk")
+    def get_duration(self):
+        return "0"
 
     def get_mp3(self):
         url = self.uri + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
