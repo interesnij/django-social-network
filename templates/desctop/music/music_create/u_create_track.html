@@ -1,0 +1,31 @@
+
+    <form class="is_stat_list" data-pk="{{ user.pk }}" data-type="create_user_music">
+      {% csrf_token %}
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="content-color-primary mb-0">Создание аудиозаписи</h5>
+            </div>
+            <div class="card-body">
+                  <div class="form-group">
+                    <label>Название</label>
+                    <input type="text" name="title" class="form-control" id="id_title">
+                  </div>
+                  <div class="form-group">
+                    <label>Списки</label>
+                    <select class="form-control" id="id_list" name="list" style="height: 100%">
+                        {% for object in request.user.get_playlists %}
+                        <option data-uuid="{{ object.uuid }}" value="{{ object.pk }}">{{ object.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Файл</label>
+                    {{ form_post.file }}
+                  </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="u_create_track_btn">Создать</button>
+            </div>
+        </div>
+    </form>

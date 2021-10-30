@@ -26,4 +26,4 @@ def validate_file_extension(value):
     if not ext in valid_extensions:
         raise ValidationError('Допустимы форматы: ogg, mp3, wave!')
     if value.size > settings.MUSIC_FILE_MAX_SIZE:
-        raise ValidationError('Размер не более 5 МБ!')
+        raise ValidationError('Размер не более 10 МБ!')
