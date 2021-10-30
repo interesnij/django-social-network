@@ -9,13 +9,6 @@ class MusicAdmin(admin.ModelAdmin):
     class Meta:
             model = Music
 
-class SoundTagsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'symbol']
-    search_fields = ['name']
-    list_filter = ['symbol']
-    class Meta:
-            model = SoundTags
-
 
 class MusicListAdmin(admin.ModelAdmin):
     search_fields = ('creator',)
@@ -25,5 +18,4 @@ admin.site.register(Music, MusicAdmin)
 admin.site.register(SoundGenres)
 admin.site.register(MusicList, MusicListAdmin)
 admin.site.register(SoundSymbol)
-admin.site.register(SoundTags, SoundTagsAdmin)
 admin.site.register(UserTempMusicList)
