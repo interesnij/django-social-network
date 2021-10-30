@@ -94,7 +94,7 @@ class LoadPlaylist(ListView):
 	template_name, community = None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = SoundList.objects.get(pk=self.kwargs["pk"])
+		self.list = MusicList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:

@@ -13,11 +13,11 @@ class TempListOn(View):
     Выставляем плейлист пользователя как активный.
     """
     def get(self, request, *args, **kwargs):
-        list = SoundList.objects.get(pk=self.kwargs["pk"])
+        list = MusicList.objects.get(pk=self.kwargs["pk"])
         try:
-            my_list = UserTempSoundList.objects.get(user=request.user)
+            my_list = UserTempMusicList.objects.get(user=request.user)
         except:
-            my_list = UserTempSoundList.objects.create(user=request.user)
+            my_list = UserTempMusicList.objects.create(user=request.user)
         if request.is_ajax():
             my_list.tag = None
             my_list.genre = None
@@ -34,9 +34,9 @@ class TempTagOn(View):
     def get(self, request, *args, **kwargs):
         tag = SoundTags.objects.get(pk=self.kwargs["pk"])
         try:
-            temp_tag = UserTempSoundList.objects.get(user=request.user)
+            temp_tag = UserTempMusicList.objects.get(user=request.user)
         except:
-            temp_tag = UserTempSoundList.objects.create(user=request.user)
+            temp_tag = UserTempMusicList.objects.create(user=request.user)
         if request.is_ajax():
             temp_tag.list = None
             temp_tag.genre = None
@@ -53,9 +53,9 @@ class TempGenreOn(View):
     def get(self, request, *args, **kwargs):
         genre = SoundGenres.objects.get(pk=self.kwargs["pk"])
         try:
-            temp_genre = UserTempSoundList.objects.get(user=request.user)
+            temp_genre = UserTempMusicList.objects.get(user=request.user)
         except:
-            temp_genre = UserTempSoundList.objects.create(user=request.user)
+            temp_genre = UserTempMusicList.objects.create(user=request.user)
         if request.is_ajax():
             temp_genre.list = None
             temp_genre.genre = genre

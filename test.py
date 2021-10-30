@@ -34,7 +34,7 @@ import json, requests
 from gallery.models import PhotoList
 from goods.models import GoodList
 from video.models import VideoList
-from music.models import SoundList
+from music.models import MusicList
 from survey.models import SurveyList
 from docs.models import DocsList, Doc
 from posts.models import PostsList, Post

@@ -33,7 +33,7 @@ class ListMusicGet(TemplateView):
     template_name = "desctop/music/load_playlist.html"
 
     def get(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(pk=self.kwargs["pk"])
+        self.list = MusicList.objects.get(pk=self.kwargs["pk"])
         return super(ListMusicGet,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):

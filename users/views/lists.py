@@ -125,15 +125,15 @@ class UserMusicList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		from music.models import SoundList
+		from music.models import MusicList
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+		self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
 			self.sound_list = self.list.get_staff_items()
 		else:
 			self.sound_list = self.list.get_items()
-		if self.list.type == SoundList.MAIN:
+		if self.list.type == MusicList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

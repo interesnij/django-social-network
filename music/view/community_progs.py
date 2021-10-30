@@ -26,7 +26,7 @@ class CommunitySoundcloudSetWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_community_manage_template("music/music_create/c_soundcloud_set_playlist.html", request.user, Community.objects.get(pk=self.kwargs["pk"]), request.META['HTTP_USER_AGENT'])
         return super(CommunitySoundcloudSetWindow,self).get(request,*args,**kwargs)
 
@@ -57,7 +57,7 @@ class CommunitySoundcloudSetCreate(View):
 
 class CommunitySoundcloudSet(View):
     def post(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             add_playlist(request.POST.get('permalink'), request.user, list)
             return HttpResponse()
@@ -66,7 +66,7 @@ class CommunitySoundcloudSet(View):
 
 class AddPlayListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -77,7 +77,7 @@ class AddPlayListInCommunityCollections(View):
 
 class RemovePlayListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -88,7 +88,7 @@ class RemovePlayListFromCommunityCollections(View):
 
 class AddTrackInCommunityList(View):
     def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and not list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.playlist.add(track)
             return HttpResponse()
@@ -97,7 +97,7 @@ class AddTrackInCommunityList(View):
 
 class RemoveTrackFromCommunityList(View):
     def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), SoundList.objects.get(uuid=self.kwargs["uuid"])
+        track, list = Music.objects.get(pk=self.kwargs["pk"]), MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
             list.playlist.remove(track)
             return HttpResponse()
@@ -136,18 +136,18 @@ class CommunityPlaylistEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         self.template_name = get_community_manage_template("music/music_create/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityPlaylistEdit,self).get_context_data(**kwargs)
-        context["list"] = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = MusicList.objects.get(uuid=self.kwargs["uuid"])
         context["community"] = Community.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
@@ -159,8 +159,8 @@ class CommunityPlaylistEdit(TemplateView):
 
 class CommunityPlaylistDelete(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != SoundList.MAIN:
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
+        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != MusicList.MAIN:
             list.delete_item()
             return HttpResponse()
         else:
@@ -168,7 +168,7 @@ class CommunityPlaylistDelete(View):
 
 class CommunityPlaylistRecover(View):
     def get(self,request,*args,**kwargs):
-        list = SoundList.objects.get(uuid=self.kwargs["uuid"])
+        list = MusicList.objects.get(uuid=self.kwargs["uuid"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.restore_item()
             return HttpResponse()

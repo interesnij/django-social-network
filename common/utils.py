@@ -175,7 +175,7 @@ def create_user_models(user):
     from docs.models import DocsList
     from gallery.models import PhotoList
     from goods.models import GoodList
-    from music.models import SoundList
+    from music.models import MusicList
     from posts.models import PostsList
     from video.models import VideoList
     from users.model.list import (
@@ -203,7 +203,7 @@ def create_user_models(user):
     post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
     UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
 
-    music_list = SoundList.objects.create(creator=user, type=SoundList.MAIN, name="Основной список")
+    music_list = MusicList.objects.create(creator=user, type=MusicList.MAIN, name="Основной список")
     UserPlayListPosition.objects.create(user=user.pk, list=music_list.pk, position=1)
 
     video_list = VideoList.objects.create(creator=user, type=VideoList.MAIN, name="Основной список")

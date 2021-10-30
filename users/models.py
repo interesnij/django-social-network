@@ -639,20 +639,20 @@ class User(AbstractUser):
         return self.profile.tracks > 0
 
     def is_user_playlist(self):
-        from music.models import UserTempSoundList
-        return UserTempSoundList.objects.filter(user=self, tag=None, genre=None).exists()
+        from music.models import UserTempMusicList
+        return UserTempMusicList.objects.filter(user=self, tag=None, genre=None).exists()
 
     def is_user_temp_list(self, list):
-        from music.models import UserTempSoundList
-        return UserTempSoundList.objects.filter(user=self, tag=None, genre=None, list=list).exists()
+        from music.models import UserTempMusicList
+        return UserTempMusicList.objects.filter(user=self, tag=None, genre=None, list=list).exists()
 
     def is_tag_playlist(self, tag):
-        from music.models import UserTempSoundList
-        return UserTempSoundList.objects.filter(user=self, tag=tag, genre=None).exists()
+        from music.models import UserTempMusicList
+        return UserTempMusicList.objects.filter(user=self, tag=tag, genre=None).exists()
 
     def is_genre_playlist(self, genre):
-        from music.models import UserTempSoundList
-        return UserTempSoundList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
+        from music.models import UserTempMusicList
+        return UserTempMusicList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
 
     def is_user_administrator(self):
         return self.is_superuser or try_except(self.user_staff.level == "A")
@@ -1234,10 +1234,10 @@ class User(AbstractUser):
         return VideoList.objects.filter(query)
 
     def get_playlists(self):
-        from music.models import SoundList
+        from music.models import MusicList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
-        return SoundList.objects.filter(query)
+        return MusicList.objects.filter(query)
 
     def get_good_lists(self):
         from goods.models import GoodList
@@ -1249,8 +1249,8 @@ class User(AbstractUser):
         from goods.models import GoodList
         return GoodList.objects.get(creator_id=self.pk, community__isnull=True, type="MAI")
     def get_playlist(self):
-        from music.models import SoundList
-        return SoundList.objects.get(creator_id=self.pk, community__isnull=True, type=SoundList.MAIN)
+        from music.models import MusicList
+        return MusicList.objects.get(creator_id=self.pk, community__isnull=True, type=MusicList.MAIN)
     def get_video_list(self):
         from video.models import VideoList
         return VideoList.objects.get(creator_id=self.pk, community__isnull=True, type=VideoList.MAIN)
@@ -1274,8 +1274,8 @@ class User(AbstractUser):
         from survey.models import SurveyList
         return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
     def get_playlists(self):
-        from music.models import SoundList
-        return SoundList.objects.filter(creator_id=self.id, community__isnull=True, type=SoundList.MAIN)
+        from music.models import MusicList
+        return MusicList.objects.filter(creator_id=self.id, community__isnull=True, type=MusicList.MAIN)
 
     def get_6_photos(self):
         from gallery.models import Photo
@@ -1306,14 +1306,14 @@ class User(AbstractUser):
         return self.get_video_list().get_items()[:2]
 
     def my_playlist_too(self):
-        from music.models import SoundList, UserTempSoundList, SoundTags, SoundGenres
+        from music.models import MusicList, UserTempMusicList, SoundTags, SoundGenres
 
-        if UserTempSoundList.objects.filter(user_id=self.pk).exists():
-            temp_list = UserTempSoundList.objects.get(user_id=self.pk)
+        if UserTempMusicList.objects.filter(user_id=self.pk).exists():
+            temp_list = UserTempMusicList.objects.get(user_id=self.pk)
         else:
             return self.get_playlist().get_items()
         try:
-            return SoundList.objects.get(pk=temp_list.list.pk).get_items()
+            return MusicList.objects.get(pk=temp_list.list.pk).get_items()
         except:
             pass
         try:

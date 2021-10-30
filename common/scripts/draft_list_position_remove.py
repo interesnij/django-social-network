@@ -12,7 +12,7 @@ import django, json, requests
 
 django.setup()
 
-from music.models import SoundList
+from music.models import MusicList
 from video.models import VideoList
 from posts.models import PostsList, Post
 from docs.models import DocsList

@@ -3,7 +3,7 @@ from communities.models import Community
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
 from posts.models import Post
-from music.models import SoundList, Music
+from music.models import MusicList, Music
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
@@ -58,7 +58,7 @@ class UUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist, self.user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        self.playlist, self.user = MusicList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         self.template_name = get_detect_platform_template("music/repost/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -78,7 +78,7 @@ class CUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist, self.community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        self.playlist, self.community = MusicList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("music/repost/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicListWindow,self).get(request,*args,**kwargs)
@@ -195,7 +195,7 @@ class UUMusicListRepost(View):
     создание репоста плейлиста пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        playlist, user, attach = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
+        playlist, user, attach = MusicList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         form_post = PostForm(request.POST)
@@ -213,7 +213,7 @@ class CUMusicListRepost(View):
     создание репоста плейлиста сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        playlist, community, form_post, attach = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        playlist, community, form_post, attach = MusicList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -230,7 +230,7 @@ class UCMusicListRepost(View):
     создание репоста плейлиста пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        playlist, user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        playlist, user = MusicList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
@@ -252,7 +252,7 @@ class CCMusicListRepost(View):
     создание репоста плейлиста сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        playlist, community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        playlist, community = MusicList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
         attach = request.POST.getlist('attach_items')
@@ -273,7 +273,7 @@ class UMMusicListRepost(View):
     создание репоста плейлиста пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        playlist, user = SoundList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        playlist, user = MusicList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(playlist, "lmu"+str(playlist.pk), None, request, "Репост плейлиста пользователя")
@@ -285,7 +285,7 @@ class CMMusicListRepost(View):
     создание репоста плейлиста сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        playlist, community = SoundList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        playlist, community = MusicList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(playlist, "lmu"+str(playlist.pk), community, request, "Репост плейлиста сообщества")
         return HttpResponse()
