@@ -59,5 +59,5 @@ on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
 
 on('#ajax', 'click', '.u_track_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/music/user_progs/add_track/" + pk + "/", "worker_fullscreen");
+  create_fullscreen("/music/user_progs/create_track/" + pk + "/", "worker_fullscreen");
 });
