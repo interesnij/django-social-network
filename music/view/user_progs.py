@@ -212,7 +212,7 @@ class UserTrackCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid():
             track = form_post.save(commit=False)
-            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, list=track.list, is_public=request.POST.get("is_public"), community=None)
+            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, list=track.list)
             return render_for_platform(request, 'music/music_create/u_new_track.html',{'object': new_track})
         else:
             return HttpResponseBadRequest()
