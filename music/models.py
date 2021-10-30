@@ -33,29 +33,34 @@ class SoundGenres(models.Model):
         verbose_name_plural = "жанры"
 
 
-class SoundSymbol(models.Model):
-    RUS_SYMBOL = 'RS'
-    ANGL_SYMBOL = 'AS'
-    NUMBER_SYMBOL = 'NS'
-    SYMBOL_TYPES = (
-        (RUS_SYMBOL, 'русские исполнители'),
-        (ANGL_SYMBOL, 'английские исполнители'),
-        (NUMBER_SYMBOL, 'исполнители по цифрам'),
-        )
-
+class Artist(models.Model):
     name = models.CharField(max_length=100)
     order = models.IntegerField(default=0)
-    type = models.CharField(max_length=5, choices=SYMBOL_TYPES, default=ANGL_SYMBOL, verbose_name="Язык исполнителя")
+    image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 96}, upload_to="/music/artist/", processors=[Transpose(), ResizeToFit(width=500, height=500)])
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
     def __str__(self):
         return self.name
 
-    def get_tags_count(self):
-        return self.symbol_papa.count()
+    class Meta:
+        verbose_name = "Исполнитель"
+        verbose_name_plural = "Исполнители"
+
+class MusicAlbum(models.Model):
+    name = models.CharField(max_length=255)
+    artist = models.ForeignKey(Artist, related_name='artist_playlist', blank=True, null=True, db_index=False, on_delete=models.CASCADE, verbose_name="Исполнитель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+    image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
+    count = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name + " " + self.creator.get_full_name()
 
     class Meta:
-        verbose_name = "буква поиска музыки"
-        verbose_name_plural = "буквы поиска музыки"
+        verbose_name = "плейлист"
+        verbose_name_plural = "плейлисты"
 
 
 class MusicList(models.Model):
@@ -193,7 +198,7 @@ class MusicList(models.Model):
         return self.type[:4] == "_CLO"
 
     @classmethod
-    def create_list(cls, creator, name, description, community):
+    def create_list(cls, creator, name, description, community=None):
         from notify.models import Notify, Wall
         from common.processing.music import get_playlist_processing
 
@@ -223,18 +228,18 @@ class MusicList(models.Model):
         get_playlist_processing(list, MusicList.LIST)
         return list
 
-    def edit_list(self, name, description, is_public):
+    def edit_list(self, name, description):
         from common.processing.music import get_playlist_processing
 
         self.name = name
         self.description = description
         self.save()
-        if is_public:
-            get_playlist_processing(self, MusicList.LIST)
-            self.make_publish()
-        else:
-            get_playlist_processing(self, MusicList.PRIVATE)
-            self.make_private()
+        #if is_public:
+        get_playlist_processing(self, MusicList.LIST)
+        #    self.make_publish()
+        #else:
+        #    get_playlist_processing(self, MusicList.PRIVATE)
+        #    self.make_private()
         return self
 
     def make_private(self):
@@ -401,42 +406,6 @@ class MusicList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
 
-class SoundTags(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    order = models.IntegerField(default=0)
-    symbol = models.ForeignKey(SoundSymbol, related_name="symbol_papa", on_delete=models.CASCADE, verbose_name="Буква")
-
-    def __str__(self):
-        return self.name
-
-    def is_track_in_tag(self, track_id):
-        self.track_tag.filter(id=track_id).exists()
-
-    def get_genres(self):
-        from django.db.models import Q
-
-        genres_list = []
-        genres = self.track_tag.values('genre_id')
-        genres_ids = [id['genre_id'] for id in genres]
-        for genre in genres_ids:
-            if not genre in genres_list:
-                genres_list = genres_list + [genre,]
-
-        genres_query = Q(id__in=genres_list)
-        result = SoundGenres.objects.filter(genres_query)
-        return result
-
-    def get_items(self):
-        queryset = self.track_tag.all()
-        return queryset
-
-    def get_tracks_count(self):
-        return self.track_tag.count()
-
-    class Meta:
-        verbose_name = "тег"
-        verbose_name_plural = "теги"
-
 class UserTempMusicList(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_of_field', db_index=False, on_delete=models.CASCADE, verbose_name="Слушатель")
     list = models.ForeignKey(MusicList, related_name='list_field', null=True, blank=True, on_delete=models.CASCADE, verbose_name="Связь на плейлист человека или сообщества")
@@ -455,10 +424,9 @@ class Music(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     duration = models.CharField(max_length=255, blank=True, null=True)
     genre = models.ForeignKey(SoundGenres, blank=True, null=True, related_name='track_genre', on_delete=models.CASCADE, verbose_name="Жанр трека")
-    tag = models.ForeignKey(SoundTags, blank=True, null=True, related_name='track_tag', on_delete=models.CASCADE, verbose_name="Буква")
     title = models.CharField(max_length=255)
-    #uri = models.CharField(max_length=255, blank=True, null=True)
     list = models.ForeignKey(MusicList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
+    album = models.ForeignKey(MusicAlbum, on_delete=models.SET_NULL, related_name='album_playlist', blank=True, null=True)
     type = models.CharField(choices=TYPE, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
@@ -482,17 +450,6 @@ class Music(models.Model):
 
     def get_duration(self):
         return "0"
-
-    def get_mp3(self):
-        url = self.uri + '/stream?client_id=3ddce5652caa1b66331903493735ddd64d'
-        url.replace("\\?", "%3f")
-        url.replace("=", "%3d")
-        return url
-    def get_uri(self):
-        if self.file:
-            return self.file.url
-        else:
-            return self.uri
 
     def get_remote_image(self, image_url):
         import os
