@@ -49,7 +49,7 @@ class Artist(models.Model):
 class MusicAlbum(models.Model):
     name = models.CharField(max_length=255)
     artist = models.ForeignKey(Artist, related_name='artist_playlist', blank=True, null=True, db_index=False, on_delete=models.CASCADE, verbose_name="Исполнитель")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_playlist_album', db_index=False, on_delete=models.CASCADE, verbose_name="Создатель")
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=400, height=400)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
