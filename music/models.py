@@ -516,7 +516,7 @@ class Music(models.Model):
         if community:
             community.plus_tracks(1)
         else:
-            user.plus_tracks(1)
+            creator.plus_tracks(1)
         get_music_processing(track, Track.PUBLISHED)
         #if not list.is_private():
         #    if community:
