@@ -31,7 +31,6 @@ def get_post_attach(post, user):
             try:
                 from music.models import Music
                 music = Music.objects.get(pk=item[3:], type="PUB")
-                music_counter += 1
                 if music.image:
                     figure = ''.join(['<figure><a class="music_list_post music_thumb pointer"><img style="width:30px;heigth:auto" src="', music.image.url, '" alt="img" /></a></figure>'])
                 else:
