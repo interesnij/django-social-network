@@ -517,7 +517,7 @@ class Music(models.Model):
             community.plus_tracks(1)
         else:
             creator.plus_tracks(1)
-        get_music_processing(track, Track.PUBLISHED)
+        get_music_processing(track, Music.PUBLISHED)
         #if not list.is_private():
         #    if community:
         #        from common.notify.progs import community_send_notify, community_send_wall
