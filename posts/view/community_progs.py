@@ -123,7 +123,7 @@ class PostCommunityEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_admin_template
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Post.objects.get(pk=self.kwargs["pk"])
         self.community = self.post.community
         if request.user.is_administrator_of_community(self.community.pk):
             self.template_name = get_admin_template(self.community, "posts/post_community/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])
