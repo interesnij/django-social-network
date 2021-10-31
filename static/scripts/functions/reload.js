@@ -42,7 +42,7 @@ function create_window_stat_list(block) {
     push_window_stat_list()
   };
   item = block.querySelector(".is_stat_list");
-  main_container = document.body.querySelector(".main_container");
+  main_container = document.body.querySelector(".main-container");
   $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
   console.log($new_window_list)
 };
@@ -299,7 +299,7 @@ var delayedExec = function(after, fn) {
 
 function append_items_in_stat_list(block, list) {
   _list = block.querySelectorAll('.pag');
-  main_container = document.body.querySelector(".main_container");
+  main_container = document.body.querySelector(".main-container");
   for (var i = 0; i < _list.length; i++) {
       if (!_list[i].classList.contains("showed")) {
           inViewport = elementInViewport(_list[i]);
@@ -340,7 +340,7 @@ $page_stat = [];
 $list_stat = [];
 
 // инициализируем временные списки для сбора статистики
-init_stat_lists(document.body.querySelector(".main_container"), '', '');
+init_stat_lists(document.body.querySelector(".main-container"), '', '');
 
 function init_stat_lists(next_block, prev_type, prev_pk) {
   if ($page_stat.length) {
