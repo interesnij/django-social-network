@@ -511,7 +511,7 @@ function post_and_load_object_page(form, url_post, url_1, url_2) {
 
             prev_container = rtr.querySelector(".main-container");
             next_container = ajax.querySelector(".main-container");
-            add_list_in_all_stat(next_container.getAttribute("data-pk"),next_container.getAttribute("data-type"),prev_container.getAttribute("data-pk"),prev_container.getAttribute("data-type"))
+            add_list_in_all_stat("created_" + next_container.getAttribute("data-type"),next_container.getAttribute("data-pk"),prev_container.getAttribute("data-type"),prev_container.getAttribute("data-pk"))
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
