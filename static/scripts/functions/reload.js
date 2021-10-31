@@ -42,7 +42,8 @@ function create_window_stat_list(block) {
     push_window_stat_list()
   };
   item = block.querySelector(".is_stat_list");
-  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, $main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
+  main_container = document.body.querySelector(".main_container");
+  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
   console.log($new_window_list)
 };
 
@@ -298,6 +299,7 @@ var delayedExec = function(after, fn) {
 
 function append_items_in_stat_list(block, list) {
   _list = block.querySelectorAll('.pag');
+  main_container = document.body.querySelector(".main_container");
   for (var i = 0; i < _list.length; i++) {
       if (!_list[i].classList.contains("showed")) {
           inViewport = elementInViewport(_list[i]);
@@ -309,7 +311,7 @@ function append_items_in_stat_list(block, list) {
             pk = _list[i].getAttribute('data-pk');
             type = _list[i].getAttribute('data-type');
             if ($all_stat.indexOf(type + " " + pk) == -1 && $new_elements.indexOf(pk + " " + type) == -1) {
-              list.push([type,pk,0,$main_container.getAttribute("data-pk"),$main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
+              list.push([type,pk,0,main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]);
               console.log(list);
             };
             _list[i].classList.add("showed");
@@ -324,7 +326,6 @@ var window_scrollStopper = delayedExec(3000, function() {
     } catch {null};
 });
 
-$main_container = document.body.querySelector(".main-container");
 // высота экрана в переаводе на метры
 $window_height = parseFloat(window.innerHeight * 0.000264).toFixed(2);
 
@@ -339,10 +340,9 @@ $page_stat = [];
 $list_stat = [];
 
 // инициализируем временные списки для сбора статистики
-init_stat_lists($main_container, '', '');
+init_stat_lists(main_container = document.body.querySelector(".main_container"), '', '');
 
 function init_stat_lists(next_block, prev_type, prev_pk) {
-  $main_container = next_block;
   if ($page_stat.length) {
   el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8]
   $all_stat.push(el_page_stat);
