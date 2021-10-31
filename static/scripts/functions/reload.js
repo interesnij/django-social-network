@@ -61,7 +61,7 @@ function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
+    get_document_opacity_1();
     push_window_stat_list()
   } else {
     create_window_stat_list(container.querySelector(".card_fullscreen"));
@@ -72,7 +72,7 @@ function close_work_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
+    get_document_opacity_1();
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
@@ -662,7 +662,7 @@ function this_page_reload(url) {
             window.scrollTo(0, 0);
             if_list(rtr);
             create_pagination(rtr);
-            get_document_opacity_1(document.body.querySelector(".main-container"));
+            get_document_opacity_1();
         }
     }
     ajax_link.send()
@@ -694,7 +694,7 @@ window.addEventListener('popstate', function (e) {
           create_pagination(rtr);
           get_dragula(".drag_container");
           get_dragula(".drag_list");
-          get_document_opacity_1(rtr);
+          get_document_opacity_1();
           $serf_history.push(document.location.href);
 
       }
@@ -727,7 +727,7 @@ function ajax_get_reload(url) {
             create_pagination(rtr);
             get_dragula(".drag_container");
             get_dragula(".drag_list");
-            get_document_opacity_1(rtr);
+            get_document_opacity_1();
             console.log($all_stat);
         }
     }
@@ -757,7 +757,7 @@ function search_ajax_get_reload(url) {
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);
-            get_document_opacity_1(rtr);
+            get_document_opacity_1();
 
             try{
               document.getElementById("user_height").innerHTML = elem_.querySelector("#user_height").innerHTML;

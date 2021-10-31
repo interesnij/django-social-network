@@ -45,7 +45,7 @@ on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
     toast_error("Ссылка - обязательное поле!"); return
   } else {this.disabled = true;}
   post_and_load_object_page(form, "/music/community_progs/create_soundcloud_set/", "/communities/", "/music_list/");
-  get_document_opacity_1(document.body.querySelector(".main-container"));
+  get_document_opacity_1();
 });
 
 on('#ajax', 'click', '.c_add_music_list', function(e) {

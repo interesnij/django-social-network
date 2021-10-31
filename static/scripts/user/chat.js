@@ -337,7 +337,7 @@ on('#ajax', 'click', '#add_chat_btn', function() {
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
             window.history.pushState(null, "vfgffgfgf", "/chat/" + pk + "/");
-            get_document_opacity_1(document.body.querySelector(".main-container"));
+            get_document_opacity_1();
         }
       }
       ajax_link.send(form_data);
