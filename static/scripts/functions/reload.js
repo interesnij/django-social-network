@@ -340,11 +340,9 @@ $page_stat = [];
 $list_stat = [];
 
 // инициализируем временные списки для сбора статистики
-init_stat_lists(main_container = document.body.querySelector(".main_container"), '', '');
+init_stat_lists(document.body.querySelector(".main_container"), '', '');
 
 function init_stat_lists(next_block, prev_type, prev_pk) {
-  $main_container = next_block;
-  console.log(next_block);
   if ($page_stat.length) {
   el_page_stat = $page_stat[0] + ";" + $page_stat[1] + ";" + $page_stat[2] + ";" + $page_stat[3] + ";" + $page_stat[4] + ";" + $page_stat[5] + ";" + $page_stat[6] + ";" + $page_stat[7] + ";" + $page_stat[8]
   $all_stat.push(el_page_stat);
