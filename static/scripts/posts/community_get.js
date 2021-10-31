@@ -9,8 +9,9 @@ on('#ajax', 'click', '.c_post_edit', function() {
     block.querySelector(".fullscreen") ? block.querySelector(".fullscreen").style.display = "none" : null;
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
+    pk = block.getAttribute("data-pk");
 
-    list_load(div, "/posts/community_progs/edit_post/" + block.getAttribute("data-uuid") + "/")
+    list_load(div, "/posts/community_progs/edit_post/" + pk + "/");
   }
 });
 

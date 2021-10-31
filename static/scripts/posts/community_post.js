@@ -51,6 +51,7 @@ on('#ajax', 'click', '#c_add_post_btn', function() {
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    main_container = document.body.querySelector(".main-container");
     add_list_in_all_stat("created_community_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   } else {
         new_post = document.createElement("span");
@@ -177,6 +178,7 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
 
     div = document.createElement("div");div.classList.add("media");_div = document.createElement("div");_div.classList.add("media-body");h6 = document.createElement("h6");h6.classList.add("mb-0");h6.innerHTML = name;_div.append(h6); div.append(_div);document.body.querySelector(".date-list").prepend(div);
     close_work_fullscreen();
+    main_container = document.body.querySelector(".main-container");
     add_list_in_all_stat("created_community_post_list",new_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
 

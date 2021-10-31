@@ -42,7 +42,7 @@ on('#ajax', 'click', '.post_list_change', function() {
     list_block_load(block, ".span_list_pk", url + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "post_list_change");
     this.classList.add("active");
-    reload_list_stat(this); 
+    reload_list_stat(this);
   }
 });
 
@@ -156,7 +156,7 @@ on('#ajax', 'click', '.u_post_edit', function() {
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
 
-    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/");
+    list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-pk") + "/");
   }
 });
 on('#ajax', 'click', '.u_article_detail', function() {

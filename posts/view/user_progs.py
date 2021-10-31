@@ -99,7 +99,7 @@ class PostUserEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
-        self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+        self.post = Post.objects.get(pk=self.kwargs["pk"])
         if request.user.pk != self.post.creator.pk:
             raise Http404
         self.template_name = get_my_template("posts/post_user/edit_post.html", request.user, request.META['HTTP_USER_AGENT'])

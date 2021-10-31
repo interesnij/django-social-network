@@ -63,6 +63,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     toast_info('Запись опубликована');
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    main_container = document.body.querySelector(".main-container");
     add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   } else {
         new_post = document.createElement("span");
