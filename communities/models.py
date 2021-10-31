@@ -951,7 +951,7 @@ class Community(models.Model):
 
     def is_community_playlist(self):
         from music.models import UserTempMusicList
-        return UserTempMusicList.objects.filter(tag=None, community=self, genre=None).exists()
+        return UserTempMusicList.objects.filter(community=self, genre=None).exists()
 
     def is_can_fixed_post(self):
         from posts.models import PostsList
