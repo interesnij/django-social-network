@@ -47,6 +47,10 @@ function create_window_stat_list(block) {
   console.log($new_window_list)
 };
 
+function add_list_in_all_stat(item_type,item_pk,main_type,main_pk) {
+  $all_stat.push(item_type + ";" + item_pk + ";;;" + main_type + ";" + main_pk + ";" + $request_user_id, $user_device + ";" + new Date().toLocaleString().replace(",", ""));
+};
+
 function push_window_stat_list() {
   el_list_stat = $new_window_list[0] + ";" + $new_window_list[1] + ";" + $new_window_list[2] + ";" + $new_window_list[3] + ";" + $new_window_list[4] + ";" + $new_window_list[5] + ";" + $new_window_list[6] + ";" + $new_window_list[7] + ";" + $new_window_list[8];
   $all_stat.push(el_list_stat);

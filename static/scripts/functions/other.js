@@ -508,11 +508,16 @@ function post_and_load_object_page(form, url_post, url_1, url_2) {
             elem_.innerHTML = ajax_link.responseText;
             ajax = elem_.querySelector("#reload_block");
             rtr = document.getElementById('ajax');
+
+            prev_container = rtr.querySelector(".main-container");
+            next_container = ajax.querySelector(".main-container");
+            add_list_in_all_stat(next_container.getAttribute("data-pk"),next_container.getAttribute("data-type"),prev_container.getAttribute("data-pk"),prev_container.getAttribute("data-type"))
+
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             document.title = elem_.querySelector('title').innerHTML;
             uuid = rtr.querySelector(".uuid_saver").getAttribute("data-uuid");
-            window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/')
+            window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/');
         }
     }
     ajax_link.send(form_data)
