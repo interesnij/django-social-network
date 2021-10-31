@@ -277,14 +277,14 @@ on('#ajax', 'click', '.item_stat_f', function() {
 });
 
 on('#ajax', 'click', '.item_fullscreen_hide', function() {
-  get_document_opacity_1(document.getElementById("ajax"));
+  get_document_opacity_1();
   this.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
 });
-on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("video_loader"));document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
+on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1();document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
   document.querySelector(".video_fullscreen").style.display = "none";
   video_window = document.querySelector(".video_fullscreen");
-  get_document_opacity_1(document.getElementById("video_loader"));
+  get_document_opacity_1();
   video_window.classList.remove("video_fullscreen_resized", "draggable");
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";

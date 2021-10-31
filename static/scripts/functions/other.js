@@ -518,6 +518,7 @@ function post_and_load_object_page(form, url_post, url_1, url_2) {
             document.title = elem_.querySelector('title').innerHTML;
             uuid = rtr.querySelector(".uuid_saver").getAttribute("data-uuid");
             window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/');
+            get_document_opacity_1();
         }
     }
     ajax_link.send(form_data)
@@ -993,7 +994,7 @@ function get_document_opacity_0() {
   overlay.style.visibility = "unset";
   overlay.style.opacity = "1";
 };
-function get_document_opacity_1(block) {
+function get_document_opacity_1() {
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
   overlay = document.body.querySelector(".body_overlay");

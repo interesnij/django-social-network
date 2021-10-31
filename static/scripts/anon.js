@@ -11,7 +11,7 @@ function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
-    get_document_opacity_1(document.body.querySelector(".main-container"));
+    get_document_opacity_1();
   };
   window.history.replaceState(null, null, window.location.pathname);
   console.log("okkkkk")
@@ -158,7 +158,7 @@ function get_document_opacity_0() {
   overlay.style.visibility = "unset";
   overlay.style.opacity = "1";
 };
-function get_document_opacity_1(block) {
+function get_document_opacity_1() {
   document.body.style.overflow = "scroll";
   document.body.style.marginRight = "0";
   overlay = document.body.querySelector(".body_overlay");
@@ -716,7 +716,7 @@ function ajax_get_reload(url) {
         document.title = elem_.querySelector('title').innerHTML;
         window.history.pushState({route: url}, "network", url);
         if_list(rtr);
-        get_document_opacity_1(rtr)
+        get_document_opacity_1()
       }
     }
     ajax_link.send();
@@ -741,7 +741,7 @@ function search_ajax_get_reload(url) {
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);
-            get_document_opacity_1(rtr);
+            get_document_opacity_1();
         }
     }
     ajax_link.send()
@@ -849,12 +849,12 @@ on('body', 'click', '.prev_item', function(event) {
 });
 
 on('#ajax', 'click', '.item_fullscreen_hide', function() {
-  get_document_opacity_1(document.getElementById("ajax"));
+  get_document_opacity_1();
   this.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
 });
-on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(document.getElementById("video_loader")), document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
+on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(), document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
-  get_document_opacity_1(document.getElementById("video_loader"));
+  get_document_opacity_1();
   document.querySelector(".video_fullscreen").style.display = "none";
   video_window = document.querySelector(".video_fullscreen");
   video_window.classList.remove("video_fullscreen_resized", "draggable");
