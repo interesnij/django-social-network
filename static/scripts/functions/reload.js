@@ -48,7 +48,7 @@ function create_window_stat_list(block) {
 };
 
 function add_list_in_all_stat(item_type,item_pk,main_type,main_pk) {
-  $all_stat.push(item_type + ";" + item_pk + ";;;" + main_type + ";" + main_pk + ";" + $request_user_id, $user_device + ";" + new Date().toLocaleString().replace(",", ""));
+  $all_stat.push(item_type + ";" + item_pk + ";;;" + main_type + ";" + main_pk + ";" + $request_user_id + ";" + $user_device + ";" + new Date().toLocaleString().replace(",", ""));
 };
 
 function push_window_stat_list() {
