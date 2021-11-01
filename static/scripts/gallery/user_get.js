@@ -112,7 +112,7 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 
 on('#ajax', 'click', '.load_photo_comments', function() {
   clear_comment_dropdown();
-  data = document.body.querySelector(".data_display");
+  data = this.parentElement.parentElement.parentElement.parentElement.parentElement; 
   pk = data.getAttribute("data-pk");
   block = data.querySelector(".load_comments");
   if (block.classList.contains("show")){
