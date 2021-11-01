@@ -149,7 +149,7 @@ class PostCommentUserCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), post=post, text=comment.text, sticker=request.POST.get('sticker'))
+                new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), post=post, text=comment.text, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'posts/u_post_comment/parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
