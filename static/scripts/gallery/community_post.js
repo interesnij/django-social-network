@@ -4,9 +4,9 @@
 on('#ajax', 'click', '.c_add_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  pk = parent.getAttribute("data-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/gallery/community_progs/add_list/" + uuid + "/", true );
+  link.open( 'GET', "/gallery/community_progs/add_list/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
@@ -100,10 +100,10 @@ on('#ajax', 'click', '.c_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form.querySelector(".c_photo_description_form"));
   data_display = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = data_display.getAttribute("data-uuid");
+  pk = data_display.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/community_progs/description/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/community_progs/description/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -150,16 +150,16 @@ on('#ajax', 'click', '.community_photo_restore', function() {
 
 on('#ajax', 'click', '.c_photo_like', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("data-pk");
-  send_like(parent, "/gallery/votes/community_like/" + uuid + "/" + pk + "/");
+  pk = parent.getAttribute("owner-pk");
+  c_pk = parent.getAttribute("data-pk");
+  send_like(parent, "/gallery/votes/community_like/" + pk + "/" + c_pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_photo_likes");
 });
 on('#ajax', 'click', '.c_photo_dislike', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  pk = parent.getAttribute("data-pk");
-  send_dislike(parent, "/gallery/votes/community_dislike/" + uuid + "/" + pk + "/");
+  photo_pk = parent.getAttribute("data-pk");
+  pk = parent.getAttribute("owner-pk");
+  send_dislike(parent, "/gallery/votes/community_dislike/" + photo_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_photo_dislikes");
 });
 on('#ajax', 'click', '.c_photo_like2', function() {

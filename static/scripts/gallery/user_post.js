@@ -3,9 +3,9 @@
 on('#ajax', 'click', '.u_add_photo_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  photo_pk = parent.getAttribute("photo-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/gallery/user_progs/add_list/" + uuid + "/", true );
+  link.open( 'GET', "/gallery/user_progs/add_list/" + photo_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
@@ -97,10 +97,10 @@ on('#ajax', 'click', '.u_photo_edit', function() {
 on('#ajax', 'click', '.u_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form.querySelector(".u_photo_description_form"));
-  uuid = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid");
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/description/" + uuid + "/", true );
+  link_.open( 'POST', "/gallery/user_progs/description/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -147,16 +147,16 @@ on('#ajax', 'click', '.user_photo_restore', function() {
 
 on('#ajax', 'click', '.u_photo_like', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  u_pk = parent.getAttribute("owner-pk");
   pk = parent.getAttribute("data-pk");
-  send_like(parent, "/gallery/votes/user_like/" + uuid + "/" + pk + "/");
+  send_like(parent, "/gallery/votes/user_like/" + u_pk + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_likes");
 });
 on('#ajax', 'click', '.u_photo_dislike', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  u_pk = parent.getAttribute("owner-pk");
   pk = parent.getAttribute("data-pk");
-  send_dislike(parent, "/gallery/votes/user_dislike/" + uuid + "/" + pk + "/");
+  send_dislike(parent, "/gallery/votes/user_dislike/" + u_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_dislikes");
 });
 on('#ajax', 'click', '.u_photo_like2', function() {

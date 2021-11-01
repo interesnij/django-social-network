@@ -20,9 +20,9 @@ on('#ajax', 'click', '#u_ucm_doc_list_repost_btn', function() {
 on('#ajax', 'click', '.u_add_doc_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  pk = parent.getAttribute("data-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/user_progs/add_list/" + uuid + "/", true );
+  link.open( 'GET', "/docs/user_progs/add_list/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {

@@ -341,9 +341,9 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   post.querySelector(".dislike").style.display = "unset";
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-})
+});
 
-on('#ajax', 'click', '.u_like', function() {
+on('#ajax', 'click', '.u_like', function() { 
   item = this.parentElement.parentElement.parentElement.parentElement;
   item_pk = item.getAttribute("data-pk");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
