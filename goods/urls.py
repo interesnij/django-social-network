@@ -5,7 +5,7 @@ from goods.views import *
 urlpatterns=[
 	url(r'^load_list/(?P<uuid>[0-9a-f-]+)/$', LoadGoodList.as_view(), name="load_good_list"),
 	url(r'^good/(?P<pk>\d+)/$', GoodDetail.as_view(), name="good_detail"),
-	url(r'^comments/(?P<uuid>[0-9a-f-]+)/$', GoodCommentList.as_view()),
+	url(r'^comments/(?P<pk>\d+)/$', GoodCommentList.as_view()),
 
 	url(r'^user/', include('goods.url.user')),
 	url(r'^community/', include('goods.url.community')),
