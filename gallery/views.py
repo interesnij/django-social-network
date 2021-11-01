@@ -209,7 +209,7 @@ class AddPhotosInList(View):
 			photos = []
 			uploaded_file = request.FILES['file']
 			for p in request.FILES.getlist('file'):
-				photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
+				photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=list.community)
 				photos += [photo,]
 			return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
 		else:
