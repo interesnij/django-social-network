@@ -464,7 +464,7 @@ on('#ajax', 'click', '.music_list_item', function() {
               for(i=0; i<count && i>=track_id; i++) {
                 console.log(i+1);
                 try{
-                _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+                _source=list[i].getAttribute("data-path");
                 _title=list[i].getAttribute("data-title");
                 _thumbPath=list[i].getAttribute("data-thumbpath");
                 _duration=list[i].getAttribute("data-duration");

@@ -95,9 +95,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
   form_post.append($input);
   form_data = new FormData(form_post);
   block = form_post.parentElement.parentElement;
+  pk = block.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/user_progs/edit_post/" + block.getAttribute("data-uuid") + "/", true );
+  link_.open( 'POST', "/posts/user_progs/edit_post/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -116,7 +117,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
     if (new_post.querySelector(".attach_container")) {
       block.append(new_post.querySelector(".attach_container"))
     };
-    block.append(new_post.querySelector(".card-footer"))
+    block.append(new_post.querySelector(".card-footer"));
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("edited_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
+
   }};
 
   link_.send(form_data);
@@ -183,7 +187,9 @@ on('#ajax', 'click', '#u_edit_post_list_btn', function() {
         title = document.body.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
         title.querySelector(".list_name").innerHTML = name;
         close_work_fullscreen();
-        toast_success("Список изменен")
+        toast_success("Список изменен");
+        main_container = document.body.querySelector(".main-container");
+        add_list_in_all_stat("edited_user_post_list",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
       }
     }
     ajax_link.send(form_data);
@@ -204,6 +210,8 @@ on('#ajax', 'click', '.u_delete_post_list', function() {
         _this.classList.remove("u_delete_post_list");
         _this.classList.add("u_restore_post_list", "mb-5");
         toast_success("Список удален");
+        main_container = document.body.querySelector(".main-container");
+        add_list_in_all_stat("deleted_user_post_list",list_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
       }
     }
     ajax_link.send();
@@ -223,6 +231,8 @@ on('#ajax', 'click', '.u_restore_post_list', function() {
         _this.classList.remove("u_restore_post_list", "mb-5");
         _this.classList.add("u_delete_post_list");
         toast_success("Список восстановлен");
+        main_container = document.body.querySelector(".main-container");
+        add_list_in_all_stat("restored_user_post_list",list_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
       }
     }
     ajax_link.send();
@@ -241,9 +251,9 @@ on('#ajax', 'click', '.u_post_edit_comment_btn', function() {
   */
 on('#ajax', 'click', '.u_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/delete/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -251,39 +261,16 @@ on('#ajax', 'click', '.u_post_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.innerHTML = "<span class='u_post_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
+    p.innerHTML = "<span class='u_post_restore pointer' data-pk='" + pk + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
-    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
+    item = block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' ),
     item.style.display = "none",
     p.style.display =  "block",
-    item.parentElement.insertBefore(p, item))
-  }};
-
-  link.send( );
-});
-on('#ajax', 'click', '.u_post_wall_remove', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/wall_delete/" + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    p = document.createElement("div");
-    p.classList.add("card", "mb-3");
-    p.style.padding = "20px";
-    p.innerHTML = "<span class='u_post_wall_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
-    !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
-    : (document.querySelector(".item_fullscreen").style.display = "none",
-    block = document.body.querySelector(".post_stream"),
-    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
-    item.style.display = "none",
-    p.style.display =  "block",
-    item.parentElement.insertBefore(p, item))
+    item.parentElement.insertBefore(p, item));
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("deleted_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
   }};
 
   link.send( );
@@ -291,54 +278,52 @@ on('#ajax', 'click', '.u_post_wall_remove', function() {
 
 on('#ajax', 'click', '.u_post_restore', function() {
   item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/restore/" + uuid + "/", true );
+  link.open( 'GET', "/posts/user_progs/restore/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
     item.style.display = "block";
-  }};
-  link.send();
-});
-on('#ajax', 'click', '.u_post_wall_restore', function() {
-  item = this.parentElement.nextElementSibling;
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  uuid = this.getAttribute("data-uuid");
-  block = this.parentElement;
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/wall_restore/" + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    block.remove();
-    item.style.display = "block";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("restored_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
   }};
   link.send();
 });
 
 on('#ajax', 'click', '.u_post_fixed', function() {
-  send_change(this, "/posts/user_progs/fixed/", "u_post_unfixed", "Открепить")
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = item.getAttribute("data-pk");
+  send_change(this, "/posts/user_progs/fixed/", "u_post_unfixed", "Открепить");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("fixed_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.u_post_unfixed', function() {
-  send_change(this, "/posts/user_progs/unfixed/", "u_post_fixed", "Закрепить")
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  pk = item.getAttribute("data-pk");
+  send_change(this, "/posts/user_progs/unfixed/", "u_post_fixed", "Закрепить");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("unfixed_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'click', '.u_post_off_comment', function() {
   send_change(this, "/posts/user_progs/off_comment/", "u_post_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "none"
-  : post.querySelector(".u_news_item_comments").style.display = "none"
+  : post.querySelector(".u_news_item_comments").style.display = "none";
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("off_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 })
 on('#ajax', 'click', '.u_post_on_comment', function() {
   send_change(this, "/posts/user_progs/on_comment/", "u_post_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_post_comments") ? post.querySelector(".load_post_comments").style.display = "unset"
-  : post.querySelector(".u_news_item_comments").style.display = "unset"
+  : post.querySelector(".u_news_item_comments").style.display = "unset";
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("on_comment_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'click', '.u_post_off_votes', function() {
@@ -346,27 +331,35 @@ on('#ajax', 'click', '.u_post_off_votes', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "none";
   post.querySelector(".dislike").style.display = "none";
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("off_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.u_post_on_votes', function() {
   send_change(this, "/posts/user_progs/on_votes/", "u_post_off_votes", "Выкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".like").style.display = "unset";
   post.querySelector(".dislike").style.display = "unset";
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 })
 
 on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  item_pk = item.getAttribute("data-pk");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
-  send_like(item, "/posts/votes/user_like/" + uuid + "/" + pk + "/");
+  send_like(item, "/posts/votes/user_like/" + item_pk + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_likes");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("like_user_post",item_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.u_dislike', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  item_pk = item.getAttribute("data-pk");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
-  send_dislike(item, "/posts/votes/user_dislike/" + uuid + "/" + pk + "/");
+  send_dislike(item, "/posts/votes/user_dislike/" + item_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_dislikes");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("dislike_user_post",item_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'click', '.u_like2', function() {
@@ -376,6 +369,8 @@ on('#ajax', 'click', '.u_like2', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_like(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_comment_likes")
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("like_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.u_dislike2', function() {
   _this = this;
@@ -383,7 +378,9 @@ on('#ajax', 'click', '.u_dislike2', function() {
   comment_pk = item.getAttribute("data-pk");
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   send_dislike(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_comment_dislikes")
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_comment_dislikes");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
@@ -392,14 +389,6 @@ on('#ajax', 'click', '.u_post_comment_delete', function() {
 
 on('#ajax', 'click', '.u_post_comment_restore', function() {
   comment_restore(this, "/posts/user_progs/restore_comment/")
-});
-
-on('#ajax', 'click', '.u_post_owner_comment_delete', function() {
-  comment_owner_delete(this, "/posts/user_progs/delete_owner_comment/", "u_post_owner_comment_restore")
-});
-
-on('#ajax', 'click', '.u_post_owner_comment_restore', function() {
-  comment_owner_restore(this, "/posts/user_progs/restore_owner_comment/")
 });
 
 on('#ajax', 'change', '#u_photo_post_attach', function() {

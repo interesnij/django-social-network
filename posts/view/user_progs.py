@@ -112,7 +112,7 @@ class PostUserEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         form_post, attach = PostForm(request.POST, instance=post), request.POST.getlist('attach_items')
 
         if request.is_ajax() and form_post.is_valid():
@@ -135,43 +135,9 @@ class PostUserEdit(TemplateView):
             return HttpResponseBadRequest()
 
 
-class UserPostView(View):
-    def get(self,request,*args,**kwargs):
-        from stst.models import PostNumbers
-
-        if request.is_ajax() and request.user.is_authenticated:
-            try:
-                post = Post.objects.get(uuid=self.kwargs["uuid"])
-            except:
-                pass
-            if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
-                pass
-            else:
-                PostNumbers.objects.create(user=request.user.pk, post=post.pk, device=request.user.get_device())
-                post.plus_views(1)
-        else:
-            pass
-        return HttpResponse()
-
-class UserAdPostView(View):
-    def get(self,request,*args,**kwargs):
-        from stst.models import PostAdNumbers
-
-        if request.is_ajax() and request.user.is_authenticated:
-            post = Post.objects.get(uuid=self.kwargs["uuid"])
-            if PostNumbers.objects.filter(user=request.user.pk, post=post.pk).exists():
-                pass
-            else:
-                PostAdNumbers.objects.get(user=request.user.pk, post=post.pk, device=request.user.get_device())
-                post.plus_ad_views(1)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class PostCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(uuid=request.POST.get('uuid'))
+        form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(pk=request.POST.get('post_pk'))
 
         if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             comment = form_post.save(commit=False)
@@ -280,7 +246,7 @@ class PostWallCommentUserRecover(View):
 
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator:
             post.fixed_user_post(post.creator.pk)
             return HttpResponse()
@@ -289,7 +255,7 @@ class PostUserFixed(View):
 
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator:
             post.unfixed_user_post(post.creator.pk)
             return HttpResponse()
@@ -299,7 +265,7 @@ class PostUserUnFixed(View):
 
 class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator and request.is_ajax():
             post.comments_enabled = False
             post.save(update_fields=['comments_enabled'])
@@ -309,7 +275,7 @@ class PostUserOffComment(View):
 
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator and request.is_ajax():
             post.comments_enabled = True
             post.save(update_fields=['comments_enabled'])
@@ -319,17 +285,8 @@ class PostUserOnComment(View):
 
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.delete_item(None)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostWallUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
             post.delete_item(None)
             return HttpResponse()
         else:
@@ -337,17 +294,8 @@ class PostWallUserDelete(View):
 
 class PostUserRecover(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.restore_item(None)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostWallUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
             post.restore_item(None)
             return HttpResponse()
         else:
@@ -356,7 +304,7 @@ class PostWallUserRecover(View):
 
 class UserOnVotesPost(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and post.creator == request.user:
             post.votes_on = True
             post.save(update_fields=['votes_on'])
@@ -366,7 +314,7 @@ class UserOnVotesPost(View):
 
 class UserOffVotesPost(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and post.creator == request.user:
             post.votes_on = False
             post.save(update_fields=['votes_on'])
@@ -377,7 +325,7 @@ class UserOffVotesPost(View):
 
 class PostGetVotes(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         data = {'like_count': post.likes_count(), 'dislike_count': post.dislikes_count()}
         return JsonResponse(data)
 
@@ -457,7 +405,7 @@ class UserPostsListRecover(View):
 class AddPostInUserList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(post.pk):
             list.post_list.add(post)
@@ -468,7 +416,7 @@ class AddPostInUserList(View):
 class RemovePostFromUserList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(post.pk):
             list.post_list.remove(post)
             return HttpResponse()

@@ -347,7 +347,7 @@ on('#ajax', 'click', '.music_list_post', function() {
     document.querySelector("body").classList.add("item_" + item_pk);
     list = [].slice.call(item.querySelectorAll(".music"), 0).reverse();
     for(i=0; i<list.length; i++) {
-      _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+      _source=list[i].getAttribute("data-path");
       _title=list[i].querySelector(".music_title").innerHTML;
       try{_thumbPath= list[i].querySelector("img").getAttribute("data-src")} catch {_thumbPath = "/static/images/no_track_img.jpg"};
       _duration=list[i].getAttribute("data-duration");
@@ -372,7 +372,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
     document.querySelector("body").classList.add("comment_" + comment_pk);
     list = [].slice.call(comment.querySelectorAll(".media"), 0).reverse();
     for(i=0; i<list.length; i++) {
-      _source=list[i].getAttribute("data-path") + '/stream?client_id=' + 'dce5652caa1b66331903493735ddd64d';
+      _source=list[i].getAttribute("data-path");
       _title=list[i].querySelector(".music_title").innerHTML;
       try{_thumbPath= list[i].querySelector("img").getAttribute("data-src")} catch {_thumbPath = "/static/images/no_track_img.jpg"};
       _duration=list[i].getAttribute("data-duration");

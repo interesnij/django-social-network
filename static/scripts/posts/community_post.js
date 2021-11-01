@@ -83,9 +83,9 @@ on('#ajax', 'click', '#c_edit_post_btn', function() {
   form_post.append($input);
   form_data = new FormData(form_post);
   block = form_post.parentElement.parentElement;
-
+  pk = block.getAttribute("data-pk");
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/posts/community_progs/edit_post/" + block.getAttribute("data-uuid") + "/", true );
+  link_.open( 'POST', "/posts/community_progs/edit_post/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -104,7 +104,9 @@ on('#ajax', 'click', '#c_edit_post_btn', function() {
     if (new_post.querySelector(".attach_container")) {
       block.append(new_post.querySelector(".attach_container"))
     };
-    block.append(new_post.querySelector(".card-footer"))
+    block.append(new_post.querySelector(".card-footer"));
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("edited_community_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 
   }};
 

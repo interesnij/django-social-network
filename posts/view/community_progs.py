@@ -138,7 +138,7 @@ class PostCommunityEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        _post = Post.objects.get(uuid=self.kwargs["uuid"])
+        _post = Post.objects.get(pk=self.kwargs["pk"])
         community_pk = _post.community.pk
         form_post, attach = PostForm(request.POST, instance=_post), request.POST.getlist('attach_items')
 
@@ -224,7 +224,7 @@ class PostCommunityCommentCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST, request.FILES)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        post = Post.objects.get(uuid=request.POST.get('uuid'))
+        post = Post.objects.get(post_pk=request.POST.get('pk'))
         if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
             check_can_get_lists(request.user,community)
             comment=form_post.save(commit=False)
@@ -297,7 +297,7 @@ class PostWallCommentCommunityRecover(View):
 
 class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
             post.fixed_community_post(post.community.pk)
             return HttpResponse()
@@ -306,7 +306,7 @@ class PostCommunityFixed(View):
 
 class PostCommunityUnFixed(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
             post.unfixed_community_post(post.community.pk)
             return HttpResponse()
@@ -315,7 +315,7 @@ class PostCommunityUnFixed(View):
 
 class PostCommunityOffComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
@@ -325,7 +325,7 @@ class PostCommunityOffComment(View):
 
 class PostCommunityOnComment(View):
     def get(self,request,*args,**kwargs):
-        item = Post.objects.get(uuid=self.kwargs["uuid"])
+        item = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
@@ -335,37 +335,17 @@ class PostCommunityOnComment(View):
 
 class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.delete_item(c)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostWallCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        c = post.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.delete_item(c)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostWallCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
-        c = post.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.restore_item(c)
             return HttpResponse()
         else:
             raise Http404
 
 class PostCommunityRecover(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             post.restore_item(c)
@@ -375,7 +355,7 @@ class PostCommunityRecover(View):
 
 class CommunityOnVotesPost(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
             post.votes_on = True
             post.save(update_fields=['votes_on'])
@@ -385,7 +365,7 @@ class CommunityOnVotesPost(View):
 
 class CommunityOffVotesPost(View):
     def get(self,request,*args,**kwargs):
-        post = Post.objects.get(uuid=self.kwargs["uuid"])
+        post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
             post.votes_on = False
             post.save(update_fields=['votes_on'])
@@ -395,7 +375,7 @@ class CommunityOffVotesPost(View):
 
 def post_update_interactions(request):
     data_point = request.POST['id_value']
-    item = Post.objects.get(uuid=data_point)
+    item = Post.objects.get(pk=data_point)
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
 
@@ -480,7 +460,7 @@ class CommunityPostsListRecover(View):
 class AddPostInCommunityList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.post_list.add(post)
@@ -491,7 +471,7 @@ class AddPostInCommunityList(View):
 class RemovePostFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(post.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.post_list.remove(post)
             return HttpResponse()
