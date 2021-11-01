@@ -1269,7 +1269,7 @@ class PostComment(models.Model):
         return self.commenter.get_full_name()
 
     @classmethod
-    def create_comment(cls, commenter, attach, post, parent, text, community, sticker):
+    def create_comment(cls, commenter, attach, post=None, parent=None, text, community=None, sticker):
         from common.processing_2 import get_text_processing
 
         _attach = str(attach)
