@@ -40,8 +40,8 @@ on('#ajax', 'click', '.u_good_list_add', function() {
   create_fullscreen("/goods/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.u_good_list_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/goods/user_progs/edit_list/" + uuid + "/", "worker_fullscreen");
+  pk = this.parentElement.parentElement.getAttribute('data-pk');
+  create_fullscreen("/goods/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.u_goods_list_create', function() {
@@ -70,7 +70,7 @@ on('#ajax', 'click', '.u_all_good_comment_dislikes', function() {
 
 on('#ajax', 'click', '.u_all_good_reposts', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('good-pk');
-  create_fullscreen("/goods/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
+  create_fullscreen("/goods/window/all_user_reposts/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_good_comments', function() {
@@ -81,7 +81,7 @@ on('#ajax', 'click', '.load_good_comments', function() {
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
   } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/goods/comments/" + uuid + "/");
+    block_comments.firstChild ? null : list_load(block_comments, "/goods/comments/" + good_pk + "/");
     block_comments.classList.add("show")
   }
 });
