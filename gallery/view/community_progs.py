@@ -241,27 +241,6 @@ class CommunityOffPrivatePhoto(View):
             raise Http404
 
 
-class PhotoWallCommentCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWallCommentCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user or request.user.is_staff_of_community(community.pk):
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class PhotoListCommunityCreate(TemplateView):
     template_name = None
     form = None

@@ -14,8 +14,6 @@ urlpatterns = [
 	url(r'^edit_comment/(?P<pk>\d+)/$', PostCommunityCommentEdit.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostCommentCommunityRecover.as_view()),
-	url(r'^delete_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentCommunityDelete.as_view()),
-	url(r'^restore_owner_comment/(?P<pk>\d+)/(?P<comment_pk>\d+)/$', PostWallCommentCommunityRecover.as_view()),
 
 	url(r'^fixed/(?P<pk>\d+)/$', PostCommunityFixed.as_view()),
     url(r'^unfixed/(?P<pk>\d+)/$', PostCommunityUnFixed.as_view()),

@@ -243,26 +243,6 @@ class UserOffPrivatePhoto(View):
         else:
             raise Http404
 
-class PhotoWallCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWallCommentUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
