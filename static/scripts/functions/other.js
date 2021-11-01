@@ -665,9 +665,9 @@ function comment_wall_restore(_this, _link) {
 function send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk");
+    item.getAttribute("data-pk") ? pk = item.getAttribute("data-pk") : pk = item.getAttribute("good-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', _link + uuid + "/", true);
+    link.open('GET', _link + pk + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {
@@ -702,8 +702,8 @@ function chat_send_change(span, _link, new_class, html) {
 function mob_send_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement;
-    item.getAttribute("data-uuid") ? uuid = item.getAttribute("data-uuid") : uuid = item.getAttribute("good-pk"); link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', _link + uuid + "/", true);
+    item.getAttribute("data-pk") ? pk = item.getAttribute("data-pk") : pk = item.getAttribute("good-pk"); link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    link.open('GET', _link + pk + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {

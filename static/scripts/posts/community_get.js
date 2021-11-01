@@ -10,7 +10,6 @@ on('#ajax', 'click', '.c_post_edit', function() {
     block.querySelector(".attach_container") ? block.querySelector(".attach_container").style.display = "none" : null;
     block.querySelector(".card-footer").style.display = "none";
     pk = block.getAttribute("data-pk");
-
     list_load(div, "/posts/community_progs/edit_post/" + pk + "/");
   }
 });
