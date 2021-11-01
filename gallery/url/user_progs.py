@@ -5,12 +5,10 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns=[
     url(r'^description/(?P<pk>\d+)/$', UserPhotoDescription.as_view()),
-    url(r'^delete/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserPhotoDelete.as_view()), 
+    url(r'^delete/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserPhotoDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserPhotoRecover.as_view()),
     url(r'^on_comment/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserOpenCommentPhoto.as_view()),
     url(r'^off_comment/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserCloseCommentPhoto.as_view()),
-    url(r'^on_private/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserOnPrivatePhoto.as_view()),
-    url(r'^off_private/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserOffPrivatePhoto.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/(?P<photo_pk>\d+)/$', UserOffVotesPhoto.as_view()),
 

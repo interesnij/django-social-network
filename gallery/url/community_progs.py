@@ -9,8 +9,6 @@ urlpatterns=[
     url(r'^restore/(?P<pk>\d+)/$', CommunityPhotoRecover.as_view()),
     url(r'^on_comment/(?P<pk>\d+)/$', CommunityOpenCommentPhoto.as_view()),
     url(r'^off_comment/(?P<pk>\d+)/$', CommunityCloseCommentPhoto.as_view()),
-    url(r'^on_private/(?P<pk>\d+)/$', CommunityOnPrivatePhoto.as_view()),
-    url(r'^off_private/(?P<pk>\d+)/$', CommunityOffPrivatePhoto.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesPhoto.as_view()),
 

@@ -83,13 +83,6 @@ on('#ajax', 'click', '.u_photo_comment_restore', function() {
   comment_restore(this, "/gallery/user_progs/restore_comment/")
 });
 
-on('#ajax', 'click', '.u_photo_off_private', function() {
-  send_photo_change(this, "/gallery/user_progs/off_private/", "u_photo_on_private", "Вкл. приватность")
-});
-on('#ajax', 'click', '.u_photo_on_private', function() {
-  send_photo_change(this, "/gallery/user_progs/on_private/", "u_photo_off_private", "Выкл. приватность")
-});
-
 on('#ajax', 'click', '.u_photo_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });
@@ -261,12 +254,7 @@ on('#ajax', 'click', '.mob_u_photo_on_comment', function() {
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
-on('#ajax', 'click', '.mob_u_photo_off_private', function() {
-  mob_send_change(this, "/gallery/user_progs/off_private/", "mob_u_photo_on_private", "Вкл. приватность")
-});
-on('#ajax', 'click', '.mob_u_photo_on_private', function() {
-  mob_send_change(this, "/gallery/user_progs/on_private/", "mob_u_photo_off_private", "Выкл. приватность")
-});
+
 on('#ajax', 'click', '.mob_u_photo_off_votes', function() {
   mob_send_change(this, "/gallery/user_progs/off_votes/", "mob_u_photo_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

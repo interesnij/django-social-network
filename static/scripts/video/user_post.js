@@ -50,13 +50,6 @@ on('#video_loader', 'click', '.u_video_comment_restore', function() {
   comment_restore(this, "/video/user_progs/restore_comment/")
 });
 
-on('#video_loader', 'click', '.u_video_off_private', function() {
-  send_photo_change(this, "/video/user_progs/off_private/", "u_video_on_private", "Вкл. приватность")
-});
-on('#video_loader', 'click', '.u_video_on_private', function() {
-  send_photo_change(this, "/video/user_progs/on_private/", "u_video_off_private", "Выкл. приватность")
-});
-
 on('#ajax', 'click', '.u_video_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });

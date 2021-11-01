@@ -68,13 +68,6 @@ on('#ajax', 'click', '.c_good_add', function() {
   create_fullscreen('/goods/community_progs/add/' + pk + '/', "item_fullscreen");
 });
 
-on('#ajax', 'click', '.u_good_off_private', function() {
-  send_good_change(this, "/goods/community_progs/off_private/", "c_good_on_private", "Вкл. приватность")
-});
-on('#ajax', 'click', '.c_good_on_private', function() {
-  send_good_change(this, "/goods/community_progs/on_private/", "c_good_off_private", "Выкл. приватность")
-});
-
 on('#ajax', 'click', '.c_good_off_votes', function() {
   send_good_change(this, "/goods/community_progs/off_votes/", "c_good_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

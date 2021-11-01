@@ -44,13 +44,6 @@ on('#video_loader', 'click', '.c_video_comment_restore', function() {
 });
 
 
-on('#video_loader', 'click', '.u_video_off_private', function() {
-  send_photo_change(this, "/video/community_progs/off_private/", "c_video_on_private", "Вкл. приватность")
-});
-on('#video_loader', 'click', '.c_video_on_private', function() {
-  send_photo_change(this, "/video/community_progs/on_private/", "c_video_off_private", "Выкл. приватность")
-});
-
 on('#video_loader', 'click', '.c_video_off_votes', function() {
   send_photo_change(this, "/video/community_progs/off_votes/", "c_video_on_votes", "Вкл. реакции");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
