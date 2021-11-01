@@ -193,17 +193,6 @@ class UserOffPrivateVideo(View):
         else:
             raise Http404
 
-class VideoWallCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = VideoComment.objects.get(pk=self.kwargs["comment_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == user.pk:
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserVideoCreate(TemplateView):
     template_name, form_post  = None, None
     def get(self,request,*args,**kwargs):
