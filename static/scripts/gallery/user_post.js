@@ -177,7 +177,7 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
 });
 
 on('#ajax', 'change', '.add_photos_in_list', function() {
-  form = this.parentElement.parentElement.parentElement;
+  form = this.parentElement.parentElement;
   pk = form.parentElement.nextElementSibling.querySelector(".is_stat_list").getAttribute("data-pk");
   form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
