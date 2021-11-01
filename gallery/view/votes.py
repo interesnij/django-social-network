@@ -13,7 +13,7 @@ from common.notify.notify import *
 
 class PhotoUserLikeCreate(View):
     def get(self, request, **kwargs):
-        item = Photo.objects.get(uuid=self.kwargs["uuid"])
+        item = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -22,7 +22,7 @@ class PhotoUserLikeCreate(View):
 
 class PhotoUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        item = Photo.objects.get(uuid=self.kwargs["uuid"])
+        item = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -53,7 +53,7 @@ class PhotoCommentUserDislikeCreate(View):
 
 class PhotoCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        item = Photo.objects.get(uuid=self.kwargs["uuid"])
+        item = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if not item.votes_on or not request.is_ajax():
             raise Http404
@@ -63,7 +63,7 @@ class PhotoCommunityLikeCreate(View):
 
 class PhotoCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
-        item = Photo.objects.get(uuid=self.kwargs["uuid"])
+        item = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), item.like, item.dislike
         if not item.votes_on or not request.is_ajax():
             raise Http404

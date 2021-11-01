@@ -4,14 +4,14 @@
 
   <span class="load_block">
   <div class="media mt-3" style="padding-left: 7px;">
-    <form id="add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
+    <form class="uuid_saver" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
     <h5 class="mt-1">
       <p>
         <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - альбом
         <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
       </p>
-        <input type="file" id="u_gallery_list_photo_add" name="file" style="display:none" multiple="multiple">
+        <input type="file" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
         {% if list.is_main or list.is_have_edit %}
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
         {% endif %}

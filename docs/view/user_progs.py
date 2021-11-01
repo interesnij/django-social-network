@@ -12,7 +12,7 @@ from common.check.user import check_user_can_get_list
 
 class AddDocListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["list_pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -22,7 +22,7 @@ class AddDocListInUserCollections(View):
 
 class RemoveDocListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -36,7 +36,7 @@ class AddDocInUserList(View):
     Добавляем документ в любой список, если его там нет
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and not list.is_item_in_list(doc.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -48,7 +48,7 @@ class RemoveDocFromUserList(View):
     Удаляем документ из любого списка, если он там есть
     """
     def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(doc.pk):
             list.doc_list.remove(doc)
             return HttpResponse()
@@ -88,11 +88,11 @@ class UserDocListEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserDocListEdit,self).get_context_data(**kwargs)
-        context["list"] = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = DocsList.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(pk=self.kwargs["pk"])
         self.form = DocslistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.list.creator.pk:
             list = self.form.save(commit=False)
@@ -149,7 +149,7 @@ class UserDocEdit(TemplateView):
 
 class UserDocListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk and list.type != DocsList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -158,7 +158,7 @@ class UserDocListDelete(View):
 
 class UserDocListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()

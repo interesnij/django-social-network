@@ -13,7 +13,7 @@ from common.notify.notify import *
 
 class VideoUserLikeCreate(View):
     def get(self, request, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not video.votes_on:
             raise Http404
@@ -24,7 +24,7 @@ class VideoUserLikeCreate(View):
 
 class VideoUserDislikeCreate(View):
     def get(self, request, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not video.votes_on:
             raise Http404
@@ -57,7 +57,7 @@ class VideoCommentUserDislikeCreate(View):
 
 class VideoCommunityLikeCreate(View):
     def get(self, request, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not video.votes_on:
             raise Http404
@@ -67,7 +67,7 @@ class VideoCommunityLikeCreate(View):
 
 class VideoCommunityDislikeCreate(View):
     def get(self, request, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if not request.is_ajax() and not video.votes_on:
             raise Http404

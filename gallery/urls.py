@@ -8,6 +8,8 @@ urlpatterns=[
 	url(r'^load_list/(?P<pk>\d+)/$', LoadPhotoList.as_view(), name="load_photo_list"),
 	url(r'^comments/(?P<uuid>[0-9a-f-]+)/$', PhotoCommentList.as_view()),
 
+	url(r'^add_photos_in_list/(?P<pk>\d+)/$', AddPhotosInList.as_view()),
+
 	url(r'^user/', include('gallery.url.user')),
 	url(r'^community/', include('gallery.url.community')),
 

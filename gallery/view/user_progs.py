@@ -46,38 +46,6 @@ class UserAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
-class UserCreatePhotosInMainList(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя в основной альбом
-    """
-    def post(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        photos = []
-        if request.is_ajax() and self.user == request.user:
-            list = request.user.get_photo_list()
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=self.user, image=p, list=list, type="PHO", community=None)
-                photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_photos.html', {'object_list': photos, 'user': request.user})
-        else:
-            raise Http404
-
-class UserCreatePhotosInPhotoList(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя в альбом
-    """
-    def post(self, request, *args, **kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        photos = []
-        if request.is_ajax() and user == request.user:
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=user, image=p, list=list, type="PHLIS", community=None)
-                photos += [photo,]
-            return render_for_platform(request, 'gallery/u_photo/new_album_photos.html',{'object_list': photos, 'list': list, 'user': request.user})
-        else:
-            raise Http404
-
 class PhotoAttachUserCreate(View):
     def post(self, request, *args, **kwargs):
         photos = []

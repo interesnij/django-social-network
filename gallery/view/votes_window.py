@@ -12,7 +12,7 @@ class PhotoUserLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -30,7 +30,7 @@ class PhotoUserDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -86,7 +86,7 @@ class PhotoCommunityLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -107,7 +107,7 @@ class PhotoCommunityDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_community_item(self.photo, "gallery/photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -166,7 +166,7 @@ class AllPhotoUserLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -191,7 +191,7 @@ class AllPhotoUserDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -263,7 +263,7 @@ class AllPhotoCommunityLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -288,7 +288,7 @@ class AllPhotoCommunityDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if self.photo.votes_on:
             if request.user.is_authenticated:
                 self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -360,7 +360,7 @@ class AllPhotoCommunityRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_community_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -382,7 +382,7 @@ class AllPhotoUserRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        self.photo = Photo.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.photo, "gallery/all_photo_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:

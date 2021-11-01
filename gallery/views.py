@@ -1,6 +1,8 @@
 from gallery.models import Photo, PhotoList
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView
+from django.http import Http404
+from django.views import View
 from common.templates import (
 								get_template_community_item,
 								get_template_anon_community_item,
@@ -192,3 +194,23 @@ class PhotoCommentList(ListView):
 
 	def get_queryset(self):
 		return self.photo.get_comments()
+
+
+class AddPhotosInList(View):
+    def post(self, request, *args, **kwargs):
+		from common.templates import render_for_platform
+
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax():
+            if list.community and not request.user.is_administrator_of_community(list.community.pk):
+                raise Http404
+            else if not list.creator.pk == request.user.pk:
+                raise Http404
+            photos = []
+            uploaded_file = request.FILES['file']
+            for p in request.FILES.getlist('file'):
+                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
+                photos += [photo,]
+            return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
+        else:
+            raise Http404
