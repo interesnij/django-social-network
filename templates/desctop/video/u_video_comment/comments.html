@@ -28,7 +28,7 @@
 
   <form class="u_video_comment">
       {% csrf_token %}
-      <input type="hidden" name="uuid" value="{{ parent.uuid }}">
+      <input type="hidden" name="video_pk" value="{{ parent.pk }}">
       <input type="hidden" name="pk" value="{{ user.pk }}">
       {% include 'base_block/comment/comment_form.html' %}
   </form>
