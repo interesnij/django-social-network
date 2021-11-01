@@ -99,7 +99,7 @@ class GoodCommentList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_comments, get_template_community_comments
 
-		self.good = Good.objects.get(uuid=self.kwargs["uuid"])
+		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		if not request.is_ajax() or not self.good.comments_enabled:
 			raise Http404
 		if self.good.community:
