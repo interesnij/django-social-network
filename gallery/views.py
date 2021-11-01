@@ -197,20 +197,20 @@ class PhotoCommentList(ListView):
 
 
 class AddPhotosInList(View):
-    def post(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		from common.templates import render_for_platform
 
-        list = PhotoList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            if list.community and not request.user.is_administrator_of_community(list.community.pk):
-                raise Http404
-            else if not list.creator.pk == request.user.pk:
-                raise Http404
-            photos = []
-            uploaded_file = request.FILES['file']
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
-                photos += [photo,]
-            return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
-        else:
-            raise Http404
+		list = PhotoList.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax():
+			if list.community and not request.user.is_administrator_of_community(list.community.pk):
+				raise Http404
+			else if not list.creator.pk == request.user.pk:
+				raise Http404
+			photos = []
+			uploaded_file = request.FILES['file']
+			for p in request.FILES.getlist('file'):
+				photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
+				photos += [photo,]
+			return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
+		else:
+			raise Http404
