@@ -226,24 +226,6 @@ class PostCommentUserRecover(View):
         else:
             raise Http404
 
-class PostWallCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostWallCommentUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        if request.is_ajax() and request.user.pk == int(self.kwargs["pk"]):
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])

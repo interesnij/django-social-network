@@ -41,7 +41,7 @@ class UserPostVideoList(TemplateView):
 	def get(self,request,*args,**kwargs):
 		from posts.models import Post
 
-		self.post = Post.objects.get(uuid=self.kwargs["uuid"])
+		self.post = Post.objects.get(pk=self.kwargs["post_pk"])
 		self.video_list = self.post.get_attach_videos()
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -60,7 +60,7 @@ class UserMessageVideoList(TemplateView):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
 
-		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
+		self.message = Message.objects.get(pk=self.kwargs["message_pk"])
 		self.video_list = self.message.get_attach_videos()
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -129,7 +129,7 @@ class UserVideoDetail(TemplateView):
 		from stst.models import VideoNumbers
 
 		self.video = Video.objects.get(pk=self.kwargs["pk"])
-		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+		self.list = VideoList.objects.get(pk=self.kwargs["list_pk"])
 		if request.user.is_authenticated:
 			try:
 				VideoNumbers.objects.get(user=request.user.pk, video=self.video.pk)

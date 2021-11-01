@@ -19,7 +19,7 @@ class UUCMVideoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
@@ -40,7 +40,7 @@ class CUCMVideoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("video/repost/c_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -61,7 +61,7 @@ class UUCMVideoListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
@@ -82,7 +82,7 @@ class CUCMVideoListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("video/repost/c_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -101,7 +101,7 @@ class UUVideoRepost(View):
     создание репоста видеозаписи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -120,7 +120,7 @@ class CUVideoRepost(View):
     создание репоста видеозаписи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -139,7 +139,7 @@ class UCVideoRepost(View):
     создание репоста видеозаписи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -162,7 +162,7 @@ class CCVideoRepost(View):
     создание репоста видеозаписи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -184,7 +184,7 @@ class UMVideoRepost(View):
     создание репоста видеозаписи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -197,7 +197,7 @@ class CMVideoRepost(View):
     создание репоста видеозаписи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(video, "vid"+str(video.pk), community, request, "Репост видеозаписи сообщества")
@@ -209,7 +209,7 @@ class UUVideoListRepost(View):
     создание репоста видеоальбома пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -228,7 +228,7 @@ class CUVideoListRepost(View):
     создание репоста видеоальбома сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -247,7 +247,7 @@ class UCVideoListRepost(View):
     создание репоста видеоальбома пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -270,7 +270,7 @@ class CCVideoListRepost(View):
     создание репоста видеоальбома сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -292,7 +292,7 @@ class UMVideoListRepost(View):
     создание репоста видеоальбома пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -305,7 +305,7 @@ class CMVideoListRepost(View):
     создание репоста видеоальбома сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(list, "lvi"+str(list.pk), community, request, "Репост видеоальбома сообщества")

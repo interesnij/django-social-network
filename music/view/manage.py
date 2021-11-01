@@ -27,25 +27,6 @@ class TempListOn(View):
         else:
             raise Http404
 
-class TempTagOn(View):
-    """
-    Выставляем поисковый тег (исполнителя) для пользователя как активный.
-    """
-    def get(self, request, *args, **kwargs):
-        tag = SoundTags.objects.get(pk=self.kwargs["pk"])
-        try:
-            temp_tag = UserTempMusicList.objects.get(user=request.user)
-        except:
-            temp_tag = UserTempMusicList.objects.create(user=request.user)
-        if request.is_ajax():
-            temp_tag.list = None
-            temp_tag.genre = None
-            temp_tag.tag = tag
-            temp_tag.save()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class TempGenreOn(View):
     """
     Выставляем плейлист жанра как активный.

@@ -12,7 +12,7 @@ from common.templates import get_settings_template, render_for_platform, get_det
 
 class AddGoodListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -22,7 +22,7 @@ class AddGoodListInUserCollections(View):
 
 class RemoveGoodListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -224,11 +224,11 @@ class UserGoodListEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserGoodListEdit,self).get_context_data(**kwargs)
         context["user"] = self.request.user
-        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = GoodList.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = GoodList.objects.get(pk=self.kwargs["pk"])
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
@@ -240,7 +240,7 @@ class UserGoodListEdit(TemplateView):
 
 class UserGoodListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk and list.type != GoodList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -249,7 +249,7 @@ class UserGoodListDelete(View):
 
 class UserGoodListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()
@@ -346,7 +346,7 @@ class GoodCommentUserRecover(View):
 class AddGoodInUserList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(good.pk):
             list.good_list.add(good)
@@ -357,7 +357,7 @@ class AddGoodInUserList(View):
 class RemoveGoodFromUserList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(good.pk):
             list.good_list.remove(good)
             return HttpResponse()

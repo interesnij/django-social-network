@@ -47,7 +47,7 @@ class UserPhotosAlbumList(ListView):
         from common.templates import get_template_user_list, get_template_anon_user_list
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax():
             if request.user.is_authenticated:
                 self.template_name = get_template_user_list(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])

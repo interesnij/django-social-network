@@ -42,7 +42,7 @@ class CommunityVideoDetail(TemplateView):
 		from stst.models import VideoNumbers
 
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+		self.video = Video.objects.get(pk=self.kwargs["video_pk"])
 		if request.user.is_authenticated:
 			self.template_name = get_template_community_item(self.post, "video/c_video_detail/", "video.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
@@ -68,7 +68,7 @@ class CommunityPostVideoList(TemplateView):
 		from posts.models import Post
 		from common.templates import get_template_community_item, get_template_anon_community_item
 
-		self.post, self.community = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+		self.post, self.community = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_authenticated:
 			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:

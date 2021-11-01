@@ -130,7 +130,7 @@ class SurveyUserDetail(TemplateView):
 
 class AddSurveyListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -140,7 +140,7 @@ class AddSurveyListInUserCollections(View):
 
 class RemoveSurveyListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -188,7 +188,7 @@ class UserSurveyListEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from survey.forms import SurveylistForm
-        self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
         self.form = SurveylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.pk == self.list.creator.pk:
             list = self.form.save(commit=False)
@@ -200,7 +200,7 @@ class UserSurveyListEdit(TemplateView):
 
 class UserSurveyListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk and list.type != SurveyList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -209,7 +209,7 @@ class UserSurveyListDelete(View):
 
 class UserSurveyListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()

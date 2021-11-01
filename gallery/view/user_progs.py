@@ -11,7 +11,7 @@ from django.views.generic.base import TemplateView
 
 class AddPhotoListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -21,7 +21,7 @@ class AddPhotoListInUserCollections(View):
 
 class RemovePhotoListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -63,7 +63,7 @@ class PhotoCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))
-        photo = Photo.objects.get(uuid=request.POST.get('uuid'))
+        photo = Photo.objects.get(pk=request.POST.get('photo_pk'))
 
         if request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
             comment = form_post.save(commit=False)
@@ -150,7 +150,7 @@ class UserPhotoDescription(View):
     form_image = None
 
     def post(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["pk"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
@@ -161,8 +161,8 @@ class UserPhotoDescription(View):
 
 class UserPhotoDelete(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
-        user = User.objects.get(pk=self.kwargs["pk"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        user = User.objects.get(pk=self.kwargs["photo_pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.delete_item(None)
             return HttpResponse()
@@ -171,7 +171,7 @@ class UserPhotoDelete(View):
 
 class UserPhotoRecover(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.restore_item(None)
@@ -181,7 +181,7 @@ class UserPhotoRecover(View):
 
 class UserOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = True
@@ -192,7 +192,7 @@ class UserOpenCommentPhoto(View):
 
 class UserCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.comments_enabled = False
@@ -203,7 +203,7 @@ class UserCloseCommentPhoto(View):
 
 class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = False
@@ -214,7 +214,7 @@ class UserOffVotesPhoto(View):
 
 class UserOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.votes_on = True
@@ -225,7 +225,7 @@ class UserOnVotesPhoto(View):
 
 class UserOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator.pk == request.user.pk:
             photo.make_private()
@@ -235,7 +235,7 @@ class UserOnPrivatePhoto(View):
 
 class UserOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.make_publish()
@@ -267,7 +267,7 @@ class PhotoWallCommentUserRecover(View):
 class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         if request.is_ajax() and user.pk == request.user.pk:
             photo.list = None
             list = PhotoList.objects.get(creator=user, community__isnull=True, type=PhotoList.AVATAR)
@@ -314,11 +314,11 @@ class PhotoListUserEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(PhotoListUserEdit,self).get_context_data(**kwargs)
         context["form"] = self.form
-        context["list"] = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = PhotoList.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
         self.form = PhotoListForm(request.POST,instance=self.list)
         self.user = self.list.creator
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and self.list.is_have_edit():
@@ -331,7 +331,7 @@ class PhotoListUserEdit(TemplateView):
 
 class PhotoListUserDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk and list.is_have_edit():
             list.delete_item()
             return HttpResponse()
@@ -340,7 +340,7 @@ class PhotoListUserDelete(View):
 
 class PhotoListUserRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.restore_item()
             return HttpResponse()
@@ -351,7 +351,7 @@ class PhotoListUserRecover(View):
 class AddPhotoInUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and not list.is_item_in_list(photo.pk):
             list.photo_list.add(photo)
             return HttpResponse()
@@ -361,7 +361,7 @@ class AddPhotoInUserList(View):
 class RemovePhotoFromUserList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(photo.pk):
             list.photo_list.remove(photo)
             return HttpResponse()

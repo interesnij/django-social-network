@@ -4,5 +4,5 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', PostCommunityDetail.as_view(), name="community_item_detail"),
+	url(r'^detail/(?P<pk>\d+)/$', PostCommunityDetail.as_view(), name="community_item_detail"),
 ]

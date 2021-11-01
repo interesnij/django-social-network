@@ -58,7 +58,7 @@ class UUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.user, self.template_name = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
@@ -77,7 +77,7 @@ class CUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.c, self.template_name = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
@@ -191,7 +191,7 @@ class UUGoodListRepost(View):
     создание репоста плейлиста пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, user, lists, form_post, attach = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), PostForm(request.POST), request.POST.getlist('attach_items')
+        list, user, lists, form_post, attach = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("lists"), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -207,7 +207,7 @@ class CUGoodListRepost(View):
     создание репоста плейлиста сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, c, form_post, lists, attach = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
+        list, c, form_post, lists, attach = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("lists"), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, c)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -223,7 +223,7 @@ class UCGoodListRepost(View):
     создание репоста плейлиста пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list, user = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
@@ -244,7 +244,7 @@ class CCGoodListRepost(View):
     создание репоста плейлиста сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list, c = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, c = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
         communities = request.POST.getlist("communities")
         attach = request.POST.getlist('attach_items')
@@ -265,7 +265,7 @@ class UMGoodListRepost(View):
     создание репоста плейлиста пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list, user = GoodList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(list, "lgo"+str(list.pk), None, request, "Репост списка товаров пользователя")
@@ -277,7 +277,7 @@ class CMGoodListRepost(View):
     создание репоста плейлиста сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list, c = GoodList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, c = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
         repost_message_send(list, "lgo"+str(list.pk), c, request, "Репост списка товаров сообщества")
         return HttpResponse()

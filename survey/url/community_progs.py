@@ -11,11 +11,11 @@ urlpatterns=[
     url(r'^detail/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyCommunityDetail.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', CommunitySurveyListCreate.as_view()),
-    url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListEdit.as_view()),
-    url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListDelete.as_view()),
-    url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', CommunitySurveyListRecover.as_view()),
-    url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', AddSurveyListInCommunityCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<uuid>[0-9a-f-]+)/$', RemovSurveyListFromCommunityCollections.as_view()),
+    url(r'^edit_list/(?P<list_pk>\d+)/$', CommunitySurveyListEdit.as_view()),
+    url(r'^delete_list/(?P<list_pk>\d+)/$', CommunitySurveyListDelete.as_view()),
+    url(r'^restore_list/(?P<list_pk>\d+)/$', CommunitySurveyListRecover.as_view()),
+    url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddSurveyListInCommunityCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovSurveyListFromCommunityCollections.as_view()),
 
     url(r'^change_position/(?P<pk>\d+)/$', CommunityChangeSurveyPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangeSurveyListPosition.as_view()),
