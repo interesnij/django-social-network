@@ -16,7 +16,7 @@
       {% csrf_token %}
     <h5 class="mt-1">
       <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
-        <input type="file" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
+        <input type="file" accept="image/*" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
         {% if list.is_main or list.is_have_edit %}
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
         {% endif %}
