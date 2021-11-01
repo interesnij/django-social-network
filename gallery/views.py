@@ -204,7 +204,7 @@ class AddPhotosInList(View):
 		if request.is_ajax():
 			if list.community and not request.user.is_administrator_of_community(list.community.pk):
 				raise Http404
-			else if not list.creator.pk == request.user.pk:
+			elif not list.creator.pk == request.user.pk:
 				raise Http404
 			photos = []
 			uploaded_file = request.FILES['file']
