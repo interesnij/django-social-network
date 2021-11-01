@@ -223,26 +223,6 @@ class UserOnVotesPhoto(View):
         else:
             raise Http404
 
-class UserOnPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator.pk == request.user.pk:
-            photo.make_private()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserOffPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
-            photo.make_publish()
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):

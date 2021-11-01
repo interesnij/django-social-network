@@ -220,26 +220,6 @@ class CommunityOnVotesPhoto(View):
         else:
             raise Http404
 
-class CommunityOnPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.make_private()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityOffPrivatePhoto(View):
-    def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            comment.make_publish()
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class PhotoListCommunityCreate(TemplateView):
     template_name = None

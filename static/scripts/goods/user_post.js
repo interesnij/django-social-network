@@ -103,13 +103,6 @@ on('#ajax', 'click', '.u_good_comment_restore', function() {
   comment_restore(this, "/goods/user_progs/restore_comment/")
 });
 
-on('#ajax', 'click', '.u_good_off_private', function() {
-  send_good_change(this, "/goods/user_progs/off_private/", "u_good_on_private", "Вкл. приватность")
-});
-on('#ajax', 'click', '.u_good_on_private', function() {
-  send_good_change(this, "/goods/user_progs/on_private/", "u_good_off_private", "Выкл. приватность")
-});
-
 on('#ajax', 'click', '.u_good_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });
