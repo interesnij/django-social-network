@@ -31,8 +31,8 @@ on('body', 'click', '.u_doc_edit', function() {
 });
 
 on('#ajax', 'click', '.u_doc_list_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/docs/user_progs/edit_list/" + uuid + "/", "worker_fullscreen");
+  pk = this.parentElement.parentElement.getAttribute('data-pk');
+  create_fullscreen("/docs/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {
@@ -54,7 +54,7 @@ on('#ajax', 'click', '.u_ucm_doc_repost', function() {
 on('#ajax', 'click', '.u_ucm_doc_list_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.getAttribute("data-pk") ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  parent.getAttribute("data-uuid") ? uuid = parent.getAttribute('data-uuid') : uuid = document.body.querySelector(".pk_saver").getAttribute('data-uuid');
-  create_fullscreen("/docs/repost/u_ucm_list_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
+  list_pk = parent.getAttribute('list-pk');
+  create_fullscreen("/docs/repost/u_ucm_list_window/" + pk + "/" + list_pk + "/", "worker_fullscreen");
   clear_attach_block();
 });

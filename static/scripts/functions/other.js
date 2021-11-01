@@ -132,7 +132,7 @@ function remove_class_timeout(el) {
 
 function remove_item_and_show_restore_block(item, url, _class, title) {
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url + item.getAttribute("data-uuid") + "/", true );
+    ajax_link.open( 'GET', url + item.getAttribute("data-pk") + "/", true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
@@ -141,7 +141,7 @@ function remove_item_and_show_restore_block(item, url, _class, title) {
         checkbox.style.display = "none";
         p = document.createElement("div");
         p.classList.add("media", "p-1");
-        p.innerHTML = "<span style='width:100%' class='" + _class + " pointer border p-2' data-uuid='" + item.getAttribute("data-uuid") + "'>" + title + ". <span class='underline'>Восстановить</span></span>";
+        p.innerHTML = "<span style='width:100%' class='" + _class + " pointer border p-2' data-pk='" + item.getAttribute("data-pk") + "'>" + title + ". <span class='underline'>Восстановить</span></span>";
         item.parentElement.insertBefore(p, item), item.style.display = "none";
         item.classList.remove("custom_color");
       }
@@ -256,17 +256,17 @@ function media_list_edit(_this, url) {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { _this.disabled = true }
-  uuid = form.getAttribute("data-uuid")
+  pk = form.getAttribute("data-pk")
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', url + uuid + "/", true );
+  link_.open( 'POST', url + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     close_work_fullscreen();
     name = form.querySelector('#id_name').value;
-    list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+    list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
     document.body.querySelector('.second_list_name').innerHTML = name;
     toast_success("Список изменен")
@@ -274,9 +274,9 @@ function media_list_edit(_this, url) {
   link_.send(form_data);
 };
 function media_list_delete(_this, url, old_class, new_class) {
-  uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
+  pk = _this.parentElement.parentElement.getAttribute('data-pk');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', url + uuid + "/", true );
+  link_.open( 'GET', url + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
@@ -284,7 +284,7 @@ function media_list_delete(_this, url, old_class, new_class) {
     _this.previousElementSibling.style.display = "none";
     _this.previousElementSibling.previousElementSibling.style.display = "none";
     _this.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
-    list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' );
+    list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace(old_class, new_class);
     _this.innerHTML = "Восстановить список";
@@ -292,9 +292,9 @@ function media_list_delete(_this, url, old_class, new_class) {
   link_.send();
 };
 function media_list_recover(_this, url, old_class, new_class) {
-  uuid = _this.parentElement.parentElement.getAttribute('data-uuid');
+  pk = _this.parentElement.parentElement.getAttribute('data-pk');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', url + uuid + "/", true );
+  link_.open( 'GET', url + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -304,7 +304,7 @@ function media_list_recover(_this, url, old_class, new_class) {
     name = second_list.getAttribute("data-name");
     second_list.innerHTML = name;
     document.body.querySelector('.file-manager-item') ?
-      (list = document.body.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
+      (list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' ),
        list.querySelector('.list_name').innerHTML = name) : null;
     _this.classList.replace(old_class, new_class);
     _this.innerHTML = "Удалить список";
@@ -352,7 +352,7 @@ function profile_list_block_load(_this, block, url, actions_class) {
 };
 
 function on_off_list_in_collections(_this, url, new_class, old_class, text) {
-  pk = _this.parentElement.parentElement.getAttribute("data-uuid");
+  pk = _this.parentElement.parentElement.getAttribute("data-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', url + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -368,10 +368,10 @@ link.send( null );
 
 function add_item_in_list(_this, url, old_class, new_class) {
   parent = _this.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  list_pk = parent.getAttribute("data-pk");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/" + uuid + "/", true );
+  link.open( 'GET', url + pk + "/" + list_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
@@ -386,10 +386,10 @@ function add_item_in_list(_this, url, old_class, new_class) {
 };
 function remove_item_from_list(_this, url, old_class, new_class) {
   parent = _this.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  list_pk = parent.getAttribute("data-pk");
   pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/" + uuid + "/", true );
+  link.open( 'GET', url + pk + "/" + list_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
@@ -432,19 +432,19 @@ function get_preview(response, type) {
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
     form_post = _this.parentElement.parentElement.parentElement;
     form_data = new FormData(form_post);
-    uuid = _this.getAttribute("data-uuid");
+    item_pk = _this.getAttribute("item-pk");
     pk = _this.getAttribute("data-pk");
     preview_target_block = form_post.querySelector('#selected_message_target_items');
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     if (form_post.querySelector('#repost_radio_wall').checked) {
-        link_.open('POST', wall_url + pk + "/" + uuid + "/", true);
+        link_.open('POST', wall_url + pk + "/" + item_pk + "/", true);
         link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         link_.send(form_data);
         toast_info(wall_toast)
     } else if (form_post.querySelector('#repost_radio_community').checked) {
         staff_communities = form_post.querySelector("#id_staff_communities");
         if (preview_target_block.querySelector(".community").value) {
-            link_.open('POST', community_url + pk + "/" + uuid + "/", true);
+            link_.open('POST', community_url + pk + "/" + item_pk + "/", true);
             link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             link_.send(form_data);
             toast_info(community_toast)
@@ -453,7 +453,7 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
         }
     } else if (form_post.querySelector('#repost_radio_message').checked) {
         if (preview_target_block.querySelector(".chat").value) {
-            link_.open('POST', message_url + pk + "/" + uuid + "/", true);
+            link_.open('POST', message_url + pk + "/" + item_pk + "/", true);
             link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             link_.send(form_data);
             toast_info(message_toast)
@@ -757,10 +757,10 @@ function send_mob_good_change(span, _link, new_class, html) {
 function send_photo_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-    uuid = item.getAttribute("data-uuid");
+    item_pk = item.getAttribute("item-pk");
     pk = item.getAttribute("data-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    link.open('GET', _link + pk + "/" + uuid + "/", true);
+    link.open('GET', _link + pk + "/" + item_pk + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function() {
         if (link.readyState == 4 && link.status == 200) {

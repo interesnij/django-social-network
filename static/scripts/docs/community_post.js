@@ -20,9 +20,9 @@ on('#ajax', 'click', '#c_ucm_doc_list_repost_btn', function() {
 on('#ajax', 'click', '.c_add_doc_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  pk = parent.getAttribute("data-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/add_list/" + uuid + "/", true );
+  link.open( 'GET', "/docs/community_progs/add_list/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
@@ -36,9 +36,9 @@ on('#ajax', 'click', '.c_add_doc_list', function(e) {
 on('#ajax', 'click', '.c_remove_doc_list', function(e) {
   _this = this;
   parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
+  pk = parent.getAttribute("data-pk");
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/remove_list/" + uuid + "/", true );
+  link.open( 'GET', "/docs/community_progs/remove_list/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {

@@ -1,6 +1,6 @@
 
-<div class="mb-3 data_display" data-uuid="{{ object.uuid }}" data-pk="{{ object.creator.pk }}">
-  <div class="row is_stat_list" data-pk="{{ object.pk }}" data-type="user_photo">
+<div class="mb-3 data_display is_stat_list" data-type="user_photo" data-pk="{{ object.pk }}" data-owner="{{ user.pk }}">
+  <div class="row">
     <div class="col-lg-8 col-md-7 col-sm-12 order-1">
       <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}
