@@ -11,7 +11,7 @@ from common.templates import get_settings_template, render_for_platform
 
 class AddVideoListInUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_user_collections(request.user)
@@ -21,7 +21,7 @@ class AddVideoListInUserCollections(View):
 
 class RemoveVideoListFromUserCollections(View):
     def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["pk"])
         check_user_can_get_list(request.user, list.creator)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_user_collections(request.user)
@@ -34,7 +34,7 @@ class VideoCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         user = User.objects.get(pk=request.POST.get('pk'))
-        video = Video.objects.get(uuid=request.POST.get('uuid'))
+        video = Video.objects.get(pk=request.POST.get('video_pk'))
 
         if request.is_ajax() and form_post.is_valid() and video.comments_enabled:
             comment = form_post.save(commit=False)
@@ -119,7 +119,7 @@ class VideoCommentUserRecover(View):
 
 class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.delete_item(None)
             return HttpResponse()
@@ -128,7 +128,7 @@ class UserVideoDelete(View):
 
 class UserVideoRecover(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.restore_item(None)
             return HttpResponse()
@@ -137,7 +137,7 @@ class UserVideoRecover(View):
 
 class UserOpenCommentVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.comments_enabled = True
             video.save(update_fields=['comments_enabled'])
@@ -147,7 +147,7 @@ class UserOpenCommentVideo(View):
 
 class UserCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.comments_enabled = False
             video.save(update_fields=['comments_enabled'])
@@ -157,7 +157,7 @@ class UserCloseCommentVideo(View):
 
 class UserOffVotesVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.votes_on = False
             video.save(update_fields=['votes_on'])
@@ -167,7 +167,7 @@ class UserOffVotesVideo(View):
 
 class UserOnVotesVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.votes_on = True
             video.save(update_fields=['votes_on'])
@@ -177,7 +177,7 @@ class UserOnVotesVideo(View):
 
 class UserOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.make_private()
             return HttpResponse()
@@ -186,7 +186,7 @@ class UserOnPrivateVideo(View):
 
 class UserOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and video.creator == request.user:
             video.make_publish()
             return HttpResponse()
@@ -247,7 +247,7 @@ class UserVideoEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         self.form = VideoForm(request.POST,request.FILES, instance=self.video)
 
         if request.is_ajax() and self.form.is_valid() and request.user == self.user:
@@ -299,7 +299,7 @@ class UserVideolistEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserVideolistEdit,self).get_context_data(**kwargs)
-        context["list"] = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = VideoList.objects.get(pk=self.kwargs["pk"])
         context["user"] = request.user
         return context
 
@@ -313,7 +313,7 @@ class UserVideolistEdit(TemplateView):
 
 class UserVideolistDelete(View):
     def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk and list.type != VideoList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -322,7 +322,7 @@ class UserVideolistDelete(View):
 
 class UserVideolistRecover(View):
     def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == list.creator.pk:
             list.restore_item()
             return HttpResponse()
@@ -333,7 +333,7 @@ class UserVideolistRecover(View):
 class AddVideoInUserList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and not list.is_item_in_list(video.pk):
             list.video_list.add(video)
             return HttpResponse()
@@ -343,7 +343,7 @@ class AddVideoInUserList(View):
 class RemoveVideoFromUserList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(video.pk):
             list.video_list.remove(video)
             return HttpResponse()

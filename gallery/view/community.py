@@ -48,7 +48,7 @@ class CommunityAlbumPhotosList(ListView):
         from common.templates import get_template_community_list, get_template_anon_community_list
 
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax():
             if request.user.is_authenticated:
                 self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -80,7 +80,7 @@ class CommunityAlbumPhotoList(TemplateView):
         from common.templates import get_template_community_item, get_template_anon_community_item
 
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_community_item(self.photo, "gallery/c_photo/list_photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:

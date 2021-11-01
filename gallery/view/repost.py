@@ -19,7 +19,7 @@ class UUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.user, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.photo, self.user, self.template_name = Photo.objects.get(pk=self.kwargs["photo_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
@@ -38,7 +38,7 @@ class CUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.c, self.template_name = Photo.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.photo, self.c, self.template_name = Photo.objects.get(pk=self.kwargs["photo_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
@@ -58,7 +58,7 @@ class UUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.user, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = PhotoList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoListWindow,self).get(request,*args,**kwargs)
@@ -78,7 +78,7 @@ class CUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.c, self.template_name = PhotoList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.c, self.template_name = PhotoList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.c)
         return super(CUCMPhotoListWindow,self).get(request,*args,**kwargs)
 
@@ -93,7 +93,7 @@ class UUPhotoRepost(View):
     создание репоста фотографии пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         attach = request.POST.getlist('attach_items')
         if user != request.user:
@@ -112,7 +112,7 @@ class CUPhotoRepost(View):
     создание репоста фотографии сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         attach = request.POST.getlist('attach_items')
         form_post = PostForm(request.POST)
@@ -131,7 +131,7 @@ class UCPhotoRepost(View):
     создание репоста фотографии пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -154,7 +154,7 @@ class CCPhotoRepost(View):
     создание репоста фотографии сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -178,7 +178,7 @@ class UMPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
 
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -193,7 +193,7 @@ class CMPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
 
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(photo, "pho"+str(photo.pk), community, request, "Репост фотографии сообщества")
@@ -207,7 +207,7 @@ class UUPhotoListRepost(View):
     def post(self, request, *args, **kwargs):
         from gallery.models import PhotoList
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -228,7 +228,7 @@ class CUPhotoListRepost(View):
     def post(self, request, *args, **kwargs):
         from gallery.models import PhotoList
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         attach = request.POST.getlist('attach_items')
@@ -249,7 +249,7 @@ class UCPhotoListRepost(View):
     def post(self, request, *args, **kwargs):
         from gallery.models import PhotoList
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -274,7 +274,7 @@ class CCPhotoListRepost(View):
     def post(self, request, *args, **kwargs):
         from gallery.models import PhotoList
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -299,7 +299,7 @@ class UMPhotoListRepost(View):
         from gallery.models import PhotoList
         from common.processing.post import repost_message_send
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -315,7 +315,7 @@ class CMPhotoListRepost(View):
         from gallery.models import PhotoList
         from common.processing.post import repost_message_send
 
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(list, "lph"+str(list.pk), community, request, "Репост фотоальбома сообщества")

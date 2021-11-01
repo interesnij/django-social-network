@@ -10,7 +10,7 @@ from django.views.generic.base import TemplateView
 
 class AddPhotoListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -21,7 +21,7 @@ class AddPhotoListInCommunityCollections(View):
 
 class RemovePhotoListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -29,7 +29,7 @@ class RemovePhotoListFromCommunityCollections(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-            
+
 
 class CommunityAddAvatar(View):
     """
@@ -52,7 +52,7 @@ class PhotoCommentCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = CommentForm(request.POST)
         community = Community.objects.get(pk=request.POST.get('pk'))
-        photo = Photo.objects.get(uuid=request.POST.get('uuid'))
+        photo = Photo.objects.get(pk=request.POST.get('photo_pk'))
         if request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
             comment=form_post.save(commit=False)
 
@@ -145,7 +145,7 @@ class CommunityPhotoDescription(View):
     form_image = None
 
     def post(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["pk"])
         community = photo.community
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
         if request.is_ajax() and form_image.is_valid() and request.user.is_administrator_of_community(community.pk):
@@ -157,7 +157,7 @@ class CommunityPhotoDescription(View):
 
 class CommunityPhotoDelete(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.delete_item(community)
@@ -167,7 +167,7 @@ class CommunityPhotoDelete(View):
 
 class CommunityPhotoRecover(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.restore_item(community)
@@ -178,7 +178,7 @@ class CommunityPhotoRecover(View):
 
 class CommunityOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.comments_enabled = True
@@ -189,7 +189,7 @@ class CommunityOpenCommentPhoto(View):
 
 class CommunityCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.comments_enabled = False
@@ -200,7 +200,7 @@ class CommunityCloseCommentPhoto(View):
 
 class CommunityOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.votes_on = False
@@ -211,7 +211,7 @@ class CommunityOffVotesPhoto(View):
 
 class CommunityOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.votes_on = True
@@ -222,7 +222,7 @@ class CommunityOnVotesPhoto(View):
 
 class CommunityOnPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.make_private()
@@ -232,7 +232,7 @@ class CommunityOnPrivatePhoto(View):
 
 class CommunityOffPrivatePhoto(View):
     def get(self,request,*args,**kwargs):
-        photo = Photo.objects.get(uuid=self.kwargs["uuid"])
+        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             comment.make_publish()
@@ -298,7 +298,7 @@ class PhotoListCommunityEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
         self.community = self.list.community
         self.template_name = get_community_manage_template("communities/photos/list/edit_list.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
         return super(PhotoListCommunityEdit,self).get(request,*args,**kwargs)
@@ -307,11 +307,11 @@ class PhotoListCommunityEdit(TemplateView):
         context = super(PhotoListCommunityEdit,self).get_context_data(**kwargs)
         context["form"] = self.form
         context["community"] = self.community
-        context["list"] = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = PhotoList.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
         self.form = PhotoListForm(request.POST,instance=self.list)
         self.community = self.list.community
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk) and self.list.is_have_edit():
@@ -324,7 +324,7 @@ class PhotoListCommunityEdit(TemplateView):
 
 class PhotoListCommunityDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk) and list.is_have_edit():
             list.delete_item()
             return HttpResponse()
@@ -333,7 +333,7 @@ class PhotoListCommunityDelete(View):
 
 class PhotoListCommunityRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(list.community.pk):
             list.restore_item()
             return HttpResponse()
@@ -343,7 +343,7 @@ class PhotoListCommunityRecover(View):
 class AddPhotoInCommunityList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(photo.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.photo_list.add(photo)
@@ -354,7 +354,7 @@ class AddPhotoInCommunityList(View):
 class RemovePhotoFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(photo.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.photo_list.remove(photo)
             return HttpResponse()

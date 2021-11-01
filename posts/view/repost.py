@@ -25,7 +25,7 @@ class UUCMPostWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
+        context["object"] = Post.objects.get(pk=self.kwargs["pk"])
         context["user"] = self.user
         return context
 
@@ -43,7 +43,7 @@ class CUCMPostWindow(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(CUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
-        context["object"] = Post.objects.get(uuid=self.kwargs["uuid"])
+        context["object"] = Post.objects.get(pk=self.kwargs["pk"])
         context["community"] = self.community
         return context
 
@@ -54,7 +54,7 @@ class UUCMPostsListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
@@ -75,7 +75,7 @@ class CUCMPostsListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -94,7 +94,7 @@ class UUPostRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, user, form_post, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        parent, user, form_post, attach = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -113,7 +113,7 @@ class CUPostRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, community, form_post, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        parent, community, form_post, attach = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -132,7 +132,7 @@ class UCPostRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, user, form_post, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
+        parent, user, form_post, communities, attach = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -155,7 +155,7 @@ class CCPostRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, community, form_post, communities, attach = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
+        parent, community, form_post, communities, attach = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist("communities"), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -178,7 +178,7 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, user, connections, form_post = Post.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
+        parent, user, connections, form_post = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if not connections:
@@ -214,7 +214,7 @@ class CMPostRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, community, connections, form_post = Post.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
+        parent, community, connections, form_post = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
         check_can_get_lists(request.user, community)
 
         if not connections:
@@ -250,7 +250,7 @@ class UUPostsListRepost(View):
     создание репоста списка записей пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -269,7 +269,7 @@ class CUPostsListRepost(View):
     создание репоста списка записей сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         form_post = PostForm(request.POST)
         check_can_get_lists(request.user, community)
@@ -288,7 +288,7 @@ class UCPostsListRepost(View):
     создание репоста списка записей пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -311,7 +311,7 @@ class CCPostsListRepost(View):
     создание репоста списка записей сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -333,7 +333,7 @@ class UMPostsListRepost(View):
     создание репоста списка записей пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -346,7 +346,7 @@ class CMPostsListRepost(View):
     создание репоста списка записей сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list = PostsList.objects.get(uuid=self.kwargs["uuid"])
+        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(list, "lpo"+str(list.pk), community, request, "Репост списка записей сообщества")

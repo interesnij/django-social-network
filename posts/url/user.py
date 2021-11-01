@@ -4,6 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-	url(r'^detail/(?P<uuid>[0-9a-f-]+)/$', PostUserDetail.as_view(), name="user_item_detail"),
-	url(r'^load_post/(?P<uuid>[0-9a-f-]+)/$', PostLoadView.as_view()),
+	url(r'^detail/(?P<pk>\d+)/$', PostUserDetail.as_view(), name="user_item_detail"),
+	url(r'^load_post/(?P<pk>\d+)/$', PostLoadView.as_view()),
 ]

@@ -5,7 +5,7 @@ from video.views import *
 urlpatterns = [
     url(r'^$', AllVideoView.as_view()),
     url(r'^load_list/(?P<pk>\d+)/$', LoadVideoList.as_view(), name="load_video_list"),
-    url(r'^comments/(?P<uuid>[0-9a-f-]+)/$', VideoCommentList.as_view()),
+    url(r'^comments/(?P<pk>\d+)/$', VideoCommentList.as_view()),
 
     url(r'^user/', include('video.url.user')),
     url(r'^community/', include('video.url.community')),

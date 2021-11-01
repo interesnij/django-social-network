@@ -20,7 +20,7 @@ class UUCMSurveyWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        self.survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
@@ -41,7 +41,7 @@ class CUCMSurveyWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        self.survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, self.community)
         self.template_name = get_detect_platform_template("survey/repost/c_ucm_survey.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -60,7 +60,7 @@ class UUSurveyRepost(View):
     создание репоста опроса пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         attach = request.POST.getlist('attach_items')
         if user != request.user:
@@ -79,7 +79,7 @@ class CUSurveyRepost(View):
     создание репоста опроса сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         attach = request.POST.getlist('attach_items')
         form_post = PostForm(request.POST)
@@ -98,7 +98,7 @@ class UCSurveyRepost(View):
     создание репоста опроса пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -121,7 +121,7 @@ class CCSurveyRepost(View):
     создание репоста опроса сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
@@ -143,7 +143,7 @@ class UMSurveyRepost(View):
     создание репоста опроса пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
@@ -156,7 +156,7 @@ class CMSurveyRepost(View):
     создание репоста опроса сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        survey = Survey.objects.get(uuid=self.kwargs["uuid"])
+        survey = Survey.objects.get(pk=self.kwargs["survey_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(survey, "sur"+str(survey.pk), community, request, "Репост опроса сообщества")

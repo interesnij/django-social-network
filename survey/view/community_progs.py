@@ -128,7 +128,7 @@ class SurveyCommunityDetail(TemplateView):
 
 class AddSurveyListInCommunityCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, list.community)
         if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
             list.add_in_community_collections(community)
@@ -136,7 +136,7 @@ class AddSurveyListInCommunityCollections(View):
 
 class RemoveSurveyListFromCommunityCollections(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, list.community)
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_community_collections(community)
@@ -170,7 +170,7 @@ class CommunitySurveyListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.template_name = get_settings_template("survey/community/edit_list.html", request.user, request.META['HTTP_USER_AGENT']), SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        self.list, self.template_name = get_settings_template("survey/community/edit_list.html", request.user, request.META['HTTP_USER_AGENT']), SurveyList.objects.get(pk=self.kwargs["pk"])
         return super(CommunitySurveyListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -182,7 +182,7 @@ class CommunitySurveyListEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from survey.forms import SurveylistForm
-        self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
         self.form = SurveylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
@@ -195,7 +195,7 @@ class CommunitySurveyListEdit(TemplateView):
 
 class CommunitySurveyListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != SurveyList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -204,7 +204,7 @@ class CommunitySurveyListDelete(View):
 
 class CommunitySurveyListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.restore_item()
             return HttpResponse()

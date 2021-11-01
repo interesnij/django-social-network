@@ -11,7 +11,7 @@ from common.templates import render_for_platform
 
 class AddVideoListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -22,7 +22,7 @@ class AddVideoListInCommunityCollections(View):
 
 class RemoveVideoListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -36,7 +36,7 @@ class VideoCommentCommunityCreate(View):
 	def post(self,request,*args,**kwargs):
 		form_post = CommentForm(request.POST)
 		community = Community.objects.get(pk=request.POST.get('pk'))
-		video = Video.objects.get(uuid=request.POST.get('uuid'))
+		video = Video.objects.get(pk=request.POST.get('video_pk'))
 		if request.is_ajax() and form_post.is_valid() and video.comments_enabled:
 			comment = form_post.save(commit=False)
 			check_can_get_lists(request.user, community)
@@ -122,7 +122,7 @@ class VideoCommentCommunityRecover(View):
 
 class CommunityVideoDelete(View):
     def get(self,request,*args,**kwargs):
-        video, c = Video.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        video, c = Video.objects.get(pk=self.kwargs["video_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
             video.delete_video(c)
             return HttpResponse()
@@ -131,7 +131,7 @@ class CommunityVideoDelete(View):
 
 class CommunityVideoRecover(View):
     def get(self,request,*args,**kwargs):
-        video, c = Video.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        video, c = Video.objects.get(pk=self.kwargs["video_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
             video.restore_video(c)
             return HttpResponse()
@@ -140,7 +140,7 @@ class CommunityVideoRecover(View):
 
 class CommunityOpenCommentVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.comments_enabled = True
             video.save(update_fields=['comments_enabled'])
@@ -150,7 +150,7 @@ class CommunityOpenCommentVideo(View):
 
 class CommunityCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.comments_enabled = False
             video.save(update_fields=['comments_enabled'])
@@ -160,7 +160,7 @@ class CommunityCloseCommentVideo(View):
 
 class CommunityOffVotesVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.votes_on = False
             video.save(update_fields=['votes_on'])
@@ -170,7 +170,7 @@ class CommunityOffVotesVideo(View):
 
 class CommunityOnVotesVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.votes_on = True
             video.save(update_fields=['votes_on'])
@@ -180,7 +180,7 @@ class CommunityOnVotesVideo(View):
 
 class CommunityOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.make_private()
             return HttpResponse()
@@ -189,7 +189,7 @@ class CommunityOnPrivateVideo(View):
 
 class CommunityOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
-        video = Video.objects.get(uuid=self.kwargs["uuid"])
+        video = Video.objects.get(pk=self.kwargs["video_pk"])
         if request.is_ajax() and request.user.is_administrator_of_community(photo.community.pk):
             video.make_publish()
             return HttpResponse()
@@ -271,7 +271,7 @@ class CommunityVideoEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         self.form = VideoForm(request.POST,request.FILES, instance=self.video)
         if request.is_ajax() and self.form.is_valid() and request.user.pk.is_administrator_of_community(self.kwargs["pk"]):
             video = self.form.save(commit=False)
@@ -296,7 +296,7 @@ class CommunityVideolistEdit(TemplateView):
     form=None
 
     def get(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
         self.template_name = self.community.get_manage_template("video/community_create/edit_list.html", request.user, self.list.community.pk, request.META['HTTP_USER_AGENT'])
         return super(CommunityVideolistEdit,self).get(request,*args,**kwargs)
 
@@ -307,7 +307,7 @@ class CommunityVideolistEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
         self.form = VideoListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
@@ -320,7 +320,7 @@ class CommunityVideolistEdit(TemplateView):
 class CommunityVideolistDelete(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type != VideoList.MAIN:
             list.delete_item()
             return HttpResponse()
@@ -330,7 +330,7 @@ class CommunityVideolistDelete(View):
 class CommunityVideolistRecover(View):
     def get(self,request,*args,**kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and request.user.is_staff_of_community(community.pk):
             list.restore_item()
             return HttpResponse()
@@ -341,7 +341,7 @@ class CommunityVideolistRecover(View):
 class AddVideoInCommunityList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(video.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.video_list.add(video)
@@ -352,7 +352,7 @@ class AddVideoInCommunityList(View):
 class RemoveVideoFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(uuid=self.kwargs["uuid"])
+        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(video.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.video_list.remove(video)
             return HttpResponse()

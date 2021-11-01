@@ -10,7 +10,7 @@ from common.templates import render_for_platform
 
 class AddGoodListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
@@ -21,7 +21,7 @@ class AddGoodListInCommunityCollections(View):
 
 class RemoveGoodListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
@@ -218,27 +218,24 @@ class GoodListCommunityCreate(TemplateView):
 
 
 class CommunityGoodListEdit(TemplateView):
-    """
-    изменение списка товаров пользователя
-    """
     template_name = None
     form = None
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
 
-        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = GoodList.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("goods/good_base/c_edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityGoodListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CommunityGoodListEdit,self).get_context_data(**kwargs)
-        context["list"] = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        context["list"] = GoodList.objects.get(pk=self.kwargs["pk"])
         context["community"] = list.community
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = GoodList.objects.get(pk=self.kwargs["pk"])
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
@@ -250,7 +247,7 @@ class CommunityGoodListEdit(TemplateView):
 
 class CommunityGoodListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         c = list.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != GoodList.MAIN:
             list.delete_item()
@@ -260,7 +257,7 @@ class CommunityGoodListDelete(View):
 
 class CommunityGoodListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["pk"])
         c = list.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             list.restore_item()
@@ -370,7 +367,7 @@ class GoodCommentCommunityRecover(View):
 class AddGoodInCommunityList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
 
         if request.is_ajax() and not list.is_item_in_list(good.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.good_list.add(good)
@@ -381,7 +378,7 @@ class AddGoodInCommunityList(View):
 class RemoveGoodFromCommunityList(View):
     def get(self, request, *args, **kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
         if request.is_ajax() and list.is_item_in_list(good.pk) and request.user.is_administrator_of_community(list.community.pk):
             list.good_list.remove(good)
             return HttpResponse()

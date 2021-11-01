@@ -11,11 +11,11 @@ urlpatterns=[
     url(r'^detail/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyUserDetail.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', UserSurveyListCreate.as_view()),
-    url(r'^edit_list/(?P<uuid>[0-9a-f-]+)/$', UserSurveyListEdit.as_view()),
-    url(r'^delete_list/(?P<uuid>[0-9a-f-]+)/$', UserSurveyListDelete.as_view()),
-    url(r'^restore_list/(?P<uuid>[0-9a-f-]+)/$', UserSurveyListRecover.as_view()),
-    url(r'^add_list_in_collections/(?P<uuid>[0-9a-f-]+)/$', AddSurveyListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<uuid>[0-9a-f-]+)/$', RemoveSurveyListFromUserCollections.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/$', UserSurveyListEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/$', UserSurveyListDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/$', UserSurveyListRecover.as_view()),
+    url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddSurveyListInUserCollections.as_view()),
+    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemoveSurveyListFromUserCollections.as_view()),
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeSurveyPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeSurveyListPosition.as_view()),
 ]
