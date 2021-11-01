@@ -162,7 +162,7 @@ class UserPhotoDescription(View):
 class UserPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["photo_pk"])
+        user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
             photo.delete_item(None)
             return HttpResponse()
