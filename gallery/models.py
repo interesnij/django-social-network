@@ -468,7 +468,7 @@ class Photo(models.Model):
         return self.save(update_fields=['repost'])
 
     @classmethod
-    def create_photo(cls, creator, image, list, type, community):
+    def create_photo(cls, creator, image, list, type, community=None):
         from common.processing.photo import get_photo_processing
 
         list.count += 1

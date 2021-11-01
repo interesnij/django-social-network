@@ -29,42 +29,7 @@ class RemovePhotoListFromCommunityCollections(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
-
-
-class CommunityCreatePhotosInMainList(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя в основной альбом
-    """
-    def post(self, request, *args, **kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            photos = []
-            check_can_get_lists(request.user, community)
-            list = PhotoList.objects.get(community=community, type=PhotoList.MAIN)
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHO", community=community)
-                photos += [photo,]
-            return render_for_platform(request, 'gallery/c_photo/new_photos.html',{'object_list': photos, 'community': community})
-        else:
-            raise Http404
-
-class CommunityCreatePhotosInPhotoList(View):
-    """
-    асинхронная мульти загрузка фотографий пользователя в альбом
-    """
-    def post(self, request, *args, **kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax():
-            photos = []
-            uploaded_file = request.FILES['file']
-            check_can_get_lists(request.user, community)
-            for p in request.FILES.getlist('file'):
-                photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHLIS", community=community)
-                photos += [photo,]
-            return render_for_platform(request, 'gallery/c_photo/new_album_photos.html',{'object_list': photos, 'list': list, 'community': community})
-        else:
-            raise Http404
+            
 
 class CommunityAddAvatar(View):
     """

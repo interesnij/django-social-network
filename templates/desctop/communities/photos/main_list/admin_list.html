@@ -18,12 +18,12 @@
 
 <span class="load_block">
   <div class="media mt-3" style="padding-left: 7px;">
-    <form id="c_add_photos" class="uuid_saver" data-uuid="{{ list.uuid }}">
+    <form class="uuid_saver" data-uuid="{{ list.uuid }}">
       {% csrf_token %}
     <h5 class="mt-1">
       {{ list.name }} ({{ list.count_items }})
 
-        <input type="file" id="c_gallery_photo_add" name="file" style="display:none" multiple="multiple">
+        <input type="file" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
         <span class="pointer badge badge-light-success c_photo_list_add">Создать список</span>
     </h5>

@@ -57,7 +57,7 @@ class UUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.user, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.user, self.template_name = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.user != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocListWindow,self).get(request,*args,**kwargs)
@@ -76,7 +76,7 @@ class CUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.community, self.template_name = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.list, self.community, self.template_name = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.community)
         return super(CUCMDocListWindow,self).get(request,*args,**kwargs)
 
@@ -191,7 +191,7 @@ class UUDocListRepost(View):
     создание репоста списка документов пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, user, form_post, attach = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        list, user, form_post, attach = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if request.is_ajax() and form_post.is_valid():
@@ -207,7 +207,7 @@ class CUDocListRepost(View):
     создание репоста списка документов сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        list, community, form_post, attach = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
+        list, community, form_post, attach = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
         check_can_get_lists(request.user, community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -223,7 +223,7 @@ class UCDocListRepost(View):
     создание репоста списка документов пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list, user = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         communities = request.POST.getlist("communities")
@@ -244,7 +244,7 @@ class CCDocListRepost(View):
     создание репоста списка документов сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        list, community = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         communities = request.POST.getlist("communities")
         attach = request.POST.getlist('attach_items')
@@ -265,7 +265,7 @@ class UMDocListRepost(View):
     создание репоста списка документов пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list, user = DocsList.objects.get(uuid=self.kwargs["uuid"]), User.objects.get(pk=self.kwargs["pk"])
+        list, user = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
         repost_message_send(list, "ldo"+str(list.pk), None, request, "Репост плейлиста пользователя")
@@ -277,7 +277,7 @@ class CMDocListRepost(View):
     создание репоста списка документов сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        list, community = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         repost_message_send(list, "ldo"+str(list.pk), community, request, "Репост плейлиста сообщества")
         return HttpResponse()

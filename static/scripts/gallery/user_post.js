@@ -176,37 +176,18 @@ on('#ajax', 'click', '.u_photo_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
-on('#ajax', 'change', '#u_gallery_photo_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form_data = new FormData(document.body.querySelector("#add_photos"));
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_photos_in_main_list/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-    document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
-  }}
-  link_.send(form_data);
-});
-
-on('#ajax', 'change', '#u_gallery_list_photo_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  form = document.body.querySelector("#add_photos");
+on('#ajax', 'change', '.add_photos_in_list', function() {
+  form = this.parentElement.parentElement.parentElement;
+  pk = form.parentElement.nextElementSibling.getAttribute("data-pk");
   form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/user_progs/add_photos_in_photo_list/" + pk + "/" + form.getAttribute("data-uuid") + "/", true );
+  link_.open( 'POST', "/gallery/add_photos_in_list/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
     response = document.createElement("span");
-    photo_list = document.createElement("div");
     response.innerHTML = elem;
     document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null

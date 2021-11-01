@@ -11,7 +11,7 @@ from common.check.community import check_can_get_lists
 
 class AddDocListInCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list, community = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_community_can_add_list(community.pk):
             list.add_in_community_collections(community)
@@ -21,7 +21,7 @@ class AddDocListInCommunityCollections(View):
 
 class RemoveDocListFromCommunityCollections(View):
     def post(self,request,*args,**kwargs):
-        list, community = DocsList.objects.get(uuid=self.kwargs["uuid"]), Community.objects.get(pk=self.kwargs["pk"])
+        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
         if request.is_ajax() and list.is_user_can_delete_list(community.pk):
             list.remove_in_community_collections(community)
@@ -32,7 +32,7 @@ class RemoveDocListFromCommunityCollections(View):
 
 class AddDocInCommunityList(View):
     def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and not list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.add(doc)
             return HttpResponse()
@@ -41,7 +41,7 @@ class AddDocInCommunityList(View):
 
 class RemoveDocFromCommunityList(View):
     def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
+        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
             list.doc_list.remove(doc)
             return HttpResponse()
@@ -130,7 +130,7 @@ class CommunityDocListEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(pk=self.kwargs["pk"])
         self.c = self.list.community
         self.template_name = get_community_manage_template("docs/doc_create/c_edit_list.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityDocListEdit,self).get(request,*args,**kwargs)
@@ -141,7 +141,7 @@ class CommunityDocListEdit(TemplateView):
         return c
 
     def post(self,request,*args,**kwargs):
-        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        self.list = DocsList.objects.get(pk=self.kwargs["pk"])
         self.c = self.list.community
         self.form = DocslistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
@@ -155,7 +155,7 @@ class CommunityDocListEdit(TemplateView):
 
 class CommunityDocListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         c = list.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != DocsList.MAIN:
             list.delete_item()
@@ -165,7 +165,7 @@ class CommunityDocListDelete(View):
 
 class CommunityDocListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(uuid=self.kwargs["uuid"])
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
         c = list.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
             list.restore_item()

@@ -13,7 +13,7 @@ class VideoUserLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -33,7 +33,7 @@ class VideoUserDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -93,7 +93,7 @@ class VideoCommunityLikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -113,7 +113,7 @@ class VideoCommunityDislikeWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -171,7 +171,7 @@ class AllVideoUserLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -195,7 +195,7 @@ class AllVideoUserDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -266,7 +266,7 @@ class AllVideoCommunityLikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -290,7 +290,7 @@ class AllVideoCommunityDislikeWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if not self.video.votes_on:
             raise PermissionDenied('Реакции отключены.')
         if request.user.is_authenticated:
@@ -361,7 +361,7 @@ class AllVideoCommunityRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_community_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
@@ -383,7 +383,7 @@ class AllVideoUserRepostWindow(ListView):
     paginate_by = 15
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(uuid=self.kwargs["uuid"])
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
         if request.user.is_authenticated:
             self.template_name = get_template_user_item(self.video, "video/all_video_votes/", "page.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
