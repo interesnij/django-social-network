@@ -24,9 +24,9 @@
               {{ list.name }} ({{ list.count_items }})
 
               {% if list|is_user_can_add_list:request.user.pk %}
-                <span class="pointer badge badge-light-success u_copy_video_list">Добавить список в коллекцию</span>
+                <span class="pointer badge badge-light-success copy_user_video_list">Добавить список в коллекцию</span>
               {% elif request.user.pk in list.get_users_ids %}
-                <span class="pointer badge badge-light-danger u_uncopy_video_list">Удалить список из коллекции</span>
+                <span class="pointer badge badge-light-danger uncopy_user_video_list">Удалить список из коллекции</span>
               {% endif %}
               <span class="pointer badge badge-light-warning u_video_video_claim">Пожаловаться</span>
             </h5>

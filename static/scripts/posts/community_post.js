@@ -142,10 +142,10 @@ on('#ajax', 'click', '#c_add_offer_post', function() {
 });
 
 on('#ajax', 'click', '.c_add_post_in_list', function() {
-  add_item_in_list(this, '/posts/community_progs/add_post_in_list/', "c_add_post_in_list", "c_remove_post_from_list")
+  add_item_in_list(this, '/posts/community_progs/copy_post_in_list/', "c_add_post_in_list", "c_remove_post_from_list")
 })
 on('#ajax', 'click', '.c_remove_post_from_list', function() {
-  remove_item_from_list(this, '/posts/community_progs/remove_post_from_list/', "c_remove_post_from_list", "c_add_post_in_list")
+  remove_item_from_list(this, '/posts/community_progs/uncopy_post_from_list/', "c_remove_post_from_list", "c_add_post_in_list")
 })
 
 on('#ajax', 'click', '#c_add_post_list_btn', function() {
@@ -368,57 +368,12 @@ on('#ajax', 'click', '.c_post_remove', function() {
   link.send( );
 });
 
-on('#ajax', 'click', '.c_post_wall_remove', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community_progs/wall_delete/" + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    p = document.createElement("div");
-    p.classList.add("card", "mb-3");
-    p.style.padding = "20px";
-    p.innerHTML = "Запись удалена. <span class='c_post_wall_restore pointer' data-uuid='" + uuid + "'>Восстановить</span>";
-    !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
-    : (document.querySelector(".item_fullscreen").style.display = "none",
-    block = document.body.querySelector(".post_stream"),
-    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
-    item.parentElement.insertBefore(p, item),
-    item.style.display = "none",
-    p.style.display =  "block")
-  }};
-
-  link.send( );
-});
-
-
 on('#ajax', 'click', '.c_post_restore', function() {
   item = this.parentElement.nextElementSibling;
   uuid = this.getAttribute("data-uuid");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/posts/community_progs/restore/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    block.remove();
-    item.style.display = "block";
-  }};
-
-  link.send();
-});
-
-on('#ajax', 'click', '.c_post_wall_restore', function() {
-  item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  block = this.parentElement;
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community_progs/wall_restore/" + pk + "/" + uuid + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {

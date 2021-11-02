@@ -23,8 +23,8 @@ urlpatterns = [
 	url(r'^restore/(?P<pk>\d+)/$', PostCommunityRecover.as_view()),
 	url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesPost.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesPost.as_view()),
-	url(r'^add_post_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPostInCommunityList.as_view()),
-    url(r'^remove_post_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePostFromCommunityList.as_view()),
+	url(r'^copy_post_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPostInCommunityList.as_view()),
+    url(r'^uncopy_post_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePostFromCommunityList.as_view()),
 
 	url(r'^add_list/(?P<pk>\d+)/$', CommunityPostsListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/$', CommunityPostsListEdit.as_view()),

@@ -42,9 +42,9 @@
             &nbsp;
           {% load get_key %}
           {% if list|is_user_can_add_list:request.user.pk %}
-            <a class="c_copy_post_list pointer">Добавить список</a>
+            <a class="copy_user_post_list pointer">Добавить список</a>
           {% elif request.user.pk in list.get_users_ids %}
-            <a class="c_uncopy_post_list pointer">Удалить список</a>
+            <a class="uncopy_user_post_list pointer">Удалить список</a>
           {% endif %}
         </span>
         {% if is_user_can_create_posts %}

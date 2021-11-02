@@ -1,31 +1,13 @@
 
-// скрипты галереи для сообщества
-
-on('#ajax', 'click', '.c_add_photo_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/gallery/community_progs/add_list/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_remove_photo_list");
-      _this.classList.remove("c_add_photo_list")
-      _this.innerHTML = 'Удалить'
-  }};
-  link.send( null );
-});
 on('body', 'click', '.c_photo_list_remove', function() {
-  media_list_delete(this, "/gallery/community_progs/delete_list/", "c_photo_list_remove", "c_photo_list_abort_remove")
+  media_list_delete(this, "/gallery/community_progs/delete_list/", "c_photo_list_remove", "c_photo_list_abort_remove", "removed_community_photo_list")
 });
 on('body', 'click', '.c_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/community_progs/restore_list/", "c_photo_list_abort_remove", "c_photo_list_remove")
+  media_list_recover(this, "/gallery/community_progs/restore_list/", "c_photo_list_abort_remove", "c_photo_list_remove", "restored_community_photo_list")
 });
 
 on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
-  media_list_edit(this, "/gallery/community_progs/edit_list/")
+  media_list_edit(this, "/gallery/community_progs/edit_list/", "edited_community_photo_list")
 });
 
 on('#ajax', 'click', '#c_create_photo_list_btn', function() {
@@ -35,7 +17,7 @@ on('#ajax', 'click', '#c_create_photo_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/");
+  post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/", "added_community_photo_list");
 });
 
 on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
@@ -172,10 +154,10 @@ on('#ajax', 'click', '.c_photo_dislike2', function() {
 });
 
 on('#ajax', 'click', '.c_add_photo_in_list', function() {
-  add_item_in_list(this, '/gallery/community_progs/add_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
+  add_item_in_list(this, '/gallery/community_progs/copy_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
 });
 on('#ajax', 'click', '.u_remove_photo_from_list', function() {
-  remove_item_from_list(this, '/gallery/community_progs/remove_photo_from_list/', "c_remove_photo_from_list", "c_add_photo_in_list")
+  remove_item_from_list(this, '/gallery/community_progs/uncopy_photo_from_list/', "c_remove_photo_from_list", "c_add_photo_in_list")
 });
 
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {

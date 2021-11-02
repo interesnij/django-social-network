@@ -127,10 +127,10 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
 });
 
 on('#ajax', 'click', '.u_add_post_in_list', function() {
-  add_item_in_list(this, '/posts/user_progs/add_post_in_list/', "u_add_post_in_list", "u_remove_post_from_list")
+  add_item_in_list(this, '/posts/user_progs/copy_post_in_list/', "u_add_post_in_list", "u_remove_post_from_list")
 });
 on('#ajax', 'click', '.u_remove_post_from_list', function() {
-  remove_item_from_list(this, '/posts/user_progs/remove_post_from_list/', "u_remove_post_from_list", "u_add_post_in_list")
+  remove_item_from_list(this, '/posts/user_progs/uncopy_post_from_list/', "u_remove_post_from_list", "u_add_post_in_list")
 });
 
 on('#ajax', 'click', '#u_add_post_list_btn', function() {
@@ -343,7 +343,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('#ajax', 'click', '.u_like', function() { 
+on('#ajax', 'click', '.u_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   item_pk = item.getAttribute("data-pk");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');

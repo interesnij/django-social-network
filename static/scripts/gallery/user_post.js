@@ -1,30 +1,13 @@
-// скрипты галереи для пользователя
 
-on('#ajax', 'click', '.u_add_photo_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  photo_pk = parent.getAttribute("photo-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/gallery/user_progs/add_list/" + photo_pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_remove_photo_list");
-      _this.classList.remove("u_add_photo_list")
-      _this.innerHTML = 'Удалить'
-  }};
-  link.send( null );
-});
 on('body', 'click', '.u_photo_list_remove', function() {
-  media_list_delete(this, "/gallery/user_progs/delete_list/", "u_photo_list_remove", "u_photo_list_abort_remove")
+  media_list_delete(this, "/gallery/user_progs/delete_list/", "u_photo_list_remove", "u_photo_list_abort_remove", "removed_user_photo_list")
 });
 on('body', 'click', '.u_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/user_progs/restore_list/", "u_photo_list_abort_remove", "u_photo_list_remove")
+  media_list_recover(this, "/gallery/user_progs/restore_list/", "u_photo_list_abort_remove", "u_photo_list_remove", "restored_user_photo_list")
 });
 
 on('#ajax', 'click', '#u_edit_photo_list_btn', function() {
-  media_list_edit(this, "/gallery/user_progs/edit_list/")
+  media_list_edit(this, "/gallery/user_progs/edit_list/", "edited_user_photo_list")
 });
 
 on('#ajax', 'click', '#u_create_photo_list_btn', function() {
@@ -34,7 +17,7 @@ on('#ajax', 'click', '#u_create_photo_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/user_progs/add_list/", "/users/", "/list/");
+  post_and_load_object_page(form, "/gallery/user_progs/add_list/", "/users/", "/list/", "added_user_photo_list");
 });
 
 on('#ajax', 'click', '#u_ucm_photo_repost_btn', function() {
@@ -238,10 +221,10 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
 });
 
 on('#ajax', 'click', '.u_add_photo_in_list', function() {
-  add_item_in_list(this, '/gallery/user_progs/add_photo_in_list/', "u_add_photo_in_list", "u_remove_photo_from_list")
+  add_item_in_list(this, '/gallery/user_progs/copy_photo_in_list/', "u_add_photo_in_list", "u_remove_photo_from_list")
 });
 on('#ajax', 'click', '.u_remove_photo_from_list', function() {
-  remove_item_from_list(this, '/gallery/user_progs/remove_photo_from_list/', "u_remove_photo_from_list", "u_add_photo_in_list")
+  remove_item_from_list(this, '/gallery/user_progs/uncopy_photo_from_list/', "u_remove_photo_from_list", "u_add_photo_in_list")
 });
 
 on('#ajax', 'click', '.mob_u_photo_off_comment', function() {

@@ -1,8 +1,8 @@
-on('#ajax', 'click', '.u_copy_playlist', function() {
-  on_off_list_in_collections(this, "/music/user_progs/add_list_in_collections/", "u_uncopy_playlist", "u_copy_playlist", "Удалить")
+on('#ajax', 'click', '.copy_user_music_list', function() {
+  on_off_list_in_collections(this, "/music/user_progs/add_list_in_collections/", "uncopy_user_music_list", "copy_user_music_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_playlist', function() {
-  on_off_list_in_collections(this, "/music/user_progs/remove_list_from_collections/", "u_copy_playlist", "u_uncopy_playlist", "Добавить")
+on('#ajax', 'click', '.uncopy_user_music_list', function() {
+  on_off_list_in_collections(this, "/music/user_progs/remove_list_from_collections/", "copy_user_music_list", "uncopy_user_music_list", "Добавить")
 });
 
 on('#ajax', 'click', '.load_profile_playlist', function() {

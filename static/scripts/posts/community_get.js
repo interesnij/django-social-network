@@ -14,11 +14,11 @@ on('#ajax', 'click', '.c_post_edit', function() {
   }
 });
 
-on('#ajax', 'click', '.c_copy_post_list', function() {
-  on_off_list_in_collections(this, "/posts/community_progs/add_list_in_collections/", "c_uncopy_post_list", "c_copy_post_list", "Удалить")
+on('#ajax', 'click', '.copy_community_post_list', function() {
+  on_off_list_in_collections(this, "/posts/community_progs/add_list_in_collections/", "uncopy_community_post_list", "copy_community_post_list", "Удалить")
 });
-on('#ajax', 'click', '.c_uncopy_post_list', function() {
-  on_off_list_in_collections(this, "/posts/community_progs/remove_list_from_collections/", "c_copy_post_list", "c_uncopy_post_list", "Добавить")
+on('#ajax', 'click', '.uncopy_community_post_list', function() {
+  on_off_list_in_collections(this, "/posts/community_progs/remove_list_from_collections/", "copy_community_post_list", "uncopy_community_post_list", "Добавить")
 });
 
 on('#ajax', 'click', '.c_add_post_list', function() {

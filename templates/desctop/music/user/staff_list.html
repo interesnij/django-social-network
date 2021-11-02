@@ -8,9 +8,9 @@
         <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
       </p>
       {% if list|is_user_can_add_list:request.user.pk %}
-        <span class="pointer badge badge-light-success u_copy_playlist">Добавить список в коллекцию</span>
+        <span class="pointer badge badge-light-success copy_user_music_list">Добавить список в коллекцию</span>
       {% elif request.user.pk in list.get_users_ids %}
-        <span class="pointer badge badge-light-danger u_uncopy_playlist">Удалить список из коллекции</span>
+        <span class="pointer badge badge-light-danger uncopy_user_music_list">Удалить список из коллекции</span>
       {% endif %}
       <span class="pointer badge badge-light-warning u_close_playlist">Закрыть список</span>
       <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>

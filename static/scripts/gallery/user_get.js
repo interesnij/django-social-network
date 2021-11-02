@@ -1,8 +1,8 @@
-on('#ajax', 'click', '.u_copy_photo_list', function() {
-  on_off_list_in_collections(this, "/gallery/user_progs/add_list_in_collections/", "u_uncopy_photo_list", "u_copy_photo_list", "Удалить")
+on('#ajax', 'click', '.copy_user_photo_list', function() {
+  on_off_list_in_collections(this, "/gallery/user_progs/add_list_in_collections/", "uncopy_user_photo_list", "copy_user_photo_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_photo_list', function() {
-  on_off_list_in_collections(this, "/gallery/user_progs/remove_list_from_collections/", "u_copy_photo_list", "u_uncopy_photo_list", "Добавить")
+on('#ajax', 'click', '.uncopy_user_photo_list', function() {
+  on_off_list_in_collections(this, "/gallery/user_progs/remove_list_from_collections/", "copy_user_photo_list", "uncopy_user_photo_list", "Добавить")
 });
 
 on('#ajax', 'click', '.load_profile_photo_list', function() {
@@ -111,7 +111,7 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
 });
 
 on('#ajax', 'click', '.load_photo_comments', function() {
-  clear_comment_dropdown(); 
+  clear_comment_dropdown();
   data = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   pk = data.getAttribute("data-pk");
   block = data.querySelector(".load_comments");

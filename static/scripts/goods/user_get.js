@@ -1,8 +1,8 @@
-on('#ajax', 'click', '.u_copy_good_list', function() {
-  on_off_list_in_collections(this, "/goods/user_progs/add_list_in_collections/", "u_uncopy_good_list", "u_copy_good_list", "Удалить")
+on('#ajax', 'click', '.copy_user_good_list', function() {
+  on_off_list_in_collections(this, "/goods/user_progs/add_list_in_collections/", "uncopy_user_good_list", "copy_user_good_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_good_list', function() {
-  on_off_list_in_collections(this, "/goods/user_progs/remove_list_from_collections/", "u_copy_good_list", "u_uncopy_good_list", "Добавить")
+on('#ajax', 'click', '.uncopy_user_good_list', function() {
+  on_off_list_in_collections(this, "/goods/user_progs/remove_list_from_collections/", "copy_user_good_list", "uncopy_user_good_list", "Добавить")
 });
 
 on('#ajax', 'click', '.load_profile_good_list', function() {

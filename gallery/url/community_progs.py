@@ -18,8 +18,8 @@ urlpatterns=[
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityRecover.as_view())),
 	url(r'^add_avatar/(?P<pk>\d+)/$', CommunityAddAvatar.as_view()),
-    url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPhotoInCommunityList.as_view()),
-    url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePhotoFromCommunityList.as_view()),
+    url(r'^copy_photo_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPhotoInCommunityList.as_view()),
+    url(r'^uncopy_photo_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePhotoFromCommunityList.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListCommunityCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/$', PhotoListCommunityEdit.as_view()),

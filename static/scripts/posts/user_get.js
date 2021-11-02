@@ -14,11 +14,11 @@ on('#ajax', 'click', '.input_new_post_in_list', function() {
   this.parentElement.nextElementSibling.style.display = "block";
 });
 
-on('#ajax', 'click', '.u_copy_post_list', function() {
-  on_off_list_in_collections(this, "/posts/user_progs/add_list_in_collections/", "u_uncopy_post_list", "u_copy_post_list", "Удалить")
+on('#ajax', 'click', '.copy_user_post_list', function() {
+  on_off_list_in_collections(this, "/posts/user_progs/add_list_in_collections/", "uncopy_user_post_list", "copy_user_post_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_post_list', function() {
-  on_off_list_in_collections(this, "/posts/user_progs/remove_list_from_collections/", "u_copy_post_list", "u_uncopy_post_list", "Добавить")
+on('#ajax', 'click', '.uncopy_user_post_list', function() {
+  on_off_list_in_collections(this, "/posts/user_progs/remove_list_from_collections/", "copy_user_post_list", "uncopy_user_post_list", "Добавить")
 });
 
 on('#ajax', 'click', '.u_add_post_list', function() {
