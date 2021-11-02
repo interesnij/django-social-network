@@ -47,7 +47,7 @@
                       </div>
                       <small class="file-accessed">
                         <a class="ajax underline" href="{% url 'user' pk=object.creator.pk %}">
-                          {{ object.creator.name }}
+                          {{ object.creator.get_full_name }}
                         </a>
                       </small>
                   </div>
