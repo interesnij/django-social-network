@@ -273,7 +273,7 @@ class UserVideoListCreate(TemplateView):
 
         if request.is_ajax() and self.form_post.is_valid():
             list = self.form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
             return render_for_platform(request, 'users/video/list/my_list.html',{'list': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
@@ -295,7 +295,7 @@ class UserVideolistEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         if request.is_ajax() and self.form_post.is_valid():
             list = VideoListForm(request.POST,instance=self.list)
-            new_list = list.create_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            new_list = list.create_list(name=list.name, description=list.description)
         return HttpResponse()
 
         return super(UserVideolistEdit,self).get(request,*args,**kwargs)

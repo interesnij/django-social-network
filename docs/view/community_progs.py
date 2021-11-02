@@ -95,7 +95,7 @@ class CommunityDocEdit(TemplateView):
         form_post = DocForm(request.POST, request.FILES)
         if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(self.community.pk):
             _doc = form_post.save(commit=False)
-            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list, file=_doc.file,is_public=request.POST.get("is_public"), type_2=_doc.type_2)
+            new_doc = _doc.edit_doc(title=_doc.title,list=_doc.list, file=_doc.file,type_2=_doc.type_2)
             return render_for_platform(request, 'communities/docs/doc.html',{'object': new_doc})
         else:
             return HttpResponseBadRequest()
@@ -118,7 +118,7 @@ class CommunityDocListCreate(TemplateView):
         form_post, community = DocslistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community)
             return render_for_platform(request, 'communities/docs/list/admin_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
@@ -146,7 +146,7 @@ class CommunityDocListEdit(TemplateView):
         self.form = DocslistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

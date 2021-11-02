@@ -99,7 +99,7 @@ class UUDocRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=user, community=None, attach="doc"+str(doc.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -114,7 +114,7 @@ class CUDocRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=request.user, community=community, attach="doc"+str(doc.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -138,7 +138,7 @@ class UCDocRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, attach="doc"+str(doc.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -159,7 +159,7 @@ class CCDocRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=community, attach="doc"+str(doc.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -197,7 +197,7 @@ class UUDocListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="ldo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, is_signature=False, attach=attach, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, is_signature=False, attach=attach, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -212,7 +212,7 @@ class CUDocListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="ldo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -236,7 +236,7 @@ class UCDocListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 class CCDocListRepost(View):
@@ -256,7 +256,7 @@ class CCDocListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

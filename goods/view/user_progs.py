@@ -204,7 +204,7 @@ class GoodListUserCreate(TemplateView):
         self.form = GoodListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
             return render_for_platform(request, 'users/goods/main_list/my_list.html',{'list': new_list})
         else:
             return HttpResponseBadRequest()
@@ -232,7 +232,7 @@ class UserGoodListEdit(TemplateView):
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

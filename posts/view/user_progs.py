@@ -332,7 +332,7 @@ class UserPostsListCreate(TemplateView):
             from common.templates import render_for_platform
 
             list = self.form.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
@@ -358,7 +358,7 @@ class UserPostsListEdit(TemplateView):
         self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk:
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            new_list = list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

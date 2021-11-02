@@ -248,12 +248,12 @@ class GoodList(models.Model):
 		return cls.objects.filter(query).values("pk").count()
 
 	@classmethod
-	def create_list(cls, creator, name, description, community, is_public):
+	def create_list(cls, creator, name, description, community):
 		from notify.models import Notify, Wall
 		from common.processing.good import get_good_list_processing
 
 		list = cls.objects.create(creator=creator,name=name,description=description, community=community)
-
+		is_public = True
 		if community:
 			from communities.model.list import CommunityGoodListPosition
 			CommunityGoodListPosition.objects.create(community=community.pk, list=list.pk, position=GoodList.get_community_lists_count(community.pk))
@@ -277,12 +277,13 @@ class GoodList(models.Model):
 					Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="GOL", object_id=list.pk, verb="ITE")
 					user_send_notify(list.pk, creator.pk, user_id, None, "create_u_good_list_notify")
 		return list
-	def edit_list(self, name, description, is_public):
+	def edit_list(self, name, description):
 		from common.processing.good import get_good_list_processing
 
 		self.name = name
 		self.description = description
 		self.save()
+		is_public = True
 		if is_public:
 			get_good_list_processing(self, GoodList.LIST)
 			self.make_publish()

@@ -216,7 +216,7 @@ class CommunityVideoListCreate(TemplateView):
 
         if request.is_ajax() and self.form_post.is_valid() and request.user.is_staff_of_community(self.c.pk):
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c)
             return render_for_platform(request, 'communities/video/list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()

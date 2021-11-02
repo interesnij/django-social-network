@@ -161,7 +161,7 @@ class CommunitySurveyListCreate(TemplateView):
         form_post, community = SurveylistForm(request.POST), Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community)
             return render_for_platform(request, 'communities/survey_list/my_list.html',{'list': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
@@ -186,7 +186,7 @@ class CommunitySurveyListEdit(TemplateView):
         self.form = SurveylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, community=self.list.community,is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description, community=self.list.community)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

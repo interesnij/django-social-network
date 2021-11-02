@@ -257,7 +257,7 @@ class PhotoListUserCreate(TemplateView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and self.user == request.user:
             list = self.form.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
             return render_for_platform(request, 'users/photos/list/new_list.html',{'list': new_list, 'user': self.user})
         else:
             return HttpResponseBadRequest()
@@ -283,7 +283,7 @@ class PhotoListUserEdit(TemplateView):
         self.user = self.list.creator
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk and self.list.is_have_edit():
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            new_list = list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

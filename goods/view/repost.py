@@ -100,7 +100,7 @@ class UUGoodRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=good.creator, community=None, attach="goo"+str(good.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -115,7 +115,7 @@ class CUGoodRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=good.creator, community=c, attach="goo"+str(good.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -139,7 +139,7 @@ class UCGoodRepost(View):
             parent = Post.create_parent_post(creator=good.creator, community=community, attach="goo"+str(good.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 class CCGoodRepost(View):
@@ -159,7 +159,7 @@ class CCGoodRepost(View):
             parent = Post.create_parent_post(creator=good.creator, community=community, attach="goo"+str(good.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -197,7 +197,7 @@ class UUGoodListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="lgo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on,community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -212,7 +212,7 @@ class CUGoodListRepost(View):
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=c, attach="lgo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
             return HttpResponse("")
         else:
             return HttpResponseBadRequest()
@@ -236,7 +236,7 @@ class UCGoodListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lgo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 class CCGoodListRepost(View):
@@ -256,7 +256,7 @@ class CCGoodListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=community, attach="lgo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

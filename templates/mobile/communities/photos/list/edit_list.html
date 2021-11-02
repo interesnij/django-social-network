@@ -14,12 +14,6 @@
                   <label>Описание</label>
                   <input type="text" name="description" value="{{ list.description }}" class="form-control" id="id_description">
                 </div>
-                <div class="form-group">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_public" class="custom-control-input" {% if list.is_list %}checked{% endif %} id="id_is_public">
-                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
-                  </div>
-                </div>
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
