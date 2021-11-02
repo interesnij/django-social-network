@@ -163,24 +163,24 @@ on('#ajax', 'click', '#u_create_video_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/video/user_progs/add_list/", "/users/", "/video_list/")
+  post_and_load_object_page(form, "/video/user_progs/add_list/", "/users/", "/video_list/", "added_user_video_list")
 
 });
 
 on('#ajax', 'click', '#u_edit_video_list_btn', function() {
-  media_list_edit(this, "/video/user_progs/edit_list/")
+  media_list_edit(this, "/video/user_progs/edit_list/", "edited_user_video_list")
 });
 
 on('body', 'click', '.u_video_list_remove', function() {
-  media_list_delete(this, "/video/user_progs/delete_list/", "u_video_list_remove", "u_video_list_abort_remove")
+  media_list_delete(this, "/video/user_progs/delete_list/", "u_video_list_remove", "u_video_list_abort_remove", "deleted_user_video_list")
 });
 on('body', 'click', '.u_video_list_abort_remove', function() {
-  media_list_recover(this, "/video/user_progs/restore_list/", "u_video_list_abort_remove", "u_video_list_remove")
+  media_list_recover(this, "/video/user_progs/restore_list/", "u_video_list_abort_remove", "u_video_list_remove", "restored_community_video_list")
 });
 
 on('#ajax', 'click', '.u_add_video_in_list', function() {
-  add_item_in_list(this, '/video/user_progs/add_video_in_list/', "u_add_video_in_list", "u_remove_video_from_list")
+  add_item_in_list(this, '/video/user_progs/copy_video_in_list/', "u_add_video_in_list", "u_remove_video_from_list")
 });
 on('#ajax', 'click', '.u_remove_video_from_list', function() {
-  remove_item_from_list(this, '/video/user_progs/remove_video_from_list/', "u_remove_video_from_list", "u_add_video_in_list")
+  remove_item_from_list(this, '/video/user_progs/uncopy_video_from_list/', "u_remove_video_from_list", "u_add_video_in_list")
 });

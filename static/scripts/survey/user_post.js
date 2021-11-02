@@ -46,12 +46,12 @@ on('#ajax', 'click', '#u_add_survey_btn', function() {
 });
 
 on('#ajax', 'click', '#u_edit_survey_list_btn', function() {
-  media_list_edit(this, "/survey/user_progs/edit_list/")
+  media_list_edit(this, "/survey/user_progs/edit_list/", "edited_user_survey_list")
 });
 
 on('body', 'click', '.u_survey_list_remove', function() {
-  media_list_delete(this, "/survey/user_progs/delete_list/", "u_survey_list_remove", "u_survey_list_abort_remove")
+  media_list_delete(this, "/survey/user_progs/delete_list/", "u_survey_list_remove", "u_survey_list_abort_remove", "removed_user_survey_list")
 });
 on('body', 'click', '.u_survey_list_abort_remove', function() {
-  media_list_recover(this, "/survey/user_progs/restore_list/", "u_survey_list_abort_remove", "u_survey_list_remove")
+  media_list_recover(this, "/survey/user_progs/restore_list/", "u_survey_list_abort_remove", "u_survey_list_remove", "restored_user_survey_list")
 });

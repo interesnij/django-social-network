@@ -18,43 +18,10 @@ on('#ajax', 'click', '#u_ucm_good_list_repost_btn', function() {
 });
 
 on('#ajax', 'click', '.u_add_good_in_list', function() {
-  add_item_in_list(this, '/goods/user_progs/add_good_in_list/', "u_add_good_in_list", "u_remove_good_from_list")
-})
-on('#ajax', 'click', '.u_remove_good_from_list', function() {
-  remove_item_from_list(this, '/goods/user_progs/remove_good_from_list/', "u_remove_good_from_list", "u_add_good_in_list")
-})
-
-on('#ajax', 'click', '.u_add_good_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/goods/user_progs/add_list/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_remove_good_list");
-      _this.classList.remove("u_add_good_list")
-      _this.innerHTML = '<svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
-  }};
-  link.send( null );
+  add_item_in_list(this, '/goods/user_progs/copy_good_in_list/', "u_add_good_in_list", "u_remove_good_from_list")
 });
-on('#ajax', 'click', '.u_remove_good_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/goods/user_progs/remove_list/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_add_good_list");
-      _this.classList.remove("u_remove_good_list")
-      _this.innerHTML = '<svg fill="#ffffff" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
-  }};
-  link.send( null );
+on('#ajax', 'click', '.u_remove_good_from_list', function() {
+  remove_item_from_list(this, '/goods/user_progs/uncopy_good_from_list/', "u_remove_good_from_list", "u_add_good_in_list")
 });
 
 on('#ajax', 'change', '.goods_category', function() {
@@ -271,7 +238,7 @@ on('#ajax', 'click', '#u_create_good_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!"); return
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/goods/user_progs/add_list/", "/users/", "/goods_list/")
+  post_and_load_object_page(form, "/goods/user_progs/add_list/", "/users/", "/goods_list/", "added_user_good_list")
 });
 
 on('#ajax', 'click', '#u_edit_good_list_btn', function() {

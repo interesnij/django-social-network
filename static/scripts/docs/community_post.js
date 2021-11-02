@@ -17,39 +17,6 @@ on('#ajax', 'click', '#c_ucm_doc_list_repost_btn', function() {
                      "Репост списка документов в сообщения сделан")
 });
 
-on('#ajax', 'click', '.c_add_doc_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/add_list/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_remove_doc_list");
-      _this.classList.remove("c_add_doc_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
-  }};
-  link.send( null );
-});
-on('#ajax', 'click', '.c_remove_doc_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/community_progs/remove_list/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_add_doc_list");
-      _this.classList.remove("c_remove_doc_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
-  }};
-  link.send( null );
-});
-
 on('#ajax', 'click', '.c_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/docs/community_progs/create_doc/" + pk + "/", "worker_fullscreen");
@@ -70,9 +37,11 @@ on('body', 'click', '.c_doc_remove', function() {
     div.style.display =  "block";
     div.innerHTML = "Документ удален. <span class='c_doc_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
     item = saver.parentElement.parentElement.parentElement;
-    item.style.display = "none"; item.parentElement.insertBefore(div, item)
+    item.style.display = "none"; item.parentElement.insertBefore(div, item);
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("deleted_community_doc",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
-  link.send( );
+  link.send();
 });
 on('body', 'click', '.c_doc_restore', function() {
   pk = this.getAttribute("data-pk");
@@ -85,15 +54,17 @@ on('body', 'click', '.c_doc_restore', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     block.remove();
     next.style.display = "block";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("restored_community_doc",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
   link.send();
 });
 
 on('#ajax', 'click', '.c_add_doc_in_list', function() {
-  add_item_in_list(this, '/docs/community_progs/add_doc_in_list/', "c_add_doc_in_list", "c_remove_doc_from_list")
+  add_item_in_list(this, '/docs/community_progs/copy_doc_in_list/', "c_add_doc_in_list", "c_remove_doc_from_list")
 });
 on('#ajax', 'click', '.c_remove_photo_from_list', function() {
-  remove_item_from_list(this, '/docs/community_progs/remove_doc_from_list/', "c_remove_doc_from_list", "c_add_doc_in_list")
+  remove_item_from_list(this, '/docs/community_progs/uncopy_doc_from_list/', "c_remove_doc_from_list", "c_add_doc_in_list")
 });
 
 on('#ajax', 'click', '#c_create_doc_list_btn', function() {
@@ -103,7 +74,7 @@ on('#ajax', 'click', '#c_create_doc_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/docs/community_progs/add_list/", "/communities/", "/doc_list/");
+  post_and_load_object_page(form, "/docs/community_progs/add_list/", "/communities/", "/doc_list/", "added_community_doc_list");
 });
 
 on('#ajax', 'click', '#c_create_doc_btn', function() {
@@ -146,20 +117,21 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
       container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
       toast_info("Документ создан!")
     };
-    toast_info("Документ создан!");
-    close_work_fullscreen()
+    close_work_fullscreen();
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat("created_community_doc",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
 
   link_.send(form_data);
 });
 
 on('#ajax', 'click', '#c_edit_doc_list_btn', function() {
-  media_list_edit(this, "/docs/community_progs/edit_list/")
+  media_list_edit(this, "/docs/community_progs/edit_list/", "edited_community_doc_list")
 });
 
 on('body', 'click', '.c_doc_list_remove', function() {
-  media_list_delete(this, "/docs/community_progs/delete_list/", "c_doc_list_remove", "c_doc_list_abort_remove")
+  media_list_delete(this, "/docs/community_progs/delete_list/", "c_doc_list_remove", "c_doc_list_abort_remove", "deleted_community_doc_list")
 });
 on('body', 'click', '.c_doc_list_abort_remove', function() {
-  media_list_recover(this, "/docs/community_progs/restore_list/", "c_doc_list_abort_remove", "c_doc_list_remove")
+  media_list_recover(this, "/docs/community_progs/restore_list/", "c_doc_list_abort_remove", "c_doc_list_remove", "recover_community_doc_list")
 });

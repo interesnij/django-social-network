@@ -1,8 +1,8 @@
-on('#ajax', 'click', '.u_copy_doc_list', function() {
-  on_off_list_in_collections(this, "/docs/user_progs/add_list_in_collections/", "u_uncopy_doc_list", "u_copy_doc_list", "Удалить")
+on('#ajax', 'click', '.copy_user_doc_list', function() {
+  on_off_list_in_collections(this, "/docs/user_progs/add_list_in_collections/", "uncopy_user_doc_list", "copy_user_doc_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_doc_list', function() {
-  on_off_list_in_collections(this, "/docs/user_progs/remove_list_from_collections/", "u_copy_doc_list", "u_uncopy_doc_list", "Добавить")
+on('#ajax', 'click', '.uncopy_user_doc_list', function() { 
+  on_off_list_in_collections(this, "/docs/user_progs/remove_list_from_collections/", "copy_user_doc_list", "uncopy_user_doc_list", "Добавить")
 });
 
 on('#ajax', 'click', '.load_profile_doc_list', function() {

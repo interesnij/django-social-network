@@ -24,102 +24,25 @@ on('#ajax', 'click', '#c_create_music_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/music/community_progs/add_list/", "/communities/", "/music_list/")
+  post_and_load_object_page(form, "/music/community_progs/add_list/", "/communities/", "/music_list/", "added_community_music_list")
 });
 
 on('#ajax', 'click', '.c_add_track_in_list', function() {
-  add_item_in_list(this, '/music/community_progs/add_track_in_list/', "c_add_track_in_list", "c_remove_track_from_list")
+  add_item_in_list(this, '/music/community_progs/copy_track_in_list/', "c_add_track_in_list", "c_remove_track_from_list")
 });
 on('#ajax', 'click', '.c_remove_video_from_list', function() {
-  remove_item_from_list(this, '/music/community_progs/remove_track_from_list/', "c_remove_track_from_list", "c_add_track_in_list")
-});
-
-on('#ajax', 'click', '#c_soundcloud_set_create_btn', function() {
-  form = document.body.querySelector("#u_soundcloud_set_create_form");
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!"); return
-  } else if (!form.querySelector("#id_permalink").value){
-    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!"); return
-  } else {this.disabled = true;}
-  post_and_load_object_page(form, "/music/community_progs/create_soundcloud_set/", "/communities/", "/music_list/");
-  get_document_opacity_1();
-});
-
-on('#ajax', 'click', '.c_add_music_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/music/community_progs/add_list/" + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_remove_music_list");
-      _this.classList.remove("c_add_music_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
-  }};
-  link.send( null );
-});
-on('#ajax', 'click', '.c_remove_music_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  uuid = parent.getAttribute("data-uuid"); pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/music/community_progs/remove_list/" + pk + "/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("c_add_music_list");
-      _this.classList.remove("c_remove_music_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
-  }};
-  link.send( null );
-});
-
-on('#ajax', 'click', '#c_soundcloud_set_btn', function() {
-  uuid = this.getAttribute("data-uuid");
-  form = document.body.querySelector("#c_soundcloud_set_form");
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_permalink").value){
-    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!");
-  };
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/community_progs/soundcloud_set/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload(document.location.href);
-      } else {this.disabled = false}
-    }
-    ajax_link.send(form_data);
-})
-
-on('#ajax', 'click', '#c_create_music_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/music/community_progs/add_list/", "/communities/", "/music_list/")
+  remove_item_from_list(this, '/music/community_progs/uncopy_track_from_list/', "c_remove_track_from_list", "c_add_track_in_list")
 });
 
 on('#ajax', 'click', '#c_edit_playlist_btn', function() {
-  media_list_edit(this, "/music/community_progs/edit_list/")
+  media_list_edit(this, "/music/community_progs/edit_list/", "edited_community_music_list")
 });
 
 on('body', 'click', '.c_playlist_remove', function() {
-  media_list_delete(this, "/music/community_progs/delete_list/", "c_playlist_remove", "c_playlist_abort_remove")
+  media_list_delete(this, "/music/community_progs/delete_list/", "c_playlist_remove", "c_playlist_abort_remove", "removed_community_music_list")
 });
 on('body', 'click', '.c_playlist_abort_remove', function() {
-  media_list_recover(this, "/music/community_progs/restore_list/", "c_playlist_abort_remove", "c_playlist_remove")
+  media_list_recover(this, "/music/community_progs/restore_list/", "c_playlist_abort_remove", "c_playlist_remove", "restored_community_music_list")
 });
 
 on('body', 'click', '#c_create_track_btn', function() {

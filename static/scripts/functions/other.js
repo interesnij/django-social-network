@@ -249,7 +249,7 @@ function profile_list_block_attach(_this, block, url, actions_class) {
     }};
     request.send( null );
 };
-function media_list_edit(_this, url) {
+function media_list_edit(_this, url, stat_class) {
   form = _this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
@@ -269,11 +269,13 @@ function media_list_edit(_this, url) {
     list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
     document.body.querySelector('.second_list_name').innerHTML = name;
-    toast_success("Список изменен")
+    toast_success("Список изменен");
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send(form_data);
 };
-function media_list_delete(_this, url, old_class, new_class) {
+function media_list_delete(_this, url, old_class, new_class, stat_class) {
   pk = _this.parentElement.parentElement.getAttribute('data-pk');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', url + pk + "/", true );
@@ -288,10 +290,12 @@ function media_list_delete(_this, url, old_class, new_class) {
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace(old_class, new_class);
     _this.innerHTML = "Восстановить список";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send();
 };
-function media_list_recover(_this, url, old_class, new_class) {
+function media_list_recover(_this, url, old_class, new_class, stat_class) {
   pk = _this.parentElement.parentElement.getAttribute('data-pk');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', url + pk + "/", true );
@@ -308,6 +312,8 @@ function media_list_recover(_this, url, old_class, new_class) {
        list.querySelector('.list_name').innerHTML = name) : null;
     _this.classList.replace(old_class, new_class);
     _this.innerHTML = "Удалить список";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send();
 };
@@ -360,8 +366,10 @@ function on_off_list_in_collections(_this, url, new_class, old_class, text) {
     if ( link.readyState == 4 && link.status == 200 ) {
       _this.innerHTML = "";
       _this.classList.add(new_class);
-      _this.classList.remove(old_class)
-      _this.innerHTML = text
+      _this.classList.remove(old_class);
+      _this.innerHTML = text;
+      main_container = document.body.querySelector(".main-container");
+      add_list_in_all_stat(old_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
 }}
 link.send( null );
 };
@@ -380,7 +388,10 @@ function add_item_in_list(_this, url, old_class, new_class) {
     _this.classList.remove(old_class);
     span = document.createElement("span");
     span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
-    _this.prepend(span)
+    _this.prepend(span);
+    main_container = document.body.querySelector(".main-container");
+    url_list = url.split('/');
+    add_list_in_all_stat(url_list[url_list.length - 1],pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
   link.send( null );
 };
@@ -397,6 +408,9 @@ function remove_item_from_list(_this, url, old_class, new_class) {
     _this.classList.add(new_class);
     _this.classList.remove(old_class);
     _this.querySelector("svg").remove();
+    main_container = document.body.querySelector(".main-container");
+    url_list = url.split('/');
+    add_list_in_all_stat(url_list[url_list.length - 1],pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }};
   link.send( null );
 };
@@ -496,7 +510,7 @@ function attach_list_for_post(_this, url) {
     }
 };
 
-function post_and_load_object_page(form, url_post, url_1, url_2) {
+function post_and_load_object_page(form, url_post, url_1, url_2, stat_type) {
     form_data = new FormData(form);
     pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -519,6 +533,7 @@ function post_and_load_object_page(form, url_post, url_1, url_2) {
             uuid = rtr.querySelector(".uuid_saver").getAttribute("data-uuid");
             window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/');
             get_document_opacity_1();
+            add_list_in_all_stat(stat_type,pk,prev_container.getAttribute("data-type"),prev_container.getAttribute("data-pk"))
         }
     }
     ajax_link.send(form_data)
@@ -758,7 +773,7 @@ function send_photo_change(span, _link, new_class, html) {
     parent = span.parentElement;
     item = span.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     photo_pk = item.getAttribute("data-pk");
-    pk = item.getAttribute("owner-pk"); 
+    pk = item.getAttribute("owner-pk");
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     link.open('GET', _link + pk + "/" + photo_pk + "/", true);
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

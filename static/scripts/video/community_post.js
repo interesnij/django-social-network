@@ -109,18 +109,18 @@ on('#ajax', 'click', '#c_add_video_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/video/community_progs/add_list/", "/communities/", "/video_list/");
+  post_and_load_object_page(form, "/video/community_progs/add_list/", "/communities/", "/video_list/", "added_community_video_list");
 });
 
 on('#ajax', 'click', '#c_edit_video_list_btn', function() {
-  media_list_edit(this, "/video/community_progs/edit_list/")
+  media_list_edit(this, "/video/community_progs/edit_list/", "edited_community_video_list")
 });
 
 on('body', 'click', '.c_video_list_remove', function() {
-  media_list_delete(this, "/video/community_progs/delete_list/", "c_video_list_remove", "c_video_list_abort_remove")
+  media_list_delete(this, "/video/community_progs/delete_list/", "c_video_list_remove", "c_video_list_abort_remove", "removed_community_video_list")
 });
 on('body', 'click', '.c_video_list_abort_remove', function() {
-  media_list_recover(this, "/video/community_progs/restore_list/", "c_video_list_abort_remove", "c_video_list_remove")
+  media_list_recover(this, "/video/community_progs/restore_list/", "c_video_list_abort_remove", "c_video_list_remove", "restored_community_video_list")
 });
 
 on('#ajax', 'click', '.c_video_create_window', function(e) {
@@ -130,8 +130,8 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
 });
 
 on('#ajax', 'click', '.c_add_video_in_list', function() {
-  add_item_in_list(this, '/video/community_progs/add_video_in_list/', "c_add_video_in_list", "c_remove_video_from_list")
+  add_item_in_list(this, '/video/community_progs/copy_video_in_list/', "c_add_video_in_list", "c_remove_video_from_list")
 });
 on('#ajax', 'click', '.c_remove_video_from_list', function() {
-  remove_item_from_list(this, '/video/community_progs/remove_video_from_list/', "c_remove_video_from_list", "c_add_video_in_list")
+  remove_item_from_list(this, '/video/community_progs/uncopy_video_from_list/', "c_remove_video_from_list", "c_add_video_in_list")
 });

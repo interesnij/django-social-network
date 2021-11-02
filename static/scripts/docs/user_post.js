@@ -17,23 +17,6 @@ on('#ajax', 'click', '#u_ucm_doc_list_repost_btn', function() {
                      "Репост списка документов в сообщения сделан")
 });
 
-on('#ajax', 'click', '.u_add_doc_list', function(e) {
-  _this = this;
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/docs/user_progs/add_list/" + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add("u_remove_doc_list");
-      _this.classList.remove("u_add_doc_list")
-      _this.innerHTML = '<svg fill="currentColor" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>'
-  }};
-  link.send( null );
-});
-
 on('body', 'click', '.u_doc_remove', function() {
   saver = this.parentElement.parentElement.parentElement;
   pk = saver.getAttribute("data-pk")
@@ -69,10 +52,10 @@ on('body', 'click', '.u_doc_restore', function() {
 });
 
 on('#ajax', 'click', '.u_add_doc_in_list', function() {
-  add_item_in_list(this, '/docs/user_progs/add_doc_in_list/', "u_add_doc_in_list", "u_remove_doc_from_list")
+  add_item_in_list(this, '/docs/user_progs/copy_doc_in_list/', "u_add_doc_in_list", "u_remove_doc_from_list")
 });
 on('#ajax', 'click', '.u_remove_doc_from_list', function() {
-  remove_item_from_list(this, '/docs/user_progs/remove_doc_from_list/', "u_remove_doc_from_list", "u_add_doc_in_list")
+  remove_item_from_list(this, '/docs/user_progs/uncopy_doc_from_list/', "u_remove_doc_from_list", "u_add_doc_in_list")
 });
 
 on('#ajax', 'click', '#u_create_doc_btn', function() {
@@ -128,16 +111,16 @@ on('#ajax', 'click', '#u_create_doc_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/docs/user_progs/add_list/", "/users/", "/doc_list/");
+  post_and_load_object_page(form, "/docs/user_progs/add_list/", "/users/", "/doc_list/", "added_user_doc_list");
 });
 
 on('#ajax', 'click', '#u_edit_doc_list_btn', function() {
-  media_list_edit(this, "/docs/user_progs/edit_list/")
+  media_list_edit(this, "/docs/user_progs/edit_list/", "edited_user_doc_list")
 });
 
 on('body', 'click', '.u_doc_list_remove', function() {
-  media_list_delete(this, "/docs/user_progs/delete_list/", "u_doc_list_remove", "u_doc_list_abort_remove")
+  media_list_delete(this, "/docs/user_progs/delete_list/", "u_doc_list_remove", "u_doc_list_abort_remove", "deleted_user_doc_list")
 });
 on('body', 'click', '.u_doc_list_abort_remove', function() {
-  media_list_recover(this, "/docs/user_progs/restore_list/", "u_doc_list_abort_remove", "u_doc_list_remove")
+  media_list_recover(this, "/docs/user_progs/restore_list/", "u_doc_list_abort_remove", "u_doc_list_remove", "restored_user_doc_list")
 });

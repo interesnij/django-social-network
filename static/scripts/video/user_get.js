@@ -7,11 +7,11 @@ on('#ajax', 'click', '.u_video_add', function() {
   create_fullscreen("/video/user_progs/create_video/" + pk + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '.u_copy_video_list', function() {
-  on_off_list_in_collections(this, "/video/user_progs/add_list_in_collections/", "u_uncopy_video_list", "u_copy_video_list", "Удалить")
+on('#ajax', 'click', '.copy_user_video_list', function() {
+  on_off_list_in_collections(this, "/video/user_progs/add_list_in_collections/", "uncopy_user_video_list", "copy_user_video_list", "Удалить")
 });
-on('#ajax', 'click', '.u_uncopy_video_list', function() {
-  on_off_list_in_collections(this, "/video/user_progs/remove_list_from_collections/", "u_copy_video_list", "u_uncopy_video_list", "Добавить")
+on('#ajax', 'click', '.uncopy_user_video_list', function() {
+  on_off_list_in_collections(this, "/video/user_progs/remove_list_from_collections/", "copy_user_video_list", "uncopy_user_video_list", "Добавить")
 });
 
 on('#ajax', 'click', '.load_profile_video_list', function() {

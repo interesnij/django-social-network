@@ -148,44 +148,10 @@ on('body', 'click', '.u_track_restore', function() {
 });
 
 on('#ajax', 'click', '.u_add_track_in_list', function() {
-  add_item_in_list(this, '/music/user_progs/add_track_in_list/', "u_add_track_in_list", "u_remove_track_from_list")
+  add_item_in_list(this, '/music/user_progs/copy_track_in_list/', "u_add_track_in_list", "u_remove_track_from_list")
 });
 on('#ajax', 'click', '.u_remove_track_from_list', function() {
-  remove_item_from_list(this, '/music/user_progs/remove_track_from_list/', "u_remove_track_from_list", "u_add_track_in_list")
-});
-
-on('#ajax', 'click', '#u_soundcloud_set_create_btn', function() {
-  form = document.body.querySelector("#u_soundcloud_set_create_form");
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!"); return
-  } else if (!form.querySelector("#id_permalink").value){
-    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!"); return
-  } else {this.disabled = true;}
-  close_work_fullscreen();
-  post_and_load_object_page(form, "/music/user_progs/create_soundcloud_set/", "/users/", "/music_list/")
-});
-
-on('#ajax', 'click', '#u_soundcloud_set_btn', function() {
-  uuid = this.getAttribute("data-uuid");
-  form = document.body.querySelector("#u_soundcloud_set_form");
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_permalink").value){
-    form.querySelector("#id_permalink").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка - обязательное поле!");
-  }
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/music/user_progs/soundcloud_set/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        this_page_reload(document.location.href);
-      } else {this.disabled = false}
-    }
-    ajax_link.send(form_data);
+  remove_item_from_list(this, '/music/user_progs/uncopy_track_from_list/', "u_remove_track_from_list", "u_add_track_in_list")
 });
 
 on('#ajax', 'click', '#u_create_music_list_btn', function() {
@@ -195,7 +161,7 @@ on('#ajax', 'click', '#u_create_music_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  post_and_load_object_page(form, "/music/user_progs/add_list/", "/users/", "/music_list/")
+  post_and_load_object_page(form, "/music/user_progs/add_list/", "/users/", "/music_list/", "added_user_music_list")
 });
 
 on('#ajax', 'click', '.u_remove_music_list', function(e) {
@@ -216,12 +182,12 @@ on('#ajax', 'click', '.u_remove_music_list', function(e) {
 });
 
 on('#ajax', 'click', '#u_edit_playlist_btn', function() {
-  media_list_edit(this, "/music/user_progs/edit_list/")
+  media_list_edit(this, "/music/user_progs/edit_list/", "edited_user_music_list")
 });
 
 on('body', 'click', '.u_playlist_remove', function() {
-  media_list_delete(this, "/music/user_progs/delete_list/", "u_playlist_remove", "u_playlist_abort_remove")
+  media_list_delete(this, "/music/user_progs/delete_list/", "u_playlist_remove", "u_playlist_abort_remove", "deleted_user_music_list")
 });
 on('body', 'click', '.u_playlist_abort_remove', function() {
-  media_list_recover(this, "/music/user_progs/restore_list/", "u_playlist_abort_remove", "u_playlist_remove")
+  media_list_recover(this, "/music/user_progs/restore_list/", "u_playlist_abort_remove", "u_playlist_remove", "restored_user_music_list")
 });

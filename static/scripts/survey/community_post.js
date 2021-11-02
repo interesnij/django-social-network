@@ -44,12 +44,12 @@ on('#ajax', 'click', '#c_add_survey_btn', function() {
 });
 
 on('#ajax', 'click', '#c_edit_survey_list_btn', function() {
-  media_list_edit(this, "/gallery/community_progs/edit_list/")
+  media_list_edit(this, "/gallery/community_progs/edit_list/", "edited_community_survey_list")
 });
 
 on('body', 'click', '.c_survey_list_remove', function() {
-  media_list_delete(this, "/survey/community_progs/delete_list/", "c_survey_list_remove", "c_survey_list_abort_remove")
+  media_list_delete(this, "/survey/community_progs/delete_list/", "c_survey_list_remove", "c_survey_list_abort_remove", "removed_community_survey_list")
 });
 on('body', 'click', '.c_survey_list_abort_remove', function() {
-  media_list_recover(this, "/survey/community_progs/restore_list/", "c_survey_list_abort_remove", "c_survey_list_remove")
+  media_list_recover(this, "/survey/community_progs/restore_list/", "c_survey_list_abort_remove", "c_survey_list_remove", "restored_community_survey_list")
 });
