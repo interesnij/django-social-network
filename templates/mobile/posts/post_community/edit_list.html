@@ -1,5 +1,5 @@
 
-    <form id="post_list_form" list-pk="{{ list.pk }}" class="main-container" data-pk="{{ list.community.pk }}" data-type="edit_community_post_list">
+    <form id="post_list_form" data-pk="{{ list.pk }}" class="is_stat_list" data-type="edit_community_post_list">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
