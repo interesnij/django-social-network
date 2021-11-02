@@ -9,8 +9,8 @@
 {% block content %}
 
 <div class="container main-container mt-3" data-pk="{{ list.pk }}" data-type="community_photo_list">
-  <span class="load_block pk_saver" data-pk="{{ community.pk }}">
-  <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+  <span class="load_block">
+  <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
       {{ list.name }} ({{ list.count_items }})
       <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
