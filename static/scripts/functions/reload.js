@@ -41,10 +41,11 @@ function create_window_stat_list(block) {
   if ($new_window_list.length) {
     push_window_stat_list()
   };
-  item = block.querySelector(".is_stat_list");
-  main_container = document.body.querySelector(".main-container");
-  $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
-  console.log($new_window_list)
+  if (block.querySelector(".is_stat_list")) {
+    item = block.querySelector(".is_stat_list");
+    main_container = document.body.querySelector(".main-container");
+    $new_window_list = [item.getAttribute("data-type"),item.getAttribute("data-pk"),0,0, main_container.getAttribute("data-pk"),main_container.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")]
+  }
 };
 
 function add_list_in_all_stat(item_type,item_pk,main_type,main_pk) {
