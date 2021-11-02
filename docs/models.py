@@ -200,11 +200,12 @@ class DocsList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community, is_public):
+    def create_list(cls, creator, name, description, community):
         from notify.models import Notify, Wall
         from common.processing.doc import get_doc_list_processing
 
         list = cls.objects.create(creator=creator,name=name,description=description,community=community)
+        is_public = True
         if community:
             from communities.model.list import CommunityDocsListPosition
             CommunityDocsListPosition.objects.create(community=community.pk, list=list.pk, position=DocsList.get_community_lists_count(community.pk))
@@ -227,11 +228,12 @@ class DocsList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_doc_list_notify")
         get_doc_list_processing(list, DocsList.LIST)
         return list
-    def edit_list(self, name, description, is_public):
+    def edit_list(self, name, description):
         from common.processing.doc import get_doc_list_processing
 
         self.name = name
         self.description = description
+        is_public = True
         self.save()
         if is_public:
             get_doc_list_processing(self, DocsList.LIST)
@@ -344,7 +346,7 @@ class Doc(models.Model):
     TYPE_2 = (
         (BOOK, 'Книга'),(ARTICLE, 'Статья'),(PUBLIC, 'Заметка'),(FILE, 'Файл'),(OTHER, 'Другое'),
     )
-    
+
     title = models.CharField(max_length=200, verbose_name="Название")
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")

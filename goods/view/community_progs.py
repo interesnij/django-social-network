@@ -210,7 +210,7 @@ class GoodListCommunityCreate(TemplateView):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c)
             return render_for_platform(request, 'communities/goods/main_list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
@@ -239,7 +239,7 @@ class CommunityGoodListEdit(TemplateView):
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

@@ -104,7 +104,7 @@ class UUMusicRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=user, community=None, attach="mus"+str(track.pk))
             track.item.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -120,7 +120,7 @@ class CUMusicRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=request.user, community=community, attach="mus"+str(track.pk))
             track.item.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -144,7 +144,7 @@ class UCMusicRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, attach="mus"+str(track.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 class CCMusicRepost(View):
@@ -164,7 +164,7 @@ class CCMusicRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=community, attach="mus"+str(track.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -203,7 +203,7 @@ class UUMusicListRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=playlist.creator, community=None, attach="lmu"+str(playlist.pk))
             playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -219,7 +219,7 @@ class CUMusicListRepost(View):
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=playlist.creator, community=community, attach="lmu"+str(playlist.pk))
             playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, is_public=request.POST.get("is_public"),community=None)
+            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -243,7 +243,7 @@ class UCMusicListRepost(View):
             parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 
@@ -264,7 +264,7 @@ class CCMusicListRepost(View):
             parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, is_public=request.POST.get("is_public"),community=Community.objects.get(pk=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
         return HttpResponse()
 
 

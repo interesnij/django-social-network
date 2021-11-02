@@ -96,7 +96,7 @@ class CommunityPlaylistEdit(TemplateView):
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, order=list.order, is_public=request.POST.get("is_public"))
+            new_list = list.edit_list(name=list.name, description=list.description, order=list.order)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -180,7 +180,7 @@ class CommunityTrackEdit(TemplateView):
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(self.kwargs["pk"]):
             _track = form_post.save(commit=False)
-            new_doc = self.track.edit_track(title=_track.title, file=_track.file, list=_track.list, is_public=request.POST.get("is_public"))
+            new_doc = self.track.edit_track(title=_track.title, file=_track.file, list=_track.list)
             return render_for_platform(request, 'music/music_create/c_new_track.html',{'object': self.track})
         else:
             return HttpResponseBadRequest()

@@ -204,11 +204,12 @@ class SurveyList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community, is_public):
+    def create_list(cls, creator, name, description, community):
         from notify.models import Notify, Wall
         from common.processing.survey import get_survey_list_processing
 
         list = cls.objects.create(creator=creator,name=name,description=description, community=community)
+        is_public = True
         if community:
             from communities.model.list import CommunitySurveyListPosition
             CommunitySurveyListPosition.objects.create(community=community.pk, list=list.pk, position=SurveyList.get_community_lists_count(community.pk))
@@ -231,12 +232,13 @@ class SurveyList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_survey_list_notify")
         get_survey_list_processing(list, SurveyList.LIST)
         return list
-    def edit_list(self, name, description, is_public):
+    def edit_list(self, name, description):
         from common.processing.survey import get_survey_list_processing
 
         self.name = name
         self.description = description
         self.save()
+        is_public = True
         if is_public:
             get_survey_list_processing(self, SurveyList.LIST)
             self.make_publish()

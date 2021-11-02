@@ -243,7 +243,7 @@ class PhotoListCommunityCreate(TemplateView):
             list = self.form.save(commit=False)
             if not list.description:
                 list.description = "Без описания"
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c,is_public=request.POST.get("is_public"))
+            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c,)
             return render_for_platform(request, 'communities/photos/list/new_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
@@ -275,7 +275,7 @@ class PhotoListCommunityEdit(TemplateView):
         self.community = self.list.community
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.community.pk) and self.list.is_have_edit():
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, is_public=request.POST.get("is_public"))
+            new_list = list.edit_list(name=list.name, description=list.description)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

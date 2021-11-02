@@ -317,11 +317,12 @@ class PostsList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community, is_public):
+    def create_list(cls, creator, name, description, community):
         from notify.models import Notify, Wall
         from common.processing.post import get_post_list_processing
 
         list = cls.objects.create(creator=creator,name=name,description=description, community=community)
+        is_public = True
         if community:
             from communities.model.list import CommunityPostsListPosition
             CommunityPostsListPosition.objects.create(community=community.pk, list=list.pk, position=PostsList.get_community_lists_count(community.pk))
@@ -345,12 +346,13 @@ class PostsList(models.Model):
         get_post_list_processing(list, PostsList.LIST)
         return list
 
-    def edit_list(self, name, description, is_public):
+    def edit_list(self, name, description):
         from common.processing.post import get_post_list_processing
 
         self.name = name
         self.description = description
         self.save()
+        is_public = True
         if is_public:
             get_post_list_processing(self, PostsList.LIST)
             self.make_publish()

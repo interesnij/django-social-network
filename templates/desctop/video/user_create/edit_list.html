@@ -11,10 +11,8 @@
                   <input type="text" value="{{ list.name }}" name="name" class="form-control" id="id_name">
                 </div>
                 <div class="form-group">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_public" class="custom-control-input" {% if list.is_list %}checked{% endif %} id="id_is_public">
-                    <label class="custom-control-label" for="id_is_public">Виден всем</label>
-                  </div>
+                  <label>Описание</label>
+                  <input value="{{ list.description }}" name="description" class="form-control">
                 </div>
             </div>
             <div class="card-footer">
