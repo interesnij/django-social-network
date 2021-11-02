@@ -21,9 +21,9 @@ urlpatterns=[
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
 
     url(r'^add_list/(?P<pk>\d+)/$', PhotoListUserCreate.as_view()),
-    url(r'^edit_list/(?P<list_pk>\d+)/$', PhotoListUserEdit.as_view()),
-    url(r'^delete_list/(?P<list_pk>\d+)/$', PhotoListUserDelete.as_view()),
-    url(r'^restore_list/(?P<list_pk>\d+)/$', PhotoListUserRecover.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/$', PhotoListUserEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/$', PhotoListUserDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/$', PhotoListUserRecover.as_view()),
     url(r'^add_photo_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPhotoInUserList.as_view()),
     url(r'^remove_photo_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePhotoFromUserList.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPhotoListInUserCollections.as_view()),

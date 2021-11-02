@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^remove_post_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePostFromCommunityList.as_view()),
 
 	url(r'^add_list/(?P<pk>\d+)/$', CommunityPostsListCreate.as_view()),
-    url(r'^edit_list/(?P<list_pk>\d+)/$', CommunityPostsListEdit.as_view()),
-    url(r'^delete_list/(?P<list_pk>\d+)/$', CommunityPostsListDelete.as_view()),
-    url(r'^restore_list/(?P<list_pk>\d+)/$', CommunityPostsListRecover.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/$', CommunityPostsListEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/$', CommunityPostsListDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/$', CommunityPostsListRecover.as_view()),
 	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromCommunityCollections.as_view()),
 
