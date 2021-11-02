@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^remove_post_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePostFromUserList.as_view()),
 
 	url(r'^add_list/$', UserPostsListCreate.as_view()),
-    url(r'^edit_list/(?P<list_pk>\d+)/$', UserPostsListEdit.as_view()),
-    url(r'^delete_list/(?P<list_pk>\d+)/$', UserPostsListDelete.as_view()),
-    url(r'^restore_list/(?P<list_pk>\d+)/$', UserPostsListRecover.as_view()),
+    url(r'^edit_list/(?P<pk>\d+)/$', UserPostsListEdit.as_view()),
+    url(r'^delete_list/(?P<pk>\d+)/$', UserPostsListDelete.as_view()),
+    url(r'^restore_list/(?P<pk>\d+)/$', UserPostsListRecover.as_view()),
 	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromUserCollections.as_view()),
 
