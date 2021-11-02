@@ -350,11 +350,11 @@ class UserPostsListEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserPostsListEdit,self).get_context_data(**kwargs)
-        context["list"] = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        context["list"] = PostsList.objects.get(pk=self.kwargs["pk"])
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.list = PostsList.objects.get(pk=self.kwargs["pk"])
         self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk:
             list = self.form.save(commit=False)
@@ -367,7 +367,7 @@ class UserPostsListEdit(TemplateView):
 
 class UserPostsListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.type != PostsList.MAIN and list.creator.pk == request.user.pk:
             list.delete_item()
             return HttpResponse()
@@ -376,7 +376,7 @@ class UserPostsListDelete(View):
 
 class UserPostsListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.creator.pk == request.user.pk:
             list.restore_item()
             return HttpResponse()

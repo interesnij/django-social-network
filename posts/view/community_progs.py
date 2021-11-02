@@ -398,18 +398,18 @@ class CommunityPostsListEdit(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_community_manage_template
 
-        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.list = PostsList.objects.get(pk=self.kwargs["pk"])
         self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context=super(CommunityPostsListEdit,self).get_context_data(**kwargs)
-        context["list"] = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        context["list"] = self.list
         context["community"] = list.community
         return context
 
     def post(self,request,*args,**kwargs):
-        self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.list = PostsList.objects.get(pk=self.kwargs["pk"])
         self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.c.pk):
             list = self.form.save(commit=False)
@@ -422,7 +422,7 @@ class CommunityPostsListEdit(TemplateView):
 
 class CommunityPostsListDelete(View):
     def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and list.type != PostsList.MAIN and request.user.is_administrator_of_community(list.c.pk):
             list.delete_item()
             return HttpResponse()
@@ -431,7 +431,7 @@ class CommunityPostsListDelete(View):
 
 class CommunityPostsListRecover(View):
     def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        list = PostsList.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
             list.restore_item()
             return HttpResponse()
