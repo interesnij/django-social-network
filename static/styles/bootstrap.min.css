@@ -8256,7 +8256,9 @@ button.bg-dark:focus {
 }
 
 .align-items-center {
-    align-items: center !important
+    align-items: center !important;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .align-items-baseline {

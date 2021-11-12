@@ -3472,10 +3472,10 @@ body.dragging * {
 .icon-20 {
   height: 20px;
   width: 20px;
-  font-size: 0.8em;
   text-align: center;
   display: inline-block;
   color: white;
+  margin-right: 3px;
 }
 
 .icon-10 {
