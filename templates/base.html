@@ -17,24 +17,22 @@
      <div class="wrapper">
         {% include "base_block/navbar.html" %}
         <div class="row no-gutters">
-          <div class="col-md-1 col-lg-2 col-xl-2 clean_panel"></div>
+          <div class="col-md-1 col-lg-2 col-xl-2"></div>
 
  					{% include 'base_block/desctop_nav.html' %}
 
           <div class="col-md-8 col-lg-7 col-xl-6 desctop_version" id="ajax">
             <span id="reload_block">
-          	   {% block content %}
-          	   {% endblock %}
-
-               <div id="fullscreens_container"></div>
+              {% block content %}
+              {% endblock %}
+              <div id="fullscreens_container"></div>
             </span>
 					 </div>
-					<div class="col-md-0 col-lg-1 col-xl-2 clean_panel"></div>
+					<div class="col-md-0 col-lg-1 col-xl-2"></div>
         </div>
 
-    {% include 'base_block/audio_playlist.html' %}
-
     </div>
+    {% include 'base_block/audio_playlist.html' %}
     <div class='card video_fullscreen' style='display:none;z-index:1000'>
       <span class="video_btn_big">
         <span class="video_fullscreen_resize" title="Свернуть">
