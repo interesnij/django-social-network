@@ -4121,10 +4121,6 @@ body.dragging * {
   color: #ffffff;
 }
 
-.date-list .date.active h6 {
-  color: #ffffff;
-}
-
 .grid .grid-item {
   width: 33.3%;
   padding: 1px;
