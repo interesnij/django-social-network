@@ -1,8 +1,9 @@
 <div class="px-0 card no-shadow main-container" chat-pk="{{ chat.pk }}" data-pk="none" data-type="none" style="min-height: 600px;">
-    <div class="card-header" style="min-height: 100px;">
-      <span class="header_title">Выбор собеседников<span>
-    </div>
-    <div class="card-body">
+    <form>
+      <div class="card-header" style="min-height: 100px;">
+        <span class="header_title">Выбор собеседников<span>
+      </div>
+      <div class="card-body">
         <div class="is_block_paginate">
           {% if object_list %}
           {% for object in object_list %}
@@ -37,10 +38,11 @@
           {% endif %}
 
         </div>
-    </div>
-    <div class="card-footer border-top">
-      <button class="btn btn-sm border" disabled id="append_friends_to_chat_btn" style="float: right;">
-        Выберите пользователей
-      </button>
-    </div>
+      </div>
+      <div class="card-footer border-top">
+        <button type="button" class="btn btn-sm border" disabled id="append_friends_to_chat_btn" style="float: right;">
+          Выберите пользователей
+        </button>
+      </div>
+    </form>
 </div>
