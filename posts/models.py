@@ -489,18 +489,18 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = "_COF","_UOF","_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_MES'
+    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, REPOST = "_COF","_UOF","_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_REP'
     DELETED_C_OFFER, DELETED_U_OFFER, DELETED_MANAGER, CLOSED_MANAGER = '_DCOF','_DUOF','_DELM','_CLOM'
     TYPE = (
         (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(MESSAGE, 'Репост в сообщения'),
+        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(REPOST, 'Репост'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
-    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name='post_creator', on_delete=models.SET_NULL, verbose_name="Создатель")
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
     list = models.ForeignKey(PostsList, blank=True, null=True, on_delete=models.SET_NULL, related_name='post_list')
+    parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     type = models.CharField(choices=TYPE, max_length=5, verbose_name="Статус статьи")
