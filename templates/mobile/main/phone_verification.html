@@ -87,16 +87,5 @@
          };
          request.send(null)
      });
-
-     var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-     gender.open('GET', "/users/progs/get_gender/", true);
-     gender.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-     gender.onreadystatechange = function() {
-         if (gender.readyState == 4 && gender.status == 200) {
-             console.log("Пол сохранен!");
-         }
-     };
-     gender.send(null)
      </script>
-
 {% endblock %}

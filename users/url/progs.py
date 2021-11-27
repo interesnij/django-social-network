@@ -9,6 +9,4 @@ urlpatterns = [
     url(r'^color/(?P<color>[\w\-]+)/$', login_required(UserColorChange.as_view())),
     url(r'^phone_send/(?P<phone>\d+)/$', login_required(PhoneSend.as_view())),
     url(r'^phone_verify/(?P<phone>\d+)/(?P<code>\d+)/$', login_required(PhoneVerify.as_view())),
-
-    url(r'^get_gender/$', GetUserGender.as_view()),
 ]
