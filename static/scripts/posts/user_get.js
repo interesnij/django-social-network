@@ -42,7 +42,9 @@ on('#ajax', 'click', '.post_list_change', function() {
     list_block_load(block, ".span_list_pk", url + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + this.getAttribute("list-pk") + "/");
     this.classList.remove("pointer", "post_list_change");
     this.classList.add("active");
-    reload_list_stat(this);
+    try{
+      reload_list_stat(this)
+    }catch {null}
   }
 });
 
