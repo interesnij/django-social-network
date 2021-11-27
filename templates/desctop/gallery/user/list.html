@@ -23,7 +23,7 @@
       <div class="row is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
 
         {% for object in object_list %}
-        <div class="row_item pointer hide_shower col-lg-4 detail_photo" data-pk="{{ object.pk }}">
+        <div class="row_item pointer hide_shower col-lg-4 detail_photo" photo-pk="{{ object.pk }}">
           <div class="progressive replace" data-href="{{ object.file.url }}">
             <img class="preview image_fit_200" src="{{ object.get_preview }}" alt="img">
           </div>
