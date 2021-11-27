@@ -20,13 +20,13 @@
                         <img src="{{ user.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}">
                         <form id="add_user_avatar">
                           {% csrf_token %}
-                          <input type="file" id="user_avatar_upload" class="hidden" name="file">
-                          <p class="previous_click pointer change_avatar text-white hidden"> Загрузить аватар</p>
+                          <input type="file" id="user_avatar_upload" name="file" style="display:none">
+                          <p class="previous_click pointer change_avatar" style="display:none; color:white !important"> Загрузить аватар</p>
                         </form>
                       {% else %}
                       <form id="add_user_avatar">
                         {% csrf_token %}
-                        <input type="file" class="hidden" id="user_avatar_upload" name="file">
+                        <input type="file" id="user_avatar_upload" name="file" style="display:none">
                         <img src="{{ user.get_b_avatar }}" class="previous_click pointer">
                       </form>
                       {% endif %}
