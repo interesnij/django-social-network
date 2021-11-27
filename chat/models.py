@@ -440,7 +440,7 @@ class Chat(models.Model):
         for user in users:
             member = ChatUsers.create_membership(user=user, chat=self)
             if member:
-                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a> ' + var + ' <a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                 info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                 info_messages.append(info_message)
                 for recipient in self.get_recipients_2(creator.pk):
