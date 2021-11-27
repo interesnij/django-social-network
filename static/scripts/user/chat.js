@@ -839,7 +839,7 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
             message_load = document.body.querySelector(".chatlist");
             message_load.append(elem_);
             objDiv = document.querySelector("#chatcontent");
-            objDiv.scrollTop = objDiv.scrollHeight);
+            objDiv.scrollTop = objDiv.scrollHeight;
             close_work_fullscreen();
         }
       };
