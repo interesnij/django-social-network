@@ -498,26 +498,33 @@ on('body', 'click', '#register_ajax', function() {
   if (!form.querySelector("#id_first_name").value){
     form.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
     toast_error("Имя - обязательное поле!");
+    return
   } else if (!form.querySelector("#id_last_name").value){
     form.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
-    toast_error("Фамилия - обязательное поле!")
+    toast_error("Фамилия - обязательное поле!");
+    return
   } else if (!form.querySelector("#password1").value){
     form.querySelector("#password1").style.border = "1px #FF0000 solid";
-    toast_error("Пароль - обязательное поле!")
+    toast_error("Пароль - обязательное поле!");
+    return
   }else if (!form.querySelector("#password2").value){
     form.querySelector("#password2").style.border = "1px #FF0000 solid";
-    toast_error("Введите пароль еще раз!")
+    toast_error("Введите пароль еще раз!");
+    return
   }
 
   else if (!form.querySelector("#date_day").value){
       form.querySelector("#date_day").style.border = "1px #FF0000 solid";
-      toast_error("День рождения - обязательное поле!")
+      toast_error("День рождения - обязательное поле!");
+      return
   } else if (!form.querySelector("#date_month").value){
       form.querySelector("#date_month").style.border = "1px #FF0000 solid";
-      toast_error("Месяц рождения - обязательное поле!")
+      toast_error("Месяц рождения - обязательное поле!");
+      return
   } else if (!form.querySelector("#date_year").value){
       form.querySelector("#date_year").style.border = "1px #FF0000 solid";
-      toast_error("Год рождения - обязательное поле!")
+      toast_error("Год рождения - обязательное поле!");
+      return
   } else {this.disabled = true}
   form_data = new FormData(form);
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -532,10 +539,14 @@ on('body', 'click', '#logg', function() {
   form = document.querySelector("#login_form");
   if (!form.querySelector("#id_username").value){
     form.querySelector("#id_username").style.border = "1px #FF0000 solid";
-    toast_error("Введите телефон!")}
+    toast_error("Введите телефон!");
+    return
+  }
   else if (!form.querySelector("#id_password").value){
     form.querySelector("#id_password").style.border = "1px #FF0000 solid";
-    toast_error("Введите пароль!")}
+    toast_error("Введите пароль!");
+    return
+  }
   else {this.disabled = true}
   if (form.querySelector("#id_username").value){form.querySelector("#id_username").style.border = "rgba(0, 0, 0, 0.2)";}
   if (form.querySelector("#id_password").value){form.querySelector("#id_password").style.border = "rgba(0, 0, 0, 0.2)";}
