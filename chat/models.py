@@ -283,9 +283,12 @@ class Chat(models.Model):
             else:
                 preview_text = first_message.get_type_text()
         if first_message.is_manager():
-            creator = first_message.creator
-            message = first_message.copy
-            preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
+            if first_message.copy:
+                creator = first_message.creator
+                message = first_message.copy
+                preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
+            else:
+                preview_text = first_message.text
 
         request_chat_user = self.get_chat_request_user(user_id)
 
