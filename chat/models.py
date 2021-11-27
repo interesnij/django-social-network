@@ -437,12 +437,13 @@ class Chat(models.Model):
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
-            ChatUsers.objects.create(chat=self, user=user)
-            text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + var + '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-            info_messages.append(info_message)
-            for recipient in self.get_recipients_2(creator.pk):
-                info_message.create_socket(recipient.user.pk, recipient.beep())
+            member = ChatUsers.create_membership(user=user, chat=self)
+            if member:
+                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + var + '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+                info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+                info_messages.append(info_message)
+                for recipient in self.get_recipients_2(creator.pk):
+                    info_message.create_socket(recipient.user.pk, recipient.beep())
         return info_messages
 
 
@@ -450,6 +451,7 @@ class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
+    is_active = models.BooleanField(default=True, verbose_name="Активный")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     no_disturb = models.DateTimeField(blank=True, null=True, verbose_name='Не беспокоить до...')
 
@@ -458,8 +460,17 @@ class ChatUsers(models.Model):
 
     @classmethod
     def create_membership(cls, user, chat, is_administrator=False):
-        membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
-        return membership
+        from rest_framework.exceptions import ValidationError
+
+        if not cls.objects.filter(user=user, chat=chat).exists():
+            membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
+            return membership
+        elif cls.objects.filter(user=user, chat=chat, is_active=False).exists():
+            raise ValidationError("Нельзя пригласить " + user.get_full_name_genitive() + " в беседу, так как пользователь вышел из неё")
+        elif cls.objects.filter(user=user, chat=chat, is_active=True).exists():
+            raise ValidationError("Нельзя пригласить " + user.get_full_name_genitive() + " в беседу, так как пользователь уже в ней состоит")
+        else:
+            raise ValidationError("Неизвестная ошибка")
 
     def delete_membership(user, chat):
         if ChatUsers.objects.filter(user=user, chat=chat).exists():
