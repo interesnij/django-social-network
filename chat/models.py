@@ -432,15 +432,15 @@ class Chat(models.Model):
         from users.models import User
 
         if creator.is_women():
-            var = " пригласила"
+            var = "пригласила"
         else:
-            var = " пригласил"
+            var = "пригласил"
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
             member = ChatUsers.create_membership(user=user, chat=self)
             if member:
-                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + var + '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a> ' + var + ' <a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                 info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                 info_messages.append(info_message)
                 for recipient in self.get_recipients_2(creator.pk):
