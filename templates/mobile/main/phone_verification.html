@@ -25,7 +25,10 @@
 </div>
 
      <script type="text/javascript">
-       document.body.querySelector(".mobile_nav").remove();
+       nav = document.body.querySelector(".mobile_naw");
+       console.log(nav);
+       nav.style.display = "none";
+       nav.remove();
        function on(elSelector, eventName, selector, fn) {
            var element = document.querySelector(elSelector);
            element.addEventListener(eventName, function(event) {
