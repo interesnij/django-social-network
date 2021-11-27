@@ -541,12 +541,13 @@ def get_detect_platform_template(template, request_user, user_agent):
 
 
 def get_default_template(folder, template, request_user, user_agent):
-    if request_user.type[0] == "_":
-        template_name = get_fine_request_user(request_user)
     if request_user.is_authenticated:
-        template_name = folder + template
+        if request_user.type[0] == "_":
+            template_name = get_fine_request_user(request_user)
+        else:
+            template_name = folder + template
         update_activity(request_user, user_agent)
-    elif request_user.is_anonymous:
+    else:
         template_name = folder + "anon_" + template
     return get_folder(user_agent) + template_name
 
