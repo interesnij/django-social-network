@@ -180,14 +180,14 @@ class Chat(models.Model):
 
     def get_members(self):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk)
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__is_active=True)
 
     def get_recipients(self, exclude_creator_pk):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk).exclude(pk=exclude_creator_pk)
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__is_active=True).exclude(pk=exclude_creator_pk)
 
     def get_recipients_2(self, exclude_creator_pk):
-        return ChatUsers.objects.filter(chat_id=self.pk).exclude(user_id=exclude_creator_pk)
+        return ChatUsers.objects.filter(chat_id=self.pk, is_active=True).exclude(user_id=exclude_creator_pk)
 
     def get_members_ids(self):
         users = self.get_members().values('id')
