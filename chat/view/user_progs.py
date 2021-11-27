@@ -459,6 +459,7 @@ class InviteMembersInChat(ListView):
 	def post(self,request,*args,**kwargs):
 		if request.is_ajax():
 			from common.templates import render_for_platform
+			from chat.models import Chat
 
 			list = request.POST.getlist('chat_users')
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
