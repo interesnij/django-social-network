@@ -1,9 +1,14 @@
 .active h6{
   font-weight: bold;
 }
+.bottom_nav_counter {
+  position: absolute;
+  top: 0px;
+  right: 15%;
+}
 
 .post_stream .card-footer {
-    padding: 1px 15px !important;
+  padding: 1px 15px !important;
 }
 
 .tooltip_2 {
@@ -290,9 +295,6 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px
-}
-#notification {
-  position: relative;
 }
 .border_red {
   border: 1px #FF0000 solid
