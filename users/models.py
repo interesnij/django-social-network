@@ -36,7 +36,6 @@ class User(AbstractUser):
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
-    gender = models.CharField(max_length=5, choices=GENDER, blank=True, verbose_name="Пол")
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="ru")
     USERNAME_FIELD = 'phone'
 

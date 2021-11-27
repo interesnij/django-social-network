@@ -20,20 +20,20 @@
                         <img src="{{ user.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}">
                         <form id="add_user_avatar">
                           {% csrf_token %}
-                          <input type="file" id="user_avatar_upload" name="file" style="display:none">
-                          <p class="previous_click pointer change_avatar" style="display:none; color:white !important"> Загрузить аватар</p>
+                          <input type="file" id="user_avatar_upload" class="hidden" name="file">
+                          <p class="previous_click pointer change_avatar text-white hidden"> Загрузить аватар</p>
                         </form>
                       {% else %}
                       <form id="add_user_avatar">
                         {% csrf_token %}
-                        <input type="file" id="user_avatar_upload" name="file" style="display:none">
+                        <input type="file" class="hidden" id="user_avatar_upload" name="file">
                         <img src="{{ user.get_b_avatar }}" class="previous_click pointer">
                       </form>
                       {% endif %}
                     </figure>
                   </a>
               </div>
-              <span class="centered tooltip_2" _tooltip="yay, bottom tooltip content! provided by your friendly data-* attribute">
+              <span class="centered">
                   <a class="btn btn-sm border ajax" href="{% url 'user_general_form' %}">Редактировать</a>
               </span>
           </div>
