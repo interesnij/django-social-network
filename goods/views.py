@@ -121,7 +121,7 @@ class GoodDetail(TemplateView):
 	template_name, community, user_form = None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.good = Photo.objects.get(pk=self.kwargs["pk"])
+		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		self.list = self.good.list
 		if self.good.community:
 			self.community = self.good.community
