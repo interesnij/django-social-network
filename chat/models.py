@@ -955,8 +955,11 @@ class Message(models.Model):
             return text
 
     def get_manager_text(self):
-        message = self.copy
-        text = message.get_type_text()
+        if self.copy:
+            message = self.copy
+            text = message.get_type_text()
+        else:
+            text = self.get_type_text()
         return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
 
     def is_repost(self):
