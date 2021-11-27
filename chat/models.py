@@ -288,7 +288,7 @@ class Chat(models.Model):
                 message = first_message.copy
                 preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
             else:
-                preview_text = first_message.text
+                preview_text = first_message.get_text_60()
 
         request_chat_user = self.get_chat_request_user(user_id)
 
