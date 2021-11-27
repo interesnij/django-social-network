@@ -3,8 +3,6 @@
 {% block content %}
 <div class="main-container wrapper justify-content-center" style="height: 85vh !important;padding-top:0">
     <div class="container">
-        <div class="">
-            <div class="">
                 <h2 class="font-weight-light mb-3 text-center">Регистрация</h2>
                 <form id="signup text-center">
                     <div class="card mb-3">
@@ -24,11 +22,12 @@
                     </div>
                     {% include 'mobile/main/auth/birtday.html' %}
                 </form>
-                <div class="col mt-3">
+                <div class="col mt-2 mb-2">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" id="register_" checked onchange="document.getElementById('register_ajax').disabled = !this.checked;" class="custom-control-input">
                         <label class="custom-control-label" for="register_">
-                            Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a>.
+                            Я принимаю <a href="{% url 'terms' %}" class="ajax underline">Правила сайта</a> и
+                            даю согласие на обработку моих персональных данных.
                         </label>
                     </div>
                 </div>
@@ -36,8 +35,6 @@
                     <button desabled id="register_ajax" class="btn btn-success success-gradient">Регистрация</button>
                     <a href="/" class="btn border ajax">Вход</a>
                 </div>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}
