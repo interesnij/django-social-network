@@ -33,6 +33,7 @@ class Chat(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
     order = models.PositiveIntegerField(default=0)
+    members = models.PositiveIntegerField(default=0)
 
     """ Полномочия в чате """
     can_add_members = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто приглашает участников")
@@ -198,10 +199,10 @@ class Chat(models.Model):
         return [i['id'] for i in users]
 
     def get_members_count(self):
-        return self.get_members().values('id').count()
+        return self.members
 
     def get_members_count_ru(self):
-        count = self.get_members_count()
+        count = self.members
 
         a, b = count % 10, count % 100
         if (a == 1) and (b != 11):
@@ -464,6 +465,8 @@ class ChatUsers(models.Model):
 
         if not cls.objects.filter(user=user, chat=chat).exists():
             membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
+            chat.members = chat.members + 1
+            chat.save(update_fields=["members"])
             return membership
         elif cls.objects.filter(user=user, chat=chat, is_active=False).exists():
             raise ValidationError("Нельзя пригласить " + user.get_full_name_genitive() + " в беседу, так как пользователь вышел из неё")
@@ -476,6 +479,8 @@ class ChatUsers(models.Model):
         if ChatUsers.objects.filter(user=user, chat=chat).exists():
             membership = ChatUsers.objects.get(user=user, chat=chat)
             membership.delete()
+            chat.members = chat.members - 1
+            chat.save(update_fields=["members"])
         else:
             pass
 
