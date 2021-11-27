@@ -11,7 +11,7 @@
           <span class="like_window">
             {% if object.window_likes %}
           <div class="like_pop" style="margin:15px">
-            <span class="u_all_photo_likes" style="cursor:pointer">Оценили: <span data-count="like">{{ object.likes_count }}</span></span>
+            <span class="c_all_photo_likes" style="cursor:pointer">Оценили: <span data-count="like">{{ object.likes_count }}</span></span>
             <br><br>
             <span style="display: flex;">
               {% for voter in object.window_likes %}
