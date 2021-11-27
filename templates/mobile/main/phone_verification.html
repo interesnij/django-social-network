@@ -7,7 +7,8 @@
     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary">{{ request.user.get_full_name }}!</h1>
     <p>
       Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
-      в качестве логина к профилю соцсети трезвый.рус
+      в качестве логина к профилю соцсети трезвый.рус. <br>
+      Ваш номер телефона станет известен только администрации соцсети.
     </p>
     <div style="display: flex;margin: 5px;" class="mt-2">
       <div class="input-group-prepend">
@@ -24,7 +25,7 @@
 </div>
 
      <script type="text/javascript">
-       document.body.querySelector(".mobile_naw").remove();
+       document.body.querySelector(".mobile_nav").remove();
        function on(elSelector, eventName, selector, fn) {
            var element = document.querySelector(elSelector);
            element.addEventListener(eventName, function(event) {
