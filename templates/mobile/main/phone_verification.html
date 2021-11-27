@@ -6,7 +6,7 @@
   <div class="card text-center">
     <h1 class="font-weight-light mb-3 mt-4 content-color-secondary">{{ request.user.get_full_name }}!</h1>
     <p>
-      Для усиление информационной безопасности Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
+      Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
       в качестве логина к профилю соцсети трезвый.рус
     </p>
     <div style="display: flex;margin: 5px;" class="mt-2">
@@ -24,6 +24,7 @@
 </div>
 
      <script type="text/javascript">
+       document.querySelector(".mobile_naw").remove();
        function on(elSelector, eventName, selector, fn) {
            var element = document.querySelector(elSelector);
            element.addEventListener(eventName, function(event) {
