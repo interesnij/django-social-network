@@ -5,50 +5,6 @@ from django.http import Http404
 from common.templates import render_for_platform
 
 
-class GetUserGender(View):
-    def get(self,request,*args,**kwargs):
-        import pandas as pd
-        from io import StringIO
-        import requests
-
-        ru_url, en_url = "http://раса.рус/static/scripts/csv/rus.csv", "http://раса.рус/static/scripts/csv/en.csv"
-        ru_s, en_s = requests.get(ru_url).text, requests.get(en_url).text
-
-        dfru, dfen = pd.read_csv(StringIO(ru_s)), pd.read_csv(StringIO(en_s))
-
-        rumalenames = set(dfru[dfru['Gender'] == 'male']['GivenName'])
-        rumalesurnames = set(dfru[dfru['Gender'] == 'male']['Surname'])
-
-        rufemalenames = set(dfru[dfru['Gender'] == 'female']['GivenName'])
-        rufemalesurnames = set(dfru[dfru['Gender'] == 'female']['Surname'])
-
-        enmalenames = set(dfen[dfen['Gender'] == 'male']['GivenName'])
-        enmalesurnames = set(dfen[dfen['Gender'] == 'male']['Surname'])
-
-        enfemalenames = set(dfen[dfen['Gender'] == 'female']['GivenName'])
-        enfemalesurnames = set(dfen[dfen['Gender'] == 'female']['Surname'])
-
-        name, surname = request.user.first_name, request.user.last_name
-
-        if name in rumalenames:
-            request.user.gender = "Man"
-        if surname in rumalesurnames:
-            request.user.gender = "Man"
-        if surname in rufemalenames:
-            request.user.gender = "Fem"
-        if surname in rufemalesurnames:
-            request.user.gender = "Fem"
-        if name in enmalenames and surname in enmalesurnames:
-            request.user.gender = "Man"
-        if name in enfemalenames and surname in enfemalesurnames:
-            request.user.gender = "Fem"
-        request.user.save(update_fields=['gender'])
-        if not request.user.gender:
-            request.user.gender = "Man"
-            request.user.save(update_fields=['gender'])
-        return HttpResponse(request.user.gender)
-
-
 class UserBanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])

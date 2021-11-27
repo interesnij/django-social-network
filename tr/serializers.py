@@ -159,6 +159,7 @@ class RegisterSerializer(serializers.Serializer):
     date_day = serializers.CharField(required=True, write_only=True)
     date_month = serializers.CharField(required=True, write_only=True)
     date_year = serializers.CharField(required=True, write_only=True)
+    gender = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -176,8 +177,6 @@ class RegisterSerializer(serializers.Serializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError("Пароль 1 и пароль 2 не совпадают")
-        is_have_bad_words(data['first_name'])
-        is_have_bad_words(data['last_name'])
         return data
 
     def get_cleaned_data(self):
@@ -199,6 +198,7 @@ class RegisterSerializer(serializers.Serializer):
         self.date_day = self.validated_data.get('date_day', '')
         self.date_month = self.validated_data.get('date_month', '')
         self.date_year = self.validated_data.get('date_year', '')
+        self.gender = self.validated_data.get('gender', '')
 
         birthday = str(self.date_day) + "/" + str(self.date_month) + "/" + str(self.date_year)
 
@@ -211,5 +211,8 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
-        get_first_location(request, user)
+        try:
+            get_first_location(request, user)
+        except:
+            pass
         return user
