@@ -824,7 +824,7 @@ on('#ajax', 'click', '.off_full_chat_notify', function() {
 
 
 on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
+  form = this.parentElement.parentElement;
   this.disabled = true;
   pk = form.parentElement.getAttribute("chat-pk");
   form_data = new FormData(form);
