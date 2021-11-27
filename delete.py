@@ -18,3 +18,4 @@ from chat.models import Chat, ChatUsers
 
 for chat in Chat.objects.all():
     chat.members = ChatUsers.objects.filter(chat=chat).count()
+    chat.save(update_fields=["members"])
