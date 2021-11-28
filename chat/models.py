@@ -277,21 +277,19 @@ class Chat(models.Model):
                     preview_text = 'Вы: ' + first_message.get_type_text()
                 else:
                     preview_text = first_message.get_type_text()
-        else:
-            if first_message:
-                if first_message.creator.id == user_id:
-                    preview_text = 'Вы: ' + first_message.get_type_text()
-                else:
-                    preview_text = first_message.get_type_text()
-            else:
-                preview_text = "Нет сообщений"
-        if first_message.is_manager():
+        elif not first_message:
+            preview_text = "Нет сообщений"
+        elif first_message.is_manager():
             if first_message.copy:
                 creator = first_message.creator
                 message = first_message.copy
                 preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
+        else:
+            preview_text = first_message.get_text_60()
+            if first_message.creator.id == user_id:
+                preview_text = 'Вы: ' + first_message.get_type_text()
             else:
-                preview_text = first_message.get_text_60()
+                preview_text = first_message.get_type_text()
 
         request_chat_user = self.get_chat_request_user(user_id)
 
