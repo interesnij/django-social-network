@@ -46,14 +46,14 @@
           </a>
           <div class="dropdown">
           {% if object.pk == request.user.pk %}
-          <span class="small drop">
+          <span class="small drop pointer">
             Создатель беседы
           </span>
           <div class="dropdown-menu dropdown-menu-right">
               <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
           </div>
           {% elif object|is_admin:chat.pk %}
-          <span class="small drop">
+          <span class="small drop pointer">
             Администратор
           </span>
           <div class="dropdown-menu dropdown-menu-right">
@@ -61,7 +61,7 @@
               <span class="dropdown-item remove_perm_user_in_user_chat">Расжаловать</span>
           </div>
           {% else %}
-          <span class="small drop">
+          <span class="small drop pointer">
             Участник
           </span>
           <div class="dropdown-menu dropdown-menu-right">
