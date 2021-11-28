@@ -45,14 +45,14 @@
               <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
           </a>
           {% if object.pk == request.user.pk %}
-          <span class="small dropdown">
+          <span class="small drop">
             Создатель беседы
           </span>
           <div class="dropdown-menu dropdown-menu-right">
               <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
           </div>
           {% elif object|is_admin:chat.pk %}
-          <span class="small dropdown">
+          <span class="small drop">
             Администратор
           </span>
           <div class="dropdown-menu dropdown-menu-right">
@@ -60,7 +60,7 @@
               <span class="dropdown-item remove_perm_user_in_user_chat">Расжаловать</span>
           </div>
           {% else %}
-          <span class="small">
+          <span class="small drop">
             Участник
           </span>
           <div class="dropdown-menu dropdown-menu-right">
