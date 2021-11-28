@@ -3,7 +3,7 @@
 {% load message %}
 {% block content %}
 
-<div class="container main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat" style="height: 80vh;">
+<div class="container main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat" style="height: 90vh;">
       <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
           <div class="chat_header media w-100">
             {{ chat|get_header_group_chat:request.user.pk|safe }}
