@@ -39,5 +39,5 @@ def get_edit_attach(message, request_user):
 
 
 @register.filter
-def is_admin(request_user, chat_pk):
-    return request_user.is_administrator_of_chat(chat_pk)
+def is_admin(user, chat_pk):
+    return user.is_administrator_of_chat(chat_pk)
