@@ -105,4 +105,4 @@ class ChatInfo(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.chat.get_members(self.chat)
+		return self.chat.get_members()
