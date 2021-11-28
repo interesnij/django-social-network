@@ -290,11 +290,11 @@ class Chat(models.Model):
                 preview_text = 'Вы: ' + first_message.get_type_text()
             else:
                 preview_text = first_message.get_type_text()
+            if user_id == first_message.creator.pk and not first_message.is_copy_reed():
+                is_read = ' bg-light-secondary'
 
         request_chat_user = self.get_chat_request_user(user_id)
 
-        if user_id == first_message.creator.pk and not first_message.is_copy_reed():
-            is_read = ' bg-light-secondary'
         if self.is_private():
             chat_user = self.get_chat_user(user_id)
             member = chat_user.user
