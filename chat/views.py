@@ -93,6 +93,7 @@ class ChatInfo(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_user_chat
+		from chat.models import Chat
 
 		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_template_user_chat("chat/chat/info/", "info.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatInfo,self).get(request,*args,**kwargs)
