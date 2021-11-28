@@ -4,6 +4,7 @@
 {% block content %}
 
 <div class="container main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat" style="height: 90vh;">
+    <div><div>
       <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
           <div class="chat_header media w-100 u_chat_settings pointer">
             {{ chat|get_header_group_chat:request.user.pk|safe }}
@@ -31,7 +32,7 @@
           </div>
           {% include 'mobile/chat/chat/search.html' %}
       </div>
-
+      </div></div>
     <div class="fixed_messages">
       {% if fix_message %}
         {% include 'mobile/chat/chat/fixed_message.html' %}
