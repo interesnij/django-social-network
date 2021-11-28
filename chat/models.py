@@ -278,10 +278,13 @@ class Chat(models.Model):
                 else:
                     preview_text = first_message.get_type_text()
         else:
-            if first_message and first_message.creator.id == user_id:
-                preview_text = 'Вы: ' + first_message.get_type_text()
+            if first_message:
+                if first_message.creator.id == user_id:
+                    preview_text = 'Вы: ' + first_message.get_type_text()
+                else:
+                    preview_text = first_message.get_type_text()
             else:
-                preview_text = first_message.get_type_text()
+                preview_text = "Нет сообщений"
         if first_message.is_manager():
             if first_message.copy:
                 creator = first_message.creator
