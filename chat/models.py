@@ -481,9 +481,20 @@ class ChatUsers(models.Model):
             raise ValidationError("Неизвестная ошибка")
 
     def delete_membership(user, chat):
+        # удаление участника админом
         if ChatUsers.objects.filter(user=user, chat=chat).exists():
             membership = ChatUsers.objects.get(user=user, chat=chat)
             membership.delete()
+            chat.members = chat.members - 1
+            chat.save(update_fields=["members"])
+        else:
+            pass
+    def exit_membership(user, chat):
+        # выход участника из чата
+        if ChatUsers.objects.filter(user=user, chat=chat).exists():
+            member = ChatUsers.objects.get(user=user, chat=chat)
+            member.is_active = False
+            member.save(update_fields=["is_active"])
             chat.members = chat.members - 1
             chat.save(update_fields=["members"])
         else:
