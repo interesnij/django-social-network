@@ -613,3 +613,15 @@ def get_detect_main_template(template, request_user, user_agent):
 def render_for_platform(request, template, data):
     from django.shortcuts import render
     return render(request, get_folder(request.META['HTTP_USER_AGENT']) + template, data)
+
+
+def get_template_user_chat(chat, folder, template, request_user, user_agent):
+    if not request_user.is_authenticated or not chat.is_group() or request_user.type[0] == "_":
+        raise PermissionDenied("Ошибка доступа")
+    elif chat.creator.pk == request_user.pk:
+        template_name = folder + "creator_" + template
+    elif request_user.is_administrator_of_chat(chat.pk):
+        template_name = folder + "admin_" + template
+    elif request_user.is_member_of_chat(chat.pk):
+        template_name = folder + template
+    return get_folder(user_agent) + template_name

@@ -34,6 +34,7 @@ class Chat(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     order = models.PositiveIntegerField(default=0)
     members = models.PositiveIntegerField(default=0)
+    attach = models.TextField(blank=True,null=True)
 
     """ Полномочия в чате """
     can_add_members = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто приглашает участников")
