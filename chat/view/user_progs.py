@@ -356,7 +356,7 @@ class PhotoAttachInChatUserCreate(View):
 			raise Http404
 
 
-class ChatMemberDelete(View):
+class UserChatMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from chat.models import ChatUsers
@@ -369,7 +369,34 @@ class ChatMemberDelete(View):
 		else:
 			raise Http404
 
-class ChatAdminCreate(View):
+class ExitUserFromUserChat(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from chat.models import ChatUsers
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and chat.creator == request.user:
+			ChatUsers.exit_membership(user=user, chat=chat)
+			return HttpResponse()
+		else:
+			raise Http404
+
+class AppendUserInUserChat(View):
+	def get(self,request,*args,**kwargs):
+		from users.models import User
+		from chat.models import ChatUsers
+		from django.http import HttpResponse
+
+		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		if request.is_ajax() and chat.creator == request.user:
+			ChatUsers.create_membership(user=user, chat=chat)
+			return HttpResponse()
+		else:
+			raise Http404
+
+
+class UserChatAdminCreate(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from django.http import HttpResponse
@@ -381,7 +408,7 @@ class ChatAdminCreate(View):
 		else:
 			raise Http404
 
-class ChatAdminDelete(View):
+class UserChatAdminDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from django.http import HttpResponse
@@ -425,7 +452,7 @@ class UserChatBeepOn(View):
 			raise Http404
 
 
-class InviteMembersInChat(ListView):
+class InviteMembersInUserChat(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
@@ -434,10 +461,10 @@ class InviteMembersInChat(ListView):
 
 		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		return super(InviteMembersInChat,self).get(request,*args,**kwargs)
+		return super(InviteMembersInUserChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(InviteMembersInChat,self).get_context_data(**kwargs)
+		context = super(InviteMembersInUserChat,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
 		context["perm"] = self.request.user.user_private
 		return context

@@ -30,16 +30,3 @@ class ChatRecover(View):
 			return HttpResponse()
 		else:
 			raise Http404
-
-
-class ChatExit(View):
-	def get(self,request,*args,**kwargs):
-		from chat.models import Chat, ChatUsers
-		from django.http import HttpResponse, Http404
-
-		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
-			ChatUsers.delete_membership(request.user, chat)
-			return HttpResponse()
-		else:
-			raise Http404

@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/info/$', ChatInfo.as_view()),
 
     url(r'^user_progs/', include('chat.url.user_progs')),
-	url(r'^chat_progs/', include('chat.url.chat_progs')),
 ]

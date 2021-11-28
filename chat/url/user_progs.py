@@ -18,11 +18,13 @@ urlpatterns = [
 
     url(r'^create_chat/(?P<pk>\d+)/$', CreateUserChat.as_view()),
     url(r'^add_attach_photo/$', PhotoAttachInChatUserCreate.as_view()),
-    url(r'^(?P<pk>\d+)/add_admin/(?P<user_pk>\d+)/$', ChatAdminCreate.as_view()),
-    url(r'^(?P<pk>\d+)/remove_admin/(?P<user_pk>\d+)/$', ChatAdminDelete.as_view()),
-    url(r'^(?P<pk>\d+)/remove_member/(?P<user_pk>\d+)/$', ChatMemberDelete.as_view()),
+    url(r'^(?P<pk>\d+)/add_admin/(?P<user_pk>\d+)/$', UserChatAdminCreate.as_view()),
+    url(r'^(?P<pk>\d+)/remove_admin/(?P<user_pk>\d+)/$', UserChatAdminDelete.as_view()),
+    url(r'^(?P<pk>\d+)/remove_member/(?P<user_pk>\d+)/$', UserChatMemberDelete.as_view()),
     url(r'^beep_off/(?P<pk>\d+)/$', UserChatBeepOff.as_view()),
     url(r'^beep_on/(?P<pk>\d+)/$', UserChatBeepOn.as_view()),
+    url(r'^(?P<pk>\d+)/append_in_chat/(?P<user_pk>\d+)/$', AppendUserInUserChat.as_view()),
+    url(r'^(?P<pk>\d+)/exit_user_from_user_chat/(?P<user_pk>\d+)/$', ExitUserFromUserChat.as_view()),
 
-    url(r'^invite_members/(?P<pk>\d+)/$', InviteMembersInChat.as_view()),
+    url(r'^invite_members/(?P<pk>\d+)/$', InviteMembersInUserChat.as_view()),
 ]
