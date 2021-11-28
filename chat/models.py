@@ -357,16 +357,13 @@ class Chat(models.Model):
         if self.image:
             figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:30px;width:30px;" alt="image"></figure>'])
         else:
-            avatars = ''
-            for figure in self.get_avatars():
-                avatars += figure
-
+            figure = '<svg class="svg_default_30" style="margin-bottom:5px" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 4h16v12H5.17L4 17.17V4m0-2c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H4zm2 10h8v2H6v-2zm0-3h12v2H6V9zm0-3h12v2H6V6z"/></svg>'
         if self.name:
              chat_name = self.name
         else:
             chat_name = "Групповой чат"
         media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-1 pointer u_chat_settings">', chat_name, '<span class="notify_box">', request_chat_user.get_beep_icon(), '</h5><span class="mt-1 mb-2 target_display"><span class="type_display small" style="position:absolute;left:25px;top: 19px;">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
-        return ''.join([media_body, avatars])
+        return ''.join([media_body, figure])
 
     def is_not_empty(self):
         return self.chat_message.exclude(type__contains="_").exists()
