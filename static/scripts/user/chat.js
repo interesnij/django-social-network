@@ -450,10 +450,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
 
 on('#ajax', 'click', '.u_message_reply', function() {
   message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
   hide_chat_console();
-  checkbox.style.display = "none";
   message.classList.remove("target_message", "custom_color");
   if (message.querySelector(".attach_container")) {
     parent = "Вложения"
@@ -475,9 +472,6 @@ on('#ajax', 'click', '.u_message_reply', function() {
 on('#ajax', 'click', '.u_message_edit', function() {
   hide_chat_console();
   message = document.body.querySelector(".target_message");
-  checkbox = message.querySelector(".message_checkbox");
-  checkbox.checked = false;
-  checkbox.style.display = "none";
   message.classList.remove("target_message", "custom_color");
   message.style.display = "none";
 
@@ -569,17 +563,10 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
 
-  if (this.classList.contains("message_checkbox")) {
-    message = this.parentElement.parentElement;
-  } else {
-    message = this;
-  };
-  checkbox = message.querySelector(".message_checkbox");
+  message = this;
   is_toggle = false, is_favourite = false;
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color", "target_message");
-    checkbox.checked = false;
-    checkbox.style.display = "none"
     list = message.parentElement.querySelectorAll(".message");
     for (var i = 0; i < list.length; i++){
       if (list[i].classList.contains("custom_color")) {
@@ -592,9 +579,6 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     is_toggle ? null : hide_chat_console(is_favourite)
   } else {
     message.classList.add("custom_color", "target_message");
-
-    checkbox.checked = true;
-    checkbox.style.display = "block"
     show_chat_console(message)
   };
   if (get_toggle_messages().length > 1) {

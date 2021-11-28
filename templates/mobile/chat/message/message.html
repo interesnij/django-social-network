@@ -17,9 +17,6 @@
     {% if object|is_favourite:request.user.pk %}
       favourite
     {% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
-    <span>
-      <input type="checkbox" class="toggle_message t_f message_checkbox">
-    </span>
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax no_select">
         {{ object.creator.get_40_avatar|safe }}
