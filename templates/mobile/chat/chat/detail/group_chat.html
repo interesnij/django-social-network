@@ -38,7 +38,7 @@
         {% include 'mobile/chat/chat/fixed_message.html' %}
       {% endif %}
     </div>
-    <div class="card-body chatview" id="chatcontent" style="height: 70vh;">
+    <div class="chatview" id="chatcontent" style="height: 70vh;margin-top:15px;margin-bottom:15px;">
         <ul class="chatlist app is_chat_paginate">
           {% if object_list %}
           {% for object in object_list reversed %}
