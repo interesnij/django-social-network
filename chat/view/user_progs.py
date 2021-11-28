@@ -495,3 +495,28 @@ class InviteMembersInUserChat(ListView):
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
+
+
+class ChatDelete(View):
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse, Http404
+
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user/is_administrator_of_chat(chat.pk):
+			chat.delete_chat()
+			return HttpResponse()
+		else:
+			raise Http404
+
+class ChatRecover(View):
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse, Http404
+
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+			chat.restore_chat()
+			return HttpResponse()
+		else:
+			raise Http404
