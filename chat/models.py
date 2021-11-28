@@ -452,6 +452,19 @@ class Chat(models.Model):
                     info_message.create_socket(recipient.user.pk, recipient.beep())
         return info_messages
 
+    def edit_chat(self, name, image, description, can_add_members, can_edit_info, can_fix_item, can_mention, can_add_admin, can_add_design):
+        self.name = name
+        self.description = description
+        self.image = image
+        self.can_add_members = can_add_members
+        self.can_edit_info = can_edit_info
+        self.can_fix_item = can_fix_item
+        self.can_mention = can_mention
+        self.can_add_admin = can_add_admin
+        self.can_add_design = can_add_design
+        self.save()
+        return self
+
 
 class ChatUsers(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
