@@ -18,7 +18,7 @@ class Chat(models.Model):
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
-        (PUBLIC, 'Публичный'),(PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
+        (GROUP, 'Групповой'),(PUBLIC, 'Публичный'),(PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
         (DELETED_PUBLIC, 'Удалённый публичный'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_GROUP, 'Удалённый групповой'),(DELETED_MANAGER, 'Удалённый менеджерский'),(DELETED_PRIVATE_FIXED, 'Удалённый приватный закреплённый'),(DELETED_GROUP_FIXED, 'Удалённый групповой закреплённый'),
         (CLOSED_PUBLIC, 'Закрытый публичный'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_GROUP, 'Закрытый групповой'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_PRIVATE_FIXED, 'Закрытый закреплённый приватный'),(CLOSED_GROUP_FIXED, 'Закрытый групповой закреплённый'),
     )
