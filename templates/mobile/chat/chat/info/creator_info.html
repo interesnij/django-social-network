@@ -40,10 +40,11 @@
               {% endif %}
           </figure>
       </a>
-      <div class="media-body dropdown">
+      <div class="media-body">
           <a href="{{ object.get_link }}" target="_blank">
               <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
           </a>
+          <div class="dropdown">
           {% if object.pk == request.user.pk %}
           <span class="small drop">
             Создатель беседы
@@ -68,6 +69,7 @@
               <span class="dropdown-item add_perm_user_in_user_chat">Сделать админом</span>
           </div>
           {% endif %}
+          </div>
       </div>
   </div>
 </li>
