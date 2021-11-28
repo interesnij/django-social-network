@@ -523,31 +523,31 @@ class UserChatRecover(View):
 
 
 class UserChatEdit(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_settings_template("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserChatEdit,self).get(request,*args,**kwargs)
+		self.template_name = get_settings_template("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(UserChatEdit,self).get_context_data(**kwargs)
-        context["chat"] = self.chat
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(UserChatEdit,self).get_context_data(**kwargs)
+		context["chat"] = self.chat
+		return context
 
-    def post(self,request,*args,**kwargs):
+	def post(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from chat.forms import ChatForm
 		from django.http import HttpResponse
 
-        self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-        self.form = ChatForm(request.POST,instance=self.chat)
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_chat(self.chat.pk):
-            chat = self.form.save(commit=False)
-            chat.edit_chat(
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.form = ChatForm(request.POST,instance=self.chat)
+		if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_chat(self.chat.pk):
+			chat = self.form.save(commit=False)
+			chat.edit_chat(
 				name=chat.name,
 				description=chat.description,
 				image=chat.image,
@@ -557,7 +557,7 @@ class UserChatEdit(TemplateView):
 				can_mention=chat.can_mention,
 				can_add_admin=chat.can_add_admin,
 				can_add_design=chat.can_add_design,)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-        return super(UserChatEdit,self).get(request,*args,**kwargs)
+			return HttpResponse()
+		else:
+			return HttpResponseBadRequest()
+		return super(UserChatEdit,self).get(request,*args,**kwargs)
