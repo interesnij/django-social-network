@@ -758,7 +758,8 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
     if (message.querySelector(".attach_container")) {
       preview = "Вложения"
     } else if (message.querySelector(".text") != null) {
-      preview = message.querySelector(".text").innerHTML
+      text = message.querySelector(".text").innerHTML;
+      preview = text.replace("<br>", " ");
     } else if(message.querySelector(".message_sticker")) {
         preview = "Наклейка"
     };
