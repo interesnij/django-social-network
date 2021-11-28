@@ -1523,7 +1523,7 @@ class User(AbstractUser):
     def is_administrator_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True, is_active=True).exists()
     def is_member_of_chat(self, chat_pk):
-        return self.chat_users.filter(chat__pk=chat_pk).exists()
+        return self.chat_users.filter(chat__pk=chat_pk, is_active=True).exists()
 
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0

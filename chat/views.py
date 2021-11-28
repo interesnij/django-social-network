@@ -1,6 +1,7 @@
 """ ListView """
 from django.views.generic import ListView
 
+
 class MessagesListView(ListView):
 	template_name, paginate_by = None, 15
 
@@ -87,17 +88,17 @@ class ChatFixedMessagesView(ListView):
 		return chats
 
 
-class ChatMembers(ListView):
+class ChatInfo(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_settings_template
+		from common.templates import get_template_user_chat
 
-		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_settings_template("chat/chat/members.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(ChatMembers,self).get(request,*args,**kwargs)
+		self.chat, self.template_name = Chat.objects.get(pk=self.kwargs["pk"]), get_template_user_chat("chat/chat/info/", "info.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(ChatInfo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(ChatMembers,self).get_context_data(**kwargs)
+		context = super(ChatInfo,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
 		return context
 
