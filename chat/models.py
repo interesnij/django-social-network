@@ -266,7 +266,7 @@ class Chat(models.Model):
         return self.chat_relation.get(user_id=user_id)
 
     def get_preview_message(self, user_id):
-        first_message, preview_text, is_read, creator_figure = self.get_first_message(user_id), '', '', ''
+        first_message, preview_text, is_read, creator_figure, created = self.get_first_message(user_id), '', '', '', ''
 
         if self.is_have_draft_message(user_id):
             message = self.get_draft_message(user_id)
@@ -292,6 +292,7 @@ class Chat(models.Model):
                 preview_text = first_message.get_type_text()
             if user_id == first_message.creator.pk and not first_message.is_copy_reed():
                 is_read = ' bg-light-secondary'
+            created = first_message.get_created()
 
         request_chat_user = self.get_chat_request_user(user_id)
 
@@ -312,7 +313,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', created, '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif self.is_group():
             if self.image:
@@ -323,7 +324,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = "Групповой чат"
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), '<small class="float-right text-muted">', first_message.get_created(), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), '<small class="float-right text-muted">', created, '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_avatars(self):
