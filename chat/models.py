@@ -278,7 +278,7 @@ class Chat(models.Model):
                 else:
                     preview_text = first_message.get_type_text()
         else:
-            if first_message.creator.id == user_id:
+            if first_message and first_message.creator.id == user_id:
                 preview_text = 'Вы: ' + first_message.get_type_text()
             else:
                 preview_text = first_message.get_type_text()
