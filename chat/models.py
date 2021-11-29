@@ -434,7 +434,7 @@ class Chat(models.Model):
             return str(count) + " сообщений"
 
     def delete_member(self, user, creator):
-        if creator.is_women():
+        if creator.is_women(): 
             var = "исключила"
         else:
             var = "исключил"
