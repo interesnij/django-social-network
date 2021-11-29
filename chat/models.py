@@ -11,16 +11,16 @@ from common.model.other import Stickers
 
 
 class Chat(models.Model):
-    PUBLIC,PRIVATE,MANAGER,GROUP,PRIVATE_FIXED,GROUP_FIXED = 'PUB','PRI','MAN','GRO','_FIXT','_FIXG'
-    DELETED_PUBLIC,DELETED_PRIVATE,DELETED_GROUP,DELETED_MANAGER,DELETED_PRIVATE_FIXED,DELETED_GROUP_FIXED = '_DELP','_DEL','_DELG','_DELM','_DELPF','_DELGF'
-    CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_GROUP,CLOSED_MANAGER,CLOSED_PRIVATE_FIXED,CLOSED_GROUP_FIXED = '_CLOP','_CLOPR','_CLOG','_CLOM','_CLOPF','_CLOGF'
+    PUBLIC,PRIVATE,MANAGER,GROUP,SUPPORT = 'PUB','PRI','MAN','GRO','SUP'
+    DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP,DELETED_SUPPORT = '_DPUB','_DPRI','_DMAN','_DGRO','_DSUP'
+    CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP,CLOSED_SUPPORT = '_CPUB','_CPRI','_CMAN','_CGRO','_CSUP'
 
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
-        (GROUP, 'Групповой'),(PUBLIC, 'Публичный'),(PRIVATE, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(PRIVATE_FIXED, 'Закреплённый приватный'),(GROUP_FIXED, 'Закреплённый групповой'),
-        (DELETED_PUBLIC, 'Удалённый публичный'),(DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_GROUP, 'Удалённый групповой'),(DELETED_MANAGER, 'Удалённый менеджерский'),(DELETED_PRIVATE_FIXED, 'Удалённый приватный закреплённый'),(DELETED_GROUP_FIXED, 'Удалённый групповой закреплённый'),
-        (CLOSED_PUBLIC, 'Закрытый публичный'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_GROUP, 'Закрытый групповой'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_PRIVATE_FIXED, 'Закрытый закреплённый приватный'),(CLOSED_GROUP_FIXED, 'Закрытый групповой закреплённый'),
+        (PUBLIC, 'Публичный'),(PRIVATE, 'Приватный'),(MANAGER, 'Служебный'),(GROUP, 'Групповой'),(SUPPORT, 'Техподдержка'),
+        (DELETED_PUBLIC, 'удал Публичный'),(DELETED_PRIVATE, 'удал Приватный'),(DELETED_MANAGER, 'удал Служебный'),(DELETED_GROUP, 'удал Групповой'),(DELETED_SUPPORT, 'удал Техподдержка'),
+        (CLOSED_PUBLIC, 'закр. Публичный'),(CLOSED_PRIVATE, 'закр. Приватный'),(CLOSED_MANAGER, 'закр. Служебный'),(CLOSED_GROUP, 'закр. Групповой'),(CLOSED_SUPPORT, 'закр. Техподдержка'),
     )
     ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),(MEMBERS_BUT, 'Участники кроме'),(SOME_MEMBERS, 'Некоторые участники'),)
     ADMIN_PERM = ((CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
@@ -434,7 +434,7 @@ class Chat(models.Model):
             return str(count) + " сообщений"
 
     def delete_member(self, user, creator):
-        if creator.is_women(): 
+        if creator.is_women():
             var = "исключила"
         else:
             var = "исключил"
@@ -467,8 +467,8 @@ class Chat(models.Model):
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
-            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=chat).exclude(type="DEL")).exists() \
-            or not ChatUsers.objects.filter(user=user, chat=chat).exists():
+            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=self).exclude(type="DEL")).exists() \
+            or not ChatUsers.objects.filter(user=user, chat=self).exists():
                 member = ChatUsers.create_membership(user=user, chat=self)
                 if member:
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
