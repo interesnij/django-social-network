@@ -52,7 +52,7 @@
           <div class="dropdown-menu dropdown-menu-right">
               <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
           </div>
-          {% elif request.user|is_admin:chat.pk %}
+          {% elif object|is_admin:chat.pk %}
           <span class="small drop pointer">
             Администратор
           </span>
