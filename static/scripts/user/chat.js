@@ -830,6 +830,7 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
             objDiv = document.querySelector("#chatcontent");
             objDiv.scrollTop = objDiv.scrollHeight;
             close_work_fullscreen();
+            message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
         }
       };
       ajax_link.send(form_data);
