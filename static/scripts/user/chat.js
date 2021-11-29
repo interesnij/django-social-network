@@ -874,7 +874,8 @@ on('body', 'click', '.add_perm_user_chat', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     _this.classList.remove("add_perm_user_chat");
     _this.classList.add("remove_perm_user_chat");
-    _this.innerHTML = "Расжаловать"
+    _this.innerHTML = "Расжаловать";
+    item.querySelector('.member_role').innerHTML = "Администратор"
   }};
   link.send();
 });
@@ -890,7 +891,8 @@ on('body', 'click', '.remove_perm_user_chat', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     _this.classList.remove("remove_perm_user_chat");
     _this.classList.add("add_perm_user_chat");
-    _this.innerHTML = "Сделать админом"
+    _this.innerHTML = "Сделать админом";
+    item.querySelector('.member_role').innerHTML = "Участник"
   }};
   link.send();
 });
