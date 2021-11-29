@@ -364,7 +364,7 @@ class UserChatMemberDelete(View):
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and chat.creator == request.user:
-			chat.delete_member(chat=chat, user=user, creator=request.user)
+			chat.delete_member(user=user, creator=request.user)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -377,7 +377,7 @@ class ExitUserFromUserChat(View):
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and chat.creator == request.user:
-			chat.exit_member(chat=chat, creator=request.user)
+			chat.exit_member(creator=request.user)
 			return HttpResponse()
 		else:
 			raise Http404
