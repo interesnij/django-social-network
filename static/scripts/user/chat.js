@@ -867,7 +867,7 @@ on('body', 'click', '.add_perm_user_chat', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/add_admin/" + user_pk + "/", true );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/add_admin/" + user_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -883,7 +883,7 @@ on('body', 'click', '.remove_perm_user_chat', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_admin/" + user_pk + "/", true );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/remove_admin/" + user_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
