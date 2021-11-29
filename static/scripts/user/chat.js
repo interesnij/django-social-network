@@ -851,7 +851,7 @@ on('#ajax', 'click', '.remove_user_from_chat', function() {
 on('#ajax', 'click', '.user_exit_in_user_chat', function() {
   if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")){
     pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk");
-  } else { pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")}
+  } else { pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")}
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/exit_user_from_user_chat/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
