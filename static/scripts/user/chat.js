@@ -836,23 +836,10 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
 });
 
 on('#ajax', 'click', '.remove_user_from_chat', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = this.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_member/" + user_pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    item.remove()
-  }};
-  link.send();
-});
-on('#ajax', 'click', '.remove_user_from_chat', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
-  user_pk = this.getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_member/" + user_pk + "/", true );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/remove_member/" + user_pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
