@@ -50,14 +50,14 @@
           <span class="small drop pointer member_role">
             Создатель беседы
           </span>
-          <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu">
               <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
           </div>
           {% elif object|is_admin:chat.pk %}
           <span class="small drop pointer member_role">
             Администратор
           </span>
-          <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu">
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
               <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
           </div>
@@ -65,7 +65,7 @@
           <span class="small drop pointer member_role">
             Участник
           </span>
-          <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu">
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
               <span class="dropdown-item add_perm_user_chat">Сделать админом</span>
           </div>
