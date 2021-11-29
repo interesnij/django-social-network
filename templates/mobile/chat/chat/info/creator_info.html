@@ -24,7 +24,7 @@
           </div>
       </div>
   </div>
-  <div class="card-body" style="overflow:visible">
+  <div class="card-body">
 <ul class="is_block_paginate">
 {% for object in object_list %}
 <li class="list-group-item border-top pag">
@@ -40,7 +40,7 @@
               {% endif %}
           </figure>
       </a>
-      <div class="media-body">
+      <div class="media-body" style="overflow:visible">
           <a href="{{ object.get_link }}" target="_blank">
               <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
           </a>
