@@ -849,15 +849,27 @@ on('#ajax', 'click', '.remove_user_from_chat', function() {
   link.send();
 });
 on('#ajax', 'click', '.user_exit_in_user_chat', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  user_pk = item.getAttribute("data-pk");
+  if (this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")){
+    pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk");
+  } else { pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")}
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/exit_user_from_user_chat/" + user_pk + "/", true );
+  link.open( 'GET', "/chat/user_progs/exit_user_from_user_chat/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
-    item.remove()
+    ajax_get_reload("/chat/");
+  }};
+  link.send();
+});
+on('#ajax', 'click', '.u_clean_chat_messages', function() {
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/clean_messages/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/exit_user_from_user_chat/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    ajax_get_reload("/chat/");
   }};
   link.send();
 });

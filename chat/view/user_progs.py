@@ -375,7 +375,7 @@ class ExitUserFromUserChat(View):
 		from chat.models import Chat, ChatUsers
 		from django.http import HttpResponse
 
-		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and chat.creator == request.user:
 			ChatUsers.exit_membership(user=user, chat=chat)
 			return HttpResponse()
@@ -522,6 +522,15 @@ class UserChatRecover(View):
 			return HttpResponse()
 		else:
 			raise Http404
+
+class UserChatCleanMessages(View):
+	def get(self,request,*args,**kwargs):
+		from chat.models import Message
+		from django.http import HttpResponse
+
+		if request.user.is_authenticated:
+			Message.objects.filter(chat_pk=self.kwargs["pk"], recipient_id=request.user.pk).update(type=Message.DELETED)
+		return HttpResponse()
 
 
 class UserChatEdit(TemplateView):
