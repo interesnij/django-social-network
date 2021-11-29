@@ -8,7 +8,7 @@
     </a>
   </div>
 </div>
-<div class="card">
+<div class="card" chat-pk="{{ chat.pk }}">
   <div class="card-header">
       <div class="media">
         <figure>
@@ -19,7 +19,7 @@
           {% endif %}
         </figure>
         <div class="media-body">
-          <h6>{{ chat.name }} &nbsp;</h6>
+          <h6>{% if chat.name %}{{ chat.name }}Групповой чат{% else %}{% endif %} &nbsp;</h6>
               <p class="mb-0">{{ chat.get_created }}</p>
           </div>
       </div>
