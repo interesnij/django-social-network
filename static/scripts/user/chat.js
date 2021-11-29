@@ -50,7 +50,11 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 });
 
 on('#ajax', 'click', '.u_add_members_in_chat', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  if (this.getAttribute("chat-pk")) {
+    pk = this.getAttribute("chat-pk")
+  } else {
+    pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  };
   create_fullscreen("/chat/user_progs/invite_members/" + pk + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.u_chat_info', function() {
