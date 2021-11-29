@@ -10,9 +10,7 @@
           {% load notify %}
             <span class="is_paginate">
               {% for object in object_list %}
-                <div class="post card mb-3">
-                  {{ object|get_notify:request.user|safe }}
-                </div>
+                {{ object|get_notify:request.user|safe }}
               {% endfor %}
             </span>
           {% else %}
