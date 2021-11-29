@@ -864,7 +864,7 @@ on('#ajax', 'click', '.user_exit_in_user_chat', function() {
 });
 on('#ajax', 'click', '.u_clean_chat_messages', function() {
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/clean_messages/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/exit_user_from_user_chat/", true );
+  link.open( 'GET', "/chat/user_progs/clean_messages/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
