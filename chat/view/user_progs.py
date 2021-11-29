@@ -359,7 +359,7 @@ class PhotoAttachInChatUserCreate(View):
 class UserChatMemberDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from chat.models import ChatUsers
+		from chat.models import Chat, ChatUsers
 		from django.http import HttpResponse
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
@@ -372,7 +372,7 @@ class UserChatMemberDelete(View):
 class ExitUserFromUserChat(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from chat.models import ChatUsers
+		from chat.models import Chat, ChatUsers
 		from django.http import HttpResponse
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
@@ -385,7 +385,7 @@ class ExitUserFromUserChat(View):
 class AppendUserInUserChat(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from chat.models import ChatUsers
+		from chat.models import Chat, ChatUsers
 		from django.http import HttpResponse
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
@@ -400,6 +400,7 @@ class UserChatAdminCreate(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from django.http import HttpResponse
+		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
@@ -412,6 +413,7 @@ class UserChatAdminDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from django.http import HttpResponse
+		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
