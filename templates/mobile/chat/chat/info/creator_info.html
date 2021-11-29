@@ -25,21 +25,21 @@
       </div>
   </div>
   <div class="card-body">
-<ul class="is_block_paginate">
-  <li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
-    <div class="media">
-        <figure>
-          <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-          </svg>
-        </figure>
-        <div class="media-body" style="overflow:visible">
-          <h6 class="my-0 mt-1">Пригласить друзей</h6>
-        </div>
+    <div class="list-group-item border-top pag" data-pk="{{ object.pk }}">
+      <div class="media">
+          <figure>
+            <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </figure>
+          <div class="media-body" style="overflow:visible">
+            <h6 class="my-0 mt-1">Пригласить друзей</h6>
+          </div>
+      </div>
     </div>
-  </li>
-  
+<ul class="is_block_paginate">
+
 <p class="mb-0">{{ chat.get_members_count_ru }}</p>
 {% for object in object_list %}
 <li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
