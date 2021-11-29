@@ -27,7 +27,7 @@
   <div class="card-body">
 <ul class="is_block_paginate">
 {% for object in object_list %}
-<li class="list-group-item border-top pag">
+<li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
   <div class="media">
       <a href="{{ object.get_link }}" target="_blank">
           <figure>
