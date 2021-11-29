@@ -21,11 +21,11 @@
         <div class="media-body">
           <h6>{% if chat.name %}{{ chat.name }}{% else %}Групповой чат{% endif %} &nbsp;</h6>
           <p class="mb-0 user_chat_settings pointer">Настройки</p>
-          <p class="mb-0">{{ chat.get_members_count_ru }}</p>
         </div>
       </div>
   </div>
   <div class="card-body">
+    <p class="mb-0">{{ chat.get_members_count_ru }}</p>
 <ul class="is_block_paginate">
 {% for object in object_list %}
 <li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
