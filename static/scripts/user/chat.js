@@ -864,7 +864,7 @@ on('#ajax', 'click', '.user_exit_in_user_chat', function() {
 
 on('body', 'click', '.add_perm_user_chat', function() {
   _this = this;
-  item = this.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/add_admin/" + user_pk + "/", true );
@@ -880,7 +880,7 @@ on('body', 'click', '.add_perm_user_chat', function() {
 });
 on('body', 'click', '.remove_perm_user_chat', function() {
   _this = this;
-  item = this.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_admin/" + user_pk + "/", true );
