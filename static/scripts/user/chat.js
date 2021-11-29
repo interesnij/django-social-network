@@ -834,3 +834,61 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
       };
       ajax_link.send(form_data);
 });
+
+on('#ajax', 'click', '.remove_user_from_chat', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  user_pk = this.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_member/" + user_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    item.remove()
+  }};
+  link.send();
+});
+on('#ajax', 'click', '.remove_user_from_chat', function() {
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  user_pk = this.getAttribute("data-pk");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_member/" + user_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    item.remove()
+  }};
+  link.send();
+});
+
+on('body', 'click', '.add_perm_user_chat', function() {
+  _this = this;
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/add_admin/" + user_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    _this.classList.remove("add_perm_user_chat");
+    _this.classList.add("remove_perm_user_chat");
+    _this.innerHTML = "Расжаловать"
+  }};
+  link.send();
+});
+on('body', 'click', '.remove_perm_user_chat', function() {
+  _this = this;
+  item = this.parentElement.parentElement.parentElement.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/" + item.parentElement.parentElement.getAttribute("chat-pk") + "/remove_admin/" + user_pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    _this.classList.remove("remove_perm_user_chat");
+    _this.classList.add("add_perm_user_chat");
+    _this.innerHTML = "Сделать админом"
+  }};
+  link.send();
+});

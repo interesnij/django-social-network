@@ -27,7 +27,7 @@
   <div class="card-body">
 <ul class="is_block_paginate">
 {% for object in object_list %}
-<li class="list-group-item border-top pag">
+<li class="list-group-item border-top pag" data-pk="{{ object.pk }}">
   <div class="media">
       <a href="{{ object.get_link }}" target="_blank">
           <figure>
@@ -56,16 +56,16 @@
             Администратор
           </span>
           <div class="dropdown-menu dropdown-menu-right">
-              <span class="dropdown-item admin_user_exit_in_user_chat">Удалить из беседы</span>
-              <span class="dropdown-item remove_perm_user_in_user_chat">Расжаловать</span>
+              <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+              <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
           </div>
           {% else %}
           <span class="small dropdown">
             Участник
           </span>
           <div class="dropdown-menu dropdown-menu-right">
-              <span class="dropdown-item admin_user_exit_in_user_chat">Удалить из беседы</span>
-              <span class="dropdown-item add_perm_user_in_user_chat">Сделать админом</span>
+              <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+              <span class="dropdown-item add_perm_user_chat">Сделать админом</span> 
           </div>
           {% endif %}
       </div>
