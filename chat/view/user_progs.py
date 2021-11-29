@@ -529,7 +529,7 @@ class UserChatCleanMessages(View):
 		from django.http import HttpResponse
 
 		if request.user.is_authenticated:
-			Message.objects.filter(chat_pk=self.kwargs["pk"], recipient_id=request.user.pk).update(type=Message.DELETED)
+			Message.objects.filter(chat_id=self.kwargs["pk"], recipient_id=request.user.pk).update(type=Message.DELETED)
 		return HttpResponse()
 
 
