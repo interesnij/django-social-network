@@ -377,7 +377,7 @@ class ExitUserFromUserChat(View):
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and chat.creator == request.user:
-			ChatUsers.exit_membership(user=user, chat=chat)
+			ChatUsers.exit_membership(user=request.user, chat=chat)
 			return HttpResponse()
 		else:
 			raise Http404
