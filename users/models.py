@@ -1521,7 +1521,7 @@ class User(AbstractUser):
         return list(chain(self.get_all_chats(), self.get_all_connection()))
 
     def is_administrator_of_chat(self, chat_pk):
-        return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True, is_active=True).exists()
+        return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True, type="ACT").exists()
     def is_member_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk, type="ACT").exists()
 
