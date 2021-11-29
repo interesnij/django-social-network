@@ -364,7 +364,7 @@ class UserChatMemberDelete(View):
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
 		if request.is_ajax() and chat.creator == request.user:
-			ChatUsers.delete_membership(user=user, chat=chat)
+			chat.delete_member(chat=chat, user=user, creator=request.user)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -372,25 +372,12 @@ class UserChatMemberDelete(View):
 class ExitUserFromUserChat(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from chat.models import Chat, ChatUsers
+		from chat.models import Chat
 		from django.http import HttpResponse
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and chat.creator == request.user:
-			ChatUsers.exit_membership(user=request.user, chat=chat)
-			return HttpResponse()
-		else:
-			raise Http404
-
-class AppendUserInUserChat(View):
-	def get(self,request,*args,**kwargs):
-		from users.models import User
-		from chat.models import Chat, ChatUsers
-		from django.http import HttpResponse
-
-		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
-		if request.is_ajax() and chat.creator == request.user:
-			ChatUsers.create_membership(user=user, chat=chat)
+			chat.exit_member(chat=chat, creator=request.user)
 			return HttpResponse()
 		else:
 			raise Http404

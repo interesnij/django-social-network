@@ -182,14 +182,14 @@ class Chat(models.Model):
 
     def get_members(self):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__is_active=True)
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT")
 
     def get_recipients(self, exclude_creator_pk):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__is_active=True).exclude(pk=exclude_creator_pk)
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT").exclude(pk=exclude_creator_pk)
 
     def get_recipients_2(self, exclude_creator_pk):
-        return ChatUsers.objects.filter(chat_id=self.pk, is_active=True).exclude(user_id=exclude_creator_pk)
+        return ChatUsers.objects.filter(chat_id=self.pk, type="ACT").exclude(user_id=exclude_creator_pk)
 
     def get_members_ids(self):
         users = self.get_members().values('id')
@@ -433,6 +433,30 @@ class Chat(models.Model):
         else:
             return str(count) + " сообщений"
 
+    def delete_member(self, user, creator):
+        if creator.is_women():
+            var = "исключила"
+        else:
+            var = "исключил"
+        ChatUsers.delete_member(user=user, chat=self)
+        text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+        info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+        for recipient in self.get_recipients_2(creator.pk):
+            info_message.create_socket(recipient.user.pk, recipient.beep())
+        return info_message
+
+    def exit_member(self, user):
+        if user.is_women():
+            var = "вышла из чата"
+        else:
+            var = "вышел из чата"
+        ChatUsers.exit_member(user=user, chat=self)
+        text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
+        info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,type=Message.MANAGER,text=text)
+        for recipient in self.get_recipients_2(user.pk):
+            info_message.create_socket(recipient.user.pk, recipient.beep())
+        return info_message
+
     def invite_users_in_chat(self, users_ids, creator):
         from users.models import User
 
@@ -443,13 +467,15 @@ class Chat(models.Model):
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
-            member = ChatUsers.create_membership(user=user, chat=self)
-            if member:
-                text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-                info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-                info_messages.append(info_message)
-                for recipient in self.get_recipients_2(creator.pk):
-                    info_message.create_socket(recipient.user.pk, recipient.beep())
+            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=chat).exclude(type="DEL")).exists() \
+            or not ChatUsers.objects.filter(user=user, chat=chat).exists():
+                member = ChatUsers.create_membership(user=user, chat=self)
+                if member:
+                    text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
+                    info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+                    info_messages.append(info_message)
+                    for recipient in self.get_recipients_2(creator.pk):
+                        info_message.create_socket(recipient.user.pk, recipient.beep())
         return info_messages
 
     def edit_chat(self, name, image, description, can_add_members, can_edit_info, can_fix_item, can_mention, can_add_admin, can_add_design):
@@ -467,51 +493,46 @@ class Chat(models.Model):
 
 
 class ChatUsers(models.Model):
+    ACTIVE, EXITED, DELETED = "ACT", "EXI", "DEL"
+    TYPE = (
+        (ACTIVE, 'Действующий'),(EXITED, 'Вышедший'),(DELETED, 'Уделенный'),
+    )
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='chat_users', null=False, blank=False, verbose_name="Члены сообщества")
     chat = models.ForeignKey(Chat, db_index=False, on_delete=models.CASCADE, related_name='chat_relation', verbose_name="Чат")
     is_administrator = models.BooleanField(default=False, verbose_name="Это администратор")
-    is_active = models.BooleanField(default=True, verbose_name="Активный")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     no_disturb = models.DateTimeField(blank=True, null=True, verbose_name='Не беспокоить до...')
+    type = models.CharField(max_length=3, choices=TYPE, default=ACTIVE, verbose_name="Тип участника")
 
     def __str__(self):
         return self.user.get_full_name()
 
     @classmethod
     def create_membership(cls, user, chat, is_administrator=False):
-        from rest_framework.exceptions import ValidationError
-
-        if not cls.objects.filter(user=user, chat=chat).exists():
+        if not cls.objects.filter(user=user, chat=chat).exclude(type="DEL").exists():
             membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
             chat.members = chat.members + 1
             chat.save(update_fields=["members"])
             return membership
-        elif cls.objects.filter(user=user, chat=chat, is_active=False).exists():
-            raise ValidationError("Нельзя пригласить " + user.get_full_name_genitive() + " в беседу, так как пользователь вышел из неё")
-        elif cls.objects.filter(user=user, chat=chat, is_active=True).exists():
-            raise ValidationError("Нельзя пригласить " + user.get_full_name_genitive() + " в беседу, так как пользователь уже в ней состоит")
-        else:
-            raise ValidationError("Неизвестная ошибка")
 
-    def delete_membership(user, chat):
-        # удаление участника админом
-        if ChatUsers.objects.filter(user=user, chat=chat).exists():
-            membership = ChatUsers.objects.get(user=user, chat=chat)
-            membership.delete()
-            chat.members = chat.members - 1
-            chat.save(update_fields=["members"])
-        else:
-            pass
-    def exit_membership(user, chat):
-        # выход участника из чата
+    def exit_member(user, chat):
+        # Человек сам выходит из группового чата и больше приглашать его в этот чат нельзя
         if ChatUsers.objects.filter(user=user, chat=chat).exists():
             member = ChatUsers.objects.get(user=user, chat=chat)
-            member.is_active = False
-            member.save(update_fields=["is_active"])
+            member.type = "EXI"
+            member.save(update_fields=["type"])
             chat.members = chat.members - 1
             chat.save(update_fields=["members"])
-        else:
-            pass
+
+    def delete_member(user, chat):
+        # Человека удаляют из группового чата и он может вернуться только по приглашению админов
+        if ChatUsers.objects.filter(user=user, chat=chat).exists():
+            member = ChatUsers.objects.get(user=user, chat=chat)
+            member.type = "DEL"
+            member.save(update_fields=["type"])
+            chat.members = chat.members - 1
+            chat.save(update_fields=["members"])
 
     def beep(self):
         if not self.no_disturb:

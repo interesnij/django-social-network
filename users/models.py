@@ -1510,11 +1510,11 @@ class User(AbstractUser):
 
     def get_private_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk, chat_relation__is_active=True, type=Chat.PRIVATE)
+        return Chat.objects.filter(chat_relation__user_id=self.pk, chat_relation__type="ACT", type=Chat.PRIVATE)
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk, chat_relation__is_active=True).exclude(type__contains="_")
+        return Chat.objects.filter(chat_relation__user_id=self.pk, chat_relation__type="ACT").exclude(type__contains="_")
 
     def get_chats_and_connections(self):
         from itertools import chain
@@ -1523,7 +1523,7 @@ class User(AbstractUser):
     def is_administrator_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True, is_active=True).exists()
     def is_member_of_chat(self, chat_pk):
-        return self.chat_users.filter(chat__pk=chat_pk, is_active=True).exists()
+        return self.chat_users.filter(chat__pk=chat_pk, type="ACT").exists()
 
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0
