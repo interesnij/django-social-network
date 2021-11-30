@@ -89,6 +89,22 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто меняет дизайн</label>
+            <select name="can_mention" id="id_can_mention">
+              <option value="1" selected="">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_mention_collector"></div>
+        </div>
+        <div class="mb-1 form_group_flex">
+            <label>Кто меняет дизайн</label>
             <select name="can_add_design" id="id_can_add_design">
               <option value="1">
                 <span class="border-bottom">
