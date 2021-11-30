@@ -920,7 +920,7 @@ on('body', 'click', '.remove_perm_user_chat', function() {
 
 on('#ajax', 'click', '#u_chat_settings_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  pk = form.parentElement.getAttribute("data-pk");
+  pk = form.getAttribute("data-pk");
   form_data = new FormData(form);
   this.disabled = true;
 
