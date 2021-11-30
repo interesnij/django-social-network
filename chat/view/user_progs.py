@@ -528,7 +528,7 @@ class UserChatEdit(TemplateView):
 		from common.templates import get_template_admin_chat
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_admin_chat("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_template_admin_chat(self.chat, "chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
