@@ -542,7 +542,7 @@ class UserChatEdit(TemplateView):
 		from django.http import HttpResponse
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.form = ChatForm(request.POST,instance=self.chat)
+		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
 		if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_chat(self.chat.pk):
 			chat = self.form.save(commit=False)
 			chat.edit_chat(
