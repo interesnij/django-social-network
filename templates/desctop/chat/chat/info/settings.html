@@ -1,0 +1,113 @@
+ <form class="is_stat_list" data-pk="{{ chat.pk }}" data-type="change_user_chat">
+   {% csrf_token %}
+    <div class="card">
+      <div class="card-header border-bottom">
+        <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Название</label>
+          <input type="text" name="name" class="form-control" id="id_name" value="{{ chat.name }}">
+        </div>
+        <div class="form-group">
+          <div class="hide_image">
+            <input type="file" name="image" accept="image/*" id="id_image">
+          </div>
+          <div id="video_holder" class="border pointer">
+            {% if chat.image %}
+              <img src="{{ chat.image }}" />
+            {% else %}
+              <h6>Обложка</h6>
+              <i>(не обязательно)</i>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mb-1 form_group_flex">
+            <label>Кто приглашает участников</label>
+            <select name="can_add_members" id="id_can_add_members">
+              <option value="1" selected="">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_add_members_collector"></div>
+        </div>
+        <div class="mb-1 form_group_flex">
+            <label>Кто редактирует информацию</label>
+            <select name="can_edit_info" id="id_can_edit_info">
+              <option value="1">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3" selected="">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_edit_info_collector"></div>
+        </div>
+        <div class="mb-1 form_group_flex">
+            <label>Кто закрепляет сообщения</label>
+            <select name="can_fix_item" id="id_can_fix_item">
+              <option value="1">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3" selected="">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_fix_item_collector"></div>
+        </div>
+        <div class="mb-1 form_group_flex">
+            <label>Кто назначает админов</label>
+            <select name="can_add_admin" id="id_can_add_admin">
+              <option value="1">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3" selected="">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_add_admin_collector"></div>
+        </div>
+        <div class="mb-1 form_group_flex">
+            <label>Кто меняет дизайн</label>
+            <select name="can_add_design" id="id_can_add_design">
+              <option value="1">
+                <span class="border-bottom">
+                  Все участники
+                </span>
+              </option>
+              <option value="2">Создатель</option>
+              <option value="3" selected="">Создатель и админы</option>
+              <option value="4">Только я</option>
+              <option value="5">Участники кроме</option>
+              <option value="6">Некоторые участники</option>
+            </select>
+            <div class="can_add_design_collector"></div>
+        </div>
+
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+        <button type="button" class="btn btn-sm btn-success float-right" id="u_chat_settings_btn">Сохранить</button>
+      </div>
+    </div>
+</form>
