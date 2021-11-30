@@ -19,8 +19,6 @@ box-shadow: inset 2px -2px 0 1px #ffffff !important;
 
 body {
   background-color: #0094cb;
-  font-size: 1em;
-  line-height: 1.4em;
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .header-color-primary {
@@ -33,9 +31,7 @@ body {
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
-.boxed-page .wrapper {
-  background-color: #009bd5;
-}
+
 .media p, .media span {
   color: rgba(255, 255, 255, 0.9) !important;
 }
@@ -60,9 +56,6 @@ body {
   color: #282C34 !important;
 }
 
-.bg-light-opac {
-  background-color: #009fda;
-}
 .content-color-primary {
   color: #ffffff;
 }
@@ -119,21 +112,6 @@ a.media:hover {
 }
 .chatlist li .media .media-body:before {
   background: #00a7e5;
-}
-.wizard-1.nav-tabs .nav-item:after {
-  border-right: 20px solid #009bd5;
-}
-.wizard-1.nav-tabs .nav-item:before {
-  border-right: 20px solid #009bd5;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link {
-  background-color: #009bd5;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link.active:after {
-  border-left: 20px solid #009bd5;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link.active:before {
-  border-left: 20px solid #009bd5;
 }
 
 .btn_default svg{
