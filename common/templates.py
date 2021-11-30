@@ -628,6 +628,5 @@ def get_template_user_chat(chat, folder, template, request_user, user_agent):
 
 def get_template_admin_chat(chat, template, request_user, user_agent):
     if request_user.is_authenticated and request_user.is_administrator_of_chat(chat.pk) and not request_user.type[0] == "_":
-        template_name = folder + template
-        return get_folder(user_agent) + template_name
+        return get_folder(user_agent) + template
     return False
