@@ -497,7 +497,7 @@ class Chat(models.Model):
         self.can_add_admin = can_add_admin
         self.can_add_design = can_add_design
         if image:
-            self.chat.create_image(image)
+            self.create_image(image)
         self.save()
         return self
 
