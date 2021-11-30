@@ -557,5 +557,6 @@ class UserChatEdit(TemplateView):
 				can_add_design=chat.can_add_design,)
 			return HttpResponse()
 		else:
+			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
