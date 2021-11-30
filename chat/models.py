@@ -27,7 +27,7 @@ class Chat(models.Model):
 
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPE, max_length=6, verbose_name="Тип чата")
-    image = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_chat_directory,processors=[Transpose(), ResizeToFit(width=200, height=200)])
+    image = models.ImageField(blank=True, upload_to=upload_to_chat_directory)
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
@@ -52,6 +52,15 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.creator.get_full_name()
+
+    def create_image(self, photo_input):
+        from easy_thumbnails.files import get_thumbnailer
+
+        self.image = photo_input
+        self.save(update_fields=['image'])
+        new_img = get_thumbnailer(self.image)['avatar'].url.replace('media/', '')
+        self.image = new_img
+        return self.save(update_fields=['image'])
 
     def is_user_can_add_members(self, user):
         if self.can_add_members == self.ALL_CAN:
