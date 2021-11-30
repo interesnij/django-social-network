@@ -57,12 +57,7 @@ body {
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
-.boxed-page .wrapper {
-  background-color: #0664c1;
-}
-.bg-light-opac {
-  background-color: #0667c6;
-}
+
 .content-color-primary {
   color: #ffffff;
 }
@@ -116,26 +111,6 @@ a.media:hover {
 }
 .chatlist li .media .media-body:before {
   background: #076cd0;
-}
-.wizard-1.nav-tabs .nav-item:after {
-  border-right: 20px solid #0664c1;
-}
-.wizard-1.nav-tabs .nav-item:before {
-  border-right: 20px solid #0664c1;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link {
-  background-color: #0664c1;
-}
-
-.wizard-1.nav-tabs .nav-item a.nav-link.active:before {
-  background-color: #0664c1;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link.active:after {
-  background-color: #0664c1;
-}
-
-.wizard-1.nav-tabs .nav-item a.nav-link.active span {
-  color: #ffffff;
 }
 
 .btn_default svg, .btn_default span{

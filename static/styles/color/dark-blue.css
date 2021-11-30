@@ -42,8 +42,6 @@ a:hover{
 
 body {
   background-color: #0f152f;
-  font-size: 1em;
-  line-height: 1.4em;
   color: rgba(255, 255, 255, 0.8) !important;
 }
 .header-color-primary {
@@ -59,12 +57,7 @@ body {
 .text-secondary {
   color: rgba(255, 255, 255, 0.4) !important;
 }
-.boxed-page .wrapper {
-  background-color: #111837;
-}
-.bg-light-opac {
-  background-color: #131a3b;
-}
+
 .content-color-primary {
   color: #ffffff;
 }
@@ -120,21 +113,6 @@ a.media:hover {
 }
 .chatlist li .media .media-body:before {
   background: #151e42;
-}
-.wizard-1.nav-tabs .nav-item:after {
-  border-right: 20px solid #111837;
-}
-.wizard-1.nav-tabs .nav-item:before {
-  border-right: 20px solid #111837;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link {
-  background-color: #111837;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link.active:after {
-  border-left: 20px solid #111837;
-}
-.wizard-1.nav-tabs .nav-item a.nav-link.active:before {
-  border-left: 20px solid #111837;
 }
 
 .btn_default svg, .btn_default span{
