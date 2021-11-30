@@ -917,3 +917,22 @@ on('body', 'click', '.remove_perm_user_chat', function() {
   }};
   link.send();
 });
+
+on('#ajax', 'click', '#u_chat_settings_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  pk = form.parentElement.getAttribute("data-pk");
+  form_data = new FormData(form);
+  this.disabled = true;
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/chat/user_progs/edit/' + pk + '/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            elem_ = document.createElement('span');
+            elem_.innerHTML = ajax_link.responseText;
+            close_work_fullscreen();
+        }
+      };
+      ajax_link.send(form_data);
+});
