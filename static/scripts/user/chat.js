@@ -61,6 +61,10 @@ on('#ajax', 'click', '.u_chat_info', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/" + pk + "/info/", "worker_fullscreen");
 });
+on('#ajax', 'click', '.user_chat_settings', function() {
+  pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  create_fullscreen("/chat/user_progs/edit/" + pk + "/", "worker_fullscreen");
+});
 
 function create_user_input_card(name, pk) {
   $span = document.createElement("span");
