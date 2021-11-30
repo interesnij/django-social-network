@@ -548,7 +548,7 @@ class UserChatEdit(TemplateView):
 			chat.edit_chat(
 				name=chat.name,
 				description=chat.description,
-				image = request.POST.get("image"),
+				image=request.POST.get("image"), 
 				can_add_members=chat.can_add_members,
 				can_edit_info=chat.can_edit_info,
 				can_fix_item=chat.can_fix_item,
