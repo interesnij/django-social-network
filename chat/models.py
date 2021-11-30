@@ -467,7 +467,7 @@ class Chat(models.Model):
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
-            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=self).exclude(type="DEL")).exists() \
+            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=self).exclude(type="DEL").exists()) \
             or not ChatUsers.objects.filter(user=user, chat=self).exists():
                 member = ChatUsers.create_membership(user=user, chat=self)
                 if member:
