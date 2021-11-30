@@ -15,7 +15,7 @@
           </div>
           <div id="video_holder" class="border pointer">
             {% if chat.image %}
-              <img src="{{ chat.image }}" />
+              <img src="{{ chat.image.url }}" />
             {% else %}
               <h6>Обложка</h6>
               <i>(не обязательно)</i>
@@ -88,7 +88,7 @@
             <div class="can_add_admin_collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
-            <label>Кто меняет дизайн</label>
+            <label>Кто упоминает о беседе</label>
             <select name="can_mention" id="id_can_mention">
               <option value="1" selected="">
                 <span class="border-bottom">
