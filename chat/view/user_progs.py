@@ -545,11 +545,10 @@ class UserChatEdit(TemplateView):
 		self.form = ChatForm(request.POST, instance=self.chat)
 		if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_chat(self.chat.pk):
 			chat = self.form.save(commit=False)
-			if request.POST.get("image"):
-				self.chat.create_image(request.POST.get("image"))
 			chat.edit_chat(
 				name=chat.name,
 				description=chat.description,
+				image = request.POST.get("image"),
 				can_add_members=chat.can_add_members,
 				can_edit_info=chat.can_edit_info,
 				can_fix_item=chat.can_fix_item,
