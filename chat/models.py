@@ -38,11 +38,11 @@ class Chat(models.Model):
 
     """ Полномочия в чате """
     can_add_members = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто приглашает участников")
-    can_edit_info = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто редактирует информацию")
-    can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто закрепляет сообщения")
+    can_edit_info = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто редактирует информацию")
+    can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто закрепляет сообщения")
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
-    can_add_admin = models.PositiveSmallIntegerField(choices=ADMIN_PERM, default=1, verbose_name="Кто назначает админов")
-    can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто меняет дизайн")
+    can_add_admin = models.PositiveSmallIntegerField(choices=ADMIN_PERM, default=3, verbose_name="Кто назначает админов")
+    can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто меняет дизайн")
 
     class Meta:
         verbose_name = "Беседа"

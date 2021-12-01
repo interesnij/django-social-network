@@ -13,7 +13,11 @@
         </figure>
         <div class="media-body">
           <h6>{% if chat.name %}{{ chat.name }}{% else %}Групповой чат{% endif %} &nbsp;</h6>
-          <p class="mb-0 user_chat_settings pointer">Настройки</p>
+          {% if is_can_see_settings %}
+            <p class="mb-0 user_chat_settings pointer">Настройки</p>
+          {% else %}
+            <p class="mb-0">{{ chat.get_type_display }}</p>
+          {% endif %}
         </div>
       </div>
   </div>
@@ -55,16 +59,24 @@
             Администратор
           </span>
           <div class="dropdown-menu">
+            {% if request.user|is_admin:chat.pk %}
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+            {% endif %}
+            {% if is_can_add_admin %}
               <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
+            {% endif %}
           </div>
           {% else %}
           <span class="small drop pointer member_role">
             Участник
           </span>
           <div class="dropdown-menu">
+            {% if request.user|is_admin:chat.pk %}
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+            {% endif %}
+            {% if is_can_add_admin %}
               <span class="dropdown-item add_perm_user_chat">Сделать админом</span>
+            {% endif %}
           </div>
           {% endif %}
           </div>

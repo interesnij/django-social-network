@@ -20,8 +20,12 @@
         </figure>
         <div class="media-body">
           <h6>{% if chat.name %}{{ chat.name }}Групповой чат{% else %}{% endif %} &nbsp;</h6>
-              <p class="mb-0">{{ chat.get_created }}</p>
-          </div>
+          {% if is_can_see_settings %}
+            <p class="mb-0 user_chat_settings pointer">Настройки</p>
+          {% else %}
+            <p class="mb-0">{{ chat.get_type_display }}</p>
+          {% endif %}
+        </div>
       </div>
   </div>
   <div class="card-body">
@@ -40,34 +44,37 @@
               {% endif %}
           </figure>
       </a>
-      <div class="media-body">
+      <div class="media-body" style="overflow:visible">
           <a href="{{ object.get_link }}" target="_blank">
               <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
           </a>
-          {% if object.pk == request.user.pk %}
-          <span class="small dropdown">
-            Создатель беседы
-          </span>
-          <div class="dropdown-menu dropdown-menu-right">
-              <span class="dropdown-item user_exit_in_user_chat">Выйти из беседы</span>
-          </div>
-          {% elif request.user|is_admin:chat.pk %}
-          <span class="small dropdown">
+          <div class="dropdown">
+          {% if object|is_admin:chat.pk %}
+          <span class="small drop pointer member_role">
             Администратор
           </span>
-          <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu">
+            {% if request.user|is_admin:chat.pk %}
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
+            {% endif %}
+            {% if is_can_add_admin %}
               <span class="dropdown-item remove_perm_user_chat">Расжаловать</span>
+            {% endif %}
           </div>
           {% else %}
-          <span class="small dropdown">
+          <span class="small drop pointer member_role">
             Участник
           </span>
-          <div class="dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu">
+            {% if request.user|is_admin:chat.pk %}
               <span class="dropdown-item remove_user_from_chat">Удалить из беседы</span>
-              <span class="dropdown-item add_perm_user_chat">Сделать админом</span> 
+            {% endif %}
+            {% if is_can_add_admin %}
+              <span class="dropdown-item add_perm_user_chat">Сделать админом</span>
+            {% endif %}
           </div>
           {% endif %}
+          </div>
       </div>
   </div>
 </li>
