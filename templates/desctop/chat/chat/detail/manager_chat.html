@@ -38,7 +38,12 @@
     </div>
     <div class="card-body chatview" id="chatcontent" style="height: 510px;">
         <ul class="chatlist app is_chat_paginate">
-
+          {% if page_obj.has_next %}
+          <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
+              <img src="/static/images/preloader.gif">
+          </div>
+          {% endif %}
+          
           {% if object_list %}
           {% for object in object_list reversed %}
             {% include 'desctop/chat/message/message.html' %}
