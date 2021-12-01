@@ -130,18 +130,18 @@ class GoodDetail(TemplateView):
 			else:
 				self.goods = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_community_item(self.good, "good/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_community_item(self.good, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_community_item(self.good, "good/c_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_community_item(self.good, "goods/c_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			if request.user.pk == self.good.creator.pk:
 				self.goods = self.list.get_staff_items()
 			else:
 				self.goods = self.list.get_items()
 			if request.user.is_authenticated:
-				self.template_name = get_template_user_item(self.good, "good/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_user_item(self.good, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
-				self.template_name = get_template_anon_user_item(self.good, "good/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.template_name = get_template_anon_user_item(self.good, "goods/u_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(GoodDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
