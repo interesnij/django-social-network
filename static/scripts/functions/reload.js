@@ -510,6 +510,7 @@ function open_video_fullscreen(url) {
 };
 
 function paginate(block, target) {
+  console.log("paginate");
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
