@@ -446,7 +446,7 @@ class Good(models.Model):
 		return self.save(update_fields=['repost'])
 
 	def likes(self):
-		from common.model.votes import PhotoVotes
+		from common.model.votes import GoodVotes
 		return GoodVotes.objects.filter(parent=self, vote__gt=0)
 
 	def is_draft(self):
