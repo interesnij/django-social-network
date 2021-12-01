@@ -106,7 +106,6 @@ class ChatInfo(ListView):
 		context["chat"] = self.chat
 		context["is_can_see_settings"] = self.is_can_see_settings
 		context["is_user_can_add_admin"] = self.is_can_add_admin
-		context["is_admin"] = self.is_admin
 		return context
 
 	def get_queryset(self):
