@@ -97,11 +97,16 @@ class ChatInfo(ListView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_template_user_chat(self.chat, "chat/chat/info/", "info.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.is_can_see_settings = self.chat.is_user_can_edit_info(request.user)
+		self.is_can_add_admin = self.chat.is_user_can_add_admin(request.user)
 		return super(ChatInfo,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatInfo,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
+		context["is_can_see_settings"] = self.is_can_see_settings
+		context["is_user_can_add_admin"] = self.is_user_can_add_admin
+		context["is_admin"] = self.is_admin
 		return context
 
 	def get_queryset(self):

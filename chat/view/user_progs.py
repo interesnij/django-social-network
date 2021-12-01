@@ -525,10 +525,11 @@ class UserChatEdit(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
-		from common.templates import get_template_admin_chat
+		from common.templates import get_detect_platform_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_admin_chat(self.chat, "chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.chat.is_user_can_edit_info(request.user):
+			self.template_name = get_detect_platform_template(self.chat, "chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -543,7 +544,7 @@ class UserChatEdit(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
-		if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_chat(self.chat.pk):
+		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_edit_info(request.user):
 			chat = self.form.save(commit=False)
 			chat.edit_chat(
 				name=chat.name,
