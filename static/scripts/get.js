@@ -394,10 +394,10 @@ on('#ajax', 'change', '.cool_private_select', function() {
 
   if (this.classList.contains("type_chat")) {
     if (val == '5') {
-      create_fullscreen("/chat/user_progs/load_exclude_users/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/chat/user_progs/load_exclude_users/" + this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
     else if (val == '6') {
-      create_fullscreen("/chat/user_progs/load_include_users/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/chat/user_progs/load_include_users/" + this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
     else {
       this.nextElementSibling.innerHTML = ""
