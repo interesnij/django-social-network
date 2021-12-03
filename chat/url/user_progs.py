@@ -30,4 +30,7 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', UserChatDelete.as_view()),
 	url(r'^restore/(?P<pk>\d+)/$', UserChatRecover.as_view()),
     url(r'^clean_messages/(?P<pk>\d+)/$', UserChatCleanMessages.as_view()),
+
+    url(r'^load_include_users/(?P<pk>\d+)/$', UserChatIncludeUsers.as_view()),
+    url(r'^load_exclude_users/(?P<pk>\d+)/$', UserChatExcludeUsers.as_view()),
 ]
