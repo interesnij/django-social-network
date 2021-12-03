@@ -529,7 +529,7 @@ class UserChatEdit(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if self.chat.is_user_can_edit_info(request.user):
-			self.template_name = get_detect_platform_template(self.chat, "chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_detect_platform_template("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
