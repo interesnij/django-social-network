@@ -25,23 +25,23 @@
 
         <div class="mb-1 form_group_flex">
             <label>Кто приглашает участников</label>
-            <select name="can_add_members" id="id_can_add_members">
-              <option value="1" selected="">
+            <select name="can_add_members" class="can_add_members cool_private_chat_select">
+              <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>
                 <span class="border-bottom">
                   Все участники
                 </span>
               </option>
-              <option value="2">Создатель</option>
-              <option value="3">Создатель и админы</option>
-              <option value="4">Только я</option>
-              <option value="5">Участники кроме</option>
-              <option value="6">Некоторые участники</option>
+              <option value="2" {% if chat.can_add_members == 2 %}selected=""{% endif %}>Создатель</option>
+              <option value="3" {% if chat.can_add_members == 3 %}selected=""{% endif %}>Создатель и админы</option>
+              <option value="4" {% if chat.can_add_members == 4 %}selected=""{% endif %}>Только я</option>
+              <option value="5" {% if chat.can_add_members == 5 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="6" {% if chat.can_add_members == 6 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
-            <div class="can_add_members_collector"></div>
+            <div class="collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто редактирует информацию</label>
-            <select name="can_edit_info" id="id_can_edit_info">
+            <select name="can_edit_info" class="can_edit_info cool_private_chat_select">
               <option value="1">
                 <span class="border-bottom">
                   Все участники
@@ -53,11 +53,11 @@
               <option value="5">Участники кроме</option>
               <option value="6">Некоторые участники</option>
             </select>
-            <div class="can_edit_info_collector"></div>
+            <div class="collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто закрепляет сообщения</label>
-            <select name="can_fix_item" id="id_can_fix_item">
+            <select name="can_fix_item" class="can_fix_item cool_private_chat_select">
               <option value="1">
                 <span class="border-bottom">
                   Все участники
@@ -69,11 +69,11 @@
               <option value="5">Участники кроме</option>
               <option value="6">Некоторые участники</option>
             </select>
-            <div class="can_fix_item_collector"></div>
+            <div class="collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто назначает админов</label>
-            <select name="can_add_admin" id="id_can_add_admin">
+            <select name="can_add_admin" class="can_add_admin cool_private_chat_select">
               <option value="1">
                 <span class="border-bottom">
                   Все участники
@@ -85,11 +85,11 @@
               <option value="5">Участники кроме</option>
               <option value="6">Некоторые участники</option>
             </select>
-            <div class="can_add_admin_collector"></div>
+            <div class="collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто упоминает о беседе</label>
-            <select name="can_mention" id="id_can_mention">
+            <select name="can_mention" class="can_mention cool_private_chat_select">
               <option value="1" selected="">
                 <span class="border-bottom">
                   Все участники
@@ -101,11 +101,11 @@
               <option value="5">Участники кроме</option>
               <option value="6">Некоторые участники</option>
             </select>
-            <div class="can_mention_collector"></div>
+            <div class="collector"></div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто меняет дизайн</label>
-            <select name="can_add_design" id="id_can_add_design">
+            <select name="can_add_design" class="can_add_design cool_private_chat_select">
               <option value="1">
                 <span class="border-bottom">
                   Все участники
@@ -117,7 +117,7 @@
               <option value="5">Участники кроме</option>
               <option value="6">Некоторые участники</option>
             </select>
-            <div class="can_add_design_collector"></div>
+            <div class="collector"></div>
         </div>
 
       </div>

@@ -501,6 +501,21 @@ class Chat(models.Model):
         self.save()
         return self
 
+    def get_add_in_chat_include_users(self):
+        if self.can_add_members != 5:
+            return []
+        from users.models import User
+
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_in_chat=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_add_in_chat_exclude_users(self):
+        if self.can_add_members != 5:
+            return []
+        from users.models import User
+
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_in_chat=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
 
 class ChatUsers(models.Model):
     ACTIVE, EXITED, DELETED = "ACT", "EXI", "DEL"
@@ -517,6 +532,15 @@ class ChatUsers(models.Model):
 
     def __str__(self):
         return self.user.get_full_name()
+
+    class Meta:
+        unique_together = (('user', 'chat'),)
+        indexes = [
+            models.Index(fields=['chat', 'user']),
+            models.Index(fields=['chat', 'user', 'is_administrator'])
+            ]
+        verbose_name = 'участник беседы'
+        verbose_name_plural = 'участники бесед'
 
     @classmethod
     def create_membership(cls, user, chat, is_administrator=False):
@@ -557,14 +581,34 @@ class ChatUsers(models.Model):
         else:
             return ''
 
+class ChatPerm(models.Model):
+    """ связь с таблицей участников беседы. Появляется после ее инициирования, когда участник
+        получит какое либо исключение или включение для какой-либо категории.
+        1. NO_VALUE - неактивное значение.
+        2. YES_ITEM - может соверщать описанные действия
+        3. NO_ITEM - не может соверщать описанные действия
+    """
+    NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
+    ITEM = (
+        (NO_VALUE, 'Не активно'),
+        (YES_ITEM, 'Может иметь действия с элементом'),
+        (NO_ITEM, 'Не может иметь действия с элементом'),
+    )
+
+    user = models.OneToOneField(ChatUsers, null=True, blank=True, on_delete=models.CASCADE, related_name='chat_ie_settings', verbose_name="Друг")
+
+    can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
+    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информацию")
+    can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
+    can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
+    can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
+    can_add_design = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто меняет дизайн")
+
     class Meta:
-        unique_together = (('user', 'chat'),)
-        indexes = [
-            models.Index(fields=['chat', 'user']),
-            models.Index(fields=['chat', 'user', 'is_administrator'])
-            ]
-        verbose_name = 'участник беседы'
-        verbose_name_plural = 'участники бесед'
+        verbose_name = 'Исключения/Включения участника беседы'
+        verbose_name_plural = 'Исключения/Включения участников беседы'
+        index_together = [('id', 'user'),]
+
 
 
 class Message(models.Model):
@@ -1241,32 +1285,3 @@ class MessageFixed(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
-
-
-class ChatPerm(models.Model):
-    """ связь с таблицей участников беседы. Появляется после ее инициирования, когда участник
-        получит какое либо исключение или включение для какой-либо категории.
-        1. NO_VALUE - неактивное значение.
-        2. YES_ITEM - может соверщать описанные действия
-        3. NO_ITEM - не может соверщать описанные действия
-    """
-    NO_VALUE, YES_ITEM, NO_ITEM = 0, 1, 2
-    ITEM = (
-        (NO_VALUE, 'Не активно'),
-        (YES_ITEM, 'Может иметь действия с элементом'),
-        (NO_ITEM, 'Не может иметь действия с элементом'),
-    )
-
-    user = models.OneToOneField(ChatUsers, null=True, blank=True, on_delete=models.CASCADE, related_name='chat_ie_settings', verbose_name="Друг")
-
-    can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
-    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информацию")
-    can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
-    can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
-    can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
-    can_add_design = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто меняет дизайн")
-
-    class Meta:
-        verbose_name = 'Исключения/Включения участника беседы'
-        verbose_name_plural = 'Исключения/Включения участников беседы'
-        index_together = [('id', 'user'),]
