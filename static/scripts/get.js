@@ -392,7 +392,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value;
   action = this.getAttribute("data-action");
 
-  if (this.classList.contains("type_chat") == '') {
+  if (this.classList.contains("type_chat")) {
     if (val == '5') {
       create_fullscreen("/chat/user_progs/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
