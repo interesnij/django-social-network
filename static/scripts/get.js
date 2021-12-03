@@ -394,16 +394,16 @@ on('#ajax', 'change', '.cool_private_select', function() {
 
   if (this.classList.contains("type_chat") == '') {
     if (val == '5') {
-      url = '/chat/user_progs/load_exclude_users/'
+      create_fullscreen("/chat/user_progs/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
     else if (val == '6') {
-      url = '/chat/user_progs/load_include_users/'
+      create_fullscreen("/chat/user_progs/load_include_users/?action=" + action, "worker_fullscreen");
     }
     else {
       this.nextElementSibling.innerHTML = ""
     }
   }
   else {
-    create_fullscreen(url + "?action=" + action, "worker_fullscreen");
+    null
   };
 });
