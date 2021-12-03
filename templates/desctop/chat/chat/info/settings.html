@@ -25,7 +25,7 @@
 
         <div class="mb-1 form_group_flex">
             <label>Кто приглашает участников</label>
-            <select name="can_add_members" class="can_add_members cool_private_chat_select">
+            <select name="can_add_members" class="can_add_members cool_private_select type_chat">
               <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>
                 <span class="border-bottom">
                   Все участники
@@ -41,7 +41,7 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто редактирует информацию</label>
-            <select name="can_edit_info" class="can_edit_info cool_private_chat_select">
+            <select name="can_edit_info" class="can_edit_info cool_private_select type_chat">
               <option value="1" {% if chat.can_edit_info == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_edit_info == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_edit_info == 3 %}selected=""{% endif %}>Создатель и админы</option>
@@ -53,7 +53,7 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто закрепляет сообщения</label>
-            <select name="can_fix_item" class="can_fix_item cool_private_chat_select">
+            <select name="can_fix_item" class="can_fix_item cool_private_select type_chat">
               <option value="1" {% if chat.can_fix_item == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_fix_item == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_fix_item == 3 %}selected=""{% endif %}>Создатель и админы</option>
@@ -65,7 +65,7 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто назначает админов</label>
-            <select name="can_add_admin" class="can_add_admin cool_private_chat_select">
+            <select name="can_add_admin" class="can_add_admin cool_private_select type_chat">
               <option value="1" {% if chat.can_add_admin == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_admin == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_add_admin == 3 %}selected=""{% endif %}>Создатель и админы</option>
@@ -77,7 +77,7 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто упоминает о беседе</label>
-            <select name="can_mention" class="can_mention cool_private_chat_select">
+            <select name="can_mention" class="can_mention cool_private_select type_chat">
               <option value="1" {% if chat.can_mention == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_mention == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_mention == 3 %}selected=""{% endif %}>Создатель и админы</option>
@@ -89,7 +89,7 @@
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто меняет дизайн</label>
-            <select name="can_add_design" class="can_add_design cool_private_chat_select">
+            <select name="can_add_design" class="can_add_design cool_private_select type_chat">
               <option value="1" {% if chat.can_add_design == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_design == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_add_design == 3 %}selected=""{% endif %}>Создатель и админы</option>
