@@ -572,7 +572,7 @@ class UserChatIncludeUsers(ListView):
 		from common.templates import get_detect_platform_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.type = request.GET.get("type")
+		self.type = request.GET.get("action")
 		if self.type == "can_add_members":
 			self.users = self.chat.get_add_in_chat_include_users()
 			self.text = "приглашать участников в чат"

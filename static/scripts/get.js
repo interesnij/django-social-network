@@ -387,3 +387,23 @@ on('#ajax', 'click', '.music_list_comment', function() {
   }
   }
 });
+
+on('#ajax', 'change', '.cool_private_select', function() {
+  val = this.value;
+  action = this.getAttribute("data-action");
+
+  if (this.classList.contains("type_chat") == '') {
+    if (val == '5') {
+      url = '/chat/user_progs/load_exclude_users/'
+    }
+    else if (val == '6') {
+      url = '/chat/user_progs/load_include_users/'
+    }
+    else {
+      this.nextElementSibling.innerHTML = ""
+    }
+  }
+  else {
+    create_fullscreen(url + "?action=" + action, "worker_fullscreen");
+  };
+});
