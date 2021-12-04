@@ -89,7 +89,7 @@ on('#ajax', 'click', '.remove_user_input', function() {
   btn = container.querySelector(".form_btn");
   if (!header.querySelector(".remove_user_input")) {
     header.querySelector(".header_title").style.display = "block";
-  };
+  }; 
 
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
   friend.querySelector(".active_svg").classList.remove("active_svg");
