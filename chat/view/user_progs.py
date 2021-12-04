@@ -478,7 +478,7 @@ class InviteMembersInUserChat(ListView):
 			from common.templates import render_for_platform
 			from chat.models import Chat
 
-			list = request.POST.getlist('chat_users')
+			list = request.POST.getlist('users')
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			info_messages = self.chat.invite_users_in_chat(list, request.user)
 			return render_for_platform(request, 'chat/chat/new_manager_messages.html', {'object_list': info_messages})
