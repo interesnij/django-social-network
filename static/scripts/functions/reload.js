@@ -62,7 +62,7 @@ function close_fullscreen() {
   toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
   _window = container.querySelector(".card_fullscreen");
-  if (!_window.querySelector(".remove_user_input")) {
+  if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
   };
   _window.remove();
@@ -86,7 +86,7 @@ function close_work_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
 
   _window = container.querySelector(".card_fullscreen");
-  if (!_window.querySelector(".remove_user_input")) {
+  if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
   };
   _window.remove();
