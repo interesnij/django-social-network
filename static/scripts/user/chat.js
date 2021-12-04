@@ -936,3 +936,25 @@ on('#ajax', 'click', '#u_chat_settings_btn', function() {
       };
       ajax_link.send(form_data);
 });
+
+
+on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
+  form = this.parentElement.parentElement;
+  this.disabled = true;
+  pk = form.parentElement.getAttribute("chat-pk");
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/chat/user_progs/load_exclude_users/' + pk + '/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            collector = form.querySelector(".collector_active");
+            users = form.querySelector(".card-header");
+            users.querySelector(".header_title").remove();
+            collector.innerHTML = users.innerHTML
+            close_work_fullscreen();
+        }
+      };
+      ajax_link.send(form_data);
+});
