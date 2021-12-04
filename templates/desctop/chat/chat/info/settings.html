@@ -37,7 +37,23 @@
               <option value="5" {% if chat.can_add_members == 5 %}selected=""{% endif %}>Участники кроме</option>
               <option value="6" {% if chat.can_add_members == 6 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
-            <div class="collector"></div>
+            <div class="collector">
+              {% if chat.can_add_members == 5 %}
+                {% for object in get_add_in_chat_exclude_users %}
+                  <a href="{{ object.get_link }}" target="_blank">
+                    {{ object.get_full_name }}
+                  </a> {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              {% endif %}
+
+              {% if chat.can_add_members == 6 %}
+                {% for object in get_add_in_chat_include_users %}
+                  <a href="{{ object.get_link }}" target="_blank">
+                    {{ object.get_full_name }}
+                  </a> {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто редактирует информацию</label>
