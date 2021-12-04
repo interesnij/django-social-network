@@ -108,7 +108,7 @@ on('#ajax', 'click', '.remove_friend_input', function() {
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
-  btn = container.querySelector("#append_friends_to_chat_btn");
+  btn = container.querySelector(".form_btn"); 
   header = container.querySelector(".card-header");
   header_title = header.querySelector(".header_title");
   pk = this.getAttribute("data-pk")
