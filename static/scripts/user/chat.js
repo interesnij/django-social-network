@@ -949,9 +949,9 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
       ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
-            collector = form.querySelector(".collector_active");
+            collector = document.body.querySelector(".collector_active");
             form.querySelector(".header_title").remove();
-            collector.innerHTML = form.querySelector(".card-header")
+            collector.innerHTML = form.querySelector(".card-header").innerHTML;
             close_work_fullscreen();
         }
       };
