@@ -59,6 +59,7 @@ function push_window_stat_list() {
 };
 
 function close_fullscreen() {
+  toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
   _window = container.querySelector(".card_fullscreen");
   if (_window.querySelector(".cool_private_form")) {
@@ -71,7 +72,7 @@ function close_fullscreen() {
     select = collector_active.previousElementSibling;
     select.value = select.getAttribute("data-value");
   };
-  
+
   if (!container.innerHTML) {
     get_document_opacity_1();
     push_window_stat_list()
