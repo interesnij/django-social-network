@@ -71,6 +71,7 @@ function close_fullscreen() {
     collector_active = settings_window.querySelector(".collector_active");
     select = collector_active.previousElementSibling;
     select.value = select.getAttribute("data-value");
+    console.log(select.value);
   };
 
   if (!container.innerHTML) {
