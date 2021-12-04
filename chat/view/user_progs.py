@@ -664,4 +664,5 @@ class UserChatExcludeUsers(ListView):
 		if request.is_ajax():
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			self.chat.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
-		return HttpResponse()
+			return HttpResponse('ok')
+		return HttpResponse('not ok')
