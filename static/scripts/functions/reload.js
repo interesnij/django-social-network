@@ -70,12 +70,7 @@ function close_fullscreen() {
     settings_window = container.querySelector(".card_fullscreen");
     collector_active = settings_window.querySelector(".collector_active");
     select = collector_active.previousElementSibling;
-    options = select.getElementsByTagName('option');
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].value === select.getAttribute("data-value")) {
-        options[i].setAttribute("selected", "")
-      }
-    }
+    select.value = select.getAttribute("data-value");
   };
 
   if (!container.innerHTML) {
