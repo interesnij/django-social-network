@@ -613,7 +613,7 @@ class UserChatIncludeUsers(ListView):
 		if request.is_ajax():
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			self.chat.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
-		return HttpResponse
+		return HttpResponse()
 
 class UserChatExcludeUsers(ListView):
 	template_name, users = None, []
@@ -664,4 +664,4 @@ class UserChatExcludeUsers(ListView):
 		if request.is_ajax():
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			self.chat.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
-		return HttpResponse
+		return HttpResponse()
