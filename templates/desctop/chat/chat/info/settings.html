@@ -41,17 +41,13 @@
             <div class="collector">
               {% if chat.can_add_members == 5 %}
                 {% for object in chat.get_add_in_chat_exclude_users %}
-                  <a href="{{ object.get_link }}" target="_blank">
-                    {{ object.get_full_name }}
-                  </a>{% if not forloop.last %}, {% endif %}
+                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
               {% if chat.can_add_members == 6 %}
                 {% for object in chat.get_add_in_chat_include_users %}
-                  <a href="{{ object.get_link }}" target="_blank">
-                    {{ object.get_full_name }}
-                  </a>{% if not forloop.last %}, {% endif %}
+                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
             </div>
