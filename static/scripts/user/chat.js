@@ -108,7 +108,7 @@ on('#ajax', 'click', '.remove_friend_input', function() {
 
 on('#ajax', 'click', '.add_member_chat_toggle', function() {
   container = this.parentElement.parentElement.parentElement;
-  btn = container.querySelector(".form_btn"); 
+  btn = container.querySelector(".form_btn");
   header = container.querySelector(".card-header");
   header_title = header.querySelector(".header_title");
   pk = this.getAttribute("data-pk")
@@ -133,13 +133,13 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   count = container.querySelectorAll(".active_svg").length;
   console.log(count);
   if (count > 1) {
-    btn_text = "Добавить собеседников" + " (" + count + ")";
+    btn_text = "Выбрать пользователей" + " (" + count + ")";
     btn.disabled = false;
   } else if (count == 1) {
-    btn_text = "Добавить собеседника";
+    btn_text = "Выбрать пользователя";
     btn.disabled = false;
   } else {
-    btn_text = "Выберите собеседников";
+    btn_text = "Выберите пользователей";
     btn.disabled = true;
   };
   btn.innerHTML = btn_text;
