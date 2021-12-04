@@ -54,6 +54,18 @@ class Chat(models.Model):
         return self.creator.get_full_name()
 
     def post_include_users(self, users, type):
+        if type == "can_add_members":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_in_chat=1).update(can_add_in_chat=0)
+        elif type == "can_edit_info":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_info=1).update(can_add_info=0)
+        elif type == "can_fix_item":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_fix=1).update(can_add_fix=0)
+        elif type == "can_add_admin":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_admin=1).update(can_add_admin=0)
+        elif type == "can_mention":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_send_mention=1).update(can_send_mention=0)
+        elif type == "can_add_design":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_design=1).update(can_add_design=0)
         for user_id in users:
             member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.object.filter(user_id=member.pk).exists():
@@ -87,6 +99,18 @@ class Chat(models.Model):
             perm.save()
 
     def post_exclude_users(self, users, type):
+        if type == "can_add_members":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_in_chat=2).update(can_add_in_chat=0)
+        elif type == "can_edit_info":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_info=2).update(can_add_info=0)
+        elif type == "can_fix_item":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_fix=2).update(can_add_fix=0)
+        elif type == "can_add_admin":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_admin=2).update(can_add_admin=0)
+        elif type == "can_mention":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_send_mention=2).update(can_send_mention=0)
+        elif type == "can_add_design":
+            ChatPerm.object.filter(user__chat_id=self.pk, can_add_design=2).update(can_add_design=0)
         for user_id in users:
             member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.objects.filter(user_id=member.pk).exists():
