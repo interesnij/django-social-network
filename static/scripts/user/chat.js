@@ -86,7 +86,7 @@ on('#ajax', 'click', '.remove_user_input', function() {
   header = parent.parentElement;
   parent.remove();
   container = header.parentElement;
-  if (!header.querySelector(".remove_friend_input")) {
+  if (!header.querySelector(".remove_user_input")) {
     header.querySelector(".header_title").style.display = "block";
   };
 
