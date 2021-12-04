@@ -6,7 +6,9 @@
         {% if users %}
           {% for object in users %}
             <span data-pk="{{ object.pk }}" class="btn btn-sm custom_color" style="margin: 2px;">
-              {{ object.get_full_name }}
+              <a href="{{ object.get_link }}" target="_blank">
+                {{ object.get_full_name }}
+              </a>
              <span class="remove_user_input pointer">x<span></span></span>
              <input class="user_pk" type="hidden" name="users" value="{{ object.pk }}">
             </span>
@@ -18,7 +20,7 @@
       <div class="card-body">
         <div class="is_block_paginate">
           {% for object in object_list %}
-          <div class="media pointer add_member_chat_toggle border-bottom" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+          <div class="media pointer add_member_chat_toggle border-bottom" data-link="{{ object.get_link }}" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <figure style="width:30px;">
               {% if object.s_avatar %}
                 <img src="{{ object.s_avatar.url }}" style="width:40px;border-radius:40px;" alt="image">
