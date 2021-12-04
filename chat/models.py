@@ -69,9 +69,9 @@ class Chat(models.Model):
             return True
         elif self.can_add_members == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
-        elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 1, 0):
+        elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 1, 0):
             return True
-        elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 1, 1):
+        elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 1, 1):
             return True
         return False
     def is_user_can_edit_info(self, user):
@@ -81,9 +81,9 @@ class Chat(models.Model):
             return True
         elif self.can_edit_info == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
-        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 2, 0):
+        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 2, 0):
             return True
-        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 2, 1):
+        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 2, 1):
             return True
         return False
     def is_user_can_fix_item(self, user):
@@ -93,9 +93,9 @@ class Chat(models.Model):
             return True
         elif self.can_fix_item == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
-        elif self.can_fix_item == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 3, 0):
+        elif self.can_fix_item == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 3, 0):
             return True
-        elif self.can_fix_item == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 3, 1):
+        elif self.can_fix_item == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 3, 1):
             return True
         return False
     def is_user_can_mention(self, user):
@@ -105,9 +105,9 @@ class Chat(models.Model):
             return True
         elif self.can_mention == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
-        elif self.can_mention == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 4, 0):
+        elif self.can_mention == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 4, 0):
             return True
-        elif self.can_mention == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 4, 1):
+        elif self.can_mention == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 4, 1):
             return True
         return False
     def is_user_can_add_admin(self, user):
@@ -125,9 +125,9 @@ class Chat(models.Model):
             return True
         elif self.can_add_design == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
             return True
-        elif self.can_add_design == self.MEMBERS_BUT and self.get_special_perm_for_user(self.pk, user.pk, 5, 0):
+        elif self.can_add_design == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 5, 0):
             return True
-        elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(self.pk, user.pk, 5, 1):
+        elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 5, 1):
             return True
 
 
