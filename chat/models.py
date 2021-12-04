@@ -586,39 +586,39 @@ class Chat(models.Model):
                 perm = ChatPerm.object.get(user_id=member.pk)
             else:
                 perm = ChatPerm.object.create(user_id=member.pk)
-                if type == "can_add_members":
-                    perm.can_add_in_chat = 1
-                elif type == "can_edit_info":
-                    perm.can_add_info = 1
-                elif type == "can_fix_item":
-                    perm.can_add_fix = 1
-                elif type == "can_add_admin":
-                    perm.can_add_admin = 1
-                elif type == "can_mention":
-                    perm.can_send_mention = 1
-                elif type == "can_add_design":
-                    perm.can_add_design = 1
+            if type == "can_add_members":
+                perm.can_add_in_chat = 1
+            elif type == "can_edit_info":
+                perm.can_add_info = 1
+            elif type == "can_fix_item":
+                perm.can_add_fix = 1
+            elif type == "can_add_admin":
+                perm.can_add_admin = 1
+            elif type == "can_mention":
+                perm.can_send_mention = 1
+            elif type == "can_add_design":
+                perm.can_add_design = 1
             perm.save()
 
     def post_exclude_users(self, users, type):
         for user_id in users:
             member = self.chat_relation.filter(user_id=user_id)
-            if ChatPerm.object.filter(user_id=member.pk).exists():
-                perm = ChatPerm.object.get(user_id=member.pk)
+            if ChatPerm.objects.filter(user_id=member.pk).exists():
+                perm = ChatPerm.objects.get(user_id=member.pk)
             else:
-                perm = ChatPerm.object.create(user_id=member.pk)
-                if type == "can_add_members":
-                    perm.can_add_in_chat = 2
-                elif type == "can_edit_info":
-                    perm.can_add_info = 2
-                elif type == "can_fix_item":
-                    perm.can_add_fix = 2
-                elif type == "can_add_admin":
-                    perm.can_add_admin = 2
-                elif type == "can_mention":
-                    perm.can_send_mention = 2
-                elif type == "can_add_design":
-                    perm.can_add_design = 2
+                perm = ChatPerm.objects.create(user_id=member.pk)
+            if type == "can_add_members":
+                perm.can_add_in_chat = 2
+            elif type == "can_edit_info":
+                perm.can_add_info = 2
+            elif type == "can_fix_item":
+                perm.can_add_fix = 2
+            elif type == "can_add_admin":
+                perm.can_add_admin = 2
+            elif type == "can_mention":
+                perm.can_send_mention = 2
+            elif type == "can_add_design":
+                perm.can_add_design = 2
             perm.save()
 
 class ChatUsers(models.Model):
