@@ -63,7 +63,8 @@ function close_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
   _window = container.querySelector(".card_fullscreen");
   if (_window.querySelector(".cool_private_form")) {
-    toggle_active_select = true
+    toggle_active_select = true;
+    console.log(".cool_private_form");
   };
   _window.remove();
   if (toggle_active_select) {
