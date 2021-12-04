@@ -4,7 +4,7 @@
       <input type="hidden" name="type" value="{{ type }}">
       <div class="card-header" style="min-height: 100px;">
         {% if users %}
-        <span class="header_title" style="display:none">Выберите тех, кто может {{ text }}<span>
+        <span class="header_title" style="display:none">Выберите тех, кто может {{ text }}</span>
           {% for object in users %}
             <span data-pk="{{ object.pk }}" class="btn btn-sm custom_color" style="margin: 2px;">
               <a href="{{ object.get_link }}" target="_blank">
@@ -15,7 +15,7 @@
             </span>
           {% endfor %}
         {% else %}
-          <span class="header_title">Выберите тех, кому нельзя {{ text }}<span>
+          <span class="header_title">Выберите тех, кому нельзя {{ text }}</span>
         {% endif %}
       </div>
       <div class="card-body">
