@@ -33,7 +33,7 @@
                 {{ object.get_full_name }}
               </h6>
             </div>
-            <span class="item_attach_circle friends_chat_load_several" tooltip="Выбрать друга" flow="up">
+            <span class="item_attach_circle friends_chat_load_several {% if object in users %}active_svg{% endif %}" tooltip="Выбрать друга" flow="up">
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 24H0V0h24v24z" fill="none"></path><circle cx="12" cy="12" r="8"></circle>
               </svg>
