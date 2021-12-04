@@ -546,7 +546,7 @@ class Chat(models.Model):
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_send_mention=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_add_in_chat_exclude_users(self):
+    def get_can_mention_exclude_users(self):
         if self.can_mention != 5:
             return []
         from users.models import User
