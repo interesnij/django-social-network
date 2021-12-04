@@ -581,7 +581,7 @@ class Chat(models.Model):
 
     def post_include_users(self, users, type):
         for user_id in users:
-            member = self.chat_relation.filter(user_id=user_id)
+            member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.object.filter(user_id=member.pk).exists():
                 perm = ChatPerm.object.get(user_id=member.pk)
             else:
@@ -602,7 +602,7 @@ class Chat(models.Model):
 
     def post_exclude_users(self, users, type):
         for user_id in users:
-            member = self.chat_relation.filter(user_id=user_id)
+            member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.objects.filter(user_id=member.pk).exists():
                 perm = ChatPerm.objects.get(user_id=member.pk)
             else:
