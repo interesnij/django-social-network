@@ -502,79 +502,55 @@ class Chat(models.Model):
         return self
 
     def get_add_in_chat_include_users(self):
-        if self.can_add_members != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_in_chat=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_add_in_chat_exclude_users(self):
-        if self.can_add_members != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_in_chat=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
     def get_can_edit_info_include_users(self):
-        if self.can_edit_info != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_info=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_can_edit_info_exclude_users(self):
-        if self.can_edit_info != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_info=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
     def get_can_fix_item_include_users(self):
-        if self.can_fix_item != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_fix=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_can_fix_item_exclude_users(self):
-        if self.can_fix_item != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_fix=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
     def get_can_mention_include_users(self):
-        if self.can_mention != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_send_mention=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_can_mention_exclude_users(self):
-        if self.can_mention != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_send_mention=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
     def get_can_add_admin_include_users(self):
-        if self.can_add_admin != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_admin=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_can_add_admin_exclude_users(self):
-        if self.can_add_admin != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_admin=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
     def get_can_add_design_include_users(self):
-        if self.can_add_design != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_design=1).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
     def get_can_add_design_exclude_users(self):
-        if self.can_add_design != 5:
-            return []
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_design=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
