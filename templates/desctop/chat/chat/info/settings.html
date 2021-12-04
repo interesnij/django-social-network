@@ -23,9 +23,9 @@
           </div>
         </div>
         {{ chat.can_add_members }}
-        <div class="mb-1 form_group_flex">
-            <label>Кто приглашает участников</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто приглашает участников</label>
+            <span class="col-md-6">
             <select name="can_add_members" data-action="can_add_members" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>
                 <span class="border-bottom">
@@ -43,7 +43,7 @@
                 {% for object in chat.get_add_in_chat_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">
                     {{ object.get_full_name }}
-                  </a> {% if not forloop.last %}, {% endif %}
+                  </a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
@@ -51,15 +51,15 @@
                 {% for object in chat.get_add_in_chat_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">
                     {{ object.get_full_name }}
-                  </a> {% if not forloop.last %}, {% endif %}
+                  </a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
             </div>
             </span>
         </div>
-        <div class="mb-1 form_group_flex">
-            <label>Кто редактирует информацию</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто редактирует информацию</label>
+            <span class="col-md-6">
             <select name="can_edit_info" data-action="can_edit_info" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_edit_info == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_edit_info == 2 %}selected=""{% endif %}>Создатель</option>
@@ -71,9 +71,9 @@
             <div class="collector"></div>
             </span>
         </div>
-        <div class="mb-1 form_group_flex">
-            <label>Кто закрепляет сообщения</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто закрепляет сообщения</label>
+            <span class="col-md-6">
             <select name="can_fix_item" data-action="can_fix_item" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_fix_item == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_fix_item == 2 %}selected=""{% endif %}>Создатель</option>
@@ -85,9 +85,9 @@
             <div class="collector"></div>
             </span>
         </div>
-        <div class="mb-1 form_group_flex">
-            <label>Кто назначает админов</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто назначает админов</label>
+            <span class="col-md-6">
             <select name="can_add_admin" data-action="can_add_admin" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_add_admin == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_admin == 2 %}selected=""{% endif %}>Создатель</option>
@@ -99,9 +99,9 @@
             <div class="collector"></div>
             </span>
         </div>
-        <div class="mb-1 form_group_flex">
-            <label>Кто упоминает о беседе</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто упоминает о беседе</label>
+            <span class="col-md-6">
             <select name="can_mention" data-action="can_mention" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_mention == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_mention == 2 %}selected=""{% endif %}>Создатель</option>
@@ -113,9 +113,9 @@
             <div class="collector"></div>
             </span>
         </div>
-        <div class="mb-1 form_group_flex">
-            <label>Кто меняет дизайн</label>
-            <span>
+        <div class="row mb-1 form_group_flex">
+            <label class="col-md-6">Кто меняет дизайн</label>
+            <span class="col-md-6">
             <select name="can_add_design" data-action="can_add_design" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_add_design == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_design == 2 %}selected=""{% endif %}>Создатель</option>
