@@ -25,7 +25,6 @@
 
         <div class="mb-1 form_group_flex">
             <label>Кто приглашает участников</label>
-            <div>
             <select name="can_add_members" data-action="can_add_members" class="cool_private_select type_chat">
               <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>
                 <span class="border-bottom">
@@ -39,7 +38,6 @@
               <option value="6" {% if chat.can_add_members == 6 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector"></div>
-            </div>
         </div>
         <div class="mb-1 form_group_flex">
             <label>Кто редактирует информацию</label>
