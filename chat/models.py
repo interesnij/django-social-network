@@ -588,28 +588,28 @@ class Chat(models.Model):
                 perm = ChatPerm.object.create(user_id=member.pk)
             if type == "can_add_members":
                 perm.can_add_in_chat = 1
-                self.can_add_members = 5
-                self.save(update_fields="can_add_members")
+                self.can_add_members = 6
+                self.save(update_fields=["can_add_members"])
             elif type == "can_edit_info":
                 perm.can_add_info = 1
-                self.can_edit_info = 5
-                self.save(update_fields="can_edit_info")
+                self.can_edit_info = 6
+                self.save(update_fields=["can_edit_info"])
             elif type == "can_fix_item":
                 perm.can_add_fix = 1
-                self.can_fix_item = 5
-                self.save(update_fields="can_fix_item")
+                self.can_fix_item = 6
+                self.save(update_fields=["can_fix_item"])
             elif type == "can_add_admin":
                 perm.can_add_admin = 1
-                self.can_add_admin = 5
-                self.save(update_fields="can_add_admin")
+                self.can_add_admin = 6
+                self.save(update_fields=["can_add_admin"])
             elif type == "can_mention":
                 perm.can_send_mention = 1
-                self.can_mention = 5
-                self.save(update_fields="can_mention")
+                self.can_mention = 6
+                self.save(update_fields=["can_mention"])
             elif type == "can_add_design":
                 perm.can_add_design = 1
-                self.can_add_design = 5
-                self.save(update_fields="can_add_design")
+                self.can_add_design = 6
+                self.save(update_fields=["can_add_design"])
             perm.save()
 
     def post_exclude_users(self, users, type):
@@ -621,28 +621,28 @@ class Chat(models.Model):
                 perm = ChatPerm.objects.create(user_id=member.pk)
             if type == "can_add_members":
                 perm.can_add_in_chat = 2
-                self.can_add_members = 4
+                self.can_add_members = 5
                 self.save(update_fields=["can_add_members"])
             elif type == "can_edit_info":
                 perm.can_add_info = 2
-                self.can_edit_info = 4
-                self.save(update_fields="can_edit_info")
+                self.can_edit_info = 5
+                self.save(update_fields=["can_edit_info"])
             elif type == "can_fix_item":
                 perm.can_add_fix = 2
-                self.can_add_fix = 4
-                self.save(update_fields="can_add_fix")
+                self.can_add_fix = 5
+                self.save(update_fields=["can_add_fix"])
             elif type == "can_add_admin":
                 perm.can_add_admin = 2
-                self.can_add_admin = 4
-                self.save(update_fields="can_add_admin")
+                self.can_add_admin = 5
+                self.save(update_fields=["can_add_admin"])
             elif type == "can_mention":
                 perm.can_send_mention = 2
-                self.can_mention = 4
-                self.save(update_fields="can_mention")
+                self.can_mention = 5
+                self.save(update_fields=["can_mention"])
             elif type == "can_add_design":
                 perm.can_add_design = 2
-                self.can_add_design = 4
-                self.save(update_fields="can_add_design")
+                self.can_add_design = 5
+                self.save(update_fields=["can_add_design"])
             perm.save()
 
 class ChatUsers(models.Model):
