@@ -959,6 +959,7 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
               final_list += users_list[i].querySelector("a").innerHTML;
             };
             collector.innerHTML = final_list;
+            form.classList.remove("cool_private_form");
             close_work_fullscreen();
         }
       };
