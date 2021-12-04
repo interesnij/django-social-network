@@ -62,9 +62,8 @@ function close_fullscreen() {
   toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
   _window = container.querySelector(".card_fullscreen");
-  if (_window.querySelector(".cool_private_form")) {
+  if (!_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
-    console.log(".cool_private_form");
   };
   _window.remove();
   if (toggle_active_select) {
@@ -72,7 +71,6 @@ function close_fullscreen() {
     collector_active = settings_window.querySelector(".collector_active");
     select = collector_active.previousElementSibling;
     select.value = select.getAttribute("data-value");
-    console.log(select.value);
   };
 
   if (!container.innerHTML) {
@@ -88,8 +86,8 @@ function close_work_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
 
   _window = container.querySelector(".card_fullscreen");
-  if (_window.querySelector(".cool_private_form")) {
-    toggle_active_select = true
+  if (!_window.querySelector(".remove_user_input")) {
+    toggle_active_select = true;
   };
   _window.remove();
   if (toggle_active_select) {
