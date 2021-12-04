@@ -950,8 +950,8 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             collector = form.querySelector(".collector_active");
+            form.querySelector(".header_title").remove();
             users = form.querySelector(".card-header");
-            users.querySelector(".header_title").remove();
             collector.innerHTML = users.innerHTML
             close_work_fullscreen();
         }
