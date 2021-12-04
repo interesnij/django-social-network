@@ -622,7 +622,7 @@ class Chat(models.Model):
             if type == "can_add_members":
                 perm.can_add_in_chat = 2
                 self.can_add_members = 4
-                self.save(update_fields="can_add_members")
+                self.save(update_fields=["can_add_members"])
             elif type == "can_edit_info":
                 perm.can_add_info = 2
                 self.can_edit_info = 4
