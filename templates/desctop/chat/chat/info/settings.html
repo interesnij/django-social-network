@@ -1,6 +1,6 @@
  <form class="is_stat_list" data-pk="{{ chat.pk }}" data-type="change_user_chat">
    {% csrf_token %}
-    <div class="card"> 
+    <div class="card">
       <div class="card-header border-bottom">
         <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
       </div>
@@ -27,25 +27,20 @@
             <label class="col-md-6">Кто приглашает участников</label>
             <span class="col-md-6">
             <select name="can_add_members" data-value="{{ chat.can_add_members }}" data-action="can_add_members" class="cool_private_select type_chat">
-              <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>
-                <span class="border-bottom">
-                  Все участники
-                </span>
-              </option>
+              <option value="1" {% if chat.can_add_members == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_members == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_add_members == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_add_members == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_add_members == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_add_members == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_add_members == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_add_members == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_add_members == 5 %}
+              {% if chat.can_add_members == 4 %}
                 {% for object in chat.get_add_in_chat_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_add_members == 6 %}
+              {% if chat.can_add_members == 5 %}
                 {% for object in chat.get_add_in_chat_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -60,18 +55,17 @@
               <option value="1" {% if chat.can_edit_info == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_edit_info == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_edit_info == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_edit_info == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_edit_info == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_edit_info == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_edit_info == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_edit_info == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_add_members == 5 %}
+              {% if chat.can_add_members == 4 %}
                 {% for object in chat.get_can_edit_info_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_add_members == 6 %}
+              {% if chat.can_add_members == 5 %}
                 {% for object in chat.get_can_edit_info_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -86,18 +80,17 @@
               <option value="1" {% if chat.can_fix_item == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_fix_item == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_fix_item == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_fix_item == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_fix_item == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_fix_item == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_fix_item == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_fix_item == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_fix_item_members == 5 %}
+              {% if chat.can_fix_item_members == 4 %}
                 {% for object in chat.get_can_fix_item_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_fix_item_members == 6 %}
+              {% if chat.can_fix_item_members == 5 %}
                 {% for object in chat.get_can_fix_item_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -112,18 +105,17 @@
               <option value="1" {% if chat.can_add_admin == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_admin == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_add_admin == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_add_admin == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_add_admin == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_add_admin == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_add_admin == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_add_admin == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_add_admin == 5 %}
+              {% if chat.can_add_admin == 4 %}
                 {% for object in chat.get_can_add_admin_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_add_admin == 6 %}
+              {% if chat.can_add_admin == 5 %}
                 {% for object in chat.get_can_add_admin_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -138,18 +130,17 @@
               <option value="1" {% if chat.can_mention == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_mention == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_mention == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_mention == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_mention == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_mention == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_mention == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_mention == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_mention == 5 %}
+              {% if chat.can_mention == 4 %}
                 {% for object in chat.get_can_mention_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_mention == 6 %}
+              {% if chat.can_mention == 5 %}
                 {% for object in chat.get_can_mention_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -164,18 +155,17 @@
               <option value="1" {% if chat.can_add_design == 1 %}selected=""{% endif %}>Все участники</option>
               <option value="2" {% if chat.can_add_design == 2 %}selected=""{% endif %}>Создатель</option>
               <option value="3" {% if chat.can_add_design == 3 %}selected=""{% endif %}>Создатель и админы</option>
-              <option value="4" {% if chat.can_add_design == 4 %}selected=""{% endif %}>Только я</option>
-              <option value="5" {% if chat.can_add_design == 5 %}selected=""{% endif %}>Участники кроме</option>
-              <option value="6" {% if chat.can_add_design == 6 %}selected=""{% endif %}>Некоторые участники</option>
+              <option value="4" {% if chat.can_add_design == 4 %}selected=""{% endif %}>Участники кроме</option>
+              <option value="5" {% if chat.can_add_design == 5 %}selected=""{% endif %}>Некоторые участники</option>
             </select>
             <div class="collector">
-              {% if chat.can_add_design == 5 %}
+              {% if chat.can_add_design == 4 %}
                 {% for object in chat.get_can_add_design_exclude_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
               {% endif %}
 
-              {% if chat.can_add_design == 6 %}
+              {% if chat.can_add_design == 5 %}
                 {% for object in chat.get_can_add_design_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
