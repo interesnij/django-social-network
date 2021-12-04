@@ -70,7 +70,7 @@ function create_user_input_card(name, pk, link) {
   $span = document.createElement("span");
   $span.setAttribute("data-pk", pk);
   $span.classList.add("btn","btn-sm","custom_color");
-  $span.innerHTML = "<a href='" link + "' target='_blank'"+ name + "</a><span class='remove_user_input pointer'>x<span>";
+  $span.innerHTML = "<a href='" + link + "' target='_blank'" + name + "</a><span class='remove_user_input pointer'>x<span>";
   $span.style.margin = "2px";
   $input = document.createElement("input");
   $input.classList.add("user_pk");
