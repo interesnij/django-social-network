@@ -70,8 +70,21 @@ function close_fullscreen() {
   window.history.replaceState(null, null, window.location.pathname);
 };
 function close_work_fullscreen() {
+  toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
-  container.querySelector(".card_fullscreen").remove();
+
+  _window = container.querySelector(".card_fullscreen");
+  if (_window.querySelector(".cool_private_form")) {
+    toggle_active_select = true
+  };
+  _window.remove();
+  if (toggle_active_select) {
+    settings_window = container.querySelector(".card_fullscreen");
+    collector_active = settings_window.querySelector(".collector_active");
+    select = collector_active.previousElementSibling;
+    select.value = select.getAttribute("data-value");
+  };
+
   if (!container.innerHTML) {
     get_document_opacity_1();
   };
