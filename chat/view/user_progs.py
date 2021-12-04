@@ -615,13 +615,32 @@ class UserChatIncludeUsers(ListView):
 		return HttpResponse
 
 class UserChatExcludeUsers(ListView):
-	template_name, users = None, None
+	template_name, users = None, []
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from common.templates import get_detect_platform_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_add_members":
+			self.users = self.chat.get_add_in_chat_exclude_users()
+			self.text = "приглашать участников в чат"
+		elif self.type == "can_edit_info":
+			self.users = self.chat.get_can_edit_info_exclude_users()
+			self.text = "менять настройки чата"
+		elif self.type == "can_fix_item":
+			self.users = self.chat.get_can_fix_item_exclude_users()
+			self.text = "закреплять сообщения в чате"
+		elif self.type == "can_add_admin":
+			self.users = self.chat.get_can_add_admin_exclude_users()
+			self.text = "добавлять/удалять админов чата"
+		elif self.type == "can_mention":
+			self.users = self.chat.get_can_mention_exclude_users()
+			self.text = "Упоминать чат в соцсети"
+		elif self.type == "can_add_design":
+			self.users = self.chat.get_can_add_design_exclude_users()
+			self.text = "Менять дизайн чата"
 		if self.chat.is_user_can_edit_info(request.user):
 			self.template_name = get_detect_platform_template("chat/chat/info/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatExcludeUsers,self).get(request,*args,**kwargs)
@@ -629,7 +648,18 @@ class UserChatExcludeUsers(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(UserChatExcludeUsers,self).get_context_data(**kwargs)
 		context["users"] = self.users
+		context["chat"] = self.chat
+		context["text"] = self.text
+		context["type"] = self.type
 		return context
 
 	def get_queryset(self):
 		return self.chat.get_members()
+
+	def post(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse
+
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.chat.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
+		return HttpResponse
