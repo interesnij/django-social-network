@@ -145,7 +145,7 @@ class Chat(models.Model):
         Потому если ее нет, то ложь. Если есть и в поле chat_ie_settings (для типа 1)
         стоит значение 1 (может совершать действия с элементом), то правда.
         """
-        member = ChatUsers.objects.get(user_id=user_id)
+        member = ChatUsers.objects.get(caht_pk=self.pk, user_id=user_id)
         if value == 0:
             try:
                 ie = member.chat_ie_settings
