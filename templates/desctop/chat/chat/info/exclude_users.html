@@ -7,8 +7,8 @@
           {% for object in users %}
             <span data-pk="{{ object.pk }}" class="btn btn-sm custom_color" style="margin: 2px;">
               {{ object.get_full_name }}
-             <span class="remove_friend_input pointer">x<span></span></span>
-             <input class="friend_pk" type="hidden" name="users" value="{{ object.pk }}">
+             <span class="remove_user_input pointer">x<span></span></span>
+             <input class="user_pk" type="hidden" name="users" value="{{ object.pk }}">
             </span>
           {% endfor %}
         {% else %}
