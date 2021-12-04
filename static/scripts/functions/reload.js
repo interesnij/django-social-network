@@ -72,7 +72,9 @@ function close_fullscreen() {
     select = collector_active.previousElementSibling;
     options = select.getElementsByTagName('option');
     for (let i = 0; i < options.length; i++) {
-      if (options[i].value === select.getAttribute("data-value")) options[i].selected = true;
+      if (options[i].value === select.getAttribute("data-value")) {
+        options[i].setAttribute("selected", "")
+      }
     }
   };
 
