@@ -391,6 +391,11 @@ on('#ajax', 'click', '.music_list_comment', function() {
 on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value;
   action = this.getAttribute("data-action");
+  collectors = this.parentElement.parentElement.querySelectorAll(".collector");
+  for (var i = 0; i < collectors.length; i++){
+    collectors[i].classList.remove("collector_active")
+  };
+  this.nextElementSibling.classList.add("collector_active");
 
   if (this.classList.contains("type_chat")) {
     if (val == '5') {
