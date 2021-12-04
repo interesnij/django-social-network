@@ -70,18 +70,18 @@ function create_user_input_card(name, pk) {
   $span = document.createElement("span");
   $span.setAttribute("data-pk", pk);
   $span.classList.add("btn","btn-sm","custom_color");
-  $span.innerHTML = name + " <span class='remove_friend_input pointer'>x<span>";
+  $span.innerHTML = name + " <span class='remove_user_input pointer'>x<span>";
   $span.style.margin = "2px";
   $input = document.createElement("input");
-  $input.classList.add("friend_pk");
+  $input.classList.add("user_pk");
   $input.setAttribute("type", "hidden");
-  $input.setAttribute("name", "chat_users");
+  $input.setAttribute("name", "users");
   $input.value = pk;
   $span.append($input);
   return $span
 };
 
-on('#ajax', 'click', '.remove_friend_input', function() {
+on('#ajax', 'click', '.remove_user_input', function() {
   parent = this.parentElement;
   header = parent.parentElement;
   parent.remove();
@@ -94,13 +94,13 @@ on('#ajax', 'click', '.remove_friend_input', function() {
   friend.querySelector(".active_svg").classList.remove("active_svg");
   count = container.querySelectorAll(".active_svg").length;
   if (count > 1) {
-    btn_text = "Добавить собеседников" + " (" + count + ")";
+    btn_text = "Выбрать пользователей" + " (" + count + ")";
     btn.disabled = false;
   } else if (count == 1) {
-    btn_text = "Добавить собеседника";
+    btn_text = "Выбрать пользователя";
     btn.disabled = false;
   } else {
-    btn_text = "Выберите собеседников";
+    btn_text = "Выбрать пользователей";
     btn.disabled = true;
   };
   btn.innerHTML = btn_text;
