@@ -955,7 +955,7 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
             users_list = users_block.querySelectorAll(".custom_color");
             final_list = "";
             for (var i = 0; i < users_list.length; i++){
-              final_list += users_list[i].querySelector("a");
+              final_list += users_list[i].querySelector("a").innerHTML;
             };
             collector.innerHTML = final_list;
             close_work_fullscreen();
