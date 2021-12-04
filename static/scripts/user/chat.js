@@ -951,8 +951,7 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
         if ( this.readyState == 4 && this.status == 200 ) {
             collector = form.querySelector(".collector_active");
             form.querySelector(".header_title").remove();
-            users = form.querySelector(".card-header");
-            collector.innerHTML = users.innerHTML
+            collector.innerHTML = form.querySelector(".card-header")
             close_work_fullscreen();
         }
       };
