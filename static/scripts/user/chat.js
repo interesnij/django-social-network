@@ -66,11 +66,11 @@ on('#ajax', 'click', '.user_chat_settings', function() {
   create_fullscreen("/chat/user_progs/edit/" + pk + "/", "worker_fullscreen");
 });
 
-function create_user_input_card(name, pk) {
+function create_user_input_card(name, pk, link) {
   $span = document.createElement("span");
   $span.setAttribute("data-pk", pk);
   $span.classList.add("btn","btn-sm","custom_color");
-  $span.innerHTML = name + " <span class='remove_user_input pointer'>x<span>";
+  $span.innerHTML = "<a href='" link + "' target='_blank'"+ name + "</a><span class='remove_user_input pointer'>x<span>";
   $span.style.margin = "2px";
   $input = document.createElement("input");
   $input.classList.add("user_pk");
@@ -111,7 +111,8 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   btn = container.querySelector(".form_btn");
   header = container.querySelector(".card-header");
   header_title = header.querySelector(".header_title");
-  pk = this.getAttribute("data-pk")
+  pk = this.getAttribute("data-pk");
+  link = this.getAttribute("data-link");
 
   if (this.querySelector(".active_svg")) {
     input_svg = this.querySelector(".active_svg");
@@ -119,7 +120,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
     input_svg.setAttribute("tooltip", "Выбрать друга")
     friend_input = header.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     friend_input.remove();
-    if (!header.querySelector(".remove_friend_input")) {
+    if (!header.querySelector(".remove_user_input")) {
       header.querySelector(".header_title").style.display = "block";
     }
   } else {
@@ -127,7 +128,7 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
     input_svg.classList.add("active_svg");
     input_svg.setAttribute("tooltip", "Отменить")
     header_title.style.display = "none";
-    header.append(create_user_input_card(this.querySelector("h6").innerHTML, pk))
+    header.append(create_user_input_card(this.querySelector("h6").innerHTML, pk, link))
   };
 
   count = container.querySelectorAll(".active_svg").length;
@@ -950,7 +951,13 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
             collector = document.body.querySelector(".collector_active");
-            form.querySelector(".header_title").remove();
+            users_block = form.querySelector(".card-header");
+            users_list = users_block.querySelectorAll(".custom_color");
+            final_list = "";
+            for (var i = 0; i < users_list.length; i++){
+              final_list += '<span class="btn btn-sm custom_color" style="margin: 2px;">' + users_list[i].querySelector(".custom_color").innerHTML
+               <span class="remove_user_input pointer">x<span></span></span></span>'
+            };
             collector.innerHTML = form.querySelector(".card-header").innerHTML;
             close_work_fullscreen();
         }
