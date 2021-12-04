@@ -955,10 +955,9 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
             users_list = users_block.querySelectorAll(".custom_color");
             final_list = "";
             for (var i = 0; i < users_list.length; i++){
-              final_list += '<span class="btn btn-sm custom_color" style="margin: 2px;">' + users_list[i].querySelector(".custom_color").innerHTML
-               <span class="remove_user_input pointer">x<span></span></span></span>'
+              final_list += users_list[i].querySelector("a");
             };
-            collector.innerHTML = form.querySelector(".card-header").innerHTML;
+            collector.innerHTML = final_list;
             close_work_fullscreen();
         }
       };
