@@ -932,6 +932,7 @@ on('#ajax', 'click', '#u_chat_settings_btn', function() {
         if ( this.readyState == 4 && this.status == 200 ) {
             elem_ = document.createElement('span');
             elem_.innerHTML = ajax_link.responseText;
+            form.classList.remove("cool_private_form");
             close_work_fullscreen();
         }
       };
