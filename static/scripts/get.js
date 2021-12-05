@@ -388,6 +388,20 @@ on('#ajax', 'click', '.music_list_comment', function() {
   }
 });
 
+function private_users_send(form_post, url) {
+  form = new FormData(form_post);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    form_post.querySelector(".collector_active").innerHTML = "";
+    toast_success("Настройки изменены")
+  }};
+  link_.send(form);
+}
+
 on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value, _this = this;
   action = this.getAttribute("data-action");
@@ -411,17 +425,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
         create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
       }
       else {
-      form = new FormData(form_post);
-      link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link_.open( 'POST', "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val, true );
-      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-      link_.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        _this.nextElementSibling.innerHTML = "";
-        toast_success("Настройки изменены")
-      }};
-      link_.send(form);
+        private_users_send(form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val)
       }
   }
   else if (this.classList.contains("type_community_chat")) {
