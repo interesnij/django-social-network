@@ -445,11 +445,11 @@ on('#ajax', 'change', '.cool_private_select', function() {
     // например, при создании списка записей
     if (this.classList.contains("type_user")) {
       // работаем с приватностью элемента профиля пользователя
-      null
+      console.log("Обработка выбора select при создании списков пользователя")
     }
     else if (this.classList.contains("type_community")) {
       // работаем с приватностью элемента сообщества
-      null
+      console.log("Обработка выбора select при создании списков сообщества")
     }
   }
 });
