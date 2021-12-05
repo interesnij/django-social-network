@@ -399,10 +399,10 @@ on('#ajax', 'change', '.cool_private_select', function() {
   this.nextElementSibling.classList.add("collector_active");
 
   if (this.classList.contains("type_chat")) {
-    if (val == '5') {
+    if (val == '4') {
       create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
-    else if (val == '6') {
+    else if (val == '5') {
       create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
     else {
