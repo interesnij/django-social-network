@@ -60,19 +60,100 @@ class PostsList(models.Model):
         verbose_name_plural = "списки записей"
 
     @classmethod
-    def create_list(cls,creator,name,description,community,can_see_el,can_see_comment,create_el,create_comment,copy_el):
-        from notify.models import Notify, Wall
+    def create_list(cls,creator,name,description,community,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
+        can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
         from common.processing.post import get_post_list_processing
 
         list = cls.objects.create(creator=creator,name=name,description=description,community=community,can_see_el=can_see_el,can_see_comment=can_see_comment,create_el=create_el,create_comment=create_comment,copy_el=copy_el)
         if community:
             from communities.model.list import CommunityPostsListPosition
+
             CommunityPostsListPosition.objects.create(community=community.pk, list=list.pk, position=PostsList.get_community_lists_count(community.pk))
         else:
             from users.model.list import UserPostsListPosition
             UserPostsListPosition.objects.create(user=creator.pk, list=list.pk, position=PostsList.get_user_lists_count(creator.pk))
 
         get_post_list_processing(list, PostsList.LIST)
+
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
+        else:
+            list.can_see_el = 7
+            list.save(update_fields=["can_see_el"])
+
+        if can_see_comment == 4 or can_see_comment == 9:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_comment"])
+        elif can_see_comment == 5 or can_see_comment == 10:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_comment"])
+        else:
+            list.can_see_comment = 7
+            list.save(update_fields=["can_see_comment"])
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["create_item"])
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["create_item"])
+        else:
+            list.create_el = 7
+            list.save(update_fields=["create_el"])
+
+        if create_comment == 4 or create_comment == 9:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["create_comment"])
+        elif create_comment == 5 or create_comment == 10:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["create_comment"])
+        else:
+            list.create_comment = 7
+            list.save(update_fields=["create_comment"])
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_copy"])
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PostsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_copy"])
+        else:
+            list.copy_el = 7
+            list.save(update_fields=["copy_el"])
         return list
 
     def edit_list(self, name, description):
@@ -1425,7 +1506,7 @@ class PostsListPerm(models.Model):
     ITEM = (
         (YES_ITEM, 'Может иметь действия с элементом'),
         (NO_ITEM, 'Не может иметь действия с элементом'),
-        (TEST, 'TEST'),
+        (NO_VALUE, 'Нет значения'),
     )
 
     list = models.ForeignKey(PostsList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
@@ -1438,5 +1519,13 @@ class PostsListPerm(models.Model):
     can_copy = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто может добавлять список/записи себе")
 
     class Meta:
-        verbose_name = 'Исключения/Включения участника беседы'
-        verbose_name_plural = 'Исключения/Включения участников беседы'
+        verbose_name = 'Исключения/Включения друга'
+        verbose_name_plural = 'Исключения/Включения друзей'
+
+    @classmethod
+    def get_or_create_perm(cls, list_id, user_id, ):
+        if cls.objects.filter(list_id=list_id, user_id=user_id).exists():
+            return cls.objects.get(list_id=list_id, user_id=user_id)
+        else:
+            perm = cls.objects.create(list_id=list_id, user_id=user_id)
+            return perm

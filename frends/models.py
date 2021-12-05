@@ -103,3 +103,12 @@ class ConnectPerm(models.Model):
         verbose_name = 'Исключения/Включения target_user'
         verbose_name_plural = 'Исключения/Включения target_user'
         index_together = [('id', 'user'),]
+
+    @classmethod
+    def get_or_create_perm(cls, user_id, target_user_id, ):
+        frend = Connect.objects.get(user_id=user_id, target_user_id=target_user_id)
+        if cls.objects.filter(user_id=frend.pk).exists():
+            return cls.objects.get(user_id=frend.pk)
+        else:
+            perm = cls.objects.create(user_id=frend.pk)
+            return perm
