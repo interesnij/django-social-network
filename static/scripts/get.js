@@ -391,6 +391,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
 on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value;
   action = this.getAttribute("data-action");
+  form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   collectors = this.parentElement.parentElement.parentElement.querySelectorAll(".collector");
   for (var i = 0; i < collectors.length; i++){
     collectors[i].classList.remove("collector_active")
@@ -399,13 +400,23 @@ on('#ajax', 'change', '.cool_private_select', function() {
 
   if (this.classList.contains("type_chat")) {
     if (val == '5') {
-      create_fullscreen("/chat/user_progs/load_exclude_users/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
     else if (val == '6') {
-      create_fullscreen("/chat/user_progs/load_include_users/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
     }
     else {
-      this.nextElementSibling.innerHTML = ""
+      form = new FormData(form_post);
+      link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link_.open( 'POST', "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val, true );
+      link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      link_.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        this.nextElementSibling.innerHTML = "";
+        toast_success("Настройки изменены")
+      }};
+      link_.send(form_data);
     }
   }
   else {
