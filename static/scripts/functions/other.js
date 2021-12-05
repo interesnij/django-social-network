@@ -13,6 +13,32 @@ function format_text(text) {
   return text
 };
 
+function post_include_exclude_users(form, url) {
+  form.querySelector(".form_btn").disabled = true;
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', url, true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            collector = document.body.querySelector(".collector_active");
+            users_block = form.querySelector(".card-header");
+            users_list = users_block.querySelectorAll(".custom_color");
+            final_list = "";
+            for (var i = 0; i < users_list.length; i++){
+              a = users_list[i].querySelector("a");
+              final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
+              final_list += '<input type="hidden" name="' + collector.previousElementSibling.getAttribute("data-action") + '_users" value="' + users_list[i].getAttribute("data-pk") + '" />'
+            };
+            collector.innerHTML = final_list;
+            form.classList.remove("cool_private_form");
+            close_work_fullscreen();
+        }
+      };
+      ajax_link.send(form_data);
+});
+
 function setEndOfContenteditable(contentEditableElement) {
     var range,selection;
     if(document.createRange) {

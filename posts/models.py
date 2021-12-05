@@ -59,6 +59,30 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    @classmethod
+    def create_list(cls,creator,name,description,community,can_see_el,can_see_comment,create_el,create_comment,copy_el):
+        from notify.models import Notify, Wall
+        from common.processing.post import get_post_list_processing
+
+        list = cls.objects.create(creator=creator,name=name,description=description,community=community,can_see_el=can_see_el,can_see_comment=can_see_comment,create_el=create_el,create_comment=create_comment,copy_el=copy_el)
+        if community:
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.create(community=community.pk, list=list.pk, position=PostsList.get_community_lists_count(community.pk))
+        else:
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.create(user=creator.pk, list=list.pk, position=PostsList.get_user_lists_count(creator.pk))
+        get_post_list_processing(list, PostsList.LIST)
+        return list
+
+    def edit_list(self, name, description):
+        from common.processing.post import get_post_list_processing
+
+        self.name = name
+        self.description = description
+        get_post_list_processing(self, PostsList.LIST)
+        self.save()
+        return self
+
     def is_suspended(self):
         return False
 
@@ -315,51 +339,6 @@ class PostsList(models.Model):
         query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
         query.add(~Q(type__contains="_"), Q.AND)
         return cls.objects.filter(query).values("pk").count()
-
-    @classmethod
-    def create_list(cls, creator, name, description, community):
-        from notify.models import Notify, Wall
-        from common.processing.post import get_post_list_processing
-
-        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
-        is_public = True
-        if community:
-            from communities.model.list import CommunityPostsListPosition
-            CommunityPostsListPosition.objects.create(community=community.pk, list=list.pk, position=PostsList.get_community_lists_count(community.pk))
-            if is_public:
-                from common.notify.progs import community_send_notify, community_send_wall
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POL", object_id=list.pk, verb="ITE")
-                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_post_list_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
-                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_post_list_notify")
-        else:
-            from users.model.list import UserPostsListPosition
-            UserPostsListPosition.objects.create(user=creator.pk, list=list.pk, position=PostsList.get_user_lists_count(creator.pk))
-            if is_public:
-                from common.notify.progs import user_send_notify, user_send_wall
-                Wall.objects.create(creator_id=creator.pk, type="POL", object_id=list.pk, verb="ITE")
-                user_send_wall(list.pk, None, "create_u_post_list_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
-                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_post_list_notify")
-        get_post_list_processing(list, PostsList.LIST)
-        return list
-
-    def edit_list(self, name, description):
-        from common.processing.post import get_post_list_processing
-
-        self.name = name
-        self.description = description
-        self.save()
-        is_public = True
-        if is_public:
-            get_post_list_processing(self, PostsList.LIST)
-            self.make_publish()
-        else:
-            get_post_list_processing(self, PostsList.PRIVATE)
-            self.make_private()
-        return self
 
     def make_private(self):
         from notify.models import Notify, Wall
