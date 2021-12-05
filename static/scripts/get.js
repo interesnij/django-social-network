@@ -398,14 +398,19 @@ on('#ajax', 'change', '.cool_private_select', function() {
   };
   this.nextElementSibling.classList.add("collector_active");
 
-  if (this.classList.contains("type_chat")) {
-    if (val == '4') {
-      create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
-    }
-    else if (val == '5') {
-      create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
-    }
-    else {
+  if (form_post.classList.contains("case_edit")) {
+    // если мы имеем дело с изменением приватности элемента, который
+    // уже есть, поэтому можем сразу сохранять приватность
+
+    if (this.classList.contains("type_user_chat")) {
+      // работаем с приватностью пользовательского чата
+      if (val == '4') {
+        create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      }
+      else if (val == '5') {
+        create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      }
+      else {
       form = new FormData(form_post);
       link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link_.open( 'POST', "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val, true );
@@ -417,9 +422,34 @@ on('#ajax', 'change', '.cool_private_select', function() {
         toast_success("Настройки изменены")
       }};
       link_.send(form);
+      }
+  }
+  else if (this.classList.contains("type_community_chat")) {
+    // работаем с приватностью чата в сообществе
+    null
+  }
+  else if (this.classList.contains("type_user")) {
+    // работаем с приватностью профиля пользователя
+    null
+  }
+  else if (this.classList.contains("type_community")) {
+    // работаем с приватностью сообщества
+    null
+  }
+
+  }
+  else if (form_post.classList.contains("case_create")) {
+    // мы меняем приватность элемента, которого еще нет, поэтому не можем
+    // на лету сохранять изменение приватности. Мы должны оформить исключения или
+    // назначения в виде post полей и разобрать их при создании элемента
+    // например, при создании списка записей
+    if (this.classList.contains("type_user")) {
+      // работаем с приватностью элемента профиля пользователя
+      null
+    }
+    else if (this.classList.contains("type_community")) {
+      // работаем с приватностью элемента сообщества
+      null
     }
   }
-  else {
-    null
-  };
 });
