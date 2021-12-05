@@ -71,6 +71,7 @@ class PostsList(models.Model):
         else:
             from users.model.list import UserPostsListPosition
             UserPostsListPosition.objects.create(user=creator.pk, list=list.pk, position=PostsList.get_user_lists_count(creator.pk))
+
         get_post_list_processing(list, PostsList.LIST)
         return list
 

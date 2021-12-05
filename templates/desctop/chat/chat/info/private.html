@@ -66,13 +66,13 @@
              <option value="5" {% if chat.can_fix_item == 5 %}selected=""{% endif %}>Некоторые участники:</option>
            </select>
            <div class="collector">
-             {% if chat.can_fix_item_members == 4 %}
+             {% if chat.can_fix_item == 4 %}
                {% for object in chat.get_can_fix_item_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
              {% endif %}
 
-             {% if chat.can_fix_item_members == 5 %}
+             {% if chat.can_fix_item == 5 %}
                {% for object in chat.get_can_fix_item_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
