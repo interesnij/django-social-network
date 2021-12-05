@@ -439,6 +439,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
 
   }
   else if (form_post.classList.contains("case_create")) {
+    console.log("case_create")
     // мы меняем приватность элемента, которого еще нет, поэтому не можем
     // на лету сохранять изменение приватности. Мы должны оформить исключения или
     // назначения в виде post полей и разобрать их при создании элемента
