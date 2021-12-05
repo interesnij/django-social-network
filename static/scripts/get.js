@@ -389,7 +389,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
 });
 
 on('#ajax', 'change', '.cool_private_select', function() {
-  val = this.value;
+  val = this.value, _this = this;
   action = this.getAttribute("data-action");
   form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   collectors = this.parentElement.parentElement.parentElement.querySelectorAll(".collector");
@@ -413,10 +413,10 @@ on('#ajax', 'change', '.cool_private_select', function() {
 
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        this.nextElementSibling.innerHTML = "";
+        _this.nextElementSibling.innerHTML = "";
         toast_success("Настройки изменены")
       }};
-      link_.send(form); 
+      link_.send(form);
     }
   }
   else {
