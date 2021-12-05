@@ -50,6 +50,4 @@ admin.site.register(IPUser)
 admin.site.register(UserProfile, UserProfileAdmin)
 
 admin.site.register(UserFeaturedFriend)
-admin.site.register(UserPopulateFriend)
-admin.site.register(UserPopulateCommunity)
 admin.site.register(UserPostsListPosition)

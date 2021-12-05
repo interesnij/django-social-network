@@ -199,7 +199,7 @@ class Community(models.Model):
         community = cls.objects.create(name=name, creator=creator, type=type, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, community=community)
         community.save()
-        creator.create_or_plus_populate_community(community.pk)
+        creator.plus_community_visited(community.pk)
         community.add_news_subscriber(creator.pk)
         community.add_notify_subscriber(creator.pk)
         return community
@@ -1015,13 +1015,12 @@ class Community(models.Model):
 
     def add_member(self, user):
         CommunityMembership.create_membership(user=user, community=self)
-        user.create_or_plus_populate_community(self.pk)
+        user.plus_community_visited(self.pk)
         self.add_news_subscriber(user.pk)
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user).delete()
         self.minus_member()
         user.minus_communities(1)
-        user.delete_populate_community(self.pk)
         self.delete_news_subscriber(user.pk)
 
     def count_members(self):
@@ -1079,6 +1078,7 @@ class CommunityMembership(models.Model):
     is_editor = models.BooleanField(default=False, verbose_name="Это редактор")
     is_advertiser = models.BooleanField(default=False, verbose_name="Это рекламодатель")
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
+    visited = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
 
     def __str__(self):
         return self.user.get_full_name()
