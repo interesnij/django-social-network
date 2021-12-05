@@ -2,7 +2,7 @@
    {% csrf_token %}
     <div class="card">
       <div class="card-header border-bottom">
-        <h5 class="content-color-primary mb-0">Создание видео-ролика</h5>
+        <h5 class="content-color-primary mb-0">Редактирование чата</h5>
       </div>
       <div class="card-body">
         <div class="form-group">
@@ -10,6 +10,7 @@
           <input type="text" name="name" class="form-control" id="id_name" value="{{ chat.name }}">
         </div>
         <div class="form-group">
+          <label>Обложка</label>
           <div class="hide_image">
             <input type="file" name="image" accept="image/*" id="id_image">
           </div>
@@ -41,6 +42,7 @@
               {% endif %}
 
               {% if chat.can_add_members == 5 %}
+              cscs
                 {% for object in chat.get_add_in_chat_include_users %}
                   <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
