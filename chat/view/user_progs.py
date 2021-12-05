@@ -547,22 +547,61 @@ class UserChatEdit(TemplateView):
 		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
 		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_edit_info(request.user):
 			chat = self.form.save(commit=False)
-			chat.edit_chat(
-				name=chat.name,
-				description=chat.description,
-				image=request.FILES.get('image'),
-				can_add_members=chat.can_add_members,
-				can_edit_info=chat.can_edit_info,
-				can_fix_item=chat.can_fix_item,
-				can_mention=chat.can_mention,
-				can_add_admin=chat.can_add_admin,
-				can_add_design=chat.can_add_design,)
+			chat.edit_chat(name=chat.name,description=chat.description,image=request.FILES.get('image'),)
 			return HttpResponse()
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
+
+class UserChatPrivate(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from common.templates import get_detect_platform_template
+
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+
+		if self.chat.is_user_can_edit_info(request.user):
+			self.template_name = get_detect_platform_template("chat/chat/info/private.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserChatPrivate,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserChatPrivate,self).get_context_data(**kwargs)
+		context["chat"] = self.chat
+		return context
+
+	def post(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse
+
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and self.chat.is_user_can_edit_info(request.user):
+			self.type = request.POST.get("action")
+			self.value = request.POST.get("value")
+			if self.value == 6 or self.value == 5:
+				return HttpResponse()
+
+			if self.type == "can_add_members":
+				self.chat.can_add_members = self.value
+			elif self.type == "can_edit_info":
+				self.chat.can_edit_info = self.value
+			elif self.type == "can_fix_item":
+				self.chat.can_fix_item = self.value
+			elif self.type == "can_add_admin":
+				self.chat.can_add_admin = self.value
+			elif self.type == "can_mention":
+				self.chat.can_mention = self.value
+			elif self.type == "can_add_design":
+				self.chat.can_add_design = self.value
+			self.chat.save()
+			return HttpResponse()
+		else:
+			from django.http import HttpResponseBadRequest
+			return HttpResponseBadRequest()
+		return super(UserChatPrivate,self).get(request,*args,**kwargs)
 
 class UserChatIncludeUsers(ListView):
 	template_name, users = None, []

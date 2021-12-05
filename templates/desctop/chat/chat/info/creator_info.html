@@ -13,7 +13,14 @@
         </figure>
         <div class="media-body">
           <h6>{% if chat.name %}{{ chat.name }}{% else %}Групповой чат{% endif %} &nbsp;</h6>
-          <p class="mb-0 user_chat_settings pointer">Настройки</p>
+          <p class="mb-0">
+            <span class="mb-0 user_chat_settings pointer">
+              Настройки
+            </span> |
+            <span class="mb-0 user_chat_settings_private pointer">
+              Приватность
+            </span>
+          </p>
         </div>
       </div>
   </div>

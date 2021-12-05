@@ -5,7 +5,7 @@ from django import forms
 class ChatForm(forms.ModelForm):
 	class Meta:
 		model = Chat
-		fields = ['name', 'description', 'can_add_members', 'can_edit_info', 'can_fix_item', 'can_mention', 'can_add_admin', 'can_add_design']
+		fields = ['name', 'description', ]
 
 class MessageForm(forms.ModelForm):
 	text=forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))

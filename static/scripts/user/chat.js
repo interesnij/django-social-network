@@ -62,8 +62,12 @@ on('#ajax', 'click', '.u_chat_info', function() {
   create_fullscreen("/chat/" + pk + "/info/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_chat_settings', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/user_progs/edit/" + pk + "/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.user_chat_settings_private', function() {
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  create_fullscreen("/chat/user_progs/private/" + pk + "/", "worker_fullscreen");
 });
 
 function create_user_input_card(name, pk, link) {
@@ -89,7 +93,7 @@ on('#ajax', 'click', '.remove_user_input', function() {
   btn = container.querySelector(".form_btn");
   if (!header.querySelector(".remove_user_input")) {
     header.querySelector(".header_title").style.display = "block";
-  }; 
+  };
 
   friend = container.querySelector('[data-pk=' + '"' + this.nextElementSibling.value + '"' + ']');
   friend.querySelector(".active_svg").classList.remove("active_svg");
