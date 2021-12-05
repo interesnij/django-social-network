@@ -128,8 +128,8 @@ class Chat(models.Model):
                 self.save(update_fields=["can_edit_info"])
             elif type == "can_fix_item":
                 perm.can_add_fix = 2
-                self.can_add_fix = 4
-                self.save(update_fields=["can_add_fix"])
+                self.can_fix_item = 4
+                self.save(update_fields=["can_fix_item"])
             elif type == "can_add_admin":
                 perm.can_add_admin = 2
                 self.can_add_admin = 4
