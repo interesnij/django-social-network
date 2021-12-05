@@ -98,6 +98,7 @@ class Chat(models.Model):
                 self.save(update_fields=["can_add_design"])
             perm.save()
 
+
     def post_exclude_users(self, users, type):
         if type == "can_add_members":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_in_chat=2).update(can_add_in_chat=0)
@@ -577,15 +578,9 @@ class Chat(models.Model):
                         info_message.create_socket(recipient.user.pk, recipient.beep())
         return info_messages
 
-    def edit_chat(self, name, image, description, can_add_members, can_edit_info, can_fix_item, can_mention, can_add_admin, can_add_design):
+    def edit_chat(self, name, image, description):
         self.name = name
         self.description = description
-        self.can_add_members = can_add_members
-        self.can_edit_info = can_edit_info
-        self.can_fix_item = can_fix_item
-        self.can_mention = can_mention
-        self.can_add_admin = can_add_admin
-        self.can_add_design = can_add_design
         if image:
             self.create_image(image)
         self.save()

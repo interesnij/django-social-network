@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^invite_members/(?P<pk>\d+)/$', InviteMembersInUserChat.as_view()),
     url(r'^edit/(?P<pk>\d+)/$', UserChatEdit.as_view()),
+    url(r'^private/(?P<pk>\d+)/$', UserChatPrivate.as_view()),
     url(r'^delete/(?P<pk>\d+)/$', UserChatDelete.as_view()),
 	url(r'^restore/(?P<pk>\d+)/$', UserChatRecover.as_view()),
     url(r'^clean_messages/(?P<pk>\d+)/$', UserChatCleanMessages.as_view()),
