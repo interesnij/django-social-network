@@ -414,6 +414,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
       link_.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
         this.nextElementSibling.innerHTML = "";
+        toast_success("Настройки изменены")
       }};
       link_.send(form_data);
     }
