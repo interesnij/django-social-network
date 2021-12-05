@@ -242,12 +242,12 @@ class ProfileUserView(TemplateView):
                 elif request.user.is_user_manager() or request.user.is_superuser:
                     self.template_name, self.get_buttons_block = "users/account/staff_user.html", request.user.get_staff_buttons_profile(user_pk)
                     if request.user.is_connected_with_user_with_id(user_id=user_pk):
-                        request.user.create_or_plus_populate_friend(user_pk)
+                        request.user.plus_friend_visited(user_pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=user_pk):
                     self.template_name = "users/account/block_user.html"
                 elif request.user.is_connected_with_user_with_id(user_id=user_pk):
                     self.template_name = "users/account/user.html"
-                    request.user.create_or_plus_populate_friend(user_pk)
+                    request.user.plus_friend_visited(user_pk)
                 elif self.user.is_closed_profile():
                     if request.user.is_followers_user_with_id(user_id=user_pk) or request.user.is_connected_with_user_with_id(user_id=user_pk):
                         self.template_name = "users/account/user.html"

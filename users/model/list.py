@@ -28,19 +28,6 @@ class UserFeaturedFriend(models.Model):
         verbose_name = 'Рекомендованные друзья'
         verbose_name_plural = 'Рекомендованные друзья'
 
-class UserPopulateFriend(models.Model):
-    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
-    friend = models.PositiveIntegerField(default=0, verbose_name="Друг")
-    count = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
-
-    class Meta:
-        verbose_name = 'Популярность друзей'
-        verbose_name_plural = 'Популярность друзей'
-        ordering = ['-count']
-
-    def __str__(self):
-        return '{} - {} :{}'.format(self.user, self.friend, self.count)
-
 class UserPopulateCommunity(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
     community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")

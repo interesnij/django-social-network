@@ -6,6 +6,7 @@ class Connect(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='connections', verbose_name="Инициатор перевода из подписчика в друзья")
     target_user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='targeted_connections', null=False, verbose_name="Кого переводит из подписчика в друзья")
     target_connection = models.OneToOneField('self', on_delete=models.CASCADE, null=True)
+    visited = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
 
     @classmethod
     def create_connection(cls, user_id, target_user_id):
