@@ -416,7 +416,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
         this.nextElementSibling.innerHTML = "";
         toast_success("Настройки изменены")
       }};
-      link_.send(form_data);
+      link_.send(form); 
     }
   }
   else {
