@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="card-footer border-top">
-        <button type="button" class="btn btn-sm border form_btn" disabled id="add_chat_include_users_btn" style="float: right;">
+        <button type="button" class="btn btn-sm border form_btn" {% if not users %}disabled{% endif %} id="add_chat_include_users_btn" style="float: right;">
           Выберите пользователей
         </button>
       </div>
