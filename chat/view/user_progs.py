@@ -579,8 +579,8 @@ class UserChatPrivate(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and self.chat.is_user_can_edit_info(request.user):
-			self.type = request.POST.get("action")
-			self.value = request.POST.get("value")
+			self.type = request.GET.get("action")
+			self.value = request.GET.get("value")
 			if self.value == 6 or self.value == 5:
 				return HttpResponse()
 
