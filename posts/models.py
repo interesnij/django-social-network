@@ -24,7 +24,7 @@ class PostsList(models.Model):
     PERM = (
             (ALL_CAN, 'Все пользователи'),
             (FRIENDS, 'Друзья'),
-            (EACH_OTHER, 'Друзья,друзья друзей'),
+            (EACH_OTHER, 'Друзья и друзья друзей'),
             (CREATOR, 'Только я'),
             (FRIENDS_BUT, 'Друзья, кроме'),
             (SOME_FRIENDS, 'Некоторые друзья'),

@@ -14,69 +14,75 @@
                   <label>Описание</label>
                   <input name="description" class="form-control">
               </div>
-              <div class="mb-1 form_group_flex">
-                  <label>Кто видит список</label>
-                  <select name="can_see_el" id="id_can_see_el">
-                    <option value="1" selected="">
-                      <span class="boder-bottom">
-                        Все пользователи
-                      </span>
-                    </option>
-                    <option value="2">Друзья</option>
-                    <option value="3">Друзья и друзья друзей</option>
-                    <option value="4">Только я</option>
-                    <option value="5">Друзья, кроме</option>
-                    <option value="6">Выбрать друзей</option>
-                  </select>
-                  <div class="can_see_item_collector"></div>
+              <div class="row mb-1 form_group_flex">
+                  <label class="col-md-6">Кто видит список</label>
+                  <span class="col-md-6">
+                    <select name="can_see_el" id="id_can_see_el">
+                      <option value="1" selected="">Все пользователи</option>
+                      <option value="2">Друзья</option>
+                      <option value="3">Друзья и друзья друзей</option>
+                      <option value="7">Только я</option>
+                      <option value="4">Друзья, кроме...</option>
+                      <option value="5">Выбрать друзей...</option>
+                    </select>
+                    <div class="collector"></div>
+                  </span>
               </div>
-              <div class="mb-1 form_group_flex">
-                  <label>Кто видит комментарии</label>
+              <div class="row mb-1 form_group_flex">
+                <label class="col-md-6">Кто видит комментарии</label>
+                <span class="col-md-6">
                   <select name="can_see_comment" id="id_can_see_comment">
                     <option value="1" selected="">Все пользователи</option>
                     <option value="2">Друзья</option>
                     <option value="3">Друзья и друзья друзей</option>
-                    <option value="4">Только я</option>
-                    <option value="5">Друзья, кроме</option>
-                    <option value="6">Выбрать друзей</option>
+                    <option value="7">Только я</option>
+                    <option value="4">Друзья, кроме...</option>
+                    <option value="5">Выбрать друзей...</option>
                   </select>
-                  <div class="can_see_comment_collector"></div>
+                  <div class="collector"></div>
+                </span>
               </div>
-              <div class="mb-1 form_group_flex">
-                  <label>Кто пишет записи</label>
+              <div class="row mb-1 form_group_flex">
+                <label class="col-md-6">Кто пишет записи</label>
+                <span class="col-md-6">
                   <select name="create_el" id="id_create_el">
                     <option value="1">Все пользователи</option>
                     <option value="2">Друзья</option>
                     <option value="3">Друзья и друзья друзей</option>
-                    <option value="4" selected="">Только я</option>
-                    <option value="5">Друзья, кроме</option>
-                    <option value="6">Выбрать друзей</option>
+                    <option value="7" selected="">Только я</option>
+                    <option value="5">Друзья, кроме...</option>
+                    <option value="6">Выбрать друзей...</option>
                   </select>
-                  <div class="create_item_collector"></div>
+                  <div class="collector"></div>
+                </span>
               </div>
-              <div class="mb-1 form_group_flex">
-                  <label>Кто пишет комментарии</label>
+              <div class="row mb-1 form_group_flex">
+                <label class="col-md-6">Кто пишет комментарии</label>
+                <span class="col-md-6">
                   <select name="create_comment" id="id_create_comment">
                     <option value="1" selected="">Все пользователи</option>
                     <option value="2">Друзья</option>
                     <option value="3">Друзья и друзья друзей</option>
-                    <option value="4">Только я</option>
-                    <option value="5">Друзья, кроме</option>
-                    <option value="6">Выбрать друзей</option>
+                    <option value="7">Только я</option>
+                    <option value="5">Друзья, кроме...</option>
+                    <option value="6">Выбрать друзей...</option>
                   </select>
-                  <div class="create_comment_collector"></div>
+                  <div class="collector"></div>
+                </span>
               </div>
-              <div class="mb-1 form_group_flex">
-                  <label>Кто может копировать</label>
+              <div class="row mb-1 form_group_flex">
+                <label class="col-md-6">Кто может копировать</label>
+                <span class="col-md-6">
                   <select name="copy_el" id="id_copy_el">
                     <option value="1" selected="">Все пользователи</option>
                     <option value="2">Друзья</option>
                     <option value="3">Друзья и друзья друзей</option>
-                    <option value="4">Только я</option>
-                    <option value="5">Друзья, кроме</option>
-                    <option value="6">Выбрать друзей</option>
+                    <option value="7">Только я</option>
+                    <option value="5">Друзья, кроме...</option>
+                    <option value="6">Выбрать друзей...</option>
                   </select>
-                  <div class="create_copy_collector"></div>
+                  <div class="collector"></div>
+                </span>
               </div>
             </div>
             <div class="card-footer">
