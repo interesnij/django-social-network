@@ -963,7 +963,6 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
             for (var i = 0; i < users_list.length; i++){
               a = users_list[i].querySelector("a");
               final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
-              final_list += users_list[i].querySelector("a").innerHTML;
             };
             collector.innerHTML = final_list;
             form.classList.remove("cool_private_form");
