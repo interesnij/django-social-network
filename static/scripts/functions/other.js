@@ -37,7 +37,7 @@ function post_include_exclude_users(form, url) {
         }
       };
       ajax_link.send(form_data);
-});
+};
 
 function setEndOfContenteditable(contentEditableElement) {
     var range,selection;
