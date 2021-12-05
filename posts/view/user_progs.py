@@ -344,7 +344,9 @@ class UserPostsListCreate(TemplateView):
                 create_el=list.create_el,
                 create_el_users=request.POST.getlist("create_el_users"),
                 create_comment=list.create_comment,
-                create_comment_users=request.POST.getlist("create_comment_users"),)
+                create_comment_users=request.POST.getlist("create_comment_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("create_copy_el"),)
             return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
         else:
             return HttpResponse()
