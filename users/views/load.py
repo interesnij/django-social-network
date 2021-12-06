@@ -364,15 +364,15 @@ class LoadListExcludeUsers(ListView):
 		self.target = request.GET.get("target")
 		self.community_pk = request.GET.get("community_pk")
 		if self.type == "can_see_el":
-			self.text = "видит записи"
+			self.text = "видеть записи"
 		elif self.type == "can_see_comment":
-			self.text = "видит комментарии"
+			self.text = "видеть комментарии"
 		elif self.type == "create_el":
-			self.text = "создает записи и потом с ними работает"
+			self.text = "создавать записи и потом с ними работает"
 		elif self.type == "create_comment":
-			self.text = "создает комментарии и потом с ними работает"
+			self.text = "создавать комментарии и потом с ними работает"
 		elif self.type == "copy_el":
-			self.text = "может копировать записи и список"
+			self.text = "копировать записи и список"
 
 		if self.community_pk and request.user.is_administrator_of_community(self.community_pk):
 			self.template_name = get_detect_platform_template("users/load/list_exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -404,15 +404,15 @@ class LoadListIncludeUsers(ListView):
 		self.target = request.GET.get("target")
 		self.community_pk = request.GET.get("community_pk")
 		if self.type == "can_see_el":
-			self.text = "видит записи"
+			self.text = "видеть записи"
 		elif self.type == "can_see_comment":
-			self.text = "видит комментарии"
+			self.text = "видеть комментарии"
 		elif self.type == "create_el":
-			self.text = "создает записи и потом с ними работает"
+			self.text = "создавать записи и потом с ними работает"
 		elif self.type == "create_comment":
-			self.text = "создает комментарии и потом с ними работает"
+			self.text = "создавать комментарии и потом с ними работает"
 		elif self.type == "copy_el":
-			self.text = "может копировать записи и список"
+			self.text = "копировать записи и список"
 		if self.community_pk and request.user.is_administrator_of_community(self.community_pk):
 			self.template_name = get_detect_platform_template("users/load/list_include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.target == "user":
