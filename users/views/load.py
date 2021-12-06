@@ -352,3 +352,125 @@ class ChatsLoad(ListView):
 
 	def get_queryset(self):
 		return self.list
+
+
+class UserLoadExcludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_settings_template
+
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.text = "создает комментарии и потом с ними работает"
+		elif self.type == "copy_el":
+			self.text = "может копировать записи и список"
+		self.template_name = get_settings_template("users/load/exclude_users_user.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadExcludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadExcludeUsers,self).get_context_data(**kwargs)
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_all_connection()
+
+class UserLoadIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_settings_template
+
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.text = "создает комментарии и потом с ними работает"
+		elif self.type == "copy_el":
+			self.text = "может копировать записи и список"
+		self.template_name = get_settings_template("users/load/include_users_user.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserLoadIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserLoadIncludeUsers,self).get_context_data(**kwargs)
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_all_connection()
+
+
+class CommunityLoadExcludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_community_manage_template
+		from communities.models import Community
+
+		self.c = Community.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.text = "создает комментарии и потом с ними работает"
+		elif self.type == "copy_el":
+			self.text = "может копировать записи и список"
+		self.template_name = get_community_manage_template("users/load/exclude_users_community.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
+		return super(CommunityLoadExcludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityLoadExcludeUsers,self).get_context_data(**kwargs)
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.c.get_members()
+
+class CommunityLoadIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_community_manage_template
+		from communities.models import Community
+
+		self.c = Community.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.text = "создает комментарии и потом с ними работает"
+		elif self.type == "copy_el":
+			self.text = "может копировать записи и список"
+		self.template_name = get_community_manage_template("users/load/include_users_community.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
+		return super(CommunityLoadIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityLoadIncludeUsers,self).get_context_data(**kwargs)
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.c.get_members()

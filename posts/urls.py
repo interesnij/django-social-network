@@ -9,6 +9,9 @@ urlpatterns = [
     url(r'^fix_post/(?P<pk>\d+)/$', LoadFixPost.as_view(), name="load_fix_post"),
     url(r'^comments/(?P<pk>\d+)/$', PostCommentList.as_view()),
 
+    url(r'^load_include_users/(?P<pk>\d+)/$', PostListLoadIncludeUsers.as_view()),
+    url(r'^load_exclude_users/(?P<pk>\d+)/$', PostListLoadExcludeUsers.as_view()),
+
     url(r'^user/', include('posts.url.user')),
 	url(r'^community/', include('posts.url.community')),
 	url(r'^votes/', include('posts.url.votes')),
