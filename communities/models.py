@@ -327,7 +327,7 @@ class Community(models.Model):
         return PostsList.objects.filter(query)
     def get_selected_post_list_pk(self):
         from communities.model.list import CommunityPostsListPosition
-        list = CommunityPostsListPosition.objects.filter(community=self.pk).first()
+        list = CommunityPostsListPosition.objects.filter(community=self.pk, type=1).first()
         return list.list
 
     def get_survey_lists(self):
