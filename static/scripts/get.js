@@ -448,16 +448,16 @@ on('#ajax', 'change', '.cool_private_select', function() {
     // назначения в виде post полей и разобрать их при создании элемента
     // например, при создании списка записей
       if (val == '4') {
-        create_fullscreen("/users/load/load_exclude_users/?action=" + action + "&target=user", "worker_fullscreen")
+        create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&target=user", "worker_fullscreen")
       }
       else if (val == '5') {
-        create_fullscreen("/users/load/load_include_users/?action=" + action + "&target=user", "worker_fullscreen")
+        create_fullscreen("/users/load/list_include_users/?action=" + action + "&target=user", "worker_fullscreen")
       }
       else if (val == '9') {
-        create_fullscreen("/users/load/load_exclude_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
+        create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
       }
       else if (val == '10') {
-        create_fullscreen("/users/load/load_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
+        create_fullscreen("/users/load/list_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
       }
   }
 });
