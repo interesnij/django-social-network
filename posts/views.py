@@ -194,3 +194,160 @@ class PostCommentList(ListView):
 
 	def get_queryset(self):
 		return self.post.get_comments()
+
+
+class PostListLoadIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from common.templates import get_detect_platform_template
+
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.users = self.list.get_can_see_el_include_users()
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.users = self.list.get_can_see_comment_include_users()
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.users = self.list.get_create_el_include_users()
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.users = self.list.get_create_comment_include_users()
+			self.text = "пишет комментарии"
+		elif self.type == "copy_el":
+			self.users = self.list.get_copy_el_include_users()
+			self.text = "может копировать записи и список"
+		if self.list.community and request.user.is_administrator_of_community(self.list.community.pk):
+			self.template_name = get_detect_platform_template("posts/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif request.user.pk == self.list.creator.pk:
+			self.template_name = get_detect_platform_template("posts/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostListLoadIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(PostListLoadIncludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["list"] = self.list
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_all_connection()
+
+	def post(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+			self.list.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
+		return HttpResponse()
+
+class PostListLoadExcludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from common.templates import get_detect_platform_template
+
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.users = self.list.get_can_see_el_exclude_users()
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.users = self.list.get_can_see_comment_exclude_users()
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.users = self.list.get_create_el_exclude_users()
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.users = self.list.get_create_comment_exclude_users()
+			self.text = "пишет комментарии"
+		elif self.type == "copy_el":
+			self.users = self.list.get_copy_el_exclude_users()
+			self.text = "может копировать записи и список"
+		if self.list.community and request.user.is_administrator_of_community(self.list.community.pk):
+			self.template_name = get_detect_platform_template("posts/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif request.user.pk == self.list.creator.pk:
+			self.template_name = get_detect_platform_template("posts/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostListLoadExcludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(PostListLoadExcludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["list"] = self.list
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		if self.list.community:
+			return self.list.community.get_members()
+		else:
+			return self.request.user.get_all_connection()
+
+	def post(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+			self.list.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
+		return HttpResponse()
+
+class PostListLoadIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from common.templates import get_detect_platform_template
+
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_el":
+			self.users = self.list.get_can_see_el_include_users()
+			self.text = "видит записи"
+		elif self.type == "can_see_comment":
+			self.users = self.list.get_can_see_comment_include_users()
+			self.text = "видит комментарии"
+		elif self.type == "create_el":
+			self.users = self.list.get_create_el_include_users()
+			self.text = "создает записи и потом с ними работает"
+		elif self.type == "create_comment":
+			self.users = self.list.get_create_comment_include_users()
+			self.text = "пишет комментарии"
+		elif self.type == "copy_el":
+			self.users = self.list.get_copy_el_include_users()
+			self.text = "может копировать записи и список"
+		if self.list.community and request.user.is_administrator_of_community(self.list.community.pk):
+			self.template_name = get_detect_platform_template("posts/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif request.user.pk == self.list.creator.pk:
+			self.template_name = get_detect_platform_template("posts/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(PostListLoadIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(PostListLoadIncludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["list"] = self.list
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		if self.list.community:
+			return self.list.community.get_members()
+		else:
+			return self.request.user.get_all_connection()
+
+	def post(self,request,*args,**kwargs):
+		from posts.models import PostsList
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+			self.list.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
+		return HttpResponse()

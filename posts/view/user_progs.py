@@ -323,11 +323,11 @@ class UserPostsListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserPostsListCreate,self).get_context_data(**kwargs)
-        context["form"] = PostsListForm()
+        context["form"] = PostsListCreateForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = PostsListForm(request.POST)
+        self.form = PostsListCreateForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.templates import render_for_platform
 
@@ -369,7 +369,7 @@ class UserPostsListEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-        self.form = PostsListForm(request.POST,instance=self.list)
+        self.form = PostsListEditForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk:
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description)

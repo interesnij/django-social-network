@@ -59,6 +59,130 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+
+    def get_can_see_el_exclude_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_el_include_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_can_see_comment_exclude_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_comment=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_comment_include_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_comment=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_create_el_exclude_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, create_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_create_el_include_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, create_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_create_comment_exclude_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, create_comment=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_create_comment_include_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, create_comment=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_copy_el_exclude_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_copy=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_copy_el_include_users(self):
+        from users.models import User
+        query = PostsListPerm.objects.filter(list_id=self.pk, can_copy=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def post_include_users(self, users, type):
+        if type == "can_see_el":
+            PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).update(can_see_item=0)
+        elif type == "can_see_comment":
+            PostsListPerm.objects.filter(list_id=self.pk, can_see_comment=1).update(can_see_comment=0)
+        elif type == "create_el":
+            PostsListPerm.objects.filter(list_id=self.pk, create_item=1).update(create_item=0)
+        elif type == "create_comment":
+            PostsListPerm.objects.filter(list_id=self.pk, create_comment=1).update(create_comment=0)
+        elif type == "copy_el":
+            PostsListPerm.objects.filter(list_id=self.pk, can_copy=1).update(can_copy=0)
+
+        for user_id in users:
+            if PostsListPerm.objects.filter(list_id=list_id, user_id=user_id).exists():
+                perm = PostsListPerm.objects.get(list_id=list_id, user_id=user_id)
+            else:
+                perm = PostsListPerm.objects.create(list_id=list_id, user_id=user_id)
+            if type == "can_see_el":
+                perm.can_see_item = 1
+                self.can_see_el = 5
+                self.save(update_fields=["can_see_el"])
+            elif type == "can_see_comment":
+                perm.can_see_comment = 1
+                self.can_see_comment = 5
+                self.save(update_fields=["can_see_comment"])
+            elif type == "create_el":
+                perm.create_item = 1
+                self.create_el = 5
+                self.save(update_fields=["create_el"])
+            elif type == "create_comment":
+                perm.create_comment = 1
+                self.create_comment = 5
+                self.save(update_fields=["create_comment"])
+            elif type == "copy_el":
+                perm.can_copy = 1
+                self.copy_el = 5
+                self.save(update_fields=["copy_el"])
+            perm.save()
+
+    def post_exclude_users(self, users, type):
+        if type == "can_see_el":
+            PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).update(can_see_item=0)
+        elif type == "can_see_comment":
+            PostsListPerm.objects.filter(list_id=self.pk, can_see_comment=2).update(can_see_comment=0)
+        elif type == "create_el":
+            PostsListPerm.objects.filter(list_id=self.pk, create_item=2).update(create_item=0)
+        elif type == "create_comment":
+            PostsListPerm.objects.filter(list_id=self.pk, create_comment=2).update(create_comment=0)
+        elif type == "copy_el":
+            PostsListPerm.objects.filter(list_id=self.pk, can_copy=2).update(can_copy=0)
+
+        for user_id in users:
+            if PostsListPerm.objects.filter(list_id=list_id, user_id=user_id).exists():
+                perm = PostsListPerm.objects.get(list_id=list_id, user_id=user_id)
+            else:
+                perm = PostsListPerm.objects.create(list_id=list_id, user_id=user_id)
+            if type == "can_see_el":
+                perm.can_see_item = 2
+                self.can_see_el = 5
+                self.save(update_fields=["can_see_el"])
+            elif type == "can_see_comment":
+                perm.can_see_comment = 2
+                self.can_see_comment = 5
+                self.save(update_fields=["can_see_comment"])
+            elif type == "create_el":
+                perm.create_item = 2
+                self.create_el = 5
+                self.save(update_fields=["create_el"])
+            elif type == "create_comment":
+                perm.create_comment = 2
+                self.create_comment = 5
+                self.save(update_fields=["create_comment"])
+            elif type == "copy_el":
+                perm.can_copy = 2
+                self.copy_el = 5
+                self.save(update_fields=["copy_el"])
+            perm.save()
+
     @classmethod
     def create_list(cls,creator,name,description,community,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
         can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
