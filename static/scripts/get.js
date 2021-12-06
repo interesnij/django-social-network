@@ -447,13 +447,17 @@ on('#ajax', 'change', '.cool_private_select', function() {
     // на лету сохранять изменение приватности. Мы должны оформить исключения или
     // назначения в виде post полей и разобрать их при создании элемента
     // например, при создании списка записей
-    if (this.classList.contains("type_user")) {
-      // работаем с приватностью элемента профиля пользователя
-      console.log("Обработка выбора select при создании списков пользователя")
-    }
-    else if (this.classList.contains("type_community")) {
-      // работаем с приватностью элемента сообщества
-      console.log("Обработка выбора select при создании списков сообщества")
-    }
+      if (val == '4') {
+        create_fullscreen("/users/load/load_exclude_users/?action=" + action + "&target=user", "worker_fullscreen")
+      }
+      else if (val == '5') {
+        create_fullscreen("/users/load/load_include_users/?action=" + action + "&target=user", "worker_fullscreen")
+      }
+      else if (val == '9') {
+        create_fullscreen("/users/load/load_exclude_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
+      }
+      else if (val == '10') {
+        create_fullscreen("/users/load/load_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
+      }
   }
 });
