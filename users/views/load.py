@@ -358,7 +358,7 @@ class LoadListExcludeUsers(ListView):
 	template_name, users = None, []
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_settings_template
+		from common.templates import get_detect_platform_template
 
 		self.type = request.GET.get("action")
 		self.target = request.GET.get("target")
