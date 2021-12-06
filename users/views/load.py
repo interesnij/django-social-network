@@ -413,7 +413,7 @@ class UserLoadIncludeUsers(ListView):
 		return self.request.user.get_all_connection()
 
 
-class CommunityLoadExcludeUsers(ListView):
+class CommunityLoadExcludeMembers(ListView):
 	template_name, users = None, []
 
 	def get(self,request,*args,**kwargs):
@@ -433,10 +433,10 @@ class CommunityLoadExcludeUsers(ListView):
 		elif self.type == "copy_el":
 			self.text = "может копировать записи и список"
 		self.template_name = get_community_manage_template("users/load/exclude_users_community.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		return super(CommunityLoadExcludeUsers,self).get(request,*args,**kwargs)
+		return super(CommunityLoadExcludeMembers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityLoadExcludeUsers,self).get_context_data(**kwargs)
+		context = super(CommunityLoadExcludeMembers,self).get_context_data(**kwargs)
 		context["text"] = self.text
 		context["type"] = self.type
 		return context
@@ -444,7 +444,7 @@ class CommunityLoadExcludeUsers(ListView):
 	def get_queryset(self):
 		return self.c.get_members()
 
-class CommunityLoadIncludeUsers(ListView):
+class CommunityLoadIncludeMembers(ListView):
 	template_name, users = None, []
 
 	def get(self,request,*args,**kwargs):
@@ -464,10 +464,10 @@ class CommunityLoadIncludeUsers(ListView):
 		elif self.type == "copy_el":
 			self.text = "может копировать записи и список"
 		self.template_name = get_community_manage_template("users/load/include_users_community.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
-		return super(CommunityLoadIncludeUsers,self).get(request,*args,**kwargs)
+		return super(CommunityLoadIncludeMembers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(CommunityLoadIncludeUsers,self).get_context_data(**kwargs)
+		context = super(CommunityLoadIncludeMembers,self).get_context_data(**kwargs)
 		context["text"] = self.text
 		context["type"] = self.type
 		return context
