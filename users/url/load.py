@@ -31,8 +31,6 @@ urlpatterns = [
     url(r'^smiles_stickers/$', SmilesStickersLoad.as_view()),
     url(r'^chats/$', ChatsLoad.as_view()),
 
-    url(r'^load_include_users_user/$', UserLoadIncludeUsers.as_view()),
-    url(r'^load_exclude_users_user/$', UserLoadExcludeUsers.as_view()),
-    url(r'^load_include_users_community/(?P<pk>\d+)/$', CommunityLoadIncludeMembers.as_view()),
-    url(r'^load_exclude_users_community/(?P<pk>\d+)/$', CommunityLoadExcludeMembers.as_view()),
+    url(r'^list_include_users/$', LoadListIncludeUsers.as_view()),
+    url(r'^list_exclude_users/$', LoadListExcludeUsers.as_view()),
 ]

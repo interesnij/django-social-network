@@ -3,20 +3,7 @@
       {% csrf_token %}
       <input type="hidden" name="type" value="{{ type }}">
       <div class="card-header" style="min-height: 100px;">
-        {% if users %}
-        <span class="header_title" style="display:none">Выберите тех, кому нельзя {{ text }}</span>
-          {% for object in users %}
-            <span data-pk="{{ object.pk }}" class="btn btn-sm custom_color" style="margin: 2px;">
-              <a href="{{ object.get_link }}" target="_blank">
-                {{ object.get_full_name }}
-              </a>
-             <span class="remove_user_input pointer">x<span></span></span>
-             <input class="user_pk" type="hidden" name="users" value="{{ object.pk }}">
-            </span>
-          {% endfor %}
-        {% else %}
-          <span class="header_title">Выберите тех, кому нельзя {{ text }}</span>
-        {% endif %}
+        <span class="header_title">Выберите тех, кому нельзя {{ text }}</span>
       </div>
       <div class="card-body">
         <div class="is_block_paginate">
@@ -44,7 +31,7 @@
         </div>
       </div>
       <div class="card-footer border-top">
-        <button type="button" class="btn btn-sm border form_btn" {% if not users %}disabled{% endif %} id="add_chat_exclude_users_btn" style="float: right;">
+        <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_exclude_users_btn" style="float: right;">
           Выберите пользователей
         </button>
       </div>
