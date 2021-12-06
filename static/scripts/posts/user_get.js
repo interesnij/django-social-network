@@ -25,7 +25,7 @@ on('#ajax', 'click', '.u_add_post_list', function() {
   create_fullscreen("/posts/user_progs/add_list/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.u_edit_post_list', function() {
-  list_pk = this.parentElement.parentElement.parentElement.getAttribute("list-pk");
+  list_pk = this.parentElement.parentElement.getAttribute("list-pk");
   create_fullscreen("/posts/user_progs/edit_list/" + list_pk + "/", "worker_fullscreen");
 });
 
