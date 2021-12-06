@@ -459,7 +459,7 @@ on('#ajax', 'change', '.cool_private_select', function() {
       else if (val == '10') {
         create_fullscreen("/users/load/list_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("data-pk"), "worker_fullscreen")
       }
-      else if (val == '') {
+      else {
         this.nextElementSibling.innerHTML = ""
       }
   }
