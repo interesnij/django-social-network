@@ -323,11 +323,11 @@ class UserPostsListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context=super(UserPostsListCreate,self).get_context_data(**kwargs)
-        context["form"] = PostsListCreateForm()
+        context["form"] = PostsListForm()
         return context
 
     def post(self,request,*args,**kwargs):
-        self.form = PostsListCreateForm(request.POST)
+        self.form = PostsListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.templates import render_for_platform
 
@@ -369,10 +369,22 @@ class UserPostsListEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-        self.form = PostsListEditForm(request.POST,instance=self.list)
+        self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and self.list.creator.pk == request.user.pk:
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description)
+            new_list = list.edit_list(
+                name=list.name,
+                description=list.description,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                can_see_comment=list.can_see_comment,
+                can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                create_comment=list.create_comment,
+                create_comment_users=request.POST.getlist("create_comment_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("create_copy_el"),)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

@@ -373,12 +373,12 @@ class CommunityPostsListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityPostsListCreate,self).get_context_data(**kwargs)
-        c["form"], c["community"] = PostsListCreateForm(), self.c
+        c["form"], c["community"] = PostsListForm(), self.c
         return c
 
     def post(self,request,*args,**kwargs):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
-        self.form = PostsListCreateForm(request.POST)
+        self.form = PostsListForm(request.POST)
         if request.is_ajax() and self.form.is_valid():
             from common.templates import render_for_platform
             list = self.form.save(commit=False)
@@ -410,7 +410,7 @@ class CommunityPostsListEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-        self.form = PostsListEditForm(request.POST,instance=self.list)
+        self.form = PostsListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.c.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(name=list.name, description=list.description)
