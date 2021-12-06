@@ -280,11 +280,100 @@ class PostsList(models.Model):
             list.save(update_fields=["copy_el"])
         return list
 
-    def edit_list(self, name, description):
+    def edit_list(self, name, description,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
+        can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
         from common.processing.post import get_post_list_processing
 
         self.name = name
         self.description = description
+        self.can_see_el = can_see_el
+        self.can_see_comment = can_see_comment
+        self.create_el = create_el
+        self.create_comment = create_comment
+        self.copy_el = copy_el
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+        else:
+            self.can_see_el = 7
+
+        if can_see_comment == 4 or can_see_comment == 9:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_comment"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
+        elif can_see_comment == 5 or can_see_comment == 10:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_comment"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
+        else:
+            self.can_see_comment = 7
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["create_item"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["create_item"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+        else:
+            self.create_el = 7
+
+        if create_comment == 4 or create_comment == 9:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["create_comment"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(create_comment=0)
+        elif create_comment == 5 or create_comment == 10:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["create_comment"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(create_comment=0)
+        else:
+            self.create_comment = 7
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_copy"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_copy"])
+                PostsListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+        
         get_post_list_processing(self, PostsList.LIST)
         self.save()
         return self
