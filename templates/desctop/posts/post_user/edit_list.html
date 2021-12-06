@@ -27,14 +27,14 @@
                         <option value="5" {% if list.can_see_el == 5 %}selected=""{% endif %}>Выбрать друзей...</option>
                       </select>
                       <div class="collector">
-                        {% if chat.can_see_el == 4 %}
-                          {% for object in chat.get_can_see_el_exclude_users %}
+                        {% if list.can_see_el == 4 %}
+                          {% for object in list.get_can_see_el_exclude_users %}
                             <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                           {% endfor %}
                         {% endif %}
 
-                        {% if chat.can_add_members == 5 %}
-                          {% for object in chat.get_can_see_el_include_users %}
+                        {% if list.can_add_members == 5 %}
+                          {% for object in list.get_can_see_el_include_users %}
                             <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                           {% endfor %}
                         {% endif %}
@@ -53,14 +53,14 @@
                       <option value="5" {% if list.can_see_comment == 5 %}selected=""{% endif %}>Выбрать друзей...</option>
                     </select>
                     <div class="collector">
-                      {% if chat.can_see_comment == 4 %}
-                        {% for object in chat.get_can_see_comment_exclude_users %}
+                      {% if list.can_see_comment == 4 %}
+                        {% for object in list.get_can_see_comment_exclude_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
 
-                      {% if chat.can_see_comment == 5 %}
-                        {% for object in chat.get_can_see_comment_include_users %}
+                      {% if list.can_see_comment == 5 %}
+                        {% for object in list.get_can_see_comment_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
@@ -79,14 +79,14 @@
                       <option value="5" {% if list.create_el == 5 %}selected=""{% endif %}>Выбрать друзей...</option>
                     </select>
                     <div class="collector">
-                      {% if chat.create_el == 4 %}
-                        {% for object in chat.get_create_el_exclude_users %}
+                      {% if list.create_el == 4 %}
+                        {% for object in list.get_create_el_exclude_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
 
-                      {% if chat.create_el == 5 %}
-                        {% for object in chat.get_create_el_include_users %}
+                      {% if list.create_el == 5 %}
+                        {% for object in list.get_create_el_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
@@ -105,14 +105,14 @@
                       <option value="5" {% if list.create_comment == 5 %}selected=""{% endif %}>Выбрать друзей...</option>
                     </select>
                     <div class="collector">
-                      {% if chat.create_comment == 4 %}
-                        {% for object in chat.get_create_comment_exclude_users %}
+                      {% if list.create_comment == 4 %}
+                        {% for object in list.get_create_comment_exclude_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
 
-                      {% if chat.create_comment == 5 %}
-                        {% for object in chat.get_create_comment_include_users %}
+                      {% if list.create_comment == 5 %}
+                        {% for object in list.get_create_comment_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
@@ -131,14 +131,14 @@
                       <option value="5" {% if list.copy_el == 5 %}selected=""{% endif %}>Выбрать друзей...</option>
                     </select>
                     <div class="collector">
-                      {% if chat.copy_el == 4 %}
-                        {% for object in chat.get_copy_el_exclude_users %}
+                      {% if list.copy_el == 4 %}
+                        {% for object in list.get_copy_el_exclude_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
 
-                      {% if chat.copy_el == 5 %}
-                        {% for object in chat.get_copy_el_include_users %}
+                      {% if list.copy_el == 5 %}
+                        {% for object in list.get_copy_el_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                       {% endif %}
