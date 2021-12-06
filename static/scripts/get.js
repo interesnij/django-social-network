@@ -404,7 +404,6 @@ function private_users_send(form_post, url) {
 
 on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value, _this = this;
-  this.setAttribute("data-value", val);
   action = this.getAttribute("data-action");
   form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   collectors = this.parentElement.parentElement.parentElement.querySelectorAll(".collector");
