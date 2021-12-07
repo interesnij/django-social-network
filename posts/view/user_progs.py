@@ -384,7 +384,7 @@ class UserPostsListEdit(TemplateView):
                 create_comment=list.create_comment,
                 create_comment_users=request.POST.getlist("create_comment_users"),
                 copy_el=list.copy_el,
-                copy_el_users=request.POST.getlist("create_copy_el"),)
+                copy_el_users=request.POST.getlist("copy_el_users"),)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
