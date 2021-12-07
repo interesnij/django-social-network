@@ -432,7 +432,8 @@ class GoodList(models.Model):
 			if can_see_comment_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
 				for user_id in can_see_comment_users:
-					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)perm.can_see_comment = 1
+					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
+					perm.can_see_comment = 1
 					perm.save(update_fields=["can_see_comment"])
 		else:
 			self.can_see_comment = 7
