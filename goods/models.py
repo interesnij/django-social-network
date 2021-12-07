@@ -96,43 +96,43 @@ class GoodList(models.Model):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_can_see_el_include_users(self):
+	def get_can_see_el_include_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
 
-    def get_can_see_comment_exclude_users(self):
+	def get_can_see_comment_exclude_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_see_comment=2).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_can_see_comment_include_users(self):
+	def get_can_see_comment_include_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_see_comment=1).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
 
-    def get_create_el_exclude_users(self):
+	def get_create_el_exclude_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, create_item=2).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_create_el_include_users(self):
+	def get_create_el_include_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, create_item=1).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
 
-    def get_create_comment_exclude_users(self):
+	def get_create_comment_exclude_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, create_comment=2).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_create_comment_include_users(self):
+	def get_create_comment_include_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, create_comment=1).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
 
-    def get_copy_el_exclude_users(self):
+	def get_copy_el_exclude_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_copy=2).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_copy_el_include_users(self):
+	def get_copy_el_include_users(self):
 		from users.models import User
 		query = GoodListPerm.objects.filter(list_id=self.pk, can_copy=1).values("user_id")
 		return User.objects.filter(id__in=[i['user_id'] for i in query])
@@ -145,6 +145,7 @@ class GoodList(models.Model):
 		from communities.model.list import CommunityGoodListPosition
 		CommunityGoodListPosition.objects.get(community=community.pk, list=self.pk).delete()
 		self.communities.remove(user)
+
 	def add_in_user_collections(self, user):
 		from users.model.list import UserGoodListPosition
 		UserGoodListPosition.objects.create(user=user.pk, list=self.pk, position=GoodList.get_user_lists_count(user.pk))
