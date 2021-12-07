@@ -225,7 +225,7 @@ class MusicList(models.Model):
         return self.type[:4] == "_CLO"
 
     @classmethod
-    def create_list(cls,creator,name,description,community=None,can_see_el,create_el,copy_el,can_see_el_users,create_el_users,copy_el_users):
+    def create_list(cls,creator,name,description,community,can_see_el,create_el,copy_el,can_see_el_users,create_el_users,copy_el_users):
         from common.processing.music import get_playlist_processing
 
         list = cls.objects.create(creator=creator,name=name,description=description, community=community,can_see_el=can_see_el,create_el=create_el,copy_el=copy_el)
