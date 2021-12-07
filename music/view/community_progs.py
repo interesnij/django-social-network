@@ -68,7 +68,17 @@ class CommunityPlaylistCreate(TemplateView):
 
         if request.is_ajax() and form_post.is_valid() and request.user.is_staff_of_community(community.pk):
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=community)
+            new_list = list.create_list(
+                creator=request.user,
+                name=list.name,
+                description=list.description,
+                community=community,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("create_copy_el"),)
             return render_for_platform(request, 'communities/music/list/admin_list.html',{'playlist': new_list, 'community': community})
         else:
             return HttpResponseBadRequest()
@@ -96,7 +106,15 @@ class CommunityPlaylistEdit(TemplateView):
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_staff_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, order=list.order)
+            new_list = list.edit_list(
+                name=list.name,
+                description=list.description,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("copy_el_users"),)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

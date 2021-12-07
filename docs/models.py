@@ -53,6 +53,33 @@ class DocsList(models.Model):
         verbose_name = "список документов"
         verbose_name_plural = "списки документов"
 
+    def get_can_see_el_exclude_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_el_include_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_create_el_exclude_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, create_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_create_el_include_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, create_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_copy_el_exclude_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, can_copy=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_copy_el_include_users(self):
+        from users.models import User
+        query = DocsListPerm.objects.filter(list_id=self.pk, can_copy=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityDocsListPosition
         CommunityDocsListPosition.objects.create(community=community.pk, list=self.pk, position=DocsList.get_community_lists_count(community.pk))
@@ -200,47 +227,126 @@ class DocsList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community):
-        from notify.models import Notify, Wall
+    def create_list(cls, creator, name, description, community,can_see_el,create_el,copy_el,\
+        can_see_el_users,create_el_users,copy_el_users):
         from common.processing.doc import get_doc_list_processing
 
-        list = cls.objects.create(creator=creator,name=name,description=description,community=community)
-        is_public = True
+        list = cls.objects.create(creator=creator,name=name,description=description,community=community,can_see_el=can_see_el,create_el=create_el,copy_el=copy_el)
+        get_doc_list_processing(list, DocsList.LIST)
         if community:
             from communities.model.list import CommunityDocsListPosition
             CommunityDocsListPosition.objects.create(community=community.pk, list=list.pk, position=DocsList.get_community_lists_count(community.pk))
-            if is_public:
-                from common.notify.progs import community_send_notify, community_send_wall
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="DOL", object_id=list.pk, verb="ITE")
-                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_doc_list_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOL", object_id=list.pk, verb="ITE")
-                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_doc_list_notify")
         else:
             from users.model.list import UserDocsListPosition
             UserDocsListPosition.objects.create(user=creator.pk, list=list.pk, position=DocsList.get_user_lists_count(creator.pk))
-            if is_public:
-                from common.notify.progs import user_send_notify, user_send_wall
-                Wall.objects.create(creator_id=creator.pk, type="DOL", object_id=list.pk, verb="ITE")
-                user_send_wall(list.pk, None, "create_u_doc_list_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POL", object_id=list.pk, verb="ITE")
-                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_doc_list_notify")
-        get_doc_list_processing(list, DocsList.LIST)
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
+        else:
+            list.can_see_el = 7
+            list.save(update_fields=["can_see_el"])
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_item = 2
+                    perm.save(update_fields=["create_item"])
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_item = 1
+                    perm.save(update_fields=["create_item"])
+        else:
+            list.create_el = 7
+            list.save(update_fields=["create_el"])
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_copy = 2
+                    perm.save(update_fields=["can_copy"])
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = DocsListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_copy = 1
+                    perm.save(update_fields=["can_copy"])
+        else:
+            list.copy_el = 7
+            list.save(update_fields=["copy_el"])
         return list
-    def edit_list(self, name, description):
+    def edit_list(self, name, description,can_see_el,create_el,copy_el,\
+        can_see_el_users,create_el_users,copy_el_users):
         from common.processing.doc import get_doc_list_processing
+
+        get_doc_list_processing(self, DocsList.LIST)
 
         self.name = name
         self.description = description
-        is_public = True
-        self.save()
-        if is_public:
-            get_doc_list_processing(self, DocsList.LIST)
-            self.make_publish()
+        self.can_see_el = can_see_el
+        self.create_el = create_el
+        self.copy_el = copy_el
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+                for user_id in can_see_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+                for user_id in can_see_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
         else:
-            get_doc_list_processing(self, DocsList.PRIVATE)
-            self.make_private()
+            self.can_see_el = 7
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+                for user_id in create_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_item = 2
+                    perm.save(update_fields=["create_item"])
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+                for user_id in create_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_item = 1
+                    perm.save(update_fields=["create_item"])
+        else:
+            self.create_el = 7
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+                for user_id in copy_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_copy = 2
+                    perm.save(update_fields=["can_copy"])
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                DocsListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+                for user_id in copy_el_users:
+                    perm = DocsListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_copy = 1
+                    perm.save(update_fields=["can_copy"])
+        self.save()
         return self
 
     def make_private(self):
@@ -521,3 +627,35 @@ class Doc(models.Model):
 
     def is_private(self):
         return False
+
+
+class DocsListPerm(models.Model):
+    """ включения и исключения для пользователей касательно конкретного списка записей
+        1. YES_ITEM - может соверщать описанные действия
+        2. NO_ITEM - не может соверщать описанные действия
+    """
+    NO_VALUE, YES_ITEM, NO_ITEM, TEST = 0, 1, 2, 3
+    ITEM = (
+        (YES_ITEM, 'Может иметь действия с элементом'),
+        (NO_ITEM, 'Не может иметь действия с элементом'),
+        (NO_VALUE, 'Нет значения'),
+    )
+
+    list = models.ForeignKey(DocsList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Пользователь")
+
+    can_see_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит список/документы")
+    create_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает документы")
+    can_copy = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто может добавлять список/документы себе")
+
+    class Meta:
+        verbose_name = 'Исключения/Включения друга'
+        verbose_name_plural = 'Исключения/Включения друзей'
+
+    @classmethod
+    def get_or_create_perm(cls, list_id, user_id, ):
+        if cls.objects.filter(list_id=list_id, user_id=user_id).exists():
+            return cls.objects.get(list_id=list_id, user_id=user_id)
+        else:
+            perm = cls.objects.create(list_id=list_id, user_id=user_id)
+            return perm
