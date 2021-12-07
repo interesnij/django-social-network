@@ -402,7 +402,7 @@ function private_users_send(form_post, url) {
   link_.send(form);
 }
 
-on('#ajax', 'OnMouseDown', '.cool_private_select', function() {
+on('#ajax', 'change', '.cool_private_select', function() {
   val = this.value, _this = this;
   action = this.getAttribute("data-action");
   form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
