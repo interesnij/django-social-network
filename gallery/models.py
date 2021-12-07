@@ -293,7 +293,7 @@ class PhotoList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community,community,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
+    def create_list(cls, creator, name, description,community,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
         can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
         from common.processing.photo import get_photo_list_processing
 
