@@ -71,7 +71,17 @@ class UserPlaylistCreate(TemplateView):
 
         if request.is_ajax() and form_post.is_valid():
             list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
+            new_list = list.create_list(
+                creator=request.user,
+                name=list.name,
+                description=list.description,
+                community=None,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("create_copy_el"),)
             return render_for_platform(request, 'users/music/list/my_list.html',{'playlist': new_list, 'user': request.user})
         else:
             return HttpResponseBadRequest()
@@ -99,7 +109,15 @@ class UserPlaylistEdit(TemplateView):
         self.form = PlaylistForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid():
             list = self.form.save(commit=False)
-            new_list = list.edit_list(name=list.name, description=list.description, order=list.order)
+            new_list = list.edit_list(
+                name=list.name,
+                description=list.description,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("copy_el_users"),)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

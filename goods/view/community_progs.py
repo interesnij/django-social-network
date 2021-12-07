@@ -210,7 +210,21 @@ class GoodListCommunityCreate(TemplateView):
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.c.pk):
             list = self.form.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=self.c)
+            new_list = list.create_list(
+                creator=request.user,
+                name=list.name,
+                description=list.description,
+                community=self.c,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                can_see_comment=list.can_see_comment,
+                can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                create_comment=list.create_comment,
+                create_comment_users=request.POST.getlist("create_comment_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("create_copy_el"),)
             return render_for_platform(request, 'communities/goods/main_list/admin_list.html',{'list': new_list, 'community': self.c})
         else:
             return HttpResponseBadRequest()
@@ -239,7 +253,19 @@ class CommunityGoodListEdit(TemplateView):
         self.form = GoodListForm(request.POST,instance=self.list)
         if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description)
+            new_list = list.edit_list(
+                name=list.name,
+                description=list.description,
+                can_see_el=list.can_see_el,
+                can_see_el_users=request.POST.getlist("can_see_el_users"),
+                can_see_comment=list.can_see_comment,
+                can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                create_el=list.create_el,
+                create_el_users=request.POST.getlist("create_el_users"),
+                create_comment=list.create_comment,
+                create_comment_users=request.POST.getlist("create_comment_users"),
+                copy_el=list.copy_el,
+                copy_el_users=request.POST.getlist("copy_el_users"),)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

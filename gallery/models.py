@@ -63,6 +63,51 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
+    def get_can_see_el_exclude_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_el_include_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_can_see_comment_exclude_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_see_comment=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_comment_include_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_see_comment=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_create_el_exclude_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, create_item=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_create_el_include_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, create_item=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_create_comment_exclude_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, create_comment=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_create_comment_include_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, create_comment=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_copy_el_exclude_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_copy=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_copy_el_include_users(self):
+        from users.models import User
+        query = PhotoListPerm.objects.filter(list_id=self.pk, can_copy=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityPhotoListPosition
         CommunityPhotoListPosition.objects.create(community=community.pk, list=self.pk, position=PhotoList.get_community_lists_count(community.pk))
@@ -248,65 +293,200 @@ class PhotoList(models.Model):
         return cls.objects.filter(query).values("pk").count()
 
     @classmethod
-    def create_list(cls, creator, name, description, community):
-        from notify.models import Notify, Wall
+    def create_list(cls, creator, name, description, community,community,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
+        can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
         from common.processing.photo import get_photo_list_processing
 
-        list = cls.objects.create(creator=creator,name=name,description=description, community=community)
-        is_public = True
+        list = cls.objects.create(creator=creator,name=name,description=description,community=community,can_see_el=can_see_el,can_see_comment=can_see_comment,create_el=create_el,create_comment=create_comment,copy_el=copy_el)
+        get_photo_list_processing(list, PhotoList.LIST)
         if community:
             from communities.model.list import CommunityPhotoListPosition
             CommunityPhotoListPosition.objects.create(community=community.pk, list=list.pk, position=PhotoList.get_community_lists_count(community.pk))
-            if is_public:
-                from common.notify.progs import community_send_notify, community_send_wall
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="PHL", object_id=list.pk, verb="ITE")
-                community_send_wall(list.pk, creator.pk, community.pk, None, "create_c_photo_list_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
-                    community_send_notify(list.pk, creator.pk, user_id, community.pk, None, "create_c_photo_list_notify")
         else:
             from users.model.list import UserPhotoListPosition
             UserPhotoListPosition.objects.create(user=creator.pk, list=list.pk, position=PhotoList.get_user_lists_count(creator.pk))
-            if is_public:
-                from common.notify.progs import user_send_notify, user_send_wall
-                Wall.objects.create(creator_id=creator.pk, type="PHL", object_id=list.pk, verb="ITE")
-                user_send_wall(list.pk, None, "create_u_photo_list_wall")
-                for user_id in creator.get_user_news_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="PHL", object_id=list.pk, verb="ITE")
-                    user_send_notify(list.pk, creator.pk, user_id, None, "create_u_photo_list_notify")
-        get_photo_list_processing(list, PhotoList.LIST)
+
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                for user_id in can_see_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
+        else:
+            list.can_see_el = 7
+            list.save(update_fields=["can_see_el"])
+
+        if can_see_comment == 4 or can_see_comment == 9:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_comment = 2
+                    perm.save(update_fields=["can_see_comment"])
+        elif can_see_comment == 5 or can_see_comment == 10:
+            if can_see_comment_users:
+                for user_id in can_see_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_see_comment = 1
+                    perm.save(update_fields=["can_see_comment"])
+        else:
+            list.can_see_comment = 7
+            list.save(update_fields=["can_see_comment"])
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_item = 2
+                    perm.save(update_fields=["create_item"])
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                for user_id in create_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_item = 1
+                    perm.save(update_fields=["create_item"])
+        else:
+            list.create_el = 7
+            list.save(update_fields=["create_el"])
+
+        if create_comment == 4 or create_comment == 9:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_comment = 2
+                    perm.save(update_fields=["create_comment"])
+        elif create_comment == 5 or create_comment == 10:
+            if create_comment_users:
+                for user_id in create_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.create_comment = 1
+                    perm.save(update_fields=["create_comment"])
+        else:
+            list.create_comment = 7
+            list.save(update_fields=["create_comment"])
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_copy = 2
+                    perm.save(update_fields=["can_copy"])
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                for user_id in copy_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(list.pk, user_id)
+                    perm.can_copy = 1
+                    perm.save(update_fields=["can_copy"])
+        else:
+            list.copy_el = 7
+            list.save(update_fields=["copy_el"])
+
         return list
-    def edit_list(self, name, description):
+
+    def edit_list(self, name, description,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
+        can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
         from common.processing.photo import get_photo_list_processing
+
+        get_photo_list_processing(self, PhotoList.LIST)
 
         self.name = name
         self.description = description
-        self.save()
-        is_public = True
-        if is_public:
-            get_photo_list_processing(self, PhotoList.LIST)
-            self.make_publish()
-        else:
-            get_photo_list_processing(self, PhotoList.PRIVATE)
-            self.make_private()
-        return self
+        self.can_see_el = can_see_el
+        self.can_see_comment = can_see_comment
+        self.create_el = create_el
+        self.create_comment = create_comment
+        self.copy_el = copy_el
 
-    def make_private(self):
-        from notify.models import Notify, Wall
-        self.type = PhotoList.PRIVATE
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
-    def make_publish(self):
-        from notify.models import Notify, Wall
-        self.type = PhotoList.LIST
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+        if can_see_el == 4 or can_see_el == 9:
+            if can_see_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+                for user_id in can_see_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 2
+                    perm.save(update_fields=["can_see_item"])
+        elif can_see_el == 5 or can_see_el == 10:
+            if can_see_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
+                for user_id in can_see_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_item = 1
+                    perm.save(update_fields=["can_see_item"])
+        else:
+            self.can_see_el = 7
+
+        if can_see_comment == 4 or can_see_comment == 9:
+            if can_see_comment_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
+                for user_id in can_see_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_comment = 2
+                    perm.save(update_fields=["can_see_comment"])
+        elif can_see_comment == 5 or can_see_comment == 10:
+            if can_see_comment_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
+                for user_id in can_see_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_see_comment = 1
+                    perm.save(update_fields=["can_see_comment"])
+        else:
+            self.can_see_comment = 7
+
+        if create_el == 4 or create_el == 9:
+            if create_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+                for user_id in create_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_item = 2
+                    perm.save(update_fields=["create_item"])
+        elif create_el == 5 or create_el == 10:
+            if create_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(create_item=0)
+                for user_id in create_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_item = 1
+                    perm.save(update_fields=["create_item"])
+        else:
+            self.create_el = 7
+
+        if create_comment == 4 or create_comment == 9:
+            if create_comment_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(create_comment=0)
+                for user_id in create_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_comment = 2
+                    perm.save(update_fields=["create_comment"])
+        elif create_comment == 5 or create_comment == 10:
+            if create_comment_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(create_comment=0)
+                for user_id in create_comment_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.create_comment = 1
+                    perm.save(update_fields=["create_comment"])
+        else:
+            self.create_comment = 7
+
+        if copy_el == 4 or copy_el == 9:
+            if copy_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+                for user_id in copy_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_copy = 2
+                    perm.save(update_fields=["can_copy"])
+        elif copy_el == 5 or copy_el == 10:
+            if copy_el_users:
+                PhotoListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
+                for user_id in copy_el_users:
+                    perm = PhotoListPerm.get_or_create_perm(self.pk, user_id)
+                    perm.can_copy = 1
+                    perm.save(update_fields=["can_copy"])
+
+        self.save()
+        return self
 
     def delete_item(self):
         from notify.models import Notify, Wall
@@ -1028,3 +1208,37 @@ class PhotoComment(models.Model):
             return self.parent.photo
         else:
             return self.photo
+
+
+class PhotoListPerm(models.Model):
+    """ включения и исключения для пользователей касательно конкретного списка записей
+        1. YES_ITEM - может соверщать описанные действия
+        2. NO_ITEM - не может соверщать описанные действия
+    """
+    NO_VALUE, YES_ITEM, NO_ITEM, TEST = 0, 1, 2, 3
+    ITEM = (
+        (YES_ITEM, 'Может иметь действия с элементом'),
+        (NO_ITEM, 'Не может иметь действия с элементом'),
+        (NO_VALUE, 'Нет значения'),
+    )
+
+    list = models.ForeignKey(PhotoList, related_name='+', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Список записей")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='+', null=True, blank=False, verbose_name="Пользователь")
+
+    can_see_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит список/фотографии")
+    can_see_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комментарии")
+    create_item = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает фотографии")
+    create_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комментарии")
+    can_copy = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто может добавлять список/фотографии себе")
+
+    class Meta:
+        verbose_name = 'Исключения/Включения друга'
+        verbose_name_plural = 'Исключения/Включения друзей'
+
+    @classmethod
+    def get_or_create_perm(cls, list_id, user_id, ):
+        if cls.objects.filter(list_id=list_id, user_id=user_id).exists():
+            return cls.objects.get(list_id=list_id, user_id=user_id)
+        else:
+            perm = cls.objects.create(list_id=list_id, user_id=user_id)
+            return perm
