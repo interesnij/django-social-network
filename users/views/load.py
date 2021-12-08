@@ -355,7 +355,7 @@ class ChatsLoad(ListView):
 
 
 class LoadListExcludeUsers(ListView):
-	template_name, users = None, []
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_detect_platform_template
@@ -363,16 +363,121 @@ class LoadListExcludeUsers(ListView):
 		self.type = request.GET.get("action")
 		self.target = request.GET.get("target")
 		self.community_pk = request.GET.get("community_pk")
+		data = request.GET.get("list")
 		if self.type == "can_see_el":
 			self.text = "видеть записи"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_exclude_users()
 		elif self.type == "can_see_comment":
 			self.text = "видеть комментарии"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_exclude_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_exclude_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_exclude_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_exclude_users()
 		elif self.type == "create_el":
 			self.text = "создавать записи и потом с ними работает"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_exclude_users()
 		elif self.type == "create_comment":
 			self.text = "создавать комментарии и потом с ними работает"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_exclude_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_exclude_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_exclude_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_exclude_users()
 		elif self.type == "copy_el":
 			self.text = "копировать записи и список"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_exclude_users()
 
 		if self.community_pk and request.user.is_administrator_of_community(self.community_pk):
 			self.template_name = get_detect_platform_template("users/load/list_exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -384,6 +489,7 @@ class LoadListExcludeUsers(ListView):
 		context = super(LoadListExcludeUsers,self).get_context_data(**kwargs)
 		context["text"] = self.text
 		context["type"] = self.type
+		context["users"] = self.users
 		return context
 
 	def get_queryset(self):
@@ -395,7 +501,7 @@ class LoadListExcludeUsers(ListView):
 			return community.get_members()
 
 class LoadListIncludeUsers(ListView):
-	template_name, users = None, []
+	template_name = None
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_detect_platform_template
@@ -403,16 +509,121 @@ class LoadListIncludeUsers(ListView):
 		self.type = request.GET.get("action")
 		self.target = request.GET.get("target")
 		self.community_pk = request.GET.get("community_pk")
+		data = request.GET.get("list")
 		if self.type == "can_see_el":
 			self.text = "видеть записи"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_el_include_users()
 		elif self.type == "can_see_comment":
 			self.text = "видеть комментарии"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_include_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_include_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_include_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_can_see_comment_include_users()
 		elif self.type == "create_el":
 			self.text = "создавать записи и потом с ними работает"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_create_el_include_users()
 		elif self.type == "create_comment":
 			self.text = "создавать комментарии и потом с ними работает"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_include_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_include_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_include_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_create_comment_include_users()
 		elif self.type == "copy_el":
 			self.text = "копировать записи и список"
+			if data[:3] == "pos":
+				from posts.models import PostsList
+				list = PostsList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
+			elif data[:3] == "pho":
+				from gallery.models import PhotoList
+				list = PhotoList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
+			elif data[:3] == "doc":
+				from docs.models import DocsList
+				list = DocsList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
+			elif data[:3] == "goo":
+				from goods.models import GoodList
+				list = GoodList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
+			elif data[:3] == "vid":
+				from video.models import VideoList
+				list = VideoList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
+			elif data[:3] == "mus":
+				from music.models import MusicList
+				list = MusicList.objects.get(pk=data[3:])
+				self.users = list.get_copy_el_include_users()
 		if self.community_pk and request.user.is_administrator_of_community(self.community_pk):
 			self.template_name = get_detect_platform_template("users/load/list_include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.target == "user":
@@ -423,6 +634,7 @@ class LoadListIncludeUsers(ListView):
 		context = super(LoadListIncludeUsers,self).get_context_data(**kwargs)
 		context["text"] = self.text
 		context["type"] = self.type
+		context["users"] = self.users
 		return context
 
 	def get_queryset(self):
