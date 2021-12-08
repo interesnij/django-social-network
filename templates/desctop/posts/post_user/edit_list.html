@@ -21,29 +21,49 @@
                       {% if list.can_see_el == 1 %}
                       <a class="menu_drop">Все пользователи</a>
                       <input name="can_see_el" type="hidden" value="1" />
+
+                      {% elif list.can_see_el == 2 %}
+                      <a class="menu_drop">Друзья</a>
+                      <input name="can_see_el" type="hidden" value="2" />
+
+                      {% elif list.can_see_el == 3 %}
+                      <a class="menu_drop">Друзья и друзья друзей</a>
+                      <input name="can_see_el" type="hidden" value="3" />
+
+                      {% elif list.can_see_el == 7 %}
+                      <a class="menu_drop">Только я</a>
+                      <input name="can_see_el" type="hidden" value="3" />
+
+                      {% elif list.can_see_el == 4 %}
+                      <a class="menu_drop">Друзья, кроме</a>
+                      <span class="collector">:
+                        {% for object in list.get_can_see_el_exclude_users %}
+                          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                      </span>
+                      <input name="can_see_el" type="hidden" value="4" />
+
+                      {% elif list.can_see_el == 5 %}
+                      <a class="menu_drop">Выбрать друзей</a>
+                      <span class="collector">:
+                        {% for object in list.get_can_see_el_include_users %}
+                          <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                          {% endfor %}
+                      </span>
+                      <input name="can_see_el" type="hidden" value="4" />
+                      {% endif %}
                       <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
+                          <span class="dropdown-item">Все пользователи</span>
                           <span class="dropdown-item">Друзья</span>
                           <span class="dropdown-item">Друзья и друзья друзей</span>
                           <span class="dropdown-item">Только я</span>
-                          <span class="dropdown-item">Друзья, кроме</span>
-                          <span class="dropdown-item">Выбрать друзей</span>
-                      </div>
-                      {% endif %}
-                      <div class="collector">
-                        {% if list.can_see_el == 4 %}
-                          {% for object in list.get_can_see_el_exclude_users %}
-                            <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                          {% endfor %}
-                        {% endif %}
-
-                        {% if list.can_see_el == 5 %}
-                          {% for object in list.get_can_see_el_include_users %}
-                            <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                          {% endfor %}
-                        {% endif %}
+                          <span class="select_exclude_users dropdown-item">Друзья, кроме</span>
+                          <span class="select_include_users dropdown-item">Некторые друзья</span>
                       </div>
                     </span>
                 </div>
+
+
                 <div class="row mb-1 form_group_flex">
                   <label class="col-md-6">Кто видит комментарии</label>
                   <span class="col-md-6">
