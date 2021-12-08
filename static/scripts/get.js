@@ -425,6 +425,7 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   current_option = this.parentElement.parentElement.querySelector(".menu_drop_2");
   collector.classList.add("collector_active");
   current_option.innerHTML = _this.innerHTML;
+  console.log(val);
 
   if (form_post.classList.contains("case_edit")) {
     // если мы имеем дело с изменением приватности элемента, который
