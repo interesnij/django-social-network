@@ -19,24 +19,24 @@
                     <label class="col-md-6">Кто видит список</label>
                     <span class="col-md-6">
                       {% if list.can_see_el == 1 %}
-                      <a class="menu_drop_2">Все пользователи</a>
+                      <a class="menu_drop_2 pointer underline">Все пользователи</a>
                       <input name="can_see_el" type="hidden" value="1" />
 
                       {% elif list.can_see_el == 2 %}
-                      <a class="menu_drop_2">Друзья</a>
+                      <a class="menu_drop_2 pointer underline">Друзья</a>
                       <input name="can_see_el" type="hidden" value="2" />
 
                       {% elif list.can_see_el == 3 %}
-                      <a class="menu_drop_2">Друзья и друзья друзей</a>
+                      <a class="menu_drop_2 pointer underline">Друзья и друзья друзей</a>
                       <input name="can_see_el" type="hidden" value="3" />
 
                       {% elif list.can_see_el == 7 %}
-                      <a class="menu_drop_2">Только я</a>
+                      <a class="menu_drop_2 pointer underline">Только я</a>
                       <input name="can_see_el" type="hidden" value="3" />
 
                       {% elif list.can_see_el == 4 %}
                       <input name="can_see_el" type="hidden" value="4" />
-                      <a class="menu_drop_2">Друзья, кроме</a>
+                      <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
                       <span class="collector">:
                         {% for object in list.get_can_see_el_exclude_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
@@ -45,7 +45,7 @@
 
                       {% elif list.can_see_el == 5 %}
                       <input name="can_see_el" type="hidden" value="4" />
-                      <a class="menu_drop_2">Выбрать друзей</a>
+                      <a class="menu_drop_2 pointer underline">Выбрать друзей</a>
                       <span class="collector">:
                         {% for object in list.get_can_see_el_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
