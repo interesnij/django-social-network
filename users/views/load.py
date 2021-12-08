@@ -409,7 +409,7 @@ class LoadListExcludeUsers(ListView):
 				list = VideoList.objects.get(pk=data[3:])
 				self.users = list.get_can_see_comment_exclude_users()
 		elif self.type == "create_el":
-			self.text = "создавать записи и потом с ними работает"
+			self.text = "создавать записи"
 			if data[:3] == "pos":
 				from posts.models import PostsList
 				list = PostsList.objects.get(pk=data[3:])
@@ -435,7 +435,7 @@ class LoadListExcludeUsers(ListView):
 				list = MusicList.objects.get(pk=data[3:])
 				self.users = list.get_create_el_exclude_users()
 		elif self.type == "create_comment":
-			self.text = "создавать комментарии и потом с ними работает"
+			self.text = "создавать комментарии"
 			if data[:3] == "pos":
 				from posts.models import PostsList
 				list = PostsList.objects.get(pk=data[3:])
@@ -555,7 +555,7 @@ class LoadListIncludeUsers(ListView):
 				list = VideoList.objects.get(pk=data[3:])
 				self.users = list.get_can_see_comment_include_users()
 		elif self.type == "create_el":
-			self.text = "создавать записи и потом с ними работает"
+			self.text = "создавать записи"
 			if data[:3] == "pos":
 				from posts.models import PostsList
 				list = PostsList.objects.get(pk=data[3:])
@@ -581,7 +581,7 @@ class LoadListIncludeUsers(ListView):
 				list = MusicList.objects.get(pk=data[3:])
 				self.users = list.get_create_el_include_users()
 		elif self.type == "create_comment":
-			self.text = "создавать комментарии и потом с ними работает"
+			self.text = "создавать комментарии"
 			if data[:3] == "pos":
 				from posts.models import PostsList
 				list = PostsList.objects.get(pk=data[3:])
