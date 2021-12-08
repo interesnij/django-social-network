@@ -483,14 +483,13 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
 });
 
 
-on('#ajax', 'click', '.exclude_include_options', function(e) {
-  e.preventDefault();
+on('#ajax', 'click', '.exclude_include_options', function() {
   val = this.value, _this = this;
   console.log(_this.parentElement.value);
   console.log(val);
-  if (!_this.parentElement.value == val) {
-    return
-  };
+  //if (!_this.parentElement.value == val) {
+  //  return
+  //};
   action = this.getAttribute("data-action");
   form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   collectors = this.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".collector");
