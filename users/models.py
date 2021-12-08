@@ -350,7 +350,7 @@ class User(AbstractUser):
         frend.save(update_fields=["visited"])
 
     def plus_community_visited(self, community_id):
-        from community.models import CommunityMembership
+        from communities.models import CommunityMembership
         member = CommunityMembership.objects.get(community_id=community_id, user_id=self.pk)
         member.visited = member.visited + 1
         member.save(update_fields=["visited"])
