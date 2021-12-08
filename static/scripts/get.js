@@ -421,8 +421,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   for (var i = 0; i < collectors.length; i++){
     collectors[i].classList.remove("collector_active")
   };
-  collector = this.parentElement.parentElement.querySelector(".collector");
-  current_option = this.parentElement.parentElement.querySelector(".menu_drop_2");
+  parent_2 = this.parentElement.parentElement;
+  collector = parent_2.querySelector(".collector");
+  current_option = parent_2.querySelector(".menu_drop_2");
+  parent_2.querySelector(".input").setAttribute("value", val);
   collector.classList.add("collector_active");
   current_option.innerHTML = _this.innerHTML;
   console.log(val);
