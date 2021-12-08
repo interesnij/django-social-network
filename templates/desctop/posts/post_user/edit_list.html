@@ -19,21 +19,21 @@
                     <label class="col-md-6">Кто видит список</label>
                     <span class="col-md-6">
                       {% if list.can_see_el == 1 %}
-                      <a class="menu_drop_2 pointer">Все пользователи</a>
                       <input class="input" name="can_see_el" type="hidden" value="1" />
-
+                      <a class="menu_drop_2 pointer">Все пользователи</a>
+                      <span class="collector"></span>
                       {% elif list.can_see_el == 2 %}
-                      <a class="menu_drop_2 pointer">Друзья</a>
                       <input class="input" name="can_see_el" type="hidden" value="2" />
-
+                      <a class="menu_drop_2 pointer">Друзья</a>
+                      <span class="collector"></span>
                       {% elif list.can_see_el == 3 %}
+                      <input class="input" name="can_see_el" type="hidden" value="3" />
                       <a class="menu_drop_2 pointer">Друзья и друзья друзей</a>
-                      <input class="input" name="can_see_el" type="hidden" value="3" />
-
+                      <span class="collector"></span>
                       {% elif list.can_see_el == 7 %}
+                      <input class="input" name="can_see_el" type="hidden" value="7" />
                       <a class="menu_drop_2 pointer">Только я</a>
-                      <input class="input" name="can_see_el" type="hidden" value="3" />
-
+                      <span class="collector"></span>
                       {% elif list.can_see_el == 4 %}
                       <input class="input" name="can_see_el" type="hidden" value="4" />
                       <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
