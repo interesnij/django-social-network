@@ -546,4 +546,4 @@ function yourFunction () {
         create_fullscreen("/users/load/list_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("community-pk") + "&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
   }
-});
+};
