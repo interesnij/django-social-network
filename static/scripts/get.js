@@ -481,3 +481,67 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
   form.classList.remove("cool_private_form");
   close_work_fullscreen();
 });
+
+
+on('#ajax', 'click', '.exclude_include_options', function() {
+  val = this.value, _this = this;
+  if (!this.parentElement.value == val) {
+    return
+  };
+  action = this.getAttribute("data-action");
+  form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  collectors = this.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".collector");
+  for (var i = 0; i < collectors.length; i++){
+    collectors[i].classList.remove("collector_active")
+  };
+  this.parentElement.nextElementSibling.classList.add("collector_active");
+
+  if (form_post.classList.contains("case_edit")) {
+    // если мы имеем дело с изменением приватности элемента, который
+    // уже есть, поэтому можем сразу сохранять приватность
+
+    if (this.classList.contains("type_user_chat")) {
+      // работаем с приватностью пользовательского чата
+      if (val == '4') {
+        create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      }
+      else if (val == '5') {
+        create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      }
+      else {
+        private_users_send(form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val)
+      }
+  }
+  else if (this.parentElement.classList.contains("type_community_chat")) {
+    // работаем с приватностью чата в сообществе
+    null
+  }
+  else if (this.parentElement.classList.contains("type_user")) {
+    // работаем с приватностью профиля пользователя
+    null
+  }
+  else if (this.parentElement.classList.contains("type_community")) {
+    // работаем с приватностью сообщества
+    null
+  }
+
+  }
+  else if (form_post.classList.contains("case_create")) {
+    // мы меняем приватность элемента, которого еще нет, поэтому не можем
+    // на лету сохранять изменение приватности. Мы должны оформить исключения или
+    // назначения в виде post полей и разобрать их при создании элемента
+    // например, при создании списка записей
+      if (val == '4') {
+        create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
+      }
+      else if (val == '5') {
+        create_fullscreen("/users/load/list_include_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
+      }
+      else if (val == '9') {
+        create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&community_pk=" + form_post.getAttribute("community-pk") + "&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
+      }
+      else if (val == '10') {
+        create_fullscreen("/users/load/list_include_users/?action=" + action + "&community_pk=" + form_post.getAttribute("community-pk") + "&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
+      }
+  }
+});

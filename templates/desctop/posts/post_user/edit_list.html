@@ -23,8 +23,8 @@
                         <option value="2" {% if list.can_see_el == 2 %}selected=""{% endif %}>Друзья</option>
                         <option value="3" {% if list.can_see_el == 3 %}selected=""{% endif %}>Друзья и друзья друзей</option>
                         <option value="7" {% if list.can_see_el == 7 %}selected=""{% endif %}>Только я</option>
-                        <option value="4" {% if list.can_see_el == 4 %}selected=""{% endif %}>Друзья, кроме:</option>
-                        <option value="5" {% if list.can_see_el == 5 %}selected=""{% endif %}>Выбрать друзей:</option>
+                        <option class="exclude_include_options" value="4" {% if list.can_see_el == 4 %}selected=""{% endif %}>Друзья, кроме:</option>
+                        <option class="exclude_include_options" value="5" {% if list.can_see_el == 5 %}selected=""{% endif %}>Выбрать друзей:</option>
                       </select>
                       <div class="collector">
                         {% if list.can_see_el == 4 %}
