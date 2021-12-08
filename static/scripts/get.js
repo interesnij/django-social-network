@@ -492,7 +492,7 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
   for (var i = 0; i < users_list.length; i++){
     a = users_list[i].querySelector("a");
     final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
-    final_list += '<input type="hidden" name="' + collector.previousElementSibling.getAttribute("data-action") + '_users" value="' + users_list[i].getAttribute("data-pk") + '" />'
+    final_list += '<input type="hidden" name="' + collector.nextElementSibling.getAttribute("data-action") + '_users" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
   collector.innerHTML = final_list;
   form.classList.remove("cool_private_form");
