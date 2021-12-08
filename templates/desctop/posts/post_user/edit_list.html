@@ -17,7 +17,7 @@
 
                 <div class="row mb-1 form_group_flex">
                     <label class="col-md-6">Кто видит список</label>
-                    <span class="col-md-6" data-action="can_see_el">
+                    <span class="col-md-6">
                       {% if list.can_see_el == 1 %}
                       <a class="menu_drop_2 pointer underline">Все пользователи</a>
                       <input name="can_see_el" type="hidden" value="1" />
@@ -52,7 +52,7 @@
                           {% endfor %}
                       </span>
                       {% endif %}
-                      <div class="dropdown-menu" style="top: 30px;">
+                      <div class="dropdown-menu" data-action="can_see_el" style="top: 30px;">
                           <span class="dropdown-item select_perm_dropdown" data-value="1">Все пользователи</span>
                           <span class="dropdown-item select_perm_dropdown" data-value="2">Друзья</span>
                           <span class="dropdown-item select_perm_dropdown" data-value="3">Друзья и друзья друзей</span>
