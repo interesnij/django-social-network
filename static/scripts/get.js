@@ -485,7 +485,9 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
 
 on('#ajax', 'click', '.exclude_include_options', function() {
   val = this.value, _this = this;
-  if (!this.parentElement.value == val) {
+  console.log(_this.parentElement.value);
+  console.log(val);
+  if (!_this.parentElement.value == val) {
     return
   };
   action = this.getAttribute("data-action");
