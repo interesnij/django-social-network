@@ -28,6 +28,7 @@
                           <span class="dropdown-item">Друзья, кроме</span>
                           <span class="dropdown-item">Выбрать друзей</span>
                       </div>
+                      {% endif %}
                       <div class="collector">
                         {% if list.can_see_el == 4 %}
                           {% for object in list.get_can_see_el_exclude_users %}
