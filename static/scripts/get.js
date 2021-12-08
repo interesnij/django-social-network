@@ -184,6 +184,15 @@ on('body', 'click', '.menu_drop', function() {
     all_drop[i].classList.remove("show")
   } block.classList.add("show")}
 });
+on('body', 'click', '.menu_drop_2', function() {
+  block = this.nextElementSibling.nextElementSibling;
+  if (block.classList.contains("show")) { block.classList.remove("show") }
+  else {
+  all_drop = document.body.querySelectorAll(".dropdown-menu");
+  for(i=0; i<all_drop.length; i++) {
+    all_drop[i].classList.remove("show")
+  } block.classList.add("show")}
+});
 
 on('body', 'click', '.user_nav_button', function() {
   document.body.querySelector(".settings_block_hide") ? (settings_block = document.body.querySelector(".settings_block_hide"),settings_block.classList.add("settings_block_show"),settings_block.classList.remove("settings_block_hide"))
