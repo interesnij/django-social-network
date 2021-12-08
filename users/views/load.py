@@ -640,7 +640,7 @@ class LoadListIncludeUsers(ListView):
 	def get_queryset(self):
 		if self.target == "user":
 			return self.request.user.get_all_connection()
-		elif self.target == "community_pk":
+		elif self.community_pk:
 			from communities.models import Community
-			community = Community.objects.get(pk=self.target)
+			community = Community.objects.get(pk=self.community_pk)
 			return community.get_members()
