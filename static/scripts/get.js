@@ -414,6 +414,7 @@ function private_users_send(form_post, url) {
 on('#ajax', 'click', '.select_perm_dropdown', function() {
   val = this.getAttribute("data-value"), _this = this;
   action = this.parentElement.getAttribute("data-action");
+  _this.parentElement.classList.remove("show");
 
   form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   collectors = this.parentElement.parentElement.parentElement.querySelectorAll(".collector");
