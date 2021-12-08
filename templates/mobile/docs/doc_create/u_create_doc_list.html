@@ -18,7 +18,7 @@
                     <label>Кто видит список</label>
                     {{ form.can_see_item }}
                   </div>
-
+                  {% include 'base_block/perm/create_user_list_perm.html' %}
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border this_mob_fullscreen_hide">Отмена</button>
