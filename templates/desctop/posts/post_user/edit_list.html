@@ -45,7 +45,7 @@
 
                       {% elif list.can_see_el == 5 %}
                       <input class="input" name="can_see_el" type="hidden" value="4" />
-                      <a class="menu_drop_2 pointer underline">Выбрать друзей</a>
+                      <a class="menu_drop_2 pointer underline">Некоторые друзья</a>
                       <span class="collector">:
                         {% for object in list.get_can_see_el_include_users %}
                           <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}

@@ -1,6 +1,9 @@
 .active h6{
   font-weight: bold;
 }
+.menu_drop_2 {
+  vertical-align: -webkit-baseline-middle;
+}
 .bottom_nav_counter {
   position: absolute;
   top: 0px;
