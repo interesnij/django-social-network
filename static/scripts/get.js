@@ -483,7 +483,8 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
 });
 
 
-on('#ajax', 'click', '.exclude_include_options', function() {
+on('#ajax', 'click', '.exclude_include_options', function(e) {
+  e.preventDefault();
   val = this.value, _this = this;
   console.log(_this.parentElement.value);
   console.log(val);
