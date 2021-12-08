@@ -1,9 +1,7 @@
 .active h6{
   font-weight: bold;
 }
-.middle_pos {
-  vertical-align: -webkit-baseline-middle;
-}
+
 .bottom_nav_counter {
   position: absolute;
   top: 0px;
@@ -200,7 +198,6 @@ button {
 }
 .form_group_flex label{
   width: -webkit-fill-available;
-  margin-top: .5rem;
 }
 .form_group_flex select{
   border: none;
