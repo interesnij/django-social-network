@@ -355,7 +355,7 @@ class ChatsLoad(ListView):
 
 
 class LoadListExcludeUsers(ListView):
-	template_name = None
+	template_name, users = None, None
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_detect_platform_template
@@ -501,7 +501,7 @@ class LoadListExcludeUsers(ListView):
 			return community.get_members()
 
 class LoadListIncludeUsers(ListView):
-	template_name = None
+	template_name, users = None, None
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_detect_platform_template
