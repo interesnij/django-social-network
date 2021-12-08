@@ -14,76 +14,9 @@
                   <label>Описание</label>
                   <input name="description" class="form-control">
               </div>
-              <div class="row mb-1 form_group_flex">
-                  <label class="col-md-6">Кто видит список</label>
-                  <span class="col-md-6">
-                    <select name="can_see_el" data-value="1" data-action="can_see_el" class="cool_private_select type_user">
-                      <option value="1" selected="">Все пользователи</option>
-                      <option value="2">Друзья</option>
-                      <option value="3">Друзья и друзья друзей</option>
-                      <option value="7">Только я</option>
-                      <option value="4">Друзья, кроме:</option>
-                      <option value="5">Выбрать друзей:</option>
-                    </select>
-                    <div class="collector"></div>
-                  </span>
-              </div>
-              <div class="row mb-1 form_group_flex">
-                <label class="col-md-6">Кто видит комментарии</label>
-                <span class="col-md-6">
-                  <select name="can_see_comment" data-value="1" data-action="can_see_comment" class="cool_private_select type_user">
-                    <option value="1" selected="">Все пользователи</option>
-                    <option value="2">Друзья</option>
-                    <option value="3">Друзья и друзья друзей</option>
-                    <option value="7">Только я</option>
-                    <option value="4">Друзья, кроме:</option>
-                    <option value="5">Выбрать друзей:</option>
-                  </select>
-                  <div class="collector"></div>
-                </span>
-              </div>
-              <div class="row mb-1 form_group_flex">
-                <label class="col-md-6">Кто пишет записи</label>
-                <span class="col-md-6">
-                  <select name="create_el" data-value="7" data-action="create_el" class="cool_private_select type_user">
-                    <option value="1">Все пользователи</option>
-                    <option value="2">Друзья</option>
-                    <option value="3">Друзья и друзья друзей</option>
-                    <option value="7" selected="">Только я</option>
-                    <option value="4">Друзья, кроме:</option>
-                    <option value="5">Выбрать друзей:</option>
-                  </select>
-                  <div class="collector"></div>
-                </span>
-              </div>
-              <div class="row mb-1 form_group_flex">
-                <label class="col-md-6">Кто пишет комментарии</label>
-                <span class="col-md-6">
-                  <select name="create_comment" data-value="1" data-action="create_comment" class="cool_private_select type_user">
-                    <option value="1" selected="">Все пользователи</option>
-                    <option value="2">Друзья</option>
-                    <option value="3">Друзья и друзья друзей</option>
-                    <option value="7">Только я</option>
-                    <option value="4">Друзья, кроме:</option>
-                    <option value="5">Выбрать друзей:</option>
-                  </select>
-                  <div class="collector"></div>
-                </span>
-              </div>
-              <div class="row mb-1 form_group_flex">
-                <label class="col-md-6">Кто может копировать</label>
-                <span class="col-md-6">
-                  <select name="copy_el" data-value="1" data-action="copy_el" class="cool_private_select type_user">
-                    <option value="1" selected="">Все пользователи</option>
-                    <option value="2">Друзья</option>
-                    <option value="3">Друзья и друзья друзей</option>
-                    <option value="7">Только я</option>
-                    <option value="4">Друзья, кроме:</option>
-                    <option value="5">Выбрать друзей:</option>
-                  </select>
-                  <div class="collector"></div>
-                </span>
-              </div>
+
+              {% include 'base_block/perm/create_user_list_comment_perm.html' %}
+
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
