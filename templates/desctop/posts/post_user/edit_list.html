@@ -52,13 +52,13 @@
                           {% endfor %}
                       </span>
                       {% endif %}
-                      <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
-                          <span class="dropdown-item">Все пользователи</span>
-                          <span class="dropdown-item">Друзья</span>
-                          <span class="dropdown-item">Друзья и друзья друзей</span>
-                          <span class="dropdown-item">Только я</span>
-                          <span class="select_exclude_users dropdown-item">Друзья, кроме</span>
-                          <span class="select_include_users dropdown-item">Некторые друзья</span>
+                      <div class="dropdown-menu" style="top: 30px;">
+                          <span class="dropdown-item select_perm_dropdown" data-value="1">Все пользователи</span>
+                          <span class="dropdown-item select_perm_dropdown" data-value="2">Друзья</span>
+                          <span class="dropdown-item select_perm_dropdown" data-value="3">Друзья и друзья друзей</span>
+                          <span class="dropdown-item select_perm_dropdown" data-value="7">Только я</span>
+                          <span data-value="4" class="select_perm_dropdown dropdown-item">Друзья, кроме</span>
+                          <span data-value="5" class="select_perm_dropdown dropdown-item">Некторые друзья</span>
                       </div>
                     </span>
                 </div>
