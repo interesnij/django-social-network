@@ -18,14 +18,16 @@
                 <div class="row mb-1 form_group_flex">
                     <label class="col-md-6">Кто видит список</label>
                     <span class="col-md-6">
-                      <select name="can_see_el" data-value="{{ list.can_see_el }}" data-action="can_see_el" class="cool_private_select type_user">
-                        <option value="1" {% if list.can_see_el == 1 %}selected=""{% endif %}>Все пользователи</option>
-                        <option value="2" {% if list.can_see_el == 2 %}selected=""{% endif %}>Друзья</option>
-                        <option value="3" {% if list.can_see_el == 3 %}selected=""{% endif %}>Друзья и друзья друзей</option>
-                        <option value="7" {% if list.can_see_el == 7 %}selected=""{% endif %}>Только я</option>
-                        <option onclick="yourFunction()" class="exclude_include_options"  value="4" {% if list.can_see_el == 4 %}selected=""{% endif %}>Друзья, кроме:</option>
-                        <option onclick="yourFunction()" class="exclude_include_options" value="5" {% if list.can_see_el == 5 %}selected=""{% endif %}>Выбрать друзей:</option>
-                      </select>
+                      {% if list.can_see_el == 1 %}
+                      <a class="menu_drop">Все пользователи</a>
+                      <input name="can_see_el" type="hidden" value="1" />
+                      <div class="dropdown-menu" style="position: absolute; top: 60px; width: 100%;right: 0px;">
+                          <span class="dropdown-item">Друзья</span>
+                          <span class="dropdown-item">Друзья и друзья друзей</span>
+                          <span class="dropdown-item">Только я</span>
+                          <span class="dropdown-item">Друзья, кроме</span>
+                          <span class="dropdown-item">Выбрать друзей</span>
+                      </div>
                       <div class="collector">
                         {% if list.can_see_el == 4 %}
                           {% for object in list.get_can_see_el_exclude_users %}
