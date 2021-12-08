@@ -1,5 +1,5 @@
 
-    <form id="c_edit_playlist_form" community-pk="{{ list.community.pk }}" class="is_stat_list" data-pk="{{ list.pk }}" data-type="edit_community_music_list">
+    <form id="c_edit_playlist_form" data-list="mus{{ list.pk }}" community-pk="{{ list.community.pk }}" class="is_stat_list" data-pk="{{ list.pk }}" data-type="edit_community_music_list">
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
