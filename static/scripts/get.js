@@ -416,8 +416,8 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   action = this.parentElement.getAttribute("data-action");
   _this.parentElement.classList.remove("show");
 
-  form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  collectors = this.parentElement.parentElement.parentElement.querySelectorAll(".collector");
+  form_post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  collectors = form_post.querySelectorAll(".collector");
   for (var i = 0; i < collectors.length; i++){
     collectors[i].classList.remove("collector_active")
   };
