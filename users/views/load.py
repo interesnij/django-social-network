@@ -497,8 +497,7 @@ class LoadListExcludeUsers(ListView):
 			return self.request.user.get_all_connection()
 		elif self.community_pk:
 			from communities.models import Community
-			community = Community.objects.get(pk=self.community_pk)
-			return community.get_members()
+			return Community.get_members(self.community_pk)
 
 class LoadListIncludeUsers(ListView):
 	template_name, users = None, None
@@ -642,5 +641,4 @@ class LoadListIncludeUsers(ListView):
 			return self.request.user.get_all_connection()
 		elif self.community_pk:
 			from communities.models import Community
-			community = Community.objects.get(pk=self.community_pk)
-			return community.get_members()
+			return Community.get_members(self.community_pk)
