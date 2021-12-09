@@ -289,9 +289,6 @@ class DocsList(models.Model):
         return list
     def edit_list(self, name, description,can_see_el,create_el,copy_el,\
         can_see_el_users,create_el_users,copy_el_users):
-        from common.processing.doc import get_doc_list_processing
-
-        get_doc_list_processing(self, DocsList.LIST)
 
         self.name = name
         self.description = description

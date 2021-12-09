@@ -288,9 +288,6 @@ class MusicList(models.Model):
 
     def edit_list(self, name, description,can_see_el,create_el,copy_el,\
         can_see_el_users,create_el_users,copy_el_users):
-        from common.processing.music import get_playlist_processing
-
-        get_playlist_processing(self, MusicList.LIST)
 
         self.name = name
         self.description = description

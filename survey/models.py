@@ -232,19 +232,11 @@ class SurveyList(models.Model):
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_survey_list_notify")
         get_survey_list_processing(list, SurveyList.LIST)
         return list
-    def edit_list(self, name, description):
-        from common.processing.survey import get_survey_list_processing
 
+    def edit_list(self, name, description):
         self.name = name
         self.description = description
         self.save()
-        is_public = True
-        if is_public:
-            get_survey_list_processing(self, SurveyList.LIST)
-            self.make_publish()
-        else:
-            get_survey_list_processing(self, SurveyList.PRIVATE)
-            self.make_private()
         return self
 
     def delete_item(self):

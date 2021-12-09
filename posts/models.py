@@ -203,9 +203,6 @@ class PostsList(models.Model):
 
     def edit_list(self, name, description,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
         can_see_el_users,can_see_comment_users,create_el_users,create_comment_users,copy_el_users):
-        from common.processing.post import get_post_list_processing
-
-        get_post_list_processing(self, PostsList.LIST)
 
         self.name = name
         self.description = description
