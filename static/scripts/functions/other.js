@@ -25,7 +25,7 @@ function post_include_exclude_users(form, url) {
             collector = document.body.querySelector(".collector_active");
             users_block = form.querySelector(".card-header");
             users_list = users_block.querySelectorAll(".custom_color");
-            final_list = "";
+            final_list = ": ";
             for (var i = 0; i < users_list.length; i++){
               a = users_list[i].querySelector("a");
               final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
