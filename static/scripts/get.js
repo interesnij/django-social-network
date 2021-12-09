@@ -433,7 +433,7 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     // если мы имеем дело с изменением приватности элемента, который
     // уже есть, поэтому можем сразу сохранять приватность
 
-    if (this.classList.contains("type_user_chat")) {
+    if (form_post.classList.contains("chat_edit")) {
       // работаем с приватностью пользовательского чата
       if (val == '4') {
         create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
