@@ -40,8 +40,8 @@ on('#ajax', 'click', '.с_video_list_create', function() {
 });
 
 on('#ajax', 'click', '.c_video_list_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/video/community_progs/edit_list/" + uuid + "/", "worker_fullscreen");
+  uuid = this.parentElement.parentElement.getAttribute('data-pk');
+  create_fullscreen("/video/community_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#video_loader', 'click', '.c_all_video_likes', function() {
