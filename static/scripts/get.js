@@ -397,7 +397,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
   }
 });
 
-function private_users_send(_this, form_post, url) {
+function private_users_send(form_post, url) {
   form = new FormData(form_post);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', url, true );
@@ -405,21 +405,14 @@ function private_users_send(_this, form_post, url) {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    parent_2 = _this.parentElement.parentElement;
-    input = parent_2.querySelector(".input");
-    if (input.value != _this.getAttribute("data-value")) {
-      parent_2.querySelector(".collector").innerHTML = "";
-      current_option = parent_2.querySelector(".menu_drop_2");
-      current_option.innerHTML = _this.innerHTML;
-      input.setAttribute("value", _this.getAttribute("data-value"));
-      toast_success("Настройки изменены")
-    }
+    form_post.querySelector(".collector_active").innerHTML = "";
+    toast_success("Настройки изменены")
   }};
   link_.send(form);
 }
 
 on('#ajax', 'click', '.select_perm_dropdown', function() {
-  val = this.getAttribute("data-value"), _this = this;
+  val = this.getAttribute("data-value"), _this = this, is_new_value = true;
   action = this.parentElement.getAttribute("data-action");
   _this.parentElement.classList.remove("show");
 
@@ -431,7 +424,11 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   parent_2 = this.parentElement.parentElement;
   collector = parent_2.querySelector(".collector");
   current_option = parent_2.querySelector(".menu_drop_2");
-  parent_2.querySelector(".input").setAttribute("value", val);
+  input = parent_2.querySelector(".input");
+  if (input.value == val) {
+    is_new_value = false
+  };
+  input.setAttribute("value", val);
   collector.classList.add("collector_active");
   current_option.innerHTML = _this.innerHTML;
   console.log(val);
@@ -449,7 +446,9 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
         create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
       }
       else {
-        private_users_send(_this, form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val)
+        if (is_new_value) {
+          private_users_send(form_post, "/chat/user_progs/private/" + form_post.getAttribute("data-pk") + "/?action=" + action + "&value=" + val)
+        }
       }
   }
   else if (this.classList.contains("type_community_chat")) {
