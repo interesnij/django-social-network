@@ -46,8 +46,8 @@
 
         {% if request.user.pk == list.creator.pk %}
           <span>
-            {% if list.is_have_edit %}
             <a class="u_edit_post_list pointer">изменить список</a>
+            {% if list.is_have_edit %}
               &nbsp;
             <a class="u_delete_post_list pointer">удалить список</a>
             {% endif %}
