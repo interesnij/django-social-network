@@ -195,18 +195,10 @@ button {
 }
 .form_group_flex {
   display: flex;
+  padding-bottom: 15px;
 }
 .form_group_flex label{
   width: -webkit-fill-available;
-}
-.form_group_flex select{
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none; appearance: none;
-  cursor: pointer;
-}
-.form_group_flex select option{
-  background-color: inherit;
 }
 
 .smile_dropdown_menu {
