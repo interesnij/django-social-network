@@ -29,8 +29,8 @@ on('#ajax', 'click', '.u_music_list_create_window', function() {
   create_fullscreen("/music/user_progs/create_list_window/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.u_playlist_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/music/user_progs/edit_list/" + uuid + "/", "worker_fullscreen");
+  uuid = this.parentElement.parentElement.getAttribute('data-pk');
+  create_fullscreen("/music/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_music_list', function() {

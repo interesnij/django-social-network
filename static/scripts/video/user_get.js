@@ -47,8 +47,8 @@ on('#ajax', 'click', '.u_ucm_video_list_repost', function() {
 });
 
 on('#ajax', 'click', '.u_video_list_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-uuid');
-  create_fullscreen("/video/user_progs/edit_list/" + uuid + "/", "worker_fullscreen");
+  uuid = this.parentElement.parentElement.getAttribute('data-pk');
+  create_fullscreen("/video/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#video_loader', 'click', '.u_all_video_likes', function() {
