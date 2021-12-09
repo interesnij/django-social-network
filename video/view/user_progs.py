@@ -303,7 +303,6 @@ class UserVideolistEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context = super(UserVideolistEdit,self).get_context_data(**kwargs)
         context["list"] = VideoList.objects.get(pk=self.kwargs["pk"])
-        context["user"] = request.user
         return context
 
     def post(self,request,*args,**kwargs):

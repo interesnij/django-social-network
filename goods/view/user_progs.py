@@ -237,7 +237,6 @@ class UserGoodListEdit(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(UserGoodListEdit,self).get_context_data(**kwargs)
-        context["user"] = self.request.user
         context["list"] = GoodList.objects.get(pk=self.kwargs["pk"])
         return context
 
