@@ -22,7 +22,7 @@ function post_include_exclude_users(form, url) {
       ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
-            collector = form.querySelector(".collector");
+            collector = form.querySelector(".collector_active");
             console.log(collector);
             users_block = form.querySelector(".card-header");
             users_list = users_block.querySelectorAll(".custom_color");
