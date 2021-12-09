@@ -35,7 +35,7 @@ on('#ajax', 'click', '.c_music_list_create_window', function() {
 });
 
 on('#ajax', 'click', '.c_playlist_edit', function() {
-  uuid = this.parentElement.parentElement.getAttribute('data-pk');
+  pk = this.parentElement.parentElement.getAttribute('data-pk');
   create_fullscreen("/music/community_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
