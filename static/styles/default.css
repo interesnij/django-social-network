@@ -199,6 +199,7 @@ button {
 }
 .form_group_flex label{
   width: -webkit-fill-available;
+  margin-bottom: 0;
 }
 
 .smile_dropdown_menu {
