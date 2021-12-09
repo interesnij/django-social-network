@@ -67,6 +67,12 @@ class User(AbstractUser):
         else:
             return verb
 
+    def get_6_populate_friends(self):
+        query = []
+        for frend_id in self.get_6_populate_friends_ids():
+            query.append(User.objects.get(pk=frend_id))
+        return query
+
     def get_populate_smiles(self):
         from common.model.other import Smiles, UserPopulateSmiles
         query = []
@@ -343,17 +349,39 @@ class User(AbstractUser):
             #and not (self.is_child() and not user.is_child_safety()):
             UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
-    def plus_friend_visited(self, user_id):
-        from frends.models import Connect
-        frend = Connect.objects.get(user_id=self.pk, target_user_id=user_id)
-        frend.visited = frend.visited + 1
-        frend.save(update_fields=["visited"])
+    def create_or_plus_populate_friend(self, user_id):
+        from users.model.list import UserPopulateFriend
+        try:
+            populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+            populate_friend.count += 1
+            populate_friend.save(update_fields=['count'])
+        except:
+            UserPopulateFriend.objects.create(user=self.pk, friend=user_id, count=1)
 
-    def plus_community_visited(self, community_id):
-        from communities.models import CommunityMembership
-        member = CommunityMembership.objects.get(community_id=community_id, user_id=self.pk)
-        member.visited = member.visited + 1
-        member.save(update_fields=["visited"])
+    def delete_populate_friend(self, user_id):
+        from users.model.list import UserPopulateFriend
+        try:
+            populate_friend = UserPopulateFriend.objects.get(user=self.pk, friend=user_id)
+            populate_friend.delete()
+        except:
+            pass
+
+    def create_or_plus_populate_community(self, community_id):
+        from users.model.list import UserPopulateCommunity
+        try:
+            populate_friend = UserPopulateCommunity.objects.get(user=self.pk, community=community_id)
+            populate_friend.count += 1
+            populate_friend.save(update_fields=['count'])
+        except:
+            UserPopulateCommunity.objects.create(user=self.pk, community=community_id, count=1)
+
+    def delete_populate_community(self, community_id):
+        from users.model.list import UserPopulateCommunity
+        try:
+            populate_friend = UserPopulateCommunity.objects.get(user=self.pk, community=community_id)
+            populate_friend.delete()
+        except:
+            pass
 
     def remove_possible_friend(self, user_id):
         from users.model.list import UserFeaturedFriend
@@ -365,6 +393,8 @@ class User(AbstractUser):
         user.plus_friends(1)
         self.plus_friends(1)
         self.minus_follows(1)
+        self.create_or_plus_populate_friend(user.pk)
+        user.create_or_plus_populate_friend(self.pk)
         try:
             for frend in user.get_6_friends():
                 self.get_or_create_possible_friend(frend)
@@ -448,6 +478,7 @@ class User(AbstractUser):
         follow = Follow.create_follow(user_id=user_id, followed_user_id=self.pk)
         follow.view = True
         follow.save(update_fields=["view"])
+        self.delete_populate_friend(user_id)
         if self.is_closed_profile():
             self.delete_news_subscriber(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
@@ -1054,22 +1085,56 @@ class User(AbstractUser):
         connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
         return User.objects.filter(connection_query)[0:6]
 
+    def get_6_populate_friends_ids(self):
+        from users.model.list import UserPopulateFriend
+        frends_query = UserPopulateFriend.objects.filter(user=self.pk).values("friend")
+        return [user['friend'] for user in frends_query][:6]
+
+    def get_6_populate_friends(self):
+        query = []
+        for frend_id in self.get_6_populate_friends_ids():
+            query.append(User.objects.get(pk=frend_id))
+        return query
+
     def get_6_friends(self):
-        return self.get_6_default_connection()
+        try:
+            return self.get_6_populate_friends()
+        except:
+            return self.get_6_default_connection()
 
     def get_6_default_communities(self):
         from communities.models import Community
         return Community.objects.filter(memberships__user=self)[0:6]
 
+    def get_6_populate_communities(self):
+        from users.model.list import UserPopulateCommunity
+        from communities.models import Community
+
+        communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
+        return Community.objects.filter(id__in=[i['community'] for i in communities_query][:6])
+
     def get_default_communities(self):
         from communities.models import Community
         return Community.objects.filter(memberships__user_id=self.pk)
 
+    def get_populate_communities(self):
+        from users.model.list import UserPopulateCommunity
+        from communities.models import Community
+
+        communities_query = UserPopulateCommunity.objects.filter(user=self.pk).values("community")
+        return Community.objects.filter(id__in=[i['community'] for i in communities_query])
+
     def get_6_communities(self):
-        return self.get_6_default_communities()
+        try:
+            return self.get_6_populate_communities()
+        except:
+            return self.get_6_default_communities()
 
     def get_communities(self):
-        return self.get_default_communities()
+        try:
+            return self.get_populate_communities()
+        except:
+            return self.get_default_communities()
 
     def get_all_connection_ids(self):
         my_frends = self.connections.values('target_user_id')
@@ -1124,6 +1189,12 @@ class User(AbstractUser):
         from posts.models import Post
         return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.C_OFFER)
 
+    def get_6_populate_friends(self):
+        query = []
+        for frend_id in self.get_6_populate_friends_ids():
+            query.append(User.objects.get(pk=frend_id))
+        return query
+
     def get_post_lists(self):
         from posts.models import PostsList
         query = Q(creator_id=self.id, community__isnull=True)
@@ -1132,7 +1203,7 @@ class User(AbstractUser):
 
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
-        list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
+        list = UserPostsListPosition.objects.filter(user=self.pk).first()
         return list.list
 
     def get_survey_lists(self):
@@ -1383,8 +1454,8 @@ class User(AbstractUser):
         from notify.models import UserNewsPk
         return [i['target'] for i in UserNewsPk.objects.filter(user=self.pk).values('target')]
     def get_community_news_notify_ids(self):
-        from notify.models import CommunityNewsPk
-        return [i['community'] for i in CommunityNewsPk.objects.filter(user=self.pk).values('community')]
+        from notify.models import CommunityNewsNotify
+        return [i['community'] for i in CommunityNewsNotify.objects.filter(user=self.pk).values('community')]
 
     def get_user_profile_notify_ids(self):
         from notify.models import UserProfileNotify
