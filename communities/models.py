@@ -930,13 +930,13 @@ class Community(models.Model):
         return [i['user'] for i in recipients] + self.get_staff_members_ids()
 
     def add_news_subscriber(self, user_id):
-        from notify.models import CommunityNewsNotify
-        if not CommunityNewsNotify.objects.filter(community=self.pk, user=user_id).exists():
-            CommunityNewsNotify.objects.create(community=self.pk, user=user_id)
+        from notify.models import CommunityNewsPk
+        if not CommunityNewsPk.objects.filter(community=self.pk, user=user_id).exists():
+            CommunityNewsPk.objects.create(community=self.pk, user=user_id)
     def delete_news_subscriber(self, user_id):
-        from notify.models import CommunityNewsNotify
-        if CommunityNewsNotify.objects.filter(community=self.pk, user=user_id).exists():
-            notify = CommunityNewsNotify.objects.get(community=self.pk, user=user_id)
+        from notify.models import CommunityNewsPk
+        if CommunityNewsPk.objects.filter(community=self.pk, user=user_id).exists():
+            notify = CommunityNewsPk.objects.get(community=self.pk, user=user_id)
             notify.delete()
 
     def add_notify_subscriber(self, user_id):

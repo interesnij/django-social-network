@@ -193,37 +193,67 @@ class Wall(models.Model):
 
 
 """
-таблицу ниже создаём при заявке в друзья у открытого аккаунта или при подтвержденной заявки при закрытом.
-это для вывода новостей в лентах новостей
+таблицу ниже создаём при заявке в друзья у открытого аккаунта или при подтвержденной
+заявки при закрытом. это нужно для вывода новостей в лентах новостей
 """
-class UserNewsNotify(models.Model):
+class UserNewsPk(models.Model):
+    L_0, L_1, L_2, L_3, L_4, L_5, L_6, L_7, L_8, L_9 = 0,1,2,3,4,5,6,7,8,9
+    LEVEL = ((L_0, 'Отключено'),(L_1, '1'),(L_2, '2'),(L_3, '3'),(L_4, '4'),(L_5, '5'),(L_6, '6'),(L_7, '7'),(L_8, '8'),(L_9, '9'),)
+
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    level = models.PositiveSmallIntegerField(choices=LEVEL, default=9, verbose_name="Уровень отображения")
+
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Новости по по факту дружбы или подписки в друзья"
         verbose_name_plural = "Новости по по факту дружбы или подписки в друзья"
+
+class UserFeaturedPk(models.Model):
+    L_0, L_1, L_2, L_3, L_4, L_5, L_6, L_7, L_8, L_9 = 0,1,2,3,4,5,6,7,8,9
+    LEVEL = ((L_0, 'Отключено'),(L_1, '1'),(L_2, '2'),(L_3, '3'),(L_4, '4'),(L_5, '5'),(L_6, '6'),(L_7, '7'),(L_8, '8'),(L_9, '9'),)
+
+    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
+    target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
+    level = models.PositiveSmallIntegerField(choices=LEVEL, default=9, verbose_name="Уровень отображения")
+
+    class Meta:
+        verbose_name = "Новости рекомендованного пользователя"
+        verbose_name_plural = "Новости рекомендованных пользователей"
 
 
 """
 создаём при подписке на сообщество или при подтвержденной заявке, если тип не открытый у сообщества
-это для вывода новостей в лентах новостей
+это для вывода новостей community для user в лентах новостей
 """
-class CommunityNewsNotify(models.Model):
+class CommunityNewsPk(models.Model):
+    L_0, L_1, L_2, L_3, L_4, L_5, L_6, L_7, L_8, L_9 = 0,1,2,3,4,5,6,7,8,9
+    LEVEL = ((L_0, 'Отключено'),(L_1, '1'),(L_2, '2'),(L_3, '3'),(L_4, '4'),(L_5, '5'),(L_6, '6'),(L_7, '7'),(L_8, '8'),(L_9, '9'),)
+
     user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
     community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
+    level = models.PositiveSmallIntegerField(choices=LEVEL, default=9, verbose_name="Уровень отображения")
+
     class Meta:
-        indexes = (BrinIndex(fields=['created']),)
         verbose_name = "Новости по по факту подписки на сообщество"
         verbose_name_plural = "Новости по по факту подписки на сообщество"
+
+class CommunityFeaturedPk(models.Model):
+    L_0, L_1, L_2, L_3, L_4, L_5, L_6, L_7, L_8, L_9 = 0,1,2,3,4,5,6,7,8,9
+    LEVEL = ((L_0, 'Отключено'),(L_1, '1'),(L_2, '2'),(L_3, '3'),(L_4, '4'),(L_5, '5'),(L_6, '6'),(L_7, '7'),(L_8, '8'),(L_9, '9'),)
+
+    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
+    community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
+    level = models.PositiveSmallIntegerField(choices=LEVEL, default=9, verbose_name="Уровень отображения")
+
+    class Meta:
+        verbose_name = "Новости рекомендованного сообщества"
+        verbose_name_plural = "Новости рекомендованных сообществ"
 
 
 """
 создаём при нажатии на колокольчик у пользователя. При изменении приватности,
 блокировке получателя, глобальных санкциях надо удалять/создавать запись новую
-это для вывода уведомлений в профиле
+это для вывода уведомлений о действиях target для user
 """
 
 class UserProfileNotify(models.Model):
@@ -239,7 +269,7 @@ class UserProfileNotify(models.Model):
 """
 создаём при нажатии на колокольчик в сообществе. При изменении приватности,
 блокировке получателя, глобалдьных санкциях надо удалять/создавать запись новую
-это для вывода уведомлений в профиле
+это для вывода уведомлений о действиях community для user
 """
 
 class CommunityProfileNotify(models.Model):
