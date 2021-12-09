@@ -406,11 +406,14 @@ function private_users_send(_this, form_post, url) {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     parent_2 = _this.parentElement.parentElement;
-    parent_2.querySelector(".collector").innerHTML = "";
-    current_option = parent_2.querySelector(".menu_drop_2");
-    current_option.innerHTML = _this.innerHTML;
-    parent_2.querySelector(".input").setAttribute("value", _this.getAttribute("data-value"));
-    toast_success("Настройки изменены")
+    input = parent_2.querySelector(".input");
+    if (input.value != _this.getAttribute("data-value")) {
+      parent_2.querySelector(".collector").innerHTML = "";
+      current_option = parent_2.querySelector(".menu_drop_2");
+      current_option.innerHTML = _this.innerHTML;
+      input.setAttribute("value", _this.getAttribute("data-value"));
+      toast_success("Настройки изменены")
+    }
   }};
   link_.send(form);
 }
