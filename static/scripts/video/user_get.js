@@ -53,7 +53,7 @@ on('#ajax', 'click', '.u_video_list_edit', function() {
 
 on('#video_loader', 'click', '.u_all_video_likes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
+  pk = container.getAttribute('data-uuid');
   create_fullscreen("/video/window/all_user_like/" + uuid + "/", "worker_fullscreen");
 });
 on('#video_loader', 'click', '.u_all_video_dislikes', function() {
