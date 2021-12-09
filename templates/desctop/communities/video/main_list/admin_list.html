@@ -22,7 +22,10 @@
             <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
               <h5 class="mt-1">
                 <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
-                <span class="pointer badge badge-light-success c_video_add">Добавить видеоролик</span>
+                {% if community.pk == list.community.pk %}
+                  <span class="pointer badge badge-light-success c_video_add">Добавить видеоролик</span>
+                  <span class="pointer badge badge-light-secondary c_video_list_edit">Изменить список</span>
+                {% endif %}
                 <span class="pointer badge badge-light-success c_video_list_add">Создать список</span>
               </h5>
             </div>
