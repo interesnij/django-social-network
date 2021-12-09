@@ -17,12 +17,12 @@
     <h5 class="mt-1">
       <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
         <input type="file" accept="image/*" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
-        {% if list.is_main or list.is_have_edit %}
-        <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
-        {% endif %}
-        {% if request.user.pk == list.creator.pk and list.is_have_edit %}
-        <span class="pointer badge badge-light-secondary u_photo_list_edit">Изменить список</span>
-        <span class="pointer badge badge-light-danger u_photo_list_remove">Удалить список</span>
+        {% if request.user.pk == list.creator.pk %}
+          <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
+          <span class="pointer badge badge-light-secondary u_photo_list_edit">Изменить список</span>
+          {% if list.is_have_edit %}
+            <span class="pointer badge badge-light-danger u_photo_list_remove">Удалить список</span>
+          {% endif %}
         {% endif %}
     </h5>
     </form>
