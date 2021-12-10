@@ -2,17 +2,17 @@
 from django.views.generic import ListView
 
 
-class MessagesListView(ListView):
+class ChatsListView(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_settings_template
 
 		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
-		return super(MessagesListView,self).get(request,*args,**kwargs)
+		return super(ChatsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-		context = super(MessagesListView,self).get_context_data(**kwargs)
+		context = super(ChatsListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		return context
 
