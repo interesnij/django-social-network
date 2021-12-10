@@ -49,5 +49,4 @@ admin.site.register(UserLocation)
 admin.site.register(IPUser)
 admin.site.register(UserProfile, UserProfileAdmin)
 
-admin.site.register(UserFeaturedFriend)
 admin.site.register(UserPostsListPosition)

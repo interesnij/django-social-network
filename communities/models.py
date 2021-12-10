@@ -200,8 +200,8 @@ class Community(models.Model):
         CommunityMembership.create_membership(user=creator, is_administrator=True, community=community)
         community.save()
         creator.plus_community_visited(community.pk)
-        community.add_news_subscriber(creator.pk)
-        community.add_notify_subscriber(creator.pk)
+        community.add_news_subscriber_in_main_list(creator.pk)
+        community.add_notify_subscriber_in_main_list(creator.pk)
         return community
 
     @classmethod
@@ -929,24 +929,46 @@ class Community(models.Model):
         recipients = CommunityProfileNotify.objects.filter(community=self.pk).values("user")
         return [i['user'] for i in recipients] + self.get_staff_members_ids()
 
-    def add_news_subscriber(self, user_id):
-        from notify.models import CommunityNewsPk
-        if not CommunityNewsPk.objects.filter(community=self.pk, user=user_id).exists():
-            CommunityNewsPk.objects.create(community=self.pk, user=user_id)
-    def delete_news_subscriber(self, user_id):
-        from notify.models import CommunityNewsPk
-        if CommunityNewsPk.objects.filter(community=self.pk, user=user_id).exists():
-            notify = CommunityNewsPk.objects.get(community=self.pk, user=user_id)
+    def add_news_subscriber_in_main_list(self, user_id):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=user_id, type=1)
+        if not NewsUC.objects.filter(list=list, owner=user_id, community=self.pk).exists():
+            NewsUC.objects.create(list=list, owner=user_id, community=self.pk)
+    def delete_news_subscriber_from_main_list(self, user_id):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=user_id, type=1)
+        if NewsUC.objects.filter(list=list, owner=user_id, community=self.pk).exists():
+            notify = NewsUC.objects.get(list=list, owner=user_id, community=self.pk)
+            notify.delete()
+    def add_news_subscriber_in_list(self, user_id, list_id):
+        from users.model.list import ListUC, NewsUC
+        if not NewsUC.objects.filter(list_id=list_id, owner=user_id, community=self.pk).exists():
+            NewsUC.objects.create(list_id=list_id, owner=user_id, community=self.pk)
+    def delete_news_subscriber_from_list(self, user_id, list_id):
+        from users.model.list import ListUC, NewsUC
+        if NewsUC.objects.filter(list_id=list_id, owner=user_id, community=self.pk).exists():
+            notify = NewsUC.objects.get(list_id=list_id, owner=user_id, community=self.pk)
             notify.delete()
 
-    def add_notify_subscriber(self, user_id):
-        from notify.models import CommunityProfileNotify
-        if not CommunityProfileNotify.objects.filter(community=self.pk, user=user_id).exists():
-            CommunityProfileNotify.objects.create(community=self.pk, user=user_id)
-    def delete_notify_subscriber(self, user_id):
-        from notify.models import CommunityProfileNotify
-        if CommunityProfileNotify.objects.filter(community=self.pk, user=user_id).exists():
-            notify = CommunityProfileNotify.objects.get(community=self.pk, user=user_id)
+    def add_notify_subscriber_in_main_list(self, user_id):
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=user_id, type=1)
+        if not NotifyUC.objects.filter(list=list, owner=user_id, community=self.pk).exists():
+            NotifyUC.objects.create(list=list, owner=user_id, community=self.pk)
+    def delete_notify_subscriber_from_main_list(self, user_id):
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=user_id, type=1)
+        if NotifyUC.objects.filter(list=list, owner=user_id, community=self.pk).exists():
+            notify = NotifyUC.objects.get(list=list, owner=user_id, community=self.pk)
+            notify.delete()
+    def add_notify_subscriber_in_list(self, user_id, list_id):
+        from users.model.list import ListUC, NotifyUC
+        if not NotifyUC.objects.filter(list_id=list_id, owner=user_id, community=self.pk).exists():
+            NotifyUC.objects.create(list_id=list_id, owner=user_id, community=self.pk)
+    def delete_notify_subscriber_from_list(self, user_id, list_id):
+        from users.model.list import ListUC, NotifyUC
+        if NotifyUC.objects.filter(list_id=list_id, owner=user_id, community=self.pk).exists():
+            notify = NotifyUC.objects.get(list_id=list_id, owner=user_id, community=self.pk)
             notify.delete()
 
     def is_community_playlist(self):
@@ -1016,12 +1038,12 @@ class Community(models.Model):
     def add_member(self, user):
         CommunityMembership.create_membership(user=user, community=self)
         user.plus_community_visited(self.pk)
-        self.add_news_subscriber(user.pk)
+        self.add_news_subscriber_in_main_list(user.pk)
     def remove_member(self, user):
         user_membership = self.memberships.get(user=user).delete()
         self.minus_member()
         user.minus_communities(1)
-        self.delete_news_subscriber(user.pk)
+        self.delete_news_subscriber_from_list(user.pk)
 
     def count_members(self):
         from communities.model.settings import CommunityInfo
@@ -1085,7 +1107,7 @@ class CommunityMembership(models.Model):
 
     @classmethod
     def create_membership(cls, user, community, is_administrator=False, is_editor=False, is_advertiser=False, is_moderator=False):
-        community.add_news_subscriber(user.pk)
+        community.add_news_subscriber_in_main_list(user.pk)
         community.plus_member()
         user.plus_communities(1)
         return cls.objects.create(user=user, community=community, is_administrator=is_administrator, is_editor=is_editor, is_advertiser=is_advertiser, is_moderator=is_moderator)

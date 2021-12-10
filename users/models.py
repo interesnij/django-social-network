@@ -311,7 +311,7 @@ class User(AbstractUser):
         if self.pk == user_id:
             raise ValidationError('Вы не можете подписаться сами на себя',)
         elif not self.is_closed_profile():
-            self.add_news_subscriber(user_id)
+            self.add_news_subscriber_in_main_list(user_id)
         return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
 
     def community_follow_user(self, community_pk):
@@ -335,13 +335,6 @@ class User(AbstractUser):
         follow.delete()
         community.delete_community_notify(self.pk)
 
-    def get_or_create_featured_friend(self, user):
-        from users.model.list import UserFeaturedFriend
-
-        if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
-            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
-            UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
-
     def plus_friend_visited(self, user_id):
         from frends.models import Connect
         frend = Connect.objects.get(user_id=self.pk, target_user_id=user_id)
@@ -354,10 +347,14 @@ class User(AbstractUser):
         member.visited = member.visited + 1
         member.save(update_fields=["visited"])
 
-    def remove_featured_friend(self, user_id):
-        from users.model.list import UserFeaturedFriend
-        if UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user_id).exists():
-            UserFeaturedFriend.objects.get(user=self.pk, featured_user=user_id).delete()
+    def remove_featured_friend_from_all_list(self, user_id):
+        from users.model.list import ListUC, FeaturedUC
+        if FeaturedUC.objects.filter(owner=self.pk, user=user_id).exists():
+            FeaturedUC.objects.get(owner=self.pk, user=user_id).delete()
+    def remove_featured_friend_from_list(self, user_id, list_id):
+        from users.model.list import ListUC, FeaturedUC
+        if FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
+            FeaturedUC.objects.get(list_id=list_id, owner=self.pk, user=user_id).delete()
 
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
@@ -366,7 +363,7 @@ class User(AbstractUser):
         self.minus_follows(1)
         try:
             for frend in user.get_6_friends():
-                self.get_or_create_featured_friend(frend)
+                self.get_or_create_featured_friend_in_main_list(frend)
         except:
             pass
 
@@ -381,38 +378,32 @@ class User(AbstractUser):
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
-        self.remove_featured_friend(user_id)
-        self.add_news_subscriber(user_id)
+        self.remove_featured_friend_from_all_list(user_id)
+        self.add_news_subscriber_in_main_list(user_id)
         return frend
 
     def get_featured_friends(self):
-        query = Q(id__in=self.get_featured_friends_ids())
-        return User.objects.filter(query)
+        return User.objects.filter(id__in=self.get_featured_friends_ids())
 
     def get_6_featured_friends(self):
         query = Q(id__in=self.get_6_featured_friends_ids())
         return User.objects.filter(query)
 
     def get_6_featured_communities_ids(self):
-        from communities.models import Community
-        return [i['pk'] for i in Community.objects.filter(memberships__user__id__in=self.get_6_featured_friends()).values("pk")]
+        from users.model.list import ListUC, FeaturedUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['user'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("community")]
 
     def get_featured_friends_ids(self):
-        from users.model.list import UserFeaturedFriend
-
-        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
-        return [user['featured_user'] for user in featured]
+        from users.model.list import ListUC, FeaturedUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['user'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("user")]
 
     def get_featured_friends_count(self):
-        from users.model.list import UserFeaturedFriend
-
-        return UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user").count()
+        return self.get_featured_friends_ids().count()
 
     def get_6_featured_friends_ids(self):
-        from users.model.list import UserFeaturedFriend
-
-        featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
-        return [user['featured_user'] for user in featured][:6]
+        return self.get_featured_friends_ids()[:6]
 
     def unfollow_user(self, user):
         self.unfollow_user_with_id(user.pk)
@@ -423,22 +414,29 @@ class User(AbstractUser):
 
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
-        self.delete_news_subscriber(user_id)
+        self.delete_news_subscriber_from_list(user_id)
 
-    def get_or_create_featured_friend(self, user):
-        from users.model.list import UserFeaturedFriend
+    def get_or_create_featured_friend_in_main_list(self, user):
+        from users.model.list import ListUC, FeaturedUC
 
-        if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
-            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk) \
-            and not (self.is_child() and not user.is_child_safety()):
-            UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
+        if self.pk != user.pk and not FeaturedUC.objects.filter(owner=self.pk, user=user.pk).exists() \
+            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
+            try:
+                list = ListUC.objects.get(type=1, owner=self.pk)
+            except:
+                list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
+
+            try:
+                FeaturedUC.objects.get(list=list, owner=self.pk, user=user.pk)
+            except:
+                FeaturedUC.objects.create(list=list, owner=self.pk, user=user.pkr)
 
     def unfrend_user(self, user):
         self.unfrend_user_with_id(user.pk)
         user.minus_friends(1)
         self.minus_friends(1)
         self.plus_follows(1)
-        return self.get_or_create_featured_friend(user)
+        return self.get_or_create_featured_friend_in_main_list(user)
 
     def unfrend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -448,7 +446,7 @@ class User(AbstractUser):
         follow.view = True
         follow.save(update_fields=["view"])
         if self.is_closed_profile():
-            self.delete_news_subscriber(user_id)
+            self.delete_news_subscriber_from_list(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         return connection.delete()
 
@@ -461,7 +459,7 @@ class User(AbstractUser):
 
     def unblock_user_with_pk(self, pk):
         user = User.objects.get(pk=pk)
-        self.get_or_create_featured_friend(user)
+        self.get_or_create_featured_friend_in_main_list(user)
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
@@ -487,9 +485,9 @@ class User(AbstractUser):
             user_to_block.unfollow_user_with_id(self.pk)
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
-        self.remove_featured_friend(user_id)
-        self.delete_news_subscriber(user_id)
-        self.delete_profile_subscriber(user_id)
+        self.remove_featured_friend_from_all_list(user_id)
+        self.delete_news_subscriber_from_list(user_id)
+        self.delete_notify_subscriber_from_list(user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
@@ -1358,24 +1356,46 @@ class User(AbstractUser):
             CommunityFollow.objects.filter(community__pk=community.pk, user__id=self.id).delete()
         return community_to_join
 
-    def add_news_subscriber(self, user_id):
-        from notify.models import UserNewsPk
-        if not UserNewsPk.objects.filter(user=self.pk, target=user_id).exists():
-            UserNewsPk.objects.create(user=self.pk, target=user_id)
-    def delete_news_subscriber(self, user_id):
-        from notify.models import UserNewsPk
-        if UserNewsPk.objects.filter(user=self.pk, target=user_id).exists():
-            notify = UserNewsPk.objects.get(user=self.pk, target=user_id)
+    def add_news_subscriber_in_main_list(self, user_id):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        if not NewsUC.objects.filter(list=list, owner=self.pk, user=user_id).exists():
+            NewsUC.objects.create(list=list, owner=self.pk, user=user_id)
+    def delete_news_subscriber_from_main_list(self, user_id):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        if NewsUC.objects.filter(list=list, owner=self.pk, user=user_id).exists():
+            notify = NewsUC.objects.get(list=list, owner=self.pk, user=user_id)
+            notify.delete()
+    def add_news_subscriber_in_list(self, user_id, list_id):
+        from users.model.list import ListUC, NewsUC
+        if not NewsUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
+            NewsUC.objects.create(list_id=list_id, owner=self.pk, user=user_id)
+    def delete_news_subscriber_from_list(self, user_id, list_id):
+        from users.model.list import ListUC, NewsUC
+        if NewsUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
+            notify = NewsUC.objects.get(list_id=list_id, owner=self.pk, user=user_id)
             notify.delete()
 
-    def add_notify_subscriber(self, user_id):
-        from notify.models import UserProfileNotify
-        if not UserProfileNotify.objects.filter(user=self.pk, target=user_id).exists():
-            UserProfileNotify.objects.create(user=self.pk, target=user_id)
-    def delete_notify_subscriber(self, user_id):
-        from notify.models import UserProfileNotify
-        if UserProfileNotify.objects.filter(user=self.pk, target=user_id).exists():
-            notify = UserProfileNotify.objects.get(user=self.pk, target=user_id)
+    def add_notify_subscriber_in_main_list(self, user_id):
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        if not NotifyUC.objects.filter(list=list, owner=self.pk, user=user_id).exists():
+            NotifyUC.objects.create(list=list, owner=self.pk, user=user_id)
+    def delete_notify_subscriber_from_main_list(self, user_id):
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        if NotifyUC.objects.filter(list=list, owner=self.pk, user=user_id).exists():
+            notify = NotifyUC.objects.get(list=list, owner=self.pk, user=user_id)
+            notify.delete()
+    def add_notify_subscriber_in_list(self, user_id, list_id):
+        from users.model.list import ListUC, NotifyUC
+        if not NotifyUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
+            NotifyUC.objects.create(list_id=list_id, owner=self.pk, user=user_id)
+    def delete_notify_subscriber_from_list(self, user_id, list_id):
+        from users.model.list import ListUC, NotifyUC
+        if NotifyUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
+            notify = NotifyUC.objects.get(list_id=list_id, owner=self.pk, user=user_id)
             notify.delete()
 
     def get_user_news_notify_ids(self):

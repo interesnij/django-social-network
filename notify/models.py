@@ -190,35 +190,3 @@ class Wall(models.Model):
     def get_notify(self, user):
         from common.attach.notify import get_notify
         return get_notify(user, self)
-
-"""
-создаём при нажатии на колокольчик у пользователя. При изменении приватности,
-блокировке получателя, глобальных санкциях надо удалять/создавать запись новую
-это для вывода уведомлений о действиях target для user
-"""
-
-class UserProfileNotify(models.Model):
-    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
-    target = models.PositiveIntegerField(default=0, verbose_name="На кого подписывается")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-    class Meta:
-        indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "уведомления при подписке на уведосления пользователя"
-        verbose_name_plural = "уведомления при подписке на уведосления пользователя"
-
-
-"""
-создаём при нажатии на колокольчик в сообществе. При изменении приватности,
-блокировке получателя, глобалдьных санкциях надо удалять/создавать запись новую
-это для вывода уведомлений о действиях community для user
-"""
-
-class CommunityProfileNotify(models.Model):
-    user = models.PositiveIntegerField(default=0, verbose_name="Кто подписывается")
-    community = models.PositiveIntegerField(default=0, verbose_name="На какое сообщество подписывается")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создано")
-
-    class Meta:
-        indexes = (BrinIndex(fields=['created']),)
-        verbose_name = "уведомления при подписке на уведосления сообщества"
-        verbose_name_plural = "уведомления при подписке на уведосленияя сообщества"

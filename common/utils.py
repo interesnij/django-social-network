@@ -184,7 +184,8 @@ def create_user_models(user):
                                     UserPlayListPosition,
                                     UserPostsListPosition,
                                     UserDocsListPosition,
-                                    UserVideoListPosition
+                                    UserVideoListPosition,
+                                    ListUC,
                                 )
     doc_list = DocsList.objects.create(creator=user, type=DocsList.MAIN, name="Основной список")
     UserDocsListPosition.objects.create(user=user.pk, list=doc_list.pk, position=1)
@@ -208,3 +209,5 @@ def create_user_models(user):
 
     video_list = VideoList.objects.create(creator=user, type=VideoList.MAIN, name="Основной список")
     UserVideoListPosition.objects.create(user=user.pk, list=video_list.pk, position=1)
+
+    ListUC.objects.create(type=1, owner=user.pk, name="Основной список")
