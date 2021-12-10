@@ -27,7 +27,7 @@
                   {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                <div class="load centered m-1 next_page_list" data-link="{% url 'messages_list' %}?page={{ page_obj.next_page_number }}">
+                <div class="load centered m-1 next_page_list" data-link="{% url 'chats_list' %}?page={{ page_obj.next_page_number }}">
                     <img src="/static/images/preloader.gif">
                 </div>
                 {% endif %}
