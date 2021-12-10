@@ -708,7 +708,7 @@ class Video(models.Model):
 
                 Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
                 user_send_wall(video.pk, None, "create_u_video_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
                     user_send_notify(video.pk, creator.pk, user_id, None, "create_u_video_notify")
         return video

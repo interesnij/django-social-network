@@ -227,7 +227,7 @@ class SurveyList(models.Model):
                 from common.notify.progs import user_send_notify, user_send_wall
                 Wall.objects.create(creator_id=creator.pk, type="SUL", object_id=list.pk, verb="ITE")
                 user_send_wall(list.pk, None, "create_u_survey_list_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="SUL", object_id=list.pk, verb="ITE")
                     user_send_notify(list.pk, creator.pk, user_id, None, "create_u_survey_list_notify")
         get_survey_list_processing(list, SurveyList.LIST)
@@ -398,7 +398,7 @@ class Survey(models.Model):
 
             Wall.objects.create(creator_id=creator.pk, type="SUR", object_id=survey.pk, verb="ITE")
             user_send_wall(survey.pk, None, "create_u_survey_wall")
-            for user_id in creator.get_user_news_notify_ids():
+            for user_id in creator.get_user_main_news_ids():
                 Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="SUR", object_id=survey.pk, verb="ITE")
                 user_send_notify(survey.pk, creator.pk, user_id, None, "create_u_survey_notify")
         return survey

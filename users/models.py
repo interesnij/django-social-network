@@ -1398,22 +1398,23 @@ class User(AbstractUser):
             notify = NotifyUC.objects.get(list_id=list_id, owner=self.pk, user=user_id)
             notify.delete()
 
-    def get_user_news_notify_ids(self):
+    def get_user_main_news_ids(self):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['user'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('user')]
+    def get_community_main_news_ids(self):
+        from users.model.list import ListUC, NewsUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['community'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('community')]
+
+    def get_user_main_notify_ids(self):
         from users.model.list import ListUC, NotifyUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['user'] for i in NotifyUC.objects.filter(list_id=list_id, owner=self.pk, mute=False).values('user')]
-    def get_community_news_notify_ids(self):
+        return [i['user'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('user')]
+    def get_community_main_notify_ids(self):
         from users.model.list import ListUC, NotifyUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['community'] for i in NotifyUC.objects.filter(list_id=list_id, owner=self.pk, mute=False).values('community')]
-
-    def get_user_profile_notify_ids(self):
-        from notify.models import UserProfileNotify
-        return [i['target'] for i in UserProfileNotify.objects.filter(user=self.pk).values('target')]
-    def get_community_profile_notify_ids(self):
-        from notify.models import CommunityProfileNotify
-        return [i['community'] for i in CommunityProfileNotify.objects.filter(user=self.pk).values('community')]
-
+        return [i['community'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('community')]
 
     def leave_community(self, community):
         check_can_leave_community(user=self, community_id=community.pk)
@@ -1488,7 +1489,7 @@ class User(AbstractUser):
     def get_user_notify(self):
         from notify.models import Notify
 
-        query = Q(creator_id__in=self.get_user_profile_notify_ids())| \
+        query = Q(creator_id__in=self.get_user_main_notify_ids())| \
                 Q(community_id__in=self.get_community_profile_notify_ids())
         query.add(Q(user_set__isnull=True, object_set__isnull=True), Q.AND)
         return Notify.objects.only('created').filter(query)
