@@ -475,8 +475,8 @@ var scrollStopper = delayedExec(3000, function() {
 
 function scrolled(_block) {
     offset = 0;
-    console.log("paginate");
     window.onscroll = function() {
+      console.log("paginate");
       // программа отслеживает окончание прокрутки
       scrollStopper();
       // программа считает секунды для внесения в стат страницы и списка, если он есть.
