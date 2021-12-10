@@ -585,7 +585,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         //        }
         //    };
         //} catch {return}
-        }
+        //}
       }
     }
     ajax_link.send();
