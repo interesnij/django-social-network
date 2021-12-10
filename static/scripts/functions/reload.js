@@ -475,6 +475,7 @@ var scrollStopper = delayedExec(3000, function() {
 
 function scrolled(_block) {
     offset = 0;
+    console.log("paginate");
     window.onscroll = function() {
       // программа отслеживает окончание прокрутки
       scrollStopper();
@@ -534,8 +535,7 @@ function open_video_fullscreen(url) {
     link.send();
 };
 
-function paginate(block, target) {
-  console.log("paginate");
+function paginate(block) {
         var link_3 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         link_3.open('GET', location.protocol + "//" + location.host + block.getAttribute("data-link"), true);
         link_3.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
