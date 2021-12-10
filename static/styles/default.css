@@ -2427,7 +2427,7 @@ body.dragging * {
 .card .card-footer {
   background: none;
   border: 0;
-  padding: 1px 15px
+  padding: 1px 15px !important
 }
 
 .card .card-body {
