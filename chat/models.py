@@ -378,6 +378,7 @@ class Chat(models.Model):
                     preview_text = 'Вы: ' + first_message.get_type_text()
                 else:
                     preview_text = first_message.get_type_text()
+                created = first_message.get_created()
         elif not first_message:
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
