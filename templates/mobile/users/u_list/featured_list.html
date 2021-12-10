@@ -10,7 +10,7 @@
       </div>
       <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
           <button class="btn btn-sm border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-              Рекомендованные друзья ({{ user.get_possible_friends_count }})
+              Рекомендованные друзья ({{ user.get_featured_friends_count }})
           </button>
           <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
             <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья ({{ user.count_friends }})</a>
@@ -42,7 +42,7 @@
                     </li>
                     {% endfor %}
                     {% if page_obj.has_next %}
-                    <div class="load centered m-1 next_page_list" data-link="{% url 'possible_users' %}?page={{ page_obj.next_page_number }}">
+                    <div class="load centered m-1 next_page_list" data-link="{% url 'featured_users' %}?page={{ page_obj.next_page_number }}">
                         <img src="/static/images/preloader.gif">
                     </div>
                     {% endif %}

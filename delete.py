@@ -14,8 +14,17 @@ import django, json, requests
 
 django.setup()
 import re
-from chat.models import Chat, ChatUsers
+from users.model.list import *
+from notify.models import *
 
-for chat in Chat.objects.all():
-    chat.members = ChatUsers.objects.filter(chat=chat).count()
-    chat.save(update_fields=["members"])
+
+for i in UserFeaturedFriend.objects.all():
+    try:
+        list = ListUC.objects.get(type=1, owner=i.user)
+    except:
+        list = ListUC.objects.create(type=1, name="Основной", owner=i.user)
+    try:
+        featured_user = FeaturedUC.objects.get(list=list, owner=i.user, user=i.featured_user)
+    except:
+        featured_user = FeaturedUC.objects.create(list=list, owner=i.user, user=i.featured_user)
+    print(" Создано! ")

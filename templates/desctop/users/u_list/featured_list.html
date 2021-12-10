@@ -17,7 +17,7 @@
                     <div class="media-body">
                         <h5 class="mt-1">
                           Рекомендованные друзья
-                          <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_possible_friends_count }}</small>
+                          <small class="content-color-secondary float-right mr-2 mt-1">Всего {{ user.get_featured_friends_count }}</small>
                         </h5>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                   </li>
                   {% endfor %}
                   {% if page_obj.has_next %}
-                  <div class="load centered m-1 next_page_list" data-link="{% url 'possible_users' %}?page={{ page_obj.next_page_number }}">
+                  <div class="load centered m-1 next_page_list" data-link="{% url 'featured_users' %}?page={{ page_obj.next_page_number }}">
                       <img src="/static/images/preloader.gif">
                   </div>
                   {% endif %}
