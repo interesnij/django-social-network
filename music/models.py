@@ -603,7 +603,7 @@ class Music(models.Model):
 
         #        Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
         #        user_send_wall(track.pk, None, "create_u_track_wall")
-        #        for user_id in creator.get_user_news_notify_ids():
+        #        for user_id in creator.get_user_main_news_ids():
         #            Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
         #            user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
         return track

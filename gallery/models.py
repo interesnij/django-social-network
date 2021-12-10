@@ -674,7 +674,7 @@ class Photo(models.Model):
                 creator.plus_photos(1)
                 Wall.objects.create(creator_id=creator.pk, type=type, object_id=photo.pk, verb="ITE")
                 user_send_wall(photo.pk, None, "create_u_photo_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
                     user_send_notify(photo.pk, creator.pk, user_id, None, "create_u_photo_notify")
         else:

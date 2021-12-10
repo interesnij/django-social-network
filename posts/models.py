@@ -862,7 +862,7 @@ class Post(models.Model):
                 from notify.models import Notify, Wall
                 Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
                 user_send_wall(post.pk, None, "create_u_post_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
                     user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
         if community:
@@ -894,7 +894,7 @@ class Post(models.Model):
                 from notify.models import Notify, Wall
                 Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="SIT")
                 user_send_wall(post.pk, None, "suggest_u_post_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="SIT")
                     user_send_notify(post.pk, creator.pk, user_id, None, "suggest_u_post_notify")
         return post

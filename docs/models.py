@@ -513,7 +513,7 @@ class Doc(models.Model):
 
                 Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
                 user_send_wall(doc.pk, None, "create_u_doc_wall")
-                for user_id in creator.get_user_news_notify_ids():
+                for user_id in creator.get_user_main_news_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
                     user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
         if community:
