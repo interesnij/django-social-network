@@ -1399,11 +1399,13 @@ class User(AbstractUser):
             notify.delete()
 
     def get_user_news_notify_ids(self):
-        from notify.models import UserNewsPk
-        return [i['target'] for i in UserNewsPk.objects.filter(user=self.pk).values('target')]
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['user'] for i in NotifyUC.objects.filter(list_id=list_id, owner=self.pk, mute=False).values('user')]
     def get_community_news_notify_ids(self):
-        from notify.models import CommunityNewsPk
-        return [i['community'] for i in CommunityNewsPk.objects.filter(user=self.pk).values('community')]
+        from users.model.list import ListUC, NotifyUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['community'] for i in NotifyUC.objects.filter(list_id=list_id, owner=self.pk, mute=False).values('community')]
 
     def get_user_profile_notify_ids(self):
         from notify.models import UserProfileNotify
