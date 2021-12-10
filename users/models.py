@@ -392,12 +392,16 @@ class User(AbstractUser):
     def get_6_featured_communities_ids(self):
         from users.model.list import ListUC, FeaturedUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['user'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("community")]
+        return [i['community'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("community")]
 
     def get_featured_friends_ids(self):
         from users.model.list import ListUC, FeaturedUC
         list = ListUC.objects.get(owner=self.pk, type=1)
         return [i['user'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("user")]
+    def get_featured_communities_ids(self):
+        from users.model.list import ListUC, FeaturedUC
+        list = ListUC.objects.get(owner=self.pk, type=1)
+        return [i['community'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=True).values("community")]
 
     def get_featured_friends_count(self):
         return self.get_featured_friends_ids().count()
