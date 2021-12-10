@@ -561,7 +561,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
-        scrolled(rtr.querySelector('.chat_container'));
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
         chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
@@ -572,6 +571,20 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
                                            ) : null;
         if (document.body.querySelector(".left_panel_menu")) {
           document.body.querySelector(".message_text").focus()
+        };
+
+        scroll_block = document.body.querySelector(".is_paginate");
+        scroll_block.onscroll = function() {
+        try {
+            box = _block.querySelector('.next_page_list');
+            if (box && box.classList.contains("next_page_list")) {
+                inViewport = elementInViewport(box);
+                if (inViewport) {
+                    box.classList.remove("next_page_list");
+                    paginate(box);
+                }
+            };
+        } catch {return}
         }
       }
     }
