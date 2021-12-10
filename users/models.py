@@ -335,12 +335,11 @@ class User(AbstractUser):
         follow.delete()
         community.delete_community_notify(self.pk)
 
-    def get_or_create_possible_friend(self, user):
+    def get_or_create_featured_friend(self, user):
         from users.model.list import UserFeaturedFriend
 
         if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
             and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
-            #and not (self.is_child() and not user.is_child_safety()):
             UserFeaturedFriend.objects.create(user=self.pk, featured_user=user.pk)
 
     def plus_friend_visited(self, user_id):
@@ -355,7 +354,7 @@ class User(AbstractUser):
         member.visited = member.visited + 1
         member.save(update_fields=["visited"])
 
-    def remove_possible_friend(self, user_id):
+    def remove_featured_friend(self, user_id):
         from users.model.list import UserFeaturedFriend
         if UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user_id).exists():
             UserFeaturedFriend.objects.get(user=self.pk, featured_user=user_id).delete()
@@ -367,7 +366,7 @@ class User(AbstractUser):
         self.minus_follows(1)
         try:
             for frend in user.get_6_friends():
-                self.get_or_create_possible_friend(frend)
+                self.get_or_create_featured_friend(frend)
         except:
             pass
 
@@ -382,34 +381,34 @@ class User(AbstractUser):
         frend = Connect.create_connection(user_id=self.pk, target_user_id=user_id)
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
-        self.remove_possible_friend(user_id)
+        self.remove_featured_friend(user_id)
         self.add_news_subscriber(user_id)
         return frend
 
-    def get_possible_friends(self):
-        query = Q(id__in=self.get_possible_friends_ids())
+    def get_featured_friends(self):
+        query = Q(id__in=self.get_featured_friends_ids())
         return User.objects.filter(query)
 
-    def get_6_possible_friends(self):
-        query = Q(id__in=self.get_6_possible_friends_ids())
+    def get_6_featured_friends(self):
+        query = Q(id__in=self.get_6_featured_friends_ids())
         return User.objects.filter(query)
 
-    def get_6_possible_friends_communities_ids(self):
+    def get_6_featured_communities_ids(self):
         from communities.models import Community
-        return [i['pk'] for i in Community.objects.filter(memberships__user__id__in=self.get_6_possible_friends()).values("pk")]
+        return [i['pk'] for i in Community.objects.filter(memberships__user__id__in=self.get_6_featured_friends()).values("pk")]
 
-    def get_possible_friends_ids(self):
+    def get_featured_friends_ids(self):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
         return [user['featured_user'] for user in featured]
 
-    def get_possible_friends_count(self):
+    def get_featured_friends_count(self):
         from users.model.list import UserFeaturedFriend
 
         return UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user").count()
 
-    def get_6_possible_friends_ids(self):
+    def get_6_featured_friends_ids(self):
         from users.model.list import UserFeaturedFriend
 
         featured = UserFeaturedFriend.objects.filter(user=self.pk).values("featured_user")
@@ -426,7 +425,7 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
         self.delete_news_subscriber(user_id)
 
-    def get_or_create_possible_friend(self, user):
+    def get_or_create_featured_friend(self, user):
         from users.model.list import UserFeaturedFriend
 
         if self.pk != user.pk and not UserFeaturedFriend.objects.filter(user=self.pk, featured_user=user.pk).exists() \
@@ -439,7 +438,7 @@ class User(AbstractUser):
         user.minus_friends(1)
         self.minus_friends(1)
         self.plus_follows(1)
-        return self.get_or_create_possible_friend(user)
+        return self.get_or_create_featured_friend(user)
 
     def unfrend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -462,7 +461,7 @@ class User(AbstractUser):
 
     def unblock_user_with_pk(self, pk):
         user = User.objects.get(pk=pk)
-        self.get_or_create_possible_friend(user)
+        self.get_or_create_featured_friend(user)
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
@@ -488,7 +487,7 @@ class User(AbstractUser):
             user_to_block.unfollow_user_with_id(self.pk)
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
-        self.remove_possible_friend(user_id)
+        self.remove_featured_friend(user_id)
         self.delete_news_subscriber(user_id)
         self.delete_profile_subscriber(user_id)
         return user_to_block

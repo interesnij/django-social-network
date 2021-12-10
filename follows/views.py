@@ -32,8 +32,7 @@ class FollowingsView(ListView):
 		return super(FollowingsView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		possible_list = self.request.user.get_followings()
-		return possible_list
+		return self.request.user.get_followings()
 
 
 class FollowCreate(View):

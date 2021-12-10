@@ -28,6 +28,78 @@ class UserFeaturedFriend(models.Model):
         verbose_name = 'Рекомендованные друзья'
         verbose_name_plural = 'Рекомендованные друзья'
 
+class ListUC(models.Model):
+    NO, MAIN, LIST = 0, 1, 2
+    TYPE = (
+        (MAIN, 'Основной список'),(LIST, 'Пользовательский'),(NO, 'Нет значения'),
+    )
+    type = models.PositiveSmallIntegerField(choices=TYPE, default=NO, verbose_name="Рекомендуемое сообщество")
+    name = models.CharField(max_length=100)
+    owner = models.PositiveIntegerField(default=0, verbose_name="Владелец")
+
+class FeaturedUC(models.Model):
+    list = models.ForeignKey(ListUC, db_index=False, on_delete=models.CASCADE, related_name='+', verbose_name="Список")
+    owner = models.PositiveIntegerField(default=0, verbose_name="Кто получает")
+    user = models.PositiveIntegerField(default=0, verbose_name="Рекомендуемый друг")
+    community = models.PositiveIntegerField(default=0, verbose_name="Рекомендуемое сообщество")
+    mute = models.BooleanField(default=False, verbose_name="Источник скрыт")
+    sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
+
+    class Meta:
+        verbose_name = 'Рекомендованные друзья'
+        verbose_name_plural = 'Рекомендованные друзья'
+
+    def is_open(self):
+        if self.mute:
+            return False
+        elif not sleep:
+            return True
+        else:
+            from datetime import datetime
+            return self.sleep < datetime.now()
+
+class NewsUC(models.Model):
+    list = models.ForeignKey(ListUC, db_index=False, on_delete=models.CASCADE, related_name='+', verbose_name="Список")
+    owner = models.PositiveIntegerField(default=0, verbose_name="Кто получает")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    mute = models.BooleanField(default=False, verbose_name="Источник скрыт")
+    sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
+
+    class Meta:
+        verbose_name = 'Друзья/сообщества и подписки'
+        verbose_name_plural = 'Друзья/сообщества и подписки'
+
+    def is_open(self):
+        if self.mute:
+            return False
+        elif not sleep:
+            return True
+        else:
+            from datetime import datetime
+            return self.sleep < datetime.now()
+
+class NotifyUC(models.Model):
+    list = models.ForeignKey(ListUC, db_index=False, on_delete=models.CASCADE, related_name='+', verbose_name="Список")
+    owner = models.PositiveIntegerField(default=0, verbose_name="Кто получает")
+    user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")
+    community = models.PositiveIntegerField(default=0, verbose_name="Сообщество")
+    mute = models.BooleanField(default=False, verbose_name="Источник скрыт")
+    sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
+
+    class Meta:
+        verbose_name = 'Друзья/сообщества и подписки'
+        verbose_name_plural = 'Друзья/сообщества и подписки'
+
+    def is_open(self):
+        if self.mute:
+            return False
+        elif not sleep:
+            return True
+        else:
+            from datetime import datetime
+            return self.sleep < datetime.now()
+
 
 class UserPhotoListPosition(models.Model):
     user = models.PositiveIntegerField(default=0, verbose_name="Пользователь")

@@ -26,8 +26,8 @@
               {% if user.count_following %}
                 <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}">Мои заявки ({{ user.count_following }})</a>
               {% endif %}
-              {% if user.get_possible_friends_count %}
-              <a class="dropdown-item ajax" href="{% url 'possible_users' %}">Возможные друзья ({{ user.get_possible_friends_count }})</a>
+              {% if user.get_featured_friends_count %}
+              <a class="dropdown-item ajax" href="{% url 'featured_users' %}">Возможные друзья ({{ user.get_featured_friends_count }})</a>
               {% endif %}
               <a class="dropdown-item ajax" href="{% url 'all_users' %}">Найти друзей</a>
             </div>

@@ -5,5 +5,5 @@ from users.views.lists import *
 urlpatterns = [
     url(r'^visit_communities/$', UserVisitCommunities.as_view(), name='visited_communities'),
     url(r'^list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UserPostsListView.as_view(), name='user_post_list'),
-    url(r'^possible/$', AllPossibleUsersList.as_view(), name='possible_users'),
+    url(r'^featured/$', AllFeaturedUsersList.as_view(), name='featured_users'),
 ]
