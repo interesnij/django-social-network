@@ -573,18 +573,18 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
           document.body.querySelector(".message_text").focus()
         };
 
-        scroll_block = document.body.querySelector(".is_paginate");
-        scroll_block.onscroll = function() {
-        try {
-            box = scroll_block.querySelector('.next_page_list');
-            if (box && box.classList.contains("next_page_list")) {
-                inViewport = elementInViewport(box);
-                if (inViewport) {
-                    box.classList.remove("next_page_list");
-                    paginate(box);
-                }
-            };
-        } catch {return}
+        //scroll_block = document.body.querySelector(".is_paginate");
+        //scroll_block.onscroll = function() {
+        //try {
+        //    box = scroll_block.querySelector('.next_page_list');
+        //    if (box && box.classList.contains("next_page_list")) {
+        //        inViewport = elementInViewport(box);
+        //        if (inViewport) {
+        //            box.classList.remove("next_page_list");
+        //            paginate(box);
+        //        }
+        //    };
+        //} catch {return}
         }
       }
     }
