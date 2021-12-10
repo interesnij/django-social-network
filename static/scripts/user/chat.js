@@ -576,7 +576,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         scroll_block = document.body.querySelector(".is_paginate");
         scroll_block.onscroll = function() {
         try {
-            box = _block.querySelector('.next_page_list');
+            box = scroll_block.querySelector('.next_page_list');
             if (box && box.classList.contains("next_page_list")) {
                 inViewport = elementInViewport(box);
                 if (inViewport) {
