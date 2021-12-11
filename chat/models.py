@@ -679,7 +679,18 @@ class ChatUsers(models.Model):
 
     @classmethod
     def create_membership(cls, user, chat, is_administrator=False):
-        if not cls.objects.filter(user=user, chat=chat).exclude(type="DEL").exists():
+        # создание участника по приглашению
+        if cls.objects.filter(user=user, chat=chat).exists():
+            member = cls.objects.get(user=user, chat=chat)
+            if member.type == ChatUsers.DELETED:
+                # если он сам не вышел из беседы
+                member.type = ChatUsers.ACTIVE
+                chat.members = chat.members + 1
+                chat.save(update_fields=["members"])
+                return membership
+            else:
+                pass 
+        else:
             membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
             chat.members = chat.members + 1
             chat.save(update_fields=["members"])
