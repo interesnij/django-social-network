@@ -20,7 +20,7 @@ from communities.models import Community
 
 
 for user in User.objects.all():
-    friends = user.get_all_connection()
+    friends = user.get_all_friends()
     communities = user.get_communities()
     try:
         list = ListUC.objects.get(type=1, owner=user.pk)

@@ -318,7 +318,7 @@ class PostsList(models.Model):
                 return True
             elif self.can_see_el == self.CREATOR and user_id == self.creator.pk:
                 return True
-            elif self.can_see_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
+            elif self.can_see_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
                 return True
             elif self.can_see_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
@@ -349,7 +349,7 @@ class PostsList(models.Model):
                 return True
             elif self.create_el == self.CREATOR and user_id == self.creator.pk:
                 return True
-            elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_connection_ids():
+            elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
                 return True
             elif self.create_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
                 return True

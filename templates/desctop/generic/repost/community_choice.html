@@ -12,7 +12,7 @@
     </div>
 
     <div class="custom-control custom-radio" id="repost_for_message" style="margin-bottom:10px">
-        <input type="radio" {% if not request.user.get_chats_and_connections %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
+        <input type="radio" {% if not request.user.get_chats_and_friends %}disabled="disabled"{% endif %} name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>
     </div>
     </div>

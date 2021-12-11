@@ -266,7 +266,7 @@ class ChatItemsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/chat_items.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.total_list = request.user.get_chats_and_connections()
+		self.total_list = request.user.get_chats_and_friends()
 		return super(ChatItemsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -290,7 +290,7 @@ class FriendsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/friends.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.list = request.user.get_all_connection()
+		self.list = request.user.get_all_friends()
 		return super(FriendsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
@@ -494,7 +494,7 @@ class LoadListExcludeUsers(ListView):
 
 	def get_queryset(self):
 		if self.target == "user":
-			return self.request.user.get_all_connection()
+			return self.request.user.get_all_friends()
 		elif self.community_pk:
 			from communities.models import Community
 			return Community.get_members(self.community_pk)
@@ -638,7 +638,7 @@ class LoadListIncludeUsers(ListView):
 
 	def get_queryset(self):
 		if self.target == "user":
-			return self.request.user.get_all_connection()
+			return self.request.user.get_all_friends()
 		elif self.community_pk:
 			from communities.models import Community
 			return Community.get_members(self.community_pk)

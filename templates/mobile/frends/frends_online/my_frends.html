@@ -16,7 +16,7 @@
         </div>
         <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
             <button class="btn btn-sm border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-                Мои друзья онлайн ({{ user.get_online_connection_count }})
+                Мои друзья онлайн ({{ user.get_online_friends_count }})
             </button>
             <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
               <a class="dropdown-item ajax" href="{% url 'frends' pk=user.pk %}">Мои друзья</a>

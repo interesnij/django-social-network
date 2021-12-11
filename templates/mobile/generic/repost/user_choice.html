@@ -24,7 +24,7 @@
     </div>
     {% endif %}
 
-    {% if not request.user.get_chats_and_connections %}
+    {% if not request.user.get_chats_and_friends %}
     <div class="custom-control custom-radio" flow="up" tooltip="У Вас нет друзей и/или сообщений" style="margin-bottom:10px">
         <input type="radio" disabled="disabled" name="radiogroup-1" class="custom-control-input" id="repost_radio_message">
         <label class="custom-control-label" for="repost_radio_message">В сообщении</label>

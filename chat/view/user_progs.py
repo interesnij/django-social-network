@@ -464,7 +464,7 @@ class InviteMembersInUserChat(ListView):
 		query = []
 
 		r_user = self.request.user
-		friends = r_user.get_all_connection()
+		friends = r_user.get_all_friends()
 
 		if self.chat:
 			memders_ids = self.chat.get_recipients_ids(r_user.pk)
