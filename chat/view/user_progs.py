@@ -58,6 +58,8 @@ class CreateUserChat(TemplateView):
 				template = 'chat/chat/detail/private_chat.html'
 			elif new_chat.is_group() or new_chat.is_public():
 				template = 'chat/chat/detail/group_chat.html'
+				if request.POST.get('users'):
+					self.chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
 			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
 			from django.http import HttpResponseBadRequest
