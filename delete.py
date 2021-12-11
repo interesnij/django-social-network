@@ -26,7 +26,7 @@ for user in User.objects.all():
         list = ListUC.objects.get(type=1, owner=user.pk)
     except:
         list = ListUC.objects.create(type=1, name="Основной", owner=user.pk)
-    for frend in frends:
+    for frend in friends:
         try:
             NewsUC.objects.get(list=list, owner=user.pk, user=frend.pk)
         except:
