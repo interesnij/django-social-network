@@ -973,12 +973,13 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
       users_block = form.querySelector(".card-header");
       users_list = users_block.querySelectorAll(".custom_color");
       collector = document.body.querySelector(".collector");
-      final_list = ": ";
+      final_list = "Выбраны друзья: ";
       for (var i = 0; i < users_list.length; i++){
         a = users_list[i].querySelector("a");
         final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
         final_list += '<input type="hidden" name="users" value="' + users_list[i].getAttribute("data-pk") + '" />'
       };
       collector.innerHTML = final_list;
+      close_work_fullscreen();
     }
 });
