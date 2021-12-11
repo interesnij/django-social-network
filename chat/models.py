@@ -48,7 +48,7 @@ class Chat(models.Model):
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
         indexes = (BrinIndex(fields=['created']),)
-        ordering = ["-chat_message"]
+        ordering = ["-chat_message__created"]
 
     def __str__(self):
         return self.creator.get_full_name()
