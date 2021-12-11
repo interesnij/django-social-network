@@ -38,8 +38,8 @@ class FeaturedUC(models.Model):
     sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
 
     class Meta:
-        verbose_name = 'Источник реокмендаций'
-        verbose_name_plural = 'Источники реокмендаций'
+        verbose_name = 'Источник рекомендаций'
+        verbose_name_plural = 'Источники рекомендаций'
 
     def __str__(self):
         return str(self.owner)

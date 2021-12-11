@@ -16,4 +16,21 @@ django.setup()
 import re
 from users.model.list import *
 from users.models import User
-from notify.models import *
+from communities.models import Community
+
+
+for user in User.objects.all():
+    friends = user.get_all_connections()
+    communities = user.get_communities()
+    list = ListUC.objects.get(type=1, owner=user)
+    for frend in frends:
+        try:
+            NewsUC.objects.get(list=list, owner=user, user=frend.pk)
+        except:
+            NewsUC.objects.create(list=list, owner=user, user=frend.pk)
+
+    for community in communities:
+        try:
+            NewsUC.objects.get(list=list, owner=user, community=community.pk)
+        except:
+            NewsUC.objects.create(list=list, owner=user, community=community.pk)
