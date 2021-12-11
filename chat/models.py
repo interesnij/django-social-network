@@ -685,6 +685,7 @@ class ChatUsers(models.Model):
             if member.type == ChatUsers.DELETED:
                 # если он сам не вышел из беседы
                 member.type = ChatUsers.ACTIVE
+                member.save(update_fields=["type"])
                 chat.members = chat.members + 1
                 chat.save(update_fields=["members"])
                 return member
