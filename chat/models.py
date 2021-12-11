@@ -314,7 +314,7 @@ class Chat(models.Model):
             return str(count) + " участников"
 
     def get_first_message(self, user_id):
-        query = Q(recipient_id=user_id)|Q(type=Message.MANAGER)
+        query = Q(recipient_id=user_id)
         query.add(~Q(type__contains="_"), Q.AND)
         return self.chat_message.filter(query).first()
 
@@ -343,7 +343,7 @@ class Chat(models.Model):
         return self.chat_message.filter(recipient_id=user_id, unread=True)
 
     def get_messages_for_recipient(self, user_id):
-        query = Q(recipient_id=user_id)|Q(type=Message.MANAGER)
+        query = Q(recipient_id=user_id)
         query.add(~Q(type__contains="_"), Q.AND)
         return self.chat_message.filter(query)
 
@@ -541,10 +541,13 @@ class Chat(models.Model):
             var = "исключил"
         ChatUsers.delete_member(user=user, chat=self)
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-        info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-        for recipient in self.get_recipients_2(creator.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
-        return info_message
+        for recipient in self.get_members():
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            if recipient.pk != creator.pk:
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            else:
+                message = info_message
+        return message
 
     def exit_member(self, user):
         if user.is_women():
@@ -553,10 +556,13 @@ class Chat(models.Model):
             var = "вышел из чата"
         ChatUsers.exit_member(user=user, chat=self)
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
-        info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,type=Message.MANAGER,text=text)
-        for recipient in self.get_recipients_2(user.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
-        return info_message
+        for recipient in self.get_members():
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            if recipient.pk != creator.pk:
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            else:
+                message = info_message
+        return message
 
     def invite_users_in_chat(self, users_ids, creator):
         from users.models import User
@@ -575,8 +581,12 @@ class Chat(models.Model):
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                     info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                     info_messages.append(info_message)
-                    for recipient in self.get_recipients_2(creator.pk):
-                        info_message.create_socket(recipient.user.pk, recipient.beep())
+                    for recipient in self.get_members():
+                        info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+                        if recipient.pk != creator.pk:
+                            info_message.create_socket(recipient.user.pk, recipient.beep())
+                        else:
+                            info_messages.append(info_message)
         return info_messages
 
     def edit_chat(self, name, image, description):
