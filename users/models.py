@@ -404,7 +404,10 @@ class User(AbstractUser):
         return [i['community'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=False).values("community")]
 
     def get_featured_friends_count(self):
-        return self.get_featured_friends_ids().count()
+        try:
+            return self.get_featured_friends_ids().count()
+        except:
+            return ''
 
     def get_6_featured_friends_ids(self):
         return self.get_featured_friends_ids()[:6]
