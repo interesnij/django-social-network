@@ -566,6 +566,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         };
 
         scroll_block = document.body.querySelector(".is_paginate");
+        get_document_opacity_1();
         scroll_block.onscroll = function() {
           console.log("worked!!!!")
         try {
