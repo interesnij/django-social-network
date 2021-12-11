@@ -49,14 +49,6 @@ on('#ajax', 'click', '.hide_chat_search', function() {
   search.style.display = "none";
 });
 
-on('#ajax', 'click', '.u_add_members_in_chat', function() {
-  if (this.getAttribute("chat-pk")) {
-    pk = this.getAttribute("chat-pk")
-  } else {
-    pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
-  };
-  create_fullscreen("/chat/user_progs/invite_members/" + pk + "/", "worker_fullscreen");
-});
 on('#ajax', 'click', '.u_chat_info', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/" + pk + "/info/", "worker_fullscreen");
@@ -838,31 +830,6 @@ on('#ajax', 'click', '.off_full_chat_notify', function() {
   document.body.querySelector(".notify_box").innerHTML= ' <svg style="width: 14px;" enable-background="new 0 0 24 24" height="14px" viewBox="0 0 24 24" width="17px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM10 15.17L7.83 13H5v-2h2.83l.88-.88L10 11.41v3.76zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z"/></svg>'
 });
 
-
-on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
-  form = this.parentElement.parentElement;
-  this.disabled = true;
-  pk = form.parentElement.getAttribute("chat-pk");
-  form_data = new FormData(form);
-
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/chat/user_progs/invite_members/' + pk + '/', true );
-      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      ajax_link.onreadystatechange = function () {
-        if ( this.readyState == 4 && this.status == 200 ) {
-            elem_ = document.createElement('span');
-            elem_.innerHTML = ajax_link.responseText;
-            message_load = document.body.querySelector(".chatlist");
-            message_load.append(elem_);
-            objDiv = document.querySelector("#chatcontent");
-            objDiv.scrollTop = objDiv.scrollHeight;
-            close_work_fullscreen();
-            message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
-        }
-      };
-      ajax_link.send(form_data);
-});
-
 on('#ajax', 'click', '.remove_user_from_chat', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   user_pk = item.getAttribute("data-pk");
@@ -964,4 +931,54 @@ on('#ajax', 'click', '#add_chat_exclude_users_btn', function() {
 on('#ajax', 'click', '#add_chat_include_users_btn', function() {
   form = this.parentElement.parentElement;
   post_include_exclude_users(form, '/chat/user_progs/load_include_users/' + form.parentElement.getAttribute("chat-pk") + '/')
+});
+
+
+on('#ajax', 'click', '.u_add_members_in_chat', function() {
+  if (this.getAttribute("chat-pk")) {
+    pk = this.getAttribute("chat-pk")
+  } else if (this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")){
+    pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  } else {pk=null};
+  create_fullscreen("/chat/user_progs/invite_members/?chat_pk=" + pk, "worker_fullscreen");
+});
+on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
+  form = this.parentElement.parentElement, is_chat = false;
+  this.disabled = true;
+  if (form.parentElement.getAttribute("chat-pk")) {
+    pk = form.parentElement.getAttribute("chat-pk");
+    is_chat = true
+  } else { pk=null};
+
+  if (is_chat) {
+    form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', "/chat/user_progs/invite_members/?chat_pk=" + pk, true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            elem_ = document.createElement('span');
+            elem_.innerHTML = ajax_link.responseText;
+            message_load = document.body.querySelector(".chatlist");
+            message_load.append(elem_);
+            objDiv = document.querySelector("#chatcontent");
+            objDiv.scrollTop = objDiv.scrollHeight;
+            close_work_fullscreen();
+            message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
+        }
+      };
+      ajax_link.send(form_data);
+    } else {
+      users_block = form.querySelector(".card-header");
+      users_list = users_block.querySelectorAll(".custom_color");
+      collector = document.body.querySelector(".collector");
+      final_list = ": ";
+      for (var i = 0; i < users_list.length; i++){
+        a = users_list[i].querySelector("a");
+        final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
+        final_list += '<input type="hidden" name="users" value="' + users_list[i].getAttribute("data-pk") + '" />'
+      };
+      collector.innerHTML = final_list;
+    }
 });
