@@ -1,5 +1,5 @@
 
-{% if user.get_pop_online_connection %}
+{% if user.get_6_online_friends %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'frends' pk=user.pk %}#tabhome223" class="ajax">
@@ -7,12 +7,12 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Друзья в сети </h6>
             </div>
-            {{ user.get_online_connection_count }}
+            {{ user.get_online_friends_count }}
         </div>
       </a>
     </div>
 
-    {% for user in user.get_pop_online_connection %}
+    {% for user in user.get_6_online_friends %}
 
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">

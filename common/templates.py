@@ -335,7 +335,7 @@ def get_template_user_item(item, folder, template, request_user, user_agent):
     else:
         if list.can_see_el == 1:
             template_name = folder + template
-        elif list.can_see_el == 2 and request_user.pk in user.get_all_connection_ids():
+        elif list.can_see_el == 2 and request_user.pk in user.get_all_friends_ids():
             template_name = folder + template
         elif list.can_see_el == 3 and request_user.pk in user.get_friend_and_friend_of_friend_ids():
             template_name = folder + template
@@ -386,7 +386,7 @@ def get_template_user_list(list, folder, template, request_user, user_agent):
     else:
         if list.can_see_el == 1:
             template_name = folder + template
-        elif list.can_see_el == 2 and request_user.pk in user.get_all_connection_ids():
+        elif list.can_see_el == 2 and request_user.pk in user.get_all_friends_ids():
             template_name = folder + template
         elif list.can_see_el == 3 and request_user.pk in user.get_friend_and_friend_of_friend_ids():
             template_name = folder + template

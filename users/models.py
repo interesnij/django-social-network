@@ -362,7 +362,7 @@ class User(AbstractUser):
         self.plus_friends(1)
         self.minus_follows(1)
         try:
-            for frend in user.get_6_default_connection():
+            for frend in user.get_6_friends():
                 self.get_or_create_featured_friend_in_main_list(frend)
         except:
             pass
@@ -1049,33 +1049,30 @@ class User(AbstractUser):
 
 
     ''''' GET всякие  219-186 '''''
-    def get_6_default_connection(self):
-        return self.get_all_connection()[:6]
-
-    def get_6_default_communities(self):
-        from communities.models import Community
-        return Community.objects.filter(memberships__user=self)[0:6]
+    def get_6_friends(self):
+        return self.get_all_friends()[:6]
 
     def get_default_communities(self):
         from communities.models import Community
         return Community.objects.filter(memberships__user_id=self.pk)
 
     def get_6_communities(self):
-        return self.get_6_default_communities()
+        from communities.models import Community
+        return Community.objects.filter(memberships__user=self)[0:6]
 
     def get_communities(self):
         return self.get_default_communities()
 
-    def get_all_connection_ids(self):
+    def get_all_friends_ids(self):
         my_frends = self.connections.order_by("-visited").values('target_user_id')
         return [i['target_user_id'] for i in my_frends]
 
     def get_friend_and_friend_of_friend_ids(self):
-        frends = self.get_all_connection()
+        frends = self.get_all_friends()
         frends_ids = [u['id'] for u in frends.values('id')]
         query = []
         for frend in frends:
-            i = frend.get_all_connection().values('id')
+            i = frend.get_all_friends().values('id')
             query = query + [user['id'] for user in i]
         query = query + frends_ids
         set_query = list(set(query))
@@ -1086,28 +1083,28 @@ class User(AbstractUser):
         return set_query
 
 
-    def get_all_connection(self):
+    def get_all_friends(self):
         query = []
-        for id in self.get_all_connection_ids():
+        for id in self.get_all_friends_ids():
             query.append(User.objects.get(id=id))
         return query
 
-    def get_online_connection(self):
-        frends, query = self.get_all_connection(), []
+    def get_online_friends(self):
+        frends, query = self.get_all_friends(), []
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
         return query
 
-    def get_online_connection_count(self):
-        frends, query = self.get_all_connection(), []
+    def get_online_friends_count(self):
+        frends, query = self.get_all_friends(), []
         for frend in frends:
             if frend.get_online():
                 query += [frend,]
         return len(query)
 
-    def get_pop_online_connection(self):
-        frends, query = self.get_all_connection(), []
+    def get_6_online_friends(self):
+        frends, query = self.get_all_friends(), []
         for frend in frends:
             if frend.get_online() and len(query) < 6:
                 query += [frend]
@@ -1469,9 +1466,9 @@ class User(AbstractUser):
         query.add(~Q(type__contains="_"), Q.AND)
         return Chat.objects.filter(query).order_by()
 
-    def get_chats_and_connections(self):
+    def get_chats_and_friends(self):
         from itertools import chain
-        return list(chain(self.get_all_chats(), self.get_all_connection()))
+        return list(chain(self.get_all_chats(), self.get_all_friends()))
 
     def is_administrator_of_chat(self, chat_pk):
         return self.chat_users.filter(chat__pk=chat_pk, is_administrator=True, type="ACT").exists()
@@ -1534,7 +1531,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_info == private.YOU and self.pk == user.pk:
             return True
-        elif private.can_see_info == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_info == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_info == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1554,7 +1551,7 @@ class User(AbstractUser):
             return True
         elif private.can_add_in_chat == "6":
             return False
-        elif private.can_add_in_chat == "4" and user_pk in self.get_all_connection_ids():
+        elif private.can_add_in_chat == "4" and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_add_in_chat == "5" and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1570,7 +1567,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_post == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_post == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_post == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_post == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1586,7 +1583,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_community == private.YOU or self.pk == user_pk:
             return True
-        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1602,7 +1599,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_photo == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_photo == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_photo == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_photo == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1618,7 +1615,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_video == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_video == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_video == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_video == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1634,7 +1631,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_music == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_music == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_music == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_music == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1650,7 +1647,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_doc == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_doc == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_doc == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_doc == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1666,7 +1663,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_friend == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_friend == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_friend == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_friend == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
@@ -1682,7 +1679,7 @@ class User(AbstractUser):
             return True
         elif private.can_see_good == private.YOU and self.pk == user_pk:
             return True
-        elif private.can_see_good == private.FRIENDS and user_pk in self.get_all_connection_ids():
+        elif private.can_see_good == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_good == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True

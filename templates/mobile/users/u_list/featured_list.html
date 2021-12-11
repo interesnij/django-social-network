@@ -14,8 +14,8 @@
           </button>
           <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
             <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья ({{ user.count_friends }})</a>
-            {% if user.get_online_connection_count %}
-              <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья онлайн ({{ user.get_online_connection_count }})</a>
+            {% if user.get_online_friends_count %}
+              <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья онлайн ({{ user.get_online_friends_count }})</a>
             {% endif %}
             {% if user.count_following %}
               <a class="dropdown-item ajax" href="{% url 'followings' pk=user.pk %}">Мои заявки ({{ user.count_following }})</a>

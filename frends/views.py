@@ -22,7 +22,7 @@ class FrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list = self.user.get_all_connection()
+		friends_list = self.user.get_all_friends()
 		return friends_list
 
 class OnlineFrendsListView(ListView):
@@ -39,7 +39,7 @@ class OnlineFrendsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		friends_list = self.user.get_online_connection()
+		friends_list = self.user.get_online_friends()
 		return friends_list
 
 class CommonFrendsListView(ListView):

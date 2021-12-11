@@ -235,7 +235,7 @@ class PostListLoadIncludeUsers(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.request.user.get_all_connection()
+		return self.request.user.get_all_friends()
 
 	def post(self,request,*args,**kwargs):
 		from posts.models import PostsList
@@ -288,7 +288,7 @@ class PostListLoadExcludeUsers(ListView):
 		if self.list.community:
 			return self.list.community.get_members()
 		else:
-			return self.request.user.get_all_connection()
+			return self.request.user.get_all_friends()
 
 	def post(self,request,*args,**kwargs):
 		from posts.models import PostsList
@@ -341,7 +341,7 @@ class PostListLoadIncludeUsers(ListView):
 		if self.list.community:
 			return self.list.community.get_members()
 		else:
-			return self.request.user.get_all_connection()
+			return self.request.user.get_all_friends()
 
 	def post(self,request,*args,**kwargs):
 		from posts.models import PostsList
