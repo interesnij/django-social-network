@@ -362,7 +362,7 @@ class User(AbstractUser):
         self.plus_friends(1)
         self.minus_follows(1)
         try:
-            for frend in user.get_6_friends():
+            for frend in user.get_6_default_connection():
                 self.get_or_create_featured_friend_in_main_list(frend)
         except:
             pass
@@ -1050,13 +1050,7 @@ class User(AbstractUser):
 
     ''''' GET всякие  219-186 '''''
     def get_6_default_connection(self):
-        my_frends = self.connections.values('target_user_id')
-        connection_query = Q(id__in=[i['target_user_id'] for i in my_frends])
-        connection_query.add(~Q(Q(blocked_by_users__blocker_id=self.id) | Q(user_blocks__blocked_user_id=self.id)), Q.AND)
-        return User.objects.filter(connection_query)[0:6]
-
-    def get_6_friends(self):
-        return self.get_6_default_connection()
+        return self.get_all_connection()[:6]
 
     def get_6_default_communities(self):
         from communities.models import Community
