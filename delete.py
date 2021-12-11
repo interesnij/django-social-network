@@ -22,7 +22,7 @@ from communities.models import Community
 for user in User.objects.all():
     friends = user.get_all_connection()
     communities = user.get_communities()
-    list = ListUC.objects.get(type=1, owner=user)
+    list = ListUC.objects.get(type=1, owner=user.pk)
     for frend in frends:
         try:
             NewsUC.objects.get(list=list, owner=user.pk, user=frend.pk)
