@@ -448,7 +448,7 @@ class InviteMembersInUserChat(ListView):
 		from common.templates import get_settings_template
 
 		self.template_name = get_settings_template("chat/chat/append_friends.html", request.user, request.META['HTTP_USER_AGENT'])
-		if request.GET.get("chat_pk"):
+		if request.GET.get("chat_pk") != "null":
 			self.chat = Chat.objects.get(pk=request.GET.get("chat_pk"))
 		return super(InviteMembersInUserChat,self).get(request,*args,**kwargs)
 
@@ -484,7 +484,7 @@ class InviteMembersInUserChat(ListView):
 			from chat.models import Chat
 			from django.http import HttpResponse
 
-			if request.GET.get("chat_pk"):
+			if request.GET.get("chat_pk") != "null":
 				self.chat = Chat.objects.get(pk=request.GET.get("chat_pk"))
 				list = request.POST.getlist('users')
 				info_messages = self.chat.invite_users_in_chat(list, request.user)
