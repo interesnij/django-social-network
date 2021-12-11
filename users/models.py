@@ -1093,7 +1093,10 @@ class User(AbstractUser):
 
 
     def get_all_connection(self):
-        return User.objects.filter(id__in=self.get_all_connection_ids())
+        query = []
+        for id in self.get_all_connection_ids():
+            query.append(User.objects.get(id=id))
+        return query
 
     def get_online_connection(self):
         frends, query = self.get_all_connection(), []
