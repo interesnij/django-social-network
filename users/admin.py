@@ -50,3 +50,7 @@ admin.site.register(IPUser)
 admin.site.register(UserProfile, UserProfileAdmin)
 
 admin.site.register(UserPostsListPosition)
+
+admin.site.register(FeaturedUC)
+admin.site.register(NewsUC)
+admin.site.register(NotifyUC)
