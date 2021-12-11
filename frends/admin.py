@@ -5,7 +5,7 @@ from frends.models import Connect
 
 class ConnectAdmin(admin.ModelAdmin):
     search_fields = ('user',)
-    #exclude = ['communities']
+    list_display = ['user','target_user','visited']
 
 
 admin.site.register(Connect, ConnectAdmin)
