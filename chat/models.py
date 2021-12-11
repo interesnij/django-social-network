@@ -544,7 +544,7 @@ class Chat(models.Model):
         ChatUsers.delete_member(user=user, chat=self)
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
         for recipient in self.get_recipients():
-            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,recipient_id=recipient.user.pk,type=Message.MANAGER,text=text)
             if recipient.user.pk != creator.pk:
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
@@ -559,7 +559,7 @@ class Chat(models.Model):
         ChatUsers.exit_member(user=user, chat=self)
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
         for recipient in self.get_recipients():
-            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,recipient_id=recipient.user.pk,type=Message.MANAGER,text=text)
             if recipient.user.pk != creator.pk:
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
@@ -582,7 +582,7 @@ class Chat(models.Model):
                 if member:
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                     for recipient in self.get_recipients():
-                        info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
+                        info_message = Message.objects.create(chat_id=self.id,recipient_id=recipient.user.pk,creator_id=creator.id,type=Message.MANAGER,text=text)
                         if recipient.user.pk != creator.pk:
                             info_message.create_socket(recipient.user.pk, recipient.beep())
                         else:
