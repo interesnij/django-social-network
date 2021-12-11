@@ -566,7 +566,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         };
         }
       }
-    }
     ajax_link.send();
 });
 
