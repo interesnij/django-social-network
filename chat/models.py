@@ -544,7 +544,7 @@ class Chat(models.Model):
         for recipient in self.get_members():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             if recipient.pk != creator.pk:
-                info_message.create_socket(recipient.user.pk, recipient.beep())
+                info_message.create_socket(recipient.pk, recipient.beep())
             else:
                 message = info_message
         return message
@@ -559,7 +559,7 @@ class Chat(models.Model):
         for recipient in self.get_members():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             if recipient.pk != creator.pk:
-                info_message.create_socket(recipient.user.pk, recipient.beep())
+                info_message.create_socket(recipient.pk, recipient.beep())
             else:
                 message = info_message
         return message
@@ -584,7 +584,7 @@ class Chat(models.Model):
                     for recipient in self.get_members():
                         info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                         if recipient.pk != creator.pk:
-                            info_message.create_socket(recipient.user.pk, recipient.beep())
+                            info_message.create_socket(recipient.pk, recipient.beep())
                         else:
                             info_messages.append(info_message)
         return info_messages
