@@ -284,9 +284,11 @@ class Chat(models.Model):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT")
 
-    def get_recipients(self, exclude_creator_pk):
+    def get_recipients_exclude_creator(self, exclude_creator_pk):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT").exclude(pk=exclude_creator_pk)
+    def get_recipients(self):
+        return ChatUsers.objects.filter(chat_pk=self.pk, type="ACT")
 
     def get_recipients_2(self, exclude_creator_pk):
         return ChatUsers.objects.filter(chat_id=self.pk, type="ACT").exclude(user_id=exclude_creator_pk)
@@ -296,7 +298,7 @@ class Chat(models.Model):
         return [_user['id'] for _user in users]
 
     def get_recipients_ids(self, exclude_creator_pk):
-        users = self.get_recipients(exclude_creator_pk).values('id')
+        users = self.get_recipients_exclude_creator(exclude_creator_pk).values('id')
         return [i['id'] for i in users]
 
     def get_members_count(self):
@@ -541,10 +543,10 @@ class Chat(models.Model):
             var = "исключил"
         ChatUsers.delete_member(user=user, chat=self)
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-        for recipient in self.get_members():
+        for recipient in self.get_recipients():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             if recipient.pk != creator.pk:
-                info_message.create_socket(recipient.pk, recipient.beep())
+                info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
         return message
@@ -556,10 +558,10 @@ class Chat(models.Model):
             var = "вышел из чата"
         ChatUsers.exit_member(user=user, chat=self)
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
-        for recipient in self.get_members():
+        for recipient in self.get_recipients():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
             if recipient.pk != creator.pk:
-                info_message.create_socket(recipient.pk, recipient.beep())
+                info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
         return message
@@ -581,10 +583,10 @@ class Chat(models.Model):
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                     info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                     info_messages.append(info_message)
-                    for recipient in self.get_members():
+                    for recipient in self.get_recipients():
                         info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                         if recipient.pk != creator.pk:
-                            info_message.create_socket(recipient.pk, recipient.beep())
+                            info_message.create_socket(recipient.user.pk, recipient.beep())
                         else:
                             info_messages.append(info_message)
         return info_messages
