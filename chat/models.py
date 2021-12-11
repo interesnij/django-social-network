@@ -687,9 +687,9 @@ class ChatUsers(models.Model):
                 member.type = ChatUsers.ACTIVE
                 chat.members = chat.members + 1
                 chat.save(update_fields=["members"])
-                return membership
+                return member
             else:
-                pass 
+                pass
         else:
             membership = cls.objects.create(user=user, chat=chat, is_administrator=is_administrator)
             chat.members = chat.members + 1
