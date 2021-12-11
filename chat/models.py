@@ -545,7 +545,7 @@ class Chat(models.Model):
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
         for recipient in self.get_recipients():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-            if recipient.pk != creator.pk:
+            if recipient.user.pk != creator.pk:
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
@@ -560,7 +560,7 @@ class Chat(models.Model):
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
         for recipient in self.get_recipients():
             info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-            if recipient.pk != creator.pk:
+            if recipient.user.pk != creator.pk:
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
@@ -581,11 +581,9 @@ class Chat(models.Model):
                 member = ChatUsers.create_membership(user=user, chat=self)
                 if member:
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-                    info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-                    info_messages.append(info_message)
                     for recipient in self.get_recipients():
                         info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-                        if recipient.pk != creator.pk:
+                        if recipient.user.pk != creator.pk:
                             info_message.create_socket(recipient.user.pk, recipient.beep())
                         else:
                             info_messages.append(info_message)
