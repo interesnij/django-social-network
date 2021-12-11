@@ -564,21 +564,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         if (document.body.querySelector(".left_panel_menu")) {
           document.body.querySelector(".message_text").focus()
         };
-
-        scroll_block = document.body.querySelector(".is_paginate");
-        get_document_opacity_1();
-        scroll_block.onscroll = function() {
-          console.log("worked!!!!")
-        try {
-            box = scroll_block.querySelector('.next_page_list');
-            if (box && box.classList.contains("next_page_list")) {
-                inViewport = elementInViewport(box);
-                if (inViewport) {
-                    box.classList.remove("next_page_list");
-                    paginate(box);
-                }
-            };
-        } catch {return}
         }
       }
     }
