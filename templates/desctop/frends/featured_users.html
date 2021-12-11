@@ -1,5 +1,5 @@
 
-{% if user.get_6_featured_friends %}
+{% if request.user.get_6_featured_friends %}
 <div class="card mb-3">
     <div class="card-header">
       <a href="{% url 'featured_users' %}" class="ajax">
@@ -7,12 +7,12 @@
             <div class="media-body">
                 <h6 class="content-color-primary mb-0">Рекомендации</h6>
             </div>
-            {{ user.get_featured_friends_count }}
+            {{ request.user.get_featured_friends_count }}
         </div>
       </a>
     </div>
 
-    {% for user in user.get_6_featured_friends %}
+    {% for user in request.user.get_6_featured_friends %}
 
     <div class="card border-top">
         <div class="card-body" style="padding:7px;">
