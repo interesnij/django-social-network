@@ -11,11 +11,35 @@
                     <input type="text" name="name" class="form-control" id="id_name" placeholder="Необязательно">
                 </div>
 
-                <span class="centered user_add_members pointer">Добавить участников</span>
-                <div class="row">
-                  <div class="col-md-7" id="chat_members" data-pk="{{ user.pk }}"></div>
-                  <div class="col-md-5" id="user_collector"></div>
+                <div class="form-group">
+                  <h6 class="font-weight-normal mb-2 mt-4">Выберитетип чата</h6>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="GRO" name="type" class="custom-control-input" id="feedback111">
+                    <label class="custom-control-label" for="feedback111">
+                      Групповой - любое кол-во участников, продвинутая приватность и назначение прав.
+                      Можно упоминать чат в соцсети.
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="PUB" name="type" class="custom-control-input" id="feedback1112">
+                    <label class="custom-control-label" for="feedback1112">
+                      Публичный - любое кол-во участников, продвинутая приватность и назначение прав.
+                      Матеирал доступен через поисковые инструменты, виден поисковыми роботами.
+                    </label>
+                  </div>
                 </div>
+
+                <div class="list-group-item border-top pointer u_add_members_in_chat mb-2" chat-pk="{{ chat.pk }}">
+                  <div class="media">
+                      <figure>
+                        <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                      </figure>
+                      <div class="media-body" style="overflow:visible">
+                        <h6 class="my-0 mt-1">Добавить друзей</h6>
+                      </div>
+                  </div>
+                </div>
+
 
             </div>
             <div class="card-footer">

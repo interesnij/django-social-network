@@ -45,8 +45,6 @@ class CreateUserChat(TemplateView):
 			new_chat = self.form.save(commit=False)
 			new_chat.creator = request.user
 			new_chat = self.form.save()
-			new_chat.type = "GRO"
-			new_chat.save(update_fields=["type"])
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
 			members = [request.user, ]
 
@@ -58,7 +56,7 @@ class CreateUserChat(TemplateView):
 
 			if new_chat.is_private():
 				template = 'chat/chat/detail/private_chat.html'
-			elif new_chat.is_group():
+			elif new_chat.is_group() or new_chat.is_public():
 				template = 'chat/chat/detail/group_chat.html'
 			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
 		else:
