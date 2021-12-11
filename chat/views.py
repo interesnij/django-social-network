@@ -31,7 +31,6 @@ class ChatDetailView(ListView):
 		from channels.layers import get_channel_layer
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.pk = request.user.pk
 		if self.chat.is_private():
 			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.chat.is_group():
@@ -41,7 +40,6 @@ class ChatDetailView(ListView):
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
-		self.get_messages = self.chat.get_messages_for_recipient(self.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
@@ -65,7 +63,7 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.get_messages
+		return self.chat.get_messages_for_recipient(self.request.user.pk)
 
 
 class ChatFixedMessagesView(ListView):
