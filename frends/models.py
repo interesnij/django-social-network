@@ -21,7 +21,7 @@ class Connect(models.Model):
         unique_together = ('user', 'target_user')
         verbose_name = 'Друг'
         verbose_name_plural = 'Друзья'
-        ordering = ["visited"]
+        ordering = ["-visited"]
 
     @classmethod
     def connection_exists(cls, user_a_id, user_b_id):
