@@ -37,9 +37,7 @@
       {% include 'desctop/chat/chat/fixed_message.html' %}
     {% endif %}
   </div>
-    <div class="card-body chatview" id="chatcontent" style="height: 540px;
-    position: fixed;
-    display: contents;">
+    <div class="card-body chatview" id="chatcontent" style="height: 520px;">
         <ul class="chatlist app is_paginate">
           {% if page_obj.has_next %}
           <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
