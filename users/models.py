@@ -1073,7 +1073,7 @@ class User(AbstractUser):
         return self.get_default_communities()
 
     def get_all_connection_ids(self):
-        my_frends = self.connections.values('target_user_id')
+        my_frends = self.connections.order_by("-visited").values('target_user_id')
         return [i['target_user_id'] for i in my_frends]
 
     def get_friend_and_friend_of_friend_ids(self):
