@@ -1471,7 +1471,7 @@ class User(AbstractUser):
         from chat.models import Chat
         query = Q(chat_relation__user_id=self.pk, chat_relation__type="ACT")
         query.add(~Q(type__contains="_"), Q.AND)
-        return Chat.objects.filter(query).order_by('-created')
+        return Chat.objects.filter(query)
 
     def get_chats_and_connections(self):
         from itertools import chain
