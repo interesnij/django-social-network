@@ -384,10 +384,13 @@ class Chat(models.Model):
         elif not first_message:
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
+            created = first_message.get_created()
             if first_message.copy:
                 creator = first_message.creator
                 message = first_message.copy
                 preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
+            else:
+                preview_text = first_message.text
         else:
             preview_text = first_message.get_text_60()
             if first_message.creator.id == user_id:
