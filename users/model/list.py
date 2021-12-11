@@ -28,6 +28,7 @@ class ListUC(models.Model):
     name = models.CharField(max_length=100)
     owner = models.PositiveIntegerField(default=0, verbose_name="Владелец")
 
+
 class FeaturedUC(models.Model):
     list = models.ForeignKey(ListUC, db_index=False, on_delete=models.CASCADE, related_name='+', verbose_name="Список")
     owner = models.PositiveIntegerField(default=0, verbose_name="Кто получает")
@@ -37,8 +38,11 @@ class FeaturedUC(models.Model):
     sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
 
     class Meta:
-        verbose_name = 'Рекомендованные друзья'
-        verbose_name_plural = 'Рекомендованные друзья'
+        verbose_name = 'Источник реокмендаций'
+        verbose_name_plural = 'Источники реокмендаций'
+
+    def __str__(self):
+        return str(self.owner)
 
     def is_open(self):
         if self.mute:
@@ -58,8 +62,11 @@ class NewsUC(models.Model):
     sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
 
     class Meta:
-        verbose_name = 'Друзья/сообщества и подписки'
-        verbose_name_plural = 'Друзья/сообщества и подписки'
+        verbose_name = 'Источник новостей'
+        verbose_name_plural = 'Источники новостей'
+
+    def __str__(self):
+        return str(self.owner)
 
     def is_open(self):
         if self.mute:
@@ -79,8 +86,8 @@ class NotifyUC(models.Model):
     sleep = models.DateTimeField(blank=True, null=True, verbose_name='Не показывать до...')
 
     class Meta:
-        verbose_name = 'Друзья/сообщества и подписки'
-        verbose_name_plural = 'Друзья/сообщества и подписки'
+        verbose_name = 'Источник уведомлений'
+        verbose_name_plural = 'Источники уведомлений'
 
     def is_open(self):
         if self.mute:
