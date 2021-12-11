@@ -10,6 +10,7 @@ from django.db.models import Q
 from common.model.other import Stickers
 
 
+
 class Chat(models.Model):
     PUBLIC,PRIVATE,MANAGER,GROUP,SUPPORT = 'PUB','PRI','MAN','GRO','SUP'
     DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP,DELETED_SUPPORT = '_DPUB','_DPRI','_DMAN','_DGRO','_DSUP'
@@ -48,6 +49,7 @@ class Chat(models.Model):
         verbose_name = "Беседа"
         verbose_name_plural = "Беседы"
         indexes = (BrinIndex(fields=['created']),)
+        ordering = ["-created"]
 
     def __str__(self):
         return self.creator.get_full_name()
@@ -539,6 +541,8 @@ class Chat(models.Model):
             return str(count) + " сообщений"
 
     def delete_member(self, user, creator):
+        from datetime import datetime
+
         if creator.is_women():
             var = "исключила"
         else:
@@ -551,9 +555,13 @@ class Chat(models.Model):
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
+        chat.created = datetime.now()
+        chat.save(update_fields=["created"])
         return message
 
     def exit_member(self, user):
+        from datetime import datetime
+
         if user.is_women():
             var = "вышла из чата"
         else:
@@ -566,10 +574,13 @@ class Chat(models.Model):
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
+        chat.created = datetime.now()
+        chat.save(update_fields=["created"])
         return message
 
     def invite_users_in_chat(self, users_ids, creator):
         from users.models import User
+        from datetime import datetime
 
         if creator.is_women():
             var = "пригласила"
@@ -589,6 +600,8 @@ class Chat(models.Model):
                             info_message.create_socket(recipient.user.pk, recipient.beep())
                         else:
                             info_messages.append(info_message)
+        chat.created = datetime.now()
+        chat.save(update_fields=["created"])
         return info_messages
 
     def edit_chat(self, name, image, description):
@@ -901,6 +914,7 @@ class Message(models.Model):
     def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
         # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
         # Если такого чата нет, создаем приватный чат, создаем по сообщению на каждого участника чата.
+        from datetime import datetime
 
         chat_list, current_chat = creator.get_all_chats(), None
         _text = Message.get_format_text(text)
@@ -928,9 +942,12 @@ class Message(models.Model):
             else:
                 recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach))
             recipient_message.create_socket(recipient.user.pk, recipient.beep())
+        current_chat.created = datetime.now()
+        current_chat.save(update_fields=["created"])
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
+        from datetime import datetime
 
         chat = Chat.objects.create(creator=creator, type=Chat.GROUP)
         _text = Message.get_format_text(text)
@@ -955,6 +972,8 @@ class Message(models.Model):
 
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
         # программа для отсылки сообщения в чате
+        from datetime import datetime
+
         _text = Message.get_format_text(text)
 
         if parent:
@@ -996,6 +1015,9 @@ class Message(models.Model):
             else:
                 recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=_text, parent_id=parent_id, attach=Message.get_format_attach(attach))
             recipient_message.create_socket(recipient.user.pk, recipient.beep())
+
+        chat.created = datetime.now()
+        chat.save(update_fields=["created"])
         return creator_message
 
     def save_draft_message(chat, creator, parent, text, attach, transfer):
