@@ -25,12 +25,12 @@ for user in User.objects.all():
     list = ListUC.objects.get(type=1, owner=user)
     for frend in frends:
         try:
-            NewsUC.objects.get(list=list, owner=user, user=frend.pk)
+            NewsUC.objects.get(list=list, owner=user.pk, user=frend.pk)
         except:
-            NewsUC.objects.create(list=list, owner=user, user=frend.pk)
+            NewsUC.objects.create(list=list, owner=user.pk, user=frend.pk)
 
     for community in communities:
         try:
-            NewsUC.objects.get(list=list, owner=user, community=community.pk)
+            NewsUC.objects.get(list=list, owner=user.pk, community=community.pk)
         except:
-            NewsUC.objects.create(list=list, owner=user, community=community.pk)
+            NewsUC.objects.create(list=list, owner=user.pk, community=community.pk)
