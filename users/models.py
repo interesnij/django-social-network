@@ -1469,7 +1469,9 @@ class User(AbstractUser):
 
     def get_all_chats(self):
         from chat.models import Chat
-        return Chat.objects.filter(chat_relation__user_id=self.pk, chat_relation__type="ACT").exclude(type__contains="_").order_by("chat_message__created")
+        query = Q(chat_relation__user_id=self.pk, chat_relation__type="ACT")
+        query.add(~Q(type__contains="_"), Q.AND)
+        return Chat.objects.filter(query)
 
     def get_chats_and_connections(self):
         from itertools import chain
