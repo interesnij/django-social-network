@@ -570,7 +570,7 @@ class Chat(models.Model):
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
         for recipient in self.get_recipients():
             info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,recipient_id=recipient.user.pk,type=Message.MANAGER,text=text)
-            if recipient.user.pk != creator.pk:
+            if recipient.user.pk != user.pk:
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             else:
                 message = info_message
