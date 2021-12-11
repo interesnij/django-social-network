@@ -38,7 +38,9 @@ class ChatDetailView(ListView):
 			self.can_add_members_in_chat = self.chat.is_user_can_add_members(request.user)
 		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
-		unread_messages = self.chat.get_unread_message(self.pk)
+		pk = request.user.pk
+		self.messages = self.chat.get_messages_for_recipient(pk)
+		unread_messages = self.chat.get_unread_message(pk)
 		unread_messages.update(unread=False)
 
 		channel_layer = get_channel_layer()
@@ -46,7 +48,7 @@ class ChatDetailView(ListView):
 			'type': 'receive',
 			'key': 'message',
 			'chat_id': self.chat.pk,
-			'recipient_ids': str(self.chat.get_recipients_ids(request.user.pk)),
+			'recipient_ids': str(self.chat.get_recipients_ids(pk)),
 			'name': "u_message_read",
 		}
 		async_to_sync(channel_layer.group_send)('notification', payload)
@@ -63,7 +65,7 @@ class ChatDetailView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.chat.get_messages_for_recipient(self.request.user.pk)
+		return self.messages
 
 
 class ChatFixedMessagesView(ListView):
