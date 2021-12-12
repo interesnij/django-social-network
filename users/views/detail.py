@@ -189,6 +189,7 @@ class UserGoods(ListView):
             self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
             self.get_lists = GoodList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
+        else:
             self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
@@ -228,6 +229,7 @@ class UserVideo(ListView):
             self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
             self.get_lists = VideoList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
+        else:
             self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
