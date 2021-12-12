@@ -29,37 +29,45 @@ class BlackListUsers(ListView):
 
 
 class UserVideoList(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_see_video_section, is_user_can_see_video_list, is_user_can_create_videos = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from video.models import VideoList
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = VideoList.objects.get(uuid=self.kwargs["uuid"])
-		if self.user == request.user:
-			self.video_list = self.list.get_staff_items()
-		else:
-			self.video_list = self.list.get_items()
-		if self.list.type == VideoList.MAIN:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.user.pk == request.user.pk:
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_video_section = True
+				self.is_user_can_see_video_list = True
+				self.is_user_can_create_videos = True
 			else:
-				self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_video_section = True
+				self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
 		else:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_video_section = self.user.is_user_can_see_video(request.user.pk)
+			self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/video/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_video_section = self.user.is_anon_user_can_see_video()
+			self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserVideoList,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['list'] = self.list
+		context['is_user_can_see_video_section'] = self.is_user_can_see_video_section
+		context['is_user_can_see_video_list'] = self.is_user_can_see_video_list
+		context['is_user_can_create_videos'] = self.is_user_can_create_videos
 		return context
 
 	def get_queryset(self):
-		return self.video_list
+		return self.list.get_items()
 
 
 class UserPhotoList(TemplateView):
@@ -73,7 +81,7 @@ class UserPhotoList(TemplateView):
 			self.is_user_can_see_photo_section = True
 		elif request.user.pk == self.user.pk:
 			self.is_user_can_see_photo_section = True
-			
+
 		if self.list.type == PhotoList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -93,41 +101,50 @@ class UserPhotoList(TemplateView):
 
 
 class UserGoodsList(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_see_good_section, is_user_can_see_good_list, is_user_can_create_goods = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from goods.models import GoodList
 
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = GoodList.objects.get(uuid=self.kwargs["uuid"])
+
 		if self.user.pk == request.user.pk:
-			self.goods_list = self.list.get_staff_items()
-		else:
-			self.goods_list = self.list.get_items()
-		if self.list.type == GoodList.MAIN:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_good_section = True
+				self.is_user_can_see_good_list = True
+				self.is_user_can_create_goods = True
 			else:
-				self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_good_section = True
+				self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
 		else:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_good_section = self.user.is_user_can_see_good(request.user.pk)
+			self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/goods/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_good_section = self.user.is_anon_user_can_see_good()
+			self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserGoodsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserGoodsList,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['list'] = self.list
+		context['is_user_can_see_good_section'] = self.is_user_can_see_good_section
+		context['is_user_can_see_good_list'] = self.is_user_can_see_good_list
+		context['is_user_can_create_goods'] = self.is_user_can_create_goods
 		return context
 
 	def get_queryset(self):
-		return self.goods_list
+		return self.list.get_items()
 
 
 class UserMusicList(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_see_music_section, is_user_can_see_music_list, is_user_can_create_tracks = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from music.models import MusicList
@@ -135,25 +152,33 @@ class UserMusicList(ListView):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
 		self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
 		if self.user.pk == request.user.pk:
-			self.sound_list = self.list.get_staff_items()
-		else:
-			self.sound_list = self.list.get_items()
-		if self.list.type == MusicList.MAIN:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_music_section = True
+				self.is_user_can_see_music_list = True
+				self.is_user_can_create_tracks = True
 			else:
-				self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_music_section = True
+				self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
 		else:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_music_section = self.user.is_user_can_see_music(request.user.pk)
+			self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/music/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_music_section = self.user.is_anon_user_can_see_music()
+			self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/music/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserMusicList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserMusicList,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['list'] = self.list
+		context['is_user_can_see_music_section'] = self.is_user_can_see_music_section
+		context['is_user_can_see_music_list'] = self.is_user_can_see_music_list
+		context['is_user_can_create_tracks'] = self.is_user_can_create_tracks
 		return context
 
 	def get_queryset(self):
@@ -161,36 +186,45 @@ class UserMusicList(ListView):
 
 
 class UserDocsList(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_user_can_see_doc_section, is_user_can_see_doc_list, is_user_can_create_docss = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocsList
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(uuid=self.kwargs["uuid"])
+
 		if self.user.pk == request.user.pk:
-			self.doc_list = self.list.get_staff_items()
-		else:
-			self.doc_list = self.list.get_items()
-		if self.list.type == DocsList.MAIN:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_doc_section = True
+				self.is_user_can_see_doc_list = True
+				self.is_user_can_create_docs = True
 			else:
-				self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_doc_section = True
+				self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
 		else:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_doc_section = self.user.is_user_can_see_doc(request.user.pk)
+			self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_docs = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/docs/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_doc_section = self.user.is_anon_user_can_see_doc()
+			self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserDocsList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserDocsList,self).get_context_data(**kwargs)
 		context['user'] = self.user
 		context['list'] = self.list
+		context['is_user_can_see_doc_section'] = self.is_user_can_see_doc_section
+		context['is_user_can_see_doc_list'] = self.is_user_can_see_doc_list
+		context['is_user_can_create_docs'] = self.is_user_can_create_docs
 		return context
 
 	def get_queryset(self):
-		return self.doc_list
+		return self.list.get_items()
 
 
 class AllFeaturedUsersList(ListView):
@@ -231,7 +265,6 @@ class UserPostsListView(ListView):
 					- видеть этот список is_user_can_see_post_list,
 					- создавать записи в этом список is_user_can_create_posts
 				"""
-				self.list = self.post_list.get_staff_items()
 				self.is_user_can_see_post_section = True
 				self.is_user_can_see_post_list = True
 				self.is_user_can_create_posts = True
@@ -242,7 +275,6 @@ class UserPostsListView(ListView):
 					видеть этот список is_user_can_see_post_list,
 					создавать записи в этом список is_user_can_create_posts
 				"""
-				self.list = self.post_list.get_items()
 				self.is_user_can_see_post_section = True
 				self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user.pk)
 				self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user.pk)
@@ -257,7 +289,6 @@ class UserPostsListView(ListView):
 			self.is_user_can_see_post_list = self.post_list.is_user_can_see_el(request.user.pk)
 			self.is_user_can_create_posts = self.post_list.is_user_can_create_el(request.user.pk)
 
-			self.list = self.post_list.get_items()
 			self.post_lists = PostsList.get_user_lists(user_pk)
 
 		if request.user.is_authenticated:
@@ -280,8 +311,7 @@ class UserPostsListView(ListView):
 		return c
 
 	def get_queryset(self):
-		return self.list
-
+		return self.post_list.get_items()
 
 class AllUsers(ListView):
 	template_name, paginate_by = None, 15

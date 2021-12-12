@@ -683,7 +683,9 @@ function this_page_reload(url) {
 
             prev = rtr.querySelector(".main-container");
             next = ajax.querySelector(".main-container");
-            init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"));
+            try{
+              init_stat_lists(next.getAttribute("data-type"), next.getAttribute("data-pk"), prev.getAttribute("data-type"), prev.getAttribute("data-pk"))
+            }catch { null };
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
