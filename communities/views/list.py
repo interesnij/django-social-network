@@ -110,8 +110,8 @@ class CommunityDocs(ListView):
 		else:
 			self.get_lists = DocsList.get_community_lists(self.c.pk)
 			self.is_user_can_see_doc_section = self.c.is_user_can_see_doc(user.pk)
-            self.is_user_can_see_doc_list = self.list.is_user_can_see_el(user.pk)
-            self.is_user_can_create_docs = self.list.is_user_can_create_el(user.pk)
+			self.is_user_can_see_doc_list = self.list.is_user_can_see_el(user.pk)
+			self.is_user_can_create_docs = self.list.is_user_can_create_el(user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.count_lists = DocsList.get_community_lists_count(self.c.pk)
 		return super(CommunityDocs,self).get(request,*args,**kwargs)
@@ -143,8 +143,8 @@ class CommunityDocsList(ListView):
 			self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
 		else:
 			self.is_user_can_see_doc_section = self.c.is_user_can_see_doc(user.pk)
-            self.is_user_can_see_doc_list = self.list.is_user_can_see_el(user.pk)
-            self.is_user_can_create_docs = self.list.is_user_can_create_el(user.pk)
+			self.is_user_can_see_doc_list = self.list.is_user_can_see_el(user.pk)
+			self.is_user_can_create_docs = self.list.is_user_can_create_el(user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/docs/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityDocsList,self).get(request,*args,**kwargs)
 
