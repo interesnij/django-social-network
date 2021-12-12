@@ -654,31 +654,12 @@ class Photo(models.Model):
         list.save(update_fields=["count"])
         photo = cls.objects.create(creator=creator,list=list, order=list.count,preview=image,file=image,community=community)
 
-        if not list.is_private():
-            get_photo_processing(photo, Photo.PUBLISHED)
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
-
-                community.plus_photos(1)
-                community_id = community.pk
-                Wall.objects.create(creator_id=creator.pk, community_id=community_id, type=type, object_id=photo.pk, verb="ITE")
-                community_send_wall(photo.pk, creator.pk, community_id, None, "create_c_photo_wall")
-                for user_id in list.community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community_id, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
-                    community_send_notify(photo.pk, creator.pk, user_id, community_id, None, "create_c_photo_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
-
-                creator.plus_photos(1)
-                Wall.objects.create(creator_id=creator.pk, type=type, object_id=photo.pk, verb="ITE")
-                user_send_wall(photo.pk, None, "create_u_photo_wall")
-                for user_id in creator.get_user_main_news_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type=type, object_id=photo.pk, verb="ITE")
-                    user_send_notify(photo.pk, creator.pk, user_id, None, "create_u_photo_notify")
+        get_photo_processing(photo, Photo.PUBLISHED)
+        if community:
+            community.plus_photos(1)
+            community_id = community.pk
         else:
-            get_photo_processing(photo, Photo.PRIVATE)
+            creator.plus_photos(1)
         return photo
 
     def is_list_exists(self):
