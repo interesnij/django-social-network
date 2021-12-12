@@ -19,8 +19,8 @@ class CommunityPhotosList(ListView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_template_community_list, get_template_anon_community_list
 
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(community_id=self.community.pk, type=PhotoList.MAIN)
+        self.c = Community.objects.get(pk=self.kwargs["pk"])
+        self.list = PhotoList.objects.get(community_id=self.c.pk, type=PhotoList.MAIN)
         if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
             self.is_user_can_see_photo_section = True
             self.is_user_can_create_photos = True
@@ -42,7 +42,7 @@ class CommunityPhotosList(ListView):
         context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
         context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
         context['is_user_can_create_photos'] = self.is_user_can_create_photos
-        context['community'] = self.community
+        context['community'] = self.c
         return context
 
     def get_queryset(self):
