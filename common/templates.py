@@ -333,18 +333,7 @@ def get_template_user_item(item, folder, template, request_user, user_agent):
     elif request_user.is_child() and not user.is_child_safety():
         template_name = "generic/u_template/no_child_safety.html"
     else:
-        if list.can_see_el == 1:
-            template_name = folder + template
-        elif list.can_see_el == 2 and request_user.pk in user.get_all_friends_ids():
-            template_name = folder + template
-        elif list.can_see_el == 3 and request_user.pk in user.get_friend_and_friend_of_friend_ids():
-            template_name = folder + template
-        elif list.can_see_el == 5 and item.get_ie_perm_for_user(request_user.pk, 1, 0):
-            template_name = folder + template
-        elif list.can_see_el == 6 and item.get_ie_perm_for_user(request_user.pk, 1, 1):
-            template_name = folder + template
-        else:
-            template_name = "generic/u_template/list_private.html"
+        template_name = folder + template
     return get_folder(user_agent) + template_name
 
 def get_template_anon_user_item(item, template, request_user, user_agent):
@@ -357,8 +346,6 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
         template_name = "generic/u_template/anon_close_user.html"
     elif not user.is_child_safety():
         template_name = "generic/u_template/anon_no_child_safety.html"
-    elif list.can_see_el != 1:
-        template_name = "generic/u_template/anon_item_private.html"
     else:
         template_name = template
     return get_folder(user_agent) + template_name
@@ -381,19 +368,8 @@ def get_template_user_list(list, folder, template, request_user, user_agent):
         template_name = "generic/u_template/close_user.html"
     elif request_user.is_child() and not user.is_child_safety():
         template_name = "generic/u_template/no_child_safety.html"
-    elif list.can_see_el == 4:
-        template_name = "generic/u_template/list_private.html"
     else:
-        if list.can_see_el == 1:
-            template_name = folder + template
-        elif list.can_see_el == 2 and request_user.pk in user.get_all_friends_ids():
-            template_name = folder + template
-        elif list.can_see_el == 3 and request_user.pk in user.get_friend_and_friend_of_friend_ids():
-            template_name = folder + template
-        elif list.can_see_el == 5 and item.get_ie_perm_for_user(request_user.pk, 1, 0):
-            template_name = folder + template
-        elif list.can_see_el == 6 and item.get_ie_perm_for_user(request_user.pk, 1, 1):
-            template_name = folder + template
+        template_name = folder + template
     return get_folder(user_agent) + template_name
 
 def get_template_anon_user_list(list, template, request_user, user_agent):
@@ -406,8 +382,6 @@ def get_template_anon_user_list(list, template, request_user, user_agent):
         template_name = "generic/u_template/anon_close_user.html"
     elif not user.is_child_safety():
         template_name = "generic/u_template/anon_no_child_safety.html"
-    elif list.can_see_el != 1:
-        template_name = "generic/u_template/anon_item_private.html"
     else:
         template_name = template
     return get_folder(user_agent) + template_name
@@ -422,6 +396,8 @@ def get_template_community_item(item, folder, template, request_user, user_agent
         template_name = get_fine_community(community, request_user)
     elif item.type[0] == "_" or list.type[0] == "_":
         template_name = get_fine_community_item(request_user, community, item, folder, template)
+    elif request_user.is_administrator_of_community(community.pk):
+        template_name = folder + "admin_" + template
     elif community.is_private():
         template_name = "generic/c_template/private_community.html"
     elif request_user.is_banned_from_community(community.pk):
@@ -430,16 +406,7 @@ def get_template_community_item(item, folder, template, request_user, user_agent
         template_name = "generic/c_template/no_child_safety.html"
     elif community.is_close() and not request_user.is_member_of_community(community.pk):
          template_name = "generic/c_template/close_community.html"
-
-    elif request_user.is_administrator_of_community(community.pk):
-        template_name = folder + "admin_" + template
-    if list.can_see_el == 1:
-        template_name = folder + template
-    elif list.can_see_el == 2 and user.is_member_of_community(community.pk):
-        template_name = folder + template
-    elif list.can_see_el == 5 and list.get_ie_perm_for_user(user.pk, 1, 0):
-        template_name = folder + template
-    elif list.can_see_el == 6 and list.get_ie_perm_for_user(user.pk, 1, 1):
+    else:
         template_name = folder + template
     return get_folder(user_agent) + template_name
 
@@ -452,8 +419,6 @@ def get_template_anon_community_item(item, template, request_user, user_agent):
     elif community.is_public():
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
-        elif list.can_see_el != 1:
-            template_name = "generic/c_template/anon_list_private.html"
         else:
             template_name = template
     elif community.is_close():
@@ -472,6 +437,8 @@ def get_template_community_list(list, folder, template, request_user, user_agent
         template_name = get_fine_community(community, request_user)
     elif list.type[0] == "_":
         template_name = get_fine_community_item(request_user, community, list, folder, template)
+    elif request_user.is_administrator_of_community(community.pk):
+        template_name = folder + "admin_" + template
     elif community.is_private() and not request_user.is_member_of_community(community.pk):
         template_name = "generic/c_template/private_community.html"
     elif request_user.is_banned_from_community(community.pk):
@@ -480,16 +447,7 @@ def get_template_community_list(list, folder, template, request_user, user_agent
         template_name = "generic/c_template/no_child_safety.html"
     elif community.is_close() and not request_user.is_member_of_community(community.pk):
          template_name = "generic/c_template/close_community.html"
-
-    if request_user.is_administrator_of_community(community.pk):
-        template_name = folder + "admin_" + template
-    elif list.can_see_el == 1:
-        template_name = folder + template
-    elif list.can_see_el == 2 and user.is_member_of_community(community.pk):
-        template_name = folder + template
-    elif list.can_see_el == 5 and list.get_ie_perm_for_user(user.pk, 1, 0):
-        template_name = folder + template
-    elif list.can_see_el == 6 and list.get_ie_perm_for_user(user.pk, 1, 1):
+    else:
         template_name = folder + template
     return get_folder(user_agent) + template_name
 
@@ -502,8 +460,6 @@ def get_template_anon_community_list(list, template, request_user, user_agent):
     elif community.is_public():
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
-        elif list.can_see_el != 1:
-            template_name = "generic/c_template/anon_list_private.html"
         else:
             template_name = template
     elif community.is_close():
