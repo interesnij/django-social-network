@@ -54,6 +54,36 @@ class UserPhotosList(ListView):
     def get_queryset(self):
         return self.list.get_items()
 
+class UserPhotosAlbumList(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_template_user_list, get_template_anon_user_list
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
+        if request.is_ajax():
+            if request.user.is_authenticated:
+                self.template_name = get_template_user_list(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        if self.user == request.user:
+            self.photo_list = self.list.get_staff_items()
+        else:
+            self.photo_list = self.list.get_items()
+        return super(UserPhotosAlbumList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(UserPhotosAlbumList,self).get_context_data(**kwargs)
+        context['user'] = self.user
+        context['list'] = self.list
+        return context
+
+    def get_queryset(self):
+        return self.photo_list
 
 class UserCommentPhoto(TemplateView):
     template_name = None
