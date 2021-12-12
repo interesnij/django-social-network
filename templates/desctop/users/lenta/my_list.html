@@ -54,13 +54,13 @@
 
           </span>
 
-        {% elif not user.is_post_manager %}
+        {% elif not request.user.is_post_manager %}
           <span>
             <a class="u_uncopy_post_list pointer">Удалить список</a>
             &nbsp;
             <a class="claim_post_list pointer">Пожаловаться</a>
           </span>
-        {% elif user.is_post_manager %}
+        {% elif request.user.is_post_manager %}
           <span>
             <a class="close_post_list pointer">Закрыть</a>
             &nbsp;

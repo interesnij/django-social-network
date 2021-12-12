@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
 from common.check.community import check_can_get_lists
+from common.templates import get_template_anon_community_list, get_template_community_list
 
 
 class CommunityDetail(TemplateView):
@@ -112,40 +113,46 @@ class CommunityDetail(TemplateView):
 
 
 class CommunityGallery(TemplateView):
-    template_name = None
+    template_name, is_user_can_see_photo_section = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_template_anon_community_list, get_template_community_list
         from gallery.models import PhotoList
 
         self.c = Community.objects.get(pk=self.kwargs["pk"])
         self.list = self.c.get_photo_list()
         if request.user.is_administrator_of_community(self.c.pk):
             self.get_lists = PhotoList.get_community_staff_lists(self.c.pk)
+            self.is_user_can_see_photo_section = True
         else:
             self.get_lists = PhotoList.get_community_lists(self.c.pk)
+            self.is_user_can_see_photo_section = self.c.is_user_can_see_photo()
         self.count_lists = PhotoList.get_community_lists_count(self.c.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community_list(self.list, "communities/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
         else:
             self.template_name = get_template_community_list(self.list, "communities/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CommunityGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CommunityGallery,self).get_context_data(**kwargs)
-        c['community'], c['list'], c['get_lists'], c['count_lists'], c['is_admin'] = self.c, self.list, self.get_lists, self.count_lists, self.request.user.is_administrator_of_community(self.c.pk)
+        c['community'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.c, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
         return c
 
 class CommunityPhotoList(TemplateView):
-    template_name = None
+    template_name, is_user_can_see_photo_section = None, None
 
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
-        from common.templates import get_template_anon_community_list, get_template_community_list
 
         self.c, self.list = Community.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+        if request.user.is_administrator_of_community(self.c.pk):
+            self.is_user_can_see_photo_section = True
+        else:
+            self.is_user_can_see_photo_section = self.c.is_user_can_see_photo()
         if request.user.is_anonymous:
             self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
         else:
             self.template_name = get_template_community_list(self.list, "communities/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 
@@ -153,5 +160,5 @@ class CommunityPhotoList(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityPhotoList,self).get_context_data(**kwargs)
-        c['community'], c['list'] = self.c, self.list
+        c['community'], c['list'], c['is_user_can_see_photo_section'] = self.c, self.list, self.is_user_can_see_photo_section
         return c

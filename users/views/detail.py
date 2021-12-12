@@ -6,6 +6,7 @@ from common.templates import get_template_user_list, get_template_anon_user_list
 
 class UserGallery(TemplateView):
     template_name, is_user_can_see_photo_section = None, None
+
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
@@ -15,7 +16,7 @@ class UserGallery(TemplateView):
             self.is_user_can_see_photo_section = True
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
-            self.is_user_can_see_photo_section = True
+            self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
@@ -135,7 +136,7 @@ class UserDocs(ListView):
         elif request.user.is_authenticated:
             self.is_user_can_see_doc_section = self.user.is_user_can_see_doc(request.user.pk)
             self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
-            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+            self.is_user_can_create_docs = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = DocsList.get_user_lists(self.user.pk)
         self.count_lists = DocsList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
