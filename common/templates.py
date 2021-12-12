@@ -504,14 +504,8 @@ def get_default_template(folder, template, request_user, user_agent):
 def get_settings_template(template, request_user, user_agent):
     if request_user.is_authenticated:
         update_activity(request_user, user_agent)
-        if request_user.is_no_phone_verified():
-            template_name = "main/phone_verification.html"
-        elif request_user.is_suspended():
-            template_name = "generic/u_template/you_suspended.html"
-        elif request_user.is_closed():
-            template_name = "generic/u_template/you_closed.html"
-        elif request_user.is_closed():
-            template_name = "generic/u_template/you_closed.html"
+        if request_user.type[0] == "_":
+            template_name = get_fine_request_user(request_user)
         else:
             template_name = template
     elif request_user.is_anonymous:
