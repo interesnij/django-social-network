@@ -5,7 +5,7 @@ from music.views import *
 urlpatterns = [
     url(r'^$', AllMusicView.as_view(), name='all_music'),
     url(r'^genre/(?P<pk>\d+)/$', GenreMusicView.as_view(), name='genre_music'),
-    url(r'^load_list/(?P<pk>\d+)/$', LoadPlaylist.as_view(), name="load_music_list"),
+    url(r'^load_list/(?P<pk>\d+)/$', LoadMusiclist.as_view(), name="load_music_list"),
 
     url(r'^manage/', include('music.url.manage')),
     url(r'^get/', include('music.url.get')),
