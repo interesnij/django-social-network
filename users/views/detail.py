@@ -106,7 +106,7 @@ class UserMusic(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_music_section = self.user.is_anon_user_can_see_music()
-			self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
+            self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
             self.get_lists = MusicList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
         else:
