@@ -91,7 +91,6 @@ class UserMusic(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list, self.get_lists = self.user.get_playlist(), None
         if request.user.pk == self.user.pk:
-            self.get_items = self.list.get_staff_items()
             self.get_lists = MusicList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_music_section = True
             self.is_user_can_create_tracks = True
@@ -101,14 +100,12 @@ class UserMusic(ListView):
             self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
             self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = MusicList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         self.count_lists = MusicList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_music_section = self.user.is_anon_user_can_see_music()
             self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
             self.get_lists = MusicList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
@@ -119,7 +116,7 @@ class UserMusic(ListView):
         return c
 
     def get_queryset(self):
-        return self.get_items
+        return self.list.get_items()
 
 
 class UserDocs(ListView):
@@ -131,7 +128,6 @@ class UserDocs(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_doc_list()
         if request.user.pk == self.user.pk:
-            self.get_items = self.list.get_staff_items()
             self.get_lists = DocsList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_doc_section = True
             self.is_user_can_create_docs = True
@@ -141,14 +137,12 @@ class UserDocs(ListView):
             self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
             self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = DocsList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         self.count_lists = DocsList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_doc_section = self.user.is_anon_user_can_see_doc()
             self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
             self.get_lists = DocsList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
@@ -159,7 +153,7 @@ class UserDocs(ListView):
         return c
 
     def get_queryset(self):
-        return self.get_items
+        return self.list.get_items()
 
 
 class UserGoods(ListView):
@@ -171,7 +165,6 @@ class UserGoods(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_good_list()
         if request.user.pk == self.user.pk:
-            self.get_items = self.list.get_staff_items()
             self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_good_section = True
             self.is_user_can_create_goods = True
@@ -181,14 +174,12 @@ class UserGoods(ListView):
             self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
             self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = GoodList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         self.count_lists = GoodList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_good_section = self.user.is_anon_user_can_see_good()
             self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
             self.get_lists = GoodList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
@@ -199,7 +190,7 @@ class UserGoods(ListView):
         return c
 
     def get_queryset(self):
-        return self.get_items
+        return self.list.get_items()
 
 
 class UserVideo(ListView):
@@ -211,7 +202,6 @@ class UserVideo(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_video_list()
         if request.user.pk == self.user.pk:
-            self.get_items = self.list.get_staff_items()
             self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_video_section = True
             self.is_user_can_create_videos = True
@@ -221,14 +211,12 @@ class UserVideo(ListView):
             self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
             self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = VideoList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         self.count_lists = VideoList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_video_section = self.user.is_anon_user_can_see_video()
             self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
             self.get_lists = VideoList.get_user_lists(self.user.pk)
-            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
@@ -239,7 +227,7 @@ class UserVideo(ListView):
         return c
 
     def get_queryset(self):
-        return self.get_items
+        return self.list.get_items()
 
 
 class ProfileUserView(TemplateView):

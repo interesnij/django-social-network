@@ -186,7 +186,7 @@ class UserMusicList(ListView):
 
 
 class UserDocsList(ListView):
-	template_name, paginate_by, is_user_can_see_doc_section, is_user_can_see_doc_list, is_user_can_create_docss = None, 15, None, None, None
+	template_name, paginate_by, is_user_can_see_doc_section, is_user_can_see_doc_list, is_user_can_create_docs = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from docs.models import DocsList
