@@ -47,8 +47,8 @@ class UserPhotosList(ListView):
         context = super(UserPhotosList,self).get_context_data(**kwargs)
         context['user'], context['list'] = self.user, self.list
         context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
-		context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
-		context['is_user_can_create_photos'] = self.is_user_can_create_photos
+        context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
+        context['is_user_can_create_photos'] = self.is_user_can_create_photos
         return context
 
     def get_queryset(self):
