@@ -27,7 +27,7 @@ on('#ajax', 'click', '.load_video_list', function() {
   videolist_pk = card.getAttribute("videolist-pk");
   owner_pk = card.getAttribute("owner-pk");
 
-  create_fullscreen("/video/load_list/" + videolist + "/", "item_fullscreen");
+  create_fullscreen("/video/load_list/" + videolist_pk + "/", "item_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
 });
 
