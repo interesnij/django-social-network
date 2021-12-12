@@ -63,12 +63,17 @@ class UserVideoList(ListView):
 
 
 class UserPhotoList(TemplateView):
-	template_name = None
+	template_name, is_user_can_see_photo_section = None, None
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
+		if request.user.pk == self.list.creator.pk:
+			self.is_user_can_see_photo_section = True
+		elif request.user.pk == self.user.pk:
+			self.is_user_can_see_photo_section = True
+			
 		if self.list.type == PhotoList.MAIN:
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])

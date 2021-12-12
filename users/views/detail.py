@@ -5,20 +5,20 @@ from common.templates import get_template_user_list, get_template_anon_user_list
 
 
 class UserGallery(TemplateView):
-    """
-    галерея для пользователя, своя галерея, галерея для анонима, плюс другие варианты
-    """
-    template_name = None
+    template_name, is_user_can_see_photo_section = None, None
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_photo_list()
         if request.user.pk == self.user.pk:
             self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
+            self.is_user_can_see_photo_section = True
         else:
             self.get_lists = PhotoList.get_user_lists(self.user.pk)
+            self.is_user_can_see_photo_section = True
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
         else:
             self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
@@ -26,7 +26,7 @@ class UserGallery(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['get_lists'], c['count_lists'] = self.user, self.list, self.get_lists, self.count_lists
+        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.user, self.list, self.get_lists, self.count_lists, se;f.is_user_can_see_photo_section
         return c
 
 class UserCommunities(ListView):
@@ -83,7 +83,7 @@ class UserMobStaffed(ListView):
 
 
 class UserMusic(ListView):
-    template_name, paginate_by = None, 15
+    template_name, paginate_by, is_user_can_see_music_section, is_user_can_see_music_list, is_user_can_create_tracks = None, 15, None, None, None
 
     def get(self,request,*args,**kwargs):
         from music.models import MusicList
@@ -93,19 +93,29 @@ class UserMusic(ListView):
         if request.user.pk == self.user.pk:
             self.get_items = self.list.get_staff_items()
             self.get_lists = MusicList.get_user_staff_lists(self.user.pk)
-        else:
-            self.get_items = self.list.get_items()
+            self.is_user_can_see_music_section = True
+            self.is_user_can_create_tracks = True
+            self.is_user_can_see_music_list = True
+        elif request.user.is_authenticated:
+            self.is_user_can_see_music_section = self.user.is_user_can_see_music(request.user.pk)
+            self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = MusicList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items()
         self.count_lists = MusicList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/music/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_music_section = self.user.is_anon_user_can_see_music()
+			self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
+            self.get_lists = MusicList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/music/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserMusic,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserMusic,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'], c['get_lists'] = self.user, self.list, self.count_lists, self.get_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'], c['is_user_can_see_music_section'], c['is_user_can_see_music_section'], c['is_user_can_create_tracks'] = self.user, self.list, self.count_lists, self.get_lists, self.is_user_can_see_music_section, self.is_user_can_see_music_list, self.is_user_can_create_tracks
         return c
 
     def get_queryset(self):
@@ -113,7 +123,7 @@ class UserMusic(ListView):
 
 
 class UserDocs(ListView):
-    template_name, paginate_by = None, 15
+    template_name, paginate_by, is_user_can_see_doc_section, is_user_can_see_doc_list, is_user_can_create_docs = None, 15, None, None, None
 
     def get(self,request,*args,**kwargs):
         from docs.models import DocsList
@@ -121,22 +131,31 @@ class UserDocs(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_doc_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = DocsList.get_user_staff_lists(self.user.pk)
             self.get_items = self.list.get_staff_items()
-        else:
+            self.get_lists = DocsList.get_user_staff_lists(self.user.pk)
+            self.is_user_can_see_doc_section = True
+            self.is_user_can_create_docs = True
+            self.is_user_can_see_doc_list = True
+        elif request.user.is_authenticated:
+            self.is_user_can_see_doc_section = self.user.is_user_can_see_doc(request.user.pk)
+            self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = DocsList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
         self.count_lists = DocsList.get_user_lists_count(self.user.pk)
-
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_doc_section = self.user.is_anon_user_can_see_doc()
+			self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
+            self.get_lists = DocsList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items()
         else:
             self.template_name = get_template_user_list(self.list, "users/docs/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserDocs,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserDocs,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'], c['get_lists'] = self.user, self.list, self.count_lists, self.get_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'], c['is_user_can_see_doc_section'], c['is_user_can_see_doc_section'], c['is_user_can_create_docs'] = self.user, self.list, self.count_lists, self.get_lists, self.is_user_can_see_doc_section, self.is_user_can_see_doc_list, self.is_user_can_create_docs
         return c
 
     def get_queryset(self):
@@ -144,7 +163,7 @@ class UserDocs(ListView):
 
 
 class UserGoods(ListView):
-    template_name, paginate_by = None, 15
+    template_name, paginate_by, is_user_can_see_good_section, is_user_can_see_good_list, is_user_can_create_goods = None, 15, None, None, None
 
     def get(self,request,*args,**kwargs):
         from goods.models import GoodList
@@ -152,21 +171,30 @@ class UserGoods(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_good_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
             self.get_items = self.list.get_staff_items()
-        else:
+            self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
+            self.is_user_can_see_good_section = True
+            self.is_user_can_create_goods = True
+            self.is_user_can_see_good_list = True
+        elif request.user.is_authenticated:
+            self.is_user_can_see_good_section = self.user.is_user_can_see_good(request.user.pk)
+            self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = GoodList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
         self.count_lists = GoodList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
+            self.is_user_can_see_good_section = self.user.is_anon_user_can_see_good()
+			self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
+            self.get_lists = GoodList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items()
             self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserGoods,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGoods,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['get_lists'], c['count_lists'] = self.user, self.list, self.get_lists, self.count_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'], c['is_user_can_see_good_section'], c['is_user_can_see_good_section'], c['is_user_can_create_goods'] = self.user, self.list, self.count_lists, self.get_lists, self.is_user_can_see_good_section, self.is_user_can_see_good_list, self.is_user_can_create_goods
         return c
 
     def get_queryset(self):
@@ -174,7 +202,7 @@ class UserGoods(ListView):
 
 
 class UserVideo(ListView):
-    template_name, paginate_by = None, 15
+    template_name, paginate_by, is_user_can_see_video_section, is_user_can_see_video_list, is_user_can_create_videos = None, 15, None, None, None
 
     def get(self,request,*args,**kwargs):
         from video.models import VideoList
@@ -182,21 +210,30 @@ class UserVideo(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = self.user.get_video_list()
         if request.user.pk == self.user.pk:
-            self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
             self.get_items = self.list.get_staff_items()
-        else:
+            self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
+            self.is_user_can_see_video_section = True
+            self.is_user_can_create_videos = True
+            self.is_user_can_see_video_list = True
+        elif request.user.is_authenticated:
+            self.is_user_can_see_video_section = self.user.is_user_can_see_video(request.user.pk)
+            self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = VideoList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
         self.count_lists = VideoList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
+            self.is_user_can_see_video_section = self.user.is_anon_user_can_see_video()
+			self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
+            self.get_lists = VideoList.get_user_lists(self.user.pk)
+            self.get_items = self.list.get_items()
             self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserVideo,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserVideo,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['count_lists'], c['get_lists'] = self.user, self.list, self.count_lists, self.get_lists
+        c['user'], c['list'], c['count_lists'], c['get_lists'], c['is_user_can_see_video_section'], c['is_user_can_see_video_list'], c['is_user_can_create_videos'] = self.user, self.list, self.count_lists, self.get_lists, self.is_user_can_see_video_section, self.is_user_can_see_video_list, self.is_user_can_create_videos
         return c
 
     def get_queryset(self):
