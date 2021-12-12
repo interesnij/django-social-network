@@ -146,7 +146,7 @@ class UserDocs(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/docs/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_doc_section = self.user.is_anon_user_can_see_doc()
-			self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
+            self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
             self.get_lists = DocsList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
         else:
@@ -186,7 +186,7 @@ class UserGoods(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/goods/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_good_section = self.user.is_anon_user_can_see_good()
-			self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
+            self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
             self.get_lists = GoodList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
             self.template_name = get_template_user_list(self.list, "users/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -225,7 +225,7 @@ class UserVideo(ListView):
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/video/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_video_section = self.user.is_anon_user_can_see_video()
-			self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
+            self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
             self.get_lists = VideoList.get_user_lists(self.user.pk)
             self.get_items = self.list.get_items()
             self.template_name = get_template_user_list(self.list, "users/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
