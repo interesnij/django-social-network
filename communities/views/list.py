@@ -180,7 +180,7 @@ class CommunityGoods(ListView):
 			self.get_lists = GoodList.get_community_lists(self.c.pk)
 			self.is_user_can_see_good_section = self.c.is_user_can_see_good(request.user.pk)
 			self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
-			self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+			self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/goods/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.count_lists = GoodList.get_community_lists_count(self.c.pk)
 		return super(CommunityGoods,self).get(request,*args,**kwargs)
@@ -213,7 +213,7 @@ class CommunityGoodsList(ListView):
 		else:
 			self.is_user_can_see_good_section = self.c.is_user_can_see_good(request.user.pk)
 			self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
-			self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+			self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/goods/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityGoodsList,self).get(request,*args,**kwargs)
 
@@ -317,7 +317,7 @@ class CommunityVideo(ListView):
 			self.get_lists = VideoList.get_community_lists(self.c.pk)
 			self.is_user_can_see_video_section = self.c.is_user_can_see_video(request.user.pk)
 			self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
-			self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+			self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/video/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.count_lists = VideoList.get_community_lists_count(self.c.pk)
 		return super(CommunityVideo,self).get(request,*args,**kwargs)
@@ -350,7 +350,7 @@ class CommunityVideoList(ListView):
 		else:
 			self.is_user_can_see_video_section = self.c.is_user_can_see_video(request.user.pk)
 			self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
-			self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+			self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
 			self.template_name = get_template_community_list(self.list, "communities/video/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 

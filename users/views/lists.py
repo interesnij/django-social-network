@@ -81,17 +81,10 @@ class UserPhotoList(TemplateView):
 			self.is_user_can_see_photo_section = True
 		elif request.user.pk == self.user.pk:
 			self.is_user_can_see_photo_section = True
-
-		if self.list.type == PhotoList.MAIN:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			if request.user.is_anonymous:
-				self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -201,7 +194,7 @@ class UserDocsList(ListView):
 			else:
 				self.is_user_can_see_doc_section = True
 				self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
-				self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+				self.is_user_can_create_docs = self.list.is_user_can_create_el(request.user.pk)
 		else:
 			self.is_user_can_see_doc_section = self.user.is_user_can_see_doc(request.user.pk)
 			self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)

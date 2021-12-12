@@ -173,7 +173,7 @@ class UserGoods(ListView):
         elif request.user.is_authenticated:
             self.is_user_can_see_good_section = self.user.is_user_can_see_good(request.user.pk)
             self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
-            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+            self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = GoodList.get_user_lists(self.user.pk)
         self.count_lists = GoodList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
@@ -210,7 +210,7 @@ class UserVideo(ListView):
         elif request.user.is_authenticated:
             self.is_user_can_see_video_section = self.user.is_user_can_see_video(request.user.pk)
             self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
-            self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
+            self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
             self.get_lists = VideoList.get_user_lists(self.user.pk)
         self.count_lists = VideoList.get_user_lists_count(self.user.pk)
         if request.user.is_anonymous:
