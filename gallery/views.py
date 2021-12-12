@@ -102,7 +102,7 @@ class MessagePhotoDetail(TemplateView):
 
 
 class LoadPhotoList(ListView):
-	template_name, community, paginate_by, is_user_can_see_photo_section, is_user_can_see_photo_list, is_user_can_create_photos = None, None, 10, None, None, None
+	template_name, c, paginate_by, is_user_can_see_photo_section, is_user_can_see_photo_list, is_user_can_create_photos = None, None, 10, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
