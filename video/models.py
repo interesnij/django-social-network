@@ -172,12 +172,10 @@ class VideoList(models.Model):
         return self.type == self.MAIN
     def is_list(self):
         return self.type == self.LIST
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
+        return self.is_list()
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
@@ -687,30 +685,28 @@ class Video(models.Model):
         list.count += 1
         list.save(update_fields=["count"])
         video = cls.objects.create(creator=creator,image=image, order=list.count,list=list,title=title,file=file,uri=uri,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
+
+        get_video_processing(video, Video.PUBLISHED)
         if community:
+            from common.notify.progs import community_send_notify, community_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="VID", object_id=video.pk, verb="ITE")
+            community_send_wall(video.pk, creator.pk, community.pk, None, "create_c_video_wall")
+            for user_id in community.get_member_for_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                community_send_notify(video.pk, creator.pk, user_id, community.pk, None, "create_c_video_notify")
             community.plus_videos(1)
         else:
+            from common.notify.progs import user_send_notify, user_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
+            user_send_wall(video.pk, None, "create_u_video_wall")
+            for user_id in creator.get_user_main_news_ids():
+                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
+                user_send_notify(video.pk, creator.pk, user_id, None, "create_u_video_notify")
             creator.plus_videos(1)
-        get_video_processing(video, Video.PUBLISHED)
-        if not list.is_private():
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
-
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="VID", object_id=video.pk, verb="ITE")
-                community_send_wall(video.pk, creator.pk, community.pk, None, "create_c_video_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
-                    community_send_notify(video.pk, creator.pk, user_id, community.pk, None, "create_c_video_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
-
-                Wall.objects.create(creator_id=creator.pk, type="VID", object_id=video.pk, verb="ITE")
-                user_send_wall(video.pk, None, "create_u_video_wall")
-                for user_id in creator.get_user_main_news_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="VID", object_id=video.pk, verb="ITE")
-                    user_send_notify(video.pk, creator.pk, user_id, None, "create_u_video_notify")
         return video
 
     def edit_video(self, title, file, uri, description, lists, comments_enabled, votes_on):
@@ -823,8 +819,6 @@ class Video(models.Model):
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
     def is_deleted(self):

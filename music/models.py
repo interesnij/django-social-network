@@ -213,12 +213,10 @@ class MusicList(models.Model):
         return self.type == self.MAIN
     def is_list(self):
         return self.type == self.LIST
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type[0] == "_"
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
+        return self.is_list()
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
@@ -588,24 +586,23 @@ class Music(models.Model):
         else:
             creator.plus_tracks(1)
         get_music_processing(track, Music.PUBLISHED)
-        #if not list.is_private():
-        #    if community:
-        #        from common.notify.progs import community_send_notify, community_send_wall
-        #        from notify.models import Notify, Wall
+        #   if community:
+        #       from common.notify.progs import community_send_notify, community_send_wall
+        #       from notify.models import Notify, Wall
 
-        #        Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
-        #        community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
-        #        for user_id in community.get_member_for_notify_ids():
-        #            Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-        #            community_send_notify(track.pk, creator.pk, user_id, community.pk, None, "create_c_track_notify")
-        #        from common.notify.progs import user_send_notify, user_send_wall
-        #        from notify.models import Notify, Wall
+        #       Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
+        #       community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
+        #       for user_id in community.get_member_for_notify_ids():
+        #           Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
+        #           community_send_notify(track.pk, creator.pk, user_id, community.pk, None, "create_c_track_notify")
+        #       from common.notify.progs import user_send_notify, user_send_wall
+        #       from notify.models import Notify, Wall
 
-        #        Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
-        #        user_send_wall(track.pk, None, "create_u_track_wall")
-        #        for user_id in creator.get_user_main_news_ids():
-        #            Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-        #            user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
+        #       Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
+        #       user_send_wall(track.pk, None, "create_u_track_wall")
+        #       for user_id in creator.get_user_main_news_ids():
+        #           Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
+        #           user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
         return track
 
     def edit_track(self, title, file, list):
@@ -716,8 +713,6 @@ class Music(models.Model):
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def is_private(self):
-        return self.type == self.PRIVATE
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
     def is_deleted(self):

@@ -10,7 +10,7 @@ from django.db.models import Q
 
 
 class DocsList(models.Model):
-    MAIN, LIST, MANAGER,  DELETED, DELETED_MANAGER, CLOSED, CLOSED_MAIN, CLOSED_MANAGER = 'MAI','LIS','MAN','_DEL','_DELM','_CLO','_CLOM','_CLOMA'
+    MAIN, LIST, MANAGER, DELETED, DELETED_MANAGER, CLOSED, CLOSED_MAIN, CLOSED_MANAGER = 'MAI','LIS','MAN','_DEL','_DELM','_CLO','_CLOM','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
@@ -143,8 +143,6 @@ class DocsList(models.Model):
         return self.type == self.MAIN
     def is_list(self):
         return self.type == self.LIST
-    def is_private(self):
-        return False
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
@@ -152,7 +150,7 @@ class DocsList(models.Model):
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
+        return self.is_list()
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
@@ -470,8 +468,6 @@ class Doc(models.Model):
     def get_lists(self):
         return self.list.only("pk")
 
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
@@ -497,28 +493,26 @@ class Doc(models.Model):
         list.save(update_fields=["count"])
         doc = cls.objects.create(creator=creator,order=list.count,title=title,list=list,file=file,community=community, type_2=type_2)
         get_doc_processing(doc, Doc.PUBLISHED)
-        if not list.is_private():
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
-
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="DOC", object_id=doc.pk, verb="ITE")
-                community_send_wall(doc.pk, creator.pk, community.pk, None, "create_c_doc_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
-                    community_send_notify(doc.pk, creator.pk, user_id, community.pk, None, "create_c_doc_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
-
-                Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
-                user_send_wall(doc.pk, None, "create_u_doc_wall")
-                for user_id in creator.get_user_main_news_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
-                    user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
         if community:
+            from common.notify.progs import community_send_notify, community_send_wall
+            from notify.models import Notify, Wall
+
             community.plus_docs(1)
+
+            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="DOC", object_id=doc.pk, verb="ITE")
+            community_send_wall(doc.pk, creator.pk, community.pk, None, "create_c_doc_wall")
+            for user_id in community.get_member_for_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
+                community_send_notify(doc.pk, creator.pk, user_id, community.pk, None, "create_c_doc_notify")
         else:
+            from common.notify.progs import user_send_notify, user_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
+            user_send_wall(doc.pk, None, "create_u_doc_wall")
+            for user_id in creator.get_user_main_news_ids():
+                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
+                user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
             creator.plus_docs(1)
         return doc
 
@@ -621,9 +615,6 @@ class Doc(models.Model):
             Notify.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="DOC", object_id=self.pk, verb="ITE").update(status="R")
-
-    def is_private(self):
-        return False
 
 
 class DocsListPerm(models.Model):
