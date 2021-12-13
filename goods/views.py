@@ -47,18 +47,18 @@ class LoadGoodList(ListView):
 		else:
 			if request.user.is_authenticated:
 				if request.user.pk == self.list.creator.pk:
-					user = self.list.creator
+					creator = self.list.creator
 					self.is_user_can_see_good_section = True
 					self.is_user_can_see_good_list = True
 					self.is_user_can_create_goods = True
 				else:
-					self.is_user_can_see_good_section = user.is_user_can_see_good(request.user.pk)
+					self.is_user_can_see_good_section = creator.is_user_can_see_good(request.user.pk)
 					self.is_user_can_see_good_list = self.list.is_user_can_see_el(request.user.pk)
 					self.is_user_can_create_goods = self.list.is_user_can_create_el(request.user.pk)
 				self.template_name = get_template_user_list(self.list, "goods/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "goods/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_good_section = self.user.is_anon_user_can_see_good()
+				self.is_user_can_see_good_section = creator.is_anon_user_can_see_good()
 				self.is_user_can_see_good_list = self.list.is_anon_user_can_see_el()
 		return super(LoadGoodList,self).get(request,*args,**kwargs)
 
