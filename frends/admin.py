@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from frends.models import Connect
+from frends.models import Connect, ConnectPerm
 
 
 class ConnectAdmin(admin.ModelAdmin):
