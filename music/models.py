@@ -111,32 +111,137 @@ class MusicList(models.Model):
         verbose_name = "плейлист"
         verbose_name_plural = "плейлисты"
 
+    def get_can_see_el_exclude_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_el_include_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
     def get_can_see_el_exclude_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_can_see_el_exclude_users_ids())
     def get_can_see_el_include_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_can_see_el_include_users_ids())
 
+    def get_create_el_exclude_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_create_el_include_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
     def get_create_el_exclude_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, create_item=2).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_create_el_exclude_users_ids())
     def get_create_el_include_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, create_item=1).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_create_el_include_users_ids())
 
+    def get_copy_el_exclude_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_copy_el_include_users_ids(self):
+        list = MusicListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
     def get_copy_el_exclude_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, can_copy=2).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_copy_el_exclude_users_ids())
     def get_copy_el_include_users(self):
         from users.models import User
-        query = MusicListPerm.objects.filter(list_id=self.pk, can_copy=1).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_copy_el_include_users_ids())
+
+    def is_user_can_see_el(self, user_id):
+        if self.community:
+            if self.can_see_el == self.ALL_CAN:
+                return True
+            elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
+                return True
+            elif self.can_see_el == self.ADMINS and user_id in self.get_admins_ids():
+                return True
+            elif self.can_see_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.can_see_el == self.MEMBERS_BUT:
+                return not user_id in self.get_can_see_el_exclude_users_ids()
+            elif self.can_see_el == self.SOME_MEMBERS:
+                return user_id in self.get_can_see_el_include_users_ids()
+        else:
+            if self.can_see_el == self.ALL_CAN:
+                return True
+            elif self.can_see_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.can_see_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.can_see_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.can_see_el == self.FRIENDS_BUT:
+                return not user_id in self.get_can_see_el_exclude_users_ids()
+            elif self.can_see_el == self.SOME_FRIENDS:
+                return user_id in self.get_can_see_el_include_users_ids()
+        return False
+    def is_anon_user_can_see_el(self):
+        return self.can_see_el == self.ALL_CAN
+
+    def is_user_can_create_el(self, user_id):
+        if self.community:
+            if self.create_el == 1:
+                return True
+            elif self.create_el == 4 and user_id == self.community.creator.pk:
+                return True
+            elif self.create_el == self.ADMINS and user_id in self.get_admins_ids():
+                return True
+            elif self.create_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.create_el == self.MEMBERS_BUT:
+                return not user_id in self.get_create_el_exclude_users_ids()
+            elif self.create_el == self.SOME_MEMBERS:
+                return user_id in self.get_create_el_include_users_ids()
+        else:
+            if self.create_el == 1:
+                return True
+            elif self.create_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.create_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.create_el == self.FRIENDS_BUT:
+                return not user_id in self.get_create_el_exclude_users_ids()
+            elif self.create_el == self.SOME_FRIENDS:
+                return user_id in self.get_create_el_include_users_ids()
+        return False
+    def is_anon_user_can_create_item(self):
+        return self.create_el == self.ALL_CAN
+
+    def is_user_can_copy_el(self, user_id):
+        if self.community:
+            if self.copy_el == 1:
+                return True
+            elif self.copy_el == 4 and user_id == self.community.creator.pk:
+                return True
+            elif self.copy_el == self.ADMINS and user_id in self.get_admins_ids():
+                return True
+            elif self.copy_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.copy_el == self.MEMBERS_BUT:
+                return not user_id in self.get_copy_el_exclude_users_ids()
+            elif self.copy_el == self.SOME_MEMBERS:
+                return user_id in self.get_copy_el_include_users_ids()
+        else:
+            if self.copy_el == 1:
+                return True
+            elif self.copy_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.copy_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.copy_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.copy_el == self.FRIENDS_BUT:
+                return not user_id in self.get_copy_el_exclude_users_ids()
+            elif self.copy_el == self.SOME_FRIENDS:
+                return user_id in self.get_copy_el_include_users_ids()
+        return False
+    def is_anon_user_can_copy_el(self):
+        return self.copy_el == self.ALL_CAN
 
     def add_in_community_collections(self, community):
         from communities.model.list import CommunityPlayListPosition
