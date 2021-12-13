@@ -1551,24 +1551,24 @@ class User(AbstractUser):
             Если выбрано YOU, мы подразумеваем "Только я", а это в данном случае НИКТО.
             Потому вернем False, если выбран этот пункт.
          """
-        private = self.user_private
-        if private.can_add_in_chat == "1":
+        private = self.profile_private
+        if private.can_add_in_chat == 1:
             return True
-        elif private.can_add_in_chat == "6":
+        elif private.can_add_in_chat == 6:
             return False
-        elif private.can_add_in_chat == "4" and user_pk in self.get_all_friends_ids():
+        elif private.can_add_in_chat == 4 and user_pk in self.get_all_friends_ids():
             return True
-        elif private.can_add_in_chat == "5" and user_pk in self.get_friend_and_friend_of_friend_ids():
+        elif private.can_add_in_chat == 5 and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_add_in_chat == "9" and self.get_special_perm_see(self.pk, user_pk, 5, 0):
+        elif private.can_add_in_chat == 9 and self.get_special_perm_see(self.pk, user_pk, 5, 0):
             return True
-        elif private.can_add_in_chat == "10" and self.get_special_perm_see(self.pk, user_pk, 5, 1):
+        elif private.can_add_in_chat == 10 and self.get_special_perm_see(self.pk, user_pk, 5, 1):
             return True
         return False
 
     def is_user_can_see_post(self, user_pk):
-        private = self.user_private
-        if private.can_see_post == "AC":
+        private = self.profile_private
+        if private.can_see_post == 1:
             return True
         elif private.can_see_post == private.YOU and self.pk == user_pk:
             return True
@@ -1583,8 +1583,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_community(self, user_pk):
-        private = self.user_private
-        if private.can_see_community == "AC":
+        private = self.profile_private
+        if private.can_see_community == 1:
             return True
         elif private.can_see_community == private.YOU or self.pk == user_pk:
             return True
@@ -1599,8 +1599,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_photo(self, user_pk):
-        private = self.user_private
-        if private.can_see_photo == "AC":
+        private = self.profile_private
+        if private.can_see_photo == 1:
             return True
         elif private.can_see_photo == private.YOU and self.pk == user_pk:
             return True
@@ -1615,8 +1615,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_video(self, user_pk):
-        private = self.user_private
-        if private.can_see_video == "AC":
+        private = self.profile_private
+        if private.can_see_video == 1:
             return True
         elif private.can_see_video == private.YOU and self.pk == user_pk:
             return True
@@ -1631,8 +1631,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_music(self, user_pk):
-        private = self.user_private
-        if private.can_see_music == "AC":
+        private = self.profile_private
+        if private.can_see_music == 1:
             return True
         elif private.can_see_music == private.YOU and self.pk == user_pk:
             return True
@@ -1647,8 +1647,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_doc(self, user_pk):
-        private = self.user_private
-        if private.can_see_doc == "AC":
+        private = self.profile_private
+        if private.can_see_doc == 1:
             return True
         elif private.can_see_doc == private.YOU and self.pk == user_pk:
             return True
@@ -1663,8 +1663,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_friend(self, user_pk):
-        private = self.user_private
-        if private.can_see_friend == "AC":
+        private = self.profile_private
+        if private.can_see_friend == 1:
             return True
         elif private.can_see_friend == private.YOU and self.pk == user_pk:
             return True
@@ -1679,8 +1679,8 @@ class User(AbstractUser):
         return False
 
     def is_user_can_see_good(self, user_pk):
-        private = self.user_private
-        if private.can_see_good == "AC":
+        private = self.profile_private
+        if private.can_see_good == 1:
             return True
         elif private.can_see_good == private.YOU and self.pk == user_pk:
             return True
@@ -1695,26 +1695,26 @@ class User(AbstractUser):
         return False
 
     def is_anon_user_can_see_post(self):
-        private = self.user_private
-        return private.can_see_post == "AC"
+        private = self.profile_private
+        return private.can_see_post == 1
     def is_anon_user_can_see_photo(self):
-        private = self.user_private
-        return private.can_see_photo == "AC"
+        private = self.profile_private
+        return private.can_see_photo == 1
     def is_anon_user_can_see_community(self):
-        private = self.user_private
-        return private.can_see_community == "AC"
+        private = self.profile_private
+        return private.can_see_community == 1
     def is_anon_user_can_see_friend(self):
-        private = self.user_private
-        return private.can_see_friend == "AC"
+        private = self.profile_private
+        return private.can_see_friend == 1
     def is_anon_user_can_see_doc(self):
-        private = self.user_private
-        return private.can_see_doc == "AC"
+        private = self.profile_private
+        return private.can_see_doc == 1
     def is_anon_user_can_see_music(self):
-        private = self.user_private
-        return private.can_see_music == "AC"
+        private = self.profile_private
+        return private.can_see_music == 1
     def is_anon_user_can_see_video(self):
-        private = self.user_private
-        return private.can_see_video == "AC"
+        private = self.profile_private
+        return private.can_see_video == 1
     def is_anon_user_can_see_good(self):
-        private = self.user_private
-        return private.can_see_good == "AC"
+        private = self.profile_private
+        return private.can_see_good == 1
