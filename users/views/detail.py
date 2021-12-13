@@ -29,7 +29,7 @@ class UserGallery(TemplateView):
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
         c['is_can_see'], c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.is_can_see, self.user, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
-        return c
+        return c 
 
 class UserCommunities(ListView):
     template_name, paginate_by = None, 15
