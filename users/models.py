@@ -1545,7 +1545,7 @@ class User(AbstractUser):
                 return connect.connect_ie_settings.can_see_info == 1
             except:
                 return False
-        return False
+        return "xxx"
 
     def is_user_can_add_in_chat(self, user_pk):
         """ Немного поменяем поведение проверки на приватность добавления пользователя в чат.
