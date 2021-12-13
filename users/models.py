@@ -1525,6 +1525,8 @@ class User(AbstractUser):
     def is_user_can_see_info(self, user_id):
         from users.model.settings import UserPrivate
         private = self.user_private
+        if not private:
+            return "eee"
         if private.can_see_info == UserPrivate.ALL_CAN:
             return True
         elif private.can_see_info == private.YOU and self.pk == user_pk:
