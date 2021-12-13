@@ -59,14 +59,16 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    def get_can_see_el_exclude_users_ids(self):
+        return PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+    def get_can_see_el_include_users_ids(self):
+        return PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
     def get_can_see_el_exclude_users(self):
         from users.models import User
-        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_can_see_el_exclude_users_ids())
     def get_can_see_el_include_users(self):
         from users.models import User
-        query = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
+        return User.objects.filter(id__in=self.get_can_see_el_include_users_ids())
 
     def get_can_see_comment_exclude_users(self):
         from users.models import User
@@ -126,15 +128,18 @@ class PostsList(models.Model):
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_see_item = 2
                     perm.save(update_fields=["can_see_item"])
+            else:
+                list.can_see_el = 7
+                list.save(update_fields=["can_see_el"])
         elif can_see_el == 5 or can_see_el == 10:
             if can_see_el_users:
                 for user_id in can_see_el_users:
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_see_item = 1
                     perm.save(update_fields=["can_see_item"])
-        else:
-            list.can_see_el = 7
-            list.save(update_fields=["can_see_el"])
+            else:
+                list.can_see_el = 7
+                list.save(update_fields=["can_see_el"])
 
         if can_see_comment == 4 or can_see_comment == 9:
             if can_see_comment_users:
@@ -142,15 +147,18 @@ class PostsList(models.Model):
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_see_comment = 2
                     perm.save(update_fields=["can_see_comment"])
+            else:
+                list.can_see_comment = 7
+                list.save(update_fields=["can_see_comment"])
         elif can_see_comment == 5 or can_see_comment == 10:
             if can_see_comment_users:
                 for user_id in can_see_comment_users:
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_see_comment = 1
                     perm.save(update_fields=["can_see_comment"])
-        else:
-            list.can_see_comment = 7
-            list.save(update_fields=["can_see_comment"])
+            else:
+                list.can_see_comment = 7
+                list.save(update_fields=["can_see_comment"])
 
         if create_el == 4 or create_el == 9:
             if create_el_users:
@@ -158,15 +166,18 @@ class PostsList(models.Model):
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.create_item = 2
                     perm.save(update_fields=["create_item"])
+            else:
+                list.create_el = 7
+                list.save(update_fields=["create_el"])
         elif create_el == 5 or create_el == 10:
             if create_el_users:
                 for user_id in create_el_users:
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.create_item = 1
                     perm.save(update_fields=["create_item"])
-        else:
-            list.create_el = 7
-            list.save(update_fields=["create_el"])
+            else:
+                list.create_el = 7
+                list.save(update_fields=["create_el"])
 
         if create_comment == 4 or create_comment == 9:
             if create_comment_users:
@@ -174,15 +185,18 @@ class PostsList(models.Model):
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.create_comment = 2
                     perm.save(update_fields=["create_comment"])
+            else:
+                list.create_comment = 7
+                list.save(update_fields=["create_comment"])
         elif create_comment == 5 or create_comment == 10:
             if create_comment_users:
                 for user_id in create_comment_users:
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.create_comment = 1
                     perm.save(update_fields=["create_comment"])
-        else:
-            list.create_comment = 7
-            list.save(update_fields=["create_comment"])
+            else:
+                list.create_comment = 7
+                list.save(update_fields=["create_comment"])
 
         if copy_el == 4 or copy_el == 9:
             if copy_el_users:
@@ -190,15 +204,18 @@ class PostsList(models.Model):
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_copy = 2
                     perm.save(update_fields=["can_copy"])
+            else:
+                list.copy_el = 7
+                list.save(update_fields=["copy_el"])
         elif copy_el == 5 or copy_el == 10:
             if copy_el_users:
                 for user_id in copy_el_users:
                     perm = PostsListPerm.get_or_create_perm(list.pk, user_id)
                     perm.can_copy = 1
                     perm.save(update_fields=["can_copy"])
-        else:
-            list.copy_el = 7
-            list.save(update_fields=["copy_el"])
+            else:
+                list.copy_el = 7
+                list.save(update_fields=["copy_el"])
         return list
 
     def edit_list(self, name, description,can_see_el,can_see_comment,create_el,create_comment,copy_el,\
@@ -336,9 +353,9 @@ class PostsList(models.Model):
             elif self.can_see_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
             elif self.can_see_el == self.FRIENDS_BUT:
-                return self.get_ie_perm_for_user(user_id, 1, 0)
+                return not user_id in self.get_can_see_el_exclude_users_ids()
             elif self.can_see_el == self.SOME_FRIENDS:
-                return self.get_ie_perm_for_user(user_id, 1, 1)
+                return user_id in self.get_can_see_el_include_users_ids()
         return False
     def is_anon_user_can_see_el(self):
         return self.can_see_el == self.ALL_CAN
