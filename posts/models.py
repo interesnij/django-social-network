@@ -353,7 +353,8 @@ class PostsList(models.Model):
             elif self.can_see_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
                 return True
             elif self.can_see_el == self.FRIENDS_BUT:
-                return not user_id in self.get_can_see_el_exclude_users_ids()
+                if user_id in self.get_can_see_el_exclude_users_ids():
+                    return False
             elif self.can_see_el == self.SOME_FRIENDS:
                 return user_id in self.get_can_see_el_include_users_ids()
         return False
