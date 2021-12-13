@@ -9,3 +9,4 @@ class ConnectAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Connect, ConnectAdmin)
+admin.site.register(ConnectPerm)
