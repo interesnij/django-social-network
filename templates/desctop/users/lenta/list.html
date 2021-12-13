@@ -34,6 +34,8 @@
   {% include 'desctop/users/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
+        no - {{ list.get_can_see_el_exclude_users_ids }}
+        yes - {{ list.get_can_see_el_include_users_ids }}
         {% if is_user_can_see_post_list %}
         <span>
           <a class="claim_post_list pointer">Пожаловаться</a>
