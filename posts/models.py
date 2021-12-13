@@ -60,9 +60,11 @@ class PostsList(models.Model):
         verbose_name_plural = "списки записей"
 
     def get_can_see_el_exclude_users_ids(self):
-        return PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        list = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
     def get_can_see_el_include_users_ids(self):
-        return PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        list = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
     def get_can_see_el_exclude_users(self):
         from users.models import User
         return User.objects.filter(id__in=self.get_can_see_el_exclude_users_ids())
