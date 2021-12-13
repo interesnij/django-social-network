@@ -1521,18 +1521,6 @@ class User(AbstractUser):
         recipients = NotifyUC.objects.filter(owner=self.pk).values("user")
         return [i['user'] for i in recipients]
 
-    def get_can_see_info_exclude_users_ids(self):
-        from frends.models import ConnectPerm
-		list = ConnectPerm.objects.filter(list_id=self.pk, can_see_info=2).values("user_id")
-		return [i['user_id'] for i in list]
-	def get_can_see_info_include_users_ids(self):
-		list = ConnectPerm.objects.filter(list_id=self.pk, can_see_info=1).values("user_id")
-		return [i['user_id'] for i in list]
-	def get_can_see_info_exclude_users(self):
-		return User.objects.filter(id__in=self.get_can_see_info_exclude_users_ids())
-	def get_can_see_info_include_users(self):
-		return User.objects.filter(id__in=self.get_can_see_info_include_users_ids())
-
     def is_user_can_see_info(self, user_id):
         private = self.user_private
         if private.can_see_info == "AC":
