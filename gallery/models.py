@@ -167,9 +167,7 @@ class PhotoList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
-    def is_private(self):
-        return False
+        return self.is_list()
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
@@ -601,9 +599,6 @@ class Photo(models.Model):
         verbose_name = 'Фото'
         verbose_name_plural = 'Фото'
         ordering = ["-order"]
-
-    def is_private(self):
-        return False
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime

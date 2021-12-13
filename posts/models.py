@@ -472,14 +472,12 @@ class PostsList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type[0] == "_"
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
+        return self.is_list()
     def is_have_get(self):
-        return self.is_list() or self.is_private() or self.is_main()
+        return self.is_list() or self.is_main()
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
@@ -757,8 +755,6 @@ class Post(models.Model):
         self.repost -= count
         return self.save(update_fields=['repost'])
 
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
     def is_deleted(self):
@@ -847,27 +843,24 @@ class Post(models.Model):
         list.save(update_fields=["count"])
         post = cls.objects.create(creator=creator,list=list,order=list.count,text=_text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,type=Post.PUBLISHED)
 
-        if not list.is_private():
-            if community:
-                from common.notify.progs import community_send_notify, community_send_wall
-                from notify.models import Notify, Wall
-
-                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
-                community_send_wall(post.pk, creator.pk, community.pk, None, "create_c_post_wall")
-                for user_id in community.get_member_for_notify_ids():
-                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
-                    community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "create_c_post_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
-                Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
-                user_send_wall(post.pk, None, "create_u_post_wall")
-                for user_id in creator.get_user_main_news_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
-                    user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
         if community:
+            from common.notify.progs import community_send_notify, community_send_wall
+            from notify.models import Notify, Wall
+
+            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
+            community_send_wall(post.pk, creator.pk, community.pk, None, "create_c_post_wall")
+            for user_id in community.get_member_for_notify_ids():
+                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
+                community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "create_c_post_notify")
             community.plus_posts(1)
         else:
+            from common.notify.progs import user_send_notify, user_send_wall
+            from notify.models import Notify, Wall
+            Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
+            user_send_wall(post.pk, None, "create_u_post_wall")
+            for user_id in creator.get_user_main_news_ids():
+                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
+                user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
             creator.plus_posts(1)
         return post
 
@@ -1258,12 +1251,6 @@ class Post(models.Model):
 
     def get_list_pk(self):
         return self.list.pk
-
-    def is_have_private_lists(self):
-        for list in self.list.all():
-            if list.is_private_list():
-                return True
-        return False
 
     def visits_count(self):
         return self.view
