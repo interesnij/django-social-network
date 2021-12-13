@@ -45,18 +45,18 @@ class LoadDocList(ListView):
 		else:
 			if request.user.is_authenticated:
 				if request.user.pk == self.list.creator.pk:
-					user = self.list.creator
+					creator = self.list.creator
 					self.is_user_can_see_doc_section = True
 					self.is_user_can_see_doc_list = True
 					self.is_user_can_create_docs = True
 				else:
-					self.is_user_can_see_doc_section = user.is_user_can_see_doc(request.user.pk)
+					self.is_user_can_see_doc_section = creator.is_user_can_see_doc(request.user.pk)
 					self.is_user_can_see_doc_list = self.list.is_user_can_see_el(request.user.pk)
 					self.is_user_can_create_docs = self.list.is_user_can_create_el(request.user.pk)
 				self.template_name = get_template_user_list(self.list, "docs/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "docs/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_doc_section = self.user.is_anon_user_can_see_doc()
+				self.is_user_can_see_doc_section = creator.is_anon_user_can_see_doc()
 				self.is_user_can_see_doc_list = self.list.is_anon_user_can_see_el()
 		return super(LoadDocList,self).get(request,*args,**kwargs)
 

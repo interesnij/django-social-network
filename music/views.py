@@ -70,18 +70,18 @@ class LoadMusiclist(ListView):
 		else:
 			if request.user.is_authenticated:
 				if request.user.pk == self.list.creator.pk:
-					user = self.list.creator
+					creator = self.list.creator
 					self.is_user_can_see_music_section = True
 					self.is_user_can_see_music_list = True
 					self.is_user_can_create_tracks = True
 				else:
-					self.is_user_can_see_music_section = user.is_user_can_see_music(request.user.pk)
+					self.is_user_can_see_music_section = creator.is_user_can_see_music(request.user.pk)
 					self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
 					self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
 				self.template_name = get_template_user_list(self.list, "music/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "music/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_music_section = self.user.is_anon_user_can_see_music()
+				self.is_user_can_see_music_section = creator.is_anon_user_can_see_music()
 				self.is_user_can_see_dmusic_list = self.list.is_anon_user_can_see_el()
 		return super(LoadMusiclist,self).get(request,*args,**kwargs)
 

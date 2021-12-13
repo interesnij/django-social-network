@@ -46,18 +46,18 @@ class LoadVideoList(ListView):
 		else:
 			if request.user.is_authenticated:
 				if request.user.pk == self.list.creator.pk:
-					user = self.list.creator
+					creator = self.list.creator
 					self.is_user_can_see_video_section = True
 					self.is_user_can_see_video_list = True
 					self.is_user_can_create_videos = True
 				else:
-					self.is_user_can_see_video_section = user.is_user_can_see_video(request.user.pk)
+					self.is_user_can_see_video_section = creator.is_user_can_see_video(request.user.pk)
 					self.is_user_can_see_video_list = self.list.is_user_can_see_el(request.user.pk)
 					self.is_user_can_create_videos = self.list.is_user_can_create_el(request.user.pk)
 				self.template_name = get_template_user_list(self.list, "video/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			if request.user.is_anonymous:
 				self.template_name = get_template_anon_user_list(self.list, "video/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_video_section = self.user.is_anon_user_can_see_good()
+				self.is_user_can_see_video_section = creator.is_anon_user_can_see_good()
 				self.is_user_can_see_video_list = self.list.is_anon_user_can_see_el()
 		return super(LoadVideoList,self).get(request,*args,**kwargs)
 
