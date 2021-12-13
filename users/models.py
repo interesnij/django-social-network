@@ -1519,10 +1519,9 @@ class User(AbstractUser):
             return ''
 
     def get_member_for_notify_ids(self):
-        from notify.models import UserProfileNotify
-        recipients = UserProfileNotify.objects.filter(user=self.pk).values("target")
-        return [i['target'] for i in recipients]
-
+        from users.model.list import NotifyUC
+        recipients = NotifyUC.objects.filter(owner=self.pk).values("user")
+        return [i['user'] for i in recipients]
 
     def is_user_can_see_info(self, user):
         private = self.user_private
