@@ -123,42 +123,6 @@ class UserColorSettings(models.Model):
         if created:
             UserColorSettings.objects.create(user=instance)
 
-
-class UserPrivate(models.Model):
-    ALL_CAN, MEMBERS, FRIENDS_MEMBERS, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
-    PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
-    PERM_PLANNER = (
-        (ALL_CAN, 'Все пользователи'),
-        (MEMBERS, 'Участники пространства или доски'),
-        (FRIENDS, 'Друзья'),
-        (FRIENDS_MEMBERS, 'Друзья и участники'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (FRIENDS_BUT, 'Друзья, кроме'),
-        (SOME_FRIENDS, 'Некоторые друзья'),
-        (MEMBERS_BUT, 'Участники, кроме'),
-        (SOME_MEMBERS, 'Некоторые участники'),
-    )
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='user_private', verbose_name="Пользователь")
-    can_see_community = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит сообщества")
-    can_see_info = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит информацию")
-    can_see_friend = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит друзей")
-    can_send_message = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_add_in_chat = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто добавляет в беседы")
-    can_see_post = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит стену")
-    can_see_photo = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_see_good = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_see_video = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_see_music = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто пишет сообщения")
-    can_see_planner = models.CharField(max_length=2, choices=PERM_PLANNER, default=MEMBERS, verbose_name="Кто видит раздел планирования")
-    can_see_doc = models.CharField(max_length=2, choices=PERM, default=ALL_CAN, verbose_name="Кто видит документы")
-
-    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserPrivate.objects.create(user=instance)
-
 class ProfilePrivate(models.Model):
     ALL_CAN, MEMBERS, FRIENDS_MEMBERS, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS, MEMBERS_BUT, SOME_MEMBERS = 'AC','ME','FM','F','EO','Y','AB','SF','MB','SM'
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
