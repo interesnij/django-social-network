@@ -370,7 +370,6 @@ class User(AbstractUser):
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
         from frends.models import Connect
-        from users.model.list import UserFeaturedFriend
 
         check_can_connect_with_user(user=self, user_id=user_id)
         if self.pk == user_id:
