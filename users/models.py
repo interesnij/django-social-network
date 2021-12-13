@@ -1524,21 +1524,21 @@ class User(AbstractUser):
 
     def is_user_can_see_info(self, user_id):
         private = self.user_private
-        if private.can_see_info == 1:
+        if private.can_see_info == "1":
             return True
-        elif private.can_see_info == private.YOU and self.pk == user_pk:
+        elif private.can_see_info == "6" and self.pk == user_pk:
             return True
-        elif private.can_see_info == private.FRIENDS and user_pk in self.get_all_friends_ids():
+        elif private.can_see_info == "4" and user_pk in self.get_all_friends_ids():
             return True
-        elif private.can_see_info == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+        elif private.can_see_info == "5" and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_info == private.MEMBERS_BUT:
+        elif private.can_see_info == "7":
             try:
                 connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
                 return not connect.connect_ie_settings.can_see_info == 2
             except:
                 return True
-        elif private.can_see_info == private.SOME_MEMBERS:
+        elif private.can_see_info == "8":
             try:
                 connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
                 return connect.connect_ie_settings.can_see_info == 1
