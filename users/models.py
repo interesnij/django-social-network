@@ -1521,20 +1521,40 @@ class User(AbstractUser):
         recipients = NotifyUC.objects.filter(owner=self.pk).values("user")
         return [i['user'] for i in recipients]
 
-    def is_user_can_see_info(self, user):
+    def get_can_see_info_exclude_users_ids(self):
+        from frends.models import ConnectPerm
+		list = ConnectPerm.objects.filter(list_id=self.pk, can_see_info=2).values("user_id")
+		return [i['user_id'] for i in list]
+	def get_can_see_info_include_users_ids(self):
+		list = ConnectPerm.objects.filter(list_id=self.pk, can_see_info=1).values("user_id")
+		return [i['user_id'] for i in list]
+	def get_can_see_info_exclude_users(self):
+		return User.objects.filter(id__in=self.get_can_see_info_exclude_users_ids())
+	def get_can_see_info_include_users(self):
+		return User.objects.filter(id__in=self.get_can_see_info_include_users_ids())
+
+    def is_user_can_see_info(self, user_id):
         private = self.user_private
         if private.can_see_info == "AC":
             return True
-        elif private.can_see_info == private.YOU and self.pk == user.pk:
+        elif private.can_see_info == private.YOU and self.pk == user_pk:
             return True
         elif private.can_see_info == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
         elif private.can_see_info == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_info == private.MEMBERS_BUT and private.get_special_perm_see(self.pk, user.pk, 1, 0):
-            return True
-        elif private.can_see_info == private.SOME_MEMBERS and private.get_special_perm_see(self.pk, user.pk, 1, 1):
-            return True
+        elif private.can_see_info == private.MEMBERS_BUT:
+            try:
+                connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
+                return not connect.connect_ie_settings.can_see_info == 2
+            except:
+                return True
+        elif private.can_see_info == private.SOME_MEMBERS:
+            try:
+                connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
+                return connect.connect_ie_settings.can_see_info == 1
+            except:
+                return False
         return False
 
     def is_user_can_add_in_chat(self, user_pk):
@@ -1709,246 +1729,3 @@ class User(AbstractUser):
     def is_anon_user_can_see_good(self):
         private = self.user_private
         return private.can_see_good == "AC"
-
-    def get_special_perm_see(self, user_id, type, value):
-        """
-        Эти проверки касаются только уровня пользователя или сообщества! Так как списки они могут
-        и увидеть, однако само содержимое списка уже проверяется по отношению к каждому списку персонально.
-        type 1 - can_see_info,
-        2 - can_see_community,
-        3 - can_see_friend
-        4 - can_send_message
-        5 - can_add_in_chat
-        6 - can_see_doc,
-        7 - can_see_music,
-        8 - can_see_post
-        9 - can_see_post_comment
-        10 - can_see_photo
-        11 - can_see_photo_comment,
-        12 - can_see_good,
-        13 - can_see_good_comment
-        14 - can_see_video
-        15 - can_see_video_comment
-        16 - can_see_planner,
-        17 - can_see_planner_comment,
-        value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
-        Логика такая.
-        Если MEMBERS_BUT, то мы проверяем, есть ли запись ConnectPerm.
-        Если ее нет, тогда правда, если есть и он в поле connect_ie_settings (для типа 1)
-        не имеет значение 2 (Не может совершат действия с элементом), тоже правда.
-        Если SOME_MEMBERS, то запись должна быть точно, ведь он включающий в список действий.
-        Потому если ее нет, то ложь. Если есть и в поле connect_ie_settings (для типа 1)
-        стоит значение 1 (может совершать действия с элементом), то правда.
-        """
-        member = ConnectPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_see_info != 2
-                elif type == 2:
-                    return ie.can_see_community != 2
-                elif type == 3:
-                    return ie.can_see_friend != 2
-                elif type == 4:
-                    return ie.can_send_message != 2
-                elif type == 5:
-                    return ie.can_add_in_chat != 2
-                if type == 6:
-                    return ie.can_see_doc != 2
-                elif type == 7:
-                    return ie.can_see_music != 2
-                elif type == 8:
-                    return ie.can_see_post != 2
-                elif type == 9:
-                    return ie.can_see_post_comment != 2
-                elif type == 10:
-                    return ie.can_see_photo != 2
-                if type == 11:
-                    return ie.can_see_photo_comment != 2
-                elif type == 12:
-                    return ie.can_see_good != 2
-                elif type == 13:
-                    return ie.can_see_good_comment != 2
-                elif type == 14:
-                    return ie.can_see_video != 2
-                elif type == 15:
-                    return ie.can_see_video_comment != 2
-                if type == 16:
-                    return ie.can_see_planner != 2
-                elif type == 17:
-                    return ie.can_see_planner_comment != 2
-            except ConnectPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_see_info == 1
-                elif type == 2:
-                    return ie.can_see_community == 1
-                elif type == 3:
-                    return ie.can_see_friend == 1
-                elif type == 4:
-                    return ie.can_send_message == 1
-                elif type == 5:
-                    return ie.can_add_in_chat == 1
-                if type == 6:
-                    return ie.can_see_doc == 1
-                elif type == 7:
-                    return ie.can_see_music == 1
-                elif type == 8:
-                    return ie.can_see_post == 1
-                elif type == 9:
-                    return ie.can_see_post_comment == 1
-                elif type == 10:
-                    return ie.can_see_photo == 1
-                if type == 11:
-                    return ie.can_see_photo_comment == 1
-                elif type == 12:
-                    return ie.can_see_good == 1
-                elif type == 13:
-                    return ie.can_see_good_comment == 1
-                elif type == 14:
-                    return ie.can_see_video == 1
-                elif type == 15:
-                    return ie.can_see_video_comment == 1
-                if type == 16:
-                    return ie.can_see_planner == 1
-                elif type == 17:
-                    return ie.can_see_planner_comment == 1
-            except ConnectPerm.DoesNotExist:
-                 return False
-
-    def get_special_perm_copy(self, user_id, type, value):
-        """
-        Проверка касается и верхнего уровня и уровня списка. Ведь пользователь может
-        разрешить кому то копировать персонально все свои списки, однако в отношении отдельного
-        списка выставить свои условия! Потому нужно брать и список тоже.
-        Сначала проверяется верхний уровень, затем нижний.
-        type 1 - can_copy_post,
-        2 - can_copy_photo
-        3 - can_copy_good
-        4 - can_copy_video,
-        5 - can_copy_planner,
-        6 - can_copy_doc
-        7 - can_copy_music
-        """
-        member = ConnectPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_copy_post != 2
-                elif type == 2:
-                    return ie.can_copy_photo != 2
-                elif type == 3:
-                    return ie.can_copy_good != 2
-                elif type == 4:
-                    return ie.can_copy_video != 2
-                elif type == 5:
-                    return ie.can_copy_planner != 2
-                if type == 6:
-                    return ie.can_copy_doc != 2
-                elif type == 7:
-                    return ie.can_copy_music != 2
-            except ConnectPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_copy_post == 1
-                elif type == 2:
-                    return ie.can_copy_photo == 1
-                elif type == 3:
-                    return ie.can_copy_good == 1
-                elif type == 4:
-                    return ie.can_copy_video == 1
-                elif type == 5:
-                    return ie.can_copy_planner == 1
-                if type == 6:
-                    return ie.can_copy_doc == 1
-                elif type == 7:
-                    return ie.can_copy_music == 1
-            except ConnectPerm.DoesNotExist:
-                 return False
-
-    def get_special_perm_create(self, user_id, type, value):
-        """
-        Проверка касается и верхнего уровня и уровня списка. Ведь пользователь может
-        разрешить кому то создавать персонально все свои элементы, однако в отношении отдельного
-        списка выставить свои условия! Потому нужно брать и список тоже.
-        Сначала проверяется верхний уровень, затем нижний.
-        type 1 - can_create_post
-        2 - can_create_post_comment
-        3 - can_create_photo,
-        4 - can_create_photo_comment,
-        5 - can_create_good
-        6 - can_create_good_comment
-        7 - can_create_video
-        8 - can_create_video_comment
-        9 - can_create_planner
-        10 - can_create_planner_comment
-        11 - can_create_doc,
-        12 - can_create_music,
-        """
-        member = ConnectPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_create_post != 2
-                elif type == 2:
-                    return ie.can_create_post_comment != 2
-                elif type == 3:
-                    return ie.can_create_photo != 2
-                elif type == 4:
-                    return ie.can_create_photo_comment != 2
-                elif type == 5:
-                    return ie.can_create_good != 2
-                if type == 6:
-                    return ie.can_create_good_comment != 2
-                elif type == 7:
-                    return ie.can_create_video != 2
-                elif type == 8:
-                    return ie.can_create_video_comment != 2
-                elif type == 9:
-                    return ie.can_create_planner != 2
-                elif type == 10:
-                    return ie.can_create_planner_comment != 2
-                if type == 11:
-                    return ie.can_create_doc != 2
-                elif type == 12:
-                    return ie.can_create_music != 2
-            except ConnectPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.connect_ie_settings
-                if type == 1:
-                    return ie.can_create_post == 1
-                elif type == 2:
-                    return ie.can_create_post_comment == 1
-                elif type == 3:
-                    return ie.can_create_photo == 1
-                elif type == 4:
-                    return ie.can_create_photo_comment == 1
-                elif type == 5:
-                    return ie.can_create_good == 1
-                if type == 6:
-                    return ie.can_create_good_comment == 1
-                elif type == 7:
-                    return ie.can_create_video == 1
-                elif type == 8:
-                    return ie.can_create_video_comment == 1
-                elif type == 9:
-                    return ie.can_create_planner == 1
-                elif type == 10:
-                    return ie.can_create_planner_comment == 1
-                if type == 11:
-                    return ie.can_create_doc == 1
-                elif type == 12:
-                    return ie.can_create_music == 1
-            except ConnectPerm.DoesNotExist:
-                 return False
