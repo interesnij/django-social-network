@@ -228,7 +228,6 @@ class User(AbstractUser):
         self.save(update_fields=['b_avatar'])
         new_img = get_thumbnailer(self.b_avatar)['avatar'].url.replace('media/', '')
         self.b_avatar = new_img
-        self.save(update_fields=['b_avatar'])
         return self.save(update_fields=['b_avatar'])
 
     def get_b_avatar(self):
