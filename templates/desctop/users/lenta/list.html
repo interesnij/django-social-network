@@ -34,6 +34,8 @@
   {% include 'desctop/users/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
       <span class="list_pk" data-uuid="{{ list.pk }}">
+        1: {{ request.user.pk }} - {{ list.get_can_see_el_exclude_users_ids }}
+        2: {{ request.user.pk }} - {{ list.get_can_see_el_include_users_ids }}
       {% if request.user.pk in list.get_can_see_el_exclude_users_ids %}
         ты исключен из списка друзей для просмотра!<br>
       {% endif %}
