@@ -18,7 +18,7 @@ class UserNotificationsMusicInline(admin.TabularInline):
     model = UserNotificationsMusic
 
 class UserPrivateInline(admin.TabularInline):
-    model = UserPrivate
+    model = ProfilePrivate
 
 class UserColorSettingsInline(admin.TabularInline):
     model = UserColorSettings

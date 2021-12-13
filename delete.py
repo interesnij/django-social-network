@@ -20,20 +20,4 @@ from communities.models import Community
 
 
 for user in User.objects.all():
-    friends = user.get_all_friends()
-    communities = user.get_communities()
-    try:
-        list = ListUC.objects.get(type=1, owner=user.pk)
-    except:
-        list = ListUC.objects.create(type=1, name="Основной", owner=user.pk)
-    for frend in friends:
-        try:
-            NewsUC.objects.get(list=list, owner=user.pk, user=frend.pk)
-        except:
-            NewsUC.objects.create(list=list, owner=user.pk, user=frend.pk)
-
-    for community in communities:
-        try:
-            NewsUC.objects.get(list=list, owner=user.pk, community=community.pk)
-        except:
-            NewsUC.objects.create(list=list, owner=user.pk, community=community.pk)
+    ProfilePrivate.objects.create(user=user)
