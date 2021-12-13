@@ -1068,11 +1068,11 @@ class User(AbstractUser):
 
     def get_friend_and_friend_of_friend_ids(self):
         frends = self.get_all_friends()
-        frends_ids = [u['id'] for u in frends.values('id')]
+        frends_ids = self.get_all_friends_ids()
         query = []
         for frend in frends:
             i = frend.get_all_friends().values('id')
-            query = query + [user['id'] for user in i]
+            query = query + i.get_all_friends_ids()
         query = query + frends_ids
         set_query = list(set(query))
         try:
