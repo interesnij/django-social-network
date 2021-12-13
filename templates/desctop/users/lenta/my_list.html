@@ -51,7 +51,6 @@
               &nbsp;
             <a class="u_delete_post_list pointer">удалить список</a>
             {% endif %}
-
           </span>
 
         {% elif not request.user.is_post_manager %}
@@ -63,8 +62,6 @@
         {% elif request.user.is_post_manager %}
           <span>
             <a class="close_post_list pointer">Закрыть</a>
-            &nbsp;
-            <a class="claim_post_list pointer">Пожаловаться</a>
           </span>
         {% endif %}
 
