@@ -487,15 +487,18 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_see_item = 2
 					perm.save(update_fields=["can_see_item"])
+			else:
+				list.can_see_el = 7
+				list.save(update_fields=["can_see_el"])
 		elif can_see_el == 5 or can_see_el == 10:
 			if can_see_el_users:
 				for user_id in can_see_el_users:
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_see_item = 1
 					perm.save(update_fields=["can_see_item"])
-		else:
-			list.can_see_el = 7
-			list.save(update_fields=["can_see_el"])
+			else:
+				list.can_see_el = 7
+				list.save(update_fields=["can_see_el"])
 
 		if can_see_comment == 4 or can_see_comment == 9:
 			if can_see_comment_users:
@@ -503,15 +506,18 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_see_comment = 2
 					perm.save(update_fields=["can_see_comment"])
+			else:
+				list.can_see_comment = 7
+				list.save(update_fields=["can_see_comment"])
 		elif can_see_comment == 5 or can_see_comment == 10:
 			if can_see_comment_users:
 				for user_id in can_see_comment_users:
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_see_comment = 1
 					perm.save(update_fields=["can_see_comment"])
-		else:
-			list.can_see_comment = 7
-			list.save(update_fields=["can_see_comment"])
+			else:
+				list.can_see_comment = 7
+				list.save(update_fields=["can_see_comment"])
 
 		if create_el == 4 or create_el == 9:
 			if create_el_users:
@@ -519,15 +525,18 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.create_item = 2
 					perm.save(update_fields=["create_item"])
+			else:
+				list.create_el = 7
+				list.save(update_fields=["create_el"])
 		elif create_el == 5 or create_el == 10:
 			if create_el_users:
 				for user_id in create_el_users:
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.create_item = 1
 					perm.save(update_fields=["create_item"])
-		else:
-			list.create_el = 7
-			list.save(update_fields=["create_el"])
+			else:
+				list.create_el = 7
+				list.save(update_fields=["create_el"])
 
 		if create_comment == 4 or create_comment == 9:
 			if create_comment_users:
@@ -535,15 +544,18 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.create_comment = 2
 					perm.save(update_fields=["create_comment"])
+			else:
+				list.create_comment = 7
+				list.save(update_fields=["create_comment"])
 		elif create_comment == 5 or create_comment == 10:
 			if create_comment_users:
 				for user_id in create_comment_users:
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.create_comment = 1
 					perm.save(update_fields=["create_comment"])
-		else:
-			list.create_comment = 7
-			list.save(update_fields=["create_comment"])
+			else:
+				list.create_comment = 7
+				list.save(update_fields=["create_comment"])
 
 		if copy_el == 4 or copy_el == 9:
 			if copy_el_users:
@@ -551,15 +563,18 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_copy = 2
 					perm.save(update_fields=["can_copy"])
+			else:
+				list.copy_el = 7
+				list.save(update_fields=["copy_el"])
 		elif copy_el == 5 or copy_el == 10:
 			if copy_el_users:
 				for user_id in copy_el_users:
 					perm = GoodListPerm.get_or_create_perm(list.pk, user_id)
 					perm.can_copy = 1
 					perm.save(update_fields=["can_copy"])
-		else:
-			list.copy_el = 7
-			list.save(update_fields=["copy_el"])
+			else:
+				list.copy_el = 7
+				list.save(update_fields=["copy_el"])
 
 		return list
 
@@ -582,6 +597,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_see_item = 2
 					perm.save(update_fields=["can_see_item"])
+			else:
+				self.can_see_el = 7
 		elif can_see_el == 5 or can_see_el == 10:
 			if can_see_el_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(can_see_item=0)
@@ -589,8 +606,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_see_item = 1
 					perm.save(update_fields=["can_see_item"])
-		else:
-			self.can_see_el = 7
+			else:
+				self.can_see_el = 7
 
 		if can_see_comment == 4 or can_see_comment == 9:
 			if can_see_comment_users:
@@ -599,6 +616,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_see_comment = 2
 					perm.save(update_fields=["can_see_comment"])
+			else:
+				self.can_see_comment = 7
 		elif can_see_comment == 5 or can_see_comment == 10:
 			if can_see_comment_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(can_see_comment=0)
@@ -606,8 +625,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_see_comment = 1
 					perm.save(update_fields=["can_see_comment"])
-		else:
-			self.can_see_comment = 7
+			else:
+				self.can_see_comment = 7
 
 		if create_el == 4 or create_el == 9:
 			if create_el_users:
@@ -616,6 +635,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.create_item = 2
 					perm.save(update_fields=["create_item"])
+			else:
+				self.create_el = 7
 		elif create_el == 5 or create_el == 10:
 			if create_el_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(create_item=0)
@@ -623,8 +644,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.create_item = 1
 					perm.save(update_fields=["create_item"])
-		else:
-			self.create_el = 7
+			else:
+				self.create_el = 7
 
 		if create_comment == 4 or create_comment == 9:
 			if create_comment_users:
@@ -633,6 +654,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.create_comment = 2
 					perm.save(update_fields=["create_comment"])
+			else:
+				self.create_comment = 7
 		elif create_comment == 5 or create_comment == 10:
 			if create_comment_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(create_comment=0)
@@ -640,8 +663,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.create_comment = 1
 					perm.save(update_fields=["create_comment"])
-		else:
-			self.create_comment = 7
+			else:
+				self.create_comment = 7
 
 		if copy_el == 4 or copy_el == 9:
 			if copy_el_users:
@@ -650,6 +673,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_copy = 2
 					perm.save(update_fields=["can_copy"])
+			else:
+				self.copy_el = 7
 		elif copy_el == 5 or copy_el == 10:
 			if copy_el_users:
 				GoodListPerm.objects.filter(list_id=self.pk).update(can_copy=0)
@@ -657,6 +682,8 @@ class GoodList(models.Model):
 					perm = GoodListPerm.get_or_create_perm(self.pk, user_id)
 					perm.can_copy = 1
 					perm.save(update_fields=["can_copy"])
+			else:
+				self.copy_el = 7
 
 		self.save()
 		return self
