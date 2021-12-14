@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^notify_music/$', UserNotifyMusicView.as_view(), name='user_music_notify'),
 
     url(r'^private/$', UserPrivateView.as_view(), name='user_profile_private'),
+    #url(r'^load_include_users/$', UserPrivateIncludeUsers.as_view()),
+    url(r'^load_exclude_users/$', UserPrivateExcludeUsers.as_view()),
 
     url(r'^edit_name/$', UserEditName.as_view()),
     url(r'^edit_password/$', UserEditPassword.as_view()),

@@ -416,3 +416,34 @@ class UserRemoveProfile(TemplateView):
 			post = self.form.save(commit=False)
 			UserDeleted.objects.create(user=request.user.pk, answer=post.answer, other=post.other)
 			return HttpResponse()
+
+
+class UserPrivateExcludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		self.type = request.GET.get("action")
+		if self.type == "can_see_community":
+			self.users = request.user.get_can_see_community_exclude_users()
+			self.text = "видеть сообщества"
+		if self.chat.is_user_can_edit_info(request.user):
+			self.template_name = get_settings_template("users/settings/perm/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserPrivateExcludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateExcludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_all_friends()
+
+	def post(self,request,*args,**kwargs):
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			request.user.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
+			return HttpResponse('ok')
+		return HttpResponse('not ok')
