@@ -194,11 +194,10 @@ on('#ajax', 'click', '#c_edit_post_list_btn', function() {
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true }
-  pk = form.getAttribute("data-pk");
   list_pk = form.getAttribute("list-pk");
 
   var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", true );
+    ajax_link.open( 'POST', "/posts/community_progs/edit_list/" + list_pk + "/", true );
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
