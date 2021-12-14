@@ -448,10 +448,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   else if (form_post.classList.contains("type_profile")) {
     // работаем с приватностью профиля пользователя
     if (val == '17') {
-      create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/users/settings/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
     else if (val == '18') {
-      create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/users/settings/load_include_users/?action=" + action, "worker_fullscreen");
     }
     else {
       if (is_new_value) {

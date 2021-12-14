@@ -18,6 +18,15 @@ on('#ajax', 'click', '.color_change', function() {
 };
 });
 
+on('#ajax', 'click', '#add_profile_exclude_users_btn', function() {
+  form = this.parentElement.parentElement;
+  post_include_exclude_users(form, '/users/settings/load_exclude_users/')
+});
+on('#ajax', 'click', '#add_profile_include_users_btn', function() {
+  form = this.parentElement.parentElement;
+  post_include_exclude_users(form, '/users/settings/load_include_users/')
+});
+
 on('#ajax', 'click', '#info_user_btn', function() {
   send_form_and_toast('/users/settings/info/', document.body.querySelector("#info_user_form"), "Изменения приняты!")
 });

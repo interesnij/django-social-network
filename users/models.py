@@ -1719,6 +1719,35 @@ class User(AbstractUser):
         private = self.profile_private
         return private.can_see_good == 1
 
+    def post_exclude_users(self, users, type):
+        from frends.models import ConnectPerm
+        private = self.profile_private
+        if type == "can_see_community":
+            self.connections.filter(connect_ie_settings__can_see_community=2).update(can_see_community=0)
+        for user_id in users:
+            friend = self.connections.filter(target_user_id=user_id).first()
+            try:
+                perm = ConnectPerm.objects.get(user_id=friend.pk)
+            except:
+                perm = ConnectPerm.objects.create(user_id=friend.pk)
+            perm.can_see_community = 2
+            perm.save(update_fields=["can_see_community"])
+
+    def post_include_users(self, users, type):
+        from frends.models import ConnectPerm
+        private = self.profile_private
+        if type == "can_see_community":
+            self.connections.filter(connect_ie_settings__can_see_community=1).update(can_see_community=0)
+        for user_id in users:
+            friend = self.connections.filter(target_user_id=user_id).first()
+            try:
+                perm = ConnectPerm.objects.get(user_id=friend.pk)
+            except:
+                perm = ConnectPerm.objects.create(user_id=friend.pk)
+            perm.can_see_community = 1
+            perm.save(update_fields=["can_see_community"])
+
+
     def get_can_see_community_exclude_users_ids(self):
         list = self.connections.filter(connect_ie_settings__can_see_community=2).values("target_user_id")
         return [i['user_id'] for i in list]
