@@ -423,15 +423,6 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   };
   parent_2 = this.parentElement.parentElement;
   collector = parent_2.querySelector(".collector");
-  current_option = parent_2.querySelector(".menu_drop_2");
-  input = parent_2.querySelector(".input");
-  if (input.value == val) {
-    is_new_value = false
-  };
-  input.setAttribute("value", val);
-  collector.classList.add("collector_active");
-  current_option.innerHTML = _this.innerHTML;
-  console.log(val);
 
   if (form_post.classList.contains("case_edit")) {
     // если мы имеем дело с изменением приватности элемента, который
@@ -451,18 +442,20 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
         }
       }
   }
-  else if (this.classList.contains("type_community_chat")) {
-    // работаем с приватностью чата в сообществе
-    null
-  }
-  else if (this.classList.contains("type_user")) {
+  else if (form_post.classList.contains("type_profile")) {
     // работаем с приватностью профиля пользователя
-    null
-  }
-  else if (this.classList.contains("type_community")) {
-    // работаем с приватностью сообщества
-    null
-  }
+    if (val == '17') {
+      create_fullscreen("/chat/user_progs/load_exclude_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+    }
+    else if (val == '18') {
+      create_fullscreen("/chat/user_progs/load_include_users/" + form_post.getAttribute("data-pk") + "/?action=" + action, "worker_fullscreen");
+    }
+    else {
+      if (is_new_value) {
+        private_users_send(form_post, "/users/settings/private/?action=" + action + "&value=" + val)
+      }
+    }
+}
 
   }
   else if (form_post.classList.contains("case_create")) {
@@ -470,6 +463,15 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     // на лету сохранять изменение приватности. Мы должны оформить исключения или
     // назначения в виде post полей и разобрать их при создании элемента
     // например, при создании списка записей
+    current_option = parent_2.querySelector(".menu_drop_2");
+    input = parent_2.querySelector(".input");
+    if (input.value == val) {
+      is_new_value = false
+    };
+    input.setAttribute("value", val);
+    collector.classList.add("collector_active");
+    current_option.innerHTML = _this.innerHTML;
+
       if (val == '4') {
         create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
       }
