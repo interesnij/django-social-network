@@ -413,7 +413,7 @@ class CommunityPostsListEdit(TemplateView):
         from common.templates import get_community_manage_template
 
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.c, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_community_manage_template("posts/post_community/edit_list.html", request.user, self.list.community, request.META['HTTP_USER_AGENT'])
         return super(CommunityPostsListEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
