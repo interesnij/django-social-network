@@ -425,7 +425,7 @@ class CommunityPostsListEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
         self.form = PostsListForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.c.pk):
+        if request.is_ajax() and self.form.is_valid() and request.user.is_administrator_of_community(self.list.community.pk):
             list = self.form.save(commit=False)
             new_list = list.edit_list(
                 name=list.name,
