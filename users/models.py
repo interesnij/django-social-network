@@ -1721,9 +1721,10 @@ class User(AbstractUser):
 
     def post_exclude_users(self, users, type):
         from frends.models import ConnectPerm
+
         private = self.profile_private
         if type == "can_see_community":
-            self.connections.filter(target_user__connect_ie_settings__can_see_community=2).update(can_see_community=0)
+            self.connections.filter(target_user__connectperm__can_see_community=2).update(can_see_community=0)
         for user_id in users:
             friend = self.connections.filter(target_user_id=user_id).first()
             try:
