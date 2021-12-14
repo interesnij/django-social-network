@@ -1724,8 +1724,7 @@ class User(AbstractUser):
 
         private = self.profile_private
         if type == "can_see_community":
-            if self.connections.filter(connect_ie_settings__can_see_community=2).exists():
-                self.connections.filter(connect_ie_settings__can_see_community=2).update(can_see_community=0)
+            self.connections.filter(connect_ie_settings__can_see_community=2).update(connect_ie_settings__can_see_community=0)
         for user_id in users:
             friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
             try:
@@ -1739,8 +1738,7 @@ class User(AbstractUser):
         from frends.models import ConnectPerm
         private = self.profile_private
         if type == "can_see_community":
-            if self.connections.filter(connect_ie_settings__can_see_community=1).exists():
-                self.connections.filter(connect_ie_settings__can_see_community=1).update(can_see_community=0)
+            self.connections.filter(connect_ie_settings__can_see_community=1).update(connect_ie_settings__can_see_community=0)
         for user_id in users:
             friend = self.connections.filter(target_user_id=user_id).first()
             try:
