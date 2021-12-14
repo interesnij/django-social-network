@@ -447,3 +447,32 @@ class UserPrivateExcludeUsers(ListView):
 			request.user.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
 		return HttpResponse('not ok')
+
+class UserPrivateIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		self.type = request.GET.get("action")
+		if self.type == "can_see_community":
+			self.users = request.user.get_can_see_community_include_users()
+			self.text = "видеть сообщества"
+		self.template_name = get_settings_template("users/settings/perm/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserPrivateIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserPrivateIncludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_all_friends()
+
+	def post(self,request,*args,**kwargs):
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			request.user.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
+			return HttpResponse('ok')
+		return HttpResponse('not ok')
