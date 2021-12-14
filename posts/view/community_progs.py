@@ -419,7 +419,7 @@ class CommunityPostsListEdit(TemplateView):
     def get_context_data(self,**kwargs):
         context=super(CommunityPostsListEdit,self).get_context_data(**kwargs)
         context["list"] = self.list
-        context["community"] = list.community
+        context["community"] = self.list.community
         return context
 
     def post(self,request,*args,**kwargs):
