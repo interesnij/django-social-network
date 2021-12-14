@@ -35,6 +35,16 @@ class Connect(models.Model):
             return True
         return False
 
+    def delete_perm(self, type):
+        try:
+            perm = self.connect_ie_settings
+            if type == "can_see_community":
+                perm.can_see_community = 0
+                perm.save(update_fields=["can_see_community"])
+        except ConnectPerm.DoesNotExist:
+            pass
+
+
 class ConnectPerm(models.Model):
     """ связь с таблицей друзей target_user. Появляется после ее инициирования, когда друг записи Connect
         добавит какое либо исключение или включение для какого-либо элемента.
