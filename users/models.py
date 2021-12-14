@@ -1728,31 +1728,34 @@ class User(AbstractUser):
             for i in list:
                 i.connect_ie_settings.can_see_community = 0
                 i.connect_ie_settings.save(update_fields=["can_see_community"])
-        for user_id in users:
-            friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
-            try:
-                perm = friend.connect_ie_settings
-            except:
-                perm = ConnectPerm.objects.create(user_id=friend.pk)
-            perm.can_see_community = 2
-            perm.save(update_fields=["can_see_community"])
+            for user_id in users:
+                friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
+                try:
+                    perm = friend.connect_ie_settings
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_community = 2
+                perm.save(update_fields=["can_see_community"])
+            private.save(update_fields=["can_see_community"])
 
     def post_include_users(self, users, type):
         from frends.models import ConnectPerm
+
         private = self.profile_private
         if type == "can_see_community":
             list = self.connections.filter(connect_ie_settings__can_see_community=1)
             for i in list:
                 i.connect_ie_settings.can_see_community = 0
                 i.connect_ie_settings.save(update_fields=["can_see_community"])
-        for user_id in users:
-            friend = self.connections.filter(target_user_id=user_id).first()
-            try:
-                perm = ConnectPerm.objects.get(user_id=friend.pk)
-            except:
-                perm = ConnectPerm.objects.create(user_id=friend.pk)
-            perm.can_see_community = 1
-            perm.save(update_fields=["can_see_community"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_community = 1
+                perm.save(update_fields=["can_see_community"])
+            private.save(update_fields=["can_see_community"])
 
 
     def get_can_see_community_exclude_users_ids(self):
