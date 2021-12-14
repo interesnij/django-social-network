@@ -240,40 +240,40 @@ class UserPrivateView(TemplateView):
 			return HttpResponse()
 		if type[:3] == "can":
 			if type == "can_see_community":
-				private.can_see_community = self.value
+				private.can_see_community = value
 				private.save(update_fields=["can_see_community"])
 			elif type == "can_see_info":
-				private.can_see_info = self.value
+				private.can_see_info = value
 				private.save(update_fields=["can_see_info"])
 			elif type == "can_see_friend":
-				private.can_see_friend = self.value
+				private.can_see_friend = value
 				private.save(update_fields=["can_see_friend"])
 			elif type == "can_send_message":
-				private.can_send_message = self.value
+				private.can_send_message = value
 				private.save(update_fields=["can_send_message"])
 			elif type == "can_add_in_chat":
-				private.can_add_in_chat = self.value
+				private.can_add_in_chat = value
 				private.save(update_fields=["can_add_in_chat"])
 			elif type == "can_see_post":
-				private.can_see_post = self.value
+				private.can_see_post = value
 				private.save(update_fields=["can_see_post"])
 			elif type == "can_see_photo":
-				private.can_see_photo = self.value
+				private.can_see_photo = value
 				private.save(update_fields=["can_see_photo"])
 			elif type == "can_see_good":
-				private.can_see_good = self.value
+				private.can_see_good = value
 				private.save(update_fields=["can_see_good"])
 			elif type == "can_see_video":
-				private.can_see_video = self.value
+				private.can_see_video = value
 				private.save(update_fields=["can_see_video"])
 			elif type == "can_see_music":
-				private.can_see_music = self.value
+				private.can_see_music = value
 				private.save(update_fields=["can_see_music"])
 			elif type == "can_see_planner":
-				private.can_see_planner = self.value
+				private.can_see_planner = value
 				private.save(update_fields=["can_see_planner"])
 			elif type == "can_see_doc":
-				private.can_see_doc = self.value
+				private.can_see_doc = value
 				private.save(update_fields=["can_see_doc"])
 		return HttpResponse()
 
