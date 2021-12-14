@@ -216,7 +216,10 @@ class UserNotifyMusicView(TemplateView):
 class UserPrivateView(TemplateView):
 	template_name = None
 	def get(self,request,*args,**kwargs):
-		self.private = UserPrivate.objects.get(user=request.user)
+		try:
+			private = ProfilePrivate.objects.get(user=request.user)
+		except UserPrivate.DoesNotExist:
+			private = ProfilePrivate.objects.create(user=request.user)
 		self.template_name = get_settings_template("users/settings/perm/private.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateView,self).get(request,*args,**kwargs)
 
@@ -227,9 +230,9 @@ class UserPrivateView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		try:
-			private = UserPrivate.objects.get(user=request.user)
+			private = ProfilePrivate.objects.get(user=request.user)
 		except UserPrivate.DoesNotExist:
-			private = UserPrivate.objects.create(user=request.user)
+			private = ProfilePrivate.objects.create(user=request.user)
 
 		type = request.GET.get("action")
 		value = request.GET.get("value")
