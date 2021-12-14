@@ -27,8 +27,7 @@ on('#ajax', 'click', '.c_add_post_list', function() {
 });
 on('#ajax', 'click', '.c_edit_post_list', function() {
   list_pk = this.parentElement.parentElement.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/posts/community_progs/edit_list/" + pk + "/" + list_pk + "/", "worker_fullscreen");
+  create_fullscreen("/posts/community_progs/edit_list/" + list_pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '#c_repost_for_community', function() {
