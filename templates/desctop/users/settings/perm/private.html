@@ -26,6 +26,7 @@
                               {% for object in request.user..get_can_see_community_include_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
+                              {% endif %}
                             </span>
                             <div class="dropdown-menu" data-action="can_see_community" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
