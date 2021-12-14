@@ -236,7 +236,7 @@ class UserPrivateView(TemplateView):
 
 		type = request.GET.get("action")
 		value = request.GET.get("value")
-		if request.is_ajax():
+		if not request.is_ajax() or value == 17 or value == 18:
 			return HttpResponse(value)
 		if type[:3] == "can":
 			if type == "can_see_community":
