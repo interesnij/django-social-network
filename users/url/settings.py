@@ -15,11 +15,6 @@ urlpatterns = [
     url(r'^notify_music/$', UserNotifyMusicView.as_view(), name='user_music_notify'),
 
     url(r'^private/$', UserPrivateView.as_view(), name='user_profile_private'),
-    url(r'^private_post/$', UserPrivatePostView.as_view(), name='user_post_private'),
-    url(r'^private_photo/$', UserPrivatePhotoView.as_view(), name='user_photo_private'),
-    url(r'^private_good/$', UserPrivateGoodView.as_view(), name='user_good_private'),
-    url(r'^private_video/$', UserPrivateVideoView.as_view(), name='user_video_private'),
-    url(r'^private_music/$', UserPrivateMusicView.as_view(), name='user_music_private'),
 
     url(r'^edit_name/$', UserEditName.as_view()),
     url(r'^edit_password/$', UserEditPassword.as_view()),

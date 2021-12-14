@@ -215,155 +215,60 @@ class UserNotifyMusicView(TemplateView):
 
 class UserPrivateView(TemplateView):
 	template_name = None
-
 	def get(self,request,*args,**kwargs):
 		self.private = UserPrivate.objects.get(user=request.user)
-		self.form = UserPrivateForm(instance=self.private)
-		self.template_name = get_settings_template("users/settings/private.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/perm/private.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(UserPrivateView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = self.form
+		context["private"] = self.private
 		return context
 
 	def post(self,request,*args,**kwargs):
-		self.private = UserPrivate.objects.get(user=request.user)
-		self.form = UserPrivateForm(request.POST, instance=self.private)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
+		private = UserPrivate.objects.get(user=request.user)
+		type = request.GET.get("action")
+		value = request.GET.get("value")
+		if request.is_ajax() or type > 16:
 			return HttpResponse()
-
-class UserPrivatePostView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = request.user.get_post_list()
-		self.template_name = get_settings_template("users/settings/private_post.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPrivatePostView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from posts.forms import PostsListForm
-
-		context = super(UserPrivatePostView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = PostsListForm(instance=self.list)
-		context["list"] = self.list
-		return context
-
-	def post(self,request,*args,**kwargs):
-		from posts.forms import PostsListForm
-
-		self.list = request.user.get_post_list()
-		self.form = PostsListForm(instance=self.list)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
-			return HttpResponse()
-
-class UserPrivateGoodView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = request.user.get_good_list()
-		self.template_name = get_settings_template("users/settings/private_good.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPrivateGoodView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from goods.forms import GoodListForm
-
-		context = super(UserPrivateGoodView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = GoodListForm(instance=self.list)
-		context["list"] = self.list
-		return context
-
-	def post(self,request,*args,**kwargs):
-		from goods.forms import GoodListForm
-
-		self.list = request.user.get_good_list()
-		self.form = GoodListForm(instance=self.list)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
-			return HttpResponse()
-
-class UserPrivateVideoView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = request.user.get_video_list()
-		self.template_name = get_settings_template("users/settings/private_video.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPrivateVideoView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from video.forms import VideoListForm
-
-		context = super(UserPrivateVideoView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = VideoListForm(instance=self.list)
-		context["list"] = self.list
-		return context
-
-	def post(self,request,*args,**kwargs):
-		from video.forms import VideoListForm
-
-		self.list = request.user.get_video_list()
-		self.form = VideoListForm(instance=self.list)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
-			return HttpResponse()
-
-class UserPrivatePhotoView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = request.user.get_photo_list()
-		self.template_name = get_settings_template("users/settings/private_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPrivatePhotoView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from gallery.forms import PhotoListForm
-
-		context = super(UserPrivatePhotoView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = PhotoListForm(instance=self.list)
-		context["list"] = self.list
-		return context
-
-	def post(self,request,*args,**kwargs):
-		from gallery.forms import PhotoListForm
-
-		self.list = request.user.get_photo_list()
-		self.form = PhotoListForm(instance=self.list)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
-			return HttpResponse()
-
-class UserPrivateMusicView(TemplateView):
-	template_name = None
-
-	def get(self,request,*args,**kwargs):
-		self.list = request.user.get_playlist()
-		self.template_name = get_settings_template("users/settings/private_music.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(UserPrivateMusicView,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		from music.forms import PlaylistForm
-
-		context = super(UserPrivateMusicView,self).get_context_data(**kwargs)
-		context["user"] = self.request.user
-		context["form"] = PlaylistForm(instance=self.list)
-		context["list"] = self.list
-		return context
-
-	def post(self,request,*args,**kwargs):
-		from music.forms import PlaylistForm
-
-		self.list = request.user.get_playlist()
-		self.form = PlaylistForm(instance=self.list)
-		if request.is_ajax() and self.form.is_valid():
-			self.form.save()
-			return HttpResponse()
+		if type[:3] == "can":
+			if type == "can_see_community":
+				private.can_see_community = self.value
+				private.save(update_fields=["can_see_community"])
+			elif type == "can_see_info":
+				private.can_see_info = self.value
+				private.save(update_fields=["can_see_info"])
+			elif type == "can_see_friend":
+				private.can_see_friend = self.value
+				private.save(update_fields=["can_see_friend"])
+			elif type == "can_send_message":
+				private.can_send_message = self.value
+				private.save(update_fields=["can_send_message"])
+			elif type == "can_add_in_chat":
+				private.can_add_in_chat = self.value
+				private.save(update_fields=["can_add_in_chat"])
+			elif type == "can_see_post":
+				private.can_see_post = self.value
+				private.save(update_fields=["can_see_post"])
+			elif type == "can_see_photo":
+				private.can_see_photo = self.value
+				private.save(update_fields=["can_see_photo"])
+			elif type == "can_see_good":
+				private.can_see_good = self.value
+				private.save(update_fields=["can_see_good"])
+			elif type == "can_see_video":
+				private.can_see_video = self.value
+				private.save(update_fields=["can_see_video"])
+			elif type == "can_see_music":
+				private.can_see_music = self.value
+				private.save(update_fields=["can_see_music"])
+			elif type == "can_see_planner":
+				private.can_see_planner = self.value
+				private.save(update_fields=["can_see_planner"])
+			elif type == "can_see_doc":
+				private.can_see_doc = self.value
+				private.save(update_fields=["can_see_doc"])
+		return HttpResponse()
 
 
 class UserEditName(TemplateView):
