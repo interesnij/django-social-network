@@ -1592,10 +1592,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_community == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 2, 0):
-            return True
-        elif private.can_see_community == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 2, 1):
-            return True
+        elif private.can_see_community == private.MEMBERS_BUT:
+            return not user_pk in self.get_can_see_community_exclude_users_ids()
+        elif private.can_see_community == private.SOME_MEMBERS:
+            return user_pk in self.get_can_see_community_include_users_ids()
         return False
 
     def is_user_can_see_photo(self, user_pk):

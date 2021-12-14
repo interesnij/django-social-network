@@ -445,7 +445,7 @@ class UserPrivateExcludeUsers(ListView):
 
 		if request.is_ajax():
 			request.user.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
-			return HttpResponse('ok')
+			return HttpResponse('ok') 
 		return HttpResponse('not ok')
 
 class UserPrivateIncludeUsers(ListView):
