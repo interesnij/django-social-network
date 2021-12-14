@@ -1062,7 +1062,7 @@ class User(AbstractUser):
         return self.get_default_communities()
 
     def get_all_friends_ids(self):
-        my_frends = self.connections.order_by("-visited").values('target_user_id')
+        my_frends = self.connections.values('target_user_id')
         return [i['target_user_id'] for i in my_frends]
 
     def get_friend_and_friend_of_friend_ids(self):
@@ -1718,3 +1718,14 @@ class User(AbstractUser):
     def is_anon_user_can_see_good(self):
         private = self.profile_private
         return private.can_see_good == 1
+
+    def get_can_see_community_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_community=2).values("target_user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_community_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_community=1).values("target_user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_community_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_community_exclude_users_ids())
+    def get_can_see_community_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_community_include_users_ids())
