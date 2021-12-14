@@ -16,38 +16,17 @@
                       <div class="row mb-1 form_group_flex">
                           <label class="col-md-6">Кто видит сообщества</label>
                           <span class="col-md-6">
-                            {% if private.can_see_community == 1 %}
-                            <a class="menu_drop_2 pointer">Все пользователи</a>
-                            <span class="collector"></span>
-
-                            {% elif private.can_see_community == 4 %}
-                            <a class="menu_drop_2 pointer">Друзья</a>
-                            <span class="collector"></span>
-
-                            {% elif private.can_see_community == 5 %}
-                            <a class="menu_drop_2 pointer">Друзья и друзья друзей</a>
-                            <span class="collector"></span>
-
-                            {% elif private.can_see_community == 6 %}
-                            <a class="menu_drop_2 pointer">Только я</a>
-                            <span class="collector"></span>
-
-                            {% elif private.can_see_community == 17 %}
-                            <a class="menu_drop_2 pointer underline">Друзья, кроме</a>
-                            <span class="collector">:
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_community_display }}</a>
+                            <span class="collector">
+                              {% if request.user.get_can_see_community_include_users %}:
                               {% for object in request.user.get_can_see_community_include_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
-                            </span>
-
-                            {% elif private.can_see_community == 18 %}
-                            <a class="menu_drop_2 pointer underline">Некоторые друзья</a>
-                            <span class="collector">:
+                              {% elif request.user.get_can_see_community_include_users %}:
                               {% for object in request.user..get_can_see_community_include_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
+                              {% endfor %}
                             </span>
-                            {% endif %}
                             <div class="dropdown-menu" data-action="can_see_community" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
