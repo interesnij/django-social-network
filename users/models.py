@@ -1742,7 +1742,8 @@ class User(AbstractUser):
         from frends.models import ConnectPerm
         private = self.profile_private
         if type == "can_see_community":
-            self.connections.filter(connect_ie_settings__can_see_community=1).update(can_see_community=0)
+            if self.connections.filter(connect_ie_settings__can_see_community=1).exists():
+                self.connections.filter(connect_ie_settings__can_see_community=1).update(can_see_community=0)
         for user_id in users:
             friend = self.connections.filter(target_user_id=user_id).first()
             try:
