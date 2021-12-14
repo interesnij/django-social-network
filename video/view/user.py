@@ -20,9 +20,9 @@ class UserVideoList(ListView):
 			self.video_list = self.list.get_items()
 
 		if request.user.is_authenticated:
-			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user_item(self.post, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_item(self.video, "video/u_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

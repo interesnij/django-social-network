@@ -1532,18 +1532,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_info == 5 and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_info == 7:
-            try:
-                connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
-                return not connect.connect_ie_settings.can_see_info == 2
-            except:
-                return True
-        elif private.can_see_info == 8:
-            try:
-                connect = Connect.objects.get(user_id=self.pk, target_user_id=user_pk)
-                return connect.connect_ie_settings.can_see_info == 1
-            except:
-                return False
+        elif private.can_see_info == 17:
+            return not user_pk in self.get_can_see_info_exclude_users_ids()
+        elif private.can_see_info == 18:
+            return user_pk in self.get_can_see_info_include_users_ids()
         return False
 
     def is_user_can_add_in_chat(self, user_pk):
@@ -1560,10 +1552,10 @@ class User(AbstractUser):
             return True
         elif private.can_add_in_chat == 5 and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_add_in_chat == 9 and self.get_special_perm_see(self.pk, user_pk, 5, 0):
-            return True
-        elif private.can_add_in_chat == 10 and self.get_special_perm_see(self.pk, user_pk, 5, 1):
-            return True
+        elif private.can_add_in_chat == 17:
+            return not user_pk in self.get_can_add_in_chat_exclude_users_ids()
+        elif private.can_add_in_chat == 18:
+            return user_pk in self.get_can_add_in_chat_include_users_ids()
         return False
 
     def is_user_can_see_post(self, user_pk):
@@ -1576,10 +1568,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_post == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_post == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 8, 0):
-            return True
-        elif private.can_see_post == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 8, 1):
-            return True
+        elif private.can_see_post == 17:
+            return not user_pk in self.get_can_see_post_exclude_users_ids()
+        elif private.can_see_post == 18:
+            return user_pk in self.get_can_see_post_include_users_ids()
         return False
 
     def is_user_can_see_community(self, user_pk):
@@ -1608,10 +1600,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_photo == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_photo == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 10, 0):
-            return True
-        elif private.can_see_photo == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 10, 1):
-            return True
+        elif private.can_see_photo == 17:
+            return not user_pk in self.get_can_see_photo_exclude_users_ids()
+        elif private.can_see_photo == 18:
+            return user_pk in self.get_can_see_photo_include_users_ids()
         return False
 
     def is_user_can_see_video(self, user_pk):
@@ -1624,10 +1616,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_video == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_video == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 14, 0):
-            return True
-        elif private.can_see_video == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 14, 1):
-            return True
+        elif private.can_see_video == 17:
+            return not user_pk in self.get_can_see_video_exclude_users_ids()
+        elif private.can_see_video == 18:
+            return user_pk in self.get_can_see_video_include_users_ids()
         return False
 
     def is_user_can_see_music(self, user_pk):
@@ -1640,10 +1632,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_music == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_music == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 7, 0):
-            return True
-        elif private.can_see_music == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 7, 1):
-            return True
+        elif private.can_see_music == 17:
+            return not user_pk in self.get_can_see_music_exclude_users_ids()
+        elif private.can_see_music == 18:
+            return user_pk in self.get_can_see_music_include_users_ids()
         return False
 
     def is_user_can_see_doc(self, user_pk):
@@ -1656,10 +1648,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_doc == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_doc == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 6, 0):
-            return True
-        elif private.can_see_doc == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 6, 1):
-            return True
+        elif private.can_see_doc == 17:
+            return not user_pk in self.get_can_see_doc_exclude_users_ids()
+        elif private.can_see_doc == 18:
+            return user_pk in self.get_can_see_doc_include_users_ids()
         return False
 
     def is_user_can_see_friend(self, user_pk):
@@ -1672,10 +1664,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_friend == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_friend == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 3, 0):
-            return True
-        elif private.can_see_friend == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 3, 1):
-            return True
+        elif private.can_see_friend == 17:
+            return not user_pk in self.get_can_see_friend_exclude_users_ids()
+        elif private.can_see_friend == 18:
+            return user_pk in self.get_can_see_friend_include_users_ids()
         return False
 
     def is_user_can_see_good(self, user_pk):
@@ -1688,10 +1680,10 @@ class User(AbstractUser):
             return True
         elif private.can_see_good == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_good == private.MEMBERS_BUT and self.get_special_perm_see(self.pk, user_pk, 12, 0):
-            return True
-        elif private.can_see_good == private.SOME_MEMBERS and self.get_special_perm_see(self.pk, user_pk, 12, 1):
-            return True
+        elif private.can_see_good == 17:
+            return not user_pk in self.get_can_see_good_exclude_users_ids()
+        elif private.can_see_good == 18:
+            return user_pk in self.get_can_see_good_include_users_ids()
         return False
 
     def is_anon_user_can_see_post(self):
