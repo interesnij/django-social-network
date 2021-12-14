@@ -226,7 +226,11 @@ class UserPrivateView(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
-		private = UserPrivate.objects.get(user=request.user)
+		try:
+			private = UserPrivate.objects.get(user=request.user)
+		except UserPrivate.DoesNotExist:
+			private = UserPrivate.objects.create(user=request.user)
+
 		type = request.GET.get("action")
 		value = request.GET.get("value")
 		if request.is_ajax() or type > 16:
