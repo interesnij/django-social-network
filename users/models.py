@@ -1592,9 +1592,9 @@ class User(AbstractUser):
             return True
         elif private.can_see_community == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
             return True
-        elif private.can_see_community == private.MEMBERS_BUT:
+        elif private.can_see_community == 17:
             return not user_pk in self.get_can_see_community_exclude_users_ids()
-        elif private.can_see_community == private.SOME_MEMBERS:
+        elif private.can_see_community == 18:
             return user_pk in self.get_can_see_community_include_users_ids()
         return False
 
