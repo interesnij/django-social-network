@@ -25,21 +25,10 @@
   </div>
 </div>
 
-<a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
+<a class="mb-2" href="{% url 'user_profile_private' %}" class="ajax">
     Приватность
 </a>
-<div class="collapse">
-  <div class="card card-body" style="display: contents;">
-    <ul>
-      <li><a href="{% url 'user_profile_private' %}" class="ajax">Профиль</a></li>
-      <li><a href="{% url 'user_post_private' %}" class="ajax">Записи</a></li>
-      <li><a href="{% url 'user_photo_private' %}" class="ajax">Фотографии</a></li>
-      <li><a href="{% url 'user_good_private' %}" class="ajax">Товары</a></li>
-      <li><a href="{% url 'user_video_private' %}" class="ajax">Видеозаписи</a></li>
-      <li><a href="{% url 'user_music_private' %}" class="ajax">Аудиозаписи</a></li>
-    </ul>
-  </div>
-</div>
+
 <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
     Уведомления
 </a>
