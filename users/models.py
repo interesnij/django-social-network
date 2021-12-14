@@ -1723,12 +1723,14 @@ class User(AbstractUser):
         from frends.models import ConnectPerm
 
         private = self.profile_private
-        if type == "can_see_community":
-            self.connections.filter(target_user__connectperm__can_see_community=2).update(can_see_community=0)
+
+        connects = self.connections.filter(user_id=self.pk)
+        for c in connects:
+            c.delete_perm(type)
         for user_id in users:
-            friend = self.connections.filter(target_user_id=user_id).first()
+            friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
             try:
-                perm = ConnectPerm.objects.get(user_id=friend.pk)
+                perm = friend.connect_ie_settings
             except:
                 perm = ConnectPerm.objects.create(user_id=friend.pk)
             perm.can_see_community = 2
