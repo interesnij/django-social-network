@@ -1723,12 +1723,9 @@ class User(AbstractUser):
         from frends.models import ConnectPerm
 
         private = self.profile_private
-
-        connects = self.connections.filter(user_id=self.pk)
         if type == "can_see_community":
-            self.connections.filter(connect_ie_settings__can_see_community=2).update(can_see_community=0)
-        #for c in connects:
-        #    c.delete_perm(type)
+            if self.connections.filter(connect_ie_settings__can_see_community=2).exists():
+                self.connections.filter(connect_ie_settings__can_see_community=2).update(can_see_community=0)
         for user_id in users:
             friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
             try:
