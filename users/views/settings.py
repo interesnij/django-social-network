@@ -1,4 +1,5 @@
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 from users.model.profile import UserProfile
 from users.model.settings import *
 from users.forms import *
