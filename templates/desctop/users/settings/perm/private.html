@@ -18,8 +18,8 @@
                           <span class="col-md-6">
                             <a class="menu_drop_2 pointer">{{ private.get_can_see_community_display }}</a>
                             <span class="collector">
-                              {% if private.can_see_community == 17 and request.user.get_can_see_community_include_users %}:
-                              {% for object in request.user.get_can_see_community_include_users %}
+                              {% if private.can_see_community == 17 and request.user.get_can_see_community_exclude_users %}:
+                              {% for object in request.user.get_can_see_community_exclude_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
                               {% elif private.can_see_community == 18 and request.user.get_can_see_community_include_users %}:
