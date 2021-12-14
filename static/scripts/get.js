@@ -423,6 +423,9 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   };
   parent_2 = this.parentElement.parentElement;
   collector = parent_2.querySelector(".collector");
+  current_option = parent_2.querySelector(".menu_drop_2");
+  current_option.innerHTML = _this.innerHTML;
+  collector.classList.add("collector_active");
 
   if (form_post.classList.contains("case_edit")) {
     // если мы имеем дело с изменением приватности элемента, который
@@ -463,14 +466,12 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
     // на лету сохранять изменение приватности. Мы должны оформить исключения или
     // назначения в виде post полей и разобрать их при создании элемента
     // например, при создании списка записей
-    current_option = parent_2.querySelector(".menu_drop_2");
+
     input = parent_2.querySelector(".input");
     if (input.value == val) {
       is_new_value = false
     };
     input.setAttribute("value", val);
-    collector.classList.add("collector_active");
-    current_option.innerHTML = _this.innerHTML;
 
       if (val == '4') {
         create_fullscreen("/users/load/list_exclude_users/?action=" + action + "&target=user&list=" + form_post.getAttribute("data-list"), "worker_fullscreen")
