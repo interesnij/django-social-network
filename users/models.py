@@ -1725,8 +1725,10 @@ class User(AbstractUser):
         private = self.profile_private
 
         connects = self.connections.filter(user_id=self.pk)
-        for c in connects:
-            c.delete_perm(type)
+        if type == "can_see_community":
+            self.connections.filter(connect_ie_settings__can_see_community=2).update(can_see_community=0)
+        #for c in connects:
+        #    c.delete_perm(type)
         for user_id in users:
             friend = self.connections.filter(user_id=self.pk,target_user_id=user_id).first()
             try:
