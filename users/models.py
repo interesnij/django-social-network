@@ -1736,6 +1736,7 @@ class User(AbstractUser):
                     perm = ConnectPerm.objects.create(user_id=friend.pk)
                 perm.can_see_community = 2
                 perm.save(update_fields=["can_see_community"])
+            private.can_see_community = 17
             private.save(update_fields=["can_see_community"])
 
     def post_include_users(self, users, type):
@@ -1755,6 +1756,7 @@ class User(AbstractUser):
                     perm = ConnectPerm.objects.create(user_id=friend.pk)
                 perm.can_see_community = 1
                 perm.save(update_fields=["can_see_community"])
+            private.can_see_community = 18
             private.save(update_fields=["can_see_community"])
 
 
