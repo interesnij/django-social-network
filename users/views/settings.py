@@ -427,8 +427,7 @@ class UserPrivateExcludeUsers(ListView):
 		if self.type == "can_see_community":
 			self.users = request.user.get_can_see_community_exclude_users()
 			self.text = "видеть сообщества"
-		if self.chat.is_user_can_edit_info(request.user):
-			self.template_name = get_settings_template("users/settings/perm/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/settings/perm/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateExcludeUsers,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
