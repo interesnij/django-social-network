@@ -13,9 +13,6 @@
         bg-light-secondary
       {% endif %}
       is_have_edited
-    {% endif %}
-    {% if object|is_favourite:request.user.pk %}
-      favourite
     {% endif %}" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}">
     <figure>
       <a href="{{ object.creator.get_link }}" class="ajax no_select">
@@ -24,7 +21,12 @@
     </figure>
     <div class="media-body t_f">
       <h5 class="time-title mb-0">
-        <a href="{{ object.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ object.creator.get_full_name }}</span></a>
+        <a href="{{ object.creator.get_link }}" class="ajax creator_link">
+          <span class="creator_name">{{ object.creator.get_full_name }}</span>
+          {% if object|is_favourite:request.user.pk %}
+            <svg class="toggle_message_favourite active svg_default_20 pointer" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g></svg>
+          {% endif %}
+        </a>
         <small class="float-right small text-muted t_f">{{ object.get_created }} {% if object.is_edited %}(ред.){% endif %}</small>
       </h5>
 
