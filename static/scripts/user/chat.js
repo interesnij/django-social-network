@@ -605,8 +605,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
 });
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
-  is_favourite = false;
-  this.classList.contains("active") ? url = "/chat/user_progs/unfavorite_message/" : url = "/chat/user_progs/favorite/";
+  this.classList.contains("favourite") ? url = "/chat/user_progs/unfavorite_message/" : url = "/chat/user_progs/favorite_message/";
 
   list = get_toggle_messages();
   for (var i = 0; i < list.length; i++){
