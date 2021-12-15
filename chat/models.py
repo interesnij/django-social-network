@@ -668,12 +668,6 @@ class Chat(models.Model):
         return self.chat_message.filter(query)
 
 
-class MessageOptions(models.Model):
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_options")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,  related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
-    is_deleted = models.BooleanField(default=True, verbose_name="Это сообщение пользователь удалил")
-
-
 class ChatUsers(models.Model):
     ACTIVE, EXITED, DELETED = "ACT", "EXI", "DEL"
     TYPE = (
@@ -1363,3 +1357,9 @@ class MessageFixed(models.Model):
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
+
+
+class MessageOptions(models.Model):
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_options")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,  related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
+    is_deleted = models.BooleanField(default=True, verbose_name="Это сообщение пользователь удалил")
