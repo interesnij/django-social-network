@@ -39,7 +39,7 @@ class ChatDetailView(ListView):
 		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.pk = request.user.pk
-		self.messages = self.chat.get_messages_for_recipient(self.pk)
+		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 

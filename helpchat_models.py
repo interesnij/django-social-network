@@ -10,10 +10,12 @@ from django.db.models import Q
 from common.model.other import Stickers
 
 
+
 class Chat(models.Model):
     PUBLIC,PRIVATE,MANAGER,GROUP,SUPPORT = 'PUB','PRI','MAN','GRO','SUP'
     DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP,DELETED_SUPPORT = '_DPUB','_DPRI','_DMAN','_DGRO','_DSUP'
     CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP,CLOSED_SUPPORT = '_CPUB','_CPRI','_CMAN','_CGRO','_CSUP'
+
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
@@ -22,6 +24,7 @@ class Chat(models.Model):
         (CLOSED_PUBLIC, 'закр. Публичный'),(CLOSED_PRIVATE, 'закр. Приватный'),(CLOSED_MANAGER, 'закр. Служебный'),(CLOSED_GROUP, 'закр. Групповой'),(CLOSED_SUPPORT, 'закр. Техподдержка'),
     )
     ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),(MEMBERS_BUT, 'Участники кроме'),(SOME_MEMBERS, 'Некоторые участники'),)
+    ADMIN_PERM = ((CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),)
 
     name = models.CharField(max_length=100, blank=True, verbose_name="Название")
     type = models.CharField(blank=False, null=False, choices=TYPE, max_length=6, verbose_name="Тип чата")
@@ -39,7 +42,7 @@ class Chat(models.Model):
     can_edit_info = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто редактирует информацию")
     can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто закрепляет сообщения")
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
-    can_add_admin = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто назначает админов")
+    can_add_admin = models.PositiveSmallIntegerField(choices=ADMIN_PERM, default=3, verbose_name="Кто назначает админов")
     can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто меняет дизайн")
 
     class Meta:
@@ -350,6 +353,11 @@ class Chat(models.Model):
     def get_unread_message(self, user_id):
         return self.chat_message.filter(recipient_id=user_id, unread=True)
 
+    def get_messages_for_recipient(self, user_id):
+        query = Q(recipient_id=user_id)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return self.chat_message.filter(query)
+
     def get_last_message_created(self):
         if self.is_not_empty():
             return self.get_first_message().get_created()
@@ -386,9 +394,9 @@ class Chat(models.Model):
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
             created = first_message.get_created()
-            if first_message.parent:
+            if first_message.copy:
                 creator = first_message.creator
-                message = first_message.parent
+                message = first_message.copy
                 preview_text = creator.get_full_name() + first_message.text + '<span class="underline">' + message.get_text_60() + '</span>'
             else:
                 preview_text = first_message.get_text_60()
@@ -398,7 +406,7 @@ class Chat(models.Model):
                 preview_text = 'Вы: ' + first_message.get_type_text()
             else:
                 preview_text = first_message.get_type_text()
-            if user_id == first_message.creator.pk and first_message.unreed:
+            if user_id == first_message.creator.pk and not first_message.is_copy_reed():
                 is_read = ' bg-light-secondary'
             created = first_message.get_created()
 
@@ -553,12 +561,15 @@ class Chat(models.Model):
             var = "исключил"
         ChatUsers.delete_member(user=user, chat=self)
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-        info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-        for recipient in self.chat.get_recipients_2(creator.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
+        for recipient in self.get_recipients():
+            info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,recipient_id=recipient.user.pk,type=Message.MANAGER,text=text)
+            if recipient.user.pk != creator.pk:
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            else:
+                message = info_message
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
-        return info_message
+        return message
 
     def exit_member(self, user):
         from datetime import datetime
@@ -569,9 +580,12 @@ class Chat(models.Model):
             var = "вышел из чата"
         ChatUsers.exit_member(user=user, chat=self)
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
-        info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,type=Message.MANAGER,text=text)
-        for recipient in self.chat.get_recipients_2(creator.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
+        for recipient in self.get_recipients():
+            info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,recipient_id=recipient.user.pk,type=Message.MANAGER,text=text)
+            if recipient.user.pk != user.pk:
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            else:
+                message = info_message
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
         return message
@@ -587,14 +601,17 @@ class Chat(models.Model):
         users = User.objects.filter(id__in=users_ids)
         info_messages = []
         for user in users:
-            if not ChatUsers.objects.filter(user=user, chat=self).exclude(type="DEL").exists():
+            if (creator.is_administrator_of_chat(self.pk) and not ChatUsers.objects.filter(user=user, chat=self).exclude(type="DEL").exists()) \
+            or not ChatUsers.objects.filter(user=user, chat=self).exists():
                 member = ChatUsers.create_membership(user=user, chat=self)
                 if member:
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
-                    info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-                    info_messages.append(info_message)
-                    for recipient in self.chat.get_recipients_2(creator.pk):
-                        info_message.create_socket(recipient.user.pk, recipient.beep())
+                    for recipient in self.get_recipients():
+                        info_message = Message.objects.create(chat_id=self.id,recipient_id=recipient.user.pk,creator_id=creator.id,type=Message.MANAGER,text=text)
+                        if recipient.user.pk != creator.pk:
+                            info_message.create_socket(recipient.user.pk, recipient.beep())
+                        else:
+                            info_messages.append(info_message)
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
         return info_messages
@@ -660,18 +677,6 @@ class Chat(models.Model):
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_design=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
-
-    def get_messages(self, user_id):
-        query = Q()
-        query.add(~Q(type__contains="_"), Q.AND)
-        query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
-        return self.chat_message.filter(query)
-
-
-class MessageOptions(models.Model):
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_options")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,  related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
-    is_deleted = models.BooleanField(default=True, verbose_name="Это сообщение пользователь удалил")
 
 
 class ChatUsers(models.Model):
@@ -750,7 +755,6 @@ class ChatUsers(models.Model):
         else:
             return ''
 
-
 class ChatPerm(models.Model):
     """ связь с таблицей участников беседы. Появляется после ее инициирования, когда участник
         получит какое либо исключение или включение для какой-либо категории.
@@ -778,6 +782,7 @@ class ChatPerm(models.Model):
         verbose_name = 'Исключения/Включения участника беседы'
         verbose_name_plural = 'Исключения/Включения участников беседы'
         index_together = [('id', 'user'),]
+
 
 
 class Message(models.Model):
@@ -814,6 +819,14 @@ class Message(models.Model):
 
     def __str__(self):
         return self.text
+
+    def is_copy_reed(self):
+        """ мы получаем копию сообщения любую. Если копия прочитана, значит возвращаем True
+        Зачем это - при отрисовке первого сообщения правильно выводить кол-во непрочитанных. """
+        for copy in self.message_copy.filter(copy=self).all():
+            if not copy.unread:
+                return True
+        return False
 
     def get_draft_transfers_block(self):
         transfers = self.transfer.all()
@@ -926,17 +939,23 @@ class Message(models.Model):
             ChatUsers.objects.create(user=user, chat=current_chat)
 
         if voice:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, voice=voice)
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice)
         elif sticker:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, sticker_id=sticker)
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+            creator_message = Message.objects.create(chat=current_chat, creator=creator, recipient_id=creator.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+        for recipient in chat.get_recipients_2(creator.pk):
+            if voice:
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, voice=voice)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, sticker_id=sticker, recipient_id=recipient.user.pk, repost=repost, voice=voice)
+            else:
+                recipient_message = Message.objects.create(chat=current_chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+            recipient_message.create_socket(recipient.user.pk, recipient.beep())
         current_chat.created = datetime.now()
         current_chat.save(update_fields=["created"])
-        for recipient in chat.get_recipients_2(creator.pk):
-            recipient_message.create_socket(recipient.user.pk, recipient.beep())
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
@@ -946,15 +965,21 @@ class Message(models.Model):
         _text = Message.get_format_text(text)
 
         if voice:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach))
 
         for recipient in chat.get_recipients_2(creator.pk):
+            if voice:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, voice=voice)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, sticker_id=sticker)
+            else:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach))
             recipient_message.create_socket(recipient.user.pk, recipient.beep())
 
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
@@ -968,9 +993,9 @@ class Message(models.Model):
         else:
             parent_id = None
         if voice:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, voice=voice, parent_id=parent_id)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, sticker_id=sticker, parent_id=parent_id)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
@@ -981,7 +1006,7 @@ class Message(models.Model):
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
+            creator_message = Message.objects.create(chat=chat, creator=creator, recipient_id=creator.pk, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
             if transfer:
                 for i in transfer:
                     m = Message.objects.get(uuid=i)
@@ -995,6 +1020,12 @@ class Message(models.Model):
                 message.save(update_fields=["text","attach","parent_id"])
 
         for recipient in chat.get_recipients_2(creator.pk):
+            if voice:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, voice=voice, parent_id=parent_id)
+            elif sticker:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, sticker_id=sticker, parent_id=parent_id)
+            else:
+                recipient_message = Message.objects.create(chat=chat, copy=creator_message, creator=creator, recipient_id=recipient.user.pk, repost=repost, text=_text, parent_id=parent_id, attach=Message.get_format_attach(attach))
             recipient_message.create_socket(recipient.user.pk, recipient.beep())
 
         chat.created = datetime.now()
@@ -1028,7 +1059,7 @@ class Message(models.Model):
             message.save(update_fields=["text","attach","parent_id"])
 
         else:
-            message = Message.objects.create(chat=chat, creator_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
+            message = Message.objects.create(chat=chat, creator_id=creator.pk, recipient_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
         message.transfer.clear()
         if transfer:
             for i in transfer:
@@ -1047,18 +1078,87 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)('notification', payload)
 
     def fixed_message_for_user_chat(self, creator):
+        """
+            Мы должны пометить все сообшения ветки как FIXED.
+            Для этого выясняем: это родительское сообщение, или имеет такое в поле copy.
+            Его и все копированные помечаем и сохраняем. Создаем запись в таблице закрепленных сообщений,
+            и в поле copy записываем сообшение, которое закрепляем. Мера нужна для показывания людям сообщения,
+            которое открепили, чтобы новое поле не создавать, их и так много.
+            Также создаем сокеты, чтобы участники чата увидели новое инфо-сообщение сразу
+        """
+        if self.copy:
+            message = self.copy
+            if message.type == "PUB":
+                message.type = "_FIX"
+            else:
+                message.type = "_FIXE"
+            message.save(update_fields=['type'])
+            for i in Message.objects.filter(copy_id=message.pk):
+                if i.type == "PUB":
+                    i.type = "_FIX"
+                else:
+                    i.type = "_FIXE"
+                i.save(update_fields=['type'])
+        else:
+            if self.type == "PUB":
+                self.type = "_FIX"
+            else:
+                self.type = "_FIXE"
+            self.save(update_fields=['type'])
+            for i in Message.objects.filter(copy_id=self.pk):
+                if i.type == "PUB":
+                    i.type = "_FIX"
+                else:
+                    i.type = "_FIXE"
+                i.save(update_fields=['type'])
+
+        self.save(update_fields=['type'])
         fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
         if creator.is_women():
             var = " закрепила"
         else:
             var = " закрепил"
         text = var + " сообщение "
-        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
+        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
         for recipient in self.chat.get_recipients_2(creator.pk):
             info_message.create_socket(recipient.user.pk, recipient.beep())
         return info_message
 
     def unfixed_message_for_user_chat(self, creator):
+        """
+            Мы должны пометить все сообшения ветки как обычные или измененные.
+            Для этого выясняем: это родительское сообщение, или имеет такое в поле copy.
+            Его и все копированные помечаем и сохраняем. Создаем запись в таблице закрепленных сообщений,
+            и в поле copy записываем сообшение, которое открепляем. Мера нужна для показывания людям сообщения,
+            которое открепили, чтобы новое поле не создавать, их и так много.
+            Также создаем сокеты, чтобы участники чата увидели новое инфо-сообщение сразу
+        """
+        if self.copy:
+            message = self.copy
+            if message.type == "_FIX":
+                message.type = "PUB"
+            else:
+                message.type = "EDI"
+            message.save(update_fields=['type'])
+            for i in Message.objects.filter(copy_id=message.pk):
+                if i.type == "_FIX":
+                    i.type = "PUB"
+                else:
+                    i.type = "EDI"
+                i.save(update_fields=['type'])
+        else:
+            if self.type == "_FIX":
+                self.type = "PUB"
+            else:
+                self.type = "EDI"
+            self.save(update_fields=['type'])
+            for i in Message.objects.filter(copy_id=self.pk):
+                if i.type == "_FIX":
+                    i.type = "PUB"
+                else:
+                    i.type = "EDI"
+                i.save(update_fields=['type'])
+
         if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
             fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
             if creator.is_women():
@@ -1066,7 +1166,7 @@ class Message(models.Model):
             else:
                 var = " открепил"
             text = var + " сообщение "
-            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
+            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,copy=self)
             for recipient in self.chat.get_recipients_2(creator.pk):
                 info_message.create_socket(recipient.user.pk, recipient.beep())
             return info_message
@@ -1083,6 +1183,11 @@ class Message(models.Model):
         self.text = text
         get_edit_message_processing(self)
         self.save()
+        for copy in Message.objects.filter(copy_id=self.pk):
+            copy.attach = self.attach
+            copy.text = self.text
+            copy.type = self.type
+            copy.save()
         return self
 
     def get_created(self):
@@ -1131,14 +1236,14 @@ class Message(models.Model):
         text = self.get_type_text()
         if self.is_manager():
             creator = self.creator
-            message = self.parent
+            message = self.copy
             return creator.get_full_name() + self.text + '<span class="underline">' + message.get_text_60() + '</span>'
         else:
             return text
 
     def get_manager_text(self):
-        if self.parent:
-            message = self.parent
+        if self.copy:
+            message = self.copy
             text = message.get_type_text()
             return '<i><a target="_blank" href="' + self.creator.get_link() + '">' + self.creator.get_full_name() + '</a><span>' + self.text + '</span><a class="pointer show_selected_fix_message underline">' + text + '</a>' + '</i>'
         else:
