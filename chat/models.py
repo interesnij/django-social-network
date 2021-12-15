@@ -348,7 +348,7 @@ class Chat(models.Model):
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(recipient_id=user_id, unread=True)
+        return self.chat_message.filter(unread=True, type__contains="_", message_options__user_id=self.pk).exclude(creator_id=self.pk)
 
     def get_last_message_created(self):
         if self.is_not_empty():
