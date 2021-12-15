@@ -68,26 +68,7 @@
 </div>
 </div>
 
-<div class="col-12 col-md-4">
-  <div class="card mb-3 mt-3">
-      <div class="card-body">
-        {% include 'desctop/generic/user/card_go_user.html' %}
-      </div>
-      </div>
-    <button class="btn btn-sm border user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
-    <br>
-    <div class="card mb-2">
-        <div class="card-header">
-          <div class="media">
-              <div class="media-body">
-                <h6 class="mt-1">
-                  <a class="ajax pointer">Избранное</a>
-                </h6>
-              </div>
-          </div>
-        </div>
-      </div>
-</div>
+{% include 'desctop/chat/detail/right_panel.html' %}
 </div>
 </div>
 {% endblock %}
