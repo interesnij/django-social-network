@@ -513,15 +513,15 @@ class Chat(models.Model):
         return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
 
     def get_first_fix_message(self):
-        if Message.objects.filter(chat_id=self.id, type=Message.FIXED).exists():
-            return Message.objects.filter(chat_id=self.id, type=Message.FIXED).first()
+        if Message.objects.filter(chat_id=self.id, type__contains="FIX").exists():
+            return Message.objects.filter(chat_id=self.id, type__contains="FIX").first()
 
     def get_fixed_messages(self):
-        return Message.objects.filter(chat_id=self.id, type=Message.FIXED)
+        return Message.objects.filter(chat_id=self.id, type__contains="FIX")
 
     def get_fix_message_count(self):
-        if Message.objects.filter(chat_id=self.id, type=Message.FIXED).exists():
-            return Message.objects.filter(chat_id=self.id, type=Message.FIXED).values("pk").count()
+        if Message.objects.filter(chat_id=self.id, type__contains="FIX").exists():
+            return Message.objects.filter(chat_id=self.id, type__contains="FIX").values("pk").count()
         else:
             return 0
 
