@@ -322,9 +322,7 @@ class Chat(models.Model):
             return str(count) + " участников"
 
     def get_first_message(self, user_id):
-        query = Q(recipient_id=user_id)
-        query.add(~Q(type__contains="_"), Q.AND)
-        return self.chat_message.filter(query).first()
+        return self.get_messages(user_id).first()
 
     def get_messages(self):
         return self.chat_message.exclude(type__contains="_")
