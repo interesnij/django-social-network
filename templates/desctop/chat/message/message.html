@@ -9,7 +9,7 @@
 <div class="
     message pag toggle_message t_f pointer media p-1
     {% if request.user.pk == object.creator.pk %}
-      {% if not object.is_copy_reed %}
+      {% if object.unreed %}
         bg-light-secondary
       {% endif %}
       is_have_edited
