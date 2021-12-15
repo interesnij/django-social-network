@@ -502,9 +502,14 @@ on('#ajax', 'click', '.u_message_edit', function() {
 
 function send_draft_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
+  text_val = form_post.querySelector(".smile_supported");
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
+
   if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "") {
+    console.log("Не не!");
     return
-  };
+  }
 
   text = form_post.querySelector(".type_hidden");
   text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
