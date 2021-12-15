@@ -154,72 +154,73 @@ class Chat(models.Model):
         self.image = new_img
         return self.save(update_fields=['image'])
 
-    def is_user_can_add_members(self, user):
+
+    def is_user_can_add_members(self, user_id):
         if self.can_add_members == self.ALL_CAN:
             return True
-        elif self.can_add_members == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_add_members == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_add_members == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_add_members == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
-        elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 1, 0):
+        elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 1, 0):
             return True
-        elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 1, 1):
+        elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 1, 1):
             return True
         return False
-    def is_user_can_edit_info(self, user):
+    def is_user_can_edit_info(self, user_id):
         if self.can_edit_info == self.ALL_CAN:
             return True
-        elif self.can_edit_info == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_edit_info == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_edit_info == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_edit_info == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
-        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 2, 0):
+        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 2, 0):
             return True
-        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 2, 1):
+        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 2, 1):
             return True
         return False
-    def is_user_can_fix_item(self, user):
+    def is_user_can_fix_item(self, user_id):
         if self.can_fix_item == self.ALL_CAN:
             return True
-        elif self.can_fix_item == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_fix_item == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_fix_item == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_fix_item == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
-        elif self.can_fix_item == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 3, 0):
+        elif self.can_fix_item == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 3, 0):
             return True
-        elif self.can_fix_item == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 3, 1):
+        elif self.can_fix_item == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 3, 1):
             return True
         return False
-    def is_user_can_mention(self, user):
+    def is_user_can_mention(self, user_id):
         if self.can_mention == self.ALL_CAN:
             return True
-        elif self.can_mention == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_mention == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_mention == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_mention == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
-        elif self.can_mention == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 4, 0):
+        elif self.can_mention == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 4, 0):
             return True
-        elif self.can_mention == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 4, 1):
+        elif self.can_mention == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 4, 1):
             return True
         return False
-    def is_user_can_add_admin(self, user):
+    def is_user_can_add_admin(self, user_id):
         if self.can_add_admin == self.ALL_CAN:
             return True
-        elif self.can_add_admin == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_add_admin == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_add_admin == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_add_admin == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
         return False
-    def is_user_can_add_design(self, user):
+    def is_user_can_add_design(self, user_id):
         if self.can_mention == self.ALL_CAN:
             return True
-        elif self.can_add_design == self.CREATOR and self.creator.pk == user.pk:
+        elif self.can_add_design == self.CREATOR and self.creator.pk == user_id:
             return True
-        elif self.can_add_design == self.CREATOR_ADMINS and user.is_administrator_of_chat(self.pk):
+        elif self.can_add_design == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
-        elif self.can_add_design == self.MEMBERS_BUT and self.get_special_perm_for_user(user.pk, 5, 0):
+        elif self.can_add_design == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 5, 0):
             return True
-        elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(user.pk, 5, 1):
+        elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 5, 1):
             return True
 
 
@@ -285,6 +286,13 @@ class Chat(models.Model):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT")
 
+    def get_admins(self):
+        from users.models import User
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT", is_administrator=True)
+    def get_admins_ids(self):
+        users = self.get_admins().values('id')
+        return [i['id'] for i in users]
+
     def get_recipients_exclude_creator(self, exclude_creator_pk):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT").exclude(pk=exclude_creator_pk)
@@ -296,7 +304,7 @@ class Chat(models.Model):
 
     def get_members_ids(self):
         users = self.get_members().values('id')
-        return [_user['id'] for _user in users]
+        return [i['id'] for i in users]
 
     def get_recipients_ids(self, exclude_creator_pk):
         users = self.get_recipients_exclude_creator(exclude_creator_pk).values('id')
@@ -464,7 +472,11 @@ class Chat(models.Model):
     def get_header_group_chat(self, user_id):
         chat_user = self.get_chat_user(user_id)
         request_chat_user = self.get_chat_request_user(user_id)
-        buttons = '<span class="console_btn_other btn_default" style="display:none;padding-top:5px"><span class="one_message"><span tooltip="Закрепить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_fixed" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg></span><span tooltip="Ответить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_reply" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg></span><span tooltip="Пожаловаться" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_claim" viewBox="0 0 24 24" fill="currentColor"><path d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg></span><span tooltip="Редактировать" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_edit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span></span><span tooltip="Отметить как важное" flow="up"><svg class="toggle_message_favourite svg_default_30 mr-1 pointer" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g></svg></span><span tooltip="Удалить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_delete" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/></svg></span><span tooltip="Переслать" flow="up"><svg class="svg_default_30 pointer u_message_transfer" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"/><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z" /></svg></span></span>'
+        if self.is_user_can_fix_item(user_id):
+            fix_btn = '<span tooltip="Закрепить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_fixed" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg></span>'
+        else:
+            fix_btn = ""
+        buttons = '<span class="console_btn_other btn_default" style="display:none;padding-top:5px"><span class="one_message">' + fix_btn + '<span tooltip="Ответить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_reply" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg></span><span tooltip="Пожаловаться" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_claim" viewBox="0 0 24 24" fill="currentColor"><path d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg></span><span tooltip="Редактировать" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_edit" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span></span><span tooltip="Отметить как важное" flow="up"><svg class="toggle_message_favourite svg_default_30 mr-1 pointer" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect x="0"></rect><polygon points="14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"></polygon></g></svg></span><span tooltip="Удалить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_delete" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/></svg></span><span tooltip="Переслать" flow="up"><svg class="svg_default_30 pointer u_message_transfer" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"/><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z" /></svg></span></span>'
         #if self.image:
         #    figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:30px;width:30px;" alt="image"></figure>'])
         #else:
