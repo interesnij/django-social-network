@@ -775,10 +775,10 @@ class ChatPerm(models.Model):
 
 
 class Message(models.Model):
-    PUBLISHED, EDITED, DELETED, CLOSED, DRAFT = 'PUB','EDI','_DEL','_CLO','_DRA'
+    PUBLISHED, EDITED, DELETED, CLOSED, DRAFT, MANAGER = 'PUB','EDI','_DEL','_CLO','_DRA','MAN'
     DELETED_EDITED, CLOSED_EDITED = '_DELE','_CLOE'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
+        (MANAGER, 'Служебное'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
         (DELETED_EDITED, 'Удалённый измененный'),(CLOSED_EDITED, 'Закрытый измененный'),
     )
 
