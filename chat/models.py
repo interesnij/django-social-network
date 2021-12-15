@@ -1224,23 +1224,37 @@ class Message(models.Model):
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
 
-    def delete_item(self, community):
-        if self.type == "PUB":
-            self.type = Message.DELETED
-        elif self.type == "EDI":
-            self.type = Message.DELETED_EDITED
-        elif self.type == "_FIX":
-            self.type = Message.DELETED_FIXED
-        self.save(update_fields=['type'])
-    def restore_item(self, community):
-        from notify.models import Notify, Wall
-        if self.type == "_DEL":
-            self.type = Message.PUBLISHED
-        elif self.type == "_DELE":
-            self.type = Message.EDITED
-        elif self.type == "_DELF":
-            self.type = Message.FIXED
-        self.save(update_fields=['type'])
+
+    def delete_item(self, user_id, community):
+        if self.creator_id == user_id:
+            if self.type == "PUB":
+                self.type = Message.DELETED
+            elif self.type == "EDI":
+                self.type = Message.DELETED_EDITED
+            elif self.type == "_FIX":
+                self.type = Message.DELETED_FIXED
+            self.save(update_fields=['type'])
+        else:
+            if MessageOptions.objects.filter(message_id,user_id=user_id).exists():
+                options = MessageOptions.objects.filter(message_id,user_id=user_id).first()
+            else:
+                options.is_deleted = True
+                options.save(update_fields=["is_deleted"])
+
+    def restore_item(self, user_id, community):
+        if self.creator_id == user_id:
+            if self.type == "_DEL":
+                self.type = Message.PUBLISHED
+            elif self.type == "_DELE":
+                self.type = Message.EDITED
+            elif self.type == "_DELF":
+                self.type = Message.FIXED
+            self.save(update_fields=['type'])
+        else:
+            if MessageOptions.objects.filter(message_id,user_id=user_id).exists():
+                options = MessageOptions.objects.filter(message_id,user_id=user_id).first()
+                options.is_deleted = True
+                options.save(update_fields=["is_deleted"])
 
     def close_item(self, community):
         if self.type == "PUB":
