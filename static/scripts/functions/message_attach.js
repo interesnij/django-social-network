@@ -52,6 +52,7 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   div = create_preview_message_photo(src, photo_pk, user_pk);
   block.append(div);
   if (document.body.querySelector(".card_fullscreen")) {
+    console.log("yes");
     fullscreen_container = document.body.querySelector(".card_fullscreen");
     fullscreen_container.style.height = "100%";
     fullscreen_container.style.top = "12px";
