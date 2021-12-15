@@ -288,7 +288,7 @@ class Chat(models.Model):
 
     def get_admins(self):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT", is_administrator=True)
+        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT", chat_users__is_administrator=True)
     def get_admins_ids(self):
         users = self.get_admins().values('id')
         return [i['id'] for i in users]
