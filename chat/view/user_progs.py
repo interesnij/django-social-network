@@ -540,7 +540,7 @@ class UserChatEdit(TemplateView):
 		from common.templates import get_detect_platform_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if self.chat.is_user_can_edit_info(request.user):
+		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
@@ -556,7 +556,7 @@ class UserChatEdit(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
-		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_edit_info(request.user):
+		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_edit_info(request.user.pk):
 			chat = self.form.save(commit=False)
 			chat.edit_chat(name=chat.name,description=chat.description,image=request.FILES.get('image'),)
 			return HttpResponse()
@@ -575,7 +575,7 @@ class UserChatPrivate(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 
-		if self.chat.is_user_can_edit_info(request.user):
+		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/private.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatPrivate,self).get(request,*args,**kwargs)
 
@@ -589,7 +589,7 @@ class UserChatPrivate(TemplateView):
 		from django.http import HttpResponse
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and self.chat.is_user_can_edit_info(request.user):
+		if request.is_ajax() and self.chat.is_user_can_edit_info(request.user.pk):
 			self.type = request.GET.get("action")
 			self.value = request.GET.get("value")
 			if self.value == 6 or self.value == 5:
@@ -641,7 +641,7 @@ class UserChatIncludeUsers(ListView):
 		elif self.type == "can_add_design":
 			self.users = self.chat.get_can_add_design_include_users()
 			self.text = "Менять дизайн чата"
-		if self.chat.is_user_can_edit_info(request.user):
+		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatIncludeUsers,self).get(request,*args,**kwargs)
 
@@ -692,7 +692,7 @@ class UserChatExcludeUsers(ListView):
 		elif self.type == "can_add_design":
 			self.users = self.chat.get_can_add_design_exclude_users()
 			self.text = "Менять дизайн чата"
-		if self.chat.is_user_can_edit_info(request.user):
+		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatExcludeUsers,self).get(request,*args,**kwargs)
 

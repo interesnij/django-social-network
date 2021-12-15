@@ -29,6 +29,8 @@
       </div>
   </div>
   <div class="card-body">
+
+     {% if is_user_can_add_members %}
     <div class="list-group-item border-top pointer u_add_members_in_chat mb-2" chat-pk="{{ chat.pk }}">
       <div class="media">
           <figure>
@@ -39,6 +41,8 @@
           </div>
       </div>
     </div>
+    {% endif %}
+
 <ul class="is_block_paginate">
 
 <p class="mb-0">{{ chat.get_members_count_ru }}</p>
