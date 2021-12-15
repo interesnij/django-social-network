@@ -20,7 +20,5 @@ from communities.models import Community
 from chat.models import Message, MessageFixed, MessageVersion
 
 
-ProfilePrivate.objects.all().delete()
-Message.objects.all().delete()
-MessageFixed.objects.all().delete()
-MessageVersion.objects.all().delete()
+for user in User.objects.all():
+    ProfilePrivate.objects.create(user=user)
