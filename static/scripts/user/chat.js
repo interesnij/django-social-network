@@ -502,6 +502,9 @@ on('#ajax', 'click', '.u_message_edit', function() {
 
 function send_draft_message (form_post, url) {
   _text = form_post.querySelector(".message_text").innerHTML;
+  if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "") {
+    return
+  };
 
   text = form_post.querySelector(".type_hidden");
   text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
