@@ -472,7 +472,7 @@ on('#ajax', 'click', '.photo_load_one', function() {
   } else if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, photo_pk) ? null : (photo_post_attach(document.body.querySelector(".attach_block"), photo_pk, user_pk, src), close_work_fullscreen())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, photo_pk) ? null : (photo_message_attach(document.body.querySelector(".message_attach_block"), photo_pk, user_pk, src), close_work_fullscreen(), show_message_form_send_btn())
+    check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, photo_pk) ? null : (close_work_fullscreen(), photo_message_attach(document.body.querySelector(".message_attach_block"), photo_pk, user_pk, src), show_message_form_send_btn())
   }
 });
 
