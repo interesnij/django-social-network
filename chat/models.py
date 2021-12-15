@@ -922,7 +922,7 @@ class Message(models.Model):
         current_chat.created = datetime.now()
         current_chat.save(update_fields=["created"])
         for recipient in chat.get_recipients_2(creator.pk):
-            recipient_message.create_socket(recipient.user.pk, recipient.beep())
+            creator_message.create_socket(recipient.user.pk, recipient.beep())
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
@@ -941,7 +941,7 @@ class Message(models.Model):
             creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
 
         for recipient in chat.get_recipients_2(creator.pk):
-            recipient_message.create_socket(recipient.user.pk, recipient.beep())
+            creator_message.create_socket(recipient.user.pk, recipient.beep())
 
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
         # программа для отсылки сообщения в чате
@@ -981,7 +981,7 @@ class Message(models.Model):
                 message.save(update_fields=["text","attach","parent_id"])
 
         for recipient in chat.get_recipients_2(creator.pk):
-            recipient_message.create_socket(recipient.user.pk, recipient.beep())
+            creator_message.create_socket(recipient.user.pk, recipient.beep())
 
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
@@ -1015,8 +1015,9 @@ class Message(models.Model):
 
         else:
             message = Message.objects.create(chat=chat, creator_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
-        message.transfer.clear()
+
         if transfer:
+            message.transfer.clear()
             for i in transfer:
                 m = Message.objects.get(uuid=i)
                 message.transfer.add(m)
