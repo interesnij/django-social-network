@@ -659,6 +659,16 @@ class Chat(models.Model):
         query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
         return self.chat_message.filter(query)
 
+    def favourite_messages(self, user_id):
+        query = []
+        messages = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True)
+        for message in messages:
+            query += message.message
+        return query
+
+    def favourite_messages_count(self, user_id):
+        return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True)
+
 
 class ChatUsers(models.Model):
     ACTIVE, EXITED, DELETED = "ACT", "EXI", "DEL"

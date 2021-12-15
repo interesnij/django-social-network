@@ -22,7 +22,7 @@ class ChatsListView(ListView):
 
 
 class ChatDetailView(ListView):
-	template_name, paginate_by, can_add_members_in_chat = None, 15, None
+	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count = None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
@@ -38,10 +38,12 @@ class ChatDetailView(ListView):
 			self.can_add_members_in_chat = self.chat.is_user_can_add_members(request.user.pk)
 		elif self.chat.is_manager():
 			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+
 		self.pk = request.user.pk
 		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
+		self.favourite_messages_count = self.chat.favourite_messages_count(self.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
@@ -62,6 +64,8 @@ class ChatDetailView(ListView):
 		context['can_add_members'] = self.can_add_members_in_chat
 		if self.chat.is_have_draft_message(self.pk):
 			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
+
+		context['favourite_messages_count'] = self.favourite_messages_count
 		return context
 
 	def get_queryset(self):

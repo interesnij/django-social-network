@@ -76,18 +76,16 @@
       </div>
       </div>
     <button class="btn btn-sm border user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
+    {% if favourite_messages_count %}
     <br>
     <div class="card mb-2">
-        <div class="card-header">
-          <div class="media">
-              <div class="media-body">
-                <h6 class="mt-1">
-                  <a class="ajax pointer">Избранное</a>
-                </h6>
-              </div>
-          </div>
+      <div class="card-header">
+        <div class="media">
+          <a class="ajax pointer">Избранное {{ favourite_messages_count }}</a>
         </div>
       </div>
+    </div>
+    {% endif %}
 </div>
 </div>
 </div>
