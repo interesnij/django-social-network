@@ -51,9 +51,11 @@ function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
   div = create_preview_message_photo(src, photo_pk, user_pk);
   block.append(div);
-  fullscreen_container = document.body.querySelector(".card_fullscreen");
-  fullscreen_container.style.height = "100%";
-  fullscreen_container.style.top = "12px";
+  if (document.body.querySelector(".card_fullscreen")) {
+    fullscreen_container = document.body.querySelector(".card_fullscreen");
+    fullscreen_container.style.height = "100%";
+    fullscreen_container.style.top = "12px";
+  };
   add_file_message_attach()
   is_full_message_attach();
   show_message_form_send_btn();
