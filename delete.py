@@ -17,7 +17,10 @@ import re
 from users.model.settings import *
 from users.models import User
 from communities.models import Community
+from chat.models import Message, MessageFixed, MessageVersion
 
 
-for user in User.objects.all():
-    ProfilePrivate.objects.create(user=user)
+ProfilePrivate.objects.all().delete()
+Message.objects.all().delete()
+MessageFixed.objects.all().delete()
+MessageVersion.objects.all().delete()
