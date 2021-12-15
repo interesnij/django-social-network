@@ -513,15 +513,15 @@ class Chat(models.Model):
         return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
 
     def get_first_fix_message(self):
-        if MessageFixed.objects.filter(chat_id=self.id).exists():
-            return MessageFixed.objects.filter(chat_id=self.id).first()
+        if Message.objects.filter(chat_id=self.id, type=Message.FIXED).exists():
+            return Message.objects.filter(chat_id=self.id, type=Message.FIXED).first()
 
     def get_fixed_messages(self):
-        return MessageFixed.objects.filter(chat_id=self.id)
+        return Message.objects.filter(chat_id=self.id, type=Message.FIXED)
 
     def get_fix_message_count(self):
-        if MessageFixed.objects.filter(chat_id=self.id).exists():
-            return MessageFixed.objects.filter(chat_id=self.id).values("pk").count()
+        if Message.objects.filter(chat_id=self.id, type=Message.FIXED).exists():
+            return Message.objects.filter(chat_id=self.id, type=Message.FIXED).values("pk").count()
         else:
             return 0
 
@@ -767,26 +767,24 @@ class ChatPerm(models.Model):
 
 
 class Message(models.Model):
-    PUBLISHED, EDITED, DELETED, CLOSED, DRAFT, MANAGER = 'PUB','EDI','_DEL','_CLO','_DRA','MAN'
-    DELETED_EDITED, CLOSED_EDITED = '_DELE','_CLOE'
+    PUBLISHED, EDITED, DELETED, CLOSED, DRAFT, MANAGER, PUBLISHED_FIXED, EDITED_FIXED = 'PUB','EDI','_DEL','_CLO','_DRA','MAN','PFIX','EFIX'
+    DELETED_EDITED, CLOSED_EDITED, DELETED_PUBLISHED_FIXED, CLOSED_PUBLISHED_FIXED, DELETED_EDITED_FIXED, CLOSED_EDITED_FIXED = '_DELE','_CLOE', '_DELPF','_CLOPF', '_DELEF','_CLOEF'
     TYPE = (
-        (MANAGER, 'Служебное'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
-        (DELETED_EDITED, 'Удалённый измененный'),(CLOSED_EDITED, 'Закрытый измененный'),
+        (PUBLISHED_FIXED, 'Закреп опубл'),(EDITED_FIXED, 'Закреп измен'),(MANAGER, 'Служебное'),(PUBLISHED, 'Опубл'),(DELETED, 'Удалено'),(EDITED, 'Изменено'),(CLOSED, 'Закрыто модератором'),(DRAFT, 'Черновик'),
+        (DELETED_EDITED_FIXED, 'Удал измен закреп'),(DELETED_PUBLISHED_FIXED, 'Удал опубл закреп'),(CLOSED_EDITED_FIXED, 'Закр измен закреп'),(CLOSED_PUBLISHED_FIXED, 'Закр опубл закреп'),(CLOSED_PUBLISHED_FIXED, 'Закр опубл закреп'),(DELETED_EDITED, 'Удал измен'),(CLOSED_EDITED, 'Закр измен'),
     )
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
-    #recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
-    #copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="Копия")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
     transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     created = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(max_length=5000, blank=True)
+    text = models.TextField(max_length=10000, blank=True)
     unread = models.BooleanField(default=True, db_index=True, verbose_name="Не прочитано")
     type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=6, verbose_name="Статус сообщения")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
@@ -825,6 +823,10 @@ class Message(models.Model):
         return self.type == "EDI"
     def is_manager(self):
         return self.type == Message.MANAGER
+    def is_fixed(self):
+        return self.type == Message.PUBLISHED_FIXED or self.type == Message.EDITED_FIXED
+    def is_favourite(self, user_id):
+        return MessageOptions.objects.filter(message_id=seelf.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
         if self.transfer.exists():
@@ -852,9 +854,6 @@ class Message(models.Model):
         user = parent.creator
 
         return '<div class="media p-1" data-uuid="' + str(parent.uuid) + '" style="border-left: 1px solid rgba(0, 0, 0, 0.7)"><span style="padding-top: 6px;"><a href="' + user.get_link() + '" class="ajax">' + user.get_s_avatar() + '</a></span><div class="media-body" style="line-height: 1em;padding-left: 3px;"><p class="time-title mb-0"><a href="' + user.get_link()  + '" class="ajax">' + user.get_full_name() + '</a></p><small class="text-muted">' + parent.get_created() + '</small><p class="text">' + preview + '</p></div></div>'
-
-    def is_message_in_favourite(self, user_id):
-        return MessageFavourite.objects.filter(message=self, user_id=user_id).exists()
 
     def mark_as_read(self):
         if self.unread:
@@ -1034,7 +1033,12 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)('notification', payload)
 
     def fixed_message_for_user_chat(self, creator):
-        fixed_message = MessageFixed.objects.create(chat_id=self.chat.id,creator_id=creator.id,message=self)
+        if self.type == Message.PUBLISHED:
+            self.type = Message.FIXED_PUBLISHED
+        elif self.type == Message.EDITED:
+            self.type = Message.FIXED_EDITED
+        self.save(update_fields=["type"])
+
         if creator.is_women():
             var = " закрепила"
         else:
@@ -1046,17 +1050,21 @@ class Message(models.Model):
         return info_message
 
     def unfixed_message_for_user_chat(self, creator):
-        if MessageFixed.objects.filter(chat_id=self.chat.id,message=self).exists():
-            fixed_message = MessageFixed.objects.get(chat_id=self.chat.id,message=self).delete()
-            if creator.is_women():
-                var = " открепила"
-            else:
-                var = " открепил"
-            text = var + " сообщение "
-            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
-            for recipient in self.chat.get_recipients_2(creator.pk):
-                info_message.create_socket(recipient.user.pk, recipient.beep())
-            return info_message
+        if self.type == Message.FIXED_PUBLISHED:
+            self.type = Message.PUBLISHED
+        elif self.type == Message.FIXED_EDITED:
+            self.type = Message.EDITED
+        self.save(update_fields=["type"])
+
+        if creator.is_women():
+            var = " открепила"
+        else:
+            var = " открепил"
+        text = var + " сообщение "
+        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
+        for recipient in self.chat.get_recipients_2(creator.pk):
+            info_message.create_socket(recipient.user.pk, recipient.beep())
+        return info_message
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
@@ -1064,8 +1072,8 @@ class Message(models.Model):
         MessageVersion.objects.create(message=self, text=self.text, attach=self.attach.replace("<div class='attach_container'></div>", ""))
         if self.type == Message.PUBLISHED:
             self.type = Message.EDITED
-        elif self.type == Message.FIXED:
-            self.type = Message.FIXED_EDITED
+        elif self.type == Message.PUBLISHED_FIXED:
+            self.type = Message.EDITED_FIXED
         self.attach = self.get_attach(attach)
         self.text = text
         get_edit_message_processing(self)
@@ -1225,6 +1233,15 @@ class Message(models.Model):
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
 
+    def add_favourite_message(self, user_id):
+        if MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).exists():
+            options = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).first()
+            options.is_favourite = True
+            options.save()
+        else:
+            MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_favourite=True)
+    def remove_favourite_message(self, user_id):
+        MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).delete():
 
     def delete_item(self, user_id, community):
         if self.creator_id == user_id:
@@ -1232,15 +1249,19 @@ class Message(models.Model):
                 self.type = Message.DELETED
             elif self.type == "EDI":
                 self.type = Message.DELETED_EDITED
-            elif self.type == "_FIX":
-                self.type = Message.DELETED_FIXED
+            elif self.type == "PFIX":
+                self.type = Message.DELETED_PUBLISHED_FIXED
+            elif self.type == "EFIX":
+                self.type = Message.DELETED_EDITED_FIXED
             self.save(update_fields=['type'])
         else:
-            if MessageOptions.objects.filter(message_id,user_id=user_id).exists():
-                options = MessageOptions.objects.filter(message_id,user_id=user_id).first()
-            else:
+            if MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).exists():
+                options = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).first()
                 options.is_deleted = True
-                options.save(update_fields=["is_deleted"])
+                options.is_favourite = False
+                options.save()
+            else:
+                MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_deleted=True)
 
     def restore_item(self, user_id, community):
         if self.creator_id == user_id:
@@ -1248,41 +1269,35 @@ class Message(models.Model):
                 self.type = Message.PUBLISHED
             elif self.type == "_DELE":
                 self.type = Message.EDITED
-            elif self.type == "_DELF":
-                self.type = Message.FIXED
+            elif self.type == "_DELPF":
+                self.type = Message.PUBLISHED_FIXED
+            elif self.type == "_DELEF":
+                self.type = Message.EDITED_FIXED
             self.save(update_fields=['type'])
         else:
-            if MessageOptions.objects.filter(message_id,user_id=user_id).exists():
-                options = MessageOptions.objects.filter(message_id,user_id=user_id).first()
-                options.is_deleted = True
-                options.save(update_fields=["is_deleted"])
+            if MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).exists():
+                MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).delete()
 
     def close_item(self, community):
         if self.type == "PUB":
             self.type = Message.CLOSED
         elif self.type == "EDI":
             self.type = Message.CLOSED_EDITED
-        elif self.type == "_FIX":
-            self.type = Message.CLOSED_FIXED
+        elif self.type == "PFIX":
+            self.type = Message.CLOSED_PUBLISHED_FIXED
+        elif self.type == "EFIX":
+            self.type = Message.CLOSED_EDITED_FIXED
         self.save(update_fields=['type'])
     def abort_close_item(self, community):
         if self.type == "_CLO":
             self.type = Message.PUBLISHED
         elif self.type == "_CLOE":
             self.type = Message.EDITED
-        elif self.type == "_CLOF":
-            self.type = Message.FIXED
+        elif self.type == "_CLOPF":
+            self.type = Message.PUBLISHED_FIXED
+        elif self.type == "_CLOEF":
+            self.type = Message.EDITED_FIXED
         self.save(update_fields=['type'])
-
-
-class MessageFavourite(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Добавивший", null=True, on_delete=models.CASCADE)
-    message = models.ForeignKey(Message, related_name='+', verbose_name="Сообщение", null=True, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = (('user', 'message'),)
-        verbose_name = 'Избранное сообщение'
-        verbose_name_plural = 'Избранные сообщения'
 
 
 class MessageVersion(models.Model):
@@ -1302,71 +1317,12 @@ class MessageVersion(models.Model):
         return self.text
 
 
-class MessageFixed(models.Model):
-    chat = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Чат", on_delete=models.CASCADE)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', verbose_name="Тот, кто закрепил сообщение", null=True, on_delete=models.SET_NULL)
-    message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
+class MessageOptions(models.Model):
+    message = models.ForeignKey(Message, db_index=False, on_delete=models.CASCADE, related_name="message_options")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
+    is_deleted = models.BooleanField(default=False, verbose_name="Это сообщение пользователь удалил")
+    is_favourite = models.BooleanField(default=False, verbose_name="Это сообщение пользователь поместил в избранное")
 
     class Meta:
-        verbose_name = "Закрепленное сообщение"
-        verbose_name_plural = "Закрепленные сообщения"
-        ordering = ["-created"]
-        indexes = (BrinIndex(fields=['created']),)
-
-    def __str__(self):
-        return self.text
-
-    def get_fixed_message_for_chat(self, chat_id, creator_id,):
-        if self.type == "PUB":
-            self.type = "_FIX"
-        else:
-            self.type = "_FIXE"
-        self.save(update_fields=['type'])
-        fixed_message = MessageFixed.objects.create(chat_id=chat_id,creator_id=creator_id,message=self)
-        return fixed_message
-
-    def get_unfixed_message_for_chat(self, chat_id):
-        if self.type == "_FIX":
-            self.type = "PUB"
-        else:
-            self.type = "EDI"
-        self.save(update_fields=['type'])
-        if MessageFixed.objects.filter(chat_id=chat_id,message=self).exists():
-            fixed_message = MessageFixed.objects.get(chat_id=chat_id,message=self).delete()
-
-    def get_preview_message(self):
-        message = self.message
-        if message.is_manager():
-            creator = self.creator
-            return '<i><a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>' + message.text + '</i>'
-        elif message.is_have_transfer():
-            if message.transfer.all().count() > 1:
-                return "<b class='i_link'>Пересланные сообщения</b>"
-            else:
-                return "<b class='i_link'>Пересланное сообщение</b>"
-        elif message.parent:
-            return "<b class='i_link'>Ответ на сообщение</b>"
-        elif message.attach:
-            return "<b class='i_link'>Вложения</b>"
-        elif message.voice:
-            return "<b class='i_link'>Голосовое сообщение</b>"
-        elif message.sticker:
-            return "<b class='i_link'>Наклейка</b>"
-        elif message.text:
-            import re
-            count = 60
-            images = re.findall(r'<img.*?>', message.text)
-            for image in images:
-                count += (len(image) -1)
-            return message.text[:count].replace("<br>", "  ")
-
-    def get_created(self):
-        from django.contrib.humanize.templatetags.humanize import naturaltime
-        return naturaltime(self.created)
-
-
-class MessageOptions(models.Model):
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_options")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
-    is_deleted = models.BooleanField(default=True, verbose_name="Это сообщение пользователь удалил")
+        unique_together = ('message', 'user',)
+        indexes = [models.Index(fields=['message', 'user']),]

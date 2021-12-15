@@ -261,14 +261,12 @@ class UserMessageEdit(TemplateView):
 
 class UserMessageFixed(View):
 	def get(self,request,*args,**kwargs):
-		from common.check.message import check_can_send_message
 		from chat.models import Message
 		from django.http import Http404
 		from common.templates import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		check_can_send_message(request.user, message.chat)
-		if request.is_ajax():
+		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.fixed_message_for_user_chat(request.user)
 			return render_for_platform(request, 'chat/message/info_message.html', {'object': info_message})
 		else:
@@ -276,14 +274,12 @@ class UserMessageFixed(View):
 
 class UserMessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
-		from common.check.message import check_can_send_message
 		from chat.models import Message
 		from django.http import Http404
 		from common.templates import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax():
-			check_can_send_message(request.user, message.chat)
+		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.unfixed_message_for_user_chat(request.user)
 			return render_for_platform(request, 'chat/message/message.html', {'object': info_message})
 		else:
@@ -292,14 +288,12 @@ class UserMessageUnFixed(View):
 
 class UserMessageFavorite(View):
 	def get(self,request,*args,**kwargs):
-		from common.check.message import check_can_send_message
-		from chat.models import MessageFavorite, Message
+		from chat.models import Message
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and not MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
-			check_can_send_message(request.user, message.chat)
-			MessageFavorite.objects.create(user=request.user, message=message)
+		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+			message.add_favourite_message(user_id=request.user.pk)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -310,8 +304,8 @@ class UserMessageUnFavorite(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and MessageFavorite.objects.filter(user_id=request.user.pk, message=message).exists():
-			MessageFavorite.objects.get(user=request.user, message=message).delete()
+		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+			message.remove_favourite_message(user_id=request.user.pk)
 			return HttpResponse()
 		else:
 			raise Http404
