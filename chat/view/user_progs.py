@@ -323,8 +323,8 @@ class UserMessageDelete(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
-			message.delete_item(None)
+		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+			message.delete_item(request.user.pk, None)
 			return HttpResponse()
 		else:
 			raise Http404
@@ -335,8 +335,8 @@ class UserMessageRecover(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and (request.user.pk == message.creator.pk or request.user.pk == message.recipient.pk):
-			message.restore_item(None)
+		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+			message.restore_item(request.user.pk, None)
 			return HttpResponse()
 		else:
 			raise Http404
