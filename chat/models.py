@@ -1361,5 +1361,5 @@ class MessageFixed(models.Model):
 
 class MessageOptions(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="message_options")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,  related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='message_options_user', verbose_name="Пользователь-инициатор исключения")
     is_deleted = models.BooleanField(default=True, verbose_name="Это сообщение пользователь удалил")
