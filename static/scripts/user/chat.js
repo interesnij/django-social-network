@@ -506,7 +506,7 @@ function send_draft_message (form_post, url) {
   _val = format_text(text_val);
   _text = _val.innerHTML;
 
-  if (_text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "") {
+  if (!_text == "" && _text.replace(/<(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "") {
     console.log("Не не!");
     return
   }
