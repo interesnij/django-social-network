@@ -324,9 +324,6 @@ class Chat(models.Model):
     def get_first_message(self, user_id):
         return self.get_messages(user_id).first()
 
-    def get_messages(self):
-        return self.chat_message.exclude(type__contains="_")
-
     def get_messages_uuids(self):
         messages = self.chat_message.exclude(type__contains="_").values('uuid')
         return [i['uuid'] for i in messages]
@@ -336,10 +333,7 @@ class Chat(models.Model):
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
 
     def get_unread_count_message(self, user_id):
-        count = 0
-        for message in Message.objects.filter(chat_id=self.pk,recipient_id=user_id, unread=True):
-            if message.creator.pk != user_id:
-                count += 1
+        count = Message.objects.filter(unread=True, type__contains="_", message_options__user_id=self.pk, message_options__is_deleted=True).exclude(count_id=user_id):
         if count:
             return ''.join(['<span style="font-size: 80%;" class="tab_badge badge-success">', str(count), '</span>'])
         else:
