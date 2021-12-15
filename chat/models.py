@@ -785,10 +785,10 @@ class Message(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_creator', verbose_name="Создатель", null=True, on_delete=models.SET_NULL)
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
+    #recipient = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='message_recipient', verbose_name="Получаетель", null=True, on_delete=models.SET_NULL)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="chat_message")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
-    copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="Копия")
+    #copy = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="Копия")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
     transfer = models.ManyToManyField("self", blank=True, related_name='+')
