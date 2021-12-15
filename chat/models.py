@@ -826,7 +826,7 @@ class Message(models.Model):
     def is_fixed(self):
         return self.type == Message.PUBLISHED_FIXED or self.type == Message.EDITED_FIXED
     def is_favourite(self, user_id):
-        return MessageOptions.objects.filter(message_id=seelf.pk,user_id=user_id, is_favourite=True).exists()
+        return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
         if self.transfer.exists():
