@@ -638,7 +638,7 @@ on('#ajax', 'click', '.remove_parent_block', function() {
 
 on('#ajax', 'click', '.u_message_restore', function() {
   item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-uuid");
+  uuid = this.getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', "/chat/user_progs/restore_message/" + uuid + "/", true );
