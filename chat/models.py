@@ -1241,7 +1241,7 @@ class Message(models.Model):
         else:
             MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_favourite=True)
     def remove_favourite_message(self, user_id):
-        MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).delete():
+        MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).delete()
 
     def delete_item(self, user_id, community):
         if self.creator_id == user_id:
