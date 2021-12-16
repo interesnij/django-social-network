@@ -611,7 +611,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   } else {
     btn_console.querySelector(".one_message").style.display = "unset"
   }
-});
+}});
 
 on('#ajax', 'click', '.toggle_message_favourite', function() {
   this.classList.contains("favourite") ? url = "/chat/user_progs/unfavorite_message/" : url = "/chat/user_progs/favorite_message/";
