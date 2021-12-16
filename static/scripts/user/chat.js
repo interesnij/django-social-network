@@ -60,7 +60,6 @@ function edit_favourite_count(count, type) {
 };
 on('#ajax', 'click', '.delete_favourite_message', function() {
   _this = this;
-  message.querySelector(".favourite_icon").innerHTML = '';
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', "/chat/user_progs/unfavorite_messages/?list=" + [_this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid")], true );
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
