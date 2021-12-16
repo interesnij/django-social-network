@@ -11,20 +11,19 @@ function show_chat_console(message) {
   if (message.querySelector(".message_sticker") || message.querySelector(".audio") || !message.classList.contains("is_have_edited")) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
-  list = document.body.querySelectorAll(".custom_color");
+  list = message.parentElement.querySelectorAll(".custom_color");
 
   favourite_btn = _console.querySelector(".toggle_message_favourite");
 
   // изначально не выбрано тех сообщений, которые в избанном
-  is_not_favourite = false;
+  list_not_have_favourite_messages = true;
 
   for (var i = 0; i < list.length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
-      // если хоть одно сообщение в избранном, то is_not_favourite true.
-        is_not_favourite = true;
+        list_not_have_favourite_messages = false;
       }
     };
-  if (!is_not_favourite) {
+  if (list_not_have_favourite_messages) {
     // если переменная is_not_favourite false, то кнопка делающая сообщения избранными
     favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
   } else {
