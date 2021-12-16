@@ -1106,7 +1106,11 @@ class Message(models.Model):
             else:
                 return "<b class='i_link'>Пересланное сообщение</b>"
         elif self.parent:
-            return "<b class='i_link'>Ответ на сообщение</b>"
+            if self.is_manager():
+                creator, message = self.creator, self.parent
+                return creator.get_full_name() + self.text + '<span class="underline">' + message.get_text_60() + '</span>'
+            else:
+                return "<b class='i_link'>Ответ на сообщение</b>"
         elif self.sticker:
             return "<b class='i_link'>Стикер</b>"
         elif self.voice:
