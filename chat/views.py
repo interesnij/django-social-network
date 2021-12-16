@@ -14,7 +14,7 @@ class ChatsListView(ListView):
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatsListView,self).get_context_data(**kwargs)
-		context['favourite_messages_count'] = self.user.favourite_messages_count()
+		context['favourite_messages_count'] = self.favourite_messages_count
 		return context
 
 	def get_queryset(self):
@@ -38,7 +38,7 @@ class ChatDetailView(ListView):
 		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
-		self.favourite_messages_count = request.user.favourite_messages_count(request.user)
+		self.favourite_messages_count = request.user.favourite_messages_count()
 		self.get_header_chat = self.chat.get_header_chat(self.pk)
 
 		channel_layer = get_channel_layer()
