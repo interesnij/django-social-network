@@ -56,7 +56,7 @@ class User(AbstractUser):
     def favourite_messages(self):
         from chat.models import MessageOptions
         query = []
-        messages = MessageOptions.objects.filter(self.pk=user_id, is_favourite=True)
+        messages = MessageOptions.objects.filter(user_id=self.pk, is_favourite=True)
         for message in messages:
             query += message.message
         return query
