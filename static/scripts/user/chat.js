@@ -579,12 +579,6 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
   message = this, is_favourite = false, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
-  custom_color_list = message.parentElement.querySelectorAll(".custom_color");
-  for (var i = 0; i < custom_color_list.length; i++){
-    if (list[i].querySelector(".toggle_message_favourite")) {
-      is_favourite = true;
-    }
-  };
 
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color", "target_message");
@@ -601,7 +595,13 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     } else { favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>' };
     message.classList.add("custom_color", "target_message");
     show_chat_console(message)
-  }
+  };
+  custom_color_list = message.parentElement.querySelectorAll(".custom_color");
+  for (var i = 0; i < custom_color_list.length; i++){
+    if (list[i].querySelector(".toggle_message_favourite")) {
+      is_favourite = true;
+    }
+  };
   if (is_favourite) {
     console.log("is_favourite")
     favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>'
