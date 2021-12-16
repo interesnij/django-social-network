@@ -615,10 +615,8 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   else {
     console.log("not is_favourite")
     favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
-    };
-}});
-
-
+    }
+  };
 
   if (get_toggle_messages().length > 1) {
     btn_console.querySelector(".one_message").style.display = "none"
