@@ -581,8 +581,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
   list = message.parentElement.querySelectorAll(".message");
   for (var i = 0; i < list.length; i++){
-    console.log(list[i].querySelector(".toggle_message_favourite"));
-    if (!list[i].querySelector(".toggle_message_favourite")) {
+    if (list[i].querySelector(".toggle_message_favourite")) {
       is_favourite = true;
     }
   };
