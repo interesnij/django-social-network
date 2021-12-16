@@ -1,5 +1,5 @@
 function get_toggle_messages() {
-  list = document.body.querySelectorAll(".target_message");
+  list = document.body.querySelectorAll(".toggle_message");
   query = [];
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
@@ -12,6 +12,18 @@ function show_chat_console(message) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
   list = document.body.querySelectorAll(".custom_color");
+
+  favourite_btn = _console.querySelector(".toggle_message_favourite");
+  is_not_favourite = false;
+
+  for (var i = 0; i < list.length; i++){
+    if (!list[i].querySelector(".toggle_message_favourite")) {
+        is_not_favourite = true;
+      }
+    };
+  if (is_not_favourite) {
+    favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
+  } else { favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>' };
 
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
@@ -577,8 +589,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
-  message = this, is_favourite = false, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
-  favourite_btn = btn_console.querySelector(".toggle_message_favourite");
+  message = this, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
 
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color", "target_message");
@@ -587,35 +598,12 @@ on('#ajax', 'click', '.toggle_message', function(e) {
         is_toggle = true
       }
     };
-    is_toggle ? null : hide_chat_console();
+    is_toggle ? show_chat_console(message) : hide_chat_console();
 
   } else {
-    if (message.querySelector(".toggle_message_favourite")) {
-      favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
-    } else { favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>' };
+    // сообщение не выбрано
     message.classList.add("custom_color", "target_message");
     show_chat_console(message)
-  };
-  custom_color_list = message.parentElement.querySelectorAll(".custom_color");
-  for (var i = 0; i < custom_color_list.length; i++){
-    if (list[i].getAttribute("data-uuid") != message.getAttribute("data-uuid")) {
-      is_favourite = false
-    }
-    else if (list[i].querySelector(".toggle_message_favourite")) {
-        is_favourite = true;
-      }
-  };
-  if (message.querySelector(".toggle_message_favourite")) {
-    is_favourite = true;
-  };
-  if (is_favourite) {
-    console.log("is_favourite")
-    favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>'
-    }
-  else {
-    console.log("not is_favourite")
-    favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
-    }
   };
 
   if (get_toggle_messages().length > 1) {
