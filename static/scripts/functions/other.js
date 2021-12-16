@@ -879,13 +879,23 @@ class ToastManager {
 };
 
 function toast_success(text) {
-    var toasts = new ToastManager();
-    toasts.showSuccess(text)
+  toasts = document.body.querySelectorAll(".toasts")
+  for (var i = 0; i < toasts.length; i++){
+    if (toasts[i].querySelector("h3").innerHTML = text) {
+      return
+    }
+  };
+  new ToastManager().showSuccess(text)
 };
 
 function toast_error(text) {
-    var toasts = new ToastManager();
-    toasts.showError(text)
+  toasts = document.body.querySelectorAll(".toasts")
+  for (var i = 0; i < toasts.length; i++){
+    if (toasts[i].querySelector("h3").innerHTML = text) {
+      return
+    }
+  };
+  new ToastManager().showError(text)
 };
 
 function toast_info(text) {
@@ -899,8 +909,13 @@ function toast_info(text) {
 };
 
 function toast_warning(text) {
-    var toasts = new ToastManager();
-    toasts.showWarning(text)
+  toasts = document.body.querySelectorAll(".toasts")
+  for (var i = 0; i < toasts.length; i++){
+    if (toasts[i].querySelector("h3").innerHTML = text) {
+      return
+    }
+  };
+  new ToastManager().showWarning(text)
 };
 
 function elementInViewport(el) {
