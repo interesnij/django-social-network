@@ -1100,9 +1100,7 @@ class Message(models.Model):
             return self.text[:count].replace("<br>", "  ")
 
     def get_type_text(self):
-        if self.is_manager():
-            return self.get_manager_text()
-        elif self.is_have_transfer():
+        if self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 return "<b class='i_link'>Пересланные сообщения</b>"
             else:
