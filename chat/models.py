@@ -657,13 +657,13 @@ class Chat(models.Model):
 
     def favourite_messages(self, user_id):
         query = []
-        messages = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True)
+        messages = MessageOptions.objects.filter(message__chat_id=self.pk,user_id=user_id, is_favourite=True)
         for message in messages:
             query += message.message
         return query
 
     def favourite_messages_count(self, user_id):
-        return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True)
+        return MessageOptions.objects.filter(message__chat_id=self.pk,user_id=user_id, is_favourite=True)
 
 
 class ChatUsers(models.Model):
