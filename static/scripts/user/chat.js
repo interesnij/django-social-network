@@ -14,11 +14,11 @@ function show_chat_console(message) {
   list = document.body.querySelectorAll(".custom_color");
 
   favourite_btn = _console.querySelector(".toggle_message_favourite");
-  is_not_favourite = false;
+  is_not_favourite = true;
 
   for (var i = 0; i < list.length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
-        is_not_favourite = true;
+        is_not_favourite = false;
       }
     };
   if (is_not_favourite) {
