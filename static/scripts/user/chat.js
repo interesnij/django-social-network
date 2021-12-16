@@ -37,12 +37,33 @@ function show_chat_console(message) {
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
 };
 
+function edit_favourite_count(count, type) {
+  if (document.body.querySelector(".favourite_block")) {
+    block = document.body.querySelector(".favourite_block");
+    try {
+      _count = block.querySelector(".favourite_messages_count").innerHTML
+    } catch {_count = 0};
+    _count *= 1;
+    if (type == "plus") {
+      _count += count;
+      block.querySelector(".favourite_messages_list").classList.remove("hidden");
+      block.querySelector(".favourite_messages_count").innerHTML = _count
+    }
+    else if (type == "minus") {
+      _count -= count;
+      if (_count < 1) {
+        block.querySelector(".favourite_messages_list").classList.add("hidden");
+      }
+    }
+  }
+};
 on('#ajax', 'click', '.create_favourite_messages', function() {
   hide_chat_console();
   messages = [];
   for (var i = 0; i < get_toggle_messages().length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
-        messages.push(list[i].getAttribute("data-uuid"))
+        messages.push(list[i].getAttribute("data-uuid"));
+        list[i].querySelector(".favourite_icon").innerHTML = "            <svg width="18" height="18" class="toggle_message_favourite pointer" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>"
     };
     list[i].classList.remove("custom_color", "target_message")
   };
@@ -52,7 +73,7 @@ on('#ajax', 'click', '.create_favourite_messages', function() {
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        console.log("ok")
+
       }
     }
     ajax_link.send();
