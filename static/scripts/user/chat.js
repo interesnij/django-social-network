@@ -582,6 +582,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   list = message.parentElement.querySelectorAll(".message");
   for (var i = 0; i < list.length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
+      console.log("is_favourite!")
       is_favourite = true;
     }
   };
