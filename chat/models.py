@@ -451,12 +451,12 @@ class Chat(models.Model):
         if self.name:
              chat_name = self.name
         elif self.is_public():
-            chat_name, dop_drops, target_display = "Групповой чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;left:25px;top: 19px;">' + self.get_members_count_ru() + '</span>'
+            chat_name, dop_drops, target_display = "Групповой чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;top: 19px;">' + self.get_members_count_ru() + '</span>'
             if self.is_user_can_add_members(user_id):
                 dop_drops += '<a class="dropdown-item u_add_members_in_chat pointer">Добавить друзей</a>'
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
         elif self.is_group():
-            chat_name, dop_drops, target_display = "Публичный чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;left:25px;top: 19px;">' + self.get_members_count_ru() + '</span>'
+            chat_name, dop_drops, target_display = "Публичный чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;top: 19px;">' + self.get_members_count_ru() + '</span>'
             if self.is_user_can_add_members(user_id):
                 dop_drops += '<a class="dropdown-item u_add_members_in_chat pointer">Добавить друзей</a>'
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
@@ -464,12 +464,12 @@ class Chat(models.Model):
             member = chat_user.user
             chat_name, dop_drops, target_display = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a><a class="dropdown-item u_delete_chat pointer">Удалить чат</a>', '<span class="type_display small" style="position:absolute;left:72px;top: 19px;">' + member.get_online_status() + '</span>'
         elif self.is_manager():
-            chat_name, dop_drops, target_display = "Служебный чат", '', 'Категория такая-то'
+            chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 19px;">Категория такая-то</span>'
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
         elif self.is_support():
             chat_name = "Чат техподдержки"
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
-            target_display = "Агент поддержки такой-то"
+            target_display = '<span class="type_display small" style="position:absolute;top: 19px;">Агент поддержки такой-то</span>'
         if self.is_muted(user_id):
             muted_drop = '<a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a>'
         else:
