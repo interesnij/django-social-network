@@ -11,9 +11,9 @@ urlpatterns = [
     url(r'^load_message/(?P<uuid>[0-9a-f-]+)/$', LoadUserMessage.as_view()),
     url(r'^fixed_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageFixed.as_view()),
     url(r'^unfixed_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageUnFixed.as_view()),
-    url(r'^favorite_messages/(?P<uuid>[0-9a-f-]+)/$', UserMessageFavorite.as_view()),
+    url(r'^favorite_messages/(?P<uuid>[0-9a-f-]+)/$', UserMessagesFavorite.as_view()),
     url(r'^unfavorite_messages/$', UserMessagesUnFavorite.as_view()),
-    url(r'^delete_message/$', UserMessagesDelete.as_view()),
+    url(r'^delete_message/$', UserMessageDelete.as_view()),
 	url(r'^restore_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageRecover.as_view()),
 
     url(r'^create_chat/(?P<pk>\d+)/$', CreateUserChat.as_view()),
