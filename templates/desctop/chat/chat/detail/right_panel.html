@@ -7,10 +7,8 @@
     <button class="btn btn-sm border user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
     <div class="card mt-2">
       <div class="card-header">
-        <div class="media">
-          {% if favourite_messages_count %}
-            <a class="ajax pointer">Избранное ({{ favourite_messages_count }})</a>
-          {% endif %}
+        <div class="media favourite_block">
+          <a class="{% if favourite_messages_count %}hidden{% endif %} favourite_messages_list pointer">Избранное (<span class="favourite_messages_count">{{ favourite_messages_count }}</span>)</a>
         </div>
       </div>
     </div>
