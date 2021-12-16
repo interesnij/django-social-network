@@ -8,7 +8,6 @@ function get_toggle_messages() {
 };
 function show_chat_console(message) {
   _console = document.body.querySelector(".console_btn_other");
-  message.querySelector(".toggle_message_favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
   if (message.querySelector(".message_sticker") || message.querySelector(".audio") || !message.classList.contains("is_have_edited")) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
@@ -579,7 +578,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
   message = this, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
-  console.log(message);
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
 
   if (message.classList.contains("custom_color")) {
