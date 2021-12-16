@@ -53,6 +53,7 @@ function edit_favourite_count(count, type) {
       _count -= count;
       if (_count < 1) {
         block.querySelector(".favourite_messages_list").classList.add("hidden");
+        block.querySelector(".favourite_messages_count").innerHTML = _count
       }
     }
   }
