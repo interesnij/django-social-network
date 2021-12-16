@@ -9,11 +9,12 @@ class ChatsListView(ListView):
 		from common.templates import get_settings_template
 
 		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
+		self.favourite_messages_count = self.chat.favourite_messages_count(self.pk)
 		return super(ChatsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatsListView,self).get_context_data(**kwargs)
-		context['user'] = self.user
+		context['favourite_messages_count'] = self.favourite_messages_count
 		return context
 
 	def get_queryset(self):
