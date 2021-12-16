@@ -598,9 +598,11 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   };
   custom_color_list = message.parentElement.querySelectorAll(".custom_color");
   for (var i = 0; i < custom_color_list.length; i++){
-    if (list[i].querySelector(".toggle_message_favourite") && !list[i].getAttribute("data-uuid") == message.getAttribute("data-uuid")) {
-      is_favourite = true;
-    }
+    if (list[i].getAttribute("data-uuid") != message.getAttribute("data-uuid")) {
+      if (list[i].querySelector(".toggle_message_favourite")) {
+        is_favourite = true;
+      }
+    } else {console.log("Совпадение")}
   };
   if (message.querySelector(".toggle_message_favourite")) {
     is_favourite = true;
