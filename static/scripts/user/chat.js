@@ -37,6 +37,28 @@ function show_chat_console(message) {
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
 };
 
+on('#ajax', 'click', '.create_favourite_messages', function() {
+  hide_chat_console();
+  list = get_toggle_messages();
+  messages = [];
+  for (var i = 0; i < list.length; i++){
+    if (!list[i].querySelector(".toggle_message_favourite")) {
+        messages.push(list[i].getAttribute("data-uuid"))
+    };
+    list[i].classList.remove("custom_color", "target_message")
+  };
+
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/chat/user_progs/favorite_messages/?list=" + messages, true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        console.log("ok")
+      }
+    }
+    ajax_link.send();
+});
+
 function hide_chat_console() {
   _console = document.body.querySelector(".console_btn_other");
   _console.querySelector(".u_message_edit").style.display = "unset";
@@ -147,7 +169,6 @@ on('#ajax', 'click', '.add_member_chat_toggle', function() {
   };
 
   count = container.querySelectorAll(".active_svg").length;
-  console.log(count);
   if (count > 1) {
     btn_text = "Выбрать пользователей" + " (" + count + ")";
     btn.disabled = false;
@@ -619,29 +640,6 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     btn_console.querySelector(".one_message").style.display = "unset"
   }
 }});
-
-on('#ajax', 'click', '.toggle_message_favourite', function() {
-  this.classList.contains("favourite") ? url = "/chat/user_progs/unfavorite_message/" : url = "/chat/user_progs/favorite_message/";
-
-  list = get_toggle_messages();
-  for (var i = 0; i < list.length; i++){
-  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url + list[i].getAttribute("data-uuid") + "/", true );
-		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        console.log("ok")
-      }
-    }
-    ajax_link.send();
-  };
-  for (var i = 0; i < list.length; i++){
-    if (list[i].classList.contains("favourite")) {
-      is_favourite = true
-    }
-  }
-  hide_chat_console()
-});
 
 on('#ajax', 'click', '.u_message_delete', function() {
   list = get_toggle_messages();
