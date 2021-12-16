@@ -271,6 +271,8 @@ class Chat(models.Model):
         return self.type == Chat.PRIVATE
     def is_group(self):
         return self.type == Chat.GROUP
+    def is_public(self):
+        return self.type == Chat.GROUP
     def is_manager(self):
         return self.type == Chat.MANAGER
     def is_open(self):
