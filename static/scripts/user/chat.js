@@ -579,7 +579,7 @@ on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
   message = this, is_favourite = false, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
-  list = message.parentElement.querySelectorAll(".message");
+  custom_color_list = message.parentElement.querySelectorAll(".custom_color");
   for (var i = 0; i < list.length; i++){
     if (list[i].querySelector(".toggle_message_favourite")) {
       is_favourite = true;
