@@ -8,7 +8,7 @@ function get_toggle_messages() {
 };
 function show_chat_console(message) {
   _console = document.body.querySelector(".console_btn_other");
-  message.querySelector(".favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
+  message.querySelector(".toggle_message_favourite") ? (btn = _console.querySelector(".toggle_message_favourite"), btn.classList.add("active")) : null;
   if (message.querySelector(".message_sticker") || message.querySelector(".audio") || !message.classList.contains("is_have_edited")) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
