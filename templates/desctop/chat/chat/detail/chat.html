@@ -10,45 +10,42 @@
           <div class="chat_header media w-100">
             {{ get_header_chat|safe }}
           </div>
+          {% include 'desctop/chat/chat/search.html' %}
+      </div>
+      <div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
+        <div class="fixed_messages">
+          {% if fix_message %}
+            {% include 'desctop/chat/chat/fixed_message.html' %}
+          {% endif %}
+        </div>
+        <div class="chatview" id="chatcontent" style="height: 510px;">
+          <ul class="mt-2 chatlist app is_paginate">
+            {% if page_obj.has_next %}
+              <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
+                <img src="/static/images/preloader.gif">
+              </div>
+            {% endif %}
+
+            {% if object_list %}
+              {% for object in object_list reversed %}
+                {% include 'desctop/chat/message/message.html' %}
+              {% endfor %}
+              <span id="scrolled"></span>
+            {% else %}
+              <div class="items_empty mb-3">
+                <div class="card-body"></div>
+                <h6 style="margin: 20px;text-align: center;">
+                  Пока сообщений нет.
+                </h6>
+              </div>
+              {% endif %}
+            </ul>
+        </div>
+        <div class="card-footer border-top" style="position: relative">
+          {% include 'desctop/chat/chat/form.html' %}
       </div>
     </div>
-    {% include 'desctop/chat/chat/search.html' %}
-</div>
-<div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
-    <div class="fixed_messages">
-      {% if fix_message %}
-        {% include 'desctop/chat/chat/fixed_message.html' %}
-      {% endif %}
-    </div>
-    <div class="chatview" id="chatcontent" style="height: 510px;">
-        <ul class="mt-2 chatlist app is_paginate">
-          {% if page_obj.has_next %}
-          <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
-              <img src="/static/images/preloader.gif">
-          </div>
-          {% endif %}
-
-          {% if object_list %}
-          {% for object in object_list reversed %}
-            {% include 'desctop/chat/message/message.html' %}
-          {% endfor %}
-          <span id="scrolled"></span>
-          {% else %}
-          <div class="items_empty mb-3">
-            <div class="card-body"></div>
-            <h6 style="margin: 20px;text-align: center;">
-               Пока сообщений нет.
-            </h6>
-          </div>
-          {% endif %}
-
-        </ul>
-    </div>
-    <div class="card-footer border-top" style="position: relative">
-      {% include 'desctop/chat/chat/form.html' %}
-    </div>
-</div>
-</div>
+  </div>
 {% include 'desctop/chat/chat/detail/right_panel.html' %}
 
 </div>
