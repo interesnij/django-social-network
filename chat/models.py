@@ -451,30 +451,32 @@ class Chat(models.Model):
         if self.name:
              chat_name = self.name
         elif self.is_public():
-            chat_name, dop_drops = "Групповой чат", ''
+            chat_name, dop_drops, target_display = "Групповой чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;left:25px;top: 19px;">' + self.get_members_count_ru() + '</span>'
             if self.is_user_can_add_members(user_id):
                 dop_drops += '<a class="dropdown-item u_add_members_in_chat pointer">Добавить друзей</a>'
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
         elif self.is_group():
-            chat_name, dop_drops = "Публичный чат", ''
+            chat_name, dop_drops, target_display = "Публичный чат", '', '<span class="u_chat_info pointer type_display small" style="position:absolute;left:25px;top: 19px;">' + self.get_members_count_ru() + '</span>'
             if self.is_user_can_add_members(user_id):
                 dop_drops += '<a class="dropdown-item u_add_members_in_chat pointer">Добавить друзей</a>'
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
         elif self.is_private():
             member = chat_user.user
-            chat_name, dop_drops = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a><a class="dropdown-item u_delete_chat pointer">Удалить чат</a>'
+            chat_name, dop_drops, target_display = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a><a class="dropdown-item u_delete_chat pointer">Удалить чат</a>', '<span class="type_display small" style="position:absolute;left:72px;top: 19px;">' + member.get_online_status() + '</span>'
         elif self.is_manager():
-            chat_name, dop_drops = "Служебный чат", ''
+            chat_name, dop_drops, target_display = "Служебный чат", '', 'Категория такая-то'
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
         elif self.is_support():
             chat_name = "Чат техподдержки"
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
+            target_display = "Агент поддержки такой-то"
         if self.is_muted(user_id):
             muted_drop = '<a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a>'
         else:
             muted_drop = '<a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a>'
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-1"><span class="u_chat_info pointer">', chat_name, '</span><span class="notify_box">', request_chat_user.get_beep_icon(), '</h5><span class="mt-1 mb-2 target_display"><span class="u_chat_info pointer type_display small" style="position:absolute;left:25px;top: 19px;">', self.get_members_count_ru(), '</span>', buttons, '</span></div>'])
-        dropdown = ''.join(['<div class="dropdown d-inline-block"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 29px; width: 100%;"><a class="dropdown-item chat_search pointer">Поиск сообщений</a><a class="dropdown-item show_attach_files pointer">Показать вложения</a><a class="dropdown-item u_clean_chat_messages pointer">Очистить историю</a> ', muted_drop, dop_drops,'</div></div>'])
+
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;"><h5 class="time-title mb-1"><span class="u_chat_info pointer">', chat_name, '</span><span class="notify_box">', request_chat_user.get_beep_icon(), '</h5><span class="mt-1 mb-2 target_display">', target_display, buttons, '</span></div>'])
+        dropdown = ''.join(['<div class="dropdown d-inline-block"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 29px; width: 100%;"><a class="dropdown-item chat_search pointer">Поиск сообщений</a><a class="dropdown-item show_attach_files pointer">Показать вложения</a>', muted_drop, dop_drops,'<a class="dropdown-item u_clean_chat_messages pointer">Очистить историю</a></div></div>'])
         return ''.join([media_body, dropdown])
 
     def get_header_group_chat(self, user_id):
