@@ -31,19 +31,14 @@ class ChatDetailView(ListView):
 		from channels.layers import get_channel_layer
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if self.chat.is_private():
-			self.template_name = get_settings_template("chat/chat/detail/private_chat.html", request.user, request.META['HTTP_USER_AGENT'])
-		elif self.chat.is_group():
-			self.template_name = get_settings_template("chat/chat/detail/group_chat.html", request.user, request.META['HTTP_USER_AGENT'])
-			self.can_add_members_in_chat = self.chat.is_user_can_add_members(request.user.pk)
-		elif self.chat.is_manager():
-			self.template_name = get_settings_template("chat/chat/detail/manager_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("chat/chat/detail/chat.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		self.pk = request.user.pk
 		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
 		self.favourite_messages_count = self.chat.favourite_messages_count(self.pk)
+		self.get_header_chat = self.chat.get_header_chat(self.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
@@ -60,7 +55,7 @@ class ChatDetailView(ListView):
 		context = super(ChatDetailView,self).get_context_data(**kwargs)
 		context['chat'] = self.chat
 		context['fix_message'] = self.chat.get_first_fix_message
-		context['is_muted'] = self.chat.is_muted(self.pk)
+		context['get_header_chat'] = self.get_header_chat
 		context['can_add_members'] = self.can_add_members_in_chat
 		if self.chat.is_have_draft_message(self.pk):
 			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
