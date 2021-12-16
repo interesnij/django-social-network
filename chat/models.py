@@ -1234,11 +1234,11 @@ class Message(models.Model):
         return Video.objects.filter(id__in=query)
 
     def add_favourite_messages(user_id, list):
-        for uuid in list:
+        for uuid in list.split(","):
             MessageOptions.objects.create(message_id=uuid,user_id=user_id,is_favourite=True)
 
     def remove_favourite_messages(user_id, list):
-        for uuid in list:
+        for uuid in list.split(","):
             MessageOptions.objects.filter(message_id=uuid,user_id=user_id,is_favourite=True).delete()
 
     def delete_item(self, user_id, community):
