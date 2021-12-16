@@ -1,7 +1,7 @@
 {% load message %}
 
 {% if object.is_manager %}
-<div class="media p-1 centered">
+<div class="media p-1 centered manager_message">
   {{ object.get_manager_text|safe }}
 </div>
 
