@@ -579,6 +579,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
   message = this, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
+  console.log(message);
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
 
   if (message.classList.contains("custom_color")) {
