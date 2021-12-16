@@ -9,12 +9,12 @@ class ChatsListView(ListView):
 		from common.templates import get_settings_template
 
 		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
-		self.favourite_messages_count = self.chat.favourite_messages_count(self.pk)
+		self.favourite_messages_count = request.user.favourite_messages_count()
 		return super(ChatsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatsListView,self).get_context_data(**kwargs)
-		context['favourite_messages_count'] = self.favourite_messages_count
+		context['favourite_messages_count'] = self.user.favourite_messages_count()
 		return context
 
 	def get_queryset(self):
@@ -38,7 +38,7 @@ class ChatDetailView(ListView):
 		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
-		self.favourite_messages_count = self.chat.favourite_messages_count(self.pk)
+		self.favourite_messages_count = request.user.favourite_messages_count(request.user)
 		self.get_header_chat = self.chat.get_header_chat(self.pk)
 
 		channel_layer = get_channel_layer()
