@@ -1101,7 +1101,7 @@ class Message(models.Model):
 
     def get_type_text(self):
         if self.is_manager():
-            return self.get_text_60()
+            return self.get_manager_text()
         elif self.is_have_transfer():
             if self.transfer.all().count() > 1:
                 return "<b class='i_link'>Пересланные сообщения</b>"
