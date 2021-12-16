@@ -462,7 +462,7 @@ class Chat(models.Model):
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
         elif self.is_private():
             member = chat_user.user
-            chat_name, dop_drops, target_display = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a><a class="dropdown-item u_delete_chat pointer">Удалить чат</a>', '<span class="type_display small" style="position:absolute;left:72px;top: 19px;">' + member.get_online_status() + '</span>'
+            chat_name, dop_drops, target_display = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a><a class="dropdown-item u_delete_chat pointer">Удалить чат</a>', '<span class="type_display small" style="position:absolute;top: 19px;">' + member.get_online_status() + '</span>'
         elif self.is_manager():
             chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 19px;">Категория такая-то</span>'
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
