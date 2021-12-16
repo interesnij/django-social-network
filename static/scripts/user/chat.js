@@ -1,5 +1,5 @@
 function get_toggle_messages() {
-  list = document.body.querySelectorAll(".toggle_message");
+  list = document.body.querySelectorAll(".target_message");
   query = [];
   for (var i = 0; i < list.length; i++){
       query.push(list[i])
@@ -11,14 +11,13 @@ function show_chat_console(message) {
   if (message.querySelector(".message_sticker") || message.querySelector(".audio") || !message.classList.contains("is_have_edited")) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
-  list = message.parentElement.querySelectorAll(".custom_color");
 
   favourite_btn = _console.querySelector(".toggle_message_favourite");
 
   // изначально не выбрано тех сообщений, которые в избанном
   list_not_have_favourite_messages = true;
 
-  for (var i = 0; i < list.length; i++){
+  for (var i = 0; i < get_toggle_messages().length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
         list_not_have_favourite_messages = false;
       }
