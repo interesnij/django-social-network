@@ -1032,7 +1032,7 @@ class Message(models.Model):
         if self.type == Message.PUBLISHED:
             self.type = Message.FIXED_PUBLISHED
         elif self.type == Message.EDITED:
-            self.type = Message.FIXED_EDITED
+            self.type = Message.EDITED_FIXED
         self.save(update_fields=["type"])
 
         if creator.is_women():
@@ -1048,7 +1048,7 @@ class Message(models.Model):
     def unfixed_message_for_user_chat(self, creator):
         if self.type == Message.FIXED_PUBLISHED:
             self.type = Message.PUBLISHED
-        elif self.type == Message.FIXED_EDITED:
+        elif self.type == Message.EDITED_FIXED:
             self.type = Message.EDITED
         self.save(update_fields=["type"])
 
