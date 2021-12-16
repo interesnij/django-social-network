@@ -358,7 +358,7 @@ on('#ajax', 'click', '#send_page_message_btn', function() {
   _text = form.querySelector(".page_message_text").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && form.querySelector(".files_0")){
     toast_error("Напишите или прикрепите что-нибудь");
-    form_post.querySelector(".page_message_text").classList.add("border_red");
+    post.querySelector(".page_message_text").classList.add("border_red");
     return
   };
 
