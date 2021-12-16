@@ -289,9 +289,10 @@ class UserMessageUnFixed(View):
 class UserMessagesFavorite(View):
 	def get(self,request,*args,**kwargs):
 		from django.http import HttpResponse, Http404
+		from chat.models import Message
 
 		if request.is_ajax():
-			message.add_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
+			Message.add_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
 			return HttpResponse()
 		else:
 			raise Http404
@@ -299,9 +300,10 @@ class UserMessagesFavorite(View):
 class UserMessagesUnFavorite(View):
 	def get(self,request,*args,**kwargs):
 		from django.http import HttpResponse, Http404
+		from chat.models import Message
 
 		if request.is_ajax():
-			message.remove_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
+			Message.remove_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
 			return HttpResponse()
 		else:
 			raise Http404
