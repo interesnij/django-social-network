@@ -822,7 +822,7 @@ class Message(models.Model):
     def is_fixed(self):
         return self.type == Message.PUBLISHED_FIXED or self.type == Message.EDITED_FIXED
     def is_favourite(self, user_id):
-        return MessageOptions.objects.filter(message_uuid=self.uuid,user_id=user_id, is_favourite=True).exists()
+        return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
         if self.transfer.exists():
@@ -1233,15 +1233,11 @@ class Message(models.Model):
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
 
-    def add_favourite_message(self, user_id):
-        if MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).exists():
-            options = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).first()
-            options.is_favourite = True
-            options.save()
-        else:
-            MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_favourite=True)
-    def remove_favourite_message(self, user_id):
-        MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).delete()
+    def add_favourite_messages(self, user_id, list):
+        for uuid in list:
+            MessageOptions.objects.create(message__uuid=uuid, user_id=user_id, is_favourite=True)
+    def remove_favourite_messages(self, user_id, list):
+        MessageOptions.objects.filter(message__uuid__in=list,user_id=user_id, is_favourite=True).delete()
 
     def delete_item(self, user_id, community):
         if self.creator_id == user_id:
@@ -1255,13 +1251,7 @@ class Message(models.Model):
                 self.type = Message.DELETED_EDITED_FIXED
             self.save(update_fields=['type'])
         else:
-            if MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).exists():
-                options = MessageOptions.objects.filter(message_id=self.pk,user_id=user_id).first()
-                options.is_deleted = True
-                options.is_favourite = False
-                options.save()
-            else:
-                MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_deleted=True)
+            MessageOptions.objects.create(message_id=self.pk,user_id=user_id, is_deleted=True)
 
     def restore_item(self, user_id, community):
         if self.creator_id == user_id:
