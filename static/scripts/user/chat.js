@@ -39,9 +39,8 @@ function show_chat_console(message) {
 
 on('#ajax', 'click', '.create_favourite_messages', function() {
   hide_chat_console();
-  list = get_toggle_messages();
   messages = [];
-  for (var i = 0; i < list.length; i++){
+  for (var i = 0; i < get_toggle_messages().length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
         messages.push(list[i].getAttribute("data-uuid"))
     };

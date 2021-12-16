@@ -291,8 +291,7 @@ class UserMessagesFavorite(View):
 		from django.http import HttpResponse, Http404
 
 		if request.is_ajax():
-			list = request.GET.getlist("list")
-			message.add_favourite_message(user_id=request.user.pk)
+			message.add_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
 			return HttpResponse()
 		else:
 			raise Http404
@@ -301,9 +300,8 @@ class UserMessagesUnFavorite(View):
 	def get(self,request,*args,**kwargs):
 		from django.http import HttpResponse, Http404
 
-		if request.is_ajax() and request.user.pk:
-			list = request.GET.getlist("list")
-			message.remove_favourite_message(user_id=request.user.pk)
+		if request.is_ajax():
+			message.remove_favourite_messages(user_id=request.user.pk, request.GET.getlist("list"))
 			return HttpResponse()
 		else:
 			raise Http404
