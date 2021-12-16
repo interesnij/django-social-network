@@ -1235,10 +1235,10 @@ class Message(models.Model):
 
     def add_favourite_messages(user_id, list):
         for uuid in list:
-            MessageOptions.objects.create(message_uuid=uuid, user_id=user_id, is_favourite=True)
+            MessageOptions.objects.create(message_id=uuid, user_id=user_id, is_favourite=True)
 
     def remove_favourite_messages(user_id, list):
-        MessageOptions.objects.filter(message_uuid__in=list,user_id=user_id, is_favourite=True).delete()
+        MessageOptions.objects.filter(message_id__in=list,user_id=user_id, is_favourite=True).delete()
 
     def delete_item(self, user_id, community):
         if self.creator_id == user_id:
