@@ -5,10 +5,10 @@
       </div>
       </div>
     <button class="btn btn-sm border user_create_chat" data-pk="{{ user.pk }}" style="margin-bottom:15px;width:100%;">Создать чат</button>
-    <div class="card mt-2">
+    <div class="card mt-2 {% if not favourite_messages_count %}hidden{% endif %}">
       <div class="card-header">
         <div class="media favourite_block">
-          <a class="{% if favourite_messages_count %}hidden{% endif %} favourite_messages_list pointer">Избранное (<span class="favourite_messages_count">{{ favourite_messages_count }}</span>)</a>
+          <a class="favourite_messages_list pointer">Избранное (<span class="favourite_messages_count">{{ favourite_messages_count }}</span>)</a>
         </div>
       </div>
     </div>
