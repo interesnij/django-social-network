@@ -577,22 +577,24 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
 on('#ajax', 'click', '.toggle_message', function(e) {
   if (e.target.classList.contains("t_f")) {
-  message = this, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
+  message = this, is_favourite = false, is_toggle = false, btn_console = document.body.querySelector(".console_btn_other");
   favourite_btn = btn_console.querySelector(".toggle_message_favourite");
+  list = message.parentElement.querySelectorAll(".message");
+  for (var i = 0; i < list.length; i++){
+    if (!list[i].querySelector(".toggle_message_favourite")) {
+      is_favourite = true;
+    }
+  };
 
   if (message.classList.contains("custom_color")) {
     message.classList.remove("custom_color", "target_message");
-    list = message.parentElement.querySelectorAll(".message");
     for (var i = 0; i < list.length; i++){
-      console.log(list[i]);
       if (list[i].classList.contains("custom_color")) {
         is_toggle = true
       }
-      if (list[i].querySelector(".toggle_message_favourite")) {
-          favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
-        } else { favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>' };
-      };
+    };
     is_toggle ? null : hide_chat_console();
+
   } else {
     if (message.querySelector(".toggle_message_favourite")) {
       favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
@@ -600,6 +602,13 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     message.classList.add("custom_color", "target_message");
     show_chat_console(message)
   }};
+
+  if (is_favourite) {
+    favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>'
+    }
+  else { favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
+    };
+
   if (get_toggle_messages().length > 1) {
     btn_console.querySelector(".one_message").style.display = "none"
   } else {
