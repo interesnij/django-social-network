@@ -1,0 +1,43 @@
+{% extends "base_mobile.html" %}
+{% block title %}Сообщения{% endblock %}
+{% load message %}
+{% block content %}
+
+<div class="main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat" style="height: 90vh;padding-left:7px;padding-right:7px">
+    <div><div>
+      <div class="card-header border-bottom" style="padding-top: 5px;padding-bottom: 5px;">
+        <div class="chat_header media w-100">
+          {{ get_header_chat|safe }}
+        </div>
+          {% include 'mobile/chat/chat/search.html' %}
+      </div>
+      </div></div>
+    <div class="fixed_messages">
+      {% if fix_message %}
+        {% include 'mobile/chat/chat/fixed_message.html' %}
+      {% endif %}
+    </div>
+    <div class="chatview" id="chatcontent" style="height: 65vh;margin-top:15px;margin-bottom:15px;">
+        <ul class="chatlist app is_chat_paginate">
+          {% if object_list %}
+          {% for object in object_list reversed %}
+            {% include 'mobile/chat/message/message.html' %}
+          {% endfor %}
+          <span id="scrolled"></span>
+          {% else %}
+          <div class="items_empty mb-3">
+            <div class="card-body"></div>
+            <h6 style="margin: 20px;text-align: center;">
+               Пока сообщений нет.
+            </h6>
+          </div>
+          {% endif %}
+
+        </ul>
+    </div>
+    <div class="border-top" style="position: relative">
+      {% include 'mobile/chat/chat/form.html' %}
+    </div>
+</div>
+
+{% endblock %}
