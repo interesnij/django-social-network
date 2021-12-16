@@ -597,7 +597,9 @@ on('#ajax', 'click', '.toggle_message', function(e) {
     show_chat_console(message)
   };
   custom_color_list = message.parentElement.querySelectorAll(".custom_color");
+  console.log(message.getAttribute("data-uuid"));
   for (var i = 0; i < custom_color_list.length; i++){
+    console.log(list[i].getAttribute("data-uuid"));
     if (list[i].querySelector(".toggle_message_favourite") && list[i].getAttribute("data-uuid") != message.getAttribute("data-uuid")) {
       is_favourite = true;
     }
