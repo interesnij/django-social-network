@@ -292,7 +292,7 @@ class UserMessagesFavorite(View):
 		from chat.models import Message
 
 		if request.is_ajax():
-			Message.add_favourite_messages(request.user.pk, request.GET.getlist("list"))
+			Message.add_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
 		else:
 			raise Http404
@@ -303,7 +303,7 @@ class UserMessagesUnFavorite(View):
 		from chat.models import Message
 
 		if request.is_ajax():
-			Message.remove_favourite_messages(request.user.pk, request.GET.getlist("list"))
+			Message.remove_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
 		else:
 			raise Http404
