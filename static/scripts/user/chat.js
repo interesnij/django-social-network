@@ -46,13 +46,13 @@ function edit_favourite_count(count, type) {
     _count *= 1;
     if (type == "plus") {
       _count += count;
-      block.querySelector(".favourite_messages_list").classList.remove("hidden");
+      block.parentElement.parentElement.classList.remove("hidden");
       block.querySelector(".favourite_messages_count").innerHTML = _count
     }
     else if (type == "minus") {
       _count -= count;
       if (_count < 1) {
-        block.querySelector(".favourite_messages_list").classList.add("hidden");
+        block.parentElement.parentElement.classList.add("hidden");
         block.querySelector(".favourite_messages_count").innerHTML = _count
       }
     }
