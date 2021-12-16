@@ -73,7 +73,7 @@ on('#ajax', 'click', '.create_favourite_messages', function() {
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        edit_favourite_count(len(messages), "plus")
+        edit_favourite_count(messages.length, "plus")
       }
     }
     ajax_link.send();
