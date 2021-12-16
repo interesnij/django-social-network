@@ -663,7 +663,7 @@ class Chat(models.Model):
         return query
 
     def favourite_messages_count(self, user_id):
-        return MessageOptions.objects.filter(message__chat_id=self.pk,user_id=user_id, is_favourite=True)
+        return MessageOptions.objects.filter(message__chat_id=self.pk,user_id=user_id, is_favourite=True).values("pk").count()
 
 
 class ChatUsers(models.Model):
