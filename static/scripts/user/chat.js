@@ -12,7 +12,7 @@ function show_chat_console(message) {
     _console.querySelector(".u_message_edit").style.display = "none"
   };
 
-  favourite_btn = _console.querySelector(".toggle_message_favourite");
+  favourite_btn = _console.querySelector(".toggle_messages_favourite");
   list_not_have_favourite_messages = true;
   for (var i = 0; i < get_toggle_messages().length; i++){
     if (!list[i].querySelector(".toggle_message_favourite")) {
