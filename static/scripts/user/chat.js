@@ -408,7 +408,7 @@ function send_message (form_post, url) {
   text = form_post.querySelector(".type_hidden");
   text.value = _text;
   form_data = new FormData(form_post);
-  message_load = form_post.parentElement.parentElement.querySelector(".chatlist");
+  message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
