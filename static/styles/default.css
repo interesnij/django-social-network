@@ -1,7 +1,9 @@
 .active h6{
   font-weight: bold;
 }
-
+.hidden {
+  display: none;
+}
 .bottom_nav_counter {
   position: absolute;
   top: 0px;
