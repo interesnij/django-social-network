@@ -555,7 +555,7 @@ class Chat(models.Model):
         ChatUsers.exit_member(user=user, chat=self)
         text = '<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name() + '</a>&nbsp;' + var
         info_message = Message.objects.create(chat_id=self.id,creator_id=user.id,type=Message.MANAGER,text=text)
-        for recipient in self.get_recipients_2(creator.pk):
+        for recipient in self.get_recipients_2(user.pk):
             info_message.create_socket(recipient.user.pk, recipient.beep())
         self.created = datetime.now()
         self.save(update_fields=["created"])
