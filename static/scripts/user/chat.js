@@ -58,6 +58,20 @@ function edit_favourite_count(count, type) {
     }
   }
 };
+
+on('#ajax', 'click', '.u_message_unfixed', function() {
+  message = this.parentElement.parentElement;
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/chat/user_progs/unfixed_message/" + message.getAttribute("data-uuid") + "/", true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        message.remove()
+      }
+    }
+    ajax_link.send();
+});
+
 on('#ajax', 'click', '.delete_favourite_message', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid")
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );

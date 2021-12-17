@@ -275,13 +275,12 @@ class UserMessageFixed(View):
 class UserMessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Message
-		from django.http import Http404
-		from common.templates import render_for_platform
+		from django.http import Http404, HttpResponse
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
 		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.unfixed_message_for_user_chat(request.user)
-			return render_for_platform(request, 'chat/message/message.html', {'object': info_message})
+			return HttpResponse()
 		else:
 			raise Http404
 
