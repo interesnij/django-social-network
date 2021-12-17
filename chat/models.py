@@ -1029,6 +1029,8 @@ class Message(models.Model):
         async_to_sync(channel_layer.group_send)('notification', payload)
 
     def fixed_message_for_user_chat(self, creator):
+        from datetime import datetime
+
         if self.type == Message.PUBLISHED:
             self.type = Message.PUBLISHED_FIXED
         elif self.type == Message.EDITED:
@@ -1043,9 +1045,13 @@ class Message(models.Model):
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
         for recipient in self.chat.get_recipients_2(creator.pk):
             info_message.create_socket(recipient.user.pk, recipient.beep())
+        self.chat.created = datetime.now()
+        self.chat.save(update_fields=["created"])
         return info_message
 
     def unfixed_message_for_user_chat(self, creator):
+        from datetime import datetime
+
         if self.type == Message.PUBLISHED_FIXED:
             self.type = Message.PUBLISHED
         elif self.type == Message.EDITED_FIXED:
@@ -1060,6 +1066,8 @@ class Message(models.Model):
         info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
         for recipient in self.chat.get_recipients_2(creator.pk):
             info_message.create_socket(recipient.user.pk, recipient.beep())
+        self.chat.created = datetime.now()
+        self.chat.save(update_fields=["created"])
         return info_message
 
     def edit_message(self, text, attach):
