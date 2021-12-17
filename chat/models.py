@@ -655,7 +655,7 @@ class Chat(models.Model):
         query = Q()
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(message_options__user_id=user_id), Q.AND)
-        list = self.chat_message.filter(query)
+        list = self.chat_message.filter(query).values("uuid")
         return [i['uuid'] for i in list]
 
 
