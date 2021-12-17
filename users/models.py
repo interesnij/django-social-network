@@ -56,9 +56,8 @@ class User(AbstractUser):
     def get_favourite_messages(self):
         from chat.models import MessageOptions
         query = []
-        messages = MessageOptions.objects.filter(user_id=self.pk, is_favourite=True)
-        for message in messages:
-            query += message.message
+        for i in MessageOptions.objects.filter(user_id=self.pk, is_favourite=True):
+            query.append(i.message)
         return query
 
     def favourite_messages_count(self):
