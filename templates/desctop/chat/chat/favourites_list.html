@@ -1,0 +1,31 @@
+
+<div class="container mt-3 main-container" data-pk="{{ request.user.pk }}" data-type="user_favourite_messages">
+  <span class="load_block">
+    <div class="media mt-3" style="padding-left: 7px;">
+      <h5 class="mt-1">
+        <p>
+          Избранных сообщений: {{ request.user.favourite_messages_count }}
+        </p>
+      </h5>
+    </div>
+  <div class="container-fluid pk_saver">
+    <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
+      {% if object_list %}
+      {% for object in object_list %}
+        {% include 'desctop/chat/message/message.html' %}
+      {% endfor %}
+        {% if page_obj.has_next %}
+        <div class="load centered m-1 next_page_list" data-link="/chat/favourites_messages/?page={{ page_obj.next_page_number }}">
+            <img src="/static/images/preloader.gif">
+        </div>
+        {% endif %}
+
+      {% else %}
+      <div class="card mb-3 centered items_empty">
+        <h6 style="margin: 20px;text-align: center;"> Избранных сообщений нет...</h6>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </span>
+</div>
