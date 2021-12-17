@@ -652,7 +652,7 @@ class Chat(models.Model):
         return self.chat_message.filter(query)
 
     def get_messages_uuids(self, user_id):
-        messages = self.get_messages(user_id).values("id")
+        messages = self.get_messages(user_id).values("uuid")
         return [i['uuid'] for i in messages]
 
 
