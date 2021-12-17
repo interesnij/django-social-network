@@ -12,8 +12,7 @@
   <div class="container-fluid pk_saver">
     <div class="list-group border-top border-bottom list-group-flush is_block_paginate">
       {% if object_list %}
-      {% for fix in object_list %}
-      {% with object=fix.message %}
+      {% for object in object_list %}
           <div class="message media pb-0 pt-1 border-bottom" data-uuid="{{ object.uuid }}" data-pk="{{ object.pk }}" style="display:block">
             <div class="media">
               <figure>
@@ -66,7 +65,6 @@
               <span class="u_message_unfixed pointer underline"> Открепить</span>
             </p>
           </div>
-      {% endwith %}
 
       {% endfor %}
         {% if page_obj.has_next %}

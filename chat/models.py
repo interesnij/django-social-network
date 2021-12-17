@@ -342,7 +342,7 @@ class Chat(models.Model):
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(unread=True, type__contains="_", message_options__user_id=self.pk).exclude(creator_id=self.pk)
+        return self.chat_message.filter(unread=True, type__contains="_").exclude(creator_id=self.pk)
 
     def get_last_message_created(self):
         if self.is_not_empty():
@@ -506,18 +506,18 @@ class Chat(models.Model):
         return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
 
     def is_have_draft_message(self, user_id):
-        return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
+        return self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
 
     def get_first_fix_message(self):
         if Message.objects.filter(chat_id=self.id, type__contains="FIX").exists():
-            return Message.objects.filter(chat_id=self.id, type__contains="FIX").first()
+            return self.chat_message.filter(chat_id=self.id, type__contains="FIX").first()
 
     def get_fixed_messages(self):
-        return Message.objects.filter(chat_id=self.id, type__contains="FIX")
+        return self.chat_message.filter(chat_id=self.id, type__contains="FIX")
 
     def get_fix_message_count(self):
-        if Message.objects.filter(chat_id=self.id, type__contains="FIX").exists():
-            return Message.objects.filter(chat_id=self.id, type__contains="FIX").values("pk").count()
+        if self.chat_message.filter(chat_id=self.id, type__contains="FIX").exists():
+            return self.chat_message.filter(chat_id=self.id, type__contains="FIX").values("pk").count()
         else:
             return 0
 
