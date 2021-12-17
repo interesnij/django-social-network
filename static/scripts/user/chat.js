@@ -66,11 +66,11 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        //fix_span = message.parentElement.parentElement.parentElement.querySelector(".count_fixed_messages")
-        //fix_count = fix_span.innerHTML;
-        //fix_count *= 1;
-        //fix_count -= 1;
-        //fix_span.innerHTML = fix_count;
+        fix_span = message.parentElement.parentElement.parentElement.querySelector(".count_fixed_messages")
+        fix_count = fix_span.innerHTML;
+        fix_count *= 1;
+        fix_count -= 1;
+        fix_span.innerHTML = fix_count;
         message.remove();
       }
     }
