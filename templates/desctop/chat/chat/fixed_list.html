@@ -1,11 +1,12 @@
-{% load message %}
+{% load message liked_user %}
 
 <div class="container mt-3 main-container" data-pk="{{ chat.pk }}" data-type="user_chat_fixed_messages">
   <span class="load_block">
+
     <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
       <h5 class="mt-1">
         <p>
-          Закреплено: <span class="count_fixed_messages">{{ chat.get_fix_message_count }}</span>
+          Закреплено <span class="count_fixed_messages">{{ chat.get_fix_message_count }} </span> {{ chat.get_fix_message_count|rupluralize:"сообщение,сообщения,сообщениний" }}
         </p>
       </h5>
     </div>
