@@ -1329,26 +1329,23 @@ html {
 .item_attach_circle{
   position: absolute;
   right: 35px;
-  padding: 6px;
   background-color: white;
   border-radius: 50%;
   cursor: pointer;
   top: 12px;
   height: 25px;
   width: 25px;
-  border: 1px grey solid;
 }
 .item_attach_circle svg{
-  width: 12px;
-  position: absolute;
-  color: grey;
   opacity:0
 }
 .active_svg svg{
-  width: 12px;
+  width: 32px;
   position: absolute;
   color: black;
-  opacity:1
+  opacity: 1;
+  left: -3px;
+  top: -3px;
 }
 
 .photo_preview_delete,
