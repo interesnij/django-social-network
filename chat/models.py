@@ -1116,20 +1116,19 @@ class Message(models.Model):
         elif self.voice:
             return "<b class='i_link'>Голосовое сообщение</b>"
         elif self.attach and self.text:
-            return "<b class='i_link'>Текст и вложения</b>"
+            return "<b class='i_link'>Текстrr и вложения</b>"
         elif self.attach and not self.text:
             return "<b class='i_link'>Вложения</b>"
         elif self.text:
             return self.get_text_60()
 
     def get_preview_text(self):
-        text = self.get_type_text()
         if self.is_manager():
             creator = self.creator
             message = self.parent
             return creator.get_full_name() + self.text + '<span class="underline">' + message.get_text_60() + '</span>'
         else:
-            return text
+            return self.get_type_text()
 
     def get_manager_text(self):
         if self.parent:
