@@ -1030,7 +1030,7 @@ class Message(models.Model):
 
     def fixed_message_for_user_chat(self, creator):
         if self.type == Message.PUBLISHED:
-            self.type = Message.FIXED_PUBLISHED
+            self.type = Message.PUBLISHED_FIXED
         elif self.type == Message.EDITED:
             self.type = Message.EDITED_FIXED
         self.save(update_fields=["type"])
@@ -1116,7 +1116,7 @@ class Message(models.Model):
         elif self.voice:
             return "<b class='i_link'>Голосовое сообщение</b>"
         elif self.attach and self.text:
-            return "<b class='i_link'>Текстrr и вложения</b>"
+            return "<b class='i_link'>Текст и вложения</b>"
         elif self.attach and not self.text:
             return "<b class='i_link'>Вложения</b>"
         elif self.text:
