@@ -1037,17 +1037,18 @@ class Message(models.Model):
             self.type = Message.EDITED_FIXED
         self.save(update_fields=["type"])
 
-        if creator.is_women():
-            var = " закрепила"
-        else:
-            var = " закрепил"
-        text = var + " сообщение "
-        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
-        for recipient in self.chat.get_recipients_2(creator.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
-        self.chat.created = datetime.now()
-        self.chat.save(update_fields=["created"])
-        return info_message
+        if not "FIX" in self.type:
+            if creator.is_women():
+                var = " закрепила"
+            else:
+                var = " закрепил"
+            text = var + " сообщение "
+            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
+            for recipient in self.chat.get_recipients_2(creator.pk):
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            self.chat.created = datetime.now()
+            self.chat.save(update_fields=["created"])
+            return info_message
 
     def unfixed_message_for_user_chat(self, creator):
         from datetime import datetime
@@ -1058,17 +1059,18 @@ class Message(models.Model):
             self.type = Message.EDITED
         self.save(update_fields=["type"])
 
-        if creator.is_women():
-            var = " открепила"
-        else:
-            var = " открепил"
-        text = var + " сообщение "
-        info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
-        for recipient in self.chat.get_recipients_2(creator.pk):
-            info_message.create_socket(recipient.user.pk, recipient.beep())
-        self.chat.created = datetime.now()
-        self.chat.save(update_fields=["created"])
-        return info_message
+        if not "FIX" in self.type:
+            if creator.is_women():
+                var = " открепила"
+            else:
+                var = " открепил"
+            text = var + " сообщение "
+            info_message = Message.objects.create(chat_id=self.chat.id,creator_id=creator.id,type=Message.MANAGER,text=text,parent=self)
+            for recipient in self.chat.get_recipients_2(creator.pk):
+                info_message.create_socket(recipient.user.pk, recipient.beep())
+            self.chat.created = datetime.now()
+            self.chat.save(update_fields=["created"])
+            return info_message
 
     def edit_message(self, text, attach):
         from common.processing.message import get_edit_message_processing
