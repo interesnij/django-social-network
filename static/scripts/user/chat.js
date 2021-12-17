@@ -72,7 +72,6 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
         fix_count -= 1;
         fix_span.innerHTML = fix_count;
         message.remove();
-
       }
     }
     ajax_link.send();
@@ -754,20 +753,6 @@ on('#ajax', 'click', '.u_message_restore', function() {
     block.remove();
     item.style.display = "flex";
     item.classList.remove("custom_color")
-  }};
-  link.send();
-});
-
-on('#ajax', 'click', '.u_message_unfixed', function() {
-  item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-uuid");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/chat/user_progs/unfixed_message/" + uuid + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    hide_chat_console()
   }};
   link.send();
 });
