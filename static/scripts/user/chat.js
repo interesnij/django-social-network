@@ -633,6 +633,7 @@ function send_draft_message (form_post, url) {
 
   text = form_post.querySelector(".type_hidden");
   text.value = form_post.querySelector(".message_text").innerHTML.replace("data:image", '');
+  setEndOfContenteditable(text_val);
   form_data = new FormData(form_post);
   pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
@@ -642,7 +643,6 @@ function send_draft_message (form_post, url) {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    setEndOfContenteditable(text_val)
   }};
   link_.send(form_data);
 };
