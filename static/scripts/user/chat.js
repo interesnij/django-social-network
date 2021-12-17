@@ -641,7 +641,9 @@ function send_draft_message (form_post, url) {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {}};
+  if ( this.readyState == 4 && this.status == 200 ) {
+    setEndOfContenteditable(text_val)
+  }};
   link_.send(form_data);
 };
 
