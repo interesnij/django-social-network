@@ -31,14 +31,14 @@ class ChatDetailView(ListView):
 		from asgiref.sync import async_to_sync
 		from channels.layers import get_channel_layer
 
-		if request.user.pk in self.chat.get_members_ids():
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.pk = request.user.pk
+		if self.pk in self.chat.get_members_ids():
 			self.template_name = get_settings_template("chat/chat/detail/chat.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from django.http import Http404
 			raise Http404
 
-		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.pk = request.user.pk
 		self.messages = self.chat.get_messages(self.pk)
 		unread_messages = self.chat.get_unread_message(self.pk)
 		unread_messages.update(unread=False)
