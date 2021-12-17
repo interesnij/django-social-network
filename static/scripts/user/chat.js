@@ -691,7 +691,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
                                              console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
                                            ) : null;
         if (document.body.querySelector(".left_panel_menu")) {
-          document.body.querySelector(".message_text").focus()
+          setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
         }
       }
