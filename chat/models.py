@@ -326,10 +326,6 @@ class Chat(models.Model):
     def get_first_message(self, user_id):
         return self.get_messages(user_id).first()
 
-    def get_messages_uuids(self):
-        messages = self.chat_message.exclude(type__contains="_").values('uuid')
-        return [i['uuid'] for i in messages]
-
     def get_attach_photos(self):
         from gallery.models import Photo
         return Photo.objects.filter(message__uuid__in=self.get_messages_uuids())
@@ -460,7 +456,7 @@ class Chat(models.Model):
             chat_name = "Чат техподдержки"
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
             target_display = '<span class="type_display small" style="position:absolute;top: 19px;">Агент поддержки такой-то</span>'
-        if not self.is_muted(user_id): 
+        if not self.is_muted(user_id):
             muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
         else:
             muted_drop = '<span><a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a></span>'
@@ -654,6 +650,10 @@ class Chat(models.Model):
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
         return self.chat_message.filter(query)
+
+    def get_messages_uuids(self, user_id):
+        messages = self.get_messages(user_id)
+        return [i['uuid'] for i in messages]
 
 
 class ChatUsers(models.Model):
