@@ -460,7 +460,7 @@ class Chat(models.Model):
             chat_name = "Чат техподдержки"
             dop_drops += '<a class="dropdown-item u_clean_chat_messages pointer">Выйти из чата</a>'
             target_display = '<span class="type_display small" style="position:absolute;top: 19px;">Агент поддержки такой-то</span>'
-        if self.is_muted(user_id):
+        if self.is_muted(request_chat_user.pk):
             muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
         else:
             muted_drop = '<span><a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a></span>'
