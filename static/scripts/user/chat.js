@@ -562,7 +562,7 @@ on('#ajax', 'click', '.u_message_fixed', function() {
         parent = "Наклейка"
     };
     creator_p = '<p><svg style="width: 17px;vertical-align: bottom;" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="16" width="16"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg>' + message.querySelector(".creator_name").innerHTML + '</p>';
-    message.classList.remove("target_message". "custom_color");
+    message.classList.remove("target_message", "custom_color");
     block = document.body.querySelector(".fixed_messages");
     block.innerHTML = "<div class='pointer show_chat_fixed_messages'>" + creator_p + "<div class='border-bottom' style='position:relative;padding-bottom: 5px;'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span></div></div></div>";
 
