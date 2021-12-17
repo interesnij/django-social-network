@@ -560,7 +560,7 @@ class Chat(models.Model):
         self.created = datetime.now()
         self.save(update_fields=["created"])
         self.chat_message.filter(chat_id=self.pk, creator_id=user.pk, type=Message.DRAFT).delete()
-        return message
+        return info_message
 
     def invite_users_in_chat(self, users_ids, creator):
         from users.models import User
