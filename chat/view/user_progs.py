@@ -523,7 +523,7 @@ class UserChatCleanMessages(View):
 			list = chat.get_messages_uuids(request.user.pk)
 			objs = [
 				MessageOptions(
-						message_id = e.uuid,
+						message_id = e,
 						user_id = request.user.pk,
 						is_deleted = True
 					)
