@@ -515,11 +515,21 @@ class UserChatRecover(View):
 
 class UserChatCleanMessages(View):
 	def get(self,request,*args,**kwargs):
-		from chat.models import Message
+		from chat.models import Chat, Message, MessageOptions
 		from django.http import HttpResponse
 
-		if request.user.is_authenticated:
-			Message.objects.filter(chat_id=self.kwargs["pk"], recipient_id=request.user.pk).update(type=Message.DELETED)
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_authenticated and request.user.pk in chat.get_members_ids():
+			list = chat.get_messages_uuids(request.user.pk)
+			objs = [
+				MessageOptions(
+						message_id = e.uuid,
+						user_id = request.user.pk,
+						is_deleted = True
+					)
+					for e in list
+				]
+			MessageOptions.objects.bulk_create(objs)
 		return HttpResponse()
 
 
