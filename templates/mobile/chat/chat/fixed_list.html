@@ -4,9 +4,7 @@
   <span class="load_block">
     <div class="media mt-3" class="pk_saver" data-pk="{{ chat.pk }}" style="padding-left: 7px;">
       <h5 class="mt-1">
-        <p>
-          В чате закреплено: {{ chat.get_fix_message_count_ru }}
-        </p>
+        Закрепленные сообщения (<span class="count_fixed_messages">{{ chat.get_fix_message_count }}</span>)
       </h5>
     </div>
   <div class="container-fluid pk_saver">
