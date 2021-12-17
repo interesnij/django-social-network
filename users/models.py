@@ -53,7 +53,7 @@ class User(AbstractUser):
         from users.model.profile import UserLocation
         return UserLocation.objects.filter(user=self)[0]
 
-    def favourite_messages(self):
+    def get_favourite_messages(self):
         from chat.models import MessageOptions
         query = []
         messages = MessageOptions.objects.filter(user_id=self.pk, is_favourite=True)
