@@ -120,9 +120,8 @@ class ChatFavouritesMessagesView(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_settings_template
 
-		self.template_name, self.chat = get_settings_template("chat/chat/favourites_list.html", request.user, request.META['HTTP_USER_AGENT']), Chat.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("chat/chat/favourites_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatFavouritesMessagesView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		chats = self.request.user.get_favourite_messages()
-		return chats
+		return self.request.user.get_favourite_messages()
