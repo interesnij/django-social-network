@@ -68,7 +68,7 @@ on('#ajax', 'click', '.delete_favourite_message', function() {
         edit_favourite_count(1, "minus");
         messages = document.body.querySelectorAll( '[data-pk=' + '"' + uuid + '"' + ']' );
         for (var i = 0; i < messages.length; i++){
-          messages[i].remove()
+          messages[i].querySelector(".delete_favourite_message").innerHTML = ""
         }
       }
     }
