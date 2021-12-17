@@ -1046,7 +1046,7 @@ class Message(models.Model):
         return info_message
 
     def unfixed_message_for_user_chat(self, creator):
-        if self.type == Message.FIXED_PUBLISHED:
+        if self.type == Message.PUBLISHED_FIXED:
             self.type = Message.PUBLISHED
         elif self.type == Message.EDITED_FIXED:
             self.type = Message.EDITED
