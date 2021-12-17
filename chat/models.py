@@ -499,7 +499,7 @@ class Chat(models.Model):
         return Video.objects.filter(id__in=query)
 
     def get_draft_message(self, user_id):
-        return Message.objects.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
+        return self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
 
     def is_have_draft_message(self, user_id):
         return self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists()
@@ -538,10 +538,11 @@ class Chat(models.Model):
         ChatUsers.delete_member(user=user, chat=self)
         text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
         info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
-        for recipient in self.chat.get_recipients_2(creator.pk):
+        for recipient in self.get_recipients_2(creator.pk):
             info_message.create_socket(recipient.user.pk, recipient.beep())
-        chat.created = datetime.now()
-        chat.save(update_fields=["created"])
+        self.created = datetime.now()
+        self.save(update_fields=["created"])
+        self.chat_message.filter(chat_id=self.pk, creator_id=user.pk, type=Message.DRAFT).delete()
         return info_message
 
     def exit_member(self, user):
@@ -558,6 +559,7 @@ class Chat(models.Model):
             info_message.create_socket(recipient.user.pk, recipient.beep())
         self.created = datetime.now()
         self.save(update_fields=["created"])
+        self.chat_message.filter(chat_id=self.pk, creator_id=user.pk, type=Message.DRAFT).delete()
         return message
 
     def invite_users_in_chat(self, users_ids, creator):
@@ -577,10 +579,10 @@ class Chat(models.Model):
                     text = '<a target="_blank" href="' + creator.get_link() + '">' + creator.get_full_name() + '</a>&nbsp;' + var + '&nbsp;<a target="_blank" href="' + user.get_link() + '">' + user.get_full_name_genitive() + '</a>'
                     info_message = Message.objects.create(chat_id=self.id,creator_id=creator.id,type=Message.MANAGER,text=text)
                     info_messages.append(info_message)
-                    for recipient in self.chat.get_recipients_2(creator.pk):
+                    for recipient in self.get_recipients_2(creator.pk):
                         info_message.create_socket(recipient.user.pk, recipient.beep())
-        chat.created = datetime.now()
-        chat.save(update_fields=["created"])
+        self.created = datetime.now()
+        self.save(update_fields=["created"])
         return info_messages
 
     def edit_chat(self, name, image, description):
@@ -710,8 +712,10 @@ class ChatUsers(models.Model):
             member = ChatUsers.objects.get(user=user, chat=chat)
             member.type = "EXI"
             member.save(update_fields=["type"])
-            chat.members = chat.members - 1
-            chat.save(update_fields=["members"])
+            members = chat.members
+            if members > 0:
+                chat.members = chat.members - 1
+                chat.save(update_fields=["members"])
 
     def delete_member(user, chat):
         # Человека удаляют из группового чата и он может вернуться только по приглашению админов
@@ -719,8 +723,10 @@ class ChatUsers(models.Model):
             member = ChatUsers.objects.get(user=user, chat=chat)
             member.type = "DEL"
             member.save(update_fields=["type"])
-            chat.members = chat.members - 1
-            chat.save(update_fields=["members"])
+            members = chat.members
+            if members > 0:
+                chat.members = chat.members - 1
+                chat.save(update_fields=["members"])
 
     def beep(self):
         if not self.no_disturb:
