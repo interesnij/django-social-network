@@ -652,7 +652,7 @@ class Chat(models.Model):
     def get_messages(self, user_id):
         query = Q()
         query.add(~Q(type__contains="_"), Q.AND)
-        #query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
+        query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
         return self.chat_message.filter(query)
 
 
