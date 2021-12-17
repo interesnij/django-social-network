@@ -61,8 +61,10 @@
               </div>
             </div>
             <p class="small">
-              <i>Закреплено {{ fix.get_created }}</i>
-              <span class="u_message_unfixed pointer underline"> Открепить</span>
+              <i>Закреплено {{ object.get_created }}</i>
+              {% if is_user_can_fix_item %}
+                <span class="u_message_unfixed pointer underline">Открепить</span>
+              {% endif %}
             </p>
           </div>
 
