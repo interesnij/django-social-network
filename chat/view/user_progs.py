@@ -46,21 +46,10 @@ class CreateUserChat(TemplateView):
 			new_chat.creator = request.user
 			new_chat = self.form.save()
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
-			members = [request.user, ]
 
-			connections = request.POST.getlist("connections")
-			for user_id in connections:
-				user = User.objects.get(pk=user_id)
-				ChatUsers.create_membership(user=user, chat=new_chat)
-				members += [user, ]
-
-			if new_chat.is_private():
-				template = 'chat/chat/detail/private_chat.html'
-			elif new_chat.is_group() or new_chat.is_public():
-				template = 'chat/chat/detail/group_chat.html'
-				if request.POST.get('users'):
-					self.chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
-			return render_for_platform(request, template, {'chat': new_chat, 'chat_members': members, 'user': request.user})
+			if request.POST.get('users'):
+				self.chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
+			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
