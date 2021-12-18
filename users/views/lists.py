@@ -243,7 +243,6 @@ class UserPostsListView(ListView):
 			is_user_can_create_posts - может ли гость создавать записи в списках того, к кому зашел
 		"""
 		from posts.models import PostsList
-		from common.templates import get_owner_template_user, get_template_anon_user_list
 
 		self.user, user_pk, self.post_list = User.objects.get(pk=self.kwargs["pk"]), int(self.kwargs["pk"]), PostsList.objects.get(pk=self.kwargs["list_pk"])
 		if user_pk == request.user.pk:
