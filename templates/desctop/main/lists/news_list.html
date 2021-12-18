@@ -19,6 +19,9 @@
                 {% if forloop.counter == 5 %}
                   {% include 'desctop/main/lists/blocks/featured_users.html' %}
                 {% endif %}
+                {% elif forloop.counter == 10 %}
+                  {% include 'desctop/main/lists/blocks/featured_communities.html' %}
+                {% endif %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}
             </span>
