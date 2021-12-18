@@ -16,6 +16,9 @@
           {% load notify %}
             <span class="is_paginate">
               {% for object in object_list %}
+                {% if forloop %}
+                  JJJ
+                {% endif %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}
             </span>
