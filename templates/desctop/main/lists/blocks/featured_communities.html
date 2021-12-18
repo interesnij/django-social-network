@@ -2,7 +2,7 @@
 
 <div class="card csslider_2 infinity_2 mt-6 mb-3">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
-    Рекомендуемые сообщества
+    Рекомендуем группы
   </p>
   {% for object in request.user.get_6_featured_communities_ids %}
     <input type="radio" name="slides_2" {% if forloop.first %}checked="checked"{% endif %} id="com_{{ forloop.counter }}"/>
