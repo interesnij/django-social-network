@@ -17,7 +17,7 @@
             <span class="is_paginate">
               {% for object in object_list %}
                 {% if forloop.counter == 5 %}
-                  {% include 'desctop/main/lists/featured_users.html' %}
+                  {% include 'desctop/main/lists/blocks/featured_users.html' %}
                 {% endif %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}
