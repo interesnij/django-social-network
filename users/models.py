@@ -397,11 +397,6 @@ class User(AbstractUser):
     def get_6_featured_friends(self):
         return User.objects.filter(id__in=self.get_6_featured_friends_ids())
 
-    def get_6_featured_communities_ids(self):
-        from users.model.list import ListUC, FeaturedUC
-        list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['community'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=False).values("community")]
-
     def get_featured_friends_ids(self):
         from users.model.list import ListUC, FeaturedUC
         list = ListUC.objects.get(owner=self.pk, type=1)
@@ -413,9 +408,13 @@ class User(AbstractUser):
 
     def get_featured_friends_count(self):
         return len(self.get_featured_friends_ids())
-
     def get_6_featured_friends_ids(self):
         return self.get_featured_friends_ids()[:6]
+
+    def get_featured_communities_count(self):
+        return len(self.get_featured_communities_ids())
+    def get_6_featured_communities_ids(self):
+        return self.get_featured_communities_ids()[:6]
 
     def unfollow_user(self, user):
         self.unfollow_user_with_id(user.pk)
@@ -987,6 +986,15 @@ class User(AbstractUser):
         return self.profile.articles
     def count_communities(self):
         return self.profile.communities
+    def count_communities_ru(self):
+        count = self.count_communities()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " сообщество"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " сообщества"
+        else:
+            return str(count) + " сообществ"
     def count_tracks(self):
         return self.profile.tracks
     def count_videos(self):

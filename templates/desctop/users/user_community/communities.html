@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Сообщества {{ user.get_full_name_genitive }}{% endblock %}
-{% load liked_user %}
 {% block meta %}
 <meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/communities/" />
 <meta property="og:type" content="website" />
@@ -42,7 +41,7 @@
                           {% include 'desctop/generic/community/figure.html' %}
                           <div class="media-body">
                               <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
-                              <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                              <p class="small">{{ community.count_members_ru }}</p>
                           </div>
                       </div>
                   </li>
@@ -82,6 +81,7 @@
                   </div>
               </div>
         </div>
+        {% include 'desctop/user_community/featured_communities.html' %}
     </div>
 </div>
 </div>

@@ -1,18 +1,19 @@
-{% if user.is_have_communities %}
 
+{% if request.user.get_6_featured_communities_ids %}
 <div class="card mb-3">
     <div class="card-header">
-      <a href="{% url 'communities' pk=user.pk %}" class="ajax">
+      <a href="{% url 'featured_communities' %}" class="ajax">
         <div class="media">
             <div class="media-body">
-                <h6 class="content-color-primary mb-0">Группы </h6>
+                <h6 class="content-color-primary mb-0"></h6>
             </div>
-            {{ user.count_communities }}
+            {{ request.user.get_featured_communities_count }}
         </div>
       </a>
     </div>
 
-    {% for community in user.get_6_communities %}
+    {% for user in request.user.get_6_featured_communities_ids %}
+
     <div class="card border-top">
         <div class="card-body">
             <div class="media">
@@ -25,17 +26,5 @@
         </div>
     </div>
     {% endfor %}
-</div>
-{% else %}
-<div class="card mb-3">
-    <div class="card-header">
-        <div class="media centered">
-            <a href="{% url 'all_communities' %}" class="ajax">
-                <div class="media-body">
-                    <h6 class="content-color-primary mb-0">Вступайте в группы</h6>
-                </div>
-            </a>
-        </div>
-    </div>
 </div>
 {% endif %}
