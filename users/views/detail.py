@@ -38,7 +38,7 @@ class UserCommunities(ListView):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_anonymous:
             from common.templates import get_template_anon_user_list
-            self.template_name = get_template_anon_user_list(self.list, "users/user_community/anon_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_template_anon_user(self.user, "users/user_community/anon_communities.html", request.META['HTTP_USER_AGENT'])
             self.is_user_can_see_community = self.user.is_anon_user_can_see_community()
         elif request.user.is_authenticated:
             if self.user.pk == request.user.pk:

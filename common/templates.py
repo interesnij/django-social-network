@@ -235,7 +235,7 @@ def get_template_user(user, folder, template, request_user, user_agent):
             template_name = folder + template
     return get_folder(user_agent) + template_name
 
-def get_template_anon_user(user, template, request_user, user_agent):
+def get_template_anon_user(user, template, user_agent):
     if user.type[0] == "_":
         template_name = get_anon_fine_user(user)
     elif user.is_closed_profile():
