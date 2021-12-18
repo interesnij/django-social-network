@@ -1,6 +1,6 @@
 {% if request.user.get_featured_communities_count > 1 %}
 
-<div class="csslider csslider_2 infinity mt-6 mb-3" id="slider1">
+<div class="csslider_2 infinity_2 mt-6 mb-3" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
     Рекомендуемые сообщества
   </p>
@@ -14,7 +14,7 @@
     </li>
     {% endfor %}
   </ul>
-  <div class="arrows_2">
+  <div class="slides_arrows arrows_2">
     {% for object in request.user.get_6_featured_communities_ids %}
       <label for="com_{{ forloop.counter }}"></label>
     {% endfor %}
