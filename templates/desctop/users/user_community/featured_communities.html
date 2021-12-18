@@ -5,14 +5,14 @@
       <a href="{% url 'featured_communities' %}" class="ajax">
         <div class="media">
             <div class="media-body">
-                <h6 class="content-color-primary mb-0"></h6>
+                <h6 class="content-color-primary mb-0">Рекомендованные сообщества</h6>
             </div>
             {{ request.user.get_featured_communities_count }}
         </div>
       </a>
     </div>
 
-    {% for user in request.user.get_6_featured_communities_ids %}
+    {% for object in request.user.get_6_featured_communities_ids %}
 
     <div class="card border-top">
         <div class="card-body">
