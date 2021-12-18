@@ -5,7 +5,7 @@
     Возможные друзья
   </p>
   {% for object in request.user.get_6_featured_friends_ids %}
-    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="use_{{ forloop.counter }}"/>
+    <input type="radio" name="slides_1" {% if forloop.first %}checked="checked"{% endif %} id="use_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
     {% for user in request.user.get_6_featured_friends %}
