@@ -1,7 +1,7 @@
 
 {% if user.get_pop_followers %}
-<div class="card mb-3" style="">
-    <div class="card-header">
+<div class="card mb-3">
+    <div class="p-1">
       <a href="{% url 'follows' pk=user.pk %}" class="ajax">
         <div class="media">
             <div class="media-body">
