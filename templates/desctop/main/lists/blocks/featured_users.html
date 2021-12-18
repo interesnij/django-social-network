@@ -1,6 +1,6 @@
 {% if request.user.get_featured_friends_count > 1 %}
-<div class="mt-3">
-<div class="csslider infinity mt-5 mb-3" id="slider1">
+
+<div class="csslider infinity mt-6 mb-3" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
     Возможные друзья
   </p>
@@ -22,6 +22,5 @@
     <label class="goto-first" for="s_1"></label>
     <label class="goto-last" for="s_{{ request.user.get_featured_friends_count }}"></label>
   </div>
-</div>
 </div>
 {% endif %}
