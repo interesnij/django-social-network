@@ -366,11 +366,13 @@ class User(AbstractUser):
             FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).delete()
 
     def frend_user(self, user):
-        frend = self.frend_user_with_id(user.pk)
+        self.frend_user_with_id(user.pk)
         user.plus_friends(1)
         self.plus_friends(1)
         self.minus_follows(1)
-        self.get_or_create_featured_objects_in_main_list(frend)
+        if user.is_closed_profile():
+            self.add_news_subscriber_in_main_list(user.pk)
+        self.get_or_create_featured_objects_in_main_list(user)
 
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -383,9 +385,6 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
         self.remove_featured_friend_from_all_list(user_id)
-        elif frend.is_closed_profile():
-            self.add_news_subscriber_in_main_list(user_id)
-
         return frend
 
     def get_featured_friends_ids(self):
