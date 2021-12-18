@@ -33,6 +33,7 @@
             </div>
 
             <div class="card-body px-0 py-0">
+              {% if is_user_can_see_community %}
               {% if object_list %}
 
               <ul class="list-group is_paginate">
@@ -57,8 +58,12 @@
               {% else %}
                 {% include 'desctop/users/user_community/no_communities.html' %}
               {% endif %}
-            </div>
-        </div>
+
+            {% else %}
+              {% include 'desctop/generic/centered/private_page.html' %}
+            {% endif %}
+          </div>
+      </div>
     </div>
 
     <div class="col-12 col-md-4">

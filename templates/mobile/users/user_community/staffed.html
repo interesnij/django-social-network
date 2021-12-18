@@ -37,6 +37,7 @@
                         <button class="btn border user_community_create_window">Создать</button>
                     </div>
                 </div>
+                {% if is_user_can_see_community %}
                 {% if object_list %}
 
                 <ul class="list-group is_paginate">
@@ -60,6 +61,9 @@
 
                 {% else %}
                   {% include 'desctop/users/user_community/no_communities.html' %}
+                {% endif %}
+                {% else %}
+                  {% include 'desctop/generic/centered/private_page.html' %}
                 {% endif %}
             </div>
         </div>

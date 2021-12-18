@@ -32,25 +32,34 @@ class UserGallery(TemplateView):
         return c
 
 class UserCommunities(ListView):
-    template_name, paginate_by = None, 15
+    template_name, paginate_by, is_user_can_see_community = None, 15, None
 
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_anonymous:
             from common.templates import get_template_anon_user_list
             self.template_name = get_template_anon_user_list(self.list, "users/user_community/anon_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_community = self.user.is_anon_user_can_see_community()
         elif request.user.is_authenticated:
-            if self.user.pk == request.user.pk and self.user.is_staffed_user():
+            if self.user.pk == request.user.pk:
                 from common.templates import get_detect_platform_template
-                self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+
+                self.is_user_can_see_community = True
+                if self.user.is_staffed_user():
+                    self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+                else:
+                    self.template_name = get_detect_platform_template("users/user_community/my_communities.html", request.user, request.META['HTTP_USER_AGENT'])
             else:
                 from common.templates import get_template_user
+
+                self.is_user_can_see_community = self.user.is_user_can_see_community(request.user.pk)
                 self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(UserCommunities, self).get_context_data(**kwargs)
         context['user'] = self.user
+        context['is_user_can_see_community'] = self.is_user_can_see_community
         return context
 
     def get_queryset(self):
