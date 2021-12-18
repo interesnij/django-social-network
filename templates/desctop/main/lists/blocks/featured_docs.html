@@ -1,6 +1,6 @@
 {% if request.user.get_featured_friends_count > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
-  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
+  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Возможные друзья</p>
   {% for object in request.user.get_6_featured_friends_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
@@ -12,12 +12,12 @@
     {% endfor %}
   </ul>
   <div class="arrows">
-    {% for object in fix_list.get_posts_ids %}
+    {% for object in request.user.get_6_featured_friends_ids %}
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
     <label class="goto-first" for="s_1"></label>
-    <label class="goto-last" for="s_{{ fix_list.get_featured_friends_count }}"></label>
+    <label class="goto-last" for="s_{{ request.user.get_featured_friends_count }}"></label>
   </div>
 </div>
 {% endif %}
