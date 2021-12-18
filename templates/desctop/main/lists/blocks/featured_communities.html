@@ -1,17 +1,26 @@
+{% if request.user.get_featured_communities_count > 1 %}
 
-{% if request.user.get_6_featured_communities_ids %}
-<div class="card mb-3">
-      <a href="{% url 'featured_communities' %}" class="ajax">
-        <div class="media p-2">
-            <div class="media-body">
-                <p>Рекомендуемые сообщества</p>
-            </div>
-            {{ request.user.get_featured_communities_count }}
-        </div>
-      </a>
-
-    {% for object in request.user.get_6_featured_communities %}
+<div class="csslider infinity mt-6 mb-3" id="slider1">
+  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
+    Рекомендуемые сообщества
+  </p>
+  {% for object in request.user.get_6_featured_communities_ids %}
+    <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
+  {% endfor %}
+  <ul>
+    {% for user in request.user.get_6_featured_communities %}
+    <li class="scrollable">
       {% include 'desctop/generic/community/card.html' %}
+    </li>
     {% endfor %}
+  </ul>
+  <div class="arrows">
+    {% for object in request.user.get_6_featured_communities_ids %}
+      <label for="s_{{ forloop.counter }}"></label>
+    {% endfor %}
+
+    <label class="goto-first" for="s_1"></label>
+    <label class="goto-last" for="s_{{ request.user.get_featured_communities_count }}"></label>
+  </div>
 </div>
 {% endif %}
