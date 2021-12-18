@@ -4,7 +4,7 @@
       <a href="{% url 'featured_users' %}" class="ajax">
         <div class="media">
             <div class="media-body">
-                <h6 class="content-color-primary mb-0">Возможные друзья</h6>
+                <p class="content-color-primary mb-0">Возможные друзья</p>
             </div>
             {{ request.user.get_featured_friends_count }}
         </div>
