@@ -40,9 +40,13 @@ class FeaturedUC(models.Model):
     class Meta:
         verbose_name = 'Источник рекомендаций'
         verbose_name_plural = 'Источники рекомендаций'
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
+        ]
 
     def __str__(self):
         return str(self.owner)
+
 
     def is_open(self):
         if self.mute:
