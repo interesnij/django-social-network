@@ -25,19 +25,11 @@
             <div class="card-body">
               <ul class="list-group is_paginate">
                   {% if object_list %}
-                  {% for user in object_list %}
-                  <li class="border-top">
-                      <div class="card-body">
-                          <div class="media">
-                            {% include 'desctop/generic/community/figure.html' %}
-                            <div class="media-body">
-                                <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
-                                <p class="small">{{ community.count_members_ru }}</p>
-                            </div>
-                          </div>
-                      </div>
-                  </li>
-                  {% endfor %} 
+
+                  {% for object in object_list %}
+                    {% include 'desctop/generic/community/card.html' %}
+                  {% endfor %}
+
                   {% if page_obj.has_next %}
                   <div class="load centered m-1 next_page_list" data-link="{% url 'featured_communities' %}?page={{ page_obj.next_page_number }}">
                       <img src="/static/images/preloader.gif">
