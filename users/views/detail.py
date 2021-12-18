@@ -35,15 +35,16 @@ class UserCommunities(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from common.templates import get_detect_platform_template
-
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_anonymous:
+            from common.templates import get_template_anon_user_list
             self.template_name = get_template_anon_user_list(self.list, "users/user_community/anon_communities.html", request.user, request.META['HTTP_USER_AGENT'])
         elif request.user.is_authenticated:
             if self.user.pk == request.user.pk and self.user.is_staffed_user():
+                from common.templates import get_detect_platform_template
                 self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
             else:
+                from common.templates import get_template_user
                 self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
