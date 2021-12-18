@@ -365,6 +365,15 @@ class User(AbstractUser):
         if FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
             FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).delete()
 
+    def remove_featured_communities_from_all_list(self, community_id):
+        from users.model.list import ListUC, FeaturedUC
+        if FeaturedUC.objects.filter(owner=self.pk, community=community_id).exists():
+            FeaturedUC.objects.filter(owner=self.pk, community=community_id).delete()
+    def remove_featured_communities_from_list(self, community_id, list_id):
+        from users.model.list import ListUC, FeaturedUC
+        if FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, community=community_id).exists():
+            FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, community=community_id).delete()
+
     def frend_user(self, user):
         self.frend_user_with_id(user.pk)
         user.plus_friends(1)
@@ -1353,6 +1362,7 @@ class User(AbstractUser):
             CommunityInvite.objects.filter(community_pk=community.pk, invited_user__id=self.id).delete()
         elif community_to_join.is_closed():
             CommunityFollow.objects.filter(community__pk=community.pk, user__id=self.id).delete()
+        self.remove_featured_communities_from_all_list(community_to_join.pk)
         return community_to_join
 
     def add_news_subscriber_in_main_list(self, user_id):
