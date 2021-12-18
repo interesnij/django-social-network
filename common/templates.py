@@ -222,38 +222,6 @@ def get_template_user(user, folder, template, request_user, user_agent):
     elif request_user.pk != user.pk:
         if user.type[0] == "_":
             template_name = get_fine_user(user)
-        elif request_user.is_user_manager():
-            template_name = folder + "staff_" + template
-        elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
-            template_name = "generic/u_template/block_user.html"
-        elif user.is_closed_profile():
-            if request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk):
-                template_name = folder + template
-            else:
-                template_name = "generic/u_template/close_user.html"
-        elif request_user.is_child() and not user.is_child_safety():
-            template_name = "generic/u_template/no_child_safety.html"
-        else:
-            template_name = folder + template
-    return get_folder(user_agent) + template_name
-
-def get_owner_template_user(list, folder, template, owner_user, request_user, user_agent, staff=False):
-    """
-        Если список пользователя. Чтобы мог удалять, например, посты не свои, но в своем списке.
-    """
-    user = list.creator
-    update_activity(request_user, user_agent)
-    if request_user.type[0] == "_":
-        template_name = get_fine_request_user(request_user)
-    elif list.type[0] == "_":
-        template_name = get_fine_user_item(request_user, list, folder, template)
-    elif owner_user.pk == request_user.pk:
-            template_name = folder + "my_" + template
-    elif request_user.pk != user.pk:
-        if user.type[0] == "_":
-            template_name = get_fine_user(user)
-        elif staff:
-            template_name = folder + "staff_" + template
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
         elif user.is_closed_profile():

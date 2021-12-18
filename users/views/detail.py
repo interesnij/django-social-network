@@ -29,20 +29,22 @@ class UserGallery(TemplateView):
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
         c['is_can_see'], c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.is_can_see, self.user, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
-        return c 
+        return c
 
 class UserCommunities(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
+        from common.templates import get_detect_platform_template
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if request.user.is_anonymous:
             self.template_name = get_template_anon_user_list(self.list, "users/user_community/anon_communities.html", request.user, request.META['HTTP_USER_AGENT'])
-        elif self.user.is_staffed_user() and self.user == request.user:
-            from common.templates import get_detect_platform_template
-            self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_user_list(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
+        elif request.user.is_authenticated:
+            if self.user.pk == request.user.pk and self.user.is_staffed_user():
+                self.template_name = get_detect_platform_template("users/user_community/my_staffed_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+            else:
+                self.template_name = get_template_user(self.user, "users/user_community/", "communities.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UserCommunities,self).get(request,*args,**kwargs)
 
     def get_context_data(self, **kwargs):
