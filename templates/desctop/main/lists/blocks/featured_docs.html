@@ -1,0 +1,224 @@
+<style>
+  .box-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+.box-container .card {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f5f6fa;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+.box-container .card:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 0;
+  background: #64b3f4;
+  transition: all 0.5s ease;
+}
+.box-container .card:hover {
+}
+.box-container .card:hover:before {
+  height: 180px;
+}
+.box-container .card:hover .social {
+  margin-top: 50px;
+}
+.box-container .card:hover .pic {
+  width: 120px;
+  height: 120px;
+  margin-top: 50px;
+  box-shadow: 0px 0px 10px 1px #888;
+}
+.box-container .card:hover .content {
+  margin-top: 90px;
+}
+.box-container .card .social {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 0;
+  margin-top: -30px;
+  text-align: center;
+  transition: margin-top 0.5s ease;
+}
+.box-container .card .social a {
+  text-decoration: none;
+  color: #2d3436;
+  padding: 8px;
+  font-size: 18px;
+  color: #fff;
+}
+.box-container .card .pic {
+  position: relative;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+.box-container .card .pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.box-container .card .content {
+  margin-top: 90px;
+  text-align: center;
+  padding: 0 30px;
+  color: #2d3436;
+  transition: margin-top 0.5s ease;
+}
+.box-container .card .content .title {
+  margin-bottom: 0;
+  font-family: 'Yantramanav', sans-serif;
+  font-size: 22px;
+}
+.box-container .card .content span {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+.box-container .card .content p {
+  margin: 20px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b0b0b0;
+}
+</style>
+
+<div uk-slider="center: true">
+
+  <div class="uk-position-relative uk-visible-toggle uk-dark" tabindex="-1">
+
+    <ul class="uk-slider-items uk-child-width-1-2@s uk-child-width-1-4@l uk-child-width-1-4@m uk-grid">
+      <li>
+        <div class="uk-panel">
+          <div class="box-container">
+            <div class="card">
+              <div class="social">
+                <a href="" class="uk-icon-link" uk-icon="twitter"></a>
+                <a href="" class="uk-icon-link" uk-icon="facebook"></a>
+                <a href="" class="uk-icon-link" uk-icon="instagram"></a>
+                <a href="" class="uk-icon-link" uk-icon="behance"></a>
+                <a href="" class="uk-icon-link" uk-icon="linkedin"></a>
+              </div>
+              <div class="pic"><img src="https://instagram.fcgk6-1.fna.fbcdn.net/vp/b97a5a48c4db220f58e53fd7712b4c4d/5D095A20/t51.2885-15/e35/51588782_245542016328142_2909652747855401869_n.jpg?_nc_ht=instagram.fcgk6-1.fna.fbcdn.net" alt="profile-picture" title="Someone Famous" />
+              </div>
+              <div class="content">
+                <h3 class="title">Dimas Aji</h3><span>Graphic Designer</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-panel">
+          <div class="box-container">
+            <div class="card">
+              <div class="social">
+                <a href="" class="uk-icon-link" uk-icon="twitter"></a>
+                <a href="" class="uk-icon-link" uk-icon="facebook"></a>
+                <a href="" class="uk-icon-link" uk-icon="instagram"></a>
+                <a href="" class="uk-icon-link" uk-icon="behance"></a>
+                <a href="" class="uk-icon-link" uk-icon="linkedin"></a>
+              </div>
+              <div class="pic"><img src="https://instagram.fcgk6-1.fna.fbcdn.net/vp/b97a5a48c4db220f58e53fd7712b4c4d/5D095A20/t51.2885-15/e35/51588782_245542016328142_2909652747855401869_n.jpg?_nc_ht=instagram.fcgk6-1.fna.fbcdn.net" alt="profile-picture" title="Someone Famous" />
+              </div>
+              <div class="content">
+                <h3 class="title">Dimas Aji</h3><span>Graphic Designer</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-panel">
+          <div class="box-container">
+            <div class="card">
+              <div class="social">
+                <a href="" class="uk-icon-link" uk-icon="twitter"></a>
+                <a href="" class="uk-icon-link" uk-icon="facebook"></a>
+                <a href="" class="uk-icon-link" uk-icon="instagram"></a>
+                <a href="" class="uk-icon-link" uk-icon="behance"></a>
+                <a href="" class="uk-icon-link" uk-icon="linkedin"></a>
+              </div>
+              <div class="pic"><img src="https://instagram.fcgk6-1.fna.fbcdn.net/vp/b97a5a48c4db220f58e53fd7712b4c4d/5D095A20/t51.2885-15/e35/51588782_245542016328142_2909652747855401869_n.jpg?_nc_ht=instagram.fcgk6-1.fna.fbcdn.net" alt="profile-picture" title="Someone Famous" />
+              </div>
+              <div class="content">
+                <h3 class="title">Dimas Aji</h3><span>Graphic Designer</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-panel">
+          <div class="box-container">
+            <div class="card">
+              <div class="social">
+                <a href="" class="uk-icon-link" uk-icon="twitter"></a>
+                <a href="" class="uk-icon-link" uk-icon="facebook"></a>
+                <a href="" class="uk-icon-link" uk-icon="instagram"></a>
+                <a href="" class="uk-icon-link" uk-icon="behance"></a>
+                <a href="" class="uk-icon-link" uk-icon="linkedin"></a>
+              </div>
+              <div class="pic"><img src="https://instagram.fcgk6-1.fna.fbcdn.net/vp/b97a5a48c4db220f58e53fd7712b4c4d/5D095A20/t51.2885-15/e35/51588782_245542016328142_2909652747855401869_n.jpg?_nc_ht=instagram.fcgk6-1.fna.fbcdn.net" alt="profile-picture" title="Someone Famous" />
+              </div>
+              <div class="content">
+                <h3 class="title">Dimas Aji</h3><span>Graphic Designer</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="uk-panel">
+          <div class="box-container">
+            <div class="card">
+              <div class="social">
+                <a href="" class="uk-icon-link" uk-icon="twitter"></a>
+                <a href="" class="uk-icon-link" uk-icon="facebook"></a>
+                <a href="" class="uk-icon-link" uk-icon="instagram"></a>
+                <a href="" class="uk-icon-link" uk-icon="behance"></a>
+                <a href="" class="uk-icon-link" uk-icon="linkedin"></a>
+              </div>
+              <div class="pic"><img src="https://instagram.fcgk6-1.fna.fbcdn.net/vp/b97a5a48c4db220f58e53fd7712b4c4d/5D095A20/t51.2885-15/e35/51588782_245542016328142_2909652747855401869_n.jpg?_nc_ht=instagram.fcgk6-1.fna.fbcdn.net" alt="profile-picture" title="Someone Famous" />
+              </div>
+              <div class="content">
+                <h3 class="title">Dimas Aji</h3><span>Graphic Designer</span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+  </div>
+
+  <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+</div>
