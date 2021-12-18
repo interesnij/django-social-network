@@ -1,7 +1,6 @@
 
 {% if request.user.get_6_featured_communities_ids %}
 <div class="card mb-3">
-    <div class="card-header">
       <a href="{% url 'featured_communities' %}" class="ajax">
         <div class="media">
             <div class="media-body">
@@ -10,7 +9,6 @@
             {{ request.user.get_featured_communities_count }}
         </div>
       </a>
-    </div>
 
     {% for object in request.user.get_6_featured_communities %}
       {% include 'desctop/generic/community/card.html' %}
