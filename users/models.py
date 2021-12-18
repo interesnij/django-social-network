@@ -426,21 +426,6 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
         self.delete_news_subscriber_from_list(user_id)
 
-    def get_or_create_featured_objects_in_main_list(self, user):
-        from users.model.list import ListUC, FeaturedUC
-
-        try:
-            list = ListUC.objects.get(type=1, owner=self.pk)
-        except:
-            list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
-
-        for frend in user.get_6_friends():
-            if not FeaturedUC.objects.filter(owner=self.pk, user=user.pk).exists():
-                FeaturedUC.objects.create(list=list, owner=self.pk, user=user.pk)
-        for community in user.get_6_communities():
-            if not FeaturedUC.objects.filter(owner=self.pk, community=community.pk).exists():
-                FeaturedUC.objects.create(list=list, owner=self.pk, community=community.pk)
-
     def unfrend_user(self, user):
         self.unfrend_user_with_id(user.pk)
         user.minus_friends(1)
@@ -459,6 +444,21 @@ class User(AbstractUser):
             self.delete_news_subscriber_from_list(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         return connection.delete()
+
+    def get_or_create_featured_objects_in_main_list(self, user):
+        from users.model.list import ListUC, FeaturedUC
+
+        try:
+            list = ListUC.objects.get(type=1, owner=self.pk)
+        except:
+            list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
+
+        for frend in user.get_6_friends():
+            if not FeaturedUC.objects.filter(owner=self.pk, user=user.pk).exists():
+                FeaturedUC.objects.create(list=list, owner=self.pk, user=user.pk)
+        for community in user.get_6_communities():
+            if not FeaturedUC.objects.filter(owner=self.pk, community=community.pk).exists():
+                FeaturedUC.objects.create(list=list, owner=self.pk, community=community.pk)
 
     def disconnect_from_user_with_id(self, user_id):
         check_is_connected(user=self, user_id=user_id)

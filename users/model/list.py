@@ -27,9 +27,6 @@ class ListUC(models.Model):
     type = models.PositiveSmallIntegerField(choices=TYPE, default=NO, verbose_name="Рекомендуемое сообщество")
     name = models.CharField(max_length=100)
     owner = models.PositiveIntegerField(default=0, verbose_name="Владелец")
-    constraints = [
-        models.UniqueConstraint(fields=['owner', 'type'], name='feature_uc')
-    ]
 
 
 class FeaturedUC(models.Model):
@@ -48,7 +45,10 @@ class FeaturedUC(models.Model):
         ]
 
     def __str__(self):
-        return str(self.owner)
+        if self.user:
+            return "Кому рекомендуют: " + str(self.owner) + ", возможный друг: " + str(self.user)
+        elif self.community:
+            return "Кому рекомендуют: " + str(self.owner) + ", возможная группа: " + str(self.community)
 
 
     def is_open(self):
@@ -76,7 +76,10 @@ class NewsUC(models.Model):
         ]
 
     def __str__(self):
-        return str(self.owner)
+        if self.user:
+            return "Кто получает новости: " + str(self.owner) + ", от пользователя: " + str(self.user)
+        elif self.community:
+            return "Кто получает новости: " + str(self.owner) + ", от группы: " + str(self.community)
 
     def is_open(self):
         if self.mute:
@@ -101,6 +104,12 @@ class NotifyUC(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
         ]
+
+    def __str__(self):
+        if self.user:
+            return "Кто получает уведы: " + str(self.owner) + ", от пользователя: " + str(self.user)
+        elif self.community:
+            return "Кто получает уведы: " + str(self.owner) + ", от группы: " + str(self.community)
 
     def is_open(self):
         if self.mute:
