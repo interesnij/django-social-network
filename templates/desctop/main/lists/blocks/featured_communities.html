@@ -16,7 +16,7 @@
   </ul>
   <div class="arrows">
     {% for object in request.user.get_6_featured_communities_ids %}
-      <label for="s_{{ forloop.counter }}"></label>
+      <label for="com_{{ forloop.counter }}"></label>
     {% endfor %}
 
     <label class="goto-first" for="com_1"></label>
