@@ -7,10 +7,10 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important;
 }
-.csslider > .arrows label {
+.slides_arrows label {
   box-shadow: inset 2px -2px 0 1px rgba(255, 255, 255, 0.7) !important;
 }
-.csslider > .arrows label:hover {
+.slides_arrows label:hover {
 box-shadow: inset 2px -2px 0 1px #ffffff !important;
 }
 .progress_line {

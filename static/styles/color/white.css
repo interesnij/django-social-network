@@ -14,11 +14,11 @@ a {
 .bg-dark a:hover  {
   color: rgba(255, 255, 255, 1) !important
 }
-.csslider > .arrows label {
+.slides_arrows label {
   box-shadow: inset 2px -2px 0 1px rgba(0, 0, 0, 0.8) !important;
 }
-.csslider > .arrows label:hover {
-box-shadow: inset 2px -2px 0 1px black !important;
+.slides_arrows label:hover {
+  box-shadow: inset 2px -2px 0 1px black !important;
 }
 .border-top {
     border-top: 1px solid rgba(127,127,127, 0.7) !important;
