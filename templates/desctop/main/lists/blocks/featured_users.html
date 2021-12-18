@@ -1,6 +1,6 @@
 {% if request.user.get_featured_friends_count > 1 %}
 
-<div class="csslider csslider_1 infinity mt-6 mb-3">
+<div class="csslider_1 infinity_1 mt-6 mb-3">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
     Возможные друзья
   </p>
@@ -14,7 +14,7 @@
     </li>
     {% endfor %}
   </ul>
-  <div class="arrows">
+  <div class="arrows_1">
     {% for object in request.user.get_6_featured_friends_ids %}
       <label for="use_{{ forloop.counter }}"></label>
     {% endfor %}
