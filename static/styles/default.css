@@ -511,7 +511,8 @@ margin-left: 0%;
   white-space: normal;
 }
 
-.csslider > .arrows {
+.csslider > .arrows,
+.csslider > .arrows_2 {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -520,7 +521,8 @@ margin-left: 0%;
   user-select: none;
 }
 
-.csslider > .arrows {
+.csslider > .arrows,
+.csslider > .arrows_2 {
   position: absolute;
   left: -31px;
   top: 50%;
@@ -533,7 +535,8 @@ margin-left: 0%;
   box-sizing: content-box;
 }
 
-.csslider > .arrows label {
+.csslider > .arrows label,
+.csslider > .arrows_2 label {
   display: none;
   position: absolute;
   padding: 13px;
@@ -543,10 +546,12 @@ margin-left: 0%;
   -webkit-transition: box-shadow 0.15s, margin 0.15s;
   transition: box-shadow 0.15s, margin 0.15s;
 }
-.csslider > .arrows label:hover {
+.csslider > .arrows label:hover,
+.csslider > .arrows_2 label:hover {
   margin: 0 0px;
 }
-.csslider > .arrows label:before {
+.csslider > .arrows label:before,
+.csslider > .arrows_2 label:before {
   content: '';
   position: absolute;
   top: -100%;
@@ -598,18 +603,18 @@ margin-left: 0%;
   top: 0;
 }
 
-.csslider_2.infinity > input:first-of-type:checked ~ .arrows label.goto_last_2,
-.csslider_2 > input:nth-of-type(1):checked ~ .arrows > label:nth-of-type(0),
-.csslider_2 > input:nth-of-type(2):checked ~ .arrows > label:nth-of-type(1),
-.csslider_2 > input:nth-of-type(3):checked ~ .arrows > label:nth-of-type(2),
-.csslider_2 > input:nth-of-type(4):checked ~ .arrows > label:nth-of-type(3),
-.csslider_2 > input:nth-of-type(5):checked ~ .arrows > label:nth-of-type(4),
-.csslider_2 > input:nth-of-type(6):checked ~ .arrows > label:nth-of-type(5),
-.csslider_2 > input:nth-of-type(7):checked ~ .arrows > label:nth-of-type(6),
-.csslider_2 > input:nth-of-type(8):checked ~ .arrows > label:nth-of-type(7),
-.csslider_2 > input:nth-of-type(9):checked ~ .arrows > label:nth-of-type(8),
-.csslider_2 > input:nth-of-type(10):checked ~ .arrows > label:nth-of-type(9),
-.csslider_2 > input:nth-of-type(11):checked ~ .arrows > label:nth-of-type(10) {
+.csslider_2.infinity > input:first-of-type:checked ~ .arrows_2 label.goto_last_2,
+.csslider_2 > input:nth-of-type(1):checked ~ .arrows_2 > label:nth-of-type(0),
+.csslider_2 > input:nth-of-type(2):checked ~ .arrows_2 > label:nth-of-type(1),
+.csslider_2 > input:nth-of-type(3):checked ~ .arrows_2 > label:nth-of-type(2),
+.csslider_2 > input:nth-of-type(4):checked ~ .arrows_2 > label:nth-of-type(3),
+.csslider_2 > input:nth-of-type(5):checked ~ .arrows_2 > label:nth-of-type(4),
+.csslider_2 > input:nth-of-type(6):checked ~ .arrows_2 > label:nth-of-type(5),
+.csslider_2 > input:nth-of-type(7):checked ~ .arrows_2 > label:nth-of-type(6),
+.csslider_2 > input:nth-of-type(8):checked ~ .arrows_2 > label:nth-of-type(7),
+.csslider_2 > input:nth-of-type(9):checked ~ .arrows_2 > label:nth-of-type(8),
+.csslider_2 > input:nth-of-type(10):checked ~ .arrows_2 > label:nth-of-type(9),
+.csslider_2 > input:nth-of-type(11):checked ~ .arrows_2 > label:nth-of-type(10) {
   display: block;
   left: 34px;
   right: auto;
@@ -620,18 +625,18 @@ margin-left: 0%;
   transform: rotate(45deg);
 }
 
-.csslider_2.infinity > input:last-of-type:checked ~ .arrows label.goto_first_2,
-.csslider_2 > input:nth-of-type(1):checked ~ .arrows > label:nth-of-type(2),
-.csslider_2 > input:nth-of-type(2):checked ~ .arrows > label:nth-of-type(3),
-.csslider_2 > input:nth-of-type(3):checked ~ .arrows > label:nth-of-type(4),
-.csslider_2 > input:nth-of-type(4):checked ~ .arrows > label:nth-of-type(5),
-.csslider_2 > input:nth-of-type(5):checked ~ .arrows > label:nth-of-type(6),
-.csslider_2 > input:nth-of-type(6):checked ~ .arrows > label:nth-of-type(7),
-.csslider_2 > input:nth-of-type(7):checked ~ .arrows > label:nth-of-type(8),
-.csslider_2 > input:nth-of-type(8):checked ~ .arrows > label:nth-of-type(9),
-.csslider_2 > input:nth-of-type(9):checked ~ .arrows > label:nth-of-type(10),
-.csslider_2 > input:nth-of-type(10):checked ~ .arrows > label:nth-of-type(11),
-.csslider_2 > input:nth-of-type(11):checked ~ .arrows > label:nth-of-type(12) {
+.csslider_2.infinity > input:last-of-type:checked ~ .arrows_2 label.goto_first_2,
+.csslider_2 > input:nth-of-type(1):checked ~ .arrows_2 > label:nth-of-type(2),
+.csslider_2 > input:nth-of-type(2):checked ~ .arrows_2 > label:nth-of-type(3),
+.csslider_2 > input:nth-of-type(3):checked ~ .arrows_2 > label:nth-of-type(4),
+.csslider_2 > input:nth-of-type(4):checked ~ .arrows_2 > label:nth-of-type(5),
+.csslider_2 > input:nth-of-type(5):checked ~ .arrows_2 > label:nth-of-type(6),
+.csslider_2 > input:nth-of-type(6):checked ~ .arrows_2 > label:nth-of-type(7),
+.csslider_2 > input:nth-of-type(7):checked ~ .arrows_2 > label:nth-of-type(8),
+.csslider_2 > input:nth-of-type(8):checked ~ .arrows_2 > label:nth-of-type(9),
+.csslider_2 > input:nth-of-type(9):checked ~ .arrows_2 > label:nth-of-type(10),
+.csslider_2 > input:nth-of-type(10):checked ~ .arrows_2 > label:nth-of-type(11),
+.csslider_2 > input:nth-of-type(11):checked ~ .arrows_2 > label:nth-of-type(12) {
   display: block;
   right: 60px;
   -moz-transform: rotate(225deg);
