@@ -1585,12 +1585,11 @@ class User(AbstractUser):
             return user_pk in self.get_can_see_post_include_users_ids()
         return False
 
-
     def is_user_can_see_community(self, user_pk):
         private = self.profile_private
         if private.can_see_community == 1:
             return True
-        elif private.can_see_community == 6 or self.pk == user_pk:
+        elif private.can_see_community == 6 and self.pk == user_pk:
             return True
         elif private.can_see_community == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
