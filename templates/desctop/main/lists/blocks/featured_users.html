@@ -6,7 +6,7 @@
   {% for object in request.user.get_6_featured_friends_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
-  <ul clas="mt-3">
+  <ul class="mt-3">
     {% for user in request.user.get_6_featured_friends %}
     <li class="scrollable">
       {% include 'desctop/generic/user/card.html' %}
