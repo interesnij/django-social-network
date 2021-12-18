@@ -224,7 +224,7 @@ class AllFeaturedUsersList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/u_list/featured_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("users/u_list/featured_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(AllFeaturedUsersList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -234,6 +234,21 @@ class AllFeaturedUsersList(ListView):
 
 	def get_queryset(self):
 		return self.request.user.get_featured_friends()
+
+class AllFeaturedCommunitiesList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/u_list/featured_communities.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(AllFeaturedCommunitiesList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(AllFeaturedCommunitiesList,self).get_context_data(**kwargs)
+		context['user'] = self.request.user
+		return context
+
+	def get_queryset(self):
+		return self.request.user.get_featured_communities()
 
 class UserPostsListView(ListView):
 	template_name, paginate_by, is_user_can_see_post_section, is_user_can_see_post_list, is_user_can_create_posts = None, 15, None, None, None

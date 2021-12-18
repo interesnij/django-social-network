@@ -1,5 +1,5 @@
 {% extends "base_mobile.html" %}
-{% block title %}Рекомендованные друзья{% endblock %}
+{% block title %}Возможные друзья{% endblock %}
 {% block content %}
 
 <div class="main-container container mt-3">
@@ -10,7 +10,7 @@
       </div>
       <div style="flex: 0 0 80%;max-width:80%;padding:5px;">
           <button class="btn btn-sm border dropdown-toggle menu_drop" style="width: -webkit-fill-available;">
-              Рекомендованные друзья ({{ user.get_featured_friends_count }})
+              Возможные друзья ({{ user.get_featured_friends_count }})
           </button>
           <div class="dropdown-menu" style="right: 15px;left: 15px; top: 60px;">
             <a class="dropdown-item ajax" href="{% url 'online_frends' pk=user.pk %}">Мои друзья ({{ user.count_friends }})</a>
@@ -29,7 +29,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="input-group mb-3" style="display:flex">
-                    <input type="text" class="form-control form-control-sm" placeholder="Поиск людей">
+                    <input type="text" class="form-control form-control-sm" placeholder="Поиск">
                     <div class="input-group-append">
                         <button class="btn btn-sm border" type="button">Искать</button>
                     </div>
@@ -54,7 +54,7 @@
                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                                 <path d="M0 0h24v24H0z" fill="none" /></svg>
                         </div>
-                        <h6 style="margin: 20px;text-align: center;"> Рекомендованных друзей нет...</h6>
+                        <h6 style="margin: 20px;text-align: center;"> Возможных друзей нет...</h6>
                     </div>
                     {% endif %}
                 </ul>

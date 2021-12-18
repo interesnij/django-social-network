@@ -1,5 +1,4 @@
 {% extends "base_mobile.html" %}
-{% load liked_user %}
 {% block title %}Мои сообщества{% endblock %}
 {% block meta %}
 <meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/communities/" />
@@ -45,7 +44,7 @@
                             {% include 'mobile/generic/community/figure.html' %}
                             <div class="media-body">
                                 <h6 class="my-0 mt-1">{% include 'mobile/generic/community/community.html' %}</h6>
-                                <p class="small">{{ community.count_members }} {{ community.count_members|rupluralize:"подписчик,подписчика,подписчиков" }}</p>
+                                <p class="small">{{ community.count_members_ru }}</p>
                             </div>
                         </div>
                     </li>
