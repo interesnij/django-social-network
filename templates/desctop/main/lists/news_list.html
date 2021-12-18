@@ -20,8 +20,6 @@
                   {% include 'desctop/main/lists/blocks/featured_users.html' %}
                 {% elif forloop.counter == 10 %}
                   {% include 'desctop/main/lists/blocks/featured_communities.html' %}
-                {% elif forloop.counter == 1 %}
-                  {% include 'desctop/main/lists/blocks/featured_docs.html' %}
                 {% endif %}
                 {{ object|get_notify:request.user|safe }}
               {% endfor %}
