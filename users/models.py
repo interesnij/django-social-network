@@ -395,8 +395,7 @@ class User(AbstractUser):
         return User.objects.filter(id__in=self.get_featured_friends_ids())
 
     def get_6_featured_friends(self):
-        query = Q(id__in=self.get_6_featured_friends_ids())
-        return User.objects.filter(query)
+        return User.objects.filter(id__in=self.get_6_featured_friends_ids())
 
     def get_6_featured_communities_ids(self):
         from users.model.list import ListUC, FeaturedUC
@@ -1605,7 +1604,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_photo == 1:
             return True
-        elif private.can_see_photo == private.YOU and self.pk == user_pk:
+        elif private.can_see_photo == 6 and self.pk == user_pk:
             return True
         elif private.can_see_photo == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
@@ -1621,7 +1620,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_video == 1:
             return True
-        elif private.can_see_video == private.YOU and self.pk == user_pk:
+        elif private.can_see_video == 6 and self.pk == user_pk:
             return True
         elif private.can_see_video == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
@@ -1637,7 +1636,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_music == 1:
             return True
-        elif private.can_see_music == private.YOU and self.pk == user_pk:
+        elif private.can_see_music == 6 and self.pk == user_pk:
             return True
         elif private.can_see_music == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
@@ -1653,7 +1652,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_doc == 1:
             return True
-        elif private.can_see_doc == private.YOU and self.pk == user_pk:
+        elif private.can_see_doc == 6 and self.pk == user_pk:
             return True
         elif private.can_see_doc == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
@@ -1669,7 +1668,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_friend == 1:
             return True
-        elif private.can_see_friend == private.YOU and self.pk == user_pk:
+        elif private.can_see_friend == 6 and self.pk == user_pk:
             return True
         elif private.can_see_friend == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
@@ -1685,7 +1684,7 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_good == 1:
             return True
-        elif private.can_see_good == private.YOU and self.pk == user_pk:
+        elif private.can_see_good == 6 and self.pk == user_pk:
             return True
         elif private.can_see_good == private.FRIENDS and user_pk in self.get_all_friends_ids():
             return True
