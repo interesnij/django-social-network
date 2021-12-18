@@ -391,30 +391,33 @@ class User(AbstractUser):
         self.add_news_subscriber_in_main_list(user_id)
         return frend
 
-    def get_featured_friends(self):
-        return User.objects.filter(id__in=self.get_featured_friends_ids())
-
-    def get_6_featured_friends(self):
-        return User.objects.filter(id__in=self.get_6_featured_friends_ids())
-
     def get_featured_friends_ids(self):
         from users.model.list import ListUC, FeaturedUC
         list = ListUC.objects.get(owner=self.pk, type=1)
         return [i['user'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=False).values("user")]
+    def get_6_featured_friends_ids(self):
+        return self.get_featured_friends_ids()[:6]
+    def get_featured_friends(self):
+        return User.objects.filter(id__in=self.get_featured_friends_ids())
+    def get_6_featured_friends(self):
+        return User.objects.filter(id__in=self.get_6_featured_friends_ids())
+    def get_featured_friends_count(self):
+        return len(self.get_featured_friends_ids())
+
     def get_featured_communities_ids(self):
         from users.model.list import ListUC, FeaturedUC
         list = ListUC.objects.get(owner=self.pk, type=1)
         return [i['community'] for i in FeaturedUC.objects.filter(list=list, owner=self.pk, mute=False).values("community")]
-
-    def get_featured_friends_count(self):
-        return len(self.get_featured_friends_ids())
-    def get_6_featured_friends_ids(self):
-        return self.get_featured_friends_ids()[:6]
-
-    def get_featured_communities_count(self):
-        return len(self.get_featured_communities_ids())
     def get_6_featured_communities_ids(self):
         return self.get_featured_communities_ids()[:6]
+    def get_featured_communities(self):
+        from communities.models import Community
+        return Community.objects.filter(id__in=self.get_featured_communities_ids())
+    def get_6_featured_communities(self):
+        from communities.models import Community
+        return Community.objects.filter(id__in=self.get_6_featured_communities_ids())
+    def get_featured_communities_count(self):
+        return len(self.get_featured_communities_ids())
 
     def unfollow_user(self, user):
         self.unfollow_user_with_id(user.pk)
