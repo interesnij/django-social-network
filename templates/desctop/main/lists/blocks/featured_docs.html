@@ -1,4 +1,4 @@
-{% if request.user.get_6_featured_friends_ids > 1 %}
+{% if request.user.get_featured_friends_count > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
   {% for object in request.user.get_6_featured_friends_ids %}
