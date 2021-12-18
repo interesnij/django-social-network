@@ -311,18 +311,17 @@ class User(AbstractUser):
         '''''проги для подписчиков  60-109'''''
 
     def follow_user(self, user):
-        self.follow_user_with_id(user.pk)
-        user.plus_follows(1)
-
-    def follow_user_with_id(self, user_id):
         from follows.models import Follow
 
-        check_can_follow_user(user_id=user_id, user=self)
-        if self.pk == user_id:
+        check_can_follow_user(user.pk=user_id, user=self)
+        if self.pk == user.pk:
             raise ValidationError('Вы не можете подписаться сами на себя',)
-        elif not self.is_closed_profile():
-            self.add_news_subscriber_in_main_list(user_id)
-        return Follow.create_follow(user_id=self.pk, followed_user_id=user_id)
+        follow = Follow.create_follow(user_id=self.pk, followed_user_id=user.pk)
+
+        user.plus_follows(1)
+        if not user.is_closed_profile():
+            self.add_news_subscriber_in_main_list(user.pk)
+            self.get_or_create_featured_objects_in_main_list(user)
 
     def community_follow_user(self, community_pk):
         return self.follow_community(community_pk)
@@ -360,22 +359,18 @@ class User(AbstractUser):
     def remove_featured_friend_from_all_list(self, user_id):
         from users.model.list import ListUC, FeaturedUC
         if FeaturedUC.objects.filter(owner=self.pk, user=user_id).exists():
-            FeaturedUC.objects.get(owner=self.pk, user=user_id).delete()
+            FeaturedUC.objects.filter(owner=self.pk, user=user_id).delete()
     def remove_featured_friend_from_list(self, user_id, list_id):
         from users.model.list import ListUC, FeaturedUC
         if FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).exists():
-            FeaturedUC.objects.get(list_id=list_id, owner=self.pk, user=user_id).delete()
+            FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, user=user_id).delete()
 
     def frend_user(self, user):
-        self.frend_user_with_id(user.pk)
+        frend = self.frend_user_with_id(user.pk)
         user.plus_friends(1)
         self.plus_friends(1)
         self.minus_follows(1)
-        try:
-            for frend in user.get_6_friends():
-                self.get_or_create_featured_friend_in_main_list(frend)
-        except:
-            pass
+        self.get_or_create_featured_objects_in_main_list(frend)
 
     def frend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -388,7 +383,9 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=user_id, followed_user_id=self.pk)
         follow.delete()
         self.remove_featured_friend_from_all_list(user_id)
-        self.add_news_subscriber_in_main_list(user_id)
+        elif frend.is_closed_profile():
+            self.add_news_subscriber_in_main_list(user_id)
+
         return frend
 
     def get_featured_friends_ids(self):
@@ -430,27 +427,27 @@ class User(AbstractUser):
         follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
         self.delete_news_subscriber_from_list(user_id)
 
-    def get_or_create_featured_friend_in_main_list(self, user):
+    def get_or_create_featured_objects_in_main_list(self, user):
         from users.model.list import ListUC, FeaturedUC
 
-        if self.pk != user.pk and not FeaturedUC.objects.filter(owner=self.pk, user=user.pk).exists() \
-            and not self.is_connected_with_user_with_id(user_id=user.pk) and not self.is_blocked_with_user_with_id(user_id=user.pk):
-            try:
-                list = ListUC.objects.get(type=1, owner=self.pk)
-            except:
-                list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
+        try:
+            list = ListUC.objects.get(type=1, owner=self.pk)
+        except:
+            list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
 
-            try:
-                FeaturedUC.objects.get(list=list, owner=self.pk, user=user.pk)
-            except:
-                FeaturedUC.objects.create(list=list, owner=self.pk, user=user.pkr)
+        for frend in user.get_6_friends():
+            if not FeaturedUC.objects.filter(owner=self.pk, user=user.pk).exists():
+                FeaturedUC.objects.create(list=list, owner=self.pk, user=user.pk)
+        for community in user.get_6_communities():
+            if not FeaturedUC.objects.filter(owner=self.pk, community=community.pk).exists():
+                FeaturedUC.objects.create(list=list, owner=self.pk, community=community.pk)
 
     def unfrend_user(self, user):
         self.unfrend_user_with_id(user.pk)
         user.minus_friends(1)
         self.minus_friends(1)
         self.plus_follows(1)
-        return self.get_or_create_featured_friend_in_main_list(user)
+        return self
 
     def unfrend_user_with_id(self, user_id):
         from follows.models import Follow
@@ -473,7 +470,6 @@ class User(AbstractUser):
 
     def unblock_user_with_pk(self, pk):
         user = User.objects.get(pk=pk)
-        self.get_or_create_featured_friend_in_main_list(user)
         return self.unblock_user_with_id(user_id=user.pk)
 
     def unblock_user_with_id(self, user_id):
@@ -1071,16 +1067,13 @@ class User(AbstractUser):
     def get_6_friends(self):
         return self.get_all_friends()[:6]
 
-    def get_default_communities(self):
-        from communities.models import Community
-        return Community.objects.filter(memberships__user_id=self.pk)
-
     def get_6_communities(self):
         from communities.models import Community
         return Community.objects.filter(memberships__user=self)[0:6]
 
     def get_communities(self):
-        return self.get_default_communities()
+        from communities.models import Community
+        return Community.objects.filter(memberships__user_id=self.pk)
 
     def get_all_friends_ids(self):
         my_frends = self.connections.values('target_user_id')
@@ -1115,18 +1108,10 @@ class User(AbstractUser):
         return query
 
     def get_online_friends_count(self):
-        frends, query = self.get_all_friends(), []
-        for frend in frends:
-            if frend.get_online():
-                query += [frend,]
-        return len(query)
+        return len(self.get_all_friends())
 
     def get_6_online_friends(self):
-        frends, query = self.get_all_friends(), []
-        for frend in frends:
-            if frend.get_online() and len(query) < 6:
-                query += [frend]
-        return query
+        return self.get_online_friends()[:6]
 
     def get_draft_posts(self):
         from posts.models import Post

@@ -27,6 +27,9 @@ class ListUC(models.Model):
     type = models.PositiveSmallIntegerField(choices=TYPE, default=NO, verbose_name="Рекомендуемое сообщество")
     name = models.CharField(max_length=100)
     owner = models.PositiveIntegerField(default=0, verbose_name="Владелец")
+    constraints = [
+        models.UniqueConstraint(fields=['owner', 'type'], name='feature_uc')
+    ]
 
 
 class FeaturedUC(models.Model):
@@ -68,6 +71,9 @@ class NewsUC(models.Model):
     class Meta:
         verbose_name = 'Источник новостей'
         verbose_name_plural = 'Источники новостей'
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
+        ]
 
     def __str__(self):
         return str(self.owner)
@@ -92,6 +98,9 @@ class NotifyUC(models.Model):
     class Meta:
         verbose_name = 'Источник уведомлений'
         verbose_name_plural = 'Источники уведомлений'
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
+        ]
 
     def is_open(self):
         if self.mute:
