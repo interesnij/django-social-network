@@ -7,10 +7,10 @@ a:hover{
 a {
   color: rgba(255, 255, 255, 0.7) !important
 }
-.csslider > .arrows label {
+.csslider_1 > .arrows_1 label {
   box-shadow: inset 2px -2px 0 1px rgba(255, 255, 255, 0.7) !important;
 }
-.csslider > .arrows label:hover {
+.csslider_1 > .arrows_1 label:hover {
 box-shadow: inset 2px -2px 0 1px #ffffff !important;
 }
 .mt-0 a, .mt-0 p, .media-body p, .card-body p{color: rgba(255, 255, 255, 0.6) !important;}
