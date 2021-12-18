@@ -8,7 +8,7 @@
     <input type="radio" name="slides_2" {% if forloop.first %}checked="checked"{% endif %} id="com_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
-    {% for user in request.user.get_6_featured_communities %}
+    {% for object in request.user.get_6_featured_communities %}
     <li class="scrollable">
       {% include 'desctop/generic/community/card.html' %}
     </li>
