@@ -454,7 +454,7 @@ class User(AbstractUser):
             list = ListUC.objects.create(type=1, name="Основной", owner=self.pk)
 
         for frend in user.get_6_friends():
-            if not FeaturedUC.objects.filter(owner=self.pk, user=frend.pk).exists():
+            if frend.pk != self.pk and not FeaturedUC.objects.filter(owner=self.pk, user=frend.pk).exists():
                 FeaturedUC.objects.create(list=list, owner=self.pk, user=frend.pk)
         for community in user.get_6_communities():
             if not FeaturedUC.objects.filter(owner=self.pk, community=community.pk).exists():

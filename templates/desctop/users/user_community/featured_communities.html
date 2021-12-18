@@ -13,18 +13,7 @@
     </div>
 
     {% for object in request.user.get_6_featured_communities %}
-
-    <div class="card border-top"> 
-        <div class="card-body">
-            <div class="media">
-              {% include 'desctop/generic/community/figure.html' %}
-              <div class="media-body">
-                  <h6 class="my-0 mt-1">{% include 'desctop/generic/community/community.html' %}</h6>
-                  <p class="small">{{ community.count_members_ru }}</p>
-              </div>
-            </div>
-        </div>
-    </div>
+      {% include 'desctop/generic/community/card.html' %}
     {% endfor %}
 </div>
 {% endif %}
