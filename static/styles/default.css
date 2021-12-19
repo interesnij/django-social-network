@@ -457,11 +457,11 @@ height: auto;
   text-align: left;
   position: relative;
 }
-
-/* слайдер 2*/
-.csslider_1 > input {
+.csslider > input {
   display: none;
 }
+
+/* слайдер 2*/
 .csslider_1 > input:nth-of-type(10):checked ~ ul li:first-of-type {
   margin-left: -909%;
 }
@@ -615,9 +615,6 @@ margin-left: -707%;
 }
 
 /* слайдер 2*/
-.csslider_2 > input {
-  display: none;
-}
 .csslider_2 > input:nth-of-type(10):checked ~ ul li:first-of-type {
   margin-left: -909%;
 }
