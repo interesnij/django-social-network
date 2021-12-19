@@ -9,9 +9,8 @@
 {% block content %}
 
 <div class="container main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_photos">
-  {% if count_lists > 1 %}
+
     {% include 'mobile/users/photos/main_list/lists.html' %}
-  {% endif %}
 
 <span class="load_block">
 <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">

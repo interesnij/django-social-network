@@ -449,7 +449,7 @@ height: auto;
 }
 
 
-.csslider_1 {
+.csslider {
   -moz-perspective: 1300px;
   -ms-perspective: 1300px;
   -webkit-perspective: 1300px;
@@ -457,6 +457,8 @@ height: auto;
   text-align: left;
   position: relative;
 }
+
+/* слайдер 2*/
 .csslider_1 > input {
   display: none;
 }
@@ -612,16 +614,7 @@ margin-left: -707%;
   box-sizing: content-box;
 }
 
-
-
-.csslider_2 {
-  -moz-perspective: 1300px;
-  -ms-perspective: 1300px;
-  -webkit-perspective: 1300px;
-  perspective: 1300px;
-  text-align: left;
-  position: relative;
-}
+/* слайдер 2*/
 .csslider_2 > input {
   display: none;
 }

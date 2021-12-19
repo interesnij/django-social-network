@@ -1,4 +1,4 @@
-
+{% if count_lists > 1 %}
 <div class="media mt-3" style="padding-left: 7px;">
     <h5 class="mt-1" style="flex: 1;">Видеоальбом
       <a class="underline ajax" href="{% url 'user' pk=user.pk %}">
@@ -64,3 +64,4 @@
         </ul>
     </div>
 </div>
+{% endif %}
