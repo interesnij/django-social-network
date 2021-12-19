@@ -327,15 +327,14 @@ class Chat(models.Model):
         return self.get_messages(user_id).first()
 
     def get_attach_photos(self):
-        from gallery.models import Photo
-        ids = []
         if self.attach:
-            return self.attach
+            ids = []
             for i in self.attach:
                 if i[:3] == "pho" or i[:3] == "lph":
-                    ids += [i[3:]]
+                    ids.append(i[3:])
         else:
             return []
+        from gallery.models import Photo
         return Photo.objects.filter(id__in=ids)
     def get_attach_docs(self):
         from docs.models import Doc
