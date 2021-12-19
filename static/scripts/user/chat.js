@@ -196,7 +196,7 @@ on('#ajax', 'click', '.select_chat_collections', function() {
   ajax_link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
       elem = document.createElement('span');
-      elem.innerHTML = link_3.responseText;
+      elem.innerHTML = ajax_link.responseText;
       _this.parentElement.parentElement.parentElement.nextElementSibling.innerHTML = elem.querySelector(".load_block");
     }
   };
