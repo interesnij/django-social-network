@@ -1,6 +1,6 @@
-
+ {% if count_lists > 1 %}
 <div class="media mt-3" style="padding-left: 7px;">
-    <h5 class="mt-1" style="flex: 1;">Видеоальбом
+    <h5 class="mt-1" style="flex: 1;">Видеоальбомы
       <a class="underline ajax" href="{% url 'user' pk=user.pk %}">
         {{ user.get_full_name_genitive }}
       </a>
@@ -64,3 +64,4 @@
         </ul>
     </div>
 </div>
+{% endif %}
