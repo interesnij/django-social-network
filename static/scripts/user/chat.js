@@ -155,6 +155,7 @@ on('#ajax', 'click', '.smile_sticker_dropdown', function() {
   block.classList.toggle("show");
 });
 
+
 on('#ajax', 'click', '.chat_search', function() {
   header = this.parentElement.parentElement.parentElement;
   input = header.nextElementSibling;
@@ -186,6 +187,20 @@ on('#ajax', 'click', '.user_chat_settings_private', function() {
 on('#ajax', 'click', '.show_attach_files', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/" + pk + "/collections/", "item_fullscreen");
+});
+on('#ajax', 'click', '.select_chat_collections', function() {
+  _this = this;
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  ajax_link.open( 'GET', "/chat/" + this.parentElement.getAttribute("chat-pk") + "/collections/?type=" + this.getAttribute("data-type"), true );
+	ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  ajax_link.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+      elem = document.createElement('span');
+      elem.innerHTML = link_3.responseText;
+      _this.parentElement.parentElement.parentElement.nextElementSibling.innerHTML = elem.querySelector(".load_block");
+    }
+  };
+  ajax_link.send();
 });
 
 function create_user_input_card(name, pk, link) {
