@@ -520,6 +520,10 @@ height: auto;
   height: 300%;
   width: 300%;
 }
+.csslider > ul {
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 /* слайдер 2*/
 .csslider_1 > input:nth-of-type(10):checked ~ ul li:first-of-type {
@@ -552,41 +556,7 @@ margin-left: -707%;
 .csslider_1 > input:nth-of-type(1):checked ~ ul li:first-of-type {
   margin-left: 0%;
 }
-.csslider_1 > ul {
-  overflow: hidden;
-  white-space: nowrap;
-}
 
-.csslider_1 > .arrows_1 {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.csslider_1 > .arrows_1 label {
-  display: none;
-  position: absolute;
-  padding: 13px;
-  cursor: pointer;
-  -moz-transition: box-shadow 0.15s, margin 0.15s;
-  -o-transition: box-shadow 0.15s, margin 0.15s;
-  -webkit-transition: box-shadow 0.15s, margin 0.15s;
-  transition: box-shadow 0.15s, margin 0.15s;
-}
-.csslider_1 > .arrows_1 label:hover {
-  margin: 0 0px;
-}
-.csslider_1 > .arrows_1 label:before {
-  content: '';
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  height: 300%;
-  width: 300%;
-}
 .csslider_1.infinity_1 > input:first-of-type:checked ~ .arrows_1 label.goto_last_1,
 .csslider_1 > input:nth-of-type(1):checked ~ .arrows_1 > label:nth-of-type(0),
 .csslider_1 > input:nth-of-type(2):checked ~ .arrows_1 > label:nth-of-type(1),
@@ -630,7 +600,7 @@ margin-left: -707%;
   transform: rotate(225deg);
   top: 0;
 }
-
+/* конец слайдера 1*/
 /* слайдер 2*/
 .csslider_2 > input:nth-of-type(10):checked ~ ul li:first-of-type {
   margin-left: -909%;
@@ -661,10 +631,6 @@ margin-left: -707%;
 }
 .csslider_2 > input:nth-of-type(1):checked ~ ul li:first-of-type {
   margin-left: 0%;
-}
-.csslider_2 > ul {
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .csslider_2.infinity_2 > input:first-of-type:checked ~ .arrows_2 label.goto_last_2,
@@ -710,20 +676,7 @@ margin-left: -707%;
   transform: rotate(225deg);
   top: 0;
 }
-
-.csslider_2 > .arrows_2 {
-  left: 12px;
-  padding: 0;
-  height: 26px;
-  position: absolute;
-  top: -35px;
-  width: 100%;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-
+/* конец слайдера 2*/
 
 .tab_active {
   border-bottom: 3px solid #e625ea;
