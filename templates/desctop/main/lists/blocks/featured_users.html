@@ -19,8 +19,8 @@
       <label for="use_{{ forloop.counter }}"></label>
     {% endfor %}
 
-    <label class="goto_first_1 goto_first" for="use_1"></label>
-    <label class="goto_last_1 goto_last" for="use_{{ request.user.get_featured_friends_count }}"></label>
+    <label class="goto_first" for="use_1"></label>
+    <label class="goto_last" for="use_{{ request.user.get_featured_friends_count }}"></label>
   </div>
 </div>
 {% endif %}
