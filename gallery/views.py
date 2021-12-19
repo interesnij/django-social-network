@@ -67,7 +67,8 @@ class MessagePhotoDetail(TemplateView):
 
 		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		self.photos = self.chat.get_attach_photos()
+
+		self.photos_ids = self.chat.get_attach_photos_ids()
 		if self.photo.community:
 			self.community = self.photo.community
 			if request.user.is_administrator_of_community(self.community.pk):
@@ -92,8 +93,8 @@ class MessagePhotoDetail(TemplateView):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["chat"] = self.chat
-		context["next"] = self.photos[(self.photos.index(self.photo) + 1) % len(self.photos)]
-		context["prev"] = self.photos[(self.photos.index(self.photo) - 1) % len(self.photos)]
+		context["next"] = self.photos_ids[(self.photos_ids.index(self.photo.pk) + 1) % len(self.photos_ids)]
+		context["prev"] = self.photos_ids[(self.photos_ids.index(self.photo.pk) - 1) % len(self.photos_ids)]
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
