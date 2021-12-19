@@ -328,14 +328,12 @@ class Chat(models.Model):
 
     def get_attach_photos_ids(self):
         if self.attach:
-            return self.attach
             ids = []
             for i in self.attach.split(","):
                 if i[:3] == "pho":
                     ids.append(int(i[3:]))
             return ids
-        else:
-            return []
+        return []
     def get_attach_photos(self):
         if self.attach:
             from gallery.models import Photo, PhotoList
@@ -359,7 +357,7 @@ class Chat(models.Model):
             return []
         return Doc.objects.filter(id__in=ids)
 
-    def get_attach_photos_ids(self):
+    def get_attach_videos_ids(self):
         if self.attach:
             ids = []
             for i in self.attach.split(","):
