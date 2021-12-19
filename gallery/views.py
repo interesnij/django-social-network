@@ -63,11 +63,11 @@ class MessagePhotoDetail(TemplateView):
 	template_name, community, user_form = None, None, None
 
 	def get(self,request,*args,**kwargs):
-		from chat.models import Message
+		from chat.models import Chat
 
-		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
-		self.photos = self.message.get_attach_photos()
+		self.photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		self.photos = self.chat.get_attach_photos()
 		if self.photo.community:
 			self.community = self.photo.community
 			if request.user.is_administrator_of_community(self.community.pk):
@@ -90,12 +90,11 @@ class MessagePhotoDetail(TemplateView):
 	def get_context_data(self,**kwargs):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
-		context["message"] = self.message
+		context["chat"] = self.chat
 		if self.photos.filter(order=self.photo.order + 1).exists():
 			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
 		if self.photos.filter(order=self.photo.order - 1).exists():
 			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
-		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context

@@ -1038,10 +1038,11 @@ class Message(models.Model):
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
         if attach:
+            _attach = Message.get_format_attach(attach)
             if chat.attach:
-                chat.attach = chat.attach + ", " + attach
+                chat.attach = chat.attach + "," + _attach
             else:
-                chat.attach = attach
+                chat.attach = _attach
             chat.save(update_fields=["created", "attach"])
         else:
             chat.save(update_fields=["created"])
