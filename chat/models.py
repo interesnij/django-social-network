@@ -336,14 +336,16 @@ class Chat(models.Model):
         return []
     def get_attach_photos(self):
         if self.attach:
-            ids = []
+            from gallery.models import Photo, PhotoList
+            list = []
             for i in self.attach.split(","):
                 if i[:3] == "pho" or i[:3] == "lph":
-                    ids.append(int(i[3:]))
+                    list.append(Photo.objects.get(pk=i[3:]))
+                elif i[:3] == "lph":
+                    list.append(PhotoList.objects.get(pk=i[3:]))
         else:
             return []
-        from gallery.models import Photo
-        return Photo.objects.filter(id__in=ids)
+        return list
     def get_attach_docs(self):
         from docs.models import Doc
         ids = []
@@ -354,6 +356,15 @@ class Chat(models.Model):
         else:
             return []
         return Doc.objects.filter(id__in=ids)
+
+    def get_attach_photos_ids(self):
+        if self.attach:
+            ids = []
+            for i in self.attach.split(","):
+                if i[:3] == "vid":
+                    ids.append(int(i[3:]))
+            return ids
+        return []
     def get_attach_videos(self):
         from video.models import Video
         ids = []
