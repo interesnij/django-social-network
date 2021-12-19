@@ -538,8 +538,7 @@ height: auto;
 .csslider > input:nth-of-type(10):checked ~ .slides_arrows > label:nth-of-type(9),
 .csslider > input:nth-of-type(11):checked ~ .slides_arrows > label:nth-of-type(10) {
   display: block;
-  left: 34px;
-  right: auto;
+  right: 54px;
   -moz-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
@@ -560,7 +559,7 @@ height: auto;
 .csslider > input:nth-of-type(10):checked ~ .slides_arrows > label:nth-of-type(11),
 .csslider > input:nth-of-type(11):checked ~ .slides_arrows > label:nth-of-type(12) {
   display: block;
-  right: 60px;
+  right: 30px;
   -moz-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   -o-transform: rotate(225deg);

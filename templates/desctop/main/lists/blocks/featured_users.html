@@ -1,7 +1,7 @@
 {% if request.user.get_featured_friends_count > 1 %}
 
 <div class="card csslider infinity uc_slider mt-6 mb-3">
-  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
+  <p style="left: 22%;position: absolute;top: -25px;transform: translate(-50%, -50%);">
     Возможные друзья
   </p>
   {% for object in request.user.get_6_featured_friends_ids %}
