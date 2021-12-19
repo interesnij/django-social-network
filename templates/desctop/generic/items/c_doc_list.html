@@ -31,39 +31,8 @@
 <div class="card border-left">
     <div class="card-body border-left" style="padding-top: 0; padding-left: 8px;">
           <ul data-pk="{{ list.pk }}" style="margin-bottom: 0">
-            {% for doc in list.list_30 %}
-            <li class="border" style="padding-bottom:10px;">
-                <div class="media" style="align-items: unset;position: relative;">
-                  <svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24">
-                    <path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-                  </svg>
-                    <div class="media-body doc_media_body" style="padding-right: 7px;">
-                        <h6 class="pointer" style="width: 84%;overflow: hidden;">
-                          <a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a>
-                        </h6>
-                          <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-                          <span class='span_btn' doc-pk="{{ doc.pk }}" data-pk="{{ object.parent.community.pk }}">
-                            {% include 'desctop/users/user_docs/add_dropdown.html' %}
-                            <div class="dropdown" style="position: inherit;">
-                              <a class="btn_default drop pointer">
-                                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                              </a>
-                                <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                                    <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                    {% if doc.creator.pk == request.user.pk %}
-                                    <span class="dropdown-item u_doc_edit">Изменить</span>
-                                    <span class="dropdown-item u_doc_remove">Удалить</span>
-                                    {% elif request.user.is_doc_manager %}
-                                    <span class="dropdown-item u_doc_remove">♦ Удалить</span>
-                                    {% else %}
-                                    <span class="dropdown-item doc_claim">Пожаловаться</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                          </span>
-                    </div>
-                </div>
-            </li>
+            {% for object in list.list_30 %}
+              {% include 'desctop/communities/docs/doc.html' %}
             {% endfor %}
           </ul>
     </div>

@@ -37,28 +37,8 @@
               <div class="card-body">
                     <ul class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_doc_list">
                       {% if object_list %}
-                      {% for doc in object_list %}
-
-                      <li class="list-group-item pag" style="padding-bottom:10px">
-                          <div class="media" style="align-items: unset;position: relative;">
-                              <div class="media-body doc_media_body">
-                                  <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a></h6>
-                                  <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-                                    <span class='span_btn' data-pk="{{ doc.pk }}">
-                                      {% include 'mobile/users/user_docs/add_dropdown.html' %}
-                                      <div class="dropdown" style="position: inherit;">
-                                        <a class="btn_default drop pointer">
-                                          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                        </a>
-                                          <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
-                                              <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                                              <span class="dropdown-item doc_claim">Пожаловаться</span>
-                                          </div>
-                                      </div>
-                                    </span>
-                              </div>
-                          </div>
-                      </li>
+                      {% for object in object_list %}
+                        {% include 'mobile/users/docs/doc.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
                       <div class="load centered m-1 next_page_list" data-link="{% url 'user_docs' pk=user.pk %}?page={{ page_obj.next_page_number }}">

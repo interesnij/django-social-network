@@ -29,7 +29,7 @@
   {% include 'mobile/generic/items/c_music.html' %}
 {% endfor %}
 
-{% for doc in object.get_attach_docs %}
+{% for object in object.get_attach_docs %}
   {% include 'mobile/generic/items/c_doc.html' %}
 {% endfor %}
 </div>

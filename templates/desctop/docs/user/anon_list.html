@@ -12,7 +12,7 @@
   </div>
                 {% if object_list %}
                     <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_doc_list">
-                      {% for doc in object_list %}
+                      {% for object in object_list %}
                         {% include 'desctop/users/docs/anon_doc.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
