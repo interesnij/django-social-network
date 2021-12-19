@@ -515,10 +515,10 @@ height: auto;
 .csslider > .slides_arrows label:before {
   content: '';
   position: absolute;
-  top: -100%;
-  left: -100%;
-  height: 300%;
-  width: 300%;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
 }
 .csslider > ul {
   overflow: hidden;
@@ -559,7 +559,7 @@ height: auto;
 .csslider > input:nth-of-type(10):checked ~ .slides_arrows > label:nth-of-type(11),
 .csslider > input:nth-of-type(11):checked ~ .slides_arrows > label:nth-of-type(12) {
   display: block;
-  right: 30px;
+  right: 20px;
   -moz-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   -o-transform: rotate(225deg);
