@@ -536,25 +536,6 @@ class Chat(models.Model):
         member.save(update_fields=["is_administrator"])
         return member
 
-    def get_attach_photos(self):
-        if "pho" in self.attach:
-            query = []
-            from gallery.models import Photo
-
-            for item in self.attach.split(","):
-                if item[:3] == "pho":
-                    query.append(item[3:])
-        return Photo.objects.filter(id__in=query)
-
-    def get_attach_videos(self):
-        if "pho" in self.attach:
-            query = []
-            from video.models import Video
-            for item in self.attach.split(","):
-                if item[:3] == "vid":
-                    query.append(item[3:])
-        return Video.objects.filter(id__in=query)
-
     def get_draft_message(self, user_id):
         return self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
 
