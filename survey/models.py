@@ -60,14 +60,14 @@ class SurveyList(models.Model):
         verbose_name_plural = "списки опросов"
 
     def count_items_ru(self):
-		count = self.count_items()
-		a, b = count % 10, count % 100
-		if (a == 1) and (b != 11):
-			return str(count) + " опрос"
-		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
-			return str(count) + " опроса"
-		else:
-			return str(count) + " опросов"
+        count = self.count_items()
+        a, b = count % 10, count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " опрос"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " опроса"
+        else:
+            return str(count) + " опросов"
 
     def add_in_community_collections(self, community):
         from communities.model.list import CommunitySurveyListPosition
