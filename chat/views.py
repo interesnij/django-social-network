@@ -139,8 +139,8 @@ class ChatCollections(ListView):
 			self.list = self.chat.get_attach_videos()
 		elif type == "good":
 			self.list = self.chat.get_attach_goods()
-		elif type == "survey":
-			self.list = self.chat.get_attach_surveys()
+		elif type == "post":
+			self.list = self.chat.get_attach_posts()
 
 		if request.user.pk in self.chat.get_members_ids():
 			self.template_name = get_settings_template("chat/chat/collections/" + type + ".html", request.user, request.META['HTTP_USER_AGENT'])

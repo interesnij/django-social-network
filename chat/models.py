@@ -343,20 +343,19 @@ class Chat(models.Model):
                     list.append(Photo.objects.get(pk=i[3:]))
                 elif i[:3] == "lph":
                     list.append(PhotoList.objects.get(pk=i[3:]))
-        else:
-            return []
-        return list
+            return list
+        return []
     def get_attach_docs(self):
-        from docs.models import Doc
-        ids = []
         if self.attach:
+            from docs.models import Doc, DocsList
+            list = []
             for i in self.attach.split(","):
-                if i[:3] == "doc" or i[:3] == "ldo":
-                    ids.append(i[3:])
-        else:
-            return []
-        return Doc.objects.filter(id__in=ids)
-
+                if i[:3] == "doc":
+                    list.append(Doc.objects.get(pk=i[3:]))
+                elif i[:3] == "ldo":
+                    list.append(DocsList.objects.get(pk=i[3:]))
+            return list
+        return []
     def get_attach_videos_ids(self):
         if self.attach:
             ids = []
@@ -366,45 +365,66 @@ class Chat(models.Model):
             return ids
         return []
     def get_attach_videos(self):
-        from video.models import Video
-        ids = []
         if self.attach:
+            from video.models import Video, VideoList
+            list = []
             for i in self.attach.split(","):
-                if i[:3] == "vid" or i[:3] == "lvi":
-                    ids.append(i[3:])
-        else:
-            return []
-        return Video.objects.filter(id__in=ids)
+                if i[:3] == "vid":
+                    list.append(Video.objects.get(pk=i[3:]))
+                elif i[:3] == "lvi":
+                    list.append(VideoList.objects.get(pk=i[3:]))
+            return list
+        return []
     def get_attach_tracks(self):
-        from music.models import Music
-        ids = []
         if self.attach:
+            from music.models import Music, MusicList
+            list = []
             for i in self.attach.split(","):
-                if i[:3] == "mus" or i[:3] == "lmu":
-                    ids.append(i[3:])
-        else:
-            return []
-        return Music.objects.filter(id__in=ids)
+                if i[:3] == "mus":
+                    list.append(Music.objects.get(pk=i[3:]))
+                elif i[:3] == "lmu":
+                    list.append(MusicList.objects.get(pk=i[3:]))
+            return list
+        return []
+
+    def get_attach_goods_ids(self):
+        if self.attach:
+            ids = []
+            for i in self.attach.split(","):
+                if i[:3] == "goo":
+                    ids.append(int(i[3:]))
+            return ids
+        return []
     def get_attach_goods(self):
-        from goods.models import Good
-        ids = []
         if self.attach:
+            from goods.models import Good, GoodList
+            list = []
             for i in self.attach.split(","):
-                if i[:3] == "goo" or i[:3] == "lgo":
-                    ids.append(i[3:])
-        else:
-            return []
-        return Good.objects.filter(id__in=ids)
-    def get_attach_surveys(self):
-        from survey.models import Survey
-        ids = []
+                if i[:3] == "goo":
+                    list.append(Good.objects.get(pk=i[3:]))
+                elif i[:3] == "lgo":
+                    list.append(GoodList.objects.get(pk=i[3:]))
+            return list
+        return []
+    def get_attach_posts_ids(self):
         if self.attach:
+            ids = []
             for i in self.attach.split(","):
-                if i[:3] == "sur" or i[:3] == "lsu":
-                    ids.append(i[3:])
-        else:
-            return []
-        return Survey.objects.filter(id__in=ids)
+                if i[:3] == "pos":
+                    ids.append(int(i[3:]))
+            return ids
+        return []
+    def get_attach_posts(self):
+        if self.attach:
+            from posts.models import Post, PostsList
+            list = []
+            for i in self.attach.split(","):
+                if i[:3] == "pos":
+                    list.append(Post.objects.get(pk=i[3:]))
+                elif i[:3] == "lpo":
+                    list.append(PostsList.objects.get(pk=i[3:]))
+            return list
+        return []
 
     def get_unread_count_message(self, user_id):
         count = self.chat_message.filter(unread=True, type__contains="_", message_options__user_id=self.pk, message_options__is_deleted=True).exclude(creator_id=user_id).values("pk").count()
