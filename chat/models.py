@@ -330,13 +330,16 @@ class Chat(models.Model):
         if self.attach:
             ids = []
             for i in self.attach.split(","):
-                if i[:3] == "pho" or i[:3] == "lph":
+                if i[:3] == "pho":
                     ids.append(int(i[3:]))
             return ids
         return []
     def get_attach_photos(self):
         if self.attach:
-            ids = self.get_attach_photos_ids()
+            ids = []
+            for i in self.attach.split(","):
+                if i[:3] == "pho" or i[:3] == "lph":
+                    ids.append(int(i[3:]))
         else:
             return []
         from gallery.models import Photo
