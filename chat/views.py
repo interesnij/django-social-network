@@ -128,7 +128,7 @@ class ChatCollections(ListView):
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		type = request.GET.get("type")
 		if not type:
-			type = "photo"
+			type, self.list = "photo", self.chat.get_attach_photos()
 		elif type == "photo":
 			self.list = self.chat.get_attach_photos()
 		elif type == "doc":
