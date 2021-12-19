@@ -479,6 +479,17 @@ height: auto;
   box-sizing: border-box;
   white-space: normal;
 }
+.csslider > .slides_arrows {
+  left: 12px;
+  padding: 0;
+  height: 26px;
+  position: absolute;
+  top: -35px;
+  width: 100%;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
 
 /* слайдер 2*/
 .csslider_1 > input:nth-of-type(10):checked ~ ul li:first-of-type {
@@ -601,18 +612,6 @@ margin-left: -707%;
   -webkit-transform: rotate(225deg);
   transform: rotate(225deg);
   top: 0;
-}
-
-.csslider_1 > .arrows_1 {
-  left: 12px;
-  padding: 0;
-  height: 26px;
-  position: absolute;
-  top: -35px;
-  width: 100%;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 /* слайдер 2*/
