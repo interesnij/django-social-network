@@ -329,6 +329,7 @@ class Chat(models.Model):
     def get_attach_photos(self):
         if self.attach:
             ids = []
+            return self.attach.split(",")
             for i in self.attach.split(","):
                 if i[:3] == "pho" or i[:3] == "lph":
                     ids.append(i[3:])
