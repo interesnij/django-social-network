@@ -646,19 +646,6 @@ margin-left: -707%;
   user-select: none;
 }
 
-.csslider_2 > .arrows_2 {
-  position: absolute;
-  left: -31px;
-  top: 50%;
-  width: 100%;
-  height: 26px;
-  padding: 0 31px;
-  z-index: 0;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
 .csslider_2 > .arrows_2 label {
   display: none;
   position: absolute;
