@@ -53,6 +53,17 @@ class DocsList(models.Model):
         verbose_name = "список документов"
         verbose_name_plural = "списки документов"
 
+    def count_items_ru(self):
+        count = self.count_items()
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return str(count) + " документ"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return str(count) + " документа"
+        else:
+            return str(count) + " документов"
+
     def get_can_see_el_exclude_users_ids(self):
         list = DocListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
         return [i['user_id'] for i in list]

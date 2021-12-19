@@ -59,6 +59,16 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    def count_items_ru(self):
+		count = self.count_items()
+		a, b = count % 10, count % 100
+		if (a == 1) and (b != 11):
+			return str(count) + " запись"
+		elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+			return str(count) + " записи"
+		else:
+			return str(count) + " записей"
+
     def get_can_see_el_exclude_users_ids(self):
         list = PostsListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
         return [i['user_id'] for i in list]
