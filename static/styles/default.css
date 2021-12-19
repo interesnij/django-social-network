@@ -525,6 +525,50 @@ height: auto;
   white-space: nowrap;
 }
 
+.csslider.infinity > input:first-of-type:checked ~ .slides_arrows label.goto_last,
+.csslider > input:nth-of-type(1):checked ~ .slides_arrows > label:nth-of-type(0),
+.csslider > input:nth-of-type(2):checked ~ .slides_arrows > label:nth-of-type(1),
+.csslider > input:nth-of-type(3):checked ~ .slides_arrows > label:nth-of-type(2),
+.csslider > input:nth-of-type(4):checked ~ .slides_arrows > label:nth-of-type(3),
+.csslider > input:nth-of-type(5):checked ~ .slides_arrows > label:nth-of-type(4),
+.csslider > input:nth-of-type(6):checked ~ .slides_arrows > label:nth-of-type(5),
+.csslider > input:nth-of-type(7):checked ~ .slides_arrows > label:nth-of-type(6),
+.csslider > input:nth-of-type(8):checked ~ .slides_arrows > label:nth-of-type(7),
+.csslider > input:nth-of-type(9):checked ~ .slides_arrows > label:nth-of-type(8),
+.csslider > input:nth-of-type(10):checked ~ .slides_arrows > label:nth-of-type(9),
+.csslider > input:nth-of-type(11):checked ~ .slides_arrows > label:nth-of-type(10) {
+  display: block;
+  left: 34px;
+  right: auto;
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.csslider.infinity > input:last-of-type:checked ~ .slides_arrows label.goto_first,
+.csslider > input:nth-of-type(1):checked ~ .slides_arrows > label:nth-of-type(2),
+.csslider > input:nth-of-type(2):checked ~ .slides_arrows > label:nth-of-type(3),
+.csslider > input:nth-of-type(3):checked ~ .slides_arrows > label:nth-of-type(4),
+.csslider > input:nth-of-type(4):checked ~ .slides_arrows > label:nth-of-type(5),
+.csslider > input:nth-of-type(5):checked ~ .slides_arrows > label:nth-of-type(6),
+.csslider > input:nth-of-type(6):checked ~ .slides_arrows > label:nth-of-type(7),
+.csslider > input:nth-of-type(7):checked ~ .slides_arrows > label:nth-of-type(8),
+.csslider > input:nth-of-type(8):checked ~ .slides_arrows > label:nth-of-type(9),
+.csslider > input:nth-of-type(9):checked ~ .slides_arrows > label:nth-of-type(10),
+.csslider > input:nth-of-type(10):checked ~ .slides_arrows > label:nth-of-type(11),
+.csslider > input:nth-of-type(11):checked ~ .slides_arrows > label:nth-of-type(12) {
+  display: block;
+  right: 60px;
+  -moz-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  -o-transform: rotate(225deg);
+  -webkit-transform: rotate(225deg);
+  transform: rotate(225deg);
+  top: 0;
+}
+
 /* слайдер 2*/
 .csslider_1 > input:nth-of-type(10):checked ~ ul li:first-of-type {
   margin-left: -909%;
@@ -557,49 +601,6 @@ margin-left: -707%;
   margin-left: 0%;
 }
 
-.csslider_1.infinity_1 > input:first-of-type:checked ~ .arrows_1 label.goto_last_1,
-.csslider_1 > input:nth-of-type(1):checked ~ .arrows_1 > label:nth-of-type(0),
-.csslider_1 > input:nth-of-type(2):checked ~ .arrows_1 > label:nth-of-type(1),
-.csslider_1 > input:nth-of-type(3):checked ~ .arrows_1 > label:nth-of-type(2),
-.csslider_1 > input:nth-of-type(4):checked ~ .arrows_1 > label:nth-of-type(3),
-.csslider_1 > input:nth-of-type(5):checked ~ .arrows_1 > label:nth-of-type(4),
-.csslider_1 > input:nth-of-type(6):checked ~ .arrows_1 > label:nth-of-type(5),
-.csslider_1 > input:nth-of-type(7):checked ~ .arrows_1 > label:nth-of-type(6),
-.csslider_1 > input:nth-of-type(8):checked ~ .arrows_1 > label:nth-of-type(7),
-.csslider_1 > input:nth-of-type(9):checked ~ .arrows_1 > label:nth-of-type(8),
-.csslider_1 > input:nth-of-type(10):checked ~ .arrows_1 > label:nth-of-type(9),
-.csslider_1 > input:nth-of-type(11):checked ~ .arrows_1 > label:nth-of-type(10) {
-  display: block;
-  left: 34px;
-  right: auto;
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.csslider_1.infinity_1 > input:last-of-type:checked ~ .arrows_1 label.goto_first_1,
-.csslider_1 > input:nth-of-type(1):checked ~ .arrows_1 > label:nth-of-type(2),
-.csslider_1 > input:nth-of-type(2):checked ~ .arrows_1 > label:nth-of-type(3),
-.csslider_1 > input:nth-of-type(3):checked ~ .arrows_1 > label:nth-of-type(4),
-.csslider_1 > input:nth-of-type(4):checked ~ .arrows_1 > label:nth-of-type(5),
-.csslider_1 > input:nth-of-type(5):checked ~ .arrows_1 > label:nth-of-type(6),
-.csslider_1 > input:nth-of-type(6):checked ~ .arrows_1 > label:nth-of-type(7),
-.csslider_1 > input:nth-of-type(7):checked ~ .arrows_1 > label:nth-of-type(8),
-.csslider_1 > input:nth-of-type(8):checked ~ .arrows_1 > label:nth-of-type(9),
-.csslider_1 > input:nth-of-type(9):checked ~ .arrows_1 > label:nth-of-type(10),
-.csslider_1 > input:nth-of-type(10):checked ~ .arrows_1 > label:nth-of-type(11),
-.csslider_1 > input:nth-of-type(11):checked ~ .arrows_1 > label:nth-of-type(12) {
-  display: block;
-  right: 60px;
-  -moz-transform: rotate(225deg);
-  -ms-transform: rotate(225deg);
-  -o-transform: rotate(225deg);
-  -webkit-transform: rotate(225deg);
-  transform: rotate(225deg);
-  top: 0;
-}
 /* конец слайдера 1*/
 /* слайдер 2*/
 .csslider_2 > input:nth-of-type(10):checked ~ ul li:first-of-type {
