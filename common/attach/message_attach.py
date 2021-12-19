@@ -64,7 +64,7 @@ def get_message_attach(message, user):
                 photo = Photo.objects.get(pk=item[3:])
                 if photo.type[0] == "_":
                     pass
-                block = ''.join([block, '<div class="photo"><div class="progressive replace message_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                block = ''.join([block, '<div class="photo" chat-pk="', str(message.chat.pk), '"><div class="progressive replace chat_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
             except:
                 pass
         elif item[:3] == "vid":

@@ -91,10 +91,8 @@ class MessagePhotoDetail(TemplateView):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["chat"] = self.chat
-		if self.photos.filter(order=self.photo.order + 1).exists():
-			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
-		if self.photos.filter(order=self.photo.order - 1).exists():
-			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
+		context["next"] = self.photos.get_next_by_pk()
+		context["prev"] = self.photos.get_prev_by_pk()
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
