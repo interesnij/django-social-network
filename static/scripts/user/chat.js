@@ -504,7 +504,7 @@ function send_message (form_post, url) {
   _val = format_text(text_val);
   _text = _val.innerHTML;
 
-  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && !form_post.querySelector(".files_0") && !form_post.querySelector(".transfer")){
+  if (_text.replace(/<(?!br)(?!img)\/?[a-z][^>]*(>|$)/gi, "").trim() == "" && form_post.querySelector(".files_0") && !form_post.querySelector(".transfer")){
     toast_error("Напишите или прикрепите что-нибудь");
     form_post.querySelector(".message_text").classList.add("border_red");
     form_post.querySelector(".message_dropdown").classList.add("border_red");
