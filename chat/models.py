@@ -924,7 +924,14 @@ class Message(models.Model):
         else:
             creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
         current_chat.created = datetime.now()
-        current_chat.save(update_fields=["created"])
+        if attach:
+            if current_chat.attach:
+                current_chat.attach = current_chat.attach + ", " + attach
+            else:
+                current_chat.attach = attach
+            current_chat.save(update_fields=["created", "attach"])
+        else:
+            current_chat.save(update_fields=["created"])
         for recipient in chat.get_recipients_2(creator.pk):
             creator_message.create_socket(recipient.user.pk, recipient.beep())
 
@@ -946,6 +953,9 @@ class Message(models.Model):
 
         for recipient in chat.get_recipients_2(creator.pk):
             creator_message.create_socket(recipient.user.pk, recipient.beep())
+        if attach:
+            current_chat.attach = attach
+            current_chat.save(update_fields=["attach"])
 
     def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
         # программа для отсылки сообщения в чате
@@ -989,6 +999,16 @@ class Message(models.Model):
 
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
+        if attach:
+            if chat.attach:
+                chat.attach = chat.attach + ", " + attach
+            else:
+                chat.attach = attach
+            chat.save(update_fields=["created", "attach"])
+        else:
+            chat.save(update_fields=["created"])
+        for recipient in chat.get_recipients_2(creator.pk):
+            creator_message.create_socket(recipient.user.pk, recipient.beep())
         return creator_message
 
     def save_draft_message(chat, creator, parent, text, attach, transfer):
