@@ -330,6 +330,7 @@ class Chat(models.Model):
         if self.attach:
             ids = []
             for i in self.attach:
+                return i
                 if i[:3] == "pho" or i[:3] == "lph":
                     ids.append(i[3:])
         else:
