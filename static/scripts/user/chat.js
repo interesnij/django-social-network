@@ -197,7 +197,7 @@ on('#ajax', 'click', '.select_chat_collections', function() {
     if ( this.readyState == 4 && this.status == 200 ) {
       elem = document.createElement('span');
       elem.innerHTML = ajax_link.responseText;
-      _this.parentElement.parentElement.parentElement.nextElementSibling.innerHTML = elem.querySelector(".load_block");
+      _this.parentElement.parentElement.parentElement.nextElementSibling.innerHTML = elem.querySelector(".load_block").innerHTML;
     }
   };
   ajax_link.send();
