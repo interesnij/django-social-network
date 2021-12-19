@@ -33,10 +33,10 @@ on('#ajax', 'click', '.post_photo', function() {
   create_fullscreen("/gallery/post_photo/" + post_pk + "/" + photo_pk + "/", "photo_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&photo_pk=" + photo_pk + "&post_pk=" + post_pk);
 });
-on('#ajax', 'click', '.message_photo', function() {
-  pk = this.getAttribute('photo-pk');
-  post_pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/gallery/message_photo/" + post_pk + "/" + pk + "/", "photo_fullscreen");
+on('#ajax', 'click', '.chat_photo', function() {
+  photo_pk = this.getAttribute('photo-pk');
+  pk = this.parentElement.getAttribute('chat-pk');
+  create_fullscreen("/gallery/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 
 on('#ajax', 'click', '.u_photo_priview', function() {
