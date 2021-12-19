@@ -22,7 +22,7 @@
     </div>
     <div class="container-fluid pk_saver">
       {% if object_list %}
-      <div class="row is_block_paginate is_stat_list" chat-pk="{{ chat.pk }}" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="chat_doc_list">
+      <div class="row is_block_paginate is_stat_list" chat-pk="{{ chat.pk }}" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="chat_doc_list" style="display: block;">
 
         {% for object in object_list %}
           {% if object.is_doc_list %}
