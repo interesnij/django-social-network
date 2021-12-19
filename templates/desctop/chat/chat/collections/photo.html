@@ -26,7 +26,7 @@
 
         {% for object in object_list %}
           {% if object.is_photo_list %}
-            <div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" photolist-pk="{{ object.pk }}" style="width: 50%;flex-basis: 50%;">
+            <div class="custom_color row_item  text-center has-background-img position-relative box-shadow" photolist-pk="{{ object.pk }}">
               <figure class="background-img">
                 <img src="{{ object.get_cover_photo }}"></figure>
                 <div class="container">
