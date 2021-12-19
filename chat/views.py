@@ -122,7 +122,7 @@ class ChatCollections(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_chat
+		from common.templates import get_settings_template
 		from chat.models import Chat
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
@@ -142,7 +142,11 @@ class ChatCollections(ListView):
 		elif type == "survey":
 			self.list = self.chat.get_attach_surveys()
 
-		self.template_name = get_template_user_chat(self.chat, "chat/chat/collections/", type + ".html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.pk in self.chat.get_members_ids():
+			self.template_name = get_settings_template("chat/chat/collections/", type + ".html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			from django.http import Http404
+			raise Http404
 		return super(ChatCollections,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
