@@ -334,7 +334,6 @@ class Chat(models.Model):
                     ids.append(i[3:])
         else:
             return []
-        return ids
         from gallery.models import Photo
         return Photo.objects.filter(id__in=ids)
     def get_attach_docs(self):
