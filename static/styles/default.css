@@ -502,7 +502,7 @@ height: auto;
 .csslider > .slides_arrows label {
   display: none;
   position: absolute;
-  padding: 13px;
+  padding: 7px;
   cursor: pointer;
   -moz-transition: box-shadow 0.15s, margin 0.15s;
   -o-transition: box-shadow 0.15s, margin 0.15s;
