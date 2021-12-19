@@ -26,15 +26,17 @@
 
         {% for object in object_list %}
           {% if object.is_doc_list %}
-            <div class="custom_color row_item  text-center has-background-img position-relative box-shadow" doclist-pk="{{ object.pk }}">
+            <div class="custom_color row_item text-center has-background-img position-relative box-shadow" doclist-pk="{{ object.pk }}">
               <figure class="background-img">
                 <img src="{{ object.get_cover_photo }}"></figure>
                 <div class="container">
                   <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i>
                   <br>
+                  <span>
                   <h4 class="load_doc_list pointer">
                     <a>{{ object.name }}</a>
                   </h4>
+                  </span>
                   <p class="lead">
                     {% if object.community %}
                       <a class="ajax underline" href="{{ object.community.get_link }}">{{ object.community.name }}</a>
@@ -43,7 +45,9 @@
                     {% endif %}
                   </p>
                   <hr class="my-3">
+                  <span>
                   <a class="load_doc_list pointer">{{ object.count_items_ru }}</a>
+                  </span>
                 </div>
               </div>
           {% else %}
@@ -63,7 +67,7 @@
 
       </div>
       {% else %}
-        {% include 'desctop/users/docs/main_list/no_photos.html' %}
+        {% include 'desctop/users/docs/main_list/no_docs.html' %}
       {% endif %}
     </div>
   </span>
