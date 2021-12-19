@@ -333,7 +333,7 @@ class Chat(models.Model):
             return self.attach
             for i in self.attach:
                 if i[:3] == "pho" or i[:3] == "lph":
-                    ids.append(i[3:])
+                    ids += [i[3:]]
         else:
             return []
         return Photo.objects.filter(id__in=ids)
