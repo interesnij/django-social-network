@@ -2,7 +2,7 @@
 {% block title %}Сообщения{% endblock %}
 {% load message %}
 {% block content %}
-
+{{ chat.get_attach_photos_ids }}
 <div class="container main-container pk_saver chat_container" data-pk="{{ chat.pk }}" chat-pk="{{ chat.pk }}" user-pk="{{ request.user.pk }}" data-type="page_chat">
 <div class="row">
     <div class="col-md-8 mt-1">
