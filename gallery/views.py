@@ -85,14 +85,15 @@ class MessagePhotoDetail(TemplateView):
 				self.template_name = get_template_user_item(self.photo, "chat/attach/photo/u/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.photo, "chat/attach/photo/u/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+
 		return super(MessagePhotoDetail,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["chat"] = self.chat
-		context["next"] = self.photos.get_next()
-		context["prev"] = self.photos.get_prev()
+		context["next"] = self.photos[(self.photos.index(self.photo) + 1) % len(self.photos)]
+		context["prev"] = self.photos[(self.photos.index(self.photo) - 1) % len(self.photos)]
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
