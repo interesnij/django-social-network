@@ -143,7 +143,7 @@ class ChatCollections(ListView):
 			self.list = self.chat.get_attach_surveys()
 
 		if request.user.pk in self.chat.get_members_ids():
-			self.template_name = get_settings_template("chat/chat/collections/", type + ".html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("chat/chat/collections/" + type + ".html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			from django.http import Http404
 			raise Http404
