@@ -326,6 +326,15 @@ class Chat(models.Model):
     def get_first_message(self, user_id):
         return self.get_messages(user_id).first()
 
+    def get_attach_photos_ids(self):
+        if self.attach:
+            ids = []
+            for i in self.attach.split(","):
+                if i[:3] == "pho" or i[:3] == "lph":
+                    ids.append(i[3:])
+            return ids
+        return []
+
     def get_attach_photos(self):
         if self.attach:
             ids = []
