@@ -339,7 +339,7 @@ class Chat(models.Model):
             from gallery.models import Photo, PhotoList
             list = []
             for i in self.attach.split(","):
-                if i[:3] == "pho" or i[:3] == "lph":
+                if i[:3] == "pho":
                     list.append(Photo.objects.get(pk=i[3:]))
                 elif i[:3] == "lph":
                     list.append(PhotoList.objects.get(pk=i[3:]))
