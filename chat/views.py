@@ -118,6 +118,39 @@ class ChatInfo(ListView):
 	def get_queryset(self):
 		return self.chat.get_members()
 
+class ChatCollections(ListView):
+	template_name, paginate_by = None, 20
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_user_chat
+		from chat.models import Chat
+
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		type = request.GET.get("type")
+		if not type or type == "photo":
+			self.list = self.chat.get_attach_photos()
+		elif type == "doc":
+			self.list = self.chat.get_attach_docs()
+		elif type == "music":
+			self.list = self.chat.get_attach_tracks()
+		elif type == "video":
+			self.list = self.chat.get_attach_videos()
+		elif type == "good":
+			self.list = self.chat.get_attach_goods()
+		elif type == "survey":
+			self.list = self.chat.get_attach_surveys()
+
+		self.template_name = get_template_user_chat(self.chat, "chat/chat/collections/", type + ".html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(ChatCollections,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(ChatCollections,self).get_context_data(**kwargs)
+		context["chat"] = self.chat
+		return context
+
+	def get_queryset(self):
+		return self.list
+
 
 class ChatFavouritesMessagesView(ListView):
 	template_name, paginate_by = None, 15

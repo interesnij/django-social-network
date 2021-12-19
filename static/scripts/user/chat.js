@@ -22,18 +22,18 @@ function show_chat_console(message) {
   if (list_not_have_favourite_messages) {
     favourite_btn.innerHTML = '<path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>'
     favourite_btn.parentElement.setAttribute("tooltip","Удалить из избранного");
-    favourite_btn.classList.add("remove_favourite_messages", "mr-1");
+    favourite_btn.classList.add("remove_favourite_messages");
     favourite_btn.classList.remove("create_favourite_messages")
   } else {
     favourite_btn.parentElement.setAttribute("tooltip","Отметить как важное");
     favourite_btn.innerHTML = '<path d="M12 7.13l.97 2.29.47 1.11 1.2.1 2.47.21-1.88 1.63-.91.79.27 1.18.56 2.41-2.12-1.28-1.03-.64-1.03.62-2.12 1.28.56-2.41.27-1.18-.91-.79-1.88-1.63 2.47-.21 1.2-.1.47-1.11.97-2.27M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/>'
     favourite_btn.classList.remove("remove_favourite_messages");
-    favourite_btn.classList.add("create_favourite_messages", "mr-1")
+    favourite_btn.classList.add("create_favourite_messages")
   };
 
   _console.style.display = "unset";
   _console.previousElementSibling.style.display = "none";
-  _console.previousElementSibling.style.left = "28px";
+  _console.previousElementSibling.style.left = "8px";
   _console.parentElement.parentElement.querySelector("h5").style.display = "none"
 };
 
@@ -182,6 +182,10 @@ on('#ajax', 'click', '.user_chat_settings', function() {
 on('#ajax', 'click', '.user_chat_settings_private', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/user_progs/private/" + pk + "/", "worker_fullscreen");
+});
+on('#ajax', 'click', '.show_attach_files', function() {
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  create_fullscreen("/chat/" + pk + "/collections/", "item_fullscreen");
 });
 
 function create_user_input_card(name, pk, link) {
