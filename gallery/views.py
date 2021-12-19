@@ -93,8 +93,8 @@ class MessagePhotoDetail(TemplateView):
 		context = super(MessagePhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["chat"] = self.chat
-		context["next"] = self.photos_ids[(self.photos_ids.index(pk_str) + 1) % len(self.photos_ids)]
-		context["prev"] = self.photos_ids[(self.photos_ids.index(pk_str) - 1) % len(self.photos_ids)]
+		context["next"] = self.photos_ids[(self.photos_ids.index(self.pk_str) + 1) % len(self.photos_ids)]
+		context["prev"] = self.photos_ids[(self.photos_ids.index(self.pk_str) - 1) % len(self.photos_ids)]
 		context["user_form"] = self.user_form
 		context["community"] = self.community
 		return context
