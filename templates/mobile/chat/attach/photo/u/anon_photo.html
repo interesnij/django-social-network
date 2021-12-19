@@ -3,7 +3,7 @@
   <div class="row is_stat_list" data-pk="{{ object.pk }}" data-type="user_photo">
     {% if next %}
     <div class="col" style="padding:5px;">
-      <a class="btn btn-sm border next_item" href="{% url 'message_photo_detail' pk=next.pk uuid=message.uuid %}" style="width: -webkit-fill-available;position:static">
+      <a class="btn btn-sm border next_item" href="{% url 'chat_photo' photo_pk=next pk=chat.pk %}" style="width: -webkit-fill-available;position:static">
         <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z"/></svg>
       </a>
     </div>
@@ -15,7 +15,7 @@
     </div>
     {% if prev %}
       <div class="col" style="padding:5px;">
-        <a class="btn btn-sm border prev_item" href="{% url 'message_photo_detail' pk=prev.pk uuid=message.uuid %}" style="width: -webkit-fill-available;position:static">
+        <a class="btn btn-sm border prev_item" href="{% url 'chat_photo' photo_pk=prev pk=chat.pk %}" style="width: -webkit-fill-available;position:static">
           <svg fill="currentColor" class="svg_default" style="width: 19px;" viewBox="0 0 24 24"><rect fill="none" /><path d="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7-7L15,5z"/></svg>
         </a>
       </div>
