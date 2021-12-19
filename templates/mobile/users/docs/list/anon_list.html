@@ -26,7 +26,7 @@
               <div class="card-body">
                     <ul class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_doc_list">
                       {% if object_list %}
-                      {% for doc in object_list %}
+                      {% for object in object_list %}
                         {% include 'mobile/users/docs/anon_doc.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}

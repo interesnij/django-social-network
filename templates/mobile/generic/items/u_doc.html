@@ -5,10 +5,10 @@
       </svg>
       <div class="media-body doc_media_body" style="padding: 0">
           <h6 class="pointer" style="width: 84%;overflow: hidden;">
-            <a href="{{ doc.file.url }}" target="_blank" rel="nofollow">{{ doc.title }}</a>
+            <a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a>
           </h6>
-            <span class="small">{{ doc.file.size|filesizeformat }} | {{ doc.get_mime_type }}</span>
-            <span class='span_btn' doc-pk="{{ doc.pk }}" data-pk="{{ object.parent.creator.pk }}">
+            <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+            <span class='span_btn' doc-pk="{{ object.pk }}" data-pk="{{ object.parent.creator.pk }}">
               {% include 'mobile/users/user_docs/add_dropdown.html' %}
               <div class="dropdown" style="position: inherit;">
                 <a class="btn_default drop pointer">
@@ -16,7 +16,7 @@
                 </a>
                   <div class="dropdown-menu dropdown-menu-right" style="top: 32px;">
                     <span class="dropdown-item u_ucm_doc_repost">Поделиться</span>
-                    {% if doc.creator.pk == request.user.pk %}
+                    {% if object.creator.pk == request.user.pk %}
                     <span class="dropdown-item u_doc_edit">Изменить</span>
                     <span class="dropdown-item u_doc_remove">Удалить</span>
                     {% elif request.user.is_doc_manager %}
