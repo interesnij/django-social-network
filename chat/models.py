@@ -333,7 +333,8 @@ class Chat(models.Model):
                 if i[:3] == "pho":
                     ids.append(int(i[3:]))
             return ids
-        return []
+        else:
+            return []
     def get_attach_photos(self):
         if self.attach:
             from gallery.models import Photo, PhotoList
