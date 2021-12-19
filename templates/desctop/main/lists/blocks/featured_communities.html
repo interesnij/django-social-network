@@ -19,8 +19,8 @@
       <label for="com_{{ forloop.counter }}"></label>
     {% endfor %}
 
-    <label class="goto_first_2" for="com_1"></label>
-    <label class="goto_last_2" for="com_{{ request.user.get_featured_communities_count }}"></label>
+    <label class="goto_first_2 goto_first" for="com_1"></label>
+    <label class="goto_last_2 goto_last" for="com_{{ request.user.get_featured_communities_count }}"></label>
   </div>
 </div>
 {% endif %}
