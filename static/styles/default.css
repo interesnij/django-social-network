@@ -461,6 +461,25 @@ height: auto;
   display: none;
 }
 
+.csslider > ul > li {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  font-size: initial;
+  line-height: normal;
+  -moz-transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
+  -o-transition: all 0.5s ease-out;
+  -webkit-transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
+  transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
+  vertical-align: top;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
 /* слайдер 2*/
 .csslider_1 > input:nth-of-type(10):checked ~ ul li:first-of-type {
   margin-left: -909%;
@@ -495,24 +514,6 @@ margin-left: -707%;
 .csslider_1 > ul {
   overflow: hidden;
   white-space: nowrap;
-}
-.csslider_1 > ul > li {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  font-size: 15px;
-  font-size: initial;
-  line-height: normal;
-  -moz-transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
-  -o-transition: all 0.5s ease-out;
-  -webkit-transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
-  transition: all 0.5s cubic-bezier(0.4, 1.3, 0.65, 1);
-  vertical-align: top;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  white-space: normal;
 }
 
 .csslider_1 > .arrows_1 {
