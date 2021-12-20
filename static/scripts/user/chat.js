@@ -188,9 +188,9 @@ on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
   search.previousElementSibling.style.display = "flex";
   search.style.display = "none";
-  if (document.body.querySelector("show_search_result")) {
-    document.body.querySelector("show_search_result").innerHTML = "";
-    document.body.querySelector("chatlist").style.display = "block";
+  if (document.body.querySelector(".show_search_result")) {
+    document.body.querySelector(".show_search_result").innerHTML = "";
+    document.body.querySelector(".chatlist").style.display = "block";
   }
 });
 
