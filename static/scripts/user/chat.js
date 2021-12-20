@@ -78,6 +78,9 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
 });
 on('#ajax', 'click', '.chat_search_btn', function() {
   value = this.parentElement.previousElementSibling;
+  if (!value.value) {
+    return
+  }
   chat = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
   ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     ajax_link.open( 'GET', "/chat/" + chat.getAttribute("data-pk") + "/search/?q=" + value.value, true );
