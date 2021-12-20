@@ -463,11 +463,13 @@ class Chat(models.Model):
             if message.get_type_text():
                 preview_text = 'Черновик: ' + message.get_type_text()
             else:
-                if first_message.creator.id == user_id:
-                    preview_text = 'Вы: ' + first_message.get_type_text()
-                else:
-                    preview_text = first_message.get_type_text()
-                created = first_message.get_created()
+                preview_text = "Фигня какая то!"
+            #else:
+            #    if first_message.creator.id == user_id:
+            #        preview_text = 'Вы: ' + first_message.get_type_text()
+            #    else:
+            #        preview_text = first_message.get_type_text()
+            #    created = first_message.get_created()
         elif not first_message:
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
