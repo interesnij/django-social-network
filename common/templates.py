@@ -506,6 +506,8 @@ def get_detect_platform_template(template, request_user, user_agent):
         raise PermissionDenied("Ошибка доступа")
     elif request_user.is_no_phone_verified():
         template = "main/phone_verification.html"
+    else:
+        template = template
     return get_folder(user_agent) + template
 
 def get_detect_main_template(template, request_user, user_agent):
