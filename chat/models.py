@@ -990,7 +990,7 @@ class Message(models.Model):
             # ведь админы могут удалять любые сообщения чата. В приватном же чате - только
             # свои чтоб могли.
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
-            ChatUsers.objects.create(user=creator chat=current_chat)
+            ChatUsers.objects.create(user=creator, chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
 
         if voice:
