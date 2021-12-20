@@ -174,7 +174,7 @@ class ChatSearchView(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		from chat.models import Message
+		from chat.models import Chat, Message
 		from django.http import Http404
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
