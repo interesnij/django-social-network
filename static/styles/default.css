@@ -167,10 +167,9 @@ button {
   cursor:pointer;
 }
 .message_form_parent_block {
-  float:right;
-  position:absolute;
-  right: 0;
-  top:-15px;
+  position: absolute;
+  right: 10px;
+  top: -12px;
   font-size: 25px;
 }
 

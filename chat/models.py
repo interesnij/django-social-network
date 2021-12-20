@@ -1162,9 +1162,8 @@ class Message(models.Model):
 
         else:
             message = Message.objects.create(chat=chat, creator_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
-
+        message.transfer.clear()
         if transfer:
-            message.transfer.clear()
             for i in transfer:
                 m = Message.objects.get(uuid=i)
                 message.transfer.add(m)
