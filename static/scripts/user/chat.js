@@ -76,6 +76,24 @@ on('#ajax', 'click', '.u_message_unfixed', function() {
     }
     ajax_link.send();
 });
+on('#ajax', 'click', '.chat_search_btn', function() {
+  value = this.parentElement.previousElementSibling;
+  chat = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+  ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', "/chat/" + chat.getAttribute("data-pk") + "/search/?q=" + value.value, true );
+		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        chatview = chat.querySelector(".chatview");
+        chatview.querySelector(".chatlist").style.display = "none";
+        chatview.classList.add("show_search_result");
+        chatview.innerHTML = elem_.innerHTML;
+      }
+    }
+    ajax_link.send();
+});
 
 on('#ajax', 'click', '.delete_favourite_message', function() {
   uuid = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-uuid")
@@ -167,6 +185,11 @@ on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
   search.previousElementSibling.style.display = "flex";
   search.style.display = "none";
+  chatview = chat.querySelector(".chatview");
+  if (chatview.classList.contains("show_search_result")) {
+    chatview.querySelector(".chatlist").style.display = "block";
+    chatview.classList.remove("show_search_result")
+  }
 });
 
 on('#ajax', 'click', '.u_chat_info', function() {

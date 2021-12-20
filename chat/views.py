@@ -169,3 +169,35 @@ class ChatFavouritesMessagesView(ListView):
 
 	def get_queryset(self):
 		return self.request.user.get_favourite_messages()
+
+class ChatSearchView(ListView):
+    template_name, paginate_by = None, 20
+
+    def get(self,request,*args,**kwargs):
+        from chat.models import Message
+		from django.http import Http404
+
+		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if not self.chat.is_public() and not request.user.pk in self.chat.get_members_ids():
+			raise Http404
+        if request.GET.get('q'):
+            _q = request.GET.get('q').replace("#", "%23")
+            if "?stat" in _q:
+                self.q = _q[:_q.find("?"):]
+            else:
+                self.q = _q
+			self.list = Message.objects.filter(text__icontains=self.q)
+        else:
+            self.q = ""
+			self.list = []
+        self.template_name = get_default_template("chat/chat/detail/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(ChatSearchView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context=super(ChatSearchView,self).get_context_data(**kwargs)
+        context["q"] = self.q.replace("%23","#")
+		context["chat"] = self.chat
+        return context
+
+    def get_queryset(self):
+        return self.list
