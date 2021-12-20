@@ -463,13 +463,11 @@ class Chat(models.Model):
             if message.get_type_text():
                 preview_text = 'Черновик: ' + message.get_type_text()
             else:
-                preview_text = "Фигня какая то!"
-            #else:
-            #    if first_message.creator.id == user_id:
-            #        preview_text = 'Вы: ' + first_message.get_type_text()
-            #    else:
-            #        preview_text = first_message.get_type_text()
-            #    created = first_message.get_created()
+                if first_message.creator.id == user_id:
+                    preview_text = 'Вы: ' + first_message.get_type_text()
+                else:
+                    preview_text = first_message.get_type_text()
+                created = first_message.get_created()
         elif not first_message:
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
@@ -913,7 +911,7 @@ class Message(models.Model):
         return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
-        return self.transfer.filter(pk=self.pk).exists()
+        return self.transfer.filter(uuid=self.uuid).exists()
 
     def get_count_attach(self):
         if self.attach:
