@@ -911,7 +911,7 @@ class Message(models.Model):
         return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
-        return self.transfer.filter(uuid=self.uuid).exists()
+        return self.transfer.all().exists()
 
     def get_count_attach(self):
         if self.attach:
