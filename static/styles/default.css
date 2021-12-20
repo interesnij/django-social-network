@@ -1,6 +1,9 @@
 .active h6{
   font-weight: bold;
 }
+.parent_message_block {
+  line-height: 1;
+}
 .hidden {
   display: none;
 }
