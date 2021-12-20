@@ -187,7 +187,11 @@ class ChatSearchView(ListView):
 				self.q = _q[:_q.find("?"):]
 			else:
 				self.q = _q
-			self.list = Message.objects.filter(text__icontains=self.q)
+			query = Q(chat_id=self.chat)
+			query.add(~Q(type__contains="_"), Q.AND)
+			query.add(~Q(message_options__user_id=request.user.pk, message_options__is_deleted=True), Q.AND)
+			query.add(Q(text__icontains=self.q), Q.AND)
+			self.list = Message.objects.filter(query)
 		else:
 			self.q = ""
 			self.list = []
