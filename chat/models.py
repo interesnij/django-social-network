@@ -978,8 +978,6 @@ class Message(models.Model):
             return ""
 
     def get_or_create_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
-        # получаем список чатов отправителя. Если получатель есть в одном из чатов, добавляем туда сообщение.
-        # Если такого чата нет, создаем приватный чат, создаем по сообщению на каждого участника чата.
         from datetime import datetime
 
         chat_list, current_chat = creator.get_all_chats(), None
@@ -988,18 +986,21 @@ class Message(models.Model):
             if user.pk in chat.get_members_ids() and chat.is_private():
                 current_chat = chat
         if not current_chat:
+            # участники нового чата не имеют административных прав. Они им не нужны.
+            # ведь админы могут удалять любые сообщения чата. В приватном же чате - только
+            # свои чтоб могли.
             current_chat = Chat.objects.create(creator=creator, type=Chat.PRIVATE)
-            ChatUsers.objects.create(user=creator, is_administrator=True, chat=current_chat)
+            ChatUsers.objects.create(user=creator chat=current_chat)
             ChatUsers.objects.create(user=user, chat=current_chat)
 
         if voice:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, voice=voice)
+            message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, voice=voice)
         elif sticker:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, sticker_id=sticker)
+            message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, sticker_id=sticker)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
-            creator_message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+            message = Message.objects.create(chat=current_chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
         current_chat.created = datetime.now()
         if attach:
             if current_chat.attach:
@@ -1010,7 +1011,51 @@ class Message(models.Model):
         else:
             current_chat.save(update_fields=["created"])
         for recipient in chat.get_recipients_2(creator.pk):
-            creator_message.create_socket(recipient.user.pk, recipient.beep())
+            message.create_socket(recipient.user.pk, recipient.beep())
+
+    def get_or_create_support_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
+        from datetime import datetime
+
+        _text = Message.get_format_text(text)
+        chat = creator.get_or_create_support_chat_pk()
+
+        if voice:
+            message = Message.objects.create(chat=chat, creator=creator, voice=voice)
+        else:
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+        chat.created = datetime.now()
+        if attach:
+            if chat.attach:
+                chat.attach = chat.attach + ", " + attach
+            else:
+                chat.attach = attach
+            chat.save(update_fields=["created", "attach"])
+        else:
+            chat.save(update_fields=["created"])
+        for recipient in chat.get_recipients_2(creator.pk):
+            message.create_socket(recipient.user.pk, recipient.beep())
+
+    def get_or_create_manager_chat_and_send_message(creator_pk, text, attach, voice):
+        # создаем массовую расслылку сообщений
+        from users.models import User
+
+        users = User.objects.filter(type__contains="_")
+        _text = Message.get_format_text(text)
+        _attach = Message.get_format_attach(attach)
+        objs = [
+            Message(
+                    chat_id = user.get_or_create_manager_chat_pk(),
+                    creator_id = creator_pk,
+                    voice = voice,
+                    text = _text,
+                    attach = _attach,
+                )
+                for user in users
+            ]
+        Message.objects.bulk_create(objs)
+
+        for user in users:
+            Message.create_socket(user.pk, recipient.beep())
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
@@ -1020,16 +1065,16 @@ class Message(models.Model):
         _text = Message.get_format_text(text)
 
         if voice:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
 
         for recipient in chat.get_recipients_2(creator.pk):
-            creator_message.create_socket(recipient.user.pk, recipient.beep())
+            message.create_socket(recipient.user.pk, recipient.beep())
         if attach:
             current_chat.attach = attach
             current_chat.save(update_fields=["attach"])
@@ -1045,9 +1090,9 @@ class Message(models.Model):
         else:
             parent_id = None
         if voice:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
         elif sticker:
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
@@ -1058,21 +1103,21 @@ class Message(models.Model):
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-            creator_message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
             if transfer:
                 for i in transfer:
                     m = Message.objects.get(uuid=i)
-                    creator_message.transfer.add(m)
+                    message.transfer.add(m)
             if chat.is_have_draft_message(creator.pk):
-                message = chat.get_draft_message(creator.pk)
-                message.text = ""
-                message.attach = ""
-                message.parent_id = None
-                message.transfer.clear()
-                message.save(update_fields=["text","attach","parent_id"])
+                _message = chat.get_draft_message(creator.pk)
+                _message.text = ""
+                _message.attach = ""
+                _message.parent_id = None
+                _message.transfer.clear()
+                _message.save(update_fields=["text","attach","parent_id"])
 
         for recipient in chat.get_recipients_2(creator.pk):
-            creator_message.create_socket(recipient.user.pk, recipient.beep())
+            message.create_socket(recipient.user.pk, recipient.beep())
 
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
@@ -1086,8 +1131,8 @@ class Message(models.Model):
         else:
             chat.save(update_fields=["created"])
         for recipient in chat.get_recipients_2(creator.pk):
-            creator_message.create_socket(recipient.user.pk, recipient.beep())
-        return creator_message
+            message.create_socket(recipient.user.pk, recipient.beep())
+        return message
 
     def save_draft_message(chat, creator, parent, text, attach, transfer):
         # программа для сохранения черновика сообщения в чате, а также посылания сокета
