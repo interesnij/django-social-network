@@ -87,12 +87,11 @@ on('#ajax', 'click', '.chat_search_btn', function() {
 		ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span').innerHTML;
-        if (elem_ == value.value) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+        if (elem_.querySelector(".chat_search_value").innerHTML == value.value) {
           return
         };
-        elem_.innerHTML = ajax_link.responseText;
-        elem_value = elem_.querySelector(".chat_search_value")
         chatview = chat.querySelector(".chatview");
         chatview.querySelector(".chatlist").style.display = "none";
         span = document.createElement('span');
