@@ -177,6 +177,7 @@ class ChatSearchView(ListView):
 		from chat.models import Chat, Message
 		from django.http import Http404
 		from common.templates import get_detect_platform_template
+		from django.db.models import Q
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if not self.chat.is_public() and not request.user.pk in self.chat.get_members_ids():
