@@ -176,7 +176,7 @@ class ChatSearchView(ListView):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat, Message
 		from django.http import Http404
-		from common.templates import get_settings_template
+		from common.templates import get_default_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if not self.chat.is_public() and not request.user.pk in self.chat.get_members_ids():
@@ -191,7 +191,7 @@ class ChatSearchView(ListView):
 		else:
 			self.q = ""
 			self.list = []
-		self.template_name = get_settings_template("chat/chat/detail/", "search.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_default_template("chat/chat/detail/search.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(ChatSearchView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
