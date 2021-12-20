@@ -46,6 +46,23 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_or_create_manager_chat_pk(self):
+        from chat.models import Chat, ChatUsers
+        if Chat.objects.filter(creator_id=self.pk, type=Chat.MANAGER).exists():
+            return Chat.objects.filter(creator_id=self.pk, type=Chat.MANAGER).first().pk
+        else:
+            chat = Chat.objects.create(creator_id=self.pk, type=Chat.MANAGER, name="Рассылка служународу.рус",)
+            ChatUsers.objects.create(user=creator, chat=chat)
+            return chat.pk
+    def get_or_create_support_chat_pk(self):
+        from chat.models import Chat, ChatUsers
+        if Chat.objects.filter(creator_id=self.pk, type=Chat.SUPPORT).exists():
+            return Chat.objects.filter(creator_id=self.pk, type=Chat.SUPPORT).first().pk
+        else:
+            chat = Chat.objects.create(creator_id=self.pk, type=Chat.SUPPORT, name="Техподдержка",)
+            ChatUsers.objects.create(user=creator, chat=chat)
+            return chat.pk
+
     def is_closed_profile(self):
         return self.type[-1] == "P"
 
