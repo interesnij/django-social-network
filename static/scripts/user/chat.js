@@ -89,7 +89,9 @@ on('#ajax', 'click', '.chat_search_btn', function() {
         chatview = chat.querySelector(".chatview");
         chatview.querySelector(".chatlist").style.display = "none";
         chatview.classList.add("show_search_result");
-        chatview.innerHTML = elem_.innerHTML;
+        span = document.createElement('span');
+        chatview.prepend(span);
+        span.innerHTML = elem_.innerHTML;
       }
     }
     ajax_link.send();
