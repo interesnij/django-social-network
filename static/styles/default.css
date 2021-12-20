@@ -1360,12 +1360,9 @@ html {
   opacity:0
 }
 .active_svg svg{
-  width: 32px;
   position: absolute;
   color: inherit;
   opacity: 1;
-  left: -3px;
-  top: -3px;
 }
 
 .photo_preview_delete,
