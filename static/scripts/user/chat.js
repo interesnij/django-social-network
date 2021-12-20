@@ -91,10 +91,13 @@ on('#ajax', 'click', '.chat_search_btn', function() {
         elem_.innerHTML = ajax_link.responseText;
         chatview = chat.querySelector(".chatview");
         chatview.querySelector(".chatlist").style.display = "none";
-        span = document.createElement('span');
-        span.classList.add("show_search_result");
-        chatview.prepend(span);
-        span.innerHTML = "";
+        if (chatview.querySelector(".show_search_result")) {
+          chatview.querySelector(".show_search_result").innerHTML = ""
+        } else {
+          span = document.createElement('span');
+          span.classList.add("show_search_result");
+          chatview.prepend(span);
+        };
         span.innerHTML = elem_.innerHTML;
       }
     }
