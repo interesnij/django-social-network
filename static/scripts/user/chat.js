@@ -170,7 +170,7 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 });
 
 on('#ajax', 'click', '.u_chat_info', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/" + pk + "/info/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.favourite_messages_list', function() {
