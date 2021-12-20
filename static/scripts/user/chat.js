@@ -88,9 +88,10 @@ on('#ajax', 'click', '.chat_search_btn', function() {
         elem_.innerHTML = ajax_link.responseText;
         chatview = chat.querySelector(".chatview");
         chatview.querySelector(".chatlist").style.display = "none";
-        chatview.classList.add("show_search_result");
         span = document.createElement('span');
+        span.classList.add("show_search_result");
         chatview.prepend(span);
+
         span.innerHTML = elem_.innerHTML;
       }
     }
@@ -187,10 +188,9 @@ on('#ajax', 'click', '.hide_chat_search', function() {
   search = this.parentElement.parentElement;
   search.previousElementSibling.style.display = "flex";
   search.style.display = "none";
-  chatview = document.body.querySelector(".chatview");
-  if (chatview.classList.contains("show_search_result")) {
-    chatview.querySelector(".chatlist").style.display = "block";
-    chatview.classList.remove("show_search_result")
+  if (document.body.querySelector("show_search_result")) {
+    document.body.querySelector("show_search_result").innerHTML = "";
+    document.body.querySelector("chatlist").style.display = "block";
   }
 });
 
