@@ -405,9 +405,9 @@ class Community(models.Model):
         return private.can_see_good == "1"
 
     def is_user_can_see_photo(self, user_id):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_photo == "1":
             return True
         elif private.can_see_photo == "9" and user_id in self.get_admins_ids():
@@ -423,9 +423,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_post(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_post == "1":
             return True
         elif private.can_see_post == "9" and user_id in self.get_admins_ids():
@@ -441,9 +441,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_send_message(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_send_message == "1":
             return True
         elif private.can_send_message == "9" and user_id in self.get_admins_ids():
@@ -459,9 +459,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_good(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_good == "1":
             return True
         elif private.can_see_good == "9" and user_id in self.get_admins_ids():
@@ -477,9 +477,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_video(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_video == "1":
             return True
         elif private.can_see_video == "9" and user_id in self.get_admins_ids():
@@ -495,9 +495,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_music(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_music == "1":
             return True
         elif private.can_see_music == "9" and user_id in self.get_admins_ids():
@@ -513,9 +513,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_doc(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_doc == "1":
             return True
         elif private.can_see_doc == "9" and user_id in self.get_admins_ids():
@@ -531,9 +531,9 @@ class Community(models.Model):
         return False
 
     def is_user_can_see_member(self, user):
-        from communities.model.settings import CommunityPrivate
+        from communities.model.settings import CommunityPrivate2
 
-        private = CommunityPrivate.objects.get(community=self)
+        private = CommunityPrivate2.objects.get(community=self)
         if private.can_see_member == "1":
             return True
         elif private.can_see_member == "9" and user_id in self.get_admins_ids():
@@ -640,131 +640,6 @@ class Community(models.Model):
                     return ie.can_see_planner == 1
                 elif type == 17:
                     return ie.can_see_planner_comment == 1
-            except CommunityMemberPerm.DoesNotExist:
-                 return False
-
-    def get_special_perm_copy(self, user_id, type, value):
-        """
-        type 1 - can_copy_post,
-        2 - can_copy_photo
-        3 - can_copy_good
-        4 - can_copy_video,
-        5 - can_copy_planner,
-        6 - can_copy_doc
-        7 - can_copy_music
-        """
-        member = CommunityMemberPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.community_ie_settings
-                if type == 1:
-                    return ie.can_copy_post != 2
-                elif type == 2:
-                    return ie.can_copy_photo != 2
-                elif type == 3:
-                    return ie.can_copy_good != 2
-                elif type == 4:
-                    return ie.can_copy_video != 2
-                elif type == 5:
-                    return ie.can_copy_planner != 2
-                if type == 6:
-                    return ie.can_copy_doc != 2
-                elif type == 7:
-                    return ie.can_copy_music != 2
-            except CommunityMemberPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.community_ie_settings
-                if type == 1:
-                    return ie.can_copy_post == 1
-                elif type == 2:
-                    return ie.can_copy_photo == 1
-                elif type == 3:
-                    return ie.can_copy_good == 1
-                elif type == 4:
-                    return ie.can_copy_video == 1
-                elif type == 5:
-                    return ie.can_copy_planner == 1
-                if type == 6:
-                    return ie.can_copy_doc == 1
-                elif type == 7:
-                    return ie.can_copy_music == 1
-            except CommunityMemberPerm.DoesNotExist:
-                 return False
-
-    def get_special_perm_create(self, user_id, type, value):
-        """
-        type 1 - can_create_post
-        2 - can_create_post_comment
-        3 - can_create_photo,
-        4 - can_create_photo_comment,
-        5 - can_create_good
-        6 - can_create_good_comment
-        7 - can_create_video
-        8 - can_create_video_comment
-        9 - can_create_planner
-        10 - can_create_planner_comment
-        11 - can_create_doc,
-        12 - can_create_music,
-        """
-        member = CommunityMemberPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.community_ie_settings
-                if type == 1:
-                    return ie.can_create_post != 2
-                elif type == 2:
-                    return ie.can_create_post_comment != 2
-                elif type == 3:
-                    return ie.can_create_photo != 2
-                elif type == 4:
-                    return ie.can_create_photo_comment != 2
-                elif type == 5:
-                    return ie.can_create_good != 2
-                if type == 6:
-                    return ie.can_create_good_comment != 2
-                elif type == 7:
-                    return ie.can_create_video != 2
-                elif type == 8:
-                    return ie.can_create_video_comment != 2
-                elif type == 9:
-                    return ie.can_create_planner != 2
-                elif type == 10:
-                    return ie.can_create_planner_comment != 2
-                if type == 11:
-                    return ie.can_create_doc != 2
-                elif type == 12:
-                    return ie.can_create_music != 2
-            except CommunityMemberPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.community_ie_settings
-                if type == 1:
-                    return ie.can_create_post == 1
-                elif type == 2:
-                    return ie.can_create_post_comment == 1
-                elif type == 3:
-                    return ie.can_create_photo == 1
-                elif type == 4:
-                    return ie.can_create_photo_comment == 1
-                elif type == 5:
-                    return ie.can_create_good == 1
-                if type == 6:
-                    return ie.can_create_good_comment == 1
-                elif type == 7:
-                    return ie.can_create_video == 1
-                elif type == 8:
-                    return ie.can_create_video_comment == 1
-                elif type == 9:
-                    return ie.can_create_planner == 1
-                elif type == 10:
-                    return ie.can_create_planner_comment == 1
-                if type == 11:
-                    return ie.can_create_doc == 1
-                elif type == 12:
-                    return ie.can_create_music == 1
             except CommunityMemberPerm.DoesNotExist:
                  return False
 
