@@ -913,7 +913,7 @@ class Message(models.Model):
         values = MessageTransfers.objects.filter(message_id=self.pk).values("transfer_id")
         return [i['transfer_id'] for i in values]
     def get_transfers(self):
-        return Message.objects.filter(id__in=self.get_transfers_ids()).exclude(type__contains="_")
+        return Message.objects.filter(uuid__in=self.get_transfers_ids()).exclude(type__contains="_")
 
     def get_count_attach(self):
         if self.attach:
