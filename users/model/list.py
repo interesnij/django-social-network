@@ -72,7 +72,7 @@ class NewsUC(models.Model):
         verbose_name = 'Источник новостей'
         verbose_name_plural = 'Источники новостей'
         constraints = [
-            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
+            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='news_uc')
         ]
 
     def __str__(self):
@@ -102,7 +102,7 @@ class NotifyUC(models.Model):
         verbose_name = 'Источник уведомлений'
         verbose_name_plural = 'Источники уведомлений'
         constraints = [
-            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='feature_uc')
+            models.UniqueConstraint(fields=['owner', 'user', 'community'], name='notify_uc')
         ]
 
     def __str__(self):
