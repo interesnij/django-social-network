@@ -1286,6 +1286,8 @@ class Message(models.Model):
             return "<b class='i_link'>Вложения</b>"
         elif self.text:
             return self.get_text_60()
+        else:
+            return "Нет текста!"
 
     def get_preview_text(self):
         if self.is_manager():
