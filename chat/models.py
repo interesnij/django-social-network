@@ -911,7 +911,7 @@ class Message(models.Model):
         return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
-        return MessageTransfers.objects.filter(message_id=self.pk).exclude(type__contains="_").exists()
+        return MessageTransfers.objects.filter(message_id=self.pk).exists()
 
     def get_transfers_ids(self):
         values = MessageTransfers.objects.filter(message_id=self.pk).values("transfer_id")
