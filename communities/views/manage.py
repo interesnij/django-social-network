@@ -39,14 +39,14 @@ class CommunitySectionsOpenView(TemplateView):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_community_manage_template("communities/manage/sections.html", request.user, self.c, request.META['HTTP_USER_AGENT'])
 		try:
-			self.sections = CommunityPrivate2.objects.get(community=self.c)
+			self.private = CommunityPrivate2.objects.get(community=self.c)
 		except:
-			self.sections = CommunityPrivate2.objects.create(community=self.c)
+			self.private = CommunityPrivate2.objects.create(community=self.c)
 		return super(CommunitySectionsOpenView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunitySectionsOpenView,self).get_context_data(**kwargs)
-		c["sections"], c["community"] = self.sections, self.c
+		c["private"], c["community"] = self.sections, self.c
 		return c
 
 	def post(self,request,*args,**kwargs):
