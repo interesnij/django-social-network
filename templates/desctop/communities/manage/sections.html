@@ -13,7 +13,7 @@
                     </div>
                     <div class="card-body hot_perm_post">
                       <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит информацию сообщества</label>
+                          <label class="col-md-6">Кто видит информацию</label>
                           <span class="col-md-6">
                             <a class="menu_drop_2 pointer">{{ private.get_can_see_info_display }}</a>
                             <span class="collector">
@@ -34,21 +34,21 @@
                       </div>
 
                       <div class="row mb-1 form_group_flex">
-                          <label class="col-md-6">Кто видит друзей</label>
+                          <label class="col-md-6">Кто видит подписчиков</label>
                           <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">{{ private.get_can_see_friend_display }}</a>
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_member_display }}</a>
                             <span class="collector">
-                              {% if private.can_see_friend == 5 and community.get_can_see_friend_exclude_users %}:
-                              {% for object in community.get_can_see_friend_exclude_users %}
+                              {% if private.can_see_member == 5 and community.get_can_see_member_exclude_users %}:
+                              {% for object in community.get_can_see_member_exclude_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
-                              {% elif private.can_see_friend == 6 and community.get_can_see_friend_include_users %}:
-                              {% for object in community.get_can_see_friend_include_users %}
+                              {% elif private.can_see_member == 6 and community.get_can_see_member_include_users %}:
+                              {% for object in community.get_can_see_member_include_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu border" data-action="can_see_friend" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_member" style="top: 30px;">
                               {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
                             </div>
                           </span>
