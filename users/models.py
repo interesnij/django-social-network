@@ -1762,6 +1762,171 @@ class User(AbstractUser):
                 perm.save(update_fields=["can_see_community"])
             private.can_see_community = 17
             private.save(update_fields=["can_see_community"])
+        elif type == "can_see_info":
+            list = self.connections.filter(connect_ie_settings__can_see_info=2)
+            for i in list:
+                i.connect_ie_settings.can_see_info = 0
+                i.connect_ie_settings.save(update_fields=["can_see_info"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_info = 2
+                perm.save(update_fields=["can_see_info"])
+            private.can_see_info = 17
+            private.save(update_fields=["can_see_info"])
+        elif type == "can_see_friend":
+            list = self.connections.filter(connect_ie_settings__can_see_friend=2)
+            for i in list:
+                i.connect_ie_settings.can_see_friend = 0
+                i.connect_ie_settings.save(update_fields=["can_see_friend"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_friend = 2
+                perm.save(update_fields=["can_see_friend"])
+            private.can_see_friend = 17
+            private.save(update_fields=["can_see_friend"])
+        elif type == "can_send_message":
+            list = self.connections.filter(connect_ie_settings__can_send_message=2)
+            for i in list:
+                i.connect_ie_settings.can_send_message = 0
+                i.connect_ie_settings.save(update_fields=["can_send_message"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_send_message = 2
+                perm.save(update_fields=["can_send_message"])
+            private.can_send_message = 17
+            private.save(update_fields=["can_send_message"])
+        elif type == "can_add_in_chat":
+            list = self.connections.filter(connect_ie_settings__can_add_in_chat=2)
+            for i in list:
+                i.connect_ie_settings.can_add_in_chat = 0
+                i.connect_ie_settings.save(update_fields=["can_add_in_chat"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_add_in_chat = 2
+                perm.save(update_fields=["can_add_in_chat"])
+            private.can_add_in_chat = 17
+            private.save(update_fields=["can_add_in_chat"])
+        elif type == "can_see_post":
+            list = self.connections.filter(connect_ie_settings__can_see_post=2)
+            for i in list:
+                i.connect_ie_settings.can_see_post = 0
+                i.connect_ie_settings.save(update_fields=["can_see_post"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_post = 2
+                perm.save(update_fields=["can_see_post"])
+            private.can_see_post = 17
+            private.save(update_fields=["can_see_post"])
+        elif type == "can_see_photo":
+            list = self.connections.filter(connect_ie_settings__can_see_photo=2)
+            for i in list:
+                i.connect_ie_settings.can_see_photo = 0
+                i.connect_ie_settings.save(update_fields=["can_see_photo"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_photo = 2
+                perm.save(update_fields=["can_see_photo"])
+            private.can_see_photo = 17
+            private.save(update_fields=["can_see_photo"])
+        elif type == "can_see_good":
+            list = self.connections.filter(connect_ie_settings__can_see_good=2)
+            for i in list:
+                i.connect_ie_settings.can_see_good = 0
+                i.connect_ie_settings.save(update_fields=["can_see_good"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_good = 2
+                perm.save(update_fields=["can_see_good"])
+            private.can_see_good = 17
+            private.save(update_fields=["can_see_good"])
+        elif type == "can_see_video":
+            list = self.connections.filter(connect_ie_settings__can_see_video=2)
+            for i in list:
+                i.connect_ie_settings.can_see_video = 0
+                i.connect_ie_settings.save(update_fields=["can_see_video"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_video = 2
+                perm.save(update_fields=["can_see_video"])
+            private.can_see_video = 17
+            private.save(update_fields=["can_see_video"])
+        elif type == "can_see_music":
+            list = self.connections.filter(connect_ie_settings__can_see_music=2)
+            for i in list:
+                i.connect_ie_settings.can_see_music = 0
+                i.connect_ie_settings.save(update_fields=["can_see_music"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_music = 2
+                perm.save(update_fields=["can_see_music"])
+            private.can_see_music = 17
+            private.save(update_fields=["can_see_music"])
+        elif type == "can_see_planner":
+            list = self.connections.filter(connect_ie_settings__can_see_planner=2)
+            for i in list:
+                i.connect_ie_settings.can_see_planner = 0
+                i.connect_ie_settings.save(update_fields=["can_see_planner"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_planner = 2
+                perm.save(update_fields=["can_see_planner"])
+            private.can_see_planner = 17
+            private.save(update_fields=["can_see_planner"])
+        elif type == "can_see_doc":
+            list = self.connections.filter(connect_ie_settings__can_see_doc=2)
+            for i in list:
+                i.connect_ie_settings.can_see_doc = 0
+                i.connect_ie_settings.save(update_fields=["can_see_doc"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_doc = 2
+                perm.save(update_fields=["can_see_doc"])
+            private.can_see_doc = 17
+            private.save(update_fields=["can_see_doc"])
 
     def post_include_users(self, users, type):
         from frends.models import ConnectPerm
@@ -1782,6 +1947,171 @@ class User(AbstractUser):
                 perm.save(update_fields=["can_see_community"])
             private.can_see_community = 18
             private.save(update_fields=["can_see_community"])
+        elif type == "can_see_info":
+            list = self.connections.filter(connect_ie_settings__can_see_info=1)
+            for i in list:
+                i.connect_ie_settings.can_see_info = 0
+                i.connect_ie_settings.save(update_fields=["can_see_info"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_info = 1
+                perm.save(update_fields=["can_see_info"])
+            private.can_see_info = 18
+            private.save(update_fields=["can_see_info"])
+        elif type == "can_see_friend":
+            list = self.connections.filter(connect_ie_settings__can_see_friend=1)
+            for i in list:
+                i.connect_ie_settings.can_see_friend = 0
+                i.connect_ie_settings.save(update_fields=["can_see_friend"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_friend = 1
+                perm.save(update_fields=["can_see_friend"])
+            private.can_see_friend = 18
+            private.save(update_fields=["can_see_friend"])
+        elif type == "can_send_message":
+            list = self.connections.filter(connect_ie_settings__can_send_message=1)
+            for i in list:
+                i.connect_ie_settings.can_send_message = 0
+                i.connect_ie_settings.save(update_fields=["can_send_message"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_send_message = 1
+                perm.save(update_fields=["can_send_message"])
+            private.can_send_message = 18
+            private.save(update_fields=["can_send_message"])
+        elif type == "can_add_in_chat":
+            list = self.connections.filter(connect_ie_settings__can_add_in_chat=1)
+            for i in list:
+                i.connect_ie_settings.can_add_in_chat = 0
+                i.connect_ie_settings.save(update_fields=["can_add_in_chat"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_add_in_chat = 1
+                perm.save(update_fields=["can_add_in_chat"])
+            private.can_add_in_chat = 18
+            private.save(update_fields=["can_add_in_chat"])
+        elif type == "can_see_post":
+            list = self.connections.filter(connect_ie_settings__can_see_post=1)
+            for i in list:
+                i.connect_ie_settings.can_see_post = 0
+                i.connect_ie_settings.save(update_fields=["can_see_post"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_post = 1
+                perm.save(update_fields=["can_see_post"])
+            private.can_see_post = 18
+            private.save(update_fields=["can_see_post"])
+        elif type == "can_see_photo":
+            list = self.connections.filter(connect_ie_settings__can_see_photo=1)
+            for i in list:
+                i.connect_ie_settings.can_see_photo = 0
+                i.connect_ie_settings.save(update_fields=["can_see_photo"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_photo = 1
+                perm.save(update_fields=["can_see_photo"])
+            private.can_see_photo = 18
+            private.save(update_fields=["can_see_photo"])
+        elif type == "can_see_good":
+            list = self.connections.filter(connect_ie_settings__can_see_good=1)
+            for i in list:
+                i.connect_ie_settings.can_see_good = 0
+                i.connect_ie_settings.save(update_fields=["can_see_good"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_good = 1
+                perm.save(update_fields=["can_see_good"])
+            private.can_see_good = 18
+            private.save(update_fields=["can_see_good"])
+        elif type == "can_see_video":
+            list = self.connections.filter(connect_ie_settings__can_see_video=1)
+            for i in list:
+                i.connect_ie_settings.can_see_video = 0
+                i.connect_ie_settings.save(update_fields=["can_see_video"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_video = 1
+                perm.save(update_fields=["can_see_video"])
+            private.can_see_video = 18
+            private.save(update_fields=["can_see_video"])
+        elif type == "can_see_music":
+            list = self.connections.filter(connect_ie_settings__can_see_music=1)
+            for i in list:
+                i.connect_ie_settings.can_see_music = 0
+                i.connect_ie_settings.save(update_fields=["can_see_music"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_music = 1
+                perm.save(update_fields=["can_see_music"])
+            private.can_see_music = 18
+            private.save(update_fields=["can_see_music"])
+        elif type == "can_see_planner":
+            list = self.connections.filter(connect_ie_settings__can_see_planner=1)
+            for i in list:
+                i.connect_ie_settings.can_see_planner = 0
+                i.connect_ie_settings.save(update_fields=["can_see_planner"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_planner = 1
+                perm.save(update_fields=["can_see_planner"])
+            private.can_see_planner = 18
+            private.save(update_fields=["can_see_planner"])
+        elif type == "can_see_doc":
+            list = self.connections.filter(connect_ie_settings__can_see_doc=1)
+            for i in list:
+                i.connect_ie_settings.can_see_doc = 0
+                i.connect_ie_settings.save(update_fields=["can_see_doc"])
+            for user_id in users:
+                friend = self.connections.filter(target_user_id=user_id).first()
+                try:
+                    perm = ConnectPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = ConnectPerm.objects.create(user_id=friend.pk)
+                perm.can_see_doc = 1
+                perm.save(update_fields=["can_see_doc"])
+            private.can_see_doc = 18
+            private.save(update_fields=["can_see_doc"])
 
 
     def get_can_see_community_exclude_users_ids(self):
@@ -1794,3 +2124,124 @@ class User(AbstractUser):
         return User.objects.filter(id__in=self.get_can_see_community_exclude_users_ids())
     def get_can_see_community_include_users(self):
         return User.objects.filter(id__in=self.get_can_see_community_include_users_ids())
+
+    def get_can_see_info_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_info=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_info_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_info=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_info_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_info_exclude_users_ids())
+    def get_can_see_info_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_info_include_users_ids())
+
+    def get_can_see_friend_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_friend=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_friend_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_friend=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_friend_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_friend_exclude_users_ids())
+    def get_can_see_friend_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_friend_include_users_ids())
+
+    def get_can_send_message_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_send_message=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_send_message_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_send_message=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_send_message_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_send_message_exclude_users_ids())
+    def get_can_send_message_include_users(self):
+        return User.objects.filter(id__in=self.get_can_send_message_include_users_ids())
+
+    def get_can_add_in_chat_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_add_in_chat=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_add_in_chat_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_add_in_chat=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_add_in_chat_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_add_in_chat_exclude_users_ids())
+    def get_can_add_in_chat_include_users(self):
+        return User.objects.filter(id__in=self.get_can_add_in_chat_include_users_ids())
+
+    def get_can_see_post_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_post=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_post_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_post=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_post_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_post_exclude_users_ids())
+    def get_can_see_post_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_post_include_users_ids())
+
+    def get_can_see_photo_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_photo=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_photo_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_photo=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_photo_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_photo_exclude_users_ids())
+    def get_can_see_photo_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_photo_include_users_ids())
+
+    def get_can_see_good_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_good=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_good_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_good=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_good_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_good_exclude_users_ids())
+    def get_can_see_good_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_good_include_users_ids())
+
+    def get_can_see_video_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_video=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_video_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_video=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_video_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_video_exclude_users_ids())
+    def get_can_see_video_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_video_include_users_ids())
+
+    def get_can_see_music_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_music=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_music_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_music=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_music_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_music_exclude_users_ids())
+    def get_can_see_music_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_music_include_users_ids())
+
+    def get_can_see_planner_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_planner=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_planner_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_planner=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_planner_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_planner_exclude_users_ids())
+    def get_can_see_planner_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_planner_include_users_ids())
+
+    def get_can_see_doc_exclude_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_doc=2).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_doc_include_users_ids(self):
+        list = self.connections.filter(connect_ie_settings__can_see_doc=1).values("target_user_id")
+        return [i['target_user_id'] for i in list]
+    def get_can_see_doc_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_doc_exclude_users_ids())
+    def get_can_see_doc_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_doc_include_users_ids())
