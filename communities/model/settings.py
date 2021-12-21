@@ -112,23 +112,6 @@ class CommunityNotificationsMusic(models.Model):
         if created:
             CommunityNotificationsMusic.objects.create(community=instance)
 
-class CommunityPrivate(models.Model):
-    ALL_CAN,MEMBERSHIPS,CREATOR,STAFF,MEMBERSHIPS_BUT,SOME_MEMBERSHIPS = 1,2,3,4,5,6
-
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERSHIPS, 'Подписчики'),(CREATOR, 'Создатель'),(MEMBERSHIPS_BUT, 'Подписчики, кроме'),(SOME_MEMBERSHIPS, 'Некоторые подписчики'),(STAFF, 'Персонал'),)
-
-    community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private', verbose_name="Сообщество")
-    can_see_member = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит друзей")
-    can_see_info = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит информацию")
-    can_send_message = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
-    can_see_post = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит стену")
-    can_see_photo = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
-    can_see_good = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
-    can_see_video = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
-    can_see_music = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
-    can_see_planner = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит раздел планирования")
-    can_see_doc = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
-
 class CommunityPrivate2(models.Model):
     ALL_CAN,MEMBERSHIPS,CREATOR,STAFF,MEMBERSHIPS_BUT,SOME_MEMBERSHIPS = 1,2,3,4,5,6
 
