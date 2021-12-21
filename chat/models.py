@@ -863,7 +863,7 @@ class Message(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
-    transfer = models.ManyToManyField("self", blank=True, related_name='+')
+    #transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=10000, blank=True)
@@ -882,7 +882,7 @@ class Message(models.Model):
         return self.text
 
     def get_draft_transfers_block(self):
-        transfers = self.transfer.all()
+        transfers = self.get_transfers()
         count = transfers.count()
         a = count % 10
         b = count % 100
@@ -911,7 +911,13 @@ class Message(models.Model):
         return MessageOptions.objects.filter(message_id=self.pk,user_id=user_id, is_favourite=True).exists()
 
     def is_have_transfer(self):
-        return self.transfer.all().exists()
+        return MessageTransfers.objects.filter(message_id=self.pk).exclude(type__contains="_").exists()
+
+    def get_transfers_ids(self):
+        values = MessageTransfers.objects.filter(message_id=self.pk).values("transfer_id")
+        return [i['transfer_id'] for i in values]
+    def get_transfers(self):
+        return Message.objects.filter(id__in=self.get_transfers_ids()).exclude(type__contains="_")
 
     def get_count_attach(self):
         if self.attach:
@@ -1105,14 +1111,13 @@ class Message(models.Model):
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
             if transfer:
                 for i in transfer:
-                    m = Message.objects.get(uuid=i)
-                    message.transfer.add(m)
+                    MessageTransfers.objects.create(message_id=message.uuif, transfer_id=i)
             if chat.is_have_draft_message(creator.pk):
                 _message = chat.get_draft_message(creator.pk)
                 _message.text = ""
                 _message.attach = ""
                 _message.parent_id = None
-                _message.transfer.clear()
+                MessageTransfers.objects.filter(message_id=_message.uuid).delete()
                 _message.save(update_fields=["text","attach","parent_id"])
 
         for recipient in chat.get_recipients_2(creator.pk):
@@ -1161,11 +1166,10 @@ class Message(models.Model):
 
         else:
             message = Message.objects.create(chat=chat, creator_id=creator.pk, text=text, attach=Message.get_format_attach(attach), parent_id=parent_id, type=Message.DRAFT)
-        message.transfer.clear()
+        MessageTransfers.objects.filter(message_id=message.uuid).delete()
         if transfer:
             for i in transfer:
-                m = Message.objects.get(uuid=i)
-                message.transfer.add(m)
+                MessageTransfers.objects.create(message_id=message.uuid, transfer_id=i)
 
         channel_layer = get_channel_layer()
         payload = {
@@ -1262,7 +1266,7 @@ class Message(models.Model):
 
     def get_type_text(self):
         if self.is_have_transfer():
-            if self.transfer.all().count() > 1:
+            if len(self.get_transfers_ids()) > 1:
                 return "<b class='i_link'>Пересланные сообщения</b>"
             else:
                 return "<b class='i_link'>Пересланное сообщение</b>"
@@ -1478,3 +1482,12 @@ class MessageOptions(models.Model):
     class Meta:
         unique_together = ('message', 'user',)
         indexes = [models.Index(fields=['message', 'user']),]
+
+
+class MessageTransfers(models.Model):
+    message = models.ForeignKey(Message, db_index=False, on_delete=models.CASCADE, related_name="+", verbose_name="Сообщение, в котором пересылают")
+    transfer = models.ForeignKey(Message, db_index=False, on_delete=models.CASCADE, related_name='+', verbose_name="Сообщение, которое пересылают")
+
+    class Meta:
+        unique_together = ('message', 'transfer',)
+        indexes = [models.Index(fields=['message', 'transfer']),]
