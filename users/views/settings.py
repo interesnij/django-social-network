@@ -430,8 +430,8 @@ class UserPrivateExcludeUsers(ListView):
 		elif self.type == "can_see_info":
 			self.users = request.user.get_can_see_info_exclude_users()
 			self.text = "видеть информацию профиля"
-		elif self.type == "":
-			self.users = request.user.get_can_see_info_exclude_users()
+		elif self.type == "can_see_friend":
+			self.users = request.user.get_can_see_friend_exclude_users()
 			self.text = "видеть друзей"
 		elif self.type == "can_send_message":
 			self.users = request.user.get_can_send_message_exclude_users()
@@ -492,8 +492,8 @@ class UserPrivateIncludeUsers(ListView):
 		elif self.type == "can_see_info":
 			self.users = request.user.get_can_see_info_include_users()
 			self.text = "видеть информацию профиля"
-		elif self.type == "":
-			self.users = request.user.get_can_see_info_include_users()
+		elif self.type == "can_see_friend":
+			self.users = request.user.get_can_see_friend_include_users()
 			self.text = "видеть друзей"
 		elif self.type == "can_send_message":
 			self.users = request.user.get_can_send_message_include_users()
