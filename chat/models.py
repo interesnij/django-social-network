@@ -1107,7 +1107,7 @@ class Message(models.Model):
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
             if transfer:
                 for i in transfer:
-                    MessageTransfers.objects.create(message_id=message.uuif, transfer_id=i)
+                    MessageTransfers.objects.create(message_id=message.uuid, transfer_id=i)
             if chat.is_have_draft_message(creator.pk):
                 _message = chat.get_draft_message(creator.pk)
                 _message.text = ""
