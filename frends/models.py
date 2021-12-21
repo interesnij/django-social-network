@@ -66,6 +66,7 @@ class ConnectPerm(models.Model):
     can_see_friend = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит друзей")
     can_send_message = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто пишет сообщения")
     can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
+
     can_see_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит документы и списки")
     can_see_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит музыку и списки")
 

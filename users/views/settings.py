@@ -427,6 +427,39 @@ class UserPrivateExcludeUsers(ListView):
 		if self.type == "can_see_community":
 			self.users = request.user.get_can_see_community_exclude_users()
 			self.text = "видеть сообщества"
+		elif self.type == "can_see_info":
+			self.users = request.user.get_can_see_info_exclude_users()
+			self.text = "видеть информацию профиля"
+		elif self.type == "":
+			self.users = request.user.get_can_see_info_exclude_users()
+			self.text = "видеть друзей"
+		elif self.type == "can_send_message":
+			self.users = request.user.get_can_send_message_exclude_users()
+			self.text = "писать сообщения"
+		elif self.type == "can_add_in_chat":
+			self.users = request.user.get_can_add_in_chat_exclude_users()
+			self.text = "добавлять в беседы"
+		elif self.type == "can_see_post":
+			self.users = request.user.get_can_see_post_exclude_users()
+			self.text = "видеть записи"
+		elif self.type == "can_see_photo":
+			self.users = request.user.get_can_see_photo_exclude_users()
+			self.text = "видеть фотографии"
+		elif self.type == "can_see_good":
+			self.users = request.user.get_can_see_good_exclude_users()
+			self.text = "видеть товары"
+		elif self.type == "can_see_video":
+			self.users = request.user.get_can_see_video_exclude_users()
+			self.text = "видеть видеозаписи"
+		elif self.type == "can_see_music":
+			self.users = request.user.get_can_see_music_exclude_users()
+			self.text = "видеть аудиозаписи"
+		elif self.type == "can_see_planner":
+			self.users = request.user.get_can_see_planner_exclude_users()
+			self.text = "видеть раздел планирования"
+		elif self.type == "can_see_doc":
+			self.users = request.user.get_can_see_doc_exclude_users()
+			self.text = "видеть документы"
 		self.template_name = get_settings_template("users/settings/perm/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateExcludeUsers,self).get(request,*args,**kwargs)
 
@@ -445,7 +478,7 @@ class UserPrivateExcludeUsers(ListView):
 
 		if request.is_ajax():
 			request.user.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
-			return HttpResponse('ok') 
+			return HttpResponse('ok')
 		return HttpResponse('not ok')
 
 class UserPrivateIncludeUsers(ListView):
@@ -456,6 +489,39 @@ class UserPrivateIncludeUsers(ListView):
 		if self.type == "can_see_community":
 			self.users = request.user.get_can_see_community_include_users()
 			self.text = "видеть сообщества"
+		elif self.type == "can_see_info":
+			self.users = request.user.get_can_see_info_include_users()
+			self.text = "видеть информацию профиля"
+		elif self.type == "":
+			self.users = request.user.get_can_see_info_include_users()
+			self.text = "видеть друзей"
+		elif self.type == "can_send_message":
+			self.users = request.user.get_can_send_message_include_users()
+			self.text = "писать сообщения"
+		elif self.type == "can_add_in_chat":
+			self.users = request.user.get_can_add_in_chat_include_users()
+			self.text = "добавлять в беседы"
+		elif self.type == "can_see_post":
+			self.users = request.user.get_can_see_post_include_users()
+			self.text = "видеть записи"
+		elif self.type == "can_see_photo":
+			self.users = request.user.get_can_see_photo_include_users()
+			self.text = "видеть фотографии"
+		elif self.type == "can_see_good":
+			self.users = request.user.get_can_see_good_include_users()
+			self.text = "видеть товары"
+		elif self.type == "can_see_video":
+			self.users = request.user.get_can_see_video_include_users()
+			self.text = "видеть видеозаписи"
+		elif self.type == "can_see_music":
+			self.users = request.user.get_can_see_music_include_users()
+			self.text = "видеть аудиозаписи"
+		elif self.type == "can_see_planner":
+			self.users = request.user.get_can_see_planner_include_users()
+			self.text = "видеть раздел планирования"
+		elif self.type == "can_see_doc":
+			self.users = request.user.get_can_see_doc_include_users()
+			self.text = "видеть документы"
 		self.template_name = get_settings_template("users/settings/perm/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPrivateIncludeUsers,self).get(request,*args,**kwargs)
 
