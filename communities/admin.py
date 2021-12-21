@@ -14,7 +14,7 @@ class CommunityNotificationsVideoInline(admin.TabularInline):
     model = CommunityNotificationsVideo
 
 class CommunityPrivateInline(admin.TabularInline):
-    model = CommunityPrivate
+    model = CommunityPrivate2
 class CommunityInfoInline(admin.TabularInline):
     model = CommunityInfo
 

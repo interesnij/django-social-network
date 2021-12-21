@@ -44,18 +44,3 @@ class CommunityNotifyMusicForm(forms.ModelForm):
     class Meta:
         model = CommunityNotificationsMusic
         fields = ('repost',)
-
-class CommunitySectionOpenForm(forms.ModelForm):
-	class Meta:
-		model = CommunityPrivate
-		fields = (
-                'can_see_member',
-                'can_send_message',
-                'can_see_post',
-                'can_see_photo',
-                'can_see_good',
-                'can_see_video',
-                'can_see_music',
-                'can_see_planner',
-				'can_see_doc',
-                )

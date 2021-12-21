@@ -35,10 +35,3 @@ def check_anon_can_get_list(community):
         raise ValidationError('Ошибка доступа.')
     else:
         return True
-
-def check_private_post_exists(community):
-    from communities.model.settings import CommunityPrivatePost
-    try:
-        CommunityPrivatePost.objects.get(community=community)
-    except:
-        CommunityPrivatePost.objects.create(community=community)
