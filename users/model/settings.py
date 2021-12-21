@@ -124,20 +124,8 @@ class UserColorSettings(models.Model):
             UserColorSettings.objects.create(user=instance)
 
 class ProfilePrivate(models.Model):
-    ALL_CAN, MEMBERS, FRIENDS_MEMBERS, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5,6,17,18,19,20
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS, MEMBERS_BUT, SOME_MEMBERS = 1,4,5,6,17,18
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
-    PERM_PLANNER = (
-        (ALL_CAN, 'Все пользователи'),
-        (MEMBERS, 'Участники пространства или доски'),
-        (FRIENDS, 'Друзья'),
-        (FRIENDS_MEMBERS, 'Друзья и участники'),
-        (EACH_OTHER, 'Друзья и друзья друзей'),
-        (YOU, 'Только я'),
-        (FRIENDS_BUT, 'Друзья, кроме'),
-        (SOME_FRIENDS, 'Некоторые друзья'),
-        (MEMBERS_BUT, 'Участники, кроме'),
-        (SOME_MEMBERS, 'Некоторые участники'),
-    )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='profile_private', verbose_name="Пользователь")
     can_see_community = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит сообщества")
@@ -150,7 +138,7 @@ class ProfilePrivate(models.Model):
     can_see_good = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит товары")
     can_see_video = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит видеозаписи")
     can_see_music = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит аудиозаписи")
-    can_see_planner = models.PositiveSmallIntegerField(choices=PERM, default=2, verbose_name="Кто видит раздел планирования")
+    can_see_planner = models.PositiveSmallIntegerField(choices=PERM, default=5, verbose_name="Кто видит раздел планирования")
     can_see_doc = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
