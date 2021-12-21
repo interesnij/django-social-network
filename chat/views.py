@@ -44,6 +44,7 @@ class ChatDetailView(ListView):
 		unread_messages.update(unread=False)
 		self.favourite_messages_count = request.user.favourite_messages_count()
 		self.get_header_chat = self.chat.get_header_chat(self.pk)
+		self.is_admin = request.user.is_administrator_of_chat(self.chat.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
@@ -66,6 +67,7 @@ class ChatDetailView(ListView):
 			context['get_message_draft'] = self.chat.get_draft_message(self.pk)
 
 		context['favourite_messages_count'] = self.favourite_messages_count
+		context['is_admin'] = self.is_admin
 		return context
 
 	def get_queryset(self):

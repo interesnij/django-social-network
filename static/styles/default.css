@@ -341,17 +341,7 @@ p .small_badge {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.message_checkbox {
-  cursor: pointer;
-  display: none;
-  position: absolute;
-  top: 46%;
-  left: -12px
-}
-.message:hover .message_checkbox{
-  display: block !important;
 
-}
 .message {
   position: relative;
 }
@@ -2390,18 +2380,6 @@ body.dragging * {
   }
 }
 
-.box-shadow, .main-header, .sidebar.sidebar-right .close-sidebar, .card {
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.08);
-  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.08);
-  -ms-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.08);
-}
-.box-shadow-large, .boxed-page .wrapper, .popover.tour-tour, .sidebar, .dropdown-menu, .context-menu-list, .chat-window, .swiper-story .swiper-slide figure.story-img, .card-carousel .debit-card, .daterangepicker {
-  box-shadow: 0px 7px 25px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0px 7px 25px 0px rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 0px 7px 25px 0px rgba(0, 0, 0, 0.15);
-  -ms-box-shadow: 0px 7px 25px 0px rgba(0, 0, 0, 0.15);
-}
 .background-img.shadow-dark:before {
   background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
   background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
@@ -2572,15 +2550,6 @@ body.dragging * {
 .main-header .media p {
   color: rgba(255, 255, 255, 0.7);
 }
-
-.sidebar h5 {
-  color: #ffffff;
-}
-
-.sidebar .media p {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 
 .icon-rounded {
   border-radius: 4px;
@@ -2920,19 +2889,6 @@ body.dragging * {
   left: 6px;
 }
 
-.main-container .sidebar-image .custom-control {
-  width: 100px;
-  height: auto;
-}
-
-.main-container .sidebar-image .custom-control .custom-control-label {
-  height: 150px;
-}
-
-.main-container .sidebar-image .custom-control-input.bg-repeat + .custom-control-label {
-  height: 70px;
-}
-
 .table th, .table td {
   padding: .75em;
 }
@@ -3120,10 +3076,6 @@ body.dragging * {
 .chatview {
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-.setting-sidebar-open .chat-window {
-  right: 350px;
 }
 
 #chat-list .list-group-item {

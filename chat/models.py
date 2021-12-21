@@ -1404,7 +1404,7 @@ class Message(models.Model):
             MessageOptions.objects.filter(message_id=uuid,user_id=user_id,is_favourite=True).delete()
 
     def delete_item(self, user_id, community):
-        if self.creator_id == user_id:
+        if self.creator_id == user_id or user_id in self.chat.get_admins_ids():
             if self.type == "PUB":
                 self.type = Message.DELETED
             elif self.type == "EDI":
