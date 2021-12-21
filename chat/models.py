@@ -580,7 +580,7 @@ class Chat(models.Model):
 
     def is_have_draft_message(self, user_id):
         if self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).exists():
-            message = self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT)
+            message = self.chat_message.filter(chat_id=self.pk, creator_id=user_id, type=Message.DRAFT).first()
             if message.text or message.attach or message.is_have_transfer():
                 return True
         return False
