@@ -33,7 +33,7 @@ class CommunityGeneralView(TemplateView):
 
 
 class CommunitySectionsOpenView(TemplateView):
-	template_name, form = None, None
+	template_name = None
 
 	def get(self, request, *args, **kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
@@ -46,7 +46,7 @@ class CommunitySectionsOpenView(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		c = super(CommunitySectionsOpenView,self).get_context_data(**kwargs)
-		c["private"], c["community"] = self.sections, self.c
+		c["private"], c["community"] = self.private, self.c
 		return c
 
 	def post(self,request,*args,**kwargs):
