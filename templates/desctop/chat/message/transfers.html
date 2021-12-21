@@ -1,6 +1,6 @@
 {% load message %}
 
-<div class="transfers_container border">
+<div class="transfers_container border-left">
 {% for message in object.get_transfers %}
 <div class="media p-1">
     <figure>
@@ -11,7 +11,7 @@
     <div class="media-body">
       <h5 class="time-title mb-0">
         <a href="{{ message.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ message.creator.get_full_name }}</span></a>
-        <small class="float-right">{{ message.get_created }} {% if message.is_edited %}(ред.){% endif %}</small>
+        <small class="float-right text-muted">{{ message.get_created }}</small>
       </h5>
 
       {% if object.parent %}
