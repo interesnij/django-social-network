@@ -150,7 +150,7 @@ class ProfilePrivate(models.Model):
     can_see_good = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит товары")
     can_see_video = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит видеозаписи")
     can_see_music = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит аудиозаписи")
-    can_see_planner = models.PositiveSmallIntegerField(choices=PERM_PLANNER, default=2, verbose_name="Кто видит раздел планирования")
+    can_see_planner = models.PositiveSmallIntegerField(choices=PERM, default=2, verbose_name="Кто видит раздел планирования")
     can_see_doc = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
