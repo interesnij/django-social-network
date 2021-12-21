@@ -460,14 +460,7 @@ class Chat(models.Model):
 
         if self.is_have_draft_message(user_id):
             message = self.get_draft_message(user_id)
-            if message.get_type_text():
-                preview_text = 'Черновик: ' + message.get_type_text()
-            else:
-                if first_message.creator.id == user_id:
-                    preview_text = 'Вы: ' + first_message.get_type_text()
-                else:
-                    preview_text = first_message.get_type_text()
-                created = first_message.get_created()
+            preview_text = 'Черновик: ' + message.get_type_text()
         elif not first_message:
             preview_text = "Нет сообщений"
         elif first_message.is_manager():
@@ -484,7 +477,7 @@ class Chat(models.Model):
                 preview_text = 'Вы: ' + first_message.get_type_text()
             else:
                 preview_text = first_message.get_type_text()
-            if user_id == first_message.creator.pk and first_message.unreed:
+            if user_id == first_message.creator.pk and first_message.unread:
                 is_read = ' bg-light-secondary'
             created = first_message.get_created()
 
