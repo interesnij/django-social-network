@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/rekl/$', CommunityAdvertisersView.as_view(), name='community_advertisers'),
 
     url(r'^staff_window/(?P<pk>[0-9]+)/(?P<uuid>[0-9a-f-]+)/$', CommunityStaffWindow.as_view()),
+    url(r'^load_include_users/(?P<pk>[0-9]+)/$', CommunityPrivateIncludeUsers.as_view()),
+    url(r'^load_exclude_users/(?P<pk>[0-9]+)/$', CommunityPrivateExcludeUsers.as_view()),
 ]

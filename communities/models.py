@@ -548,101 +548,6 @@ class Community(models.Model):
             return True
         return False
 
-    def get_special_perm_see(self, user_id, type, value):
-        """
-        type 2 - can_see_community,
-        3 - can_see_member
-        4 - can_send_message
-        6 - can_see_doc,
-        7 - can_see_music,
-        8 - can_see_post
-        9 - can_see_post_comment
-        10 - can_see_photo
-        11 - can_see_photo_comment,
-        12 - can_see_good,
-        13 - can_see_good_comment
-        14 - can_see_video
-        15 - can_see_video_comment
-        16 - can_see_planner,
-        17 - can_see_planner_comment,
-        value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
-        """
-        member = CommunityMemberPerm.objects.get(user_id=user_id)
-        if value == 0:
-            try:
-                ie = member.community_ie_settings
-                if type == 2:
-                    return ie.can_see_community != 2
-                elif type == 3:
-                    return ie.can_see_member != 2
-                elif type == 4:
-                    return ie.can_send_message != 2
-                elif type == 5:
-                    return ie.can_add_in_chat != 2
-                if type == 6:
-                    return ie.can_see_doc != 2
-                elif type == 7:
-                    return ie.can_see_music != 2
-                elif type == 8:
-                    return ie.can_see_post != 2
-                elif type == 9:
-                    return ie.can_see_post_comment != 2
-                elif type == 10:
-                    return ie.can_see_photo != 2
-                if type == 11:
-                    return ie.can_see_photo_comment != 2
-                elif type == 12:
-                    return ie.can_see_good != 2
-                elif type == 13:
-                    return ie.can_see_good_comment != 2
-                elif type == 14:
-                    return ie.can_see_video != 2
-                elif type == 15:
-                    return ie.can_see_video_comment != 2
-                if type == 16:
-                    return ie.can_see_planner != 2
-                elif type == 17:
-                    return ie.can_see_planner_comment != 2
-            except CommunityMemberPerm.DoesNotExist:
-                 return True
-        elif value == 1:
-            try:
-                ie = member.community_ie_settings
-                if type == 2:
-                    return ie.can_see_community == 1
-                elif type == 3:
-                    return ie.can_see_member == 1
-                elif type == 4:
-                    return ie.can_send_message == 1
-                elif type == 5:
-                    return ie.can_add_in_chat == 1
-                if type == 6:
-                    return ie.can_see_doc == 1
-                elif type == 7:
-                    return ie.can_see_music == 1
-                elif type == 8:
-                    return ie.can_see_post == 1
-                elif type == 9:
-                    return ie.can_see_post_comment == 1
-                elif type == 10:
-                    return ie.can_see_photo == 1
-                if type == 11:
-                    return ie.can_see_photo_comment == 1
-                elif type == 12:
-                    return ie.can_see_good == 1
-                elif type == 13:
-                    return ie.can_see_good_comment == 1
-                elif type == 14:
-                    return ie.can_see_video == 1
-                elif type == 15:
-                    return ie.can_see_video_comment == 1
-                if type == 16:
-                    return ie.can_see_planner == 1
-                elif type == 17:
-                    return ie.can_see_planner_comment == 1
-            except CommunityMemberPerm.DoesNotExist:
-                 return False
-
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
         self.s_avatar = photo_input
@@ -965,6 +870,448 @@ class Community(models.Model):
         return Moderated.objects.filter(object_id=self.pk, type="COM")[0].description
 
     ''''' конец модерации '''''
+
+    def get_can_see_community_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_community=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_community_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_community=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_community_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_community_exclude_users_ids())
+    def get_can_see_community_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_community_include_users_ids())
+
+    def get_can_see_info_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_info=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_info_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_info=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_info_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_info_exclude_users_ids())
+    def get_can_see_info_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_info_include_users_ids())
+
+    def get_can_see_member_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_member=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_member_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_member=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_member_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_member_exclude_users_ids())
+    def get_can_see_member_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_member_include_users_ids())
+
+    def get_can_send_message_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_send_message=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_send_message_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_send_message=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_send_message_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_send_message_exclude_users_ids())
+    def get_can_send_message_include_users(self):
+        return User.objects.filter(id__in=self.get_can_send_message_include_users_ids())
+
+    def get_can_see_post_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_post=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_post_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_post=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_post_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_post_exclude_users_ids())
+    def get_can_see_post_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_post_include_users_ids())
+
+    def get_can_see_photo_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_photo=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_photo_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_photo=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_photo_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_photo_exclude_users_ids())
+    def get_can_see_photo_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_photo_include_users_ids())
+
+    def get_can_see_good_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_good=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_good_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_good=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_good_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_good_exclude_users_ids())
+    def get_can_see_good_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_good_include_users_ids())
+
+    def get_can_see_video_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_video=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_video_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_video=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_video_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_video_exclude_users_ids())
+    def get_can_see_video_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_video_include_users_ids())
+
+    def get_can_see_music_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_music=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_music_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_music=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_music_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_music_exclude_users_ids())
+    def get_can_see_music_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_music_include_users_ids())
+
+    def get_can_see_planner_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_planner=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_planner_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_planner=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_planner_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_planner_exclude_users_ids())
+    def get_can_see_planner_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_planner_include_users_ids())
+
+    def get_can_see_doc_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_doc=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_doc_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_doc=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_doc_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_doc_exclude_users_ids())
+    def get_can_see_doc_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_doc_include_users_ids())
+
+    def post_exclude_users(self, users, type):
+        private = self.community_private2
+        if type == "can_see_info":
+            list = self.memberships.filter(community_ie_settings__can_see_info=2)
+            for i in list:
+                i.community_ie_settings.can_see_info = 0
+                i.community_ie_settings.save(update_fields=["can_see_info"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_info = 2
+                perm.save(update_fields=["can_see_info"])
+            private.can_see_info = 5
+            private.save(update_fields=["can_see_info"])
+        elif type == "can_see_friend":
+            list = self.memberships.filter(community_ie_settings__can_see_friend=2)
+            for i in list:
+                i.community_ie_settings.can_see_friend = 0
+                i.community_ie_settings.save(update_fields=["can_see_friend"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_friend = 2
+                perm.save(update_fields=["can_see_friend"])
+            private.can_see_friend = 5
+            private.save(update_fields=["can_see_friend"])
+        elif type == "can_send_message":
+            list = self.memberships.filter(community_ie_settings__can_send_message=2)
+            for i in list:
+                i.community_ie_settings.can_send_message = 0
+                i.community_ie_settings.save(update_fields=["can_send_message"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_send_message = 2
+                perm.save(update_fields=["can_send_message"])
+            private.can_send_message = 5
+            private.save(update_fields=["can_send_message"])
+        elif type == "can_add_in_chat":
+            list = self.memberships.filter(community_ie_settings__can_add_in_chat=2)
+            for i in list:
+                i.community_ie_settings.can_add_in_chat = 0
+                i.community_ie_settings.save(update_fields=["can_add_in_chat"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_add_in_chat = 2
+                perm.save(update_fields=["can_add_in_chat"])
+            private.can_add_in_chat = 5
+            private.save(update_fields=["can_add_in_chat"])
+        elif type == "can_see_post":
+            list = self.memberships.filter(community_ie_settings__can_see_post=2)
+            for i in list:
+                i.community_ie_settings.can_see_post = 0
+                i.community_ie_settings.save(update_fields=["can_see_post"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_post = 2
+                perm.save(update_fields=["can_see_post"])
+            private.can_see_post = 5
+            private.save(update_fields=["can_see_post"])
+        elif type == "can_see_photo":
+            list = self.memberships.filter(community_ie_settings__can_see_photo=2)
+            for i in list:
+                i.community_ie_settings.can_see_photo = 0
+                i.community_ie_settings.save(update_fields=["can_see_photo"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_photo = 2
+                perm.save(update_fields=["can_see_photo"])
+            private.can_see_photo = 5
+            private.save(update_fields=["can_see_photo"])
+        elif type == "can_see_good":
+            list = self.memberships.filter(community_ie_settings__can_see_good=2)
+            for i in list:
+                i.community_ie_settings.can_see_good = 0
+                i.community_ie_settings.save(update_fields=["can_see_good"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_good = 2
+                perm.save(update_fields=["can_see_good"])
+            private.can_see_good = 5
+            private.save(update_fields=["can_see_good"])
+        elif type == "can_see_video":
+            list = self.memberships.filter(community_ie_settings__can_see_video=2)
+            for i in list:
+                i.community_ie_settings.can_see_video = 0
+                i.community_ie_settings.save(update_fields=["can_see_video"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_video = 2
+                perm.save(update_fields=["can_see_video"])
+            private.can_see_video = 5
+            private.save(update_fields=["can_see_video"])
+        elif type == "can_see_music":
+            list = self.memberships.filter(community_ie_settings__can_see_music=2)
+            for i in list:
+                i.community_ie_settings.can_see_music = 0
+                i.community_ie_settings.save(update_fields=["can_see_music"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_music = 2
+                perm.save(update_fields=["can_see_music"])
+            private.can_see_music = 5
+            private.save(update_fields=["can_see_music"])
+        elif type == "can_see_planner":
+            list = self.memberships.filter(community_ie_settings__can_see_planner=2)
+            for i in list:
+                i.community_ie_settings.can_see_planner = 0
+                i.community_ie_settings.save(update_fields=["can_see_planner"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_planner = 2
+                perm.save(update_fields=["can_see_planner"])
+            private.can_see_planner = 5
+            private.save(update_fields=["can_see_planner"])
+        elif type == "can_see_doc":
+            list = self.memberships.filter(community_ie_settings__can_see_doc=2)
+            for i in list:
+                i.community_ie_settings.can_see_doc = 0
+                i.community_ie_settings.save(update_fields=["can_see_doc"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_doc = 2
+                perm.save(update_fields=["can_see_doc"])
+            private.can_see_doc = 5
+            private.save(update_fields=["can_see_doc"])
+
+    def post_include_users(self, users, type):
+        private = self.community_private2
+        if type == "can_see_info":
+            list = self.memberships.filter(community_ie_settings__can_see_info=1)
+            for i in list:
+                i.community_ie_settings.can_see_info = 0
+                i.community_ie_settings.save(update_fields=["can_see_info"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_info = 1
+                perm.save(update_fields=["can_see_info"])
+            private.can_see_info = 6
+            private.save(update_fields=["can_see_info"])
+        elif type == "can_see_member":
+            list = self.memberships.filter(community_ie_settings__can_see_member=1)
+            for i in list:
+                i.community_ie_settings.can_see_member = 0
+                i.community_ie_settings.save(update_fields=["can_see_member"])
+            for user_id in users:
+                member = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=member.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=member.pk)
+                perm.can_see_member = 1
+                perm.save(update_fields=["can_see_member"])
+            private.can_see_member = 6
+            private.save(update_fields=["can_see_member"])
+        elif type == "can_send_message":
+            list = self.memberships.filter(community_ie_settings__can_send_message=1)
+            for i in list:
+                i.community_ie_settings.can_send_message = 0
+                i.community_ie_settings.save(update_fields=["can_send_message"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_send_message = 1
+                perm.save(update_fields=["can_send_message"])
+            private.can_send_message = 6
+            private.save(update_fields=["can_send_message"])
+        elif type == "can_see_post":
+            list = self.memberships.filter(community_ie_settings__can_see_post=1)
+            for i in list:
+                i.community_ie_settings.can_see_post = 0
+                i.community_ie_settings.save(update_fields=["can_see_post"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_post = 1
+                perm.save(update_fields=["can_see_post"])
+            private.can_see_post = 6
+            private.save(update_fields=["can_see_post"])
+        elif type == "can_see_photo":
+            list = self.memberships.filter(community_ie_settings__can_see_photo=1)
+            for i in list:
+                i.community_ie_settings.can_see_photo = 0
+                i.community_ie_settings.save(update_fields=["can_see_photo"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_photo = 1
+                perm.save(update_fields=["can_see_photo"])
+            private.can_see_photo = 6
+            private.save(update_fields=["can_see_photo"])
+        elif type == "can_see_good":
+            list = self.memberships.filter(community_ie_settings__can_see_good=1)
+            for i in list:
+                i.community_ie_settings.can_see_good = 0
+                i.community_ie_settings.save(update_fields=["can_see_good"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_good = 1
+                perm.save(update_fields=["can_see_good"])
+            private.can_see_good = 6
+            private.save(update_fields=["can_see_good"])
+        elif type == "can_see_video":
+            list = self.memberships.filter(community_ie_settings__can_see_video=1)
+            for i in list:
+                i.community_ie_settings.can_see_video = 0
+                i.community_ie_settings.save(update_fields=["can_see_video"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_video = 1
+                perm.save(update_fields=["can_see_video"])
+            private.can_see_video = 6
+            private.save(update_fields=["can_see_video"])
+        elif type == "can_see_music":
+            list = self.memberships.filter(community_ie_settings__can_see_music=1)
+            for i in list:
+                i.community_ie_settings.can_see_music = 0
+                i.community_ie_settings.save(update_fields=["can_see_music"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_music = 1
+                perm.save(update_fields=["can_see_music"])
+            private.can_see_music = 6
+            private.save(update_fields=["can_see_music"])
+        elif type == "can_see_planner":
+            list = self.memberships.filter(community_ie_settings__can_see_planner=1)
+            for i in list:
+                i.community_ie_settings.can_see_planner = 0
+                i.community_ie_settings.save(update_fields=["can_see_planner"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_planner = 1
+                perm.save(update_fields=["can_see_planner"])
+            private.can_see_planner = 6
+            private.save(update_fields=["can_see_planner"])
+        elif type == "can_see_doc":
+            list = self.memberships.filter(community_ie_settings__can_see_doc=1)
+            for i in list:
+                i.community_ie_settings.can_see_doc = 0
+                i.community_ie_settings.save(update_fields=["can_see_doc"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_doc = 1
+                perm.save(update_fields=["can_see_doc"])
+            private.can_see_doc = 6
+            private.save(update_fields=["can_see_doc"])
 
 
 class CommunityMembership(models.Model):

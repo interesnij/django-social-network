@@ -319,3 +319,118 @@ class CommunityStaffWindow(TemplateView):
 		c = super(CommunityStaffWindow,self).get_context_data(**kwargs)
 		c["community"], c["user"], c["administrator"], c["moderator"], c["editor"], c["advertiser"] = self.c, self.user, self.administrator, self.moderator, self.editor, self.advertiser
 		return c
+
+
+class CommunityPrivateExcludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_info":
+			self.users = self.community.get_can_see_info_exclude_users()
+			self.text = "видеть информацию сообщества"
+		elif self.type == "can_see_member":
+			self.users = self.community.get_can_see_member_exclude_users()
+			self.text = "видеть подписчиков"
+		elif self.type == "can_send_message":
+			self.users = self.community.get_can_send_message_exclude_users()
+			self.text = "писать сообщения"
+		elif self.type == "can_see_post":
+			self.users = self.community.get_can_see_post_exclude_users()
+			self.text = "видеть записи"
+		elif self.type == "can_see_photo":
+			self.users = self.community.get_can_see_photo_exclude_users()
+			self.text = "видеть фотографии"
+		elif self.type == "can_see_good":
+			self.users = self.community.get_can_see_good_exclude_users()
+			self.text = "видеть товары"
+		elif self.type == "can_see_video":
+			self.users = self.community.get_can_see_video_exclude_users()
+			self.text = "видеть видеозаписи"
+		elif self.type == "can_see_music":
+			self.users = self.community.get_can_see_music_exclude_users()
+			self.text = "видеть аудиозаписи"
+		elif self.type == "can_see_planner":
+			self.users = self.community.get_can_see_planner_exclude_users()
+			self.text = "видеть раздел планирования"
+		elif self.type == "can_see_doc":
+			self.users = self.community.get_can_see_doc_exclude_users()
+			self.text = "видеть документы"
+		self.template_name = get_community_manage_template("communities/manage/perm/exclude_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+		return super(CommunityPrivateExcludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityPrivateExcludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.community.get_members()
+
+	def post(self,request,*args,**kwargs):
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			self.community.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
+			return HttpResponse('ok')
+		return HttpResponse('not ok')
+
+class CommunityPrivateIncludeUsers(ListView):
+	template_name, users = None, []
+
+	def get(self,request,*args,**kwargs):
+		self.community = Community.objects.get(pk=self.kwargs["pk"])
+		self.type = request.GET.get("action")
+		if self.type == "can_see_info":
+			self.users = self.community.get_can_see_info_include_users()
+			self.text = "видеть информацию профиля"
+		elif self.type == "can_see_member":
+			self.users = self.community.get_can_see_member_include_users()
+			self.text = "видеть подписчиков"
+		elif self.type == "can_send_message":
+			self.users = self.community.get_can_send_message_include_users()
+			self.text = "писать сообщения"
+		elif self.type == "can_see_post":
+			self.users = self.community.get_can_see_post_include_users()
+			self.text = "видеть записи"
+		elif self.type == "can_see_photo":
+			self.users = self.community.get_can_see_photo_include_users()
+			self.text = "видеть фотографии"
+		elif self.type == "can_see_good":
+			self.users = self.community.get_can_see_good_include_users()
+			self.text = "видеть товары"
+		elif self.type == "can_see_video":
+			self.users = self.community.get_can_see_video_include_users()
+			self.text = "видеть видеозаписи"
+		elif self.type == "can_see_music":
+			self.users = self.community.get_can_see_music_include_users()
+			self.text = "видеть аудиозаписи"
+		elif self.type == "can_see_planner":
+			self.users = self.community.get_can_see_planner_include_users()
+			self.text = "видеть раздел планирования"
+		elif self.type == "can_see_doc":
+			self.users = self.community.get_can_see_doc_include_users()
+			self.text = "видеть документы"
+		self.template_name = get_community_manage_template("communities/manage/perm/include_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
+		return super(CommunityPrivateIncludeUsers,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(CommunityPrivateIncludeUsers,self).get_context_data(**kwargs)
+		context["users"] = self.users
+		context["text"] = self.text
+		context["type"] = self.type
+		return context
+
+	def get_queryset(self):
+		return self.community.get_members()
+
+	def post(self,request,*args,**kwargs):
+		from django.http import HttpResponse
+
+		if request.is_ajax():
+			self.community.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
+			return HttpResponse('ok')
+		return HttpResponse('not ok')

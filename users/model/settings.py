@@ -132,7 +132,7 @@ class ProfilePrivate(models.Model):
     can_see_info = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит информацию")
     can_see_friend = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит друзей")
     can_send_message = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет сообщения")
-    can_add_in_chat = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто добавляет в беседы")
+    can_add_in_chat = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто приглашает в беседы")
     can_see_post = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     can_see_photo = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит фотографии")
     can_see_good = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит товары")
