@@ -124,7 +124,7 @@ class UserColorSettings(models.Model):
             UserColorSettings.objects.create(user=instance)
 
 class ProfilePrivate(models.Model):
-    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS, MEMBERS_BUT, SOME_MEMBERS = 1,4,5,6,17,18
+    ALL_CAN, FRIENDS, EACH_OTHER, YOU, FRIENDS_BUT, SOME_FRIENDS = 1,4,5,6,17,18
     PERM = ((ALL_CAN, 'Все пользователи'),(FRIENDS, 'Друзья'),(EACH_OTHER, 'Друзья и друзья друзей'),(YOU, 'Только я'),(FRIENDS_BUT, 'Друзья, кроме'),(SOME_FRIENDS, 'Некоторые друзья'),)
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True, on_delete=models.CASCADE, related_name='profile_private', verbose_name="Пользователь")
