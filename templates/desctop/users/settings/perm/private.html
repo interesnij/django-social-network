@@ -27,7 +27,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_info" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_info" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -48,7 +48,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_community" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_community" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -69,7 +69,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_friend" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_friend" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -78,19 +78,19 @@
                       <div class="row mb-1 form_group_flex">
                           <label class="col-md-6">Кто пишет сообщения</label>
                           <span class="col-md-6">
-                            <a class="menu_drop_2 pointer">{{ private.get_can_see_message_display }}</a>
+                            <a class="menu_drop_2 pointer">{{ private.get_can_send_message_display }}</a>
                             <span class="collector">
-                              {% if private.can_see_message == 17 and request.user.get_can_see_message_exclude_users %}:
-                              {% for object in request.user.get_can_see_message_exclude_users %}
+                              {% if private.can_send_message == 17 and request.user.get_can_send_message_exclude_users %}:
+                              {% for object in request.user.get_can_send_message_exclude_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
-                              {% elif private.can_see_message == 18 and request.user.get_can_see_message_include_users %}:
-                              {% for object in request.user.get_can_see_message_include_users %}
+                              {% elif private.can_send_message == 18 and request.user.get_can_send_message_include_users %}:
+                              {% for object in request.user.get_can_send_message_include_users %}
                                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_message" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_send_message" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -111,7 +111,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_add_in_chat" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_add_in_chat" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -132,7 +132,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_post" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_post" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -153,7 +153,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_photo" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_photo" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -174,7 +174,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_good" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_good" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -195,7 +195,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_video" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_video" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -216,7 +216,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_music" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_music" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -237,7 +237,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_planner" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_planner" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
@@ -258,7 +258,7 @@
                               {% endfor %}
                               {% endif %}
                             </span>
-                            <div class="dropdown-menu" data-action="can_see_doc" style="top: 30px;">
+                            <div class="dropdown-menu border" data-action="can_see_doc" style="top: 30px;">
                               {% include 'desctop/users/settings/perm/user_perm_drop.html' %}
                             </div>
                           </span>
