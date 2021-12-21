@@ -1,7 +1,7 @@
 {% load message %}
 
 <div class="transfers_container border">
-{% for message in object.transfer.all %}
+{% for message in object.get_transfers %}
 <div class="media p-1">
     <figure>
       <a href="{{ message.creator.get_link }}" class="ajax">
