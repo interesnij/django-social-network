@@ -1,79 +1,236 @@
 {% extends "base.html" %}
-{% block title %}Разделы - {{ community.name }}{% endblock %}
+{% block title %}Приватность - {{ community.name }}{% endblock %}
 {% block content %}
 
-<div class="mt-4 main-container pk_saver" data-pk="{{ community.pk }}" data-type="community_manage_can_see">
+<div class="mt-4 main-container">
     <div class="row">
-        <div class="col-md-8 order-1">
-            <form id="community_sections_form" class="contact-form">
-                {% csrf_token %}
+        <div class="col-md-9 order-1">
+          <form class="type_profile case_edit">
+            {% csrf_token %}
                 <div class="card mb-3">
                     <div class="card-header border-bottom">
-                        <h5 class="content-color-primary mb-0">Разделы -
-                          {% include 'desctop/generic/community/community.html' %}
-                        </h5>
+                        <h5 class="content-color-primary mb-0">Приватность - {{ community.name }}</h5>
                     </div>
-                    <div class="card-body">
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Галерея открыта
-                          <input type="checkbox" {% if sections.photo %} checked {% endif %} name="photo" id="id_photo" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_photo" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Товары открыты
-                          <input type="checkbox" {% if sections.good %} checked {% endif %} name="good" id="id_good" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_good" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Видеоролики открыты
-                          <input type="checkbox" {% if sections.video %} checked {% endif %} name="video" id="id_video" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_video" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Аудиозаписи открыты
-                          <input type="checkbox" {% if sections.music %} checked {% endif %} name="music" id="id_music" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_music" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Документы открыты
-                          <input type="checkbox" {% if sections.doc %} checked {% endif %} name="doc" id="id_doc" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_doc" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Ссылки открыты
-                          <input type="checkbox" {% if sections.link %} checked {% endif %} name="link" id="id_link" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_link" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Статьи открыты
-                          <input type="checkbox" {% if sections.article %} checked {% endif %} name="article" id="id_article" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_article" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Контакты открыты
-                          <input type="checkbox" {% if sections.contacts %} checked {% endif %} name="contacts" id="id_contacts" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_contacts" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Обсуждения открыты
-                          <input type="checkbox" {% if sections.discussion %} checked {% endif %} name="discussion" id="id_discussion" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_discussion" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                      <p class="content-color-primary page-sub-title-small mt-2" style="line-height: 18px;">
-                          Подписчики открыты
-                          <input type="checkbox" {% if sections.members %} checked {% endif %} name="members" id="id_members" class="switch switch-sm">
-                          <label style="margin-right:12px;bottom: 5px;" for="id_members" class="bg_success mb-2 border float-right"></label>
-                      </p>
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" id="community_sections_btn" class="mb-2 btn btn-sm btn-success float-right">Сохранить</button>
+                    <div class="card-body hot_perm_post">
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит информацию сообщества</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_info_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_info == 5 and community.get_can_see_info_exclude_users %}:
+                              {% for object in community.get_can_see_info_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_info == 6 and community.get_can_see_info_include_users %}:
+                              {% for object in community.get_can_see_info_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_info" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит друзей</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_friend_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_friend == 5 and community.get_can_see_friend_exclude_users %}:
+                              {% for object in community.get_can_see_friend_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_friend == 6 and community.get_can_see_friend_include_users %}:
+                              {% for object in community.get_can_see_friend_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_friend" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто пишет сообщения</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_send_message_display }}</a>
+                            <span class="collector">
+                              {% if private.can_send_message == 5 and community.get_can_send_message_exclude_users %}:
+                              {% for object in community.get_can_send_message_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_send_message == 6 and community.get_can_send_message_include_users %}:
+                              {% for object in community.get_can_send_message_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_send_message" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит записи</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_post_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_post == 5 and community.get_can_see_post_exclude_users %}:
+                              {% for object in community.get_can_see_post_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_post == 6 and community.get_can_see_post_include_users %}:
+                              {% for object in community.get_can_see_post_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_post" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит фотографии</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_photo_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_photo == 5 and community.get_can_see_photo_exclude_users %}:
+                              {% for object in community.get_can_see_photo_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_photo == 6 and community.get_can_see_photo_include_users %}:
+                              {% for object in community.get_can_see_photo_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_photo" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит товары</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_good_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_good == 5 and community.get_can_see_good_exclude_users %}:
+                              {% for object in community.get_can_see_good_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_good == 6 and community.get_can_see_good_include_users %}:
+                              {% for object in community.get_can_see_good_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_good" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит видеозаписи</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_video_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_video == 5 and community.get_can_see_video_exclude_users %}:
+                              {% for object in community.get_can_see_video_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_video == 6 and community.get_can_see_video_include_users %}:
+                              {% for object in community.get_can_see_video_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_video" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит аудиозаписи</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_music_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_music == 5 and community.get_can_see_music_exclude_users %}:
+                              {% for object in community.get_can_see_music_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_music == 6 and community.get_can_see_music_include_users %}:
+                              {% for object in community.get_can_see_music_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_music" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит раздел планирования</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_planner_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_planner == 5 and community.get_can_see_planner_exclude_users %}:
+                              {% for object in community.get_can_see_planner_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_planner == 6 and community.get_can_see_planner_include_users %}:
+                              {% for object in community.get_can_see_planner_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_planner" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит документы</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_doc_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_doc == 5 and community.get_can_see_doc_exclude_users %}:
+                              {% for object in community.get_can_see_doc_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_doc == 6 and community.get_can_see_doc_include_users %}:
+                              {% for object in community.get_can_see_doc_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_doc" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
                     </div>
                 </div>
-            </form>
+              </form>
         </div>
-        <div class="col-md-4 order-2 left_menu">
+
+        <div class="col-md-3 order-2 left_menu">
             {% include 'desctop/communities/manage/menu.html' %}
         </div>
+
     </div>
 </div>
 
