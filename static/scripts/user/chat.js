@@ -736,7 +736,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         //window.scrollTo({
         //  top: 2000,
         //  behavior: "smooth"
-        });
+        //});
         window.scrollTo( 0, 2000 );
         window.history.pushState(null, "vfgffgfgf", url);
         chats = document.body.querySelector(".new_unread_chats");
