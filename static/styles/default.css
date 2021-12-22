@@ -3069,8 +3069,9 @@ body.dragging * {
 }
 
 .chatview {
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 85vh;
+  padding-top: 4em;
+  padding-bottom: 1em;
 }
 
 #chat-list .list-group-item {
