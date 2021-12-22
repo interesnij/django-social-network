@@ -733,10 +733,11 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
         width = rtr.querySelector(".main_chat_block").offsetWidth - 14;
         rtr.querySelector(".fixed_header_chat").style.width = width + "px";
-        window.scrollTo({
-          top: 2000,
-          behavior: "smooth"
+        //window.scrollTo({
+        //  top: 2000,
+        //  behavior: "smooth"
         });
+        window.scrollTo( 0, 2000 );
         window.history.pushState(null, "vfgffgfgf", url);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
