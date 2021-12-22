@@ -369,9 +369,10 @@ class User(AbstractUser):
 
     def plus_community_visited(self, community_id):
         from communities.models import CommunityMembership
-        member = CommunityMembership.objects.get(community_id=community_id, user_id=self.pk)
-        member.visited = member.visited + 1
-        member.save(update_fields=["visited"])
+        if CommunityMembership.objects.filter(community_id=community_id, user_id=self.pk).exists():
+            member = CommunityMembership.objects.filter(community_id=community_id, user_id=self.pk).first()
+            member.visited = member.visited + 1
+            member.save(update_fields=["visited"])
 
     def remove_featured_friend_from_all_list(self, user_id):
         from users.model.list import ListUC, FeaturedUC

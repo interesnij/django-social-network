@@ -7,7 +7,7 @@
 <meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ community.get_b_avatar }}"/>
 {% endblock %}
 {% block content %}
-
+{{ request.user.communities_memberships.visited }}
 {% if community.cover %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img" style="min-height: 150px">
