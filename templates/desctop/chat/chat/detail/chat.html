@@ -11,13 +11,13 @@
             {{ get_header_chat|safe }}
           </div>
           {% include 'desctop/chat/chat/search.html' %}
+          <div class="fixed_messages">
+            {% if fix_message %}
+              {% include 'desctop/chat/chat/fixed_message.html' %}
+            {% endif %}
+          </div>
       </div>
       <div class="px-0 card no-shadow" chat-pk="{{ chat.pk }}">
-        <div class="fixed_messages">
-          {% if fix_message %}
-            {% include 'desctop/chat/chat/fixed_message.html' %}
-          {% endif %}
-        </div>
         <div class="chatview" id="chatcontent">
           <ul class="mt-2 chatlist app is_paginate">
             {% if page_obj.has_next %}
