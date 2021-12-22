@@ -737,7 +737,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         //  top: 2000,
         //  behavior: "smooth"
         //});
-        window.scrollTo( 0, 2000 );
+        window.scrollTo( 0, 3000 );
+        scrolled(rtr.querySelector('.is_paginate')); 
         window.history.pushState(null, "vfgffgfgf", url);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;

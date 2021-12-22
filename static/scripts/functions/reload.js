@@ -435,8 +435,6 @@ function reload_list_stat() {
   };
   block = document.body.querySelector(".main-container");
   list = block.querySelector(".is_stat_list");
-  console.log(block);
-  console.log(list);
   $list_stat = [list.getAttribute("data-type"), list.getAttribute("data-pk"), 0, 0, block.getAttribute("data-pk"), block.getAttribute("data-type"),$request_user_id, $user_device, new Date().toLocaleString().replace(",", "")];
 };
 
@@ -631,8 +629,7 @@ function if_list(block) {
     if (block.querySelector(".chat_container")) {
       width = block.querySelector(".main_chat_block").offsetWidth - 14;
       block.querySelector(".fixed_header_chat").style.width = width + "px";
-      objDiv = document.querySelector(".chat_container");
-      objDiv.scrollTop = objDiv.scrollHeight;
+      window.scrollTo( 0, 3000 );
     }
 };
 
