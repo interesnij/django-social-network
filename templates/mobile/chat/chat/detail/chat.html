@@ -16,7 +16,7 @@
       </div>
   </div>
     <div class="chatview" chat-pk="{{ chat.pk }}">
-        <ul class="chatlist is_paginate">
+        <ul class="chatlist is_paginate" style="margin-bottom: 80px;">
           {% if page_obj.has_next %}
             <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
               <img src="/static/images/preloader.gif">
