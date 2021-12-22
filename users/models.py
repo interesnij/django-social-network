@@ -107,11 +107,10 @@ class User(AbstractUser):
 
     def get_populate_stickers(self):
         from common.model.other import UserPopulateStickers, Stickers
-        query = []
         stickers = UserPopulateStickers.objects.filter(user_id=self.pk)[:20]
         stickers_values = stickers.values("sticker_id")
         stickers_ids = [i['sticker_id'] for i in stickers_values]
-        return Stickers.objects.filter(id_in=stickers_ids)
+        return Stickers.objects.filter(id__in=stickers_ids)
     def is_have_populate_stickers(self):
         from common.model.other import UserPopulateStickers
         return UserPopulateStickers.objects.filter(user_id=self.pk).exists()
