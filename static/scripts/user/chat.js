@@ -727,6 +727,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
+        ajax.querySelector(".fixed_header_chat").style.width = "10px";
+
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
         objDiv = document.querySelector(".chat_container");
