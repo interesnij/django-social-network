@@ -1099,7 +1099,7 @@ class User(AbstractUser):
 
     def get_communities(self):
         from communities.models import Community
-        return Community.objects.filter(memberships__user_id=self.pk)
+        return Community.objects.filter(memberships__user_id=self.pk).order_by("-memberships__visited")
 
     def get_all_friends_ids(self):
         my_frends = self.connections.values('target_user_id')
