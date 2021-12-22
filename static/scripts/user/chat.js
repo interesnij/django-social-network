@@ -333,7 +333,7 @@ on('#ajax', 'input', '.smile_supported', function() {
 });
 
 on('#ajax', 'click', '.show_chat_fixed_messages', function() {
-  pk = this.parentElement.parentElement.getAttribute('chat-pk');
+  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('chat-pk');
   create_fullscreen("/chat/" + pk + "/fixed_messages/", "item_fullscreen");
 });
 
