@@ -136,7 +136,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.innerHTML)
           : lenta.prepend(new_post);
           document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
-  link_.send()
+  link_.send() 
 }
   else if (document.body.querySelector(".chat_container") && document.body.querySelector(".chat_container").getAttribute('chat-pk') == chat_id) {
     // если в момент получения нового сообщения получатель на странице чата, в котором ему написалм
