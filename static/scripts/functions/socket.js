@@ -151,8 +151,6 @@ function case_u_message_create(chat_id, message_uuid, beep) {
         new_post = document.createElement("span");
         new_post.innerHTML = elem;
         lenta.append(new_post);
-        width = block.querySelector(".main_chat_block").offsetWidth - 14;
-        block.querySelector(".fixed_header_chat").style.width = width + "px";
         window.scrollTo( 0, 3000 );
         document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
   link_.send()
