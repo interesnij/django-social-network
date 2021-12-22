@@ -17,7 +17,7 @@
             {% endif %}
           </div>
       </div>
-        <div class="px-0 card no-shadow chatview" chat-pk="{{ chat.pk }}" id="chatcontent">
+        <div class="px-0 card no-shadow chatview" chat-pk="{{ chat.pk }}" id="chatcontent" style="padding-top: 4em;padding-bottom: 1em;">
           <ul class="mt-2 chatlist app is_paginate">
             {% if page_obj.has_next %}
               <div class="load centered m-1 next_page_list" data-link="{% url 'chat_detail' pk=chat.pk %}?page={{ page_obj.next_page_number }}">
