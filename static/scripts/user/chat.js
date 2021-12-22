@@ -733,9 +733,10 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
         width = rtr.querySelector(".main_chat_block").offsetWidth - 14;
         rtr.querySelector(".fixed_header_chat").style.width = width + "px";
-        objDiv = document.querySelector(".chatview");
-        window.scrollTop = objDiv.scrollHeight; 
-        console.log(objDiv.scrollHeight);
+        window.scrollTo({
+          top: window.scrollHeight,
+          behavior: "smooth"
+        });
         window.history.pushState(null, "vfgffgfgf", url);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
