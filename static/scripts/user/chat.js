@@ -734,7 +734,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         width = rtr.querySelector(".main_chat_block").offsetWidth - 14;
         rtr.querySelector(".fixed_header_chat").style.width = width + "px";
         window.scrollTo({
-          top: window.scrollHeight,
+          top: 2000,
           behavior: "smooth"
         });
         window.history.pushState(null, "vfgffgfgf", url);
