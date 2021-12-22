@@ -326,7 +326,7 @@ on('#ajax', 'input', '.smile_supported', function() {
         remove_class_timeout(_this);
         setTimeout(function(){
           form = _this.parentElement.parentElement;
-          send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+          send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
       }, 1000)
     }
   };
@@ -644,7 +644,7 @@ on('#ajax', 'click', '.u_message_reply', function() {
   block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><input type='hidden' name='parent' value='" + message.getAttribute("data-pk") + "'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + parent + "</span><span class='remove_parent_block message_form_parent_block pointer'>x</span></div></div></div>"
   setTimeout(function(){
     form = block.parentElement;
-      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+      send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
 });
 
@@ -790,7 +790,7 @@ on('#ajax', 'click', '.u_message_delete', function() {
 on('#ajax', 'click', '.remove_parent_block', function() {
   form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   setTimeout(function(){
-    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
   this.parentElement.parentElement.parentElement.remove()
 });
@@ -947,7 +947,7 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
 };
 setTimeout(function(){
   form = document.body.querySelector(".customize_form");
-    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.getAttribute("chat-pk") + "/");
+    send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
 }, 1000)
 });
 
