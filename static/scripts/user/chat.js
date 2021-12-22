@@ -728,9 +728,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
-        header = ajax.querySelector(".fixed_header_chat");
-        ajax.querySelector(".fixed_header_chat").style.width = ajax.querySelector(".main_chat_block").style.width;
         rtr.innerHTML = ajax.innerHTML;
+        rtr.querySelector(".fixed_header_chat").style.width = rtr.querySelector(".main_chat_block").style.width;
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
