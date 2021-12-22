@@ -728,6 +728,8 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
         rtr = document.getElementById('ajax');
+        header = ajax.querySelector(".fixed_header_chat");
+        header.style.width = header.parentElement.style.width;
         rtr.innerHTML = ajax.innerHTML;
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
