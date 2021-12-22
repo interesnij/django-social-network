@@ -1,17 +1,17 @@
 {% load message %}
 
-<div class="transfers_container border">
-{% for message in object.transfer.all %}
+<div class="transfers_container border-left">
+{% for message in object.get_transfers %}
 <div class="media p-1">
     <figure>
       <a href="{{ message.creator.get_link }}" class="ajax">
-        <img src="{{ message.creator.get_avatar }}" style="border-radius:40px;width:40px;" alt="image">
+        {{ message.creator.get_s_avatar|safe }}
       </a>
     </figure>
     <div class="media-body">
       <h5 class="time-title mb-0">
         <a href="{{ message.creator.get_link }}" class="ajax creator_link"><span class="creator_name">{{ message.creator.get_full_name }}</span></a>
-        <small class="float-right">{{ message.get_created }} {% if message.is_edited %}(ред.){% endif %}</small>
+        <small class="float-right text-muted">{{ message.get_created }}</small>
       </h5>
 
       {% if object.parent %}
@@ -35,9 +35,9 @@
       {% if message.repost %}
         <span style="margin-left: 5%;" data-uuid="{{ message.parent.uuid }}">
           {% if message.repost.community %}
-            {% include message.get_c_repost_items_desctop %}
+            {% include message.get_c_repost_items_mobile %}
           {% else %}
-            {% include message.get_u_repost_items_desctop %}
+            {% include message.get_u_repost_items_mobile %}
           {% endif %}
         </span>
       {% endif %}
