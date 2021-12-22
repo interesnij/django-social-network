@@ -403,9 +403,7 @@ function send_comment_sticker(form_post,value) {
           form_post.querySelector(".hide_block_menu").classList.remove("show");
           form_post.querySelector(".dropdown").classList.remove("border_red");
           form_post.querySelector(".sticker").remove();
-
           block.append(new_post);
-          toast_success(" Комментарий опубликован");
 
       }
   };
@@ -460,10 +458,13 @@ function send_message_sticker(url, value) {
       form_post.querySelector(".hide_block_menu").classList.remove("show");
       form_post.querySelector(".message_dropdown").classList.remove("border_red");
       form_post.querySelector(".sticker").remove();
-      objDiv = document.querySelector("#chatcontent");
-      objDiv.scrollTop = objDiv.scrollHeight
+      if (document.querySelector(".chat_container")) {
+        window.scrollTo({
+          top: 12000,
+          behavior: "smooth"
+        })
+      };
     } else {
-      toast_success("Сообщение отправлено");
       document.querySelector(".item_fullscreen").style.display = "none";
       document.getElementById("item_loader").innerHTML="";
     }
@@ -586,8 +587,12 @@ function send_message (form_post, url) {
     try{form_post.querySelector(".parent_message_block").remove()}catch{null};
     form_post.querySelector(".type_hidden").value = '';
     show_message_form_voice_btn();
-    document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
-
+    if (document.querySelector(".chat_container")) {
+      window.scrollTo({
+        top: 12000,
+        behavior: "smooth"
+      })
+    };
   }};
   link_.send(form_data);
 };
@@ -738,7 +743,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         //  behavior: "smooth"
         //});
         window.scrollTo( 0, 3000 );
-        scrolled(rtr.querySelector('.is_paginate')); 
+        scrolled(rtr.querySelector('.is_paginate'));
         window.history.pushState(null, "vfgffgfgf", url);
         chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
