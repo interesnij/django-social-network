@@ -1345,6 +1345,7 @@ class CommunityMembership(models.Model):
             ]
         verbose_name = 'подписчик сообщества'
         verbose_name_plural = 'подписчики сообщества'
+        ordering = ["-visited"]
 
 
 class CommunityMemberPerm(models.Model):
