@@ -2,7 +2,7 @@
 
 {% if get_message_draft %}
 
-<form class="customize_form mobile_version">
+<form class="customize_form mobile_version" style="position: sticky;bottom: 20px;"> 
   <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
