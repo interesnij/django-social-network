@@ -1095,7 +1095,7 @@ class User(AbstractUser):
 
     def get_6_communities(self):
         from communities.models import Community
-        return Community.objects.filter(memberships__user=self)[0:6]
+        return Community.objects.filter(memberships__user=self).order_by("-memberships__visited")[0:6]
 
     def get_communities(self):
         from communities.models import Community
