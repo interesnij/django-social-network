@@ -727,11 +727,11 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
-        console.log(ajax.querySelector(".main_chat_block").offsetWidth)
-        ajax.querySelector(".fixed_header_chat").style.width = "10px";
 
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
+        console.log(rtr.querySelector(".main_chat_block").offsetWidth);
+        rtr.querySelector(".fixed_header_chat").style.width = rtr.querySelector(".main_chat_block").offsetWidth;
         objDiv = document.querySelector(".chat_container");
         objDiv.scrollTop = objDiv.scrollHeight;
         window.history.pushState(null, "vfgffgfgf", url);
