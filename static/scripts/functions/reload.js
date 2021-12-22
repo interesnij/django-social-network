@@ -546,6 +546,8 @@ function paginate(block) {
                 elem.innerHTML = link_3.responseText;
                 if (elem.querySelector(".is_paginate")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
+                } else if (elem.querySelector(".is_chat_paginate")){
+                  block.parentElement.insertAdjacentHTML('afterbegin', elem.querySelector(".is_chat_paginate").innerHTML)
                 };
                 block.remove()
             }
@@ -629,7 +631,7 @@ function if_list(block) {
       width = block.querySelector(".main_chat_block").offsetWidth - 14;
       block.querySelector(".fixed_header_chat").style.width = width + "px";
       objDiv = document.querySelector(".chat_container");
-      objDiv.scrollTop = objDiv.scrollHeight; 
+      objDiv.scrollTop = objDiv.scrollHeight;
     }
 };
 
