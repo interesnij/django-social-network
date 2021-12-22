@@ -3072,6 +3072,8 @@ body.dragging * {
   min-height: 85vh;
   padding-top: 4em;
   padding-bottom: 1em;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #chat-list .list-group-item {
