@@ -425,7 +425,7 @@ function get_el_view_time(count) {
 };
 
 window.onbeforeunload = function() {
-  console.log($all_stat);
+  console.log("Reload");
 };
 
 function reload_list_stat() {
@@ -622,7 +622,15 @@ function if_list(block) {
         list_load(block.querySelector(".is_block_paginate"), link);
         scrolled(lenta.querySelector('.list_pk'));
     };
-    load_item_window()
+    load_item_window();
+
+    // проверим, не страница ли чата.
+    if (block.querySelector(".chat_container")) {
+      width = block.querySelector(".main_chat_block").offsetWidth - 14;
+      block.querySelector(".fixed_header_chat").style.width = width + "px";
+      objDiv = document.querySelector(".chat_container");
+      objDiv.scrollTop = objDiv.scrollHeight; 
+    }
 };
 
 if_list(document.getElementById('ajax'));
