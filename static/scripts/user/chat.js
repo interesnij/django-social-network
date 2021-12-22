@@ -727,7 +727,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         elem_ = document.createElement('span');
         elem_.innerHTML = ajax_link.responseText;
         ajax = elem_.querySelector("#reload_block");
-        console.log(ajax.querySelector(".main_chat_block").style.width)
+        console.log(ajax.querySelector(".main_chat_block").clientWidth)
         ajax.querySelector(".fixed_header_chat").style.width = "10px";
 
         rtr = document.getElementById('ajax');
