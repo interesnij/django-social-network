@@ -2,7 +2,7 @@
 
 {% if get_message_draft %}
 
-<form class="customize_form">
+<form class="customize_form" style="position: sticky;bottom: 0;">
   <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
@@ -66,7 +66,7 @@
 
 {% else %}
 
-<form class="customize_form">
+<form class="customize_form" style="position: sticky;bottom: 0;">
   <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
