@@ -2,11 +2,11 @@
 
 {% if get_message_draft %}
 
-<form class="customize_form" style="position: sticky;bottom: 0;">
+<form class="custom_color customize_form" style="position: sticky;bottom: 0;">
   <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
-    <div class="parent_message_block">
+    <div class="custom_color parent_message_block">
         {% if get_message_draft.parent %}
           {% with parent=get_message_draft.parent %}
         <div>
@@ -70,7 +70,7 @@
   <span class="user_typed_box small"></span>
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
-    <div class="parent_message_block"></div>
+    <div class="custom_color parent_message_block"></div>
     <div class="row files_0 special_block"></div>
 
     <div class="input-group input-group-sm">
