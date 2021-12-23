@@ -14,7 +14,7 @@ import django, json, requests
 
 django.setup()
 import re
-from users.model.settings import *
+from communities.model.settings import *
 from users.models import User
 from communities.models import Community
 
