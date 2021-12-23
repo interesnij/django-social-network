@@ -14,7 +14,7 @@ function case_user_chat_typed(pk, first_name) {
       typed_box.innerHTML = first_name + " набирает сообщение..."
       setTimeout(function(){
         typed_box.innerHTML = "";
-    }, 3000)
+    }, 1000)
     }
   } if (document.body.querySelector(".chat_list_container")) {
     list = document.body.querySelector(".chat_list_container");
@@ -167,8 +167,8 @@ function case_u_message_create(chat_id, message_uuid, beep) {
       count += 1;
       chats.classList.add("tab_badge", "badge-success");
       chats.innerHTML = "";tab_span.append(count);chats.append(count);
-  }
-  // если получатель не отключил звук
+  };
+  console.log(beep);
   if (beep) {
     audio = new Audio('/static/audio/apple/message.mp3');
     audio.volume = 0.5;
