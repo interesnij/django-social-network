@@ -223,6 +223,27 @@
                       </div>
 
                       <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит статистику</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_stat_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_stat == 5 and community.get_can_see_stat_exclude_users %}:
+                              {% for object in community.get_can_see_stat_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_stat == 6 and community.get_can_see_stat_include_users %}:
+                              {% for object in community.get_can_see_stat_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_stat" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/community_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
                           <label class="col-md-6">Кто видит настройки</label>
                           <span class="col-md-6">
                             <a class="menu_drop_2 pointer">{{ private.get_can_see_settings_display }}</a>

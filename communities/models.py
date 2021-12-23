@@ -403,6 +403,9 @@ class Community(models.Model):
     def is_anon_user_can_see_good(self):
         private = self.community_private2
         return private.can_see_good == 1
+    def is_anon_user_can_see_stat(self):
+        private = self.community_private2
+        return private.can_see_stat == 1
 
     def is_user_can_see_photo(self, user_id):
         private = self.community_private2
@@ -418,6 +421,21 @@ class Community(models.Model):
             return not user_pk in self.get_can_see_photo_exclude_users_ids()
         elif private.can_see_photo == 6:
             return user_pk in self.get_can_see_photo_include_users_ids()
+        return False
+    def is_user_can_see_stat(self, user_id):
+        private = self.community_private2
+        if private.can_see_stat == 1:
+            return True
+        elif private.can_see_stat == 2 and user_id in self.get_members_ids():
+            return True
+        elif private.can_see_stat == 3 and user_id == self.creator.pk:
+            return True
+        elif private.can_see_stat == 4 and user_id in self.get_staff_members_ids():
+            return True
+        elif private.can_see_stat == 5:
+            return not user_pk in self.get_can_see_stat_exclude_users_ids()
+        elif private.can_see_stat == 6:
+            return user_pk in self.get_can_see_stat_include_users_ids()
         return False
     def is_user_can_see_settings(self, user_id):
         private = self.community_private2
@@ -965,6 +983,17 @@ class Community(models.Model):
     def get_can_see_photo_include_users(self):
         return User.objects.filter(id__in=self.get_can_see_photo_include_users_ids())
 
+    def get_can_see_stat_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_stat=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_stat_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_stat=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_stat_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_stat_exclude_users_ids())
+    def get_can_see_stat_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_stat_include_users_ids())
+
     def get_can_see_good_exclude_users_ids(self):
         list = self.memberships.filter(community_ie_settings__can_see_good=2).values("user_id")
         return [i['user_id'] for i in list]
@@ -1239,6 +1268,21 @@ class Community(models.Model):
                 perm.save(update_fields=["can_see_log"])
             private.can_see_log = 5
             private.save(update_fields=["can_see_log"])
+        elif type == "can_see_stat":
+            list = self.memberships.filter(community_ie_settings__can_see_stat=2)
+            for i in list:
+                i.community_ie_settings.can_see_stat = 0
+                i.community_ie_settings.save(update_fields=["can_see_stat"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_stat = 2
+                perm.save(update_fields=["can_see_stat"])
+            private.can_see_stat = 5
+            private.save(update_fields=["can_see_stat"])
 
     def post_include_users(self, users, type):
         private = self.community_private2
@@ -1422,6 +1466,21 @@ class Community(models.Model):
                 perm.save(update_fields=["can_see_log"])
             private.can_see_log = 6
             private.save(update_fields=["can_see_log"])
+        elif type == "can_see_stat":
+            list = self.memberships.filter(community_ie_settings__can_see_stat=1)
+            for i in list:
+                i.community_ie_settings.can_see_stat = 0
+                i.community_ie_settings.save(update_fields=["can_see_stat"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_stat = 1
+                perm.save(update_fields=["can_see_stat"])
+            private.can_see_stat = 6
+            private.save(update_fields=["can_see_stat"])
 
 
 class CommunityMembership(models.Model):

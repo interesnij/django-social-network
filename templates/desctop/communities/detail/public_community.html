@@ -89,7 +89,20 @@
                     Подписаться
                 </button>
                 <div class="card mt-1 mb-1" style="padding: 10px;">
-                  <span class="community_claim" style="cursor:pointer">Пожаловаться</span>
+                  {% if manager %}
+                    <span class="community_blocker pointer">Блокировать</span>
+                    <span class="community_suspend pointer">Остановка</span>
+                    {% if community.is_have_warning_banner %}
+                      <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax">Применен баннер</a>
+                    {% else %}
+                      <span class="community_warning_banner pointer">Повесить баннер</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="community_claim pointer">Пожаловаться</span>
+                  {% endif %}
+                  {% if is_stat_open %}
+                    <a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Статистика</a>
+                  {% endif %}
                 </div>
           </div>
             <br>
