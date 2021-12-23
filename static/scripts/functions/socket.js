@@ -242,7 +242,7 @@ event.creator_id != request_user_id
       // те, что не требуют звука, посылаются скопом. И проверяется, есть ли среди списка
       // создатель события, чтобы и ему не показывать, он то знает.
         if (event.name == "u_message_create"){
-          if (event.recipient_id != request_user_id ){
+          if (event.recipient_id == request_user_id ){
             case_u_message_create(event.chat_id, event.message_id, event.beep)
           }
         }
