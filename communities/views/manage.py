@@ -357,6 +357,12 @@ class CommunityPrivateExcludeUsers(ListView):
 		elif self.type == "can_see_doc":
 			self.users = self.community.get_can_see_doc_exclude_users()
 			self.text = "видеть документы"
+		elif self.type == "can_see_settings":
+			self.users = self.community.get_can_see_settings_exclude_users()
+			self.text = "видеть настройки"
+		elif self.type == "can_see_log":
+			self.users = self.community.get_can_see_log_exclude_users()
+			self.text = "видеть жернал действий"
 		self.template_name = get_community_manage_template("communities/manage/perm/exclude_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateExcludeUsers,self).get(request,*args,**kwargs)
 
@@ -414,6 +420,12 @@ class CommunityPrivateIncludeUsers(ListView):
 		elif self.type == "can_see_doc":
 			self.users = self.community.get_can_see_doc_include_users()
 			self.text = "видеть документы"
+		elif self.type == "can_see_settings":
+			self.users = self.community.get_can_see_settings_include_users()
+			self.text = "видеть настройки"
+		elif self.type == "can_see_log":
+			self.users = self.community.get_can_see_log_include_users()
+			self.text = "видеть жернал действий"
 		self.template_name = get_community_manage_template("communities/manage/perm/include_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateIncludeUsers,self).get(request,*args,**kwargs)
 

@@ -222,6 +222,48 @@
                           </span>
                       </div>
 
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит настройки</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_settings_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_settings == 5 and community.get_can_see_settings_exclude_users %}:
+                              {% for object in community.get_can_see_settings_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_settings == 6 and community.get_can_see_settings_include_users %}:
+                              {% for object in community.get_can_see_settings_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_settings" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/admins_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
+                      <div class="row mb-1 form_group_flex">
+                          <label class="col-md-6">Кто видит журнал действий</label>
+                          <span class="col-md-6">
+                            <a class="menu_drop_2 pointer">{{ private.get_can_see_log_display }}</a>
+                            <span class="collector">
+                              {% if private.can_see_log == 5 and community.get_can_see_log_exclude_users %}:
+                              {% for object in community.get_can_see_log_exclude_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% elif private.can_see_log == 6 and community.get_can_see_log_include_users %}:
+                              {% for object in community.get_can_see_log_include_users %}
+                                <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                            </span>
+                            <div class="dropdown-menu border" data-action="can_see_log" style="top: 30px;">
+                              {% include 'desctop/communities/manage/perm/admins_perm_drop.html' %}
+                            </div>
+                          </span>
+                      </div>
+
                     </div>
                 </div>
               </form>

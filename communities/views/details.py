@@ -39,23 +39,10 @@ class CommunityDetail(TemplateView):
                     else:
                         template_name = "generic/c_template/community_closed.html"
             elif request.user.is_member_of_community(self.c.pk):
-                if request.user.is_administrator_of_community(self.c.pk):
-                    self.template_name = "communities/detail/admin_community.html"
-                elif request.user.is_moderator_of_community(self.c.pk):
-                    self.template_name = "communities/detail/moderator_community.html"
-                elif request.user.is_editor_of_community(self.c.pk):
-                    self.template_name = "communities/detail/editor_community.html"
-                elif request.user.is_advertiser_of_community(self.c.pk):
-                    self.template_name = "communities/detail/advertiser_community.html"
-                elif request.user.is_community_manager():
-                    self.template_name = "communities/detail/staff_member_community.html"
-                else:
-                    self.template_name = "communities/detail/member_community.html"
+                self.template_name = "communities/detail/member_community.html"
                 request.user.plus_community_visited(self.c.pk)
             elif request.user.is_follow_from_community(self.c.pk):
                 self.template_name = "communities/detail/follow_community.html"
-            elif request.user.is_community_manager():
-                self.template_name = "communities/detail/staff_community.html"
             elif request.user.is_banned_from_community(self.c.pk):
                 self.template_name = "communities/detail/block_community.html"
             elif self.c.is_public():
@@ -68,13 +55,18 @@ class CommunityDetail(TemplateView):
             elif self.c.is_private():
                 self.template_name = "generic/c_template/private_community.html"
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
-            self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
-            self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
-            self.is_video_open = self.c.is_user_can_see_video(r_user_pk)
-            self.is_music_open = self.c.is_user_can_see_music(r_user_pk)
-            self.is_doc_open = self.c.is_user_can_see_doc(r_user_pk)
-            self.is_member_open = self.c.is_user_can_see_member(r_user_pk)
-            self.is_good_open = self.c.is_user_can_see_good(r_user_pk)
+
+            if request.user.pk == self.c.creator.pk:
+                is_message_open,is_photo_open,is_post_open,is_members_open,is_doc_open,is_video_open,is_music_open,is_good_open = True, True, True, True, True, True, True, True
+            else:
+                self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
+                self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
+                self.is_video_open = self.c.is_user_can_see_video(r_user_pk)
+                self.is_music_open = self.c.is_user_can_see_music(r_user_pk)
+                self.is_doc_open = self.c.is_user_can_see_doc(r_user_pk)
+                self.is_member_open = self.c.is_user_can_see_member(r_user_pk)
+                self.is_good_open = self.c.is_user_can_see_good(r_user_pk)
+                self.is_message_open = self.c.is_user_can_send_message(r_user_pk)
 
             update_activity(request.user, request.META['HTTP_USER_AGENT'])
         elif request.user.is_anonymous:
@@ -102,13 +94,20 @@ class CommunityDetail(TemplateView):
             self.is_member_open = self.c.is_anon_user_can_see_member()
             self.is_good_open = self.c.is_anon_user_can_see_good()
             self.is_post_open = self.c.is_anon_user_can_see_post()
+            self.is_message_open = self.c.is_anon_user_can_send_message(r_user_pk)
 
         self.template_name = get_folder(request.META['HTTP_USER_AGENT']) + self.template_name
         return super(CommunityDetail,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CommunityDetail,self).get_context_data(**kwargs)
-        c["membersheeps"],c["community"],c["common_friends"],c["common_friends_count"],c['post_list_pk'],c['is_photo_open'],c['is_post_open'],c['is_member_open'],c['is_doc_open'],c['is_video_open'],c['is_music_open'],c['is_good_open'] = self.c.get_members(self.c.pk)[0:6],self.c,self.common_friends,self.common_friends_count,self.c.get_selected_post_list_pk(),self.is_photo_open,self.is_post_open,self.is_member_open,self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open
+        c["membersheeps"],c["community"],c["common_friends"],c["common_friends_count"],\
+        c['post_list_pk'],c['is_photo_open'],c['is_post_open'],c['is_member_open'],\
+        c['is_doc_open'],c['is_video_open'],c['is_music_open'],\
+        c['is_good_open'], c['is_message_open'] = self.c.get_members(self.c.pk)[0:6],self.c,self.common_friends,\
+        self.common_friends_count,self.c.get_selected_post_list_pk(),self.is_photo_open,\
+        self.is_post_open,self.is_member_open,self.is_doc_open,self.is_video_open,\
+        self.is_music_open,self.is_good_open,self.is_message_open
         return c
 
 

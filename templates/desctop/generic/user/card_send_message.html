@@ -1,3 +1,4 @@
+{% load message %}
 <div class="media">
     <a href="{{ object.get_link }}" class="ajax">
         <figure>
@@ -14,6 +15,8 @@
         <a href="{{ object.get_link }}" class="ajax">
             <h6 class="my-0 mt-1">{{ object.get_full_name }}</h6>
         </a>
-        <a href="" class="small">Написать сообщение</a>
+        {% if object|is_can_send_message:request.user.pk %}
+          <a class="small user_send_page_message">Написать сообщение</a>
+        {% endif %}
     </div>
 </div>
