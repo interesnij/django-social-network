@@ -50,14 +50,15 @@ class CommunitySectionsOpenView(TemplateView):
 		return c
 
 	def post(self,request,*args,**kwargs):
-		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.private = CommunityPrivate2.objects.get(community=self.c)
+		c = Community.objects.get(pk=self.kwargs["pk"])
+		private = CommunityPrivate2.objects.get(community=c)
 		if not self.c.is_user_can_see_settings(request.user.pk):
 			return HttpResponse("Кыш отсюда!")
+		elif not request.is_ajax() or value == 5 or value == 6:
+			return HttpResponse(value)
 		type = request.GET.get("action")
 		value = request.GET.get("value")
-		if not request.is_ajax() or value == 5 or value == 6:
-			return HttpResponse(value)
+
 		if type[:3] == "can":
 			if type == "can_see_info":
 				private.can_see_info = value
