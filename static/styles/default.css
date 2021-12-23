@@ -1340,7 +1340,7 @@ html {
 
 .item_attach_circle{
   position: absolute;
-  right: 35px;
+  right: 15px;
   background-color: white;
   border-radius: 50%;
   cursor: pointer;
@@ -1374,9 +1374,7 @@ html {
   border: 1px grey solid;
   z-index: 2
 }
-.photo_preview_delete {
-  top: 12px;
-}
+
 .list_preview_delete{
   position: absolute;
   right: 20px;
