@@ -10,7 +10,7 @@
 {% block content %}
 
 <div class="container main-container pk_saver mt-3" data-pk="{{ user.pk }}" data-type="user_music">
-
+{% if is_user_can_see_music_section %}
   {% include 'mobile/users/music/main_list/lists.html' %}
 
           <span class="load_block">
@@ -47,6 +47,9 @@
               </div>
           </div>
         </span>
+        {% else %}
+          {% include 'desctop/generic/centered/private_page.html' %}
+        {% endif %}
     </div>
 
 <script>
