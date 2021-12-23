@@ -2,7 +2,7 @@ from users.models import User
 from django.views import View
 from django.http import HttpResponse, Http404
 from django.views.generic import ListView
-from common.templates import get_template_user, get_settings_template
+from common.templates import get_template_user, get_settings_template, get_template_anon_user
 
 
 class FrendsListView(ListView):
@@ -10,15 +10,15 @@ class FrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
-
-		#self.common_users=self.user.get_common_friends_of_user(request.user)
+		if request.user.is_authenticated:
+			self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user(self.user, "frends/frends/anon_frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(FrendsListView,self).get_context_data(**kwargs)
 		context['user'] = self.user
-		#context['common_users'] = self.common_users
 		return context
 
 	def get_queryset(self):
@@ -30,7 +30,10 @@ class OnlineFrendsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+			self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user(self.user, "frends/frends_online/anon_frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
