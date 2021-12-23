@@ -20,12 +20,16 @@ function case_user_chat_typed(pk, first_name) {
     list = document.body.querySelector(".chat_list_container");
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     p = chat.querySelector("p");
-    p.style.display = "none";
-    p.nextElementSibling.innerHTML = first_name + " набирает сообщение...";
-    setTimeout(function(){
-      p.nextElementSibling.innerHTML = "";
+    if (!p.nextElementSibling.innerHTML) {
+      p.style.display = "none";
+      p.nextElementSibling.innerHTML = first_name + " набирает сообщение...";
+      setTimeout(function(){
+        p.nextElementSibling.innerHTML = "";
+        p.style.display = "unset";
+      }, 1000);
+    } else {
       p.style.display = "unset";
-  }, 3000)
+    }
   }
 };
 function case_user_chat_read(pk) {
