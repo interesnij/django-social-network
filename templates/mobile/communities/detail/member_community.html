@@ -27,8 +27,25 @@
         </a>
       </span>
       <div class="dropdown-menu" style="margin-top:-65px;width:100%">
-        <span class="dropdown-item community_claim">Пожаловаться</span>
-        <span class="dropdown-item u_community_repost">Поделиться</span>
+
+        <span class="dropdown-item u_community_repost pointer">Поделиться</span>
+        {% if manager %}
+          <span class="community_blocker pointer">Блокировать</span>
+          <span class="community_suspend pointer">Остановка</span>
+          {% if community.is_have_warning_banner %}
+            <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax" style="cursor:pointer">Применен баннер</a>
+          {% else %}
+            <span class="community_warning_banner pointer">Повесить баннер</span>
+          {% endif %}
+        {% else %}
+          <span class="dropdown-item community_claim pointer">Пожаловаться</span>
+        {% endif %}
+        {% if is_settings_open %}
+          <a href="{% url 'community_general_form' pk=community.pk %}" class="dropdown-item ajax">Управление</a>
+        {% endif %}
+        {% if is_stat_open %}
+          <a href="{% url 'community_traffic_day' community.pk %}" class="dropdown-item ajax">Статистика</a>
+        {% endif %}
       </div>
     </span>
     {% include 'mobile/communities/detail_sections/description.html' %}

@@ -363,6 +363,9 @@ class CommunityPrivateExcludeUsers(ListView):
 		elif self.type == "can_see_log":
 			self.users = self.community.get_can_see_log_exclude_users()
 			self.text = "видеть жернал действий"
+		elif self.type == "can_see_stat":
+			self.users = self.community.get_can_see_stat_exclude_users()
+			self.text = "видеть статистику"
 		self.template_name = get_community_manage_template("communities/manage/perm/exclude_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateExcludeUsers,self).get(request,*args,**kwargs)
 
@@ -426,6 +429,9 @@ class CommunityPrivateIncludeUsers(ListView):
 		elif self.type == "can_see_log":
 			self.users = self.community.get_can_see_log_include_users()
 			self.text = "видеть жернал действий"
+		elif self.type == "can_see_stat":
+			self.users = self.community.get_can_see_stat_include_users()
+			self.text = "видеть статистику"
 		self.template_name = get_community_manage_template("communities/manage/perm/include_users.html", request.user, self.community, request.META['HTTP_USER_AGENT'])
 		return super(CommunityPrivateIncludeUsers,self).get(request,*args,**kwargs)
 
