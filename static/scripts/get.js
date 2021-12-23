@@ -461,15 +461,16 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   }
   else if (form_post.classList.contains("type_community")) {
     // работаем с приватностью профиля пользователя
+    c_pk = form_post.getAttribute("data-pk");
     if (val == '5') {
-      create_fullscreen("/communities/manage/load_exclude_users/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/communities/manage/load_exclude_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
     else if (val == '6') {
-      create_fullscreen("/communities/manage/load_include_users/?action=" + action, "worker_fullscreen");
+      create_fullscreen("/communities/manage/load_include_users/" + c_pk + "/?action=" + action, "worker_fullscreen");
     }
     else {
       if (is_new_value) {
-        private_users_send(form_post, "/communities/manage/private/?action=" + action + "&value=" + val)
+        private_users_send(form_post, "/communities/manage/private/" + c_pk + "/?action=" + action + "&value=" + val)
       }
     }
   }
