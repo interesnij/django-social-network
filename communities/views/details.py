@@ -57,7 +57,7 @@ class CommunityDetail(TemplateView):
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
 
             if request.user.pk == self.c.creator.pk:
-                is_message_open,is_photo_open,is_post_open,is_members_open,is_doc_open,is_video_open,is_music_open,is_good_open = True, True, True, True, True, True, True, True
+                is_message_open,is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open = True, True, True, True, True, True, True, True
             else:
                 self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
                 self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
