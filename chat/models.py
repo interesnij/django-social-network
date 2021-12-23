@@ -41,6 +41,8 @@ class Chat(models.Model):
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
     can_add_admin = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто назначает админов")
     can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто меняет дизайн")
+    can_see_settings = models.PositiveSmallIntegerField(choices=ALL_PERM, default=2, verbose_name="Кто видит настройки")
+    can_see_log = models.PositiveSmallIntegerField(choices=ALL_PERM, default=2, verbose_name="Кто видит логи")
 
     class Meta:
         verbose_name = "Беседа"
@@ -64,6 +66,10 @@ class Chat(models.Model):
             ChatPerm.objects.filter(user__chat_id=self.pk, can_send_mention=1).update(can_send_mention=0)
         elif type == "can_add_design":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_design=1).update(can_add_design=0)
+        elif type == "can_see_settings":
+            ChatPerm.objects.filter(user__chat_id=self.pk, can_see_settings=1).update(can_see_settings=0)
+        elif type == "can_see_log":
+            ChatPerm.objects.filter(user__chat_id=self.pk, can_see_log=1).update(can_see_log=0)
         for user_id in users:
             member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.objects.filter(user_id=member.pk).exists():
@@ -94,6 +100,14 @@ class Chat(models.Model):
                 perm.can_add_design = 1
                 self.can_add_design = 5
                 self.save(update_fields=["can_add_design"])
+            elif type == "can_see_settings":
+                perm.can_see_settings = 1
+                self.can_see_settings = 5
+                self.save(update_fields=["can_see_settings"])
+            elif type == "can_see_log":
+                perm.can_see_log = 1
+                self.can_see_log = 5
+                self.save(update_fields=["can_see_log"])
             perm.save()
 
 
@@ -110,6 +124,10 @@ class Chat(models.Model):
             ChatPerm.objects.filter(user__chat_id=self.pk, can_send_mention=2).update(can_send_mention=0)
         elif type == "can_add_design":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_design=2).update(can_add_design=0)
+        elif type == "can_see_settings":
+            ChatPerm.objects.filter(user__chat_id=self.pk, can_see_settings=2).update(can_see_settings=0)
+        elif type == "can_see_log":
+            ChatPerm.objects.filter(user__chat_id=self.pk, can_see_log=2).update(can_see_log=0)
         for user_id in users:
             member = self.chat_relation.filter(user_id=user_id).first()
             if ChatPerm.objects.filter(user_id=member.pk).exists():
@@ -140,6 +158,14 @@ class Chat(models.Model):
                 perm.can_add_design = 2
                 self.can_add_design = 4
                 self.save(update_fields=["can_add_design"])
+            elif type == "can_see_settings":
+                perm.can_see_settings = 2
+                self.can_see_settings = 4
+                self.save(update_fields=["can_see_settings"])
+            elif type == "can_see_log":
+                perm.can_see_log = 2
+                self.can_see_log = 4
+                self.save(update_fields=["can_see_log"])
             perm.save()
 
     def create_image(self, photo_input):
@@ -209,7 +235,7 @@ class Chat(models.Model):
             return True
         return False
     def is_user_can_add_design(self, user_id):
-        if self.can_mention == self.ALL_CAN:
+        if self.can_add_design == self.ALL_CAN:
             return True
         elif self.can_add_design == self.CREATOR and self.creator.pk == user_id:
             return True
@@ -219,11 +245,33 @@ class Chat(models.Model):
             return True
         elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 5, 1):
             return True
+    def is_user_can_see_settings(self, user_id):
+        if self.can_see_settings == self.ALL_CAN:
+            return True
+        elif self.can_see_settings == self.CREATOR and self.creator.pk == user_id:
+            return True
+        elif self.can_see_settings == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
+            return True
+        elif self.can_see_settings == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 6, 0):
+            return True
+        elif self.can_see_settings == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 6, 1):
+            return True
+    def is_user_can_see_log(self, user_id):
+        if self.can_see_log == self.ALL_CAN:
+            return True
+        elif self.can_see_log == self.CREATOR and self.creator.pk == user_id:
+            return True
+        elif self.can_see_log == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
+            return True
+        elif self.can_see_log == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 7, 0):
+            return True
+        elif self.can_see_log == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 7, 1):
+            return True
 
 
     def get_special_perm_for_user(self, user_id, type, value):
         """
-        type 1 - can_add_members, 2 - can_edit_info, 3 - can_fix_item, 4 - can_mention, 5 - can_add_design
+        type 1 - can_add_members, 2 - can_edit_info, 3 - can_fix_item, 4 - can_mention, 5 - can_add_design, 6 - can_see_settings, 7 - can_see_log
         value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
 
         Логика такая.
@@ -249,6 +297,10 @@ class Chat(models.Model):
                     return ie.can_send_mention != 2
                 elif type == 5:
                     return ie.can_add_design != 2
+                elif type == 6:
+                    return ie.can_see_settings != 2
+                elif type == 7:
+                    return ie.can_see_log != 2
             except ChatPerm.DoesNotExist:
                  return True
         elif value == 1:
@@ -264,6 +316,10 @@ class Chat(models.Model):
                     return ie.can_send_mention == 1
                 elif type == 5:
                     return ie.can_add_design == 1
+                elif type == 6:
+                    return ie.can_see_settings == 1
+                elif type == 7:
+                    return ie.can_see_log == 1
             except ChatPerm.DoesNotExist:
                  return False
 
@@ -720,6 +776,24 @@ class Chat(models.Model):
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_design=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
+    def get_can_see_settings_include_users(self):
+        from users.models import User
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_see_settings=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_settings_exclude_users(self):
+        from users.models import User
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_see_settings=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
+    def get_can_see_log_include_users(self):
+        from users.models import User
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_see_log=1).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+    def get_can_see_log_exclude_users(self):
+        from users.models import User
+        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_see_log=2).values("user_id")
+        return User.objects.filter(id__in=[i['user_id'] for i in query])
+
     def get_messages(self, user_id):
         query = Q()
         query.add(~Q(type__contains="_"), Q.AND)
@@ -837,6 +911,8 @@ class ChatPerm(models.Model):
     can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
     can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
     can_add_design = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто меняет дизайн")
+    can_see_settings = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит настройки")
+    can_see_log = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит журнал действий")
 
     class Meta:
         verbose_name = 'Исключения/Включения участника беседы'
