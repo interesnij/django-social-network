@@ -4,7 +4,7 @@ from follows.models import Follow, CommunityFollow
 from users.models import User
 from django.http import HttpResponse, Http404
 from django.views.generic import ListView
-from common.templates import get_settings_template, get_template_user
+from common.templates import get_settings_template, get_template_user, get_template_anon_user
 
 
 class FollowsView(ListView):
@@ -12,7 +12,10 @@ class FollowsView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.user = User.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request.user.is_authenticated:
+			self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user(self.user, "follows/anon_follows.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
