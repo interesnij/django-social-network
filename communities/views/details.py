@@ -5,7 +5,7 @@ from common.templates import get_template_anon_community_list, get_template_comm
 
 
 class CommunityDetail(TemplateView):
-    template_name,common_friends,common_friends_count, is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open = None,None,None,None,None,None,None,None,None,None
+    template_name,common_friends,common_friends_count, is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open,is_message_open = None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from common.templates import update_activity, get_folder
@@ -57,7 +57,7 @@ class CommunityDetail(TemplateView):
             self.common_friends, self.common_friends_count = request.user.get_common_friends_of_community(self.c.pk)[0:6], request.user.get_common_friends_of_community_count_ru(self.c.pk)
 
             if request.user.pk == self.c.creator.pk:
-                is_message_open,is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open = True, True, True, True, True, True, True, True
+                self.is_message_open,self.is_photo_open,self.is_post_open,self.is_member_open,self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open = True, True, True, True, True, True, True, True
             else:
                 self.is_photo_open = self.c.is_user_can_see_photo(r_user_pk)
                 self.is_post_open = self.c.is_user_can_see_post(r_user_pk)
