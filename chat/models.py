@@ -36,7 +36,6 @@ class Chat(models.Model):
 
     """ Полномочия в чате """
     can_add_members = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто приглашает участников")
-    can_edit_info = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто редактирует информацию")
     can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто закрепляет сообщения")
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
     can_add_admin = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто назначает админов")
@@ -56,8 +55,6 @@ class Chat(models.Model):
     def post_include_users(self, users, type):
         if type == "can_add_members":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_in_chat=1).update(can_add_in_chat=0)
-        elif type == "can_edit_info":
-            ChatPerm.objects.filter(user__chat_id=self.pk, can_add_info=1).update(can_add_info=0)
         elif type == "can_fix_item":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_fix=1).update(can_add_fix=0)
         elif type == "can_add_admin":
@@ -80,10 +77,6 @@ class Chat(models.Model):
                 perm.can_add_in_chat = 1
                 self.can_add_members = 5
                 self.save(update_fields=["can_add_members"])
-            elif type == "can_edit_info":
-                perm.can_add_info = 1
-                self.can_edit_info = 5
-                self.save(update_fields=["can_edit_info"])
             elif type == "can_fix_item":
                 perm.can_add_fix = 1
                 self.can_fix_item = 5
@@ -114,8 +107,6 @@ class Chat(models.Model):
     def post_exclude_users(self, users, type):
         if type == "can_add_members":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_in_chat=2).update(can_add_in_chat=0)
-        elif type == "can_edit_info":
-            ChatPerm.objects.filter(user__chat_id=self.pk, can_add_info=2).update(can_add_info=0)
         elif type == "can_fix_item":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_fix=2).update(can_add_fix=0)
         elif type == "can_add_admin":
@@ -138,10 +129,6 @@ class Chat(models.Model):
                 perm.can_add_in_chat = 2
                 self.can_add_members = 4
                 self.save(update_fields=["can_add_members"])
-            elif type == "can_edit_info":
-                perm.can_add_info = 2
-                self.can_edit_info = 4
-                self.save(update_fields=["can_edit_info"])
             elif type == "can_fix_item":
                 perm.can_add_fix = 2
                 self.can_fix_item = 4
@@ -188,18 +175,6 @@ class Chat(models.Model):
         elif self.can_add_members == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 1, 0):
             return True
         elif self.can_add_members == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 1, 1):
-            return True
-        return False
-    def is_user_can_edit_info(self, user_id):
-        if self.can_edit_info == self.ALL_CAN:
-            return True
-        elif self.can_edit_info == self.CREATOR and self.creator.pk == user_id:
-            return True
-        elif self.can_edit_info == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
-            return True
-        elif self.can_edit_info == self.MEMBERS_BUT and self.get_special_perm_for_user(user_id, 2, 0):
-            return True
-        elif self.can_edit_info == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 2, 1):
             return True
         return False
     def is_user_can_fix_item(self, user_id):
@@ -271,7 +246,7 @@ class Chat(models.Model):
 
     def get_special_perm_for_user(self, user_id, type, value):
         """
-        type 1 - can_add_members, 2 - can_edit_info, 3 - can_fix_item, 4 - can_mention, 5 - can_add_design, 6 - can_see_settings, 7 - can_see_log
+        type 1 - can_add_members, 3 - can_fix_item, 4 - can_mention, 5 - can_add_design, 6 - can_see_settings, 7 - can_see_log
         value 0 - MEMBERS_BUT(люди, кроме), value 1 - SOME_MEMBERS(некоторые люди)
 
         Логика такая.
@@ -289,8 +264,6 @@ class Chat(models.Model):
                 ie = member.chat_ie_settings
                 if type == 1:
                     return ie.can_add_in_chat != 2
-                elif type == 2:
-                    return ie.can_add_info != 2
                 elif type == 3:
                     return ie.can_add_fix != 2
                 elif type == 4:
@@ -308,8 +281,6 @@ class Chat(models.Model):
                 ie = member.chat_ie_settings
                 if type == 1:
                     return ie.can_add_in_chat == 1
-                elif type == 2:
-                    return ie.can_add_info == 1
                 elif type == 3:
                     return ie.can_add_fix == 1
                 elif type == 4:
@@ -731,15 +702,6 @@ class Chat(models.Model):
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_in_chat=2).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in query])
 
-    def get_can_edit_info_include_users(self):
-        from users.models import User
-        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_info=1).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
-    def get_can_edit_info_exclude_users(self):
-        from users.models import User
-        query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_info=2).values("user_id")
-        return User.objects.filter(id__in=[i['user_id'] for i in query])
-
     def get_can_fix_item_include_users(self):
         from users.models import User
         query = ChatUsers.objects.filter(chat_id=self.pk, chat_ie_settings__can_add_fix=1).values("user_id")
@@ -906,7 +868,6 @@ class ChatPerm(models.Model):
     user = models.OneToOneField(ChatUsers, null=True, blank=True, on_delete=models.CASCADE, related_name='chat_ie_settings', verbose_name="Друг")
 
     can_add_in_chat = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет в беседы")
-    can_add_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто редактирует информацию")
     can_add_fix = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто закрепляет сообщения")
     can_send_mention = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто отправляет массовые упоминания")
     can_add_admin = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто добавляет админов и работает с ними")
