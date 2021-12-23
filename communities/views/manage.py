@@ -100,7 +100,7 @@ class CommunitySectionsOpenView(TemplateView):
 			elif type == "can_see_stat":
 				private.can_see_stat = value
 				private.save(update_fields=["can_see_stat"])
-		return super(CommunitySectionsOpenView,self).post(request,*args,**kwargs)
+		return HttpResponse()
 
 
 class CommunityNotifyPostView(TemplateView):
