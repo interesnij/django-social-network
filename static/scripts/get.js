@@ -461,10 +461,10 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
   }
   else if (form_post.classList.contains("type_community")) {
     // работаем с приватностью профиля пользователя
-    if (val == '17') {
+    if (val == '5') {
       create_fullscreen("/communities/manage/load_exclude_users/?action=" + action, "worker_fullscreen");
     }
-    else if (val == '18') {
+    else if (val == '6') {
       create_fullscreen("/communities/manage/load_include_users/?action=" + action, "worker_fullscreen");
     }
     else {
