@@ -35,7 +35,7 @@
         {% endif %}
 
     </div>
-      <div class="row {{ get_message_draft.get_count_attach }} special_block message_attach_block">
+      <div class="row {{ get_message_draft.get_count_attach }} special_block message_attach_block no-gutters">
         {{ get_message_draft|get_edit_attach:request.user.pk|safe }}
       </div>
 
@@ -82,7 +82,7 @@
     {% csrf_token %}
     <input class="type_hidden" type="hidden" name="text" />
     <div class="parent_message_block"></div>
-    <div class="row files_0 special_block"></div>
+    <div class="row files_0 special_block no-gutters"></div>
 
     <div class="input-group input-group-sm">
       <div class="input-group-prepend">
