@@ -20,5 +20,5 @@ from communities.models import Community
 from chat.models import Message, MessageFixed, MessageVersion
 
 
-for user in User.objects.all():
-    ProfilePrivate.objects.create(user=user)
+for community in Community.objects.all():
+    CommunityPrivate2.objects.create(community=community)
