@@ -458,9 +458,22 @@ on('#ajax', 'click', '.select_perm_dropdown', function() {
         private_users_send(form_post, "/users/settings/private/?action=" + action + "&value=" + val)
       }
     }
-}
-
   }
+  else if (form_post.classList.contains("type_community")) {
+    // работаем с приватностью профиля пользователя
+    if (val == '17') {
+      create_fullscreen("/communities/manage/load_exclude_users/?action=" + action, "worker_fullscreen");
+    }
+    else if (val == '18') {
+      create_fullscreen("/communities/manage/load_include_users/?action=" + action, "worker_fullscreen");
+    }
+    else {
+      if (is_new_value) {
+        private_users_send(form_post, "/communities/manage/private/?action=" + action + "&value=" + val)
+      }
+    }
+  }
+}
   else if (form_post.classList.contains("case_create")) {
     // мы меняем приватность элемента, которого еще нет, поэтому не можем
     // на лету сохранять изменение приватности. Мы должны оформить исключения или
