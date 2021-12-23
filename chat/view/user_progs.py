@@ -635,6 +635,12 @@ class UserChatIncludeUsers(ListView):
 		elif self.type == "can_add_design":
 			self.users = self.chat.get_can_add_design_include_users()
 			self.text = "Менять дизайн чата"
+		elif self.type == "can_see_settings":
+			self.users = self.chat.get_can_see_settings_include_users()
+			self.text = "видеть настройки чата"
+		elif self.type == "can_see_log":
+			self.users = self.chat.get_can_see_log_include_users()
+			self.text = "видеть журнал действий"
 		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatIncludeUsers,self).get(request,*args,**kwargs)
@@ -686,6 +692,12 @@ class UserChatExcludeUsers(ListView):
 		elif self.type == "can_add_design":
 			self.users = self.chat.get_can_add_design_exclude_users()
 			self.text = "Менять дизайн чата"
+		elif self.type == "can_see_settings":
+			self.users = self.chat.get_can_see_settings_exclude_users()
+			self.text = "видеть настройки чата"
+		elif self.type == "can_see_log":
+			self.users = self.chat.get_can_see_log_exclude_users()
+			self.text = "видеть журнал действий"
 		if self.chat.is_user_can_edit_info(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatExcludeUsers,self).get(request,*args,**kwargs)
