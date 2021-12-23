@@ -17,7 +17,6 @@ import re
 from users.model.settings import *
 from users.models import User
 from communities.models import Community
-from chat.models import Message, MessageFixed, MessageVersion
 
 
 for community in Community.objects.all():
