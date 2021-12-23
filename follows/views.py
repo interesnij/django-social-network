@@ -15,7 +15,7 @@ class FollowsView(ListView):
 		if request.user.is_authenticated:
 			self.template_name = get_template_user(self.user, "follows/", "follows.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user(self.user, "follows/anon_follows.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user(self.user, "follows/anon_follows.html", request.META['HTTP_USER_AGENT'])
 		return super(FollowsView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
