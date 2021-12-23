@@ -419,6 +419,21 @@ class Community(models.Model):
         elif private.can_see_photo == 6:
             return user_pk in self.get_can_see_photo_include_users_ids()
         return False
+    def is_user_can_see_settings(self, user_id):
+        private = self.community_private2
+        if private.can_see_settings == 1:
+            return True
+        elif private.can_see_settings == 2 and user_id in self.get_members_ids():
+            return True
+        elif private.can_see_settings == 3 and user_id == self.creator.pk:
+            return True
+        elif private.can_see_settings == 4 and user_id in self.get_staff_members_ids():
+            return True
+        elif private.can_see_settings == 5:
+            return not user_pk in self.get_can_see_settings_exclude_users_ids()
+        elif private.can_see_settings == 6:
+            return user_pk in self.get_can_see_settings_include_users_ids()
+        return False
 
     def is_user_can_see_post(self, user):
         private = self.community_private2
@@ -530,6 +545,36 @@ class Community(models.Model):
             return not user_pk in self.get_can_see_member_exclude_users_ids()
         elif private.can_see_member == 6:
             return user_pk in self.get_can_see_member_include_users_ids()
+        return False
+    def is_user_can_see_settings(self, user):
+        private = self.community_private2
+        if private.can_see_settings == 1:
+            return True
+        elif private.can_see_settings == 2 and user_id in self.get_members_ids():
+            return True
+        elif private.can_see_settings == 3 and user_id == self.creator.pk:
+            return True
+        elif private.can_see_settings == 4 and user_id in self.get_staff_members_ids():
+            return True
+        elif private.can_see_settings == 5:
+            return not user_pk in self.get_can_see_settings_exclude_users_ids()
+        elif private.can_see_settings == 6:
+            return user_pk in self.get_can_see_settings_include_users_ids()
+        return False
+    def is_user_can_see_log(self, user):
+        private = self.community_private2
+        if private.can_see_log == 1:
+            return True
+        elif private.can_see_log == 2 and user_id in self.get_members_ids():
+            return True
+        elif private.can_see_log == 3 and user_id == self.creator.pk:
+            return True
+        elif private.can_see_log == 4 and user_id in self.get_staff_members_ids():
+            return True
+        elif private.can_see_log == 5:
+            return not user_pk in self.get_can_see_log_exclude_users_ids()
+        elif private.can_see_log == 6:
+            return user_pk in self.get_can_see_log_include_users_ids()
         return False
 
     def create_s_avatar(self, photo_input):
@@ -975,6 +1020,28 @@ class Community(models.Model):
     def get_can_see_doc_include_users(self):
         return User.objects.filter(id__in=self.get_can_see_doc_include_users_ids())
 
+    def get_can_see_settings_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_settings=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_settings_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_settings=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_settings_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_settings_exclude_users_ids())
+    def get_can_see_settings_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_settings_include_users_ids())
+
+    def get_can_see_log_exclude_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_log=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_log_include_users_ids(self):
+        list = self.memberships.filter(community_ie_settings__can_see_log=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_log_exclude_users(self):
+        return User.objects.filter(id__in=self.get_can_see_log_exclude_users_ids())
+    def get_can_see_log_include_users(self):
+        return User.objects.filter(id__in=self.get_can_see_log_include_users_ids())
+
     def post_exclude_users(self, users, type):
         private = self.community_private2
         if type == "can_see_info":
@@ -1142,6 +1209,36 @@ class Community(models.Model):
                 perm.save(update_fields=["can_see_doc"])
             private.can_see_doc = 5
             private.save(update_fields=["can_see_doc"])
+        elif type == "can_see_settings":
+            list = self.memberships.filter(community_ie_settings__can_see_settings=2)
+            for i in list:
+                i.community_ie_settings.can_see_settings = 0
+                i.community_ie_settings.save(update_fields=["can_see_settings"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_settings = 2
+                perm.save(update_fields=["can_see_settings"])
+            private.can_see_settings = 5
+            private.save(update_fields=["can_see_settings"])
+        elif type == "can_see_log":
+            list = self.memberships.filter(community_ie_settings__can_see_log=2)
+            for i in list:
+                i.community_ie_settings.can_see_log = 0
+                i.community_ie_settings.save(update_fields=["can_see_log"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_log = 2
+                perm.save(update_fields=["can_see_log"])
+            private.can_see_log = 5
+            private.save(update_fields=["can_see_log"])
 
     def post_include_users(self, users, type):
         private = self.community_private2
@@ -1295,6 +1392,36 @@ class Community(models.Model):
                 perm.save(update_fields=["can_see_doc"])
             private.can_see_doc = 6
             private.save(update_fields=["can_see_doc"])
+        elif type == "can_see_settings":
+            list = self.memberships.filter(community_ie_settings__can_see_settings=1)
+            for i in list:
+                i.community_ie_settings.can_see_settings = 0
+                i.community_ie_settings.save(update_fields=["can_see_settings"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_settings = 1
+                perm.save(update_fields=["can_see_settings"])
+            private.can_see_settings = 6
+            private.save(update_fields=["can_see_settings"])
+        elif type == "can_see_log":
+            list = self.memberships.filter(community_ie_settings__can_see_log=1)
+            for i in list:
+                i.community_ie_settings.can_see_log = 0
+                i.community_ie_settings.save(update_fields=["can_see_log"])
+            for user_id in users:
+                friend = self.memberships.filter(user_id=user_id).first()
+                try:
+                    perm = CommunityMemberPerm.objects.get(user_id=friend.pk)
+                except:
+                    perm = CommunityMemberPerm.objects.create(user_id=friend.pk)
+                perm.can_see_log = 1
+                perm.save(update_fields=["can_see_log"])
+            private.can_see_log = 6
+            private.save(update_fields=["can_see_log"])
 
 
 class CommunityMembership(models.Model):

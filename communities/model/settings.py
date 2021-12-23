@@ -135,6 +135,8 @@ class CommunityPrivate2(models.Model):
     can_see_music = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто пишет сообщения")
     can_see_planner = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит раздел планирования")
     can_see_doc = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
+    can_see_settings = models.PositiveSmallIntegerField(choices=PERM, default=3, verbose_name="Кто видит настройки")
+    can_see_log = models.PositiveSmallIntegerField(choices=PERM, default=3, verbose_name="Кто видит логи")
 
     @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
