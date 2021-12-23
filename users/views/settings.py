@@ -234,7 +234,6 @@ class UserPrivateView(TemplateView):
 			private = ProfilePrivate.objects.get(user=request.user)
 		except UserPrivate.DoesNotExist:
 			private = ProfilePrivate.objects.create(user=request.user)
-
 		type = request.GET.get("action")
 		value = request.GET.get("value")
 		if not request.is_ajax() or value == 17 or value == 18:
