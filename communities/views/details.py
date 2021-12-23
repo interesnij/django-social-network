@@ -5,7 +5,7 @@ from common.templates import get_template_anon_community_list, get_template_comm
 
 
 class CommunityDetail(TemplateView):
-    template_name,common_friends,common_friends_count,is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open,is_message_open,is_settings_open,is_stat_open = None,None,None,None,None,None,None,None,None,None,None,None,None
+    template_name,common_friends,common_friends_count,is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open,is_message_open,is_settings_open,is_stat_open,is_staff = None,None,None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from common.templates import update_activity, get_folder
@@ -69,6 +69,7 @@ class CommunityDetail(TemplateView):
                 self.is_message_open = self.c.is_user_can_send_message(r_user_pk)
                 self.is_settings_open = self.c.is_user_can_see_settings(r_user_pk)
                 self.is_stat_open = self.c.is_user_can_see_stat(r_user_pk)
+            self.is_staff =  request.user.is_staff_of_community(self.c.pk)
 
             update_activity(request.user, request.META['HTTP_USER_AGENT'])
         elif request.user.is_anonymous:
@@ -107,11 +108,12 @@ class CommunityDetail(TemplateView):
         c['post_list_pk'],c['is_photo_open'],c['is_post_open'],c['is_member_open'],\
         c['is_doc_open'],c['is_video_open'],c['is_music_open'],\
         c['is_good_open'], c['is_message_open'], c['is_manager'], \
-        c['is_settings_open'], c['is_stat_open'] = self.c.get_members(self.c.pk)[0:6],self.c,self.common_friends,\
+        c['is_settings_open'], c['is_stat_open'], c['is_staff'] = self.c.get_members(self.c.pk)[0:6],self.c,self.common_friends,\
         self.common_friends_count,self.c.get_selected_post_list_pk(),self.is_photo_open,\
         self.is_post_open,self.is_member_open,self.is_doc_open,self.is_video_open,\
         self.is_music_open,self.is_good_open,self.is_message_open,\
-        self.request.user.is_community_manager(), self.is_settings_open, self.is_stat_open
+        self.request.user.is_community_manager(), self.is_settings_open, self.is_stat_open, \
+        self.is_staff
         return c
 
 
