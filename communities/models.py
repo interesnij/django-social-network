@@ -453,7 +453,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_settings_include_users_ids()
         return False
 
-    def is_user_can_see_post(self, user):
+    def is_user_can_see_post(self, user_id):
         private = self.community_private2
         if private.can_see_post == 1:
             return True
@@ -469,7 +469,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_post_include_users_ids()
         return False
 
-    def is_user_can_send_message(self, user):
+    def is_user_can_send_message(self, user_id):
         private = self.community_private2
         if private.can_send_message == 1:
             return True
@@ -485,7 +485,7 @@ class Community(models.Model):
             return user_pk in self.get_can_send_message_include_users_ids()
         return False
 
-    def is_user_can_see_good(self, user):
+    def is_user_can_see_good(self, user_id):
         private = self.community_private2
         if private.can_see_good == 1:
             return True
@@ -501,7 +501,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_good_include_users_ids()
         return False
 
-    def is_user_can_see_video(self, user):
+    def is_user_can_see_video(self, user_id):
         private = self.community_private2
         if private.can_see_video == 1:
             return True
@@ -517,7 +517,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_video_include_users_ids()
         return False
 
-    def is_user_can_see_music(self, user):
+    def is_user_can_see_music(self, user_id):
         private = self.community_private2
         if private.can_see_music == 1:
             return True
@@ -533,7 +533,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_music_include_users_ids()
         return False
 
-    def is_user_can_see_doc(self, user):
+    def is_user_can_see_doc(self, user_id):
         private = self.community_private2
         if private.can_see_doc == 1:
             return True
@@ -549,7 +549,7 @@ class Community(models.Model):
             return user_pk in self.get_can_see_doc_include_users_ids()
         return False
 
-    def is_user_can_see_member(self, user):
+    def is_user_can_see_member(self, user_id):
         private = self.community_private2
         if private.can_see_member == 1:
             return True
@@ -564,22 +564,7 @@ class Community(models.Model):
         elif private.can_see_member == 6:
             return user_pk in self.get_can_see_member_include_users_ids()
         return False
-    def is_user_can_see_settings(self, user):
-        private = self.community_private2
-        if private.can_see_settings == 1:
-            return True
-        elif private.can_see_settings == 2 and user_id in self.get_members_ids():
-            return True
-        elif private.can_see_settings == 3 and user_id == self.creator.pk:
-            return True
-        elif private.can_see_settings == 4 and user_id in self.get_staff_members_ids():
-            return True
-        elif private.can_see_settings == 5:
-            return not user_pk in self.get_can_see_settings_exclude_users_ids()
-        elif private.can_see_settings == 6:
-            return user_pk in self.get_can_see_settings_include_users_ids()
-        return False
-    def is_user_can_see_log(self, user):
+    def is_user_can_see_log(self, user_id):
         private = self.community_private2
         if private.can_see_log == 1:
             return True
