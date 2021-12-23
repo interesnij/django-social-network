@@ -115,7 +115,15 @@ class CommunityNotificationsMusic(models.Model):
 class CommunityPrivate2(models.Model):
     ALL_CAN,MEMBERSHIPS,CREATOR,STAFF,MEMBERSHIPS_BUT,SOME_MEMBERSHIPS = 1,2,3,4,5,6
 
-    PERM = ((ALL_CAN, 'Все пользователи'),(MEMBERSHIPS, 'Подписчики'),(CREATOR, 'Создатель'),(MEMBERSHIPS_BUT, 'Подписчики, кроме'),(SOME_MEMBERSHIPS, 'Некоторые подписчики'),(STAFF, 'Персонал'),)
+    PERM = (
+        (ALL_CAN, 'Все пользователи'),
+        (ADMINS, 'Админы'),
+        (MEMBERSHIPS, 'Подписчики'),
+        (CREATOR, 'Создатель'),
+        (MEMBERSHIPS_BUT, 'Подписчики, кроме'),
+        (SOME_MEMBERSHIPS, 'Некоторые подписчики'),
+        (STAFF, 'Персонал'),
+    )
 
     community = models.OneToOneField(Community, on_delete=models.CASCADE, primary_key=True, related_name='community_private2', verbose_name="Сообщество")
     can_see_member = models.PositiveSmallIntegerField(default=1, choices=PERM, verbose_name="Кто видит друзей")
