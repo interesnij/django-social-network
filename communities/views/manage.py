@@ -56,8 +56,8 @@ class CommunitySectionsOpenView(TemplateView):
 			return HttpResponse("Кыш отсюда!")
 		elif not request.is_ajax() or value == 5 or value == 6:
 			return HttpResponse(value)
-		type = request.GET.get("action")
-		value = request.GET.get("value")
+		type = request.POST.get("action")
+		value = request.POST.get("value")
 
 		if type[:3] == "can":
 			if type == "can_see_info":
