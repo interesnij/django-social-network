@@ -20,4 +20,16 @@
         </div>
     </div>
 </div>
+{% elif is_staff %}
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="media centered">
+            <a href="{% url 'community_gallery' pk=community.pk %}" class="ajax">
+                <div class="media-body">
+                    <h6 class="content-color-primary mb-0">Добавьте фото</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 {% endif %}
