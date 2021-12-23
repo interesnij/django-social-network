@@ -1363,7 +1363,7 @@ html {
 .article_preview_delete,
 .doc_preview_delete{
   position: absolute;
-  right: 20px;
+  right: 15px;
   padding: 6px;
   background-color: white;
   border-radius: 50%;
@@ -1373,6 +1373,9 @@ html {
   width: 25px;
   border: 1px grey solid;
   z-index: 2
+}
+.photo_preview_delete {
+  top: 12px;
 }
 .list_preview_delete{
   position: absolute;
