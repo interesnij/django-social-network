@@ -245,7 +245,7 @@ class UserVideo(ListView):
 
 
 class ProfileUserView(TemplateView):
-    is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,common_friends_count,common_frends,get_buttons_block = None,None,None,None,None,None,None,None,None,None,None,None
+    is_message_open,is_photo_open,is_post_open,is_friend_open,is_doc_open,is_video_open,is_music_open,is_community_open,is_good_open,template_name,common_friends_count,common_frends,get_buttons_block = None,None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from common.templates import update_activity, get_folder
@@ -275,13 +275,14 @@ class ProfileUserView(TemplateView):
                 self.is_community_open = self.user.is_user_can_see_community(r_user_pk)
                 self.is_friend_open = self.user.is_user_can_see_friend(r_user_pk)
                 self.is_good_open = self.user.is_user_can_see_good(r_user_pk)
+                self.is_message_open = self.user.is_user_can_send_message(r_user_pk)
 
                 if self.user.is_suspended():
                     self.template_name = "generic/u_template/user_suspended.html"
                 elif self.user.is_closed():
                     self.template_name = "generic/u_template/user_closed.html"
                 elif request.user.is_user_manager() or request.user.is_superuser:
-                    self.template_name, self.get_buttons_block = "users/account/staff_user.html", request.user.get_staff_buttons_profile(user_pk)
+                    self.template_name, self.get_buttons_block = "users/account/user.html", request.user.get_staff_buttons_profile(user_pk)
                     if request.user.is_connected_with_user_with_id(user_id=user_pk):
                         request.user.plus_friend_visited(user_pk)
                 elif request.user.is_blocked_with_user_with_id(user_id=user_pk):
@@ -324,5 +325,11 @@ class ProfileUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super(ProfileUserView, self).get_context_data(**kwargs)
-        c['user'],c['get_buttons_block'],c['common_frends'],c['is_photo_open'],c['is_post_open'],c['is_community_open'],c['is_friend_open'],c['is_doc_open'],c['is_video_open'],c['is_music_open'],c['is_good_open'],c['post_list_pk'] = self.user,self.get_buttons_block,self.common_frends,self.is_photo_open,self.is_post_open,self.is_community_open,self.is_friend_open,self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open,self.user.get_selected_post_list_pk()
+        c['user'],c['get_buttons_block'],c['common_frends'],c['is_photo_open'],\
+        c['is_post_open'],c['is_community_open'],c['is_friend_open'],c['is_doc_open'],\
+        c['is_video_open'],c['is_music_open'],c['is_good_open'],c['is_message_open'],\
+        c['post_list_pk'] = self.user,self.get_buttons_block,self.common_frends,\
+        self.is_photo_open,self.is_post_open,self.is_community_open,self.is_friend_open,\
+        self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open,\
+        self.is_message_open,self.user.get_selected_post_list_pk()
         return c
