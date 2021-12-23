@@ -10,6 +10,7 @@
 {% block content %}
 
 <div class="container main-container mt-3" data-pk="{{ list.pk }}" data-type="user_photo_list">
+{% if is_user_can_see_photo_section %}
   <span class="load_block pk_saver" data-pk="{{ user.pk }}">
   <div class="media mt-3" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
     <h5 class="mt-1">
@@ -26,5 +27,8 @@
 
 <div class="row is_paginate is_block_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_photo_list" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ list.pk }}/"></div>
 </span>
+{% else %}
+  {% include 'desctop/generic/centered/private_page.html' %}
+{% endif %}
 </div>
 {% endblock %}

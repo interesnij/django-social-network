@@ -9,7 +9,7 @@
 {% block content %}
 
 <div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_photos">
-
+{% if is_user_can_see_photo_section %}
 <div class="container mt-4">
     {% include 'desctop/users/photos/main_list/lists.html' %}
 </div>
@@ -26,5 +26,8 @@
   <div class="row is_block_paginate is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_photo_list" data-link="/gallery/user/photos/{{ user.pk }}/"></div>
 </div>
 </span>
+{% else %}
+  {% include 'desctop/generic/centered/private_page.html' %}
+{% endif %}
 </div>
 {% endblock %}
