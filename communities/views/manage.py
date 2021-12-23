@@ -51,10 +51,53 @@ class CommunitySectionsOpenView(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.sections = CommunityPrivate2.objects.get(community=self.c)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
-			self.form.save()
-			return HttpResponse ()
+		self.private = CommunityPrivate2.objects.get(community=self.c)
+		if not self.c.is_user_can_see_settings(request.user.pk):
+			return HttpResponse("Кыш отсюда!")
+		type = request.GET.get("action")
+		value = request.GET.get("value")
+		if not request.is_ajax() or value == 5 or value == 6:
+			return HttpResponse(value)
+		if type[:3] == "can":
+			if type == "can_see_info":
+				private.can_see_info = value
+				private.save(update_fields=["can_see_info"])
+			elif type == "can_see_member":
+				private.can_see_member = value
+				private.save(update_fields=["can_see_member"])
+			elif type == "can_send_message":
+				private.can_send_message = value
+				private.save(update_fields=["can_send_message"])
+			elif type == "can_see_post":
+				private.can_see_post = value
+				private.save(update_fields=["can_see_post"])
+			elif type == "can_see_photo":
+				private.can_see_photo = value
+				private.save(update_fields=["can_see_photo"])
+			elif type == "can_see_good":
+				private.can_see_good = value
+				private.save(update_fields=["can_see_good"])
+			elif type == "can_see_video":
+				private.can_see_video = value
+				private.save(update_fields=["can_see_video"])
+			elif type == "can_see_music":
+				private.can_see_music = value
+				private.save(update_fields=["can_see_music"])
+			elif type == "can_see_planner":
+				private.can_see_planner = value
+				private.save(update_fields=["can_see_planner"])
+			elif type == "can_see_doc":
+				private.can_see_doc = value
+				private.save(update_fields=["can_see_doc"])
+			elif type == "can_see_settings":
+				private.can_see_settings = value
+				private.save(update_fields=["can_see_settings"])
+			elif type == "can_see_log":
+				private.can_see_log = value
+				private.save(update_fields=["can_see_log"])
+			elif type == "can_see_stat":
+				private.can_see_stat = value
+				private.save(update_fields=["can_see_stat"])
 		return super(CommunitySectionsOpenView,self).post(request,*args,**kwargs)
 
 
