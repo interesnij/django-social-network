@@ -13,7 +13,7 @@ class FrendsListView(ListView):
 		if request.user.is_authenticated:
 			self.template_name = get_template_user(self.user, "frends/frends/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user(self.user, "frends/frends/anon_frends.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user(self.user, "frends/frends/anon_frends.html", request.META['HTTP_USER_AGENT'])
 		return super(FrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -33,7 +33,7 @@ class OnlineFrendsListView(ListView):
 		if request.user.is_authenticated:
 			self.template_name = get_template_user(self.user, "frends/frends_online/", "frends.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.template_name = get_template_anon_user(self.user, "frends/frends_online/anon_frends.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user(self.user, "frends/frends_online/anon_frends.html", request.META['HTTP_USER_AGENT'])
 		return super(OnlineFrendsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
