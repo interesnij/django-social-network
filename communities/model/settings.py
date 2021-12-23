@@ -117,7 +117,6 @@ class CommunityPrivate2(models.Model):
 
     PERM = (
         (ALL_CAN, 'Все пользователи'),
-        (ADMINS, 'Админы'),
         (MEMBERSHIPS, 'Подписчики'),
         (CREATOR, 'Создатель'),
         (MEMBERSHIPS_BUT, 'Подписчики, кроме'),
