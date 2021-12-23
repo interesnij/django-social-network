@@ -9,82 +9,19 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто приглашает участников</label>
            <span class="col-md-6">
-             {% if chat.can_add_members == 1 %}
-             <input class="input" name="can_add_members" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_members == 2 %}
-             <input class="input" name="can_add_members" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_members == 3 %}
-             <input class="input" name="can_add_members" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_members == 4 %}
-             <input class="input" name="can_add_members" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
-               {% for object in chat.get_add_in_chat_exclude_users %}
+             <a class="menu_drop_2 pointer">{{ chat.get_can_add_members_display }}</a>
+             <span class="collector">
+               {% if chat.can_add_members == 4 and chat.get_can_add_members_exclude_users %}:
+               {% for object in chat.get_can_add_members_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
-             </span>
-
-             {% elif chat.can_add_members == 5 %}
-             <input class="input" name="can_add_members" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
-               {% for object in chat.get_add_in_chat_include_users %}
-                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
-             </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_add_members" style="top: 30px;">
-               {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
-             </div>
-           </span>
-       </div>
-
-       <div class="row mb-1 form_group_flex">
-           <label class="col-md-6">Кто редактирует информацию</label>
-           <span class="col-md-6">
-             {% if chat.can_edit_info == 1 %}
-             <input class="input" name="can_edit_info" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_edit_info == 2 %}
-             <input class="input" name="can_edit_info" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_edit_info == 3 %}
-             <input class="input" name="can_edit_info" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_edit_info == 4 %}
-             <input class="input" name="can_edit_info" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
-               {% for object in chat.get_can_edit_info_exclude_users %}
+               {% elif chat.can_add_members == 5 and chat.get_can_add_members_include_users %}:
+               {% for object in chat.get_can_add_members_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
+               {% endif %}
              </span>
-
-             {% elif chat.can_edit_info == 5 %}
-             <input class="input" name="can_edit_info" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
-               {% for object in chat.get_can_edit_info_include_users %}
-                 <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
-             </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_edit_info" style="top: 30px;">
+             <div class="dropdown-menu border" data-action="can_add_members" style="top: 30px;">
                {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
              </div>
            </span>
@@ -93,40 +30,19 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто закрепляет сообщения</label>
            <span class="col-md-6">
-             {% if chat.can_fix_item == 1 %}
-             <input class="input" name="can_fix_item" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_fix_item == 2 %}
-             <input class="input" name="can_fix_item" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_fix_item == 3 %}
-             <input class="input" name="can_fix_item" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_fix_item == 4 %}
-             <input class="input" name="can_fix_item" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
+             <a class="menu_drop_2 pointer">{{ chat.get_can_fix_item_display }}</a>
+             <span class="collector">
+               {% if chat.can_fix_item == 4 and chat.get_can_fix_item_exclude_users %}:
                {% for object in chat.get_can_fix_item_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
-             </span>
-
-             {% elif chat.can_fix_item == 5 %}
-             <input class="input" name="can_fix_item" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
+               {% elif chat.can_fix_item == 5 and chat.get_can_fix_item_include_users %}:
                {% for object in chat.get_can_fix_item_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
+               {% endfor %}
+               {% endif %}
              </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_fix_item" style="top: 30px;">
+             <div class="dropdown-menu border" data-action="can_fix_item" style="top: 30px;">
                {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
              </div>
            </span>
@@ -135,82 +51,40 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто назначает админов</label>
            <span class="col-md-6">
-             {% if chat.can_add_admin == 1 %}
-             <input class="input" name="can_add_admin" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_admin == 2 %}
-             <input class="input" name="can_add_admin" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_admin == 3 %}
-             <input class="input" name="can_add_admin" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_admin == 4 %}
-             <input class="input" name="can_add_admin" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
+             <a class="menu_drop_2 pointer">{{ chat.get_can_add_admin_display }}</a>
+             <span class="collector">
+               {% if chat.can_add_admin == 4 and chat.get_can_add_admin_exclude_users %}:
                {% for object in chat.get_can_add_admin_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
-             </span>
-
-             {% elif chat.can_add_admin == 5 %}
-             <input class="input" name="can_add_admin" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
+               {% elif chat.can_add_admin == 5 and chat.get_can_add_admin_include_users %}:
                {% for object in chat.get_can_add_admin_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
+               {% endfor %}
+               {% endif %}
              </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_add_admin" style="top: 30px;">
-               {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
+             <div class="dropdown-menu border" data-action="can_add_admin" style="top: 30px;">
+               {% include 'desctop/chat/chat/info/admin_perm_dropdown.html' %}
              </div>
            </span>
        </div>
 
        <div class="row mb-1 form_group_flex">
-           <label class="col-md-6">Кто упоминает о беседе</label>
+           <label class="col-md-6">Кто упоминает о чате</label>
            <span class="col-md-6">
-             {% if chat.can_mention == 1 %}
-             <input class="input" name="can_mention" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_mention == 2 %}
-             <input class="input" name="can_mention" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_mention == 3 %}
-             <input class="input" name="can_mention" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_mention == 4 %}
-             <input class="input" name="can_mention" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
+             <a class="menu_drop_2 pointer">{{ chat.get_can_mention_display }}</a>
+             <span class="collector">
+               {% if chat.can_mention == 4 and chat.get_can_mention_exclude_users %}:
                {% for object in chat.get_can_mention_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
-             </span>
-
-             {% elif chat.can_mention == 5 %}
-             <input class="input" name="can_mention" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
+               {% elif chat.can_mention == 5 and chat.get_can_mention_include_users %}:
                {% for object in chat.get_can_mention_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
+               {% endfor %}
+               {% endif %}
              </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_mention" style="top: 30px;">
+             <div class="dropdown-menu border" data-action="can_mention" style="top: 30px;">
                {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
              </div>
            </span>
@@ -219,40 +93,19 @@
        <div class="row mb-1 form_group_flex">
            <label class="col-md-6">Кто меняет дизайн</label>
            <span class="col-md-6">
-             {% if chat.can_add_design == 1 %}
-             <input class="input" name="can_add_design" type="hidden" value="1" />
-             <a class="menu_drop_2 pointer">Все участники</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_design == 2 %}
-             <input class="input" name="can_add_design" type="hidden" value="2" />
-             <a class="menu_drop_2 pointer">Создатель</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_design == 3 %}
-             <input class="input" name="can_add_design" type="hidden" value="3" />
-             <a class="menu_drop_2 pointer">Создатель и админы</a>
-             <span class="collector"></span>
-
-             {% elif chat.can_add_design == 4 %}
-             <input class="input" name="can_add_design" type="hidden" value="4" />
-             <a class="menu_drop_2 pointer underline">Участники, кроме</a>
-             <span class="collector">:
+             <a class="menu_drop_2 pointer">{{ chat.get_can_add_design_display }}</a>
+             <span class="collector">
+               {% if chat.can_add_design == 4 and chat.get_can_add_design_exclude_users %}:
                {% for object in chat.get_can_add_design_exclude_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
                {% endfor %}
-             </span>
-
-             {% elif chat.can_add_design == 5 %}
-             <input class="input" name="can_add_design" type="hidden" value="5" />
-             <a class="menu_drop_2 pointer underline">Некоторые участники</a>
-             <span class="collector">:
+               {% elif chat.can_add_design == 5 and chat.get_can_add_design_include_users %}:
                {% for object in chat.get_can_add_design_include_users %}
                  <a href="{{ object.get_link }}" target="_blank">{{ object.get_full_name }}</a>{% if not forloop.last %}, {% endif %}
-                 {% endfor %}
+               {% endfor %}
+               {% endif %}
              </span>
-             {% endif %}
-             <div class="dropdown-menu" data-action="can_add_design" style="top: 30px;">
+             <div class="dropdown-menu border" data-action="can_add_design" style="top: 30px;">
                {% include 'desctop/chat/chat/info/perm_dropdown.html' %}
              </div>
            </span>

@@ -530,7 +530,7 @@ class UserChatEdit(TemplateView):
 		from common.templates import get_detect_platform_template
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if self.chat.is_user_can_edit_info(request.user.pk):
+		if self.chat.is_user_can_see_settings(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/settings.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatEdit,self).get(request,*args,**kwargs)
 
@@ -546,7 +546,7 @@ class UserChatEdit(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
-		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_edit_info(request.user.pk):
+		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_see_settings(request.user.pk):
 			chat = self.form.save(commit=False)
 			chat.edit_chat(name=chat.name,description=chat.description,image=request.FILES.get('image'),)
 			return HttpResponse()
@@ -565,7 +565,7 @@ class UserChatPrivate(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 
-		if self.chat.is_user_can_edit_info(request.user.pk):
+		if self.chat.is_user_can_see_settings(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/private.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatPrivate,self).get(request,*args,**kwargs)
 
@@ -579,7 +579,7 @@ class UserChatPrivate(TemplateView):
 		from django.http import HttpResponse
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and self.chat.is_user_can_edit_info(request.user.pk):
+		if request.is_ajax() and self.chat.is_user_can_see_settings(request.user.pk):
 			self.type = request.GET.get("action")
 			self.value = request.GET.get("value")
 			if self.value == 6 or self.value == 5:
@@ -587,8 +587,6 @@ class UserChatPrivate(TemplateView):
 
 			if self.type == "can_add_members":
 				self.chat.can_add_members = self.value
-			elif self.type == "can_edit_info":
-				self.chat.can_edit_info = self.value
 			elif self.type == "can_fix_item":
 				self.chat.can_fix_item = self.value
 			elif self.type == "can_add_admin":
@@ -620,9 +618,6 @@ class UserChatIncludeUsers(ListView):
 		if self.type == "can_add_members":
 			self.users = self.chat.get_add_in_chat_include_users()
 			self.text = "приглашать участников в чат"
-		elif self.type == "can_edit_info":
-			self.users = self.chat.get_can_edit_info_include_users()
-			self.text = "менять настройки чата"
 		elif self.type == "can_fix_item":
 			self.users = self.chat.get_can_fix_item_include_users()
 			self.text = "закреплять сообщения в чате"
@@ -641,7 +636,7 @@ class UserChatIncludeUsers(ListView):
 		elif self.type == "can_see_log":
 			self.users = self.chat.get_can_see_log_include_users()
 			self.text = "видеть журнал действий"
-		if self.chat.is_user_can_edit_info(request.user.pk):
+		if self.chat.is_user_can_see_settings(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/include_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatIncludeUsers,self).get(request,*args,**kwargs)
 
@@ -677,9 +672,6 @@ class UserChatExcludeUsers(ListView):
 		if self.type == "can_add_members":
 			self.users = self.chat.get_add_in_chat_exclude_users()
 			self.text = "приглашать участников в чат"
-		elif self.type == "can_edit_info":
-			self.users = self.chat.get_can_edit_info_exclude_users()
-			self.text = "менять настройки чата"
 		elif self.type == "can_fix_item":
 			self.users = self.chat.get_can_fix_item_exclude_users()
 			self.text = "закреплять сообщения в чате"
@@ -698,7 +690,7 @@ class UserChatExcludeUsers(ListView):
 		elif self.type == "can_see_log":
 			self.users = self.chat.get_can_see_log_exclude_users()
 			self.text = "видеть журнал действий"
-		if self.chat.is_user_can_edit_info(request.user.pk):
+		if self.chat.is_user_can_see_settings(request.user.pk):
 			self.template_name = get_detect_platform_template("chat/chat/info/exclude_users.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserChatExcludeUsers,self).get(request,*args,**kwargs)
 
