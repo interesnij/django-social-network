@@ -20,4 +20,7 @@ from communities.models import Community
 
 
 for community in Community.objects.all():
-    CommunityPrivate2.objects.create(community=community)
+    try:
+        CommunityPrivate2.objects.create(community=community)
+    except:
+        pass
