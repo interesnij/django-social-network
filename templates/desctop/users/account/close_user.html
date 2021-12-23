@@ -22,9 +22,12 @@
                   </a>
               </div>
               {% include get_buttons_block %}
-              <span class="centered">
-                <span class="btn btn-sm border user_send_page_message" data-pk="{{ user.pk }}" style="width: -webkit-fill-available">Написать сообщение</span>
-              </span>
+
+              {% if is_message_open %}
+                <span class="centered">
+                  <span class="btn btn-sm border user_send_page_message" style="width: -webkit-fill-available" data-pk="{{ user.pk }}">Написать сообщение</span>
+                </span>
+              {% endif %} 
           </div>
       </div>
 
