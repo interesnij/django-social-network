@@ -597,6 +597,10 @@ class UserChatPrivate(TemplateView):
 				self.chat.can_mention = self.value
 			elif self.type == "can_add_design":
 				self.chat.can_add_design = self.value
+			elif self.type == "can_see_settings":
+				self.chat.can_see_settings = self.value
+			elif self.type == "can_see_log":
+				self.chat.can_see_log = self.value
 			self.chat.save()
 			return HttpResponse()
 		else:
