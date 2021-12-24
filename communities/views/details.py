@@ -5,7 +5,10 @@ from common.templates import get_template_anon_community_list, get_template_comm
 
 
 class CommunityDetail(TemplateView):
-    template_name,common_friends,common_friends_count,is_photo_open,is_post_open,is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open,is_message_open,is_settings_open,is_stat_open,is_staff = None,None,None,None,None,None,None,None,None,None,None,None,None,None
+    template_name,common_friends,common_friends_count,is_photo_open,is_post_open,\
+    is_member_open,is_doc_open,is_video_open,is_music_open,is_good_open,is_message_open,\
+    is_settings_open,is_stat_open,is_staff,is_manager = None,\
+    None,None,None,None,None,None,None,None,None,None,None,None,None,None
 
     def get(self,request,*args,**kwargs):
         from common.templates import update_activity, get_folder
