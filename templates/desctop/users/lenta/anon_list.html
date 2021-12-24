@@ -1,6 +1,6 @@
+<span class="post_container">
 {% if is_user_can_see_post_section %}
 
-<span class="post_container">
 {% if fix_list.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
@@ -54,7 +54,8 @@
         {% endif %}
     </span>
   </span>
-</span>
+
 {% else %}
     {% include 'desctop/generic/centered/private_post.html' %}
 {% endif %}
+</span>
