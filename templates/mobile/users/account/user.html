@@ -67,9 +67,8 @@
     {% include 'mobile/users/profile/gallery.html' %}
   {% endif %}
 
-  {% if is_post_open %}
-    <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
-  {% endif %}
+  <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
+
 </div>
 
 {% load get_key %}
