@@ -422,7 +422,7 @@ class CommunityPrivateExcludeUsers(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.community.get_members()
+		return self.community.get_members(self.kwargs["pk"])
 
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
@@ -488,7 +488,7 @@ class CommunityPrivateIncludeUsers(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.community.get_members()
+		return self.community.get_members(self.kwargs["pk"])
 
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
