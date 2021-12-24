@@ -249,7 +249,7 @@ button {
   max-height: 200px
 }
 .border_red {
-  border: 1px #FF0000 solid
+  border: 1px #FF0000 solid !important
 }
 
 .small_badge {
