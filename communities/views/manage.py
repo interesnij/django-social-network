@@ -429,6 +429,7 @@ class CommunityPrivateExcludeUsers(ListView):
 		from django.http import HttpResponse
 
 		if request.is_ajax():
+			self.community = Community.objects.get(pk=self.kwargs["pk"])
 			self.community.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
 		return HttpResponse('not ok')
@@ -496,6 +497,7 @@ class CommunityPrivateIncludeUsers(ListView):
 		from django.http import HttpResponse
 
 		if request.is_ajax():
+			self.community = Community.objects.get(pk=self.kwargs["pk"])
 			self.community.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
 		return HttpResponse('not ok')
