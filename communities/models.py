@@ -1518,7 +1518,7 @@ class CommunityMemberPerm(models.Model):
     user = models.OneToOneField(CommunityMembership, null=True, blank=True, on_delete=models.CASCADE, related_name='community_ie_settings', verbose_name="Подписчик сообщества")
 
     can_see_info = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит информацию профиля")
-    can_see_members = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит подписчиков")
+    can_see_member = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит подписчиков")
     can_send_message = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто пишет сообщения")
     can_see_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит документы и списки")
     can_see_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит музыку и списки")
