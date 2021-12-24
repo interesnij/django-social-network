@@ -648,11 +648,9 @@ class Community(models.Model):
             trending_communities_query.add(Q(categories__name=category_name), Q.AND)
         return trending_communities_query
 
-    @classmethod
-    def get_members(cls, community_pk):
+    def get_members(self):
         from users.models import User
-        community_members_query = Q(communities_memberships__community__pk=community_pk)
-        return User.objects.filter(community_members_query)
+        return User.objects.filter(communities_memberships__community__pk=community_pk)
 
     @classmethod
     def get_administrators(cls, community_pk):
