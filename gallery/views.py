@@ -23,23 +23,13 @@ class PhotoDetail(TemplateView):
 		self.list = self.photo.list
 		if self.photo.community:
 			self.community = self.photo.community
-			if request.user.is_administrator_of_community(self.community.pk):
-				from gallery.forms import PhotoDescriptionForm
-				self.photos = self.list.get_staff_items()
-				self.user_form = PhotoDescriptionForm(instance=self.photo)
-			else:
-				self.photos = self.list.get_items()
+			self.photos = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			if request.user.pk == self.photo.creator.pk:
-				from gallery.forms import PhotoDescriptionForm
-				self.photos = self.list.get_staff_items()
-				self.user_form = PhotoDescriptionForm(instance=self.photo)
-			else:
-				self.photos = self.list.get_items()
+			self.photos = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

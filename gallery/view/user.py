@@ -70,10 +70,6 @@ class UserPhotosAlbumList(ListView):
                 self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if self.user == request.user:
-            self.photo_list = self.list.get_staff_items()
-        else:
-            self.photo_list = self.list.get_items()
         return super(UserPhotosAlbumList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -83,7 +79,7 @@ class UserPhotosAlbumList(ListView):
         return context
 
     def get_queryset(self):
-        return self.photo_list
+        return self.list.get_items()
 
 class UserCommentPhoto(TemplateView):
     template_name = None

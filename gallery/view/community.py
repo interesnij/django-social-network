@@ -64,10 +64,6 @@ class CommunityAlbumPhotosList(ListView):
                 self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
-        if request.user.is_authenticated and request.user.is_staff_of_community(self.community.pk):
-            self.photo_list = self.list.get_staff_items()
-        else:
-            self.photo_list = self.list.get_items()
         return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -77,7 +73,7 @@ class CommunityAlbumPhotosList(ListView):
         return context
 
     def get_queryset(self):
-        return self.photo_list
+        return self.list.get_items()
 
 
 class GetCommunityPhoto(TemplateView):

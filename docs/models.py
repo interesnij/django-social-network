@@ -226,8 +226,6 @@ class DocsList(models.Model):
     def is_not_empty(self):
         return self.docs_list.exclude(type__contains="_").values("pk").exists()
 
-    def get_staff_items(self):
-        return self.docs_list.exclude(type__contains="_")
     def get_items(self):
         return self.docs_list.filter(type="PUB")
     def get_manager_items(self):

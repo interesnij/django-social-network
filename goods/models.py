@@ -353,8 +353,6 @@ class GoodList(models.Model):
 
 	def get_items(self):
 		return self.good_list.filter(type="PUB")
-	def get_staff_items(self):
-		return self.good_list.filter(Q(type="PUB")|Q(type="PRI"))
 	def count_items(self):
 		try:
 			return self.good_list.filter(type="PUB").values("pk").count()
