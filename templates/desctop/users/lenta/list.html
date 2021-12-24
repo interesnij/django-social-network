@@ -1,3 +1,4 @@
+{% if is_user_can_see_post_section %}
 
 <span class="post_container">
 
@@ -74,3 +75,6 @@
     </span>
   </span>
   </span>
+  {% else %}
+      {% include 'desctop/generic/centered/private_post.html' %}
+  {% endif %}
