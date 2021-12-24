@@ -139,3 +139,12 @@ on('#ajax', 'click', '.add_staff_options', function() {
     document.getElementById('load_staff_window').innerHTML = "")
   };
 });
+
+on('#ajax', 'click', '#add_community_exclude_users_btn', function() {
+  form = this.parentElement.parentElement;
+  post_include_exclude_users(form, '/communities/manage/load_exclude_users/' + form.getAttribute("data-pk") + "/")
+});
+on('#ajax', 'click', '#add_community_include_users_btn', function() {
+  form = this.parentElement.parentElement;
+  post_include_exclude_users(form, '/communities/manage/load_include_users/' + form.getAttribute("data-pk") + "/")
+});
