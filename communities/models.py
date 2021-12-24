@@ -650,7 +650,7 @@ class Community(models.Model):
 
     def get_members(self):
         from users.models import User
-        return User.objects.filter(communities_memberships__community_pk=self.pk)
+        return User.objects.filter(communities_memberships__community_id=self.pk)
 
     @classmethod
     def get_administrators(cls, community_pk):
