@@ -419,6 +419,7 @@ class CommunityPrivateExcludeUsers(ListView):
 		context["users"] = self.users
 		context["text"] = self.text
 		context["type"] = self.type
+		context["community"] = self.community
 		return context
 
 	def get_queryset(self):
@@ -485,6 +486,7 @@ class CommunityPrivateIncludeUsers(ListView):
 		context["users"] = self.users
 		context["text"] = self.text
 		context["type"] = self.type
+		context["community"] = self.community
 		return context
 
 	def get_queryset(self):
