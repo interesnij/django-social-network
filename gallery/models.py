@@ -365,8 +365,6 @@ class PhotoList(models.Model):
 
     def get_items(self):
         return self.photo_list.filter(type="PUB")
-    def get_staff_items(self):
-        return self.photo_list.exclude(type__contains="_")
     def get_6_items(self):
         return self.photo_list.filter(type="PUB")[:6]
     def get_6_staff_items(self):

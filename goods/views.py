@@ -82,20 +82,7 @@ class LoadGood(TemplateView):
 		self.good = Good.objects.get(uuid=self.kwargs["uuid"])
 		self.list = self.good.list
 
-		if self.list.community:
-			if request.user.is_authenticated:
-				if request.user.is_administrator_of_community(self.list.pk):
-					self.goods = self.list.get_staff_items()
-				else:
-					self.goods = self.list.get_items()
-			else:
-				self.goods = self.list.get_items()
-		else:
-			if request.user.pk == self.list.creator.pk:
-				self.goods = self.list.get_staff_items()
-			else:
-				self.goods = self.list.get_items()
-
+		self.goods = self.list.get_items()
 		if self.good.community:
 			self.community = self.good.community
 			if request.user.is_authenticated:
@@ -150,21 +137,14 @@ class GoodDetail(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.good = Good.objects.get(pk=self.kwargs["pk"])
 		self.list = self.good.list
+		self.goods = self.list.get_items()
 		if self.good.community:
 			self.community = self.good.community
-			if request.user.is_administrator_of_community(self.community.pk):
-				self.goods = self.list.get_staff_items()
-			else:
-				self.goods = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_community_item(self.good, "goods/c_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.good, "goods/c_good/anon_good.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			if request.user.pk == self.good.creator.pk:
-				self.goods = self.list.get_staff_items()
-			else:
-				self.goods = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_item(self.good, "goods/u_good/", "good.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

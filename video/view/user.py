@@ -14,10 +14,6 @@ class UserVideoList(ListView):
 	def get(self,request,*args,**kwargs):
 		self.video = Video.objects.get(pk=self.kwargs["pk"])
 		self.list = self.video.list
-		if self.video.creator.pk == request.user.pk:
-			self.video_list = self.list.get_staff_items()
-		else:
-			self.video_list = self.list.get_items()
 
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.video, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -32,7 +28,7 @@ class UserVideoList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.video_list
+		return self.list.get_items()
 
 
 class UserPostVideoList(TemplateView):

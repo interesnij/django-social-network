@@ -19,10 +19,6 @@ class CommunityVideoList(ListView):
 			self.template_name = get_template_community_item(self.post, "video/c_video_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			self.template_name = get_template_anon_community_item(self.post, "video/c_video_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		if request.user.is_staff_of_community(self.community.pk):
-			self.video_list = self.list.get_staff_items()
-		else:
-			self.video_list = self.list.get_items()
 		return super(CommunityVideoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -32,7 +28,7 @@ class CommunityVideoList(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.video_list
+		return self.list.get_items()
 
 
 class CommunityVideoDetail(TemplateView):

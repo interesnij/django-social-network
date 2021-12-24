@@ -536,10 +536,6 @@ class PostsList(models.Model):
     def is_item_in_list(self, item_id):
         return self.post_list.filter(pk=item_id).values("pk").exists()
 
-    def get_staff_items(self):
-        query = Q(list=self)
-        query.add(Q(Q(type="PUB")|Q(type="PRI")), Q.AND)
-        return self.post_list.select_related('creator', 'community').only('creator__id', 'community__id', 'created').filter(query)
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="PUB")
     def get_fix_items(self):

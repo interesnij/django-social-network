@@ -25,22 +25,15 @@ class LoadPostsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		self.posts = self.list.get_items()
 		if self.list.community:
 			self.community = self.list.community
 			if request.user.is_authenticated:
-				if request.user.is_administrator_of_community(self.community.pk):
-					self.posts = self.list.get_staff_items()
-				else:
-					self.posts = self.list.get_items()
 				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.posts = self.list.get_items()
 				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			if request.user.pk == self.list.creator.pk:
-				self.posts = self.list.get_staff_items()
-			else:
-				self.posts = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
@@ -63,20 +56,7 @@ class LoadPost(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.list = self.post.list
-
-		if self.list.community:
-			if request.user.is_authenticated:
-				if request.user.is_administrator_of_community(self.list.pk):
-					self.posts = self.list.get_staff_items()
-				else:
-					self.posts = self.list.get_items()
-			else:
-				self.posts = self.list.get_items()
-		else:
-			if request.user.pk == self.list.creator.pk:
-				self.posts = self.list.get_staff_items()
-			else:
-				self.posts = self.list.get_items()
+		self.posts = self.list.get_items()
 
 		if self.post.community:
 			self.community = self.post.community
@@ -108,17 +88,7 @@ class LoadFixPost(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.list = self.post.list
-
-		if self.list.community:
-			if request.user.is_administrator_of_community(self.list.pk):
-				self.posts = self.list.get_staff_items()
-			else:
-				self.posts = self.list.get_items()
-		else:
-			if request.user.pk == self.list.creator.pk:
-				self.posts = self.list.get_staff_items()
-			else:
-				self.posts = self.list.get_items()
+		self.posts = self.list.get_items()
 
 		if self.post.community:
 			self.community = self.post.community

@@ -340,8 +340,6 @@ class VideoList(models.Model):
     def is_not_empty(self):
         return self.video_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
 
-    def get_staff_items(self):
-        return self.video_list.filter(Q(type="PUB")|Q(type="PRI"))
     def get_items(self):
         return self.video_list.filter(type="PUB")
     def get_2_items(self):

@@ -282,9 +282,6 @@ class MusicList(models.Model):
 
     def is_not_empty(self):
         return self.playlist.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
-
-    def get_staff_items(self):
-        return self.playlist.filter(Q(type="PUB")|Q(type="PRI"))
     def get_items(self):
         return self.playlist.filter(type="PUB")
     def get_6_items(self):
