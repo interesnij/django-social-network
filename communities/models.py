@@ -7,6 +7,7 @@ from communities.helpers import upload_to_community_avatar_directory, upload_to_
 from imagekit.models import ProcessedImageField
 from common.utils import try_except
 from django.contrib.postgres.indexes import BrinIndex
+from users.models import User
 
 
 class CommunityCategory(models.Model):
