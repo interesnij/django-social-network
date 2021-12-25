@@ -22,15 +22,12 @@
                 Приватность
               </span>
           {% endif %}
-          {{ is_can_see_log }}
 
           {% if is_can_see_log %}
               <span class="mb-0 user_chat_logs pointer">
               |  Журнал действий
               </span>
           {% endif %}
-          |
-          <p class="mb-0">{{ chat.get_type_display }}</p>
         </div>
       </div>
   </div>
