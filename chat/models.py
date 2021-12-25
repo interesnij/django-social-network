@@ -39,7 +39,7 @@ class Chat(models.Model):
     can_fix_item = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто закрепляет сообщения")
     can_mention = models.PositiveSmallIntegerField(choices=ALL_PERM, default=1, verbose_name="Кто упоминает о беседе")
     can_add_admin = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто назначает админов")
-    can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=3, verbose_name="Кто меняет дизайн")
+    can_add_design = models.PositiveSmallIntegerField(choices=ALL_PERM, default=2, verbose_name="Кто меняет дизайн")
     can_see_settings = models.PositiveSmallIntegerField(choices=ALL_PERM, default=2, verbose_name="Кто видит настройки")
     can_see_log = models.PositiveSmallIntegerField(choices=ALL_PERM, default=2, verbose_name="Кто видит логи")
 
@@ -210,9 +210,7 @@ class Chat(models.Model):
             return True
         return False
     def is_user_can_add_design(self, user_id):
-        if self.can_add_design == self.ALL_CAN:
-            return True
-        elif self.can_add_design == self.CREATOR and self.creator.pk == user_id:
+        if self.can_add_design == self.CREATOR and self.creator.pk == user_id:
             return True
         elif self.can_add_design == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
@@ -220,10 +218,9 @@ class Chat(models.Model):
             return True
         elif self.can_add_design == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 5, 1):
             return True
+        return False
     def is_user_can_see_settings(self, user_id):
-        if self.can_see_settings == self.ALL_CAN:
-            return True
-        elif self.can_see_settings == self.CREATOR and self.creator.pk == user_id:
+        if self.can_see_settings == self.CREATOR and self.creator.pk == user_id:
             return True
         elif self.can_see_settings == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
@@ -231,10 +228,9 @@ class Chat(models.Model):
             return True
         elif self.can_see_settings == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 6, 1):
             return True
+        return False
     def is_user_can_see_log(self, user_id):
-        if self.can_see_log == self.ALL_CAN:
-            return True
-        elif self.can_see_log == self.CREATOR and self.creator.pk == user_id:
+        if self.can_see_log == self.CREATOR and self.creator.pk == user_id:
             return True
         elif self.can_see_log == self.CREATOR_ADMINS and user_id in self.get_admins_ids():
             return True
@@ -242,6 +238,7 @@ class Chat(models.Model):
             return True
         elif self.can_see_log == self.SOME_MEMBERS and self.get_special_perm_for_user(user_id, 7, 1):
             return True
+        return False
 
 
     def get_special_perm_for_user(self, user_id, type, value):
