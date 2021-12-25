@@ -161,13 +161,16 @@ function case_u_message_create(chat_id, message_uuid, beep) {
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
   console.log("Вы не в сообщениях");
-      chats = document.body.querySelector(".new_unread_chats");
-      chats.querySelector(".badge-success") ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
-      count += 1;
-      chats.classList.add("badge-success");
-      chats.innerHTML = "";
-      chats.innerHTML = count
   };
+  // добавим единичку к счетчику на панели, а если пользователь на странице чата
+  // то добавим программу, которая прочитает сообщение и на единичку убавит счетчик на панели
+  chats = document.body.querySelector(".new_unread_chats");
+  chats.querySelector(".tab-badge") ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+  count += 1;
+  chats.classList.add("badge-success", "tab-badge");
+  chats.innerHTML = "";
+  chats.innerHTML = count;
+
   if (beep) {
     audio = new Audio('/static/audio/apple/message.mp3');
     audio.volume = 0.4;

@@ -125,7 +125,7 @@ class LoadUserChatMessage(TemplateView):
 
 class LoadUserMessage(TemplateView):
 	""" Отрисовываем новое сообщение для всех участников чата, кроме текущего (это фильтруем в socket.js) - он его и так увидит сразу.
-		Отрисовываем на странице чата.
+		Отрисовываем на странице всех чатов.
 	"""
 	template_name = None
 
@@ -135,46 +135,12 @@ class LoadUserMessage(TemplateView):
 
 		self.message = Message.objects.get(uuid=self.kwargs["uuid"])
 		self.chat = self.message.chat
-		first_message, creator_figure, user_id, self.template_name = self.chat.get_first_message(request.user.pk), '', request.user.pk, get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
-		if self.chat.is_private():
-			member = self.chat.get_chat_member(user_id)
-			if self.chat.image:
-				figure = '<figure><img src="' + self.chat.image.url + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-			elif member.get_avatar():
-				figure = '<figure><img src="' + member.get_avatar() + '" style="border-radius:50px;width:50px;" alt="image"></figure>'
-			else:
-				figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
-			if self.chat.name:
-				chat_name = self.chat.name
-			else:
-				chat_name = member.get_full_name()
-			if member.get_online():
-				status = ' <span class="status bg-success"></span>'
-			else:
-				status = ''
-			if first_message.creator.id == user_id:
-				creator_figure = '<span class="underline">Вы:</span> '
-			media_body = '<div class="media-body"><h5 class="time-title mb-0">{}{}<small class="float-right text-muted">{}</small></h5><p class="mb-0" style="white-space: nowrap;">{}{}</p></div>'.format(chat_name, status, first_message.get_created(),creator_figure,first_message.get_preview_text())
-			self.block = '<div class="media">{}{}{}</div>'.format(figure, media_body, self.chat.get_unread_count_message(user_id))
-		elif self.chat.is_group():
-			if self.chat.image:
-				figure = '<figure><img src="' + self.chat.image.url + '"style="border-radius:50px;width:50px;" alt="image"></figure>'
-			else:
-				figure = '<figure><img src="/static/images/group_chat.jpg" style="border-radius:50px;width:50px;" alt="image"></figure>'
-			if self.chat.name:
-				chat_name = self.chat.name
-			else:
-				chat_name = "Групповой чат"
-			if first_message.creator.id == user_id:
-				creator_figure = '<span class="underline">Вы:</span> '
-			media_body = '<div class="media-body"><h5 class="time-title mb-0">' + chat_name + '<small class="float-right text-muted">' + first_message.get_created() + '</small></h5><p class="mb-0" style="white-space: nowrap;">' + creator_figure + first_message.get_preview_text() + '</p></div>'
-			self.block = '<div class="media">' + figure + media_body + self.chat.get_unread_count_message(user_id) + '</div>'
+		self.template_name = get_my_template("chat/message/load_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(LoadUserMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(LoadUserMessage,self).get_context_data(**kwargs)
 		context["chat"] = self.chat
-		context["block"] = str(self.block)
 		return context
 
 
