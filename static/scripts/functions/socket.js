@@ -252,6 +252,7 @@ event.creator_id != request_user_id
         }
         else if (event.name == "u_message_typed"){
           console.log(event.recipient_ids);
+          console.log(request_user_id);
           console.log(event.recipient_ids.indexOf( request_user_id ) != -1);
           if (event.recipient_ids.indexOf( request_user_id ) != -1){
             case_user_chat_typed(event.chat_id, event.user_name)
