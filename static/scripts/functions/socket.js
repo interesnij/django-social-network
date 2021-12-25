@@ -105,6 +105,15 @@ function case_c_photo_repost_notify(uuid) {
     new Audio('/static/audio/apple/nota.mp3').play();
 };
 
+function plus_1_badge_message() {
+  chats = document.body.querySelector(".new_unread_chats");
+  chats.querySelector(".tab-badge") ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+  count += 1;
+  chats.classList.add("badge-success", "tab-badge");
+  chats.innerHTML = "";
+  chats.innerHTML = count;
+}
+
 function case_u_post_create(uuid) {
   if (document.body.querySelector(".pk_saver") && document.body.querySelector(".pk_saver").getAttribute('data-pk') !=request_user_id) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -133,6 +142,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
 
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+          plus_1_badge_message();
           lenta = document.body.querySelector('.is_paginate');
           elem = link_.responseText;
           new_post = document.createElement("span");
@@ -161,15 +171,10 @@ function case_u_message_create(chat_id, message_uuid, beep) {
 } else {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
   console.log("Вы не в сообщениях");
+  plus_1_badge_message();
   };
   // добавим единичку к счетчику на панели, а если пользователь на странице чата
   // то добавим программу, которая прочитает сообщение и на единичку убавит счетчик на панели
-  chats = document.body.querySelector(".new_unread_chats");
-  chats.querySelector(".tab-badge") ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
-  count += 1;
-  chats.classList.add("badge-success", "tab-badge");
-  chats.innerHTML = "";
-  chats.innerHTML = count;
 
   if (beep) {
     audio = new Audio('/static/audio/apple/message.mp3');

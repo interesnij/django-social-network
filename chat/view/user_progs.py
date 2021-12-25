@@ -180,6 +180,7 @@ class UserSaveDraftMessage(View):
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST)
 		message = form_post.save(commit=False)
 		Message.save_draft_message(chat=chat,creator=request.user,text=message.text,parent=request.POST.get('parent'),attach=request.POST.getlist('attach_items'), transfer=request.POST.getlist('transfer'),)
+		chat.read_messages(request.user.pk)
 		return HttpResponse()
 
 class UserMessageEdit(TemplateView):
