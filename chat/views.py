@@ -18,8 +18,7 @@ class ChatsListView(ListView):
 		return context
 
 	def get_queryset(self):
-		chats = self.user.get_all_chats()
-		return chats
+		return self.user.get_all_chats()
 
 
 class ChatDetailView(ListView):
@@ -91,8 +90,7 @@ class ChatFixedMessagesView(ListView):
 		return context
 
 	def get_queryset(self):
-		chats = self.chat.get_fixed_messages()
-		return chats
+		return self.chat.get_fixed_messages()
 
 
 class ChatInfo(ListView):
