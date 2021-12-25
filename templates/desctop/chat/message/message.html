@@ -6,6 +6,7 @@
 </div>
 
 {% else %}
+{% if request.user.pk == object.creator.pk %}eeeee{% endif %}
 <div class="
     message toggle_message t_f pointer media p-1
     {% if request.user.pk == object.creator.pk %}
