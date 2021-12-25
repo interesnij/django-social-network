@@ -321,7 +321,7 @@ class Chat(models.Model):
 
     def get_recipients_exclude_creator(self, exclude_creator_pk):
         from users.models import User
-        return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT").exclude(pk=exclude_creator_pk)
+        return User.objects.filter(chat_users__chat__id=self.pk, chat_users__type="ACT").exclude(id=exclude_creator_pk)
     def get_recipients(self):
         return ChatUsers.objects.filter(chat_id=self.pk, type="ACT")
 
