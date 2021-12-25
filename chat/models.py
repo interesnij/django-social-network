@@ -1053,7 +1053,7 @@ class Message(models.Model):
             current_chat.save(update_fields=["created", "attach"])
         else:
             current_chat.save(update_fields=["created"])
-        for recipient in chat.get_recipients_2(creator.pk):
+        for recipient in current_chat.get_recipients_2(creator.pk):
             message.create_socket(recipient.user.pk, recipient.beep())
 
     def get_or_create_support_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
