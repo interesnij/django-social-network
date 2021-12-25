@@ -49,7 +49,7 @@ class ChatDetailView(ListView):
 			'type': 'receive',
 			'key': 'message',
 			'chat_id': self.chat.pk,
-			'recipient_ids': str(self.chat.get_recipients_ids(self.pk)),
+			'recipient_id': str(request.user.pk),
 			'name': "u_message_read",
 		}
 		async_to_sync(channel_layer.group_send)('notification', payload)
