@@ -80,9 +80,9 @@ function close_fullscreen() {
     create_window_stat_list(container.querySelector(".card_fullscreen"));
     // включаем видимость кнопок нового первого окна.
     prev_window = container.querySelector(".card_fullscreen");
-    prev_window.querySelector(".this_fullscreen_hide").style.display = "none";
-    try {prev_window.querySelector(".prev_item").style.display = "none"} catch {null};
-    try {prev_window.querySelector(".next_item").style.display = "none"} catch {null}
+    prev_window.querySelector(".this_fullscreen_hide").style.display = "unset";
+    try {prev_window.querySelector(".prev_item").style.display = "unset"} catch {null};
+    try {prev_window.querySelector(".next_item").style.display = "unset"} catch {null}
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
@@ -128,7 +128,7 @@ function create_fullscreen(url, type_class) {
     try {prev_window.querySelector(".prev_item").style.display = "none"} catch {null};
     try {prev_window.querySelector(".next_item").style.display = "none"} catch {null}
   };
-  
+
   try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
 
   $parent_div = document.createElement("div");
