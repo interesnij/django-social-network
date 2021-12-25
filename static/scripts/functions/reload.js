@@ -78,6 +78,11 @@ function close_fullscreen() {
     push_window_stat_list()
   } else {
     create_window_stat_list(container.querySelector(".card_fullscreen"));
+    // включаем видимость кнопок нового первого окна.
+    prev_window = container.querySelector(".card_fullscreen");
+    prev_window.querySelector(".this_fullscreen_hide").style.display = "none";
+    try {prev_window.querySelector(".prev_item").style.display = "none"} catch {null};
+    try {prev_window.querySelector(".next_item").style.display = "none"} catch {null}
   };
   window.history.replaceState(null, null, window.location.pathname);
 };
