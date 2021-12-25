@@ -12,6 +12,11 @@ function close_fullscreen() {
   container.querySelector(".card_fullscreen").remove();
   if (!container.innerHTML) {
     get_document_opacity_1();
+  } else {
+    prev_window = container.querySelector(".card_fullscreen");
+    prev_window.querySelector(".this_fullscreen_hide").style.display = "none";
+    try {prev_window.querySelector(".prev_item").style.display = "none"} catch {null};
+    try {prev_window.querySelector(".next_item").style.display = "none"} catch {null}
   };
   window.history.replaceState(null, null, window.location.pathname);
   console.log("okkkkk")
