@@ -1494,7 +1494,14 @@ class User(AbstractUser):
         from chat.models import Chat
         query = Q(chat_relation__user_id=self.pk, chat_relation__type="ACT")
         query.add(~Q(type__contains="_"), Q.AND)
-        return Chat.objects.filter(query).order_by()
+        chats = Chat.objects.filter(query)
+        list = []
+        for chat in chats:
+            if chat.is_public() or chat.is_group():
+                list.append(chat)
+            elif chat.is_not_empty(self.pk):
+                list.append(chat)
+        return list
 
     def get_chats_and_friends(self):
         from itertools import chain

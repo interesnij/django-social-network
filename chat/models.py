@@ -581,7 +581,7 @@ class Chat(models.Model):
         dropdown = ''.join(['<div class="dropdown d-inline-block"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 29px; width: 100%;"><a class="dropdown-item chat_search pointer">Поиск сообщений</a><a class="dropdown-item show_attach_files pointer">Показать вложения</a>', muted_drop, dop_drops,'<a class="dropdown-item u_clean_chat_messages pointer">Очистить историю</a></div></div>'])
         return ''.join([media_body, dropdown])
 
-    def is_not_empty(self):
+    def is_not_empty(self, user_pk):
         return self.chat_message.exclude(type__contains="_").exists()
 
     def add_administrator(self, user):
@@ -761,6 +761,11 @@ class Chat(models.Model):
         query.add(~Q(type__contains="_"), Q.AND)
         query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
         return self.chat_message.filter(query)
+    def is_not_empty(self, user_id):
+        query = Q()
+        query.add(~Q(type__contains="_"), Q.AND)
+        query.add(~Q(message_options__user_id=user_id, message_options__is_deleted=True), Q.AND)
+        return self.chat_message.filter(query).exists()
 
     def get_messages_uuids(self, user_id):
         query = Q()
