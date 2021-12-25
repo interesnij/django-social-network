@@ -162,16 +162,15 @@ function case_u_message_create(chat_id, message_uuid, beep) {
   // если в момент получения нового сообщения получатель не на странице чата или списка чатов
   console.log("Вы не в сообщениях");
       chats = document.body.querySelector(".new_unread_chats");
-      chats.querySelector(".tab_badge") ? (count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
-      tab_span = document.createElement("span");
+      chats.querySelector(".badge-success") ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
       count += 1;
-      chats.classList.add("tab_badge", "badge-success");
-      chats.innerHTML = "";tab_span.append(count);chats.append(count);
+      chats.classList.add("badge-success");
+      chats.innerHTML = "";
+      chats.innerHTML = count
   };
-  console.log(beep);
   if (beep) {
     audio = new Audio('/static/audio/apple/message.mp3');
-    audio.volume = 0.5;
+    audio.volume = 0.4;
     audio.play()
   }
 };
