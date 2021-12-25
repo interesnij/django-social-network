@@ -48,7 +48,7 @@ class CreateUserChat(TemplateView):
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
 
 			if request.POST.get('users'):
-				self.chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
+				new_chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
 			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat})
 		else:
 			from django.http import HttpResponseBadRequest
