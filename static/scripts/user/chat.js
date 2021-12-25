@@ -745,14 +745,16 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         window.scrollTo( 0, 3000 );
         scrolled(rtr.querySelector('.is_paginate'));
         window.history.pushState(null, "vfgffgfgf", url);
-        chats = document.body.querySelector(".new_unread_chats");
         document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
-        chats.querySelector(".tab_badge") ? (all_count = chats.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''),
-                                             all_count = all_count*1,
-                                             result = all_count - 1,
-                                             result > 0 ? chats.querySelector(".tab_badge").innerHTML = result : chats.innerHTML = '',
-                                             console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
-                                           ) : null;
+
+        chats = document.body.querySelector(".new_unread_chats");
+        if (chats.querySelector(".tab_badge")) {
+          all_count = chats.innerHTML.replace(/\s+/g, '');
+          all_count = all_count * 1;
+          result = all_count - 1;
+          result > 0 ? chats.innerHTML = result : chats.innerHTML = '';
+          console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
+        };
         if (document.body.querySelector(".left_panel_menu")) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
