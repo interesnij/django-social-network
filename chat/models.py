@@ -541,7 +541,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', 'created', '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_header_chat(self, user_id):
