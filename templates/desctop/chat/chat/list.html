@@ -19,9 +19,6 @@
 
               <ul class="list-group is_paginate">
                 {% for object in object_list %}
-                  {% if not object.is_not_empty %}
-                    {% include 'desctop/chat/message/empty_message.html' %}
-                  {% else %}
                   <li class="list-group-item" data-pk="{{ object.pk }}">
                     <a class="chat_ajax" href="{% url 'chat_detail' pk=object.pk %}">
                       {{ object|get_preview_message:request.user.pk|safe }}
