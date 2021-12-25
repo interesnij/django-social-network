@@ -738,17 +738,12 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
 
         width = rtr.querySelector(".main_chat_block").offsetWidth - 14;
         rtr.querySelector(".fixed_header_chat").style.width = width + "px";
-        //window.scrollTo({
-        //  top: 2000,
-        //  behavior: "smooth"
-        //});
         window.scrollTo( 0, 3000 );
         scrolled(rtr.querySelector('.is_paginate'));
         window.history.pushState(null, "vfgffgfgf", url);
-        document.querySelector("#chatcontent") ? (objDiv = document.querySelector("#chatcontent"),objDiv.scrollTop = objDiv.scrollHeight) : null;
 
         chats = document.body.querySelector(".new_unread_chats");
-        if (chats.querySelector(".tab_badge")) {
+        if (chats.querySelector(".tab_badge") && _this.querySelector(".tab_badge")) {
           all_count = chats.innerHTML.replace(/\s+/g, '');
           all_count = all_count * 1;
           result = all_count - 1;
