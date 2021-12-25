@@ -511,7 +511,6 @@ class Chat(models.Model):
         request_chat_user = self.get_chat_request_user(user_id)
 
         if self.is_group() or self.is_public():
-            return " is_group"
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             else:
@@ -525,6 +524,7 @@ class Chat(models.Model):
 
         elif self.is_private():
             chat_user = self.get_chat_user(user_id)
+            return " is_private"
             member = chat_user.user
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
