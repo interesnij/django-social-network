@@ -485,7 +485,6 @@ class Chat(models.Model):
     def get_preview_message(self, user_id):
         first_message, preview_text, is_read, creator_figure, created = self.get_first_message(user_id), '', '', '', ''
 
-        return " get_preview_message"
         if self.is_have_draft_message(user_id):
             message = self.get_draft_message(user_id)
             preview_text = 'Черновик: ' + message.get_type_text()
@@ -525,7 +524,6 @@ class Chat(models.Model):
 
         elif self.is_private():
             chat_user = self.get_chat_user(user_id)
-            return " is_private"
             member = chat_user.user
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
