@@ -39,8 +39,7 @@ class ChatDetailView(ListView):
 			raise Http404
 
 		self.messages = self.chat.get_messages(self.pk)
-		unread_messages = self.chat.get_unread_message(self.pk)
-		unread_messages.update(unread=False)
+		self.chat.read_messages(self.pk)
 		self.favourite_messages_count = request.user.favourite_messages_count()
 		self.get_header_chat = self.chat.get_header_chat(self.pk)
 		self.is_admin = request.user.is_administrator_of_chat(self.chat.pk)
