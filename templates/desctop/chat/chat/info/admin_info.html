@@ -14,21 +14,29 @@
         <div class="media-body">
           <h6>{% if chat.name %}{{ chat.name }}{% else %}Групповой чат{% endif %} &nbsp;</h6>
           {% if is_can_see_settings %}
-          <p class="mb-0">
-            <span class="mb-0 user_chat_settings pointer">
-              Настройки
-            </span> |
-            <span class="mb-0 user_chat_settings_private pointer">
-              Приватность
-            </span>
-          </p>
-          {% else %}
-            <p class="mb-0">{{ chat.get_type_display }}</p>
+              <span class="mb-0 user_chat_settings pointer">
+                Настройки
+              </span>
+              |
+              <span class="mb-0 user_chat_settings_private pointer">
+                Приватность
+              </span>
           {% endif %}
+          {{ is_can_see_log }}
+
+          {% if is_can_see_log %}
+              <span class="mb-0 user_chat_logs pointer">
+              |  Журнал действий
+              </span>
+          {% endif %}
+          |
+          <p class="mb-0">{{ chat.get_type_display }}</p>
         </div>
       </div>
   </div>
   <div class="card-body">
+
+     {% if is_user_can_add_members %}
     <div class="list-group-item border-top pointer u_add_members_in_chat mb-2" chat-pk="{{ chat.pk }}">
       <div class="media">
           <figure>
@@ -39,6 +47,8 @@
           </div>
       </div>
     </div>
+    {% endif %}
+
 <ul class="is_block_paginate">
 
 <p class="mb-0">{{ chat.get_members_count_ru }}</p>
