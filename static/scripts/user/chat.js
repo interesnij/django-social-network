@@ -1,3 +1,331 @@
+CURRENT_BLOB = null;
+
+async function get_record_stream() {
+  if (!document.body.querySelector(".mic_visual_canvas")) {
+    return
+  };
+  let leftchannel = [];
+  let rightchannel = [];
+  let recorder = null;
+  let recording = false;
+  let recordingLength = 0;
+  let volume = null;
+  let audioInput = null;
+  let sampleRate = null;
+  let AudioContext = window.AudioContext || window.webkitAudioContext;
+  let context = null;
+  let analyser = null;
+  let canvas = document.body.querySelector('.mic_visual_canvas');
+  let canvasCtx = canvas.getContext("2d");
+  let visualSelect = "";
+  let stream = null;
+  let tested = false;
+  let timer_block = document.body.querySelector(".smile_supported");
+  let TIMER_VALUE = 0;
+
+  try {
+    window.stream = stream = await getStream();
+    console.log('Есть поток');
+  } catch(err) {
+    console.log('Проблема с микрофоном', err);
+  }
+
+  const deviceInfos = await navigator.mediaDevices.enumerateDevices();
+  var mics = [];
+  for (let i = 0; i !== deviceInfos.length; ++i) {
+    let deviceInfo = deviceInfos[i];
+    if (deviceInfo.kind === 'audioinput') {
+      mics.push(deviceInfo);
+      let label = deviceInfo.label || 'микрофон ' + mics.length;
+    }
+  }
+
+  function getStream(constraints) {
+    if (!constraints) {
+      constraints = { audio: true, video: false };
+    }
+    return navigator.mediaDevices.getUserMedia(constraints);
+  }
+
+  setUpRecording();
+
+  function setUpRecording() {
+    context = new AudioContext();
+    sampleRate = context.sampleRate;
+    volume = context.createGain();
+    audioInput = context.createMediaStreamSource(stream);
+    analyser = context.createAnalyser();
+    audioInput.connect(analyser);
+    let bufferSize = 2048;
+    let recorder = context.createScriptProcessor(bufferSize, 2, 2);
+    analyser.connect(recorder);
+    recorder.connect(context.destination);
+    recorder.onaudioprocess = function(e) {
+      if (!recording) return;
+      console.log('Запись!');
+      let left = e.inputBuffer.getChannelData(0);
+      let right = e.inputBuffer.getChannelData(1);
+      if (!tested) {
+        tested = true;
+        if ( !left.reduce((a, b) => a + b) ) {
+          console.log("There seems to be an issue with your Mic");
+          stop();
+          stream.getTracks().forEach(function(track) {
+            track.stop();
+          });
+          context.close();
+        }
+      }
+      leftchannel.push(new Float32Array(left));
+      rightchannel.push(new Float32Array(right));
+      recordingLength += bufferSize;
+    };
+    visualize();
+  };
+
+  function mergeBuffers(channelBuffer, recordingLength) {
+    let result = new Float32Array(recordingLength);
+    let offset = 0;
+    let lng = channelBuffer.length;
+    for (let i = 0; i < lng; i++){
+      let buffer = channelBuffer[i];
+      result.set(buffer, offset);
+      offset += buffer.length;
+    }
+    return result;
+  }
+
+  function interleave(leftChannel, rightChannel){
+    let length = leftChannel.length + rightChannel.length;
+    let result = new Float32Array(length);
+    let inputIndex = 0;
+    for (let index = 0; index < length; ){
+      result[index++] = leftChannel[inputIndex];
+      result[index++] = rightChannel[inputIndex];
+      inputIndex++;
+    }
+    return result;
+  }
+
+  function writeUTFBytes(view, offset, string){
+    let lng = string.length;
+    for (let i = 0; i < lng; i++){
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  }
+
+  function start() {
+    recording = true;
+    document.querySelector('.user_typed_box').style.visibility = 'visible'
+    leftchannel.length = rightchannel.length = 0;
+    recordingLength = 0;
+    console.log('context: ', !!context);
+    if (!context) setUpRecording();
+    TIMER_VALUE = 183;
+  }
+
+  function stop() {
+    console.log('Stop');
+    recording = false;
+    document.body.querySelector('.user_typed_box').style.visibility = 'hidden';
+    TIMER_VALUE = 0;
+    let leftBuffer = mergeBuffers ( leftchannel, recordingLength );
+    let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
+    let interleaved = interleave ( leftBuffer, rightBuffer );
+    let buffer = new ArrayBuffer(44 + interleaved.length * 2);
+    let view = new DataView(buffer);
+    writeUTFBytes(view, 0, 'RIFF');
+    view.setUint32(4, 44 + interleaved.length * 2, true);
+    writeUTFBytes(view, 8, 'WAVE');
+    writeUTFBytes(view, 12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 2, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 4, true);
+    view.setUint16(32, 4, true);
+    view.setUint16(34, 16, true);
+    writeUTFBytes(view, 36, 'data');
+    view.setUint32(40, interleaved.length * 2, true);
+    let lng = interleaved.length;
+    let index = 44;
+    let volume = 1;
+    for (let i = 0; i < lng; i++){
+        view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
+        index += 2;
+    }
+    const blob = new Blob ( [ view ], { type : 'audio/wav' } );
+    const audioUrl = URL.createObjectURL(blob);
+    console.log('BLOB ', blob);
+    console.log('URL ', audioUrl);
+    document.querySelector('#my_audio').setAttribute('src', audioUrl);
+    CURRENT_BLOB = blob;
+  }
+
+  function visualize() {
+    WIDTH = canvas.width;
+    HEIGHT = canvas.height;
+    CENTERX = canvas.width / 2;
+    CENTERY = canvas.height / 2;
+    analyser.fftSize = 2048;
+    var bufferLength = analyser.fftSize;
+    console.log(bufferLength);
+    var dataArray = new Uint8Array(bufferLength);
+    canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+    var draw = function() {
+      drawVisual = requestAnimationFrame(draw);
+      analyser.getByteTimeDomainData(dataArray);
+      canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+      canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+      canvasCtx.lineWidth = 2;
+      canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+      canvasCtx.beginPath();
+      var sliceWidth = WIDTH * 1.0 / bufferLength;
+      var x = 0;
+      for(var i = 0; i < bufferLength; i++) {
+        var v = dataArray[i] / 128.0;
+        var y = v * HEIGHT/2;
+        if(i === 0) {
+          canvasCtx.moveTo(x, y);
+        } else {
+          canvasCtx.lineTo(x, y);
+        }
+        x += sliceWidth;
+      }
+      canvasCtx.lineTo(canvas.width, canvas.height/6);
+      canvasCtx.stroke();
+    };
+    draw();
+  }
+
+  function pause() {
+    recording = false;
+    context.suspend()
+  }
+
+  function resume() {
+    recording = true;
+    context.resume();
+  }
+
+  voice_timer = setInterval(function () {
+    fake_value = TIMER_VALUE - 3;
+    if (TIMER_VALUE >= 1) {
+      if (TIMER_VALUE == 1) {
+        console.log("TIMER_VALUE == 0");
+        clearInterval(voice_timer);
+        stop();
+        form = document.querySelector(".customize_form");
+        smile_supported = form.querySelector('.smile_supported');
+        smile_supported.innerHTML = "";
+        smile_supported.style.display = "none";
+        smile_supported.setAttribute("contenteditable", "true");
+        form.querySelector('.plyr').style.display = "block";
+        form.querySelector('.delete_voice_btn').style.display = "block";
+        form.querySelector('.mic_visual_canvas').style.display = "none";
+        form.querySelector('.voice_stop_btn').style.display = "none";
+      };
+      seconds = fake_value%60;
+      minutes = fake_value/60%60;
+      timer_block.setAttribute("contenteditable", "false");
+      let strTimer = "<span style='color:red'>Запись!</span> Осталось: " + Math.trunc(minutes) + " мин. " + seconds + " сек." ;
+      timer_block.innerHTML = strTimer;
+    }
+    else{ return };
+    --TIMER_VALUE;
+  }, 1000);
+
+  on('#ajax', 'click', '#voice_start_btn', function() {
+      console.log('Start recording');
+      form = this.parentElement.parentElement;
+      form.querySelector('.delete_voice_btn').style.display = "block";
+      form.querySelector('.file_dropdown_2').style.display = "none";
+      form.querySelector('.form_smilies').style.display = "none";
+      form.parentElement.querySelector('.mic_visual_canvas').style.display = "block";
+      form.querySelector('.voice_stop_btn').style.display = "block";
+
+      form.querySelector('#voice_start_btn').style.display = "none";
+      form.querySelector('#voice_post_btn').style.display = "block";
+      form.querySelector("#my_audio").setAttribute("name", "voice");
+      start();
+    });
+  on('#ajax', 'click', '.voice_stop_btn', function() {
+    form = document.querySelector(".customize_form");
+    smile_supported = form.querySelector('.smile_supported');
+    smile_supported.innerHTML = "";
+    smile_supported.style.display = "none";
+    smile_supported.setAttribute("contenteditable", "true");
+    form.querySelector('.plyr').style.display = "block";
+    form.querySelector('.delete_voice_btn').style.display = "block";
+    form.querySelector('.mic_visual_canvas').style.display = "none";
+    form.querySelector('.voice_stop_btn').style.display = "none";
+    stop();
+  });
+
+  on('#ajax', 'click', '.delete_voice_btn', function() {
+    stop();
+    form = this.parentElement.parentElement;
+    form.querySelector('.smile_supported').innerHTML = "";
+    form.querySelector('.smile_supported').setAttribute("contenteditable", "true");
+    remove_voice_console(form);
+    form.querySelector('#voice_start_btn').style.display = "block";
+    form.querySelector('#voice_post_btn').style.display = "none";
+    form.querySelector("#my_audio").setAttribute("name", "no_voice");
+  });
+
+  on('#ajax', 'click', '#voice_post_btn', function() {
+    stop();
+    form_post = this.parentElement.parentElement.parentElement;
+    form_data = new FormData(form_post);
+    form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
+    form_data.append("text", "voice");
+
+    message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
+    pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
+
+    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
+    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    link_.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+
+      form.querySelector('#voice_start_btn').style.display = "block";
+      form.querySelector('#voice_post_btn').style.display = "none";
+      elem = link_.responseText;
+      new_post = document.createElement("span");
+      new_post.innerHTML = elem;
+      message_load.append(new_post);
+
+      message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
+
+      message_text = form_post.querySelector(".message_text");
+      message_text.classList.remove("border_red");
+      message_text.setAttribute("contenteditable", "true");
+      message_text.innerHTML = "";
+      form_post.querySelector("#my_audio").setAttribute("name", "no_voice");
+
+      form_post.querySelector(".hide_block_menu").classList.remove("show");
+      form_post.querySelector(".message_dropdown").classList.remove("border_red");
+      try{form_post.querySelector(".parent_message_block").remove()}catch{null};
+
+      CURRENT_BLOB = null;
+      init_music(new_post);
+      remove_voice_console(form_post)
+      if (document.body.querySelector(".chat_container")) {
+        window.scrollTo({
+          top: document.body.querySelector(".chat_container").scrollHeight,
+          behavior: "smooth"
+        })
+      };
+    }};
+    link_.send(form_data);
+  });
+
+};
+
+get_record_stream();
+
 function get_toggle_messages() {
   list = document.body.querySelectorAll(".target_message");
   query = [];
@@ -753,6 +1081,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         if (document.body.querySelector(".left_panel_menu")) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
+        get_record_stream();
         }
       }
     ajax_link.send();
