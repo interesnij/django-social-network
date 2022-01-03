@@ -3,6 +3,9 @@
   height: 35px;
   width: 100%;
 }
+audio {
+  height: 25px;
+}
 .customize_form audio {
   display: none;
   width: 85%;
