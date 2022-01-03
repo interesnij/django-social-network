@@ -1,3 +1,13 @@
+.mic_visual_canvas {
+  display:none;
+  height: 35px;
+  width: 100%;
+}
+.customize_form audio {
+  display: none;
+  width: 85%;
+}
+
 .active h6{
   font-weight: bold;
 }
