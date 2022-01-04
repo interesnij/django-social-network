@@ -38,7 +38,7 @@ async function get_record_stream() {
     console.log('Есть поток');
   } catch(err) {
     console.log('Проблема с микрофоном', err);
-  }
+  };
 
   const deviceInfos = await navigator.mediaDevices.enumerateDevices();
   var mics = [];
@@ -161,8 +161,11 @@ async function get_record_stream() {
     for (let i = 0; i < lng; i++){
         view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
         index += 2;
-    }
-    const blob = new Blob ( [ view ], { type : 'audio/mp3' } );
+    };
+
+    let downsampledBuffer = downsampleBuffer(interleaved, 16000);
+    var dataview = encodeWAV(16000, downsampledBuffer, false);
+    let blob = new Blob ( [ dataview ], { type : 'audio/wav' } );
     const audioUrl = URL.createObjectURL(blob);
     console.log('BLOB ', blob);
     console.log('URL ', audioUrl);
@@ -285,7 +288,7 @@ async function get_record_stream() {
     stop();
     form_post = this.parentElement.parentElement.parentElement;
     form_data = new FormData(form_post);
-    form_data.append("voice", CURRENT_BLOB, 'fileName.mp3');
+    form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
     form_data.append("text", "voice");
 
     message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
