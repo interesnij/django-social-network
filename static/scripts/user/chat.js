@@ -167,8 +167,7 @@ async function get_record_stream() {
     let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
     let interleaved = interleave ( leftBuffer, rightBuffer );
     let buffer = new ArrayBuffer(44 + interleaved.length * 2);
-    let newBuffer = downsampleBuffer(interleaved, 16000);
-    let view = new DataView(newBuffer);
+    let view = new DataView(buffer);
     writeUTFBytes(view, 0, 'RIFF');
     view.setUint32(4, 44 + interleaved.length * 2, true);
     writeUTFBytes(view, 8, 'WAVE');
