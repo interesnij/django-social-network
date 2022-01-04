@@ -172,6 +172,7 @@ async function get_record_stream() {
     console.log('URL ', audioUrl);
     document.querySelector('#my_audio').setAttribute('src', audioUrl);
     CURRENT_BLOB = blob;
+    TIMER_VALUE = 0;
   }
 
   function visualize() {
