@@ -1131,7 +1131,10 @@ class Message(models.Model):
         else:
             parent_id = None
         if voice:
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
+            from pydub import AudioSegment as am
+            sound = am.from_file(voice, format='wav', frame_rate=22050)
+            sound = sound.set_frame_rate(16000)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=sound, parent_id=parent_id)
         elif sticker:
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
             from common.model.other import UserPopulateStickers
