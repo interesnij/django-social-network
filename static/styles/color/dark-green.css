@@ -62,10 +62,7 @@ body {
 
 .media p,
 .media span,
-audio::-webkit-media-controls-mute-button {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-audio svg {
+audio::-webkit-media-controls-current-time-display {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
