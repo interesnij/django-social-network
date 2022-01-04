@@ -133,8 +133,8 @@ async function get_record_stream() {
     console.log('context: ', !!context);
     if (!context) {
       setUpRecording();
-      TIMER_VALUE = 183;
-    }
+    };
+    TIMER_VALUE = 183;
   }
 
   function stop() {
