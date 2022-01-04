@@ -61,8 +61,7 @@ async function get_record_stream() {
 
   function setUpRecording() {
     context = new AudioContext();
-    //sampleRate = context.sampleRate;
-    sampleRate = 16000;
+    sampleRate = context.sampleRate;
     volume = context.createGain();
     audioInput = context.createMediaStreamSource(stream);
     analyser = context.createAnalyser();
@@ -177,7 +176,7 @@ async function get_record_stream() {
     view.setUint16(20, 1, true);
     view.setUint16(22, 2, true);
     view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * 4, true);
+    view.setUint32(28, sampleRate * 1, true);
     view.setUint16(32, 4, true);
     view.setUint16(34, 16, true);
     writeUTFBytes(view, 36, 'data');
