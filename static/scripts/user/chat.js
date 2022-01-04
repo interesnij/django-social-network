@@ -305,7 +305,7 @@ async function get_record_stream() {
     link = user.getAttribute("data-pk");
     if (user.querySelector("img")) {
       src = user.querySelector("img").getAttribute("src");
-      img = '<img src="' + src + '" />'
+      img = '<img style="border-radius:40px;width:40px;" src="' + src + '" />'
     } else {
       img = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>'
     };
@@ -314,7 +314,7 @@ async function get_record_stream() {
     figure.innerHTML = '<a href="' + link + '" class="ajax no_select">' + img + '</a>';
     media_body = document.createElement("div");
     media_body.classList.add("media-body,t_f");
-    media_body.innerHTML = '<h5 class="time-title mb-0"><a href="' + link + '" class="ajax creator_link"><span class="creator_name">' + user.getAttribute("data-name") + '</span></a><span class="favourite_icon"><svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span><small class="float-right small text-muted get_created t_f">Сейчас</small></h5><audio controls class="audio" src="' + CURRENT_BLOB + '"></audio>';
+    media_body.innerHTML = '<h5 class="time-title mb-0"><a href="' + link + '" class="ajax creator_link"><span class="creator_name">' + user.getAttribute("data-name") + '</span></a><span class="favourite_icon"><svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span><small class="float-right small text-muted get_created t_f">Сейчас</small></h5><audio controls class="audio" src="' + URL.createObjectURL(CURRENT_BLOB) + '"></audio>';
     new_post.append(figure);
     new_post.append(media_body);
 
