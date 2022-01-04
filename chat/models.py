@@ -1132,9 +1132,12 @@ class Message(models.Model):
             parent_id = None
         if voice:
             from pydub import AudioSegment as am
-            sound = am.from_file(voice.url, format='wav', frame_rate=22050)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
+
+            sound = am.from_file(message.voice.url, format='wav', frame_rate=22050)
             sound = sound.set_frame_rate(16000)
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=sound, parent_id=parent_id)
+            message.voice = sound
+            message.save(update_fields=["voice"])
         elif sticker:
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
             from common.model.other import UserPopulateStickers
