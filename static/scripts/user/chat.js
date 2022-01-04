@@ -137,8 +137,6 @@ async function get_record_stream() {
   function stop() {
     console.log('Stop');
     recording = false;
-    document.body.querySelector('.user_typed_box').style.visibility = 'hidden';
-    TIMER_VALUE = 0;
     let leftBuffer = mergeBuffers ( leftchannel, recordingLength );
     let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
     let interleaved = interleave ( leftBuffer, rightBuffer );
@@ -287,7 +285,7 @@ async function get_record_stream() {
     stop();
     form_post = this.parentElement.parentElement.parentElement;
     form_data = new FormData(form_post);
-    form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
+    form_data.append("voice", CURRENT_BLOB, 'fileName.mp3');
     form_data.append("text", "voice");
 
     message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
