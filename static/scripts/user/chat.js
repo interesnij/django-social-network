@@ -166,7 +166,7 @@ async function get_record_stream() {
     let leftBuffer = mergeBuffers ( leftchannel, recordingLength );
     let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
     let interleaved = interleave ( leftBuffer, rightBuffer );
-    let buffer = new ArrayBuffer(44 + interleaved.length * 2);
+    let buffer = new ArrayBuffer(44 + interleaved.length / 4); // * 2
     let view = new DataView(buffer);
     writeUTFBytes(view, 0, 'RIFF');
     view.setUint32(4, 44 + interleaved.length * 2, true);
@@ -335,7 +335,6 @@ async function get_record_stream() {
       message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
 
       message_text = form_post.querySelector(".message_text");
-      console.log(message_text)
       message_text.classList.remove("border_red");
       message_text.setAttribute("contenteditable", "true");
       message_text.innerHTML = "";
