@@ -60,7 +60,9 @@ body {
   color: rgba(255, 255, 255, 0.4) !important;
 }
 
-.media p, .media span {
+.media p,
+.media span,
+audio::-webkit-media-controls-mute-button {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
