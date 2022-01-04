@@ -164,7 +164,7 @@ async function get_record_stream() {
         view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
         index += 2;
     }
-    const blob = new Blob ( [ view ], { type : 'audio/wav' } );
+    const blob = new Blob ( [ view ], { type : 'audio/mp3' } );
     const audioUrl = URL.createObjectURL(blob);
     console.log('BLOB ', blob);
     console.log('URL ', audioUrl);
