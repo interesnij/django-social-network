@@ -287,8 +287,9 @@ async function get_record_stream() {
 
   on('#ajax', 'click', '#voice_post_btn', function() {
     stop();
-    form.querySelector('#voice_start_btn').style.display = "block";
-    form.querySelector('#voice_post_btn').style.display = "none";
+    form_post = this.parentElement.parentElement.parentElement;
+    form_post.querySelector('#voice_start_btn').style.display = "block";
+    form_post.querySelector('#voice_post_btn').style.display = "none";
 
     remove_voice_console(form_post);
     if (document.body.querySelector(".chat_container")) {
@@ -329,7 +330,6 @@ async function get_record_stream() {
     form_post.querySelector(".hide_block_menu").classList.remove("show");
     form_post.querySelector(".message_dropdown").classList.remove("border_red");
 
-    form_post = this.parentElement.parentElement.parentElement;
     form_data = new FormData(form_post);
     form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
     form_data.append("text", "voice");
