@@ -172,6 +172,36 @@ class UserSendMessage(View):
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
 
+class UserSendMessage(View):
+	def post(self,request,*args,**kwargs):
+		from chat.models import Message, Chat
+		from chat.forms import MessageForm
+
+		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST, request.FILES)
+		if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker') or request.POST.get('transfer') or request.POST.get('voice'):
+			message = form_post.save(commit=False)
+
+			new_message = Message.send_message(
+											chat=chat,
+											creator=request.user,
+											repost=None,
+											text=message.text,
+											voice=message.voice,
+											sticker=request.POST.get('sticker'),
+											parent=request.POST.get('parent'),
+											transfer=request.POST.getlist('transfer'),
+											attach=request.POST.getlist('attach_items'))
+			if new_message.voice:
+				import json
+				from django.http import HttpResponse
+				return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
+			else:
+				from common.templates import render_for_platform
+				return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
+		else:
+			from django.http import HttpResponseBadRequest
+			return HttpResponseBadRequest()
+
 class UserSaveDraftMessage(View):
 	def post(self,request,*args,**kwargs):
 		from chat.models import Message, Chat
