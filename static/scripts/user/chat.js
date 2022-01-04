@@ -320,7 +320,6 @@ async function get_record_stream() {
       try{form_post.querySelector(".parent_message_block").remove()}catch{null};
 
       CURRENT_BLOB = null;
-      init_music(new_post);
       remove_voice_console(form_post)
       if (document.body.querySelector(".chat_container")) {
         window.scrollTo({
