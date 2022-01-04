@@ -4,7 +4,7 @@ function remove_voice_console(form) {
   form.querySelector('.delete_voice_btn').style.display = "none";
   form.querySelector('.mic_visual_canvas').style.display = "none";
   form.querySelector('.smile_supported').style.display = "block";
-  form.querySelector('.file_dropdown_2').style.display = "block";
+  form.querySelector('.file_dropdown_2').style.display = "contents";
   form.querySelector('.form_smilies').style.display = "block";
   form.querySelector('.voice_stop_btn').style.display = "none";
   show_message_form_voice_btn();
