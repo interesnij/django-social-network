@@ -167,7 +167,8 @@ async function get_record_stream() {
     let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
     let interleaved = interleave ( leftBuffer, rightBuffer );
     let buffer = new ArrayBuffer(44 + interleaved.length * 2);
-    let view = new DataView(buffer);
+    let newBuffer = downsampleBuffer(interleaved, 16000);
+    let view = new DataView(newBuffer);
     writeUTFBytes(view, 0, 'RIFF');
     view.setUint32(4, 44 + interleaved.length * 2, true);
     writeUTFBytes(view, 8, 'WAVE');
@@ -189,9 +190,7 @@ async function get_record_stream() {
         index += 2;
     };
 
-    let downsampledBuffer = downsampleBuffer(interleaved, 16000);
-    var dataview = encodeWAV(16000, downsampledBuffer, false);
-    let blob = new Blob ( [ dataview ], { type : 'audio/wav' } );
+    let blob = new Blob ( [ view ], { type : 'audio/wav' } );
     const audioUrl = URL.createObjectURL(blob);
     console.log('BLOB ', blob);
     console.log('URL ', audioUrl);
