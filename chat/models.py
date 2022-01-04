@@ -1132,7 +1132,7 @@ class Message(models.Model):
             parent_id = None
         if voice:
             from pydub import AudioSegment as am
-            sound = am.from_file(voice, format='wav', frame_rate=22050)
+            sound = am.from_file(voice.url, format='wav', frame_rate=22050)
             sound = sound.set_frame_rate(16000)
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=sound, parent_id=parent_id)
         elif sticker:
