@@ -61,7 +61,8 @@ async function get_record_stream() {
 
   function setUpRecording() {
     context = new AudioContext();
-    sampleRate = context.sampleRate;
+    //sampleRate = context.sampleRate;
+    sampleRate = 16000;
     volume = context.createGain();
     audioInput = context.createMediaStreamSource(stream);
     analyser = context.createAnalyser();
@@ -166,10 +167,10 @@ async function get_record_stream() {
     let leftBuffer = mergeBuffers ( leftchannel, recordingLength );
     let rightBuffer = mergeBuffers ( rightchannel, recordingLength );
     let interleaved = interleave ( leftBuffer, rightBuffer );
-    let buffer = new ArrayBuffer(44 + interleaved.length); // * 2
+    let buffer = new ArrayBuffer(44 + interleaved.length * 2); // * 2
     let view = new DataView(buffer);
     writeUTFBytes(view, 0, 'RIFF');
-    view.setUint32(4, 44 + interleaved.length, true); // * 2
+    view.setUint32(4, 44 + interleaved.length * 2, true); // * 2
     writeUTFBytes(view, 8, 'WAVE');
     writeUTFBytes(view, 12, 'fmt ');
     view.setUint32(16, 16, true);
@@ -180,7 +181,7 @@ async function get_record_stream() {
     view.setUint16(32, 4, true);
     view.setUint16(34, 16, true);
     writeUTFBytes(view, 36, 'data');
-    view.setUint32(40, interleaved.length, true); // * 2
+    view.setUint32(40, interleaved.length * 2, true); // * 2
     let lng = interleaved.length;
     let index = 44;
     let volume = 1;
