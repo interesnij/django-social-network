@@ -82,7 +82,9 @@ body {
 .search-header .input-group .form-control {
   background-color: rgba(0, 36, 24, 0.5);
 }
-.card, .mobile_naw, .card_fullscreen {
+.card, .mobile_naw,
+.card_fullscreen,
+audio::-webkit-media-controls-panel {
   background-color: #004d33;
 }
 
