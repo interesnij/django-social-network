@@ -11,6 +11,7 @@ audio {
 .customize_form audio {
   display: none;
   width: 75%;
+  margin-top: 3px;
 }
 
 .active h6{
