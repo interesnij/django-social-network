@@ -61,7 +61,7 @@ async function get_record_stream() {
 
   function setUpRecording() {
     context = new AudioContext();
-    sampleRate = context.sampleRate;
+    sampleRate = 15000;
     console.log(sampleRate);
     volume = context.createGain();
     audioInput = context.createMediaStreamSource(stream);
