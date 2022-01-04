@@ -1134,7 +1134,7 @@ class Message(models.Model):
             from pydub import AudioSegment as am
             message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
 
-            sound = am.from_file(message.voice.url, format='wav', frame_rate=22050)
+            sound = am.from_file("https://трезвый.рус" + message.voice.url, format='wav', frame_rate=22050)
             sound = sound.set_frame_rate(16000)
             message.voice = sound
             message.save(update_fields=["voice"])
