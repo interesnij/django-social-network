@@ -335,6 +335,7 @@ async function get_record_stream() {
       message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
 
       message_text = form_post.querySelector(".message_text");
+      console.log(message_text)
       message_text.classList.remove("border_red");
       message_text.setAttribute("contenteditable", "true");
       message_text.innerHTML = "";
