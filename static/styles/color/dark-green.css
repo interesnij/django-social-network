@@ -65,6 +65,9 @@ body {
 audio::-webkit-media-controls-mute-button {
   color: rgba(255, 255, 255, 0.7) !important;
 }
+audio svg {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
 
 .content-color-primary {
   color: #ffffff;
