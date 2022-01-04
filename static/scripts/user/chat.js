@@ -181,13 +181,13 @@ async function get_record_stream() {
     view.setUint16(34, 16, true);
     writeUTFBytes(view, 36, 'data');
     view.setUint32(40, interleaved.length * 2, true);
-    let lng = interleaved.length;
-    let index = 44;
-    let volume = 1;
-    for (let i = 0; i < lng; i++){
-        view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
-        index += 2;
-    };
+    //let lng = interleaved.length;
+    //let index = 44;
+    //let volume = 1;
+    //for (let i = 0; i < lng; i++){
+    //    view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
+    //    index += 2;
+    //};
 
     let blob = new Blob ( [ view ], { type : 'audio/wav' } );
     const audioUrl = URL.createObjectURL(blob);
