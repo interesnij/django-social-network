@@ -61,7 +61,7 @@ async function get_record_stream() {
 
   function setUpRecording() {
     context = new AudioContext();
-    sampleRate = 15000;
+    sampleRate = context.sampleRate;
     console.log(sampleRate);
     volume = context.createGain();
     audioInput = context.createMediaStreamSource(stream);
@@ -131,35 +131,11 @@ async function get_record_stream() {
     leftchannel.length = rightchannel.length = 0;
     recordingLength = 0;
     console.log('context: ', !!context);
-    if (!context) setUpRecording();
-    TIMER_VALUE = 183;
+    if (!context) {
+      setUpRecording();
+      TIMER_VALUE = 183;
+    }
   }
-
-  function downsampleBuffer(buffer, rate) {
-    if (rate == sampleRate) {
-        return buffer;
-    }
-    if (rate > sampleRate) {
-        throw "downsampling rate show be smaller than original sample rate";
-    }
-    var sampleRateRatio = sampleRate / rate;
-    var newLength = Math.round(buffer.length / sampleRateRatio);
-    var result = new Float32Array(newLength);
-    var offsetResult = 0;
-    var offsetBuffer = 0;
-    while (offsetResult < result.length) {
-        var nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
-        var accum = 0, count = 0;
-        for (var i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
-            accum += buffer[i];
-            count++;
-        }
-        result[offsetResult] = accum / count;
-        offsetResult++;
-        offsetBuffer = nextOffsetBuffer;
-    }
-    return result;
-}
 
   function stop() {
     console.log('Stop');
@@ -205,7 +181,6 @@ async function get_record_stream() {
     CENTERY = canvas.height / 2;
     analyser.fftSize = 2048;
     var bufferLength = analyser.fftSize;
-    console.log(bufferLength);
     var dataArray = new Uint8Array(bufferLength);
     canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
     var draw = function() {
