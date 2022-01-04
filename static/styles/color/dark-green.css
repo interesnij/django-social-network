@@ -63,7 +63,13 @@ body {
 .media p,
 .media span,
 audio::-webkit-media-controls-current-time-display,
-audio::-webkit-media-controls-time-remaining-display {
+audio::-webkit-media-controls-time-remaining-display,
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-timeline,
+audio::-webkit-media-controls-timeline-container,
+audio::-webkit-media-controls-volume-slider-container,
+audio::-webkit-media-controls-volume-slider,
+audio::-webkit-media-controls-mute-button {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
