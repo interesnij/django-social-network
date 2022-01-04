@@ -151,7 +151,7 @@ async function get_record_stream() {
     writeUTFBytes(view, 12, 'fmt ');
     view.setUint32(16, 16, true);
     view.setUint16(20, 1, true);
-    view.setUint16(22, 1, true); // 1 - кол во каналов
+    view.setUint16(22, 2, true); // 1 - кол во каналов
     view.setUint32(24, sampleRate, true);
     view.setUint32(28, sampleRate * 4, true);
     view.setUint16(32, 4, true);
@@ -287,12 +287,53 @@ async function get_record_stream() {
 
   on('#ajax', 'click', '#voice_post_btn', function() {
     stop();
+    form.querySelector('#voice_start_btn').style.display = "block";
+    form.querySelector('#voice_post_btn').style.display = "none";
+
+    remove_voice_console(form_post);
+    if (document.body.querySelector(".chat_container")) {
+      window.scrollTo({
+        top: document.body.querySelector(".chat_container").scrollHeight,
+        behavior: "smooth"
+      })
+    };
+    new_post = document.createElement("div");
+    new_post.classList.add("message", "new_message", "t_f", "pointer", "media", "p-1", "bg-light-secondary");
+
+    user = document.body.querySelector(".userpic");
+    link = user.getAttribute("data-pk");
+    if (user.querySelector("src")) {
+      img = user.querySelector("src").getAttribute("src")
+    } else {
+      img = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>'
+    };
+
+    figure = document.createElement("figure");
+    figure.innerHTML = '<a href="' + link + '" class="ajax no_select"' + img + '</a>';
+    media_body = document.createElement("div");
+    media_body.classList.add("media-body,t_f");
+    media_body.innerHTML = '<h5 class="time-title mb-0"><a href="' + link + '" class="ajax creator_link"><span class="creator_name">' + user.getAttribute("data-name") + '</span></a><span class="favourite_icon"><svg width="18" height="18" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span><small class="float-right small text-muted get_created t_f">Сейчас</small></h5><audio controls class="audio" src="' + CURRENT_BLOB + '"></audio>';
+    new_post.append(figure);
+    new_post.append(media_body);
+
+    message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
+    message_load.append(new_post);
+    message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
+
+    message_text = form_post.querySelector(".message_text");
+    message_text.classList.remove("border_red");
+    message_text.setAttribute("contenteditable", "true");
+    message_text.innerHTML = "";
+    form_post.querySelector("#my_audio").setAttribute("name", "no_voice");
+
+    form_post.querySelector(".hide_block_menu").classList.remove("show");
+    form_post.querySelector(".message_dropdown").classList.remove("border_red");
+
     form_post = this.parentElement.parentElement.parentElement;
     form_data = new FormData(form_post);
     form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
     form_data.append("text", "voice");
 
-    message_load = form_post.parentElement.parentElement.parentElement.querySelector(".chatlist");
     pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -301,34 +342,16 @@ async function get_record_stream() {
 
     link_.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
-
-      form.querySelector('#voice_start_btn').style.display = "block";
-      form.querySelector('#voice_post_btn').style.display = "none";
-      elem = link_.responseText;
-      new_post = document.createElement("span");
-      new_post.innerHTML = elem;
-      message_load.append(new_post);
-
-      message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
-
-      message_text = form_post.querySelector(".message_text");
-      message_text.classList.remove("border_red");
-      message_text.setAttribute("contenteditable", "true");
-      message_text.innerHTML = "";
-      form_post.querySelector("#my_audio").setAttribute("name", "no_voice");
-
-      form_post.querySelector(".hide_block_menu").classList.remove("show");
-      form_post.querySelector(".message_dropdown").classList.remove("border_red");
-      try{form_post.querySelector(".parent_message_block").remove()}catch{null};
-
+      jsonResponse = JSON.parse(link_.responseText);
+      uuid = jsonResponse.uuid;
+      message = message_load.querySelector(".new_message");
+      message.setAttribute("data-pk", uuid);
+      message.setAttribute("data-uuid", uuid);
+      message.classList.add("toggle_message", "is_have_edited");
+      message.classList.remove("new_message");
+      message.querySelector(".favourite_icon").innerHTML = "";
       CURRENT_BLOB = null;
-      remove_voice_console(form_post)
-      if (document.body.querySelector(".chat_container")) {
-        window.scrollTo({
-          top: document.body.querySelector(".chat_container").scrollHeight,
-          behavior: "smooth"
-        })
-      };
+
     }};
     link_.send(form_data);
   });
