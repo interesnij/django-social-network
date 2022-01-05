@@ -48,7 +48,7 @@ class CreateUserChat(TemplateView):
 			new_chat = self.form.save()
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
 			favourite_messages_count = request.user.favourite_messages_count()
-			get_header_chat = self.chat.get_header_chat(new_chat.pk)
+			get_header_chat = new_chat.get_header_chat(new_chat.pk)
 			if request.POST.get('users'):
 				new_chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
 			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat, 'get_header_chat': get_header_chat, 'favourite_messages_count': favourite_messages_count})
