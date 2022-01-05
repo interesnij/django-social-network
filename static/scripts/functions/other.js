@@ -132,7 +132,7 @@ on('body', 'click', '.body_overlay', function() {
 
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
-  btn_block = input.nextElementSibling.nextElementSibling;
+  btn_block = document.body.querySelector(".input_group_message"); 
   if (input.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
