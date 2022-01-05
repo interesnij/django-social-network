@@ -25,13 +25,16 @@ class CreateUserChat(TemplateView):
 			self.template_name = get_my_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and request.user.get_6_friends():
 			self.template_name = get_my_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.favourite_messages_count = request.user.favourite_messages_count()
+		self.get_header_chat = self.chat.get_header_chat(self.pk)
+
 		return super(CreateUserChat,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		from chat.forms import ChatForm
 
 		c = super(CreateUserChat,self).get_context_data(**kwargs)
-		c["form"], c["member"] = ChatForm(), self.user
+		c["form"], c["member"], c['get_header_chat'], c['favourite_messages_count'] = ChatForm(), self.user, self.get_header_chat, self.favourite_messages_count
 		return c
 
 	def post(self,request,*args,**kwargs):
