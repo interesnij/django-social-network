@@ -7,7 +7,6 @@
 </style>
 
 <h5 class="m-0">Добавление статьи</h5>
-<br><br>
 
 <form id="user_article_form" enctype="multipart/form-data">
     {% csrf_token %}
@@ -15,7 +14,6 @@
         <label>Название статьи (обязательно)</label>
         <input type="text" name="title" class="form-control" id="id_title">
     </div>
-    <br>
     <div class="form-group">
       <span>
         <div class="hide_image">{{ form.g_image }}</div>
@@ -26,11 +24,9 @@
             <i style="">(обязательно)</i>
         </div>
     </div>
-    <br>
     <div class="form-group">
       {{ form.content|safe }}
     </div>
-    <br>
     <div class="form-group ">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" id="comments_enabled2" checked class="custom-control-input" name="comments_enabled">
