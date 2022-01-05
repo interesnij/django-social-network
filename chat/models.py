@@ -482,7 +482,7 @@ class Chat(models.Model):
         return self.chat_relation.get(user_id=user_id)
 
     def get_preview_message(self, user_id):
-        first_message, preview_text, is_read, creator_figure, created = self.get_first_message(user_id), '', '', '', ''
+        first_message, preview_text, is_read, creator_figure, created = self.get_first_message(user_id), '', '', '', 'Сейчас'
 
         if self.is_have_draft_message(user_id):
             message = self.get_draft_message(user_id)
