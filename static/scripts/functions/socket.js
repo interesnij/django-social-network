@@ -258,6 +258,8 @@ event.creator_id != request_user_id
           }
         }
         else if (event.name == "u_message_typed"){
+          console.log("recipient_id", event.recipient_id);
+          console.log("request_user_id", request_user_id);
           if (event.recipient_id != request_user_id){
             case_user_chat_typed(event.chat_id, event.user_name)
           }
