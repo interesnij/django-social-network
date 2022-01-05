@@ -3,7 +3,7 @@
 <div>
 <div class="card" chat-pk="{{ chat.pk }}">
   <div class="card-header">
-      <div class="media">иииии
+      <div class="media">
         <figure>
           {% if chat.image %}
             <img src="{{ chat.image.url }}" style="border-radius:50px;width:50px;" alt="image">
@@ -22,15 +22,12 @@
                 Приватность
               </span>
           {% endif %}
-          {{ is_can_see_log }}
 
           {% if is_can_see_log %}
               <span class="mb-0 user_chat_logs pointer">
-              |  Журнал действий
+              |  Журнал
               </span>
           {% endif %}
-          |
-          <p class="mb-0">{{ chat.get_type_display }}</p>
         </div>
       </div>
   </div>
