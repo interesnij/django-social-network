@@ -3,6 +3,13 @@
   height: 35px;
   width: 100%;
 }
+.fixed_header_chat {
+  position: fixed;
+  z-index: 10;
+  width:97%;
+  height: 37px;
+  top: 44px;
+}
 .pos_sticky {
   position: sticky;
   top: 58px;
