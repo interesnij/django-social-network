@@ -20,7 +20,7 @@ function case_user_chat_typed(pk, first_name) {
     list = document.body.querySelector(".chat_list_container");
     chat = list.querySelector('[data-pk=' + '"' + pk + '"' + ']');
     p = chat.querySelector("p");
-    if (!p.nextElementSibling.innerHTML) {
+    if (p.nextElementSibling && !p.nextElementSibling.innerHTML) {
       p.style.display = "none";
       p.nextElementSibling.innerHTML = first_name + " набирает сообщение...";
       setTimeout(function(){
