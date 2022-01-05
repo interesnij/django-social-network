@@ -15,7 +15,7 @@
     {% for user in request.user.get_6_featured_friends %}
 
     <div class="card border-top">
-        <div class="card-body" style="padding:7px;">
+        <div class="card-body px-0 py-0">
             <div class="media">
               <a href="{{ user.get_link }}" class="ajax">
                 <figure style="width:30px;">
