@@ -3,6 +3,10 @@
   height: 35px;
   width: 100%;
 }
+.pos_sticky {
+  position: sticky;
+  top: 68px;
+}
 .t_f {
   overflow: visible;
 }
