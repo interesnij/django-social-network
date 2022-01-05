@@ -576,11 +576,11 @@ on('#ajax', 'click', '.favourite_messages_list', function() {
   create_fullscreen("/chat/favourites_messages/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_chat_settings', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/user_progs/edit/" + pk + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.user_chat_settings_private', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
+  pk = this.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/user_progs/private/" + pk + "/", "worker_fullscreen");
 });
 on('#ajax', 'click', '.show_attach_files', function() {
