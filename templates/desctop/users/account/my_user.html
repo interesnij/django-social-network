@@ -11,7 +11,8 @@
 <div class="mt-3 pk_saver main-container" data-pk="{{ user.pk }}" data-type="user_main">
 <div class="row user_page">
     <div class="col-lg-4 col-md-5 order-1">
-      <div class="card mb-3">
+      <div class="pos_sticky">
+        <div class="card mb-3">
           <div class="card-body">
               <div class="row align-items-center no-gutters">
                   <a class="col">
@@ -37,7 +38,7 @@
                   <a class="btn btn-sm border ajax" href="{% url 'user_general_form' %}">Редактировать</a>
               </span>
           </div>
-      </div>
+        </div>
 
         {% include 'desctop/users/profile/online_frends.html' %}
 
@@ -52,6 +53,7 @@
         {% include 'desctop/users/profile/my_video.html' %}
 
         {% include 'desctop/users/profile/my_docs.html' %}
+      </div>
     </div>
     <div class="col-lg-8 col-md-7 order-2">
         <div class="card mb-3" style="padding:10px">
