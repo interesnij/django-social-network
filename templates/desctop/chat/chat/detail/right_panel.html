@@ -1,9 +1,10 @@
 <div class="col-12 col-md-4">
-  <div class="card mb-3 mt-3">
+  <div class="pos_sticky">
+    <div class="card mb-3 mt-3">
       <div class="p-1">
         {% include 'desctop/generic/user/card_go_user.html' %}
       </div>
-      </div>
+    </div>
     <button class="btn btn-sm mb-2 border user_create_chat" data-pk="{{ user.pk }}" style="width:100%;">Создать чат</button>
     <div class="card mt-2 {% if not favourite_messages_count %}hidden{% endif %}">
       <div class="card-header">
@@ -12,4 +13,5 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
