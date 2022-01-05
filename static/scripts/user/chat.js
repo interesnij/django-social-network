@@ -134,7 +134,7 @@ async function get_record_stream() {
     if (!context) {
       setUpRecording();
     };
-    TIMER_VALUE = 183;
+    TIMER_VALUE = 603;
   }
 
   function stop() {
