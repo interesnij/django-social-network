@@ -287,10 +287,10 @@ async function get_record_stream() {
   });
 
   on('#ajax', 'click', '#voice_post_btn', function() {
-    stop();
     if (!is_voise_sender_open) {
       return
     };
+    stop();
     is_voise_sender_open = false;
     form_post = this.parentElement.parentElement.parentElement;
     form_post.querySelector('#voice_start_btn').style.display = "block";
