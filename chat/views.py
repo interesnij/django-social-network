@@ -96,7 +96,7 @@ class ChatInfo(ListView):
 	template_name, paginate_by = None, 20
 
 	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_chat
+		from common.templates import get_my_template
 		from chat.models import Chat
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
