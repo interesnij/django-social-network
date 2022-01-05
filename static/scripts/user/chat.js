@@ -286,6 +286,7 @@ async function get_record_stream() {
   });
 
   on('#ajax', 'click', '#voice_post_btn', function() {
+    this.disabled = true;
     stop();
     form_post = this.parentElement.parentElement.parentElement;
     form_post.querySelector('#voice_start_btn').style.display = "block";
@@ -358,6 +359,7 @@ async function get_record_stream() {
       message.classList.remove("new_message");
       message.querySelector(".favourite_icon").innerHTML = "";
       CURRENT_BLOB = null;
+      this.disabled = false;
     }};
     link_.send(form_data);
   });
