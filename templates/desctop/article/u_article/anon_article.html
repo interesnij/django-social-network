@@ -5,7 +5,6 @@
 
     <div class="card-body">
         <h2 class="">{{ object.title }}</h2>
-        <br><br>
         <figure class="">
             {% if object.g_image %}
             <img src="{{ object.g_image.url }}" alt="img">
@@ -14,9 +13,7 @@
             {% endif %}
         </figure>
         <div class="container">
-            <br><br>
             {{ object.content|safe }}
-
         </div>
     </div>
 </div>

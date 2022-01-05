@@ -30,7 +30,6 @@
             {% endif %}
           </h1>
           <span>{% if community.status %} {{ community.status }} {% else %} {{ community.category.name }} {% endif %}</span>
-          <br><br>
           <ul class="list-group list-group-flush w-100">
               <li class="list-group-item px-0">
                   <div class="media experience">
@@ -66,7 +65,6 @@
                   {% endif %}
               </figure>
           </div>
-          <br>
           {% include 'desctop/communities/detail_sections/membersheeps.html' %}
 
         </div>
