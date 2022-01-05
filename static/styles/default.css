@@ -10,6 +10,7 @@ audio {
   height: 25px;
   box-shadow: 5px 5px 20px rgba(0,0, 0, 0.4);
   border-radius: 90px;
+  width: 100%;
 }
 .customize_form audio {
   display: none;
