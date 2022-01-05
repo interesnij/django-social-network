@@ -51,7 +51,7 @@ class CreateUserChat(TemplateView):
 			get_header_chat = self.chat.get_header_chat(new_chat.pk)
 			if request.POST.get('users'):
 				new_chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
-			return render_for_platform(request, 'chat/chat/detail/chat.html', {, 'chat': new_chat, 'get_header_chat': get_header_chat, 'favourite_messages_count': favourite_messages_count})
+			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat, 'get_header_chat': get_header_chat, 'favourite_messages_count': favourite_messages_count})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
