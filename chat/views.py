@@ -101,7 +101,8 @@ class ChatInfo(ListView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		request_user_pk = request.user.pk
-		self.template_name = get_template_user_chat(self.chat, "chat/chat/info/", "info.html", request.user, request.META['HTTP_USER_AGENT'])
+		if request_user_pk in self.chat.get_members_ids():
+			self.template_name = get_my_template("chat/chat/info/info.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.is_can_see_settings = self.chat.is_user_can_see_settings(request_user_pk)
 		self.is_can_add_admin = self.chat.is_user_can_add_admin(request_user_pk)
 		self.is_user_can_add_members = self.chat.is_user_can_add_members(request_user_pk)
