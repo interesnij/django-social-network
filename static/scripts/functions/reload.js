@@ -13,7 +13,7 @@ function get_dragula(block) {
 
 var $serf_history = [], $new_window_list = [], $new_elements = [];
 var user_info = document.body.querySelector(".userpic");
-var $request_user_id = user_info.getAttribute("data-pk");
+var $request_user_id = user_info.getAttribute("data-id");
 var $user_device = user_info.getAttribute("data-device");
 page_time = false, $new_time = 0;
 
