@@ -25,8 +25,6 @@ class CreateUserChat(TemplateView):
 			self.template_name = get_my_template("chat/chat/create_chat_send_message.html", request.user, request.META['HTTP_USER_AGENT'])
 		elif self.user != request.user and request.user.get_6_friends():
 			self.template_name = get_my_template("chat/chat/create_chat_send_message_with_members.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.favourite_messages_count = request.user.favourite_messages_count()
-		self.get_header_chat = self.chat.get_header_chat(self.pk)
 
 		return super(CreateUserChat,self).get(request,*args,**kwargs)
 
@@ -34,7 +32,7 @@ class CreateUserChat(TemplateView):
 		from chat.forms import ChatForm
 
 		c = super(CreateUserChat,self).get_context_data(**kwargs)
-		c["form"], c["member"], c['get_header_chat'], c['favourite_messages_count'] = ChatForm(), self.user, self.get_header_chat, self.favourite_messages_count
+		c["form"], c["member"] = ChatForm(), self.user
 		return c
 
 	def post(self,request,*args,**kwargs):
@@ -49,10 +47,11 @@ class CreateUserChat(TemplateView):
 			new_chat.creator = request.user
 			new_chat = self.form.save()
 			ChatUsers.create_membership(user=request.user, is_administrator=True, chat=new_chat)
-
+			favourite_messages_count = request.user.favourite_messages_count()
+			get_header_chat = self.chat.get_header_chat(new_chat.pk)
 			if request.POST.get('users'):
 				new_chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
-			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat})
+			return render_for_platform(request, 'chat/chat/detail/chat.html', {, 'chat': new_chat, 'get_header_chat': get_header_chat, 'favourite_messages_count': favourite_messages_count})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
