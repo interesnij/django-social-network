@@ -1,4 +1,5 @@
 CURRENT_BLOB = null;
+is_voise_sender_open = true;
 function remove_voice_console(form) {
   form.querySelector('#my_audio').style.display = "none";
   form.querySelector('.delete_voice_btn').style.display = "none";
@@ -286,8 +287,11 @@ async function get_record_stream() {
   });
 
   on('#ajax', 'click', '#voice_post_btn', function() {
-    this.disabled = true;
     stop();
+    if (!is_voise_sender_open) {
+      return
+    };
+    is_voise_sender_open = false;
     form_post = this.parentElement.parentElement.parentElement;
     form_post.querySelector('#voice_start_btn').style.display = "block";
     form_post.querySelector('#voice_post_btn').style.display = "none";
@@ -359,7 +363,7 @@ async function get_record_stream() {
       message.classList.remove("new_message");
       message.querySelector(".favourite_icon").innerHTML = "";
       CURRENT_BLOB = null;
-      this.disabled = false;
+      is_voise_sender_open = true;
     }};
     link_.send(form_data);
   });
