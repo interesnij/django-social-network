@@ -2,7 +2,7 @@
     background: rgba(255, 255, 255, 0.5) !important;
 }
 audio::-webkit-media-controls-panel {
-  background-color: navajowhite;
+  background-color: grey;
 }
 a:hover{
   color: #ffffff !important;
