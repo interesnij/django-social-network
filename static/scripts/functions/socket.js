@@ -184,7 +184,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
 };
 
 
-request_user_id = document.body.querySelector(".userpic").getAttribute("data-pk");
+request_user_id = document.body.querySelector(".userpic").getAttribute("data-id");
 notify = document.body.querySelector(".new_unread_notify");
 notify.querySelector(".tab_badge") ? (notify_count = notify.querySelector(".tab_badge").innerHTML.replace(/\s+/g, ''), notify_count = notify_count*1) : notify_count = 0;
 tab_span = document.createElement("span");
