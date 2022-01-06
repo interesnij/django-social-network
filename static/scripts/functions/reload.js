@@ -559,7 +559,7 @@ function paginate(block) {
                   block.parentElement.insertAdjacentHTML('afterbegin', elem.querySelector(".is_paginate").innerHTML);
                   window.scrollTo({
                     top: elem.querySelector(".is_paginate").scrollHeight,
-                    behavior: "instant"
+                    behavior: "smooth"
                   });
                 }
                 else if (!document.body.querySelector(".chat_container")){
