@@ -1187,7 +1187,7 @@ class Message(models.Model):
             created = time
         else:
             created = datetime.now()
-        message = Message.objects.create(chat=chat, creator=creator, voice=voice, created=created)
+        message = Message.objects.create(chat=chat, creator=creator, voice=voice, created=time)
 
         for recipient in chat.get_recipients_2(creator.pk):
             message.create_socket(recipient.user.pk, recipient.beep())
