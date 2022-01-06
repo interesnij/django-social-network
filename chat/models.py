@@ -8,6 +8,7 @@ from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
 from common.model.other import Stickers
+import django.utils.timezone
 
 
 class Chat(models.Model):
@@ -907,7 +908,7 @@ class Message(models.Model):
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
     #transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now)
     text = models.TextField(max_length=10000, blank=True)
     unread = models.BooleanField(default=True, db_index=True, verbose_name="Не прочитано")
     type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=6, verbose_name="Статус сообщения")
