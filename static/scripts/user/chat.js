@@ -575,6 +575,7 @@ on('#ajax', 'click', '.hide_chat_search', function() {
 });
 
 on('#ajax', 'click', '.u_chat_info', function() {
+  if (this.querySelector("a")) { return };
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk")
   create_fullscreen("/chat/" + pk + "/info/", "worker_fullscreen");
 });
