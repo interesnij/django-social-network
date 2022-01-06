@@ -556,7 +556,11 @@ function paginate(block) {
                 var elem = document.createElement('span');
                 elem.innerHTML = link_3.responseText;
                 if (document.body.querySelector(".chat_container")){
-                  block.parentElement.insertAdjacentHTML('afterbegin', elem.querySelector(".is_paginate").innerHTML)
+                  block.parentElement.insertAdjacentHTML('afterbegin', elem.querySelector(".is_paginate").innerHTML);
+                    window.scrollTo({
+                      top: elem.querySelector(".is_paginate").innerHTML.scrollHeight,
+                      behavior: "smooth"
+                    })
                 }
                 else if (!document.body.querySelector(".chat_container")){
                   block.parentElement.insertAdjacentHTML('beforeend', elem.querySelector(".is_paginate").innerHTML)
