@@ -179,7 +179,7 @@ class UserSendVoiceMessage(View):
 		from chat.forms import MessageForm
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST, request.FILES)
-		if request is_ajax() and request.POST.get('voice'):
+		if request.is_ajax() and request.POST.get('voice'):
 			import json
 			from django.http import HttpResponse
 
