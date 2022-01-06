@@ -189,7 +189,7 @@ class UserSendVoiceMessage(View):
 											chat=chat,
 											creator=request.user,
 											voice=message.voice,
-											time=datetime.datetime.strptime(request.POST.get('time'), '%Y-%m-%d %H:%M:%S.%f')
+											time=datetime.strptime(request.POST.get('time'), '%Y-%m-%d %H:%M:%S.%f')
 											#time=request.POST.get('time').strftime('%Y-%m-%dT%H:%M:%SZ')
 										)
 			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
