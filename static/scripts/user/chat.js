@@ -11,7 +11,7 @@ function remove_voice_console(form) {
   show_message_form_voice_btn();
 };
 
- function get_record_stream() {
+ async function get_record_stream() {
    let TIMER_VALUE = 0;
    let leftchannel = [];
    let rightchannel = [];
