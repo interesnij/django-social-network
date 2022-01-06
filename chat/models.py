@@ -1120,20 +1120,24 @@ class Message(models.Model):
             current_chat.attach = attach
             current_chat.save(update_fields=["attach"])
 
-    def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer):
+    def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer, time=None):
         # программа для отсылки сообщения в чате
         from datetime import datetime
 
         _text = Message.get_format_text(text)
+        if time:
+            created = time
+        else:
+            created = datetime.now()
 
         if parent:
             parent_id = parent
         else:
             parent_id = None
         if voice:
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, voice=voice, parent_id=parent_id, created=created)
         elif sticker:
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, sticker_id=sticker, parent_id=parent_id, created=created)
             from common.model.other import UserPopulateStickers
             UserPopulateStickers.get_plus_or_create(user_pk=creator.pk, sticker_pk=sticker)
         else:
@@ -1144,7 +1148,7 @@ class Message(models.Model):
                     from common.model.other import UserPopulateSmiles
                     for id in ids:
                         UserPopulateSmiles.get_plus_or_create(user_pk=creator.pk, smile_pk=id)
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id)
+            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach), parent_id=parent_id, created=created)
             if transfer:
                 for i in transfer:
                     MessageTransfers.objects.create(message_id=message.uuid, transfer_id=i)
