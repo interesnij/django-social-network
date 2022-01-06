@@ -558,7 +558,7 @@ function paginate(block) {
                 if (document.body.querySelector(".chat_container")){
                   block.parentElement.insertAdjacentHTML('afterbegin', elem.querySelector(".is_paginate").innerHTML);
                     window.scrollTo({
-                      top: 2000,
+                      top: elem.querySelector(".is_paginate").scrollHeight,
                       behavior: "smooth"
                     })
                 }
