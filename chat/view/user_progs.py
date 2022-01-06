@@ -151,7 +151,6 @@ from django.views import View
 
 class UserSendMessage(View):
 	def post(self,request,*args,**kwargs):
-		from common.templates import render_for_platform
 		from chat.models import Message, Chat
 		from chat.forms import MessageForm
 
@@ -170,7 +169,13 @@ class UserSendMessage(View):
 											transfer=request.POST.getlist('transfer'),
 											attach=request.POST.getlist('attach_items'),
 											time=request.POST.get('time'))
-			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
+			if new_message.voice:
+				import json
+				from django.http import HttpResponse
+				return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
+			else:
+				from common.templates import render_for_platform
+				return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
