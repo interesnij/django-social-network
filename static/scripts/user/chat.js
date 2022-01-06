@@ -31,7 +31,6 @@ function remove_voice_console(form) {
    let tested = false;
    let timer_block = document.body.querySelector(".smile_supported");
 
-  async function init() {
   if (!document.body.querySelector(".mic_visual_canvas")) {
     return
   };
@@ -88,7 +87,6 @@ function remove_voice_console(form) {
     };
     visualize();
   };
-};
 
   function getStream(constraints) {
     if (!constraints) {
