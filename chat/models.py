@@ -1120,7 +1120,7 @@ class Message(models.Model):
             current_chat.attach = attach
             current_chat.save(update_fields=["attach"])
 
-    def send_message(chat, creator, repost, parent, text, attach, voice, sticker, transfer, time=None):
+    def send_message(chat, creator, repost, parent, text, attach, voice=None, sticker, transfer, time=None):
         # программа для отсылки сообщения в чате
         from datetime import datetime
 
