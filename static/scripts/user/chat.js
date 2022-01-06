@@ -953,7 +953,7 @@ function send_message (form_post, url) {
     elem = link_.responseText;
     new_post = document.createElement("span");
     new_post.innerHTML = elem;
-    message_load.insertAdjacentHTML('beforeend', new_post);
+    message_load.insertAdjacentHTML('beforeend', new_post.innerHTML);
     message_load.querySelector(".items_empty") ? message_load.querySelector(".items_empty").style.display = "none" : null;
     form_post.querySelector(".message_text").classList.remove("border_red");
     form_post.querySelector(".hide_block_menu").classList.remove("show");
