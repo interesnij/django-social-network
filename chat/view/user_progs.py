@@ -196,7 +196,7 @@ class UserSendVoiceMessage(View):
 											transfer=None,
 											attach=None,
 											time=request.POST.get('time'))
-				return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
+			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
