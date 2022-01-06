@@ -968,7 +968,14 @@ function send_message (form_post, url) {
         behavior: "smooth"
       })
     };
-  }};
+  }  else {
+        new_post = document.createElement("span");
+        new_post.innerHTML = link_.responseText;
+        if (new_post.querySelector(".exception_value")){
+          text = new_post.querySelector(".exception_value").innerHTML;
+          toast_info(text)
+        }
+    }};
   link_.send(form_data);
 };
 
