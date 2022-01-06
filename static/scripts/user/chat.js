@@ -12,6 +12,7 @@ function remove_voice_console(form) {
 };
 
 async function get_record_stream() {
+  function init() {
   if (!document.body.querySelector(".mic_visual_canvas")) {
     return
   };
@@ -49,7 +50,10 @@ async function get_record_stream() {
       mics.push(deviceInfo);
       let label = deviceInfo.label || 'микрофон ' + mics.length;
     }
-  }
+  };
+  setUpRecording();
+
+};
 
   function getStream(constraints) {
     if (!constraints) {
@@ -57,8 +61,6 @@ async function get_record_stream() {
     }
     return navigator.mediaDevices.getUserMedia(constraints);
   }
-
-  setUpRecording();
 
   function setUpRecording() {
     context = new AudioContext();
@@ -249,7 +251,7 @@ async function get_record_stream() {
   }, 1000);
 
   on('#ajax', 'click', '#voice_start_btn', function() {
-      get_record_stream();
+      init();
       console.log('Start recording');
       form = this.parentElement.parentElement;
       form.querySelector('.delete_voice_btn').style.display = "block";
@@ -368,8 +370,8 @@ async function get_record_stream() {
     }};
     link_2.send(form_data);
   });
-
 };
+get_record_stream();
 
 function get_toggle_messages() {
   list = document.body.querySelectorAll(".target_message");
@@ -1128,6 +1130,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
       }
+      get_record_stream();
       }
     ajax_link.send();
 });
