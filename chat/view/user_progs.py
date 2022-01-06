@@ -189,6 +189,7 @@ class UserSendVoiceMessage(View):
 											creator=request.user,
 											voice=message.voice,
 											time=request.POST.get('time').strftime('%Y-%m-%dT%H:%M:%SZ')
+										)
 			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
 		else:
 			from django.http import HttpResponseBadRequest
