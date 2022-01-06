@@ -13,27 +13,28 @@ function remove_voice_console(form) {
 
  function get_record_stream() {
    let TIMER_VALUE = 0;
+   let leftchannel = [];
+   let rightchannel = [];
+   let recorder = null;
+   let recording = false;
+   let recordingLength = 0;
+   let volume = null;
+   let audioInput = null;
+   let sampleRate = null;
+   let AudioContext = window.AudioContext || window.webkitAudioContext;
+   let context = null;
+   let analyser = null;
+   let canvas = document.body.querySelector('.mic_visual_canvas');
+   let canvasCtx = canvas.getContext("2d");
+   let visualSelect = "";
+   let stream = null;
+   let tested = false;
+   let timer_block = document.body.querySelector(".smile_supported");
+   
   async function init() {
   if (!document.body.querySelector(".mic_visual_canvas")) {
     return
   };
-  let leftchannel = [];
-  let rightchannel = [];
-  let recorder = null;
-  let recording = false;
-  let recordingLength = 0;
-  let volume = null;
-  let audioInput = null;
-  let sampleRate = null;
-  let AudioContext = window.AudioContext || window.webkitAudioContext;
-  let context = null;
-  let analyser = null;
-  let canvas = document.body.querySelector('.mic_visual_canvas');
-  let canvasCtx = canvas.getContext("2d");
-  let visualSelect = "";
-  let stream = null;
-  let tested = false;
-  let timer_block = document.body.querySelector(".smile_supported");
 
   try {
     window.stream = stream = await getStream();
