@@ -1129,7 +1129,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
       }
-      get_record_stream();
       }
     ajax_link.send();
 });
