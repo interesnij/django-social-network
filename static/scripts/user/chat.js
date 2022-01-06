@@ -248,21 +248,6 @@ function remove_voice_console(form) {
     --TIMER_VALUE;
   }, 1000);
 
-  on('#ajax', 'click', '#voice_start_btn', function() {
-      init();
-      console.log('Start recording');
-      form = this.parentElement.parentElement;
-      form.querySelector('.delete_voice_btn').style.display = "block";
-      form.querySelector('.file_dropdown_2').style.display = "none";
-      form.querySelector('.form_smilies').style.display = "none";
-      form.parentElement.querySelector('.mic_visual_canvas').style.display = "block";
-      form.querySelector('.voice_stop_btn').style.display = "block";
-
-      form.querySelector('#voice_start_btn').style.display = "none";
-      form.querySelector('#voice_post_btn').style.display = "block";
-      form.querySelector("#my_audio").setAttribute("name", "voice");
-      start();
-    });
   on('#ajax', 'click', '.voice_stop_btn', function() {
     form = document.querySelector(".customize_form");
     smile_supported = form.querySelector('.smile_supported');
@@ -368,8 +353,23 @@ function remove_voice_console(form) {
     }};
     link_2.send(form_data);
   });
+  start();
 };
-get_record_stream();
+
+on('#ajax', 'click', '#voice_start_btn', function() {
+    get_record_stream();
+    console.log('Start recording');
+    form = this.parentElement.parentElement;
+    form.querySelector('.delete_voice_btn').style.display = "block";
+    form.querySelector('.file_dropdown_2').style.display = "none";
+    form.querySelector('.form_smilies').style.display = "none";
+    form.parentElement.querySelector('.mic_visual_canvas').style.display = "block";
+    form.querySelector('.voice_stop_btn').style.display = "block";
+
+    form.querySelector('#voice_start_btn').style.display = "none";
+    form.querySelector('#voice_post_btn').style.display = "block";
+    form.querySelector("#my_audio").setAttribute("name", "voice");
+  });
 
 function get_toggle_messages() {
   list = document.body.querySelectorAll(".target_message");
