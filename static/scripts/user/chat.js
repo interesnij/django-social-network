@@ -249,6 +249,7 @@ async function get_record_stream() {
   }, 1000);
 
   on('#ajax', 'click', '#voice_start_btn', function() {
+      get_record_stream();
       console.log('Start recording');
       form = this.parentElement.parentElement;
       form.querySelector('.delete_voice_btn').style.display = "block";
@@ -369,8 +370,6 @@ async function get_record_stream() {
   });
 
 };
-
-get_record_stream();
 
 function get_toggle_messages() {
   list = document.body.querySelectorAll(".target_message");
@@ -1128,8 +1127,7 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         if (document.body.querySelector(".left_panel_menu")) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));
         };
-        get_record_stream();
-        }
+      }
       }
     ajax_link.send();
 });
