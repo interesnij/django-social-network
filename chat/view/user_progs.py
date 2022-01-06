@@ -351,7 +351,7 @@ class ExitUserFromUserChat(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and chat.creator == request.user:
+		if request.is_ajax() and request.user.pk in chat.get_members_ids():
 			chat.exit_member(user=request.user)
 			return HttpResponse()
 		else:
