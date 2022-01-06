@@ -277,6 +277,7 @@ function remove_voice_console(form) {
       return
     };
     stop();
+    clearInterval(voice_timer);
     is_voise_sender_open = false;
     form_post = this.parentElement.parentElement.parentElement;
     form_post.querySelector('#voice_start_btn').style.display = "block";
