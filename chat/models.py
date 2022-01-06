@@ -1180,20 +1180,16 @@ class Message(models.Model):
             message.create_socket(recipient.user.pk, recipient.beep())
         return message
 
-    def send_voice_message(chat, creator, voice, time=None):
+    def send_voice_message(chat, creator, voice, time):
         # программа для отсылки голосового сообщения в чате
         from datetime import datetime
 
-        if time:
-            created = time
-        else:
-            created = datetime.now()
         message = Message.objects.create(chat=chat, creator=creator, voice=voice, created=time)
 
         for recipient in chat.get_recipients_2(creator.pk):
             message.create_socket(recipient.user.pk, recipient.beep())
 
-        chat.created = created
+        chat.created = datetime.now()
         chat.save(update_fields=["created"])
 
         for recipient in chat.get_recipients_2(creator.pk):
