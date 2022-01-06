@@ -8,7 +8,7 @@ from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
 from common.model.other import Stickers
-import django.utils.timezone
+from django.utils import timezone
 
 
 class Chat(models.Model):
