@@ -163,7 +163,6 @@ class UserSendMessage(View):
 											creator=request.user,
 											repost=None,
 											text=message.text,
-											voice=None,
 											sticker=request.POST.get('sticker'),
 											parent=request.POST.get('parent'),
 											transfer=request.POST.getlist('transfer'),

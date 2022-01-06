@@ -964,7 +964,7 @@ function send_message (form_post, url) {
     show_message_form_voice_btn();
     if (document.querySelector(".chat_container")) {
       window.scrollTo({
-        top: message_load..scrollHeight,
+        top: message_load.scrollHeight,
         behavior: "smooth"
       })
     };
