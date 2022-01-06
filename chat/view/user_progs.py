@@ -348,7 +348,7 @@ class ExitUserFromUserChat(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
 		from chat.models import Chat
-		from django.http import HttpResponse
+		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and chat.creator == request.user:
@@ -361,7 +361,7 @@ class ExitUserFromUserChat(View):
 class UserChatAdminCreate(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from django.http import HttpResponse
+		from django.http import HttpResponse, Http404
 		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
@@ -374,7 +374,7 @@ class UserChatAdminCreate(View):
 class UserChatAdminDelete(View):
 	def get(self,request,*args,**kwargs):
 		from users.models import User
-		from django.http import HttpResponse
+		from django.http import HttpResponse, Http404
 		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
@@ -388,7 +388,7 @@ class UserChatAdminDelete(View):
 class UserChatBeepOff(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat, ChatUsers
-		from django.http import HttpResponse
+		from django.http import HttpResponse, Http404
 		from datetime import datetime, timedelta
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
@@ -404,7 +404,7 @@ class UserChatBeepOff(View):
 class UserChatBeepOn(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat, ChatUsers
-		from django.http import HttpResponse
+		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
