@@ -344,7 +344,6 @@ async function get_record_stream() {
 
     form_data = new FormData(form_post);
     form_data.append("voice", CURRENT_BLOB, 'fileName.wav');
-    form_data.append("text", "voice");
     form_data.append("time", new Date().toLocaleString());
 
     pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
@@ -836,7 +835,7 @@ function send_message_sticker(url, value) {
       form_post.querySelector(".sticker").remove();
       if (document.querySelector(".chat_container")) {
         window.scrollTo({
-          top: 12000,
+          top: message_load.scrollHeight,
           behavior: "smooth"
         })
       };
@@ -965,7 +964,7 @@ function send_message (form_post, url) {
     show_message_form_voice_btn();
     if (document.querySelector(".chat_container")) {
       window.scrollTo({
-        top: 12000,
+        top: message_load..scrollHeight,
         behavior: "smooth"
       })
     };
