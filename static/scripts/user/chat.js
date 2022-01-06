@@ -348,13 +348,13 @@ async function get_record_stream() {
 
     pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
-    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_.open( 'POST', "/chat/user_progs/send_voice_message/" + pk + "/", true );
-    link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    link_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link_2.open( 'POST', "/chat/user_progs/send_voice_message/" + pk + "/", true );
+    link_2.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-    link_.onreadystatechange = function () {
+    link_2.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
-      jsonResponse = JSON.parse(link_.responseText);
+      jsonResponse = JSON.parse(link_2.responseText);
       uuid = jsonResponse.uuid;
       message = message_load.querySelector(".new_message");
       message.setAttribute("data-pk", uuid);
@@ -365,7 +365,7 @@ async function get_record_stream() {
       CURRENT_BLOB = null;
       is_voise_sender_open = true;
     }};
-    link_.send(form_data);
+    link_2.send(form_data);
   });
 
 };
