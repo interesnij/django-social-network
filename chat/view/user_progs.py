@@ -180,22 +180,15 @@ class UserSendVoiceMessage(View):
 		from chat.forms import MessageForm
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST, request.FILES)
-		if request.is_ajax() and request.POST.get('time'):
+		if request.is_ajax():
 			import json
 			from django.http import HttpResponse
 
 			message = form_post.save(commit=False)
-
-			new_message = Message.send_message(
+			new_message = Message.send_voice_message(
 											chat=chat,
 											creator=request.user,
-											repost=None,
-											text='',
 											voice=message.voice,
-											sticker=None,
-											parent=None,
-											transfer=None,
-											attach=None,
 											time=request.POST.get('time'))
 			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
 		else:
