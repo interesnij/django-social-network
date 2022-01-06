@@ -169,7 +169,7 @@ class UserSendMessage(View):
 											parent=request.POST.get('parent'),
 											transfer=request.POST.getlist('transfer'),
 											attach=request.POST.getlist('attach_items'),
-											parent=request.GET.get('time'))
+											time=request.GET.get('time'))
 			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
 		else:
 			from django.http import HttpResponseBadRequest
