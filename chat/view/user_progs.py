@@ -183,11 +183,12 @@ class UserSendVoiceMessage(View):
 			import json
 			from django.http import HttpResponse
 			from datetime import datetime
+			import dateutil.parser as dt
 
 			message = form_post.save(commit=False)
 			if request.POST.get('time'):
 				_time = request.POST.get('time')
-				time = datetime.strptime(_time, "%a, %d %b %Y %H:%M:%S %Z")
+				time = dt.parse(_time)
 			else:
 				time = None
 
