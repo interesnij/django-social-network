@@ -11,7 +11,7 @@ class ChatUsersAdmin(admin.ModelAdmin):
     list_filter = ("user", )
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ("chat",  "text", "unread")
+    list_display = ("chat", "created", "text", "type", "unread")
     list_filter = ("creator", )
 
 
