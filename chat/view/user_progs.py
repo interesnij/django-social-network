@@ -185,11 +185,17 @@ class UserSendVoiceMessage(View):
 			from datetime import datetime
 
 			message = form_post.save(commit=False)
+			if request.POST.get('time'):
+				_time = request.POST.get('time')
+				time = datetime.strptime(_time, "%a, %d %b %Y %H:%M:%S %Z")
+			else:
+				time = None
+
 			new_message = Message.send_voice_message(
 											chat=chat,
 											creator=request.user,
 											voice=message.voice,
-											time=datetime.strptime(request.POST.get('time'), '%Y-%m-%d %H:%M:%S.%f')
+											time=time
 											#time=request.POST.get('time').strftime('%Y-%m-%dT%H:%M:%SZ')
 										)
 			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
