@@ -11,8 +11,8 @@ function remove_voice_console(form) {
   show_message_form_voice_btn();
 };
 
-async function get_record_stream() {
-  function init() {
+ function get_record_stream() {
+  async function init() {
   if (!document.body.querySelector(".mic_visual_canvas")) {
     return
   };
