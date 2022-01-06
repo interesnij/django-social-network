@@ -350,7 +350,7 @@ async function get_record_stream() {
     pk = document.body.querySelector(".pk_saver").getAttribute("chat-pk");
 
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link_.open( 'POST', "/chat/user_progs/send_message/" + pk + "/", true );
+    link_.open( 'POST', "/chat/user_progs/send_voice_message/" + pk + "/", true );
     link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
     link_.onreadystatechange = function () {

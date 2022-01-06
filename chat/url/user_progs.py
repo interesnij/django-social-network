@@ -5,6 +5,7 @@ from chat.view.user_progs import *
 urlpatterns = [
     url(r'^send_page_message/(?P<pk>\d+)/$', UserSendPageMessage.as_view()),
     url(r'^send_message/(?P<pk>\d+)/$', UserSendMessage.as_view()),
+    url(r'^send_voice_message/(?P<pk>\d+)/$', UserSendVoiceMessage.as_view()),
     url(r'^save_draft_message/(?P<pk>\d+)/$', UserSaveDraftMessage.as_view()),
     url(r'^edit_message/(?P<uuid>[0-9a-f-]+)/$', UserMessageEdit.as_view()),
     url(r'^load_chat_message/(?P<uuid>[0-9a-f-]+)/$', LoadUserChatMessage.as_view()),
