@@ -114,6 +114,7 @@ function plus_1_badge_message() {
   } else {
     tab_badge = document.createElement("span");
     tab_badge.classList.add("border", "tab_badge_left_menu");
+    chats.append(tab_badge);
     count = 0;
   }
   count += 1;
