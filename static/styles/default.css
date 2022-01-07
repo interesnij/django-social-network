@@ -4,9 +4,9 @@
   width: 100%;
 }
 .tab_badge_left_menu {
-  font-size: 55%;
+  font-size: 55% !important;
   margin-left: 2px;
-  padding: 3px
+  padding: 3px !important
 }
 .fixed_header_chat {
   position: fixed;
