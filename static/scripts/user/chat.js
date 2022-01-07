@@ -1125,12 +1125,12 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         window.history.pushState(null, "vfgffgfgf", url);
 
         chats = document.body.querySelector(".new_unread_chats");
-        if (chats.querySelector(".tab_badge") && _this.querySelector(".tab_badge")) {
-          all_count = chats.innerHTML.replace(/\s+/g, '');
+        if (chats.querySelector(".tab_badge_left_menu") && _this.querySelector(".tab_badge")) {
+          tab_badge = chats.querySelector(".tab_badge_left_menu");
+          all_count = tab_badge.innerHTML.replace(/\s+/g, '');
           all_count = all_count * 1;
           result = all_count - 1;
-          result > 0 ? chats.innerHTML = result : chats.innerHTML = '';
-          console.log("Вычитаем 1, так как в чате есть непрочитанные сообщения")
+          result > 0 ? tab_badge.innerHTML = result : chats.querySelector(".tab_badge_left_menu").remove();
         };
         if (document.body.querySelector(".left_panel_menu")) {
           setEndOfContenteditable(document.body.querySelector(".message_text"));

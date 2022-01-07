@@ -107,11 +107,18 @@ function case_c_photo_repost_notify(uuid) {
 
 function plus_1_badge_message() {
   chats = document.body.querySelector(".new_unread_chats");
-  chats.innerHTML ? (count = chats.innerHTML.replace(/\s+/g, ''), count = count*1) : count = 0;
+  if (chats.innerHTML) {
+    tab_badge = chats.querySelector(".tab_badge_left_menu");
+    count = tab_badge.innerHTML.replace(/\s+/g, '');
+    count = count*1
+  } else {
+    tab_badge = document.createElement("span");
+    tab_badge.classList.add("border", "tab_badge_left_menu");
+    count = 0;
+  }
   count += 1;
-  chats.classList.add("border", "tab-badge", "tab_badge_left_menu");
-  chats.innerHTML = "";
-  chats.innerHTML = count;
+  tab_badge.innerHTML = "";
+  tab_badge.innerHTML = count;
 }
 
 function case_u_post_create(uuid) {
