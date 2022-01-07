@@ -156,7 +156,7 @@ function case_u_message_create(chat_id, message_uuid, beep) {
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
 
-          tab_badge = new_post.querySelector(".tab_badge custom_color");
+          tab_badge = new_post.querySelector(".tab_badge");
           tab_badge_count = tab_badge.innerHTML.replace(/\s+/g, '');
           tab_badge_count = tab_badge_count*1;
           if (tab_badge_count == 1) {
