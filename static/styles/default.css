@@ -3,6 +3,11 @@
   height: 35px;
   width: 100%;
 }
+.tab_badge_left_menu {
+  font-size: 55%;
+  margin-left: 2px;
+  padding: 3px
+}
 .fixed_header_chat {
   position: fixed;
   z-index: 10;
