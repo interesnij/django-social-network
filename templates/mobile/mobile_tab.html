@@ -13,7 +13,7 @@
       <p class="small">Сигналы</p>
       <span id="notification" class="new_unread_notify bottom_nav_counter">
         {% if request.user.unread_notify_count %}
-          <span class="tab_badge badge-success">{{ request.user.unread_notify_count }}</span>
+          <span class="tab_badge custom_color">{{ request.user.unread_notify_count }}</span>
         {% endif %}
       </span>
     </button>
@@ -22,7 +22,7 @@
       <p class="small">Беседы</p>
         <span class="new_unread_chats bottom_nav_counter">
           {% if request.user.get_unread_chats %}
-            <span class="tab_badge badge-success">{{ request.user.get_unread_chats }}</span>
+            <span class="tab_badge custom_color">{{ request.user.get_unread_chats }}</span>
           {% endif %}
         </span>
     </button>
