@@ -1515,7 +1515,7 @@ class User(AbstractUser):
     def get_unread_chats(self):
         chats, count = self.get_all_chats(), 0
         for chat in chats:
-            if chat.chat_message.filter(unread=True, type__contains="_").exclude(creator_id=self.pk).exists():
+            if chat.chat_message.filter(unread=True).exclude(creator_id=self.pk, type__contains="_").exists():
                 count += 1
         if count > 0:
             return count
