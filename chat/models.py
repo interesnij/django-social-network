@@ -1157,9 +1157,6 @@ class Message(models.Model):
                 MessageTransfers.objects.filter(message_id=_message.uuid).delete()
                 _message.save(update_fields=["text","attach","parent_id"])
 
-        for recipient in chat.get_recipients_2(creator.pk):
-            message.create_socket(recipient.user.pk, recipient.beep())
-
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
         if attach:
@@ -1180,9 +1177,6 @@ class Message(models.Model):
         from datetime import datetime
 
         message = Message.objects.create(chat=chat, creator=creator, voice=voice, created=time)
-
-        for recipient in chat.get_recipients_2(creator.pk):
-            message.create_socket(recipient.user.pk, recipient.beep())
 
         chat.created = datetime.now()
         chat.save(update_fields=["created"])
