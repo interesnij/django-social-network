@@ -985,11 +985,6 @@ class Message(models.Model):
 
         return '<div class="media p-1" data-uuid="' + str(parent.uuid) + '" style="border-left: 1px solid rgba(0, 0, 0, 0.7)"><span style="padding-top: 6px;"><a href="' + user.get_link() + '" class="ajax">' + user.get_s_avatar() + '</a></span><div class="media-body" style="line-height: 1em;padding-left: 3px;"><p class="time-title mb-0"><a href="' + user.get_link()  + '" class="ajax">' + user.get_full_name() + '</a></p><small class="text-muted">' + parent.get_created() + '</small><p class="text">' + preview + '</p></div></div>'
 
-    def mark_as_read(self):
-        if self.unread:
-            self.unread = False
-            self.save()
-
     def get_creator(self):
         return self.creator.user
     def get_recipient(self):

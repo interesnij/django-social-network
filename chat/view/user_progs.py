@@ -116,8 +116,6 @@ class LoadUserChatMessage(TemplateView):
 		from chat.models import Message
 
 		self.message, self.template_name = Message.objects.get(uuid=self.kwargs["uuid"]), get_my_template("chat/message/load_chat_message.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.message.unread = False
-		self.message.save(update_fields=["unread"])
 		return super(LoadUserChatMessage,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
