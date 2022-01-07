@@ -107,7 +107,7 @@ function case_c_photo_repost_notify(uuid) {
 
 function plus_1_badge_message() {
   chats = document.body.querySelector(".new_unread_chats");
-  if (chats.innerHTML) {
+  if (chats.querySelector(".tab_badge_left_menu")) {
     tab_badge = chats.querySelector(".tab_badge_left_menu");
     count = tab_badge.innerHTML.replace(/\s+/g, '');
     count = count*1
