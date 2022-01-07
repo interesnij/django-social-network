@@ -20,7 +20,7 @@
           &nbsp;Сообщения
           <span class="new_unread_chats">
             {% if request.user.get_unread_chats %}
-              <span class="tab_badge border" style="font-size: 55%;margin-left: 2px;">{{ request.user.get_unread_chats }}</span>
+              <span class="tab_badge border tab_badge_left_menu">{{ request.user.get_unread_chats }}</span>
             {% endif %}
           </span>
         </a>
@@ -30,7 +30,7 @@
         </div>
           &nbsp;Друзья
           {% if request.user.is_no_view_followers %}
-            <span class="badge border new_followers_bagde" style="font-size: 55%;margin-left: 1px;">{{ request.user.count_no_view_followers }}</span>
+            <span class="badge border new_followers_bagde tab_badge_left_menu">{{ request.user.count_no_view_followers }}</span>
           {% endif %}
         </a>
         <a class="ajax" href="{% url 'communities' pk=request.user.pk %}">
