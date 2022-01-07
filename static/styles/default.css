@@ -5,7 +5,7 @@
 }
 .tab_badge_left_menu {
   font-size: 55% !important;
-  margin-left: 2px;
+  margin-left: -2px;
   padding: 3px !important
 }
 .fixed_header_chat {
