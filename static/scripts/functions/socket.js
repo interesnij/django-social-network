@@ -150,11 +150,18 @@ function case_u_message_create(chat_id, message_uuid, beep) {
 
   link_.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-          plus_1_badge_message();
+
           lenta = document.body.querySelector('.is_paginate');
           elem = link_.responseText;
           new_post = document.createElement("span");
           new_post.innerHTML = elem;
+
+          tab_badge = new_post.querySelector(".tab_badge custom_color");
+          tab_badge_count = tab_badge.innerHTML.replace(/\s+/g, '');
+          tab_badge_count = tab_badge_count*1;
+          if (tab_badge_count == 1) {
+            plus_1_badge_message()
+          };
           lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']') ? (li = lenta.querySelector('[data-pk=' + '"' + chat_id + '"' + ']'), li.innerHTML = new_post.innerHTML)
           : lenta.prepend(new_post);
           document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null}}
