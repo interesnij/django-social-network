@@ -20,4 +20,4 @@ admin.site.register(ChatUsers, ChatUsersAdmin)
 admin.site.register(Message, MessageAdmin)
 
 admin.site.register(MessageVersion)
-admin.site.register(ChatPerm)
+admin.site.register(MessageOptions) 
