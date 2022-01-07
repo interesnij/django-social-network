@@ -20,7 +20,7 @@
           &nbsp;Сообщения
           <span class="new_unread_chats">
             {% if request.user.get_unread_chats %}
-            <span class="tab_badge border tab_badge_left_menu">
+            <span class="border tab_badge_left_menu">
               {{ request.user.get_unread_chats }}
             </span>
             {% endif %}
