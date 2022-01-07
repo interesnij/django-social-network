@@ -459,7 +459,7 @@ class Chat(models.Model):
             return ""
 
     def get_unread_message(self, user_id):
-        return self.chat_message.filter(unread=True, type__contains="_").exclude(creator_id=user_id)
+        return self.chat_message.filter(unread=True).exclude(creator_id=user_id, type__contains="_")
     def read_messages(self, user_id):
         self.chat_message.filter(unread=True).exclude(creator_id=user_id).update(unread=False)
 
