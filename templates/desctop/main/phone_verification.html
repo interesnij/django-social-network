@@ -90,15 +90,6 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-4" style="display: inline-flex;margin-top: 12px;margin-bottom: 12px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="padding: 0;">
-                              <select name="first_number" id="id_first_number" style="width: auto;cursor:pointer">
-                                <option value="7" selected="">+7</option>
-                                <option value="375">+375</option>
-                                <option value="380">+380</option>
-                              </select>
-                            </span>
-                        </div>
                         <input type="number" id="phone" min="0" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
                         <hr class="my-0">
                     </div>
@@ -150,9 +141,19 @@
             }
 
             document.getElementById("phone_send").addEventListener("click", (e) => {
-                var phone = document.getElementById('id_first_number').value + document.getElementById('phone').value;
+                _user_phone = document.getElementById('phone').value;
+                _user_phone = phone.replace(/[^0-9]/g, '');
+
+                if (_user_phone[0] == "+7") {
+                  _user_phone = _user_phone.slice(2)
+                }
+            		else if (_user_phone[0] == "8") {
+            			_user_phone = _user_phone.slice(1)
+            		};
+                _user_phone = 7 + _user_phone;
+
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                request.open('GET', "/users/progs/phone_send/" + phone + "/", true);
+                request.open('GET', "/users/progs/phone_send/" + _user_phone + "/", true);
                 request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 request.onreadystatechange = function() {
                     if (request.readyState == 4 && request.status == 200) {
@@ -165,10 +166,20 @@
                 request.send(null);
             });
             on('#ajax', 'click', '#code_send', function() {
-                var phone = document.getElementById('id_first_number').value + document.getElementById('phone').value;
+              _user_phone = document.getElementById('phone').value;
+              _user_phone = phone.replace(/[^0-9]/g, '');
+
+              if (_user_phone[0] == "+7") {
+                _user_phone = _user_phone.slice(2)
+              }
+              else if (_user_phone[0] == "8") {
+                _user_phone = _user_phone.slice(1)
+              };
+              _user_phone = 7 + _user_phone;
+
                 var code = document.getElementById('code').value;
                 var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
+                request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
                 request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 request.onreadystatechange = function() {
                     if (request.readyState == 4 && request.status == 200) {
@@ -182,15 +193,6 @@
                 };
                 request.send(null)
             });
-            var gender = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            gender.open('GET', "/users/progs/get_gender/", true);
-            gender.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            gender.onreadystatechange = function() {
-                if (gender.readyState == 4 && gender.status == 200) {
-                    console.log("Пол сохранен!");
-                }
-            };
-            gender.send(null)
         </script>
 </body>
 </html>

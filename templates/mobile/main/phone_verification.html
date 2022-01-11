@@ -11,9 +11,6 @@
       Ваш номер телефона станет известен только администрации соцсети.
     </p>
     <div style="display: flex;margin: 5px;" class="mt-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text">{{ request.user.get_last_location.phone }}</span>
-      </div>
       <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
     </div>
     <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient" style="margin: 5px;">Получить код</button>
@@ -60,9 +57,18 @@
        }
 
        document.getElementById("phone_send").addEventListener("click", (e) => {
-        phone = form.querySelector('#id_first_number').value + form.querySelector('#phone').value;
+         _this.disabled = true;
+         form.querySelector("#id_username").style.display = "none";
+         if (_user_phone[0] == "+7") {
+           _user_phone = _user_phone.slice(2)
+         }
+     		else if (_user_phone[0] == "8") {
+     			_user_phone = _user_phone.slice(1)
+     		};
+        form.querySelector("#id_username").value = 7 + _user_phone;
+
        var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-       request.open( 'GET', "/users/progs/phone_send/" + phone + "/", true );
+       request.open( 'GET', "/users/progs/phone_send/" + _user_phone + "/", true );
        request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
        request.onreadystatechange = function () {
          if ( request.readyState == 4 && request.status == 200) {
@@ -76,10 +82,18 @@
      });
 
      on('#ajax', 'click', '#code_send', function() {
-         var phone = document.getElementById('phone').value;
+       _this.disabled = true;
+       form.querySelector("#id_username").style.display = "none";
+       if (_user_phone[0] == "+7") {
+         _user_phone = _user_phone.slice(2)
+       }
+      else if (_user_phone[0] == "8") {
+        _user_phone = _user_phone.slice(1)
+      };
+      form.querySelector("#id_username").value = 7 + _user_phone;
          var code = document.getElementById('code').value;
          var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-         request.open('GET', "/users/progs/phone_verify/" + phone + "/" + code + "/", true);
+         request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
          request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
          request.onreadystatechange = function() {
              if (request.readyState == 4 && request.status == 200) {
