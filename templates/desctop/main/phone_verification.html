@@ -144,7 +144,7 @@
                 _user_phone = document.getElementById('phone').value;
                 _user_phone = _user_phone.replace(/[^0-9]/g, '');
 
-                if (_user_phone[0] == "+7") {
+                if (_user_phone[:2] == "+7") {
                   _user_phone = _user_phone.slice(2)
                 }
             		else if (_user_phone[0] == "8") {
