@@ -549,7 +549,9 @@ on('body', 'click', '#register_ajax', function() {
 });
 on('body', 'click', '#logg', function() {
   form = document.querySelector("#login_form");
-  if (!form.querySelector("#id_username").value){
+  user_phone = form.querySelector("#id_username").value;
+  _user_phone = user_phone.replace(/[^0-9]/g, '');
+  if (!_user_phone){
     form.querySelector("#id_username").style.border = "1px #FF0000 solid";
     toast_error("Введите телефон!");
     return
@@ -559,7 +561,17 @@ on('body', 'click', '#logg', function() {
     toast_error("Введите пароль!");
     return
   }
-  else {this.disabled = true}
+  else {
+    this.disabled = true;
+    form.querySelector("#id_username").style.display = "none";
+    if (_user_phone[0] == "+7") {
+      _user_phone = _user_phone.slice(2)
+    }
+		else if (_user_phone[0] == "8") {
+			_user_phone = _user_phone.slice(1)
+		};
+    form.querySelector("#id_username").value = 7 + _user_phone;
+  }
   if (form.querySelector("#id_username").value){form.querySelector("#id_username").style.border = "rgba(0, 0, 0, 0.2)";}
   if (form.querySelector("#id_password").value){form.querySelector("#id_password").style.border = "rgba(0, 0, 0, 0.2)";}
 
