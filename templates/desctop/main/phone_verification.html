@@ -142,7 +142,7 @@
 
             document.getElementById("phone_send").addEventListener("click", (e) => {
                 _user_phone = document.getElementById('phone').value;
-                _user_phone = phone.replace(/[^0-9]/g, '');
+                _user_phone = _user_phone.replace(/[^0-9]/g, '');
 
                 if (_user_phone[0] == "+7") {
                   _user_phone = _user_phone.slice(2)
@@ -167,7 +167,7 @@
             });
             on('#ajax', 'click', '#code_send', function() {
               _user_phone = document.getElementById('phone').value;
-              _user_phone = phone.replace(/[^0-9]/g, '');
+              _user_phone = _user_phone.replace(/[^0-9]/g, '');
 
               if (_user_phone[0] == "+7") {
                 _user_phone = _user_phone.slice(2)
