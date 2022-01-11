@@ -159,7 +159,7 @@
                     if (request.readyState == 4 && request.status == 200) {
                         var div = document.getElementById('jsondata');
                         div.innerHTML = request.responseText;
-                        if (div.innerHTML != "Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.") {
+                        if (request.responseText.indexOf("white") != "Пользователь") {
                         document.getElementById("phone").setAttribute("disabled", "true");
                         document.getElementById("phone_send").setAttribute("disabled", "true");
                       }
