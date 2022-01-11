@@ -549,16 +549,19 @@ on('body', 'click', '#register_ajax', function() {
 });
 on('body', 'click', '#logg', function() {
   form = document.querySelector("#login_form");
+  response = form.querySelector(".api_response")
   user_phone = form.querySelector("#id_username").value;
   _user_phone = user_phone.replace(/[^0-9]/g, '');
   if (!_user_phone){
     form.querySelector("#id_username").style.border = "1px #FF0000 solid";
-    toast_error("Введите телефон!");
+    response.innerHTML = "Введите телефон!";
+    response.classList.add("error");
     return
   }
   else if (!form.querySelector("#id_password").value){
     form.querySelector("#id_password").style.border = "1px #FF0000 solid";
-    toast_error("Введите пароль!");
+    response.innerHTML = "Введите пароль!";
+    response.classList.add("error")
     return
   }
   else {
@@ -581,8 +584,20 @@ on('body', 'click', '#logg', function() {
 
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
+    response.classList.replace("error", "success");
+    response.innerHTML = "Успешный вход";
+    this.disabled = true;
     window.location.href = "/"
-    }};
+    }
+  else {
+    this.disabled = false;
+    response.style.display = "block";
+    response.innerHTML = "Телефон или пароль - неверный!";
+    response.classList.add("error");
+    form.querySelector("#id_username").style.display = "block";
+    form.querySelector("#id_username").value = '';
+    form.querySelector("#id_password").value = '';
+  }};
   link.send(form_data);
 });
 
