@@ -159,11 +159,10 @@
                     if (request.readyState == 4 && request.status == 200) {
                         var div = document.getElementById('jsondata');
                         div.innerHTML = request.responseText;
+                        if (div.innerHTML != "Пользователь с таким номером уже зарегистрирован. Используйте другой номер или напишите в службу поддержки, если этот номер Вы не использовали ранее.") {
                         document.getElementById("phone").setAttribute("disabled", "true");
                         document.getElementById("phone_send").setAttribute("disabled", "true");
-                    } else {
-                      document.getElementById("phone").setAttribute("disabled", "false");
-                      document.getElementById("phone_send").setAttribute("disabled", "false");
+                      }
                     }
                 };
                 request.send(null);
