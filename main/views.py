@@ -224,7 +224,7 @@ class NewsListView(ListView):
 
 	def get_queryset(self):
 		from common.user_progs.news import get_news
-		if self.request.user.is_authenticated:
+		if self.request.user.is_authenticated and self.request.user.type[0] != "_":
 			return get_news(self.request.user)
 		else:
 			return []
@@ -238,7 +238,7 @@ class FeaturedListView(ListView):
 
 	def get_queryset(self):
 		from common.user_progs.news import get_featured_news
-		if self.request.user.is_authenticated:
+		if self.request.user.is_authenticated and self.request.user.type[0] != "_":
 			items = get_featured_news(self.request.user)
 		else:
 			items = []
