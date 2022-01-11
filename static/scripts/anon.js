@@ -568,12 +568,12 @@ on('body', 'click', '#logg', function() {
   else {
     _this.disabled = true;
     form.querySelector("#id_username").style.display = "none";
-    if (_user_phone[0] == "+7") {
+    if (_user_phone[0] == "+") {
       _user_phone = _user_phone.slice(2)
     }
-		else if (_user_phone[0] == "8") {
-			_user_phone = _user_phone.slice(1)
-		};
+    else if (_user_phone[0] == "8" || _user_phone[0] == "7") {
+      _user_phone = _user_phone.slice(1)
+    };
     form.querySelector("#id_username").value = 7 + _user_phone;
   }
   if (form.querySelector("#id_username").value){form.querySelector("#id_username").style.border = "rgba(0, 0, 0, 0.2)";}
