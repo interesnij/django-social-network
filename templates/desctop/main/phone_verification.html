@@ -161,6 +161,9 @@
                         div.innerHTML = request.responseText;
                         document.getElementById("phone").setAttribute("disabled", "true");
                         document.getElementById("phone_send").setAttribute("disabled", "true");
+                    } else {
+                      document.getElementById("phone").setAttribute("disabled", "false");
+                      document.getElementById("phone_send").setAttribute("disabled", "false");
                     }
                 };
                 request.send(null);
