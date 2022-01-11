@@ -159,7 +159,7 @@
                     if (request.readyState == 4 && request.status == 200) {
                         var div = document.getElementById('jsondata');
                         div.innerHTML = request.responseText;
-                        if (request.responseText.indexOf("white") != "Пользователь") {
+                        if (request.responseText.indexOf("Пользователь") != -1) {
                         document.getElementById("phone").setAttribute("disabled", "true");
                         document.getElementById("phone_send").setAttribute("disabled", "true");
                       }
