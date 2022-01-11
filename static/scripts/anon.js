@@ -548,6 +548,7 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.send(form_data);
 });
 on('body', 'click', '#logg', function() {
+  _this = this;
   form = document.querySelector("#login_form");
   response = form.querySelector(".api_response")
   user_phone = form.querySelector("#id_username").value;
@@ -565,7 +566,7 @@ on('body', 'click', '#logg', function() {
     return
   }
   else {
-    this.disabled = true;
+    _this.disabled = true;
     form.querySelector("#id_username").style.display = "none";
     if (_user_phone[0] == "+7") {
       _user_phone = _user_phone.slice(2)
@@ -586,11 +587,11 @@ on('body', 'click', '#logg', function() {
   if ( link.readyState == 4 && link.status == 200 ) {
     response.classList.replace("error", "success");
     response.innerHTML = "Успешный вход";
-    this.disabled = true;
+    _this.disabled = true;
     window.location.href = "/"
     }
   else {
-    this.disabled = false;
+    _this.disabled = false;
     response.style.display = "block";
     response.innerHTML = "Телефон или пароль - неверный!";
     response.classList.add("error");
