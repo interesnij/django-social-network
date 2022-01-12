@@ -18,7 +18,7 @@ def get_folder(user_agent):
     if MOBILE_AGENT_RE.match(user_agent):
         return "mobile/"
     else:
-        return "desctop/" 
+        return "mobile/"
 
 def get_fine_request_user(request_user):
     if request_user.is_no_phone_verified():
