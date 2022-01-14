@@ -653,7 +653,6 @@ function if_list(block) {
 if_list(document.getElementById('ajax'));
 create_pagination(document.getElementById('ajax'));
 get_dragula(".drag_container");
-get_dragula(".drag_list");
 
 function list_load(block, link) {
     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -663,6 +662,7 @@ function list_load(block, link) {
         if (request.readyState == 4 && request.status == 200) {
             block.innerHTML = request.responseText;
             get_dragula(".drag_container");
+            get_dragula(".drag_list");
             create_pagination(block);
             fullscreen_resize()
         }
@@ -681,7 +681,7 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        get_dragula(".is_block_paginate");
-       //get_dragula(".date-list");
+       get_dragula(".drag_list"); 
        create_pagination(target_block);
     }};
     request.upload.onprogress = function(event) {
