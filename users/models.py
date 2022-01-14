@@ -1209,7 +1209,7 @@ class User(AbstractUser):
         try:
             list = PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.AVATAR)
             return list.get_items().first().pk
-        except PhotoList.DoesNotExist:
+        except:
             return None
     def get_post_list(self):
         from posts.models import PostsList
