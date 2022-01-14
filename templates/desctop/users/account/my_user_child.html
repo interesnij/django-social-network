@@ -19,7 +19,7 @@
                 <a class="col">
                   <figure class="mx-auto mb-3 avatar_figure">
                     {% if user.b_avatar %}
-                      <img src="{{ user.get_b_avatar }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}">
+                      {{ user.get_b_avatar|safe }}
                       <form id="add_user_avatar">
                         {% csrf_token %}
                         <input type="file" id="user_avatar_upload" name="file" style="display:none">
@@ -29,7 +29,7 @@
                     <form id="add_user_avatar">
                       {% csrf_token %}
                       <input type="file" id="user_avatar_upload" name="file" style="display:none">
-                      <img src="{{ user.get_b_avatar }}" class="previous_click pointer">
+                      <img src="/static/images/no_img/b_avatar.png" class="previous_click pointer">
                     </form>
                     {% endif %}
                   </figure>
