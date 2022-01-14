@@ -17,11 +17,7 @@
               <div class="row align-items-center no-gutters">
                   <a class="col">
                     <figure class="mx-auto mb-3 avatar_figure">
-                      {% if user.b_avatar %}
-                        {{ user.get_b_avatar|safe }}
-                      {% else %}
                         <img src="/static/images/no_img/b_avatar.png">
-                      {% endif %}
                     </figure>
                   </a>
               </div>
