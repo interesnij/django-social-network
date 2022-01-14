@@ -260,7 +260,7 @@ class User(AbstractUser):
 
     def get_b_avatar(self):
         if self.get_avatar_pk():
-            return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + self.get_avatar_pk() + '">'
+            return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + str(self.get_avatar_pk()) + '">'
         else:
             return '/static/images/no_img/b_avatar.png'
 
