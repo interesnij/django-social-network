@@ -14,11 +14,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <span>
-              {% if object.is_fixed_in_community %}
-                <span class="dropdown-item c_post_unfixed">Открепить</span>
-              {% elif community.is_can_fixed_post %}
-                <span class="dropdown-item c_post_fixed">Закрепить</span>
-              {% endif %}
+                {% if not object.is_fixed %}
+                  <span class="dropdown-item c_post_fixed">Закрепить</span>
+                {% endif %}
               </span>
               {% if object.community.pk == community.pk %}
                 <span class="dropdown-item c_post_remove">Удалить запись</span>
