@@ -80,8 +80,8 @@ class Community(models.Model):
         return self.name
 
     def get_b_avatar(self):
-        if self.b_avatar:
-            return self.b_avatar.url
+        if self.get_avatar_pk():
+            return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + str(self.get_avatar_pk()) + '">'
         else:
             return '/static/images/no_img/list.jpg'
 
@@ -314,9 +314,12 @@ class Community(models.Model):
         from gallery.models import PhotoList
         return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
     def get_avatar_pk(self):
-        from gallery.models import PhotoList
-        list = PhotoList.objects.get(community_id=self.pk, type=PhotoList.AVATAR)
-        return list.get_items().first().pk
+        try:
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(community_id=self.pk, type=PhotoList.AVATAR)
+            return list.get_items().first().pk
+        except:
+            return None
     def get_doc_list(self):
         from docs.models import DocsList
         return DocsList.objects.get(community_id=self.pk, type=DocsList.MAIN)
@@ -598,12 +601,6 @@ class Community(models.Model):
         self.b_avatar = new_img
         self.save(update_fields=['b_avatar'])
         return self.b_avatar
-
-    def get_b_avatar(self):
-        try:
-            return self.b_avatar.url
-        except:
-            return None
 
     def get_avatar(self):
         try:
