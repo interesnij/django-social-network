@@ -1206,8 +1206,11 @@ class User(AbstractUser):
         return PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.MAIN)
     def get_avatar_pk(self):
         from gallery.models import PhotoList
-        list = PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.AVATAR)
-        return list.get_items().first().pk
+        try:
+            list = PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.AVATAR)
+            return list.get_items().first().pk
+        except PhotoList.DoesNotExist:
+            return None
     def get_post_list(self):
         from posts.models import PostsList
         return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.MAIN)
