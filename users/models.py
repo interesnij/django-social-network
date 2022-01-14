@@ -259,8 +259,8 @@ class User(AbstractUser):
         return self.save(update_fields=['b_avatar'])
 
     def get_b_avatar(self):
-        if self.b_avatar:
-            return self.b_avatar.url
+        if self.get_avatar_pk():
+            return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + self.get_avatar_pk() + '">'
         else:
             return '/static/images/no_img/b_avatar.png'
 
