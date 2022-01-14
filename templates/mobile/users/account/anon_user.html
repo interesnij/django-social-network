@@ -12,11 +12,7 @@
   <div class="card mb-3 avatar_figure" style="padding:10px">
     <div style="padding-top: 10px; display: flex; margin-bottom: 10px">
       <figure>
-        {% if user.s_avatar %}
-          <img src="{{ user.s_avatar.url }}" class="detail_photo pointer" photo-pk="{{ user.get_avatar_pk }}" style="border-radius:80px" alt="image">
-        {% else %}
-          <svg fill="currentColor" class="svg_default svg_default_80 pointer" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /><path d="M0 0h24v24H0z" fill="none" /></svg>
-        {% endif %}
+        {{ user.get_b_avatar|safe }}
       </figure>
       <div class="media-body" style="margin-left:10px">
         <h1 class="mb-0 mt-1" style="font-size: 22px;">{{ user.get_full_name }}
