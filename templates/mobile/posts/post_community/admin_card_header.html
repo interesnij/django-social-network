@@ -16,6 +16,8 @@
               <span>
                 {% if not object.is_fixed %}
                   <span class="dropdown-item c_post_fixed">Закрепить</span>
+                {% else %}
+                  <span class="dropdown-item c_post_unfixed">Открепить</span>
                 {% endif %}
               </span>
               {% if object.community.pk == community.pk %}
