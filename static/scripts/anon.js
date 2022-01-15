@@ -625,10 +625,11 @@ on('body', 'click', '#register_ajax', function() {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
     elem = reg_link.responseText;
     _span = document.createElement("span");
+    _span.innerHTML = elem.innerHTML;
     _span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
     container.innerHTML = _span.innerHTML;
-    
+
     final_form = container.querySelector("form");
     final_form.append(create_hide_input ("first_name", first_name.value));
     final_form.append(create_hide_input ("last_name", last_name.value));
