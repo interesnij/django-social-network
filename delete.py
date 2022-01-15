@@ -19,4 +19,6 @@ from users.models import User
 from communities.models import Community
 from common.model.other import PhoneCodes
 
-PhoneCodes.objects.all().delete()
+for user in User.objects.all():
+    if user.phone < 1000:
+        user.delete()

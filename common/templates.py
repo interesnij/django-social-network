@@ -21,9 +21,7 @@ def get_folder(user_agent):
         return "desctop/"
 
 def get_fine_request_user(request_user):
-    if request_user.is_no_phone_verified():
-        template = "main/phone_verification.html"
-    elif request_user.is_deleted():
+    if request_user.is_deleted():
         template = "generic/u_template/you_deleted.html"
     elif request_user.is_closed():
         template = "generic/u_template/you_closed.html"
@@ -504,8 +502,6 @@ def get_detect_platform_template(template, request_user, user_agent):
     """ получаем шаблон для зарегистрированного пользователя. Анонимов не пускаем."""
     if request_user.is_anonymous:
         raise PermissionDenied("Ошибка доступа")
-    elif request_user.is_no_phone_verified():
-        template = "main/phone_verification.html"
     else:
         template = template
     return get_folder(user_agent) + template

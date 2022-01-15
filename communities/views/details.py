@@ -17,9 +17,7 @@ class CommunityDetail(TemplateView):
 
         if request.user.is_authenticated:
             if request.user.type[0] == "_":
-                if request.user.is_no_phone_verified():
-                    template_name = "main/phone_verification.html"
-                elif request.user.is_deleted():
+                if request.user.is_deleted():
                     template_name = "generic/u_template/you_deleted.html"
                 elif request.user.is_closed():
                     template_name = "generic/u_template/you_closed.html"
