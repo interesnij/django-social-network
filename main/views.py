@@ -94,9 +94,7 @@ class SwitchView(TemplateView):
 			self.post_list_pk = self.user.get_selected_post_list_pk()
 			user_pk = int(self.user.pk)
 			if request.user.is_authenticated:
-				if request.user.is_no_phone_verified():
-					self.template_name = "main/phone_verification.html"
-				elif user_pk == r_user_pk:
+				if user_pk == r_user_pk:
 					if self.user.is_suspended():
 						self.template_name = "generic/u_template/you_suspended.html"
 					elif self.user.is_closed():
