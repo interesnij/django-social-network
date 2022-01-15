@@ -1,21 +1,25 @@
 <span class="post_container">
 {% if is_user_can_see_post_section %}
 
-{% if fix_list.count_fix_items > 1 %}
+{% if community.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
-  {% for object in fix_list.get_posts_ids %}
+  {% for object in community.get_fixed_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
-    {% for object in fix_list.get_fix_items %}
+    {% for object in get_fixed_posts %}
     <li class="scrollable">
-      {% include 'desctop/communities/lenta/fix_post.html' %}
+        {% if object.community %}
+          {% include 'desctop/communities/lenta/fix_post.html' %}
+        {% else %}
+          {% include 'desctop/users/lenta/fix_post.html' %}
+        {% endif %}
     </li>
     {% endfor %}
   </ul>
   <div class="arrows">
-    {% for object in fix_list.get_posts_ids %}
+    {% for object in community.get_fixed_posts_ids %}
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
@@ -23,36 +27,23 @@
     <label class="goto-last" for="s_{{ fix_list.count_fix_items }}"></label>
   </div>
 </div>
-{% elif fix_list.count_fix_items == 1 %}
+{% elif community.count_fix_items == 1 %}
 
-{% for object in fix_list.get_fix_items %}
-  {% include 'desctop/communities/lenta/fix_post.html' %}
+{% for object in get_fixed_posts %}
+    {% if object.community %}
+      {% include 'desctop/communities/lenta/fix_post.html' %}
+    {% else %}
+      {% include 'desctop/users/lenta/fix_post.html' %}
+    {% endif %}
 {% endfor %}
 
 {% endif %}
 
 {% include 'desctop/communities/lenta/lists.html' %}
-
   <span class="span_list_pk" list-pk="{{ list.pk }}">
-      <span class="list_pk" data-uuid="{{ list.pk }}">
-        {% if is_user_can_see_post_list %}
-        <span>
-          <a class="claim_post_list pointer">Пожаловаться</a>
-            &nbsp;
-          {% load get_key %}
-          {% if list|is_user_can_add_list:request.user.pk %}
-            <a class="copy_user_post_list pointer">Добавить список</a>
-          {% elif request.user.pk in list.get_users_ids %}
-            <a class="uncopy_user_post_list pointer">Удалить список</a>
-          {% endif %}
-        </span>
-        {% if is_user_can_create_posts %}
-          {% include 'desctop/communities/detail_sections/create_post.html' %}
-        {% elif is_user_can_create_offer_post %}
-          {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
-        {% endif %}
-        <span></span>
-        <span class="post_stream is_paginate is_stat_list" data-type="community_post_list" data-pk="{{ list.pk }}">
+    <span class="list_pk" data-uuid="{{ list.pk }}">
+      {% if is_user_can_see_post_list %}
+        <span class="post_stream is_paginate">
           {% for object in object_list %}
             {% include 'desctop/posts/post_community/post.html' %}
           {% endfor %}
@@ -66,7 +57,6 @@
             {% include 'desctop/communities/lenta/no_posts.html' %}
           {% endif %}
         </span>
-
         {% else %}
           {% include 'desctop/generic/centered/private_list.html' %}
         {% endif %}

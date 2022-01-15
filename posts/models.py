@@ -11,15 +11,15 @@ from common.model.other import Stickers
 
 
 class PostsList(models.Model):
-    MAIN, LIST, MANAGER, FIXED, DRAFT, TEST = 'MAI','LIS','MAN','_FIX','_DRA','_T'
+    MAIN, LIST, MANAGER, DRAFT, TEST = 'MAI','LIS','MAN','_DRA','_T'
     DELETED, DELETED_MANAGER = '_DEL','_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_FIXED = '_CLO','_CLOM','_CLOMA','_CLOF'
+    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
 
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(FIXED, 'Закреплённый'),(DRAFT, 'Предложка'),
+        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_FIXED, 'Закрытый закреплённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -545,7 +545,7 @@ class PostsList(models.Model):
     def count_items(self):
         return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
     def count_fix_items(self):
-        return self.post_list.filter(type="_FIX").values("pk").count()
+        return self.count_fixed_posts()
 
     def is_not_empty(self):
         return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
@@ -725,8 +725,6 @@ class PostsList(models.Model):
             self.type = PostsList.CLOSED
         elif self.type == "MAI":
             self.type = PostsList.CLOSED_MAIN
-        elif self.type == "FIX":
-            self.type = PostsList.CLOSED_FIXED
         elif self.type == "MAN":
             self.type = PostsList.CLOSED_MANAGER
         self.save(update_fields=['type'])
@@ -746,8 +744,6 @@ class PostsList(models.Model):
             self.type = PostsList.LIST
         elif self.type == "_CLOM":
             self.type = PostsList.MAIN
-        elif self.type == "_CLOF":
-            self.type = PostsList.FIXED
         elif self.type == "_CLOM":
             self.type = PostsList.MANAGER
         self.save(update_fields=['type'])
@@ -806,6 +802,7 @@ class Post(models.Model):
     category = models.ForeignKey(PostCategory, blank=True, null=True, on_delete=models.SET_NULL, verbose_name="Тематика")
     list = models.ForeignKey(PostsList, blank=True, null=True, on_delete=models.SET_NULL, related_name='post_list')
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.SET_NULL, related_name="thread")
+    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     type = models.CharField(choices=TYPE, max_length=5, verbose_name="Статус статьи")
@@ -815,7 +812,6 @@ class Post(models.Model):
     is_signature = models.BooleanField(default=True, verbose_name="Подпись автора")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    community = models.ForeignKey('communities.Community', related_name='post_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
@@ -1222,59 +1218,21 @@ class Post(models.Model):
     def get_comments(self):
         return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
-    def fixed_user_post(self, user_id):
-        list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
+    def fixed_post(self, user_id):
         if not list.is_full_list():
-            Post.create_post(
-                            creator_id=user_id,
-                            text=self.text,
-                            category=self.category,
-                            list=list,
-                            attach=self.attach,
-                            parent=self.parent,
-                            comments_enabled=self.comments_enabled,
-                            is_signature=self.is_signature,
-                            votes_on=self.votes_on,
-                            community=self.community
-                            )
             self.type = Post.FIXED
             return self.save(update_fields=["type"])
         else:
             return ValidationError("Список уже заполнен.")
 
-    def unfixed_user_post(self, user_id):
-        list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
+    def unfixed_post(self, user_id):
         if list.is_item_in_list(self.pk):
             if self.is_fixed:
-                """ нажато у поста в ленте """
-                post = Post.objects.filter(list=list, text=self.text, attach=self.attach).first()
-                post.remove()
                 self.type = Post.PUBLISHED
                 return self.save(update_fields=["type"])
             else:
-                """ нажато у закрепденного поста """
-                post = Post.objects.filter(creator_id=user_id, text=self.text, attach=self.attach, type=Post.FIXED).first()
-                post.type = Post.PUBLISHED
-                post.save(update_fields=["type"])
-                self.remove()
-        else:
-            return ValidationError("Запись и так не в списке.")
-
-    def fixed_community_post(self, community_id):
-        list = PostsList.objects.get(community_id=community_id, type=PostsList.FIXED)
-        if not list.is_full_list():
-            self.list.add(list)
-            self.type = Post.FIXED
-            return self.save(update_fields=["type"])
-        else:
-            return ValidationError("Список уже заполнен.")
-
-    def unfixed_community_post(self, community_id):
-        list = PostsList.objects.get(community_id=community_id, type=PostsList.FIXED)
-        if list.is_item_in_list(self.pk):
-            self.list.remove(list)
-            self.type = Post.PUBLISHED
-            return self.save(update_fields=["type"])
+                self.type = Post.FIXED
+                self.save(update_fields=["type"])
         else:
             return ValidationError("Запись и так не в списке.")
 

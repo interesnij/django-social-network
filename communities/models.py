@@ -259,10 +259,6 @@ class Community(models.Model):
         trending_communities_query.add(~Q(banned_users__id=user_id), Q.AND)
         return cls._get_trending_communities_with_query(query=trending_communities_query)
 
-    def get_fix_list(self):
-        from posts.models import PostsList
-        return PostsList.objects.get(community_id=self.pk, type=PostsList.FIXED)
-
     def get_draft_posts(self):
         from posts.models import PostsList
         list = PostsList.objects.get(community_id=self.pk, type="_DRA")
@@ -782,13 +778,20 @@ class Community(models.Model):
         from music.models import UserTempMusicList
         return UserTempMusicList.objects.filter(community=self, genre=None).exists()
 
+    def get_fixed_posts(self):
+        from posts.models import Post
+        return Post.objects.filter(community_id=self.pk, type=Post.FIXED)
+    def get_fixed_posts_ids(self):
+        from posts.models import Post
+        list = Post.objects.filter(community_id=self.pk, type=Post.FIXED).values("pk")
+        return [i['pk'] for i in list]
+
+    def count_fixed_posts(self):
+        from posts.models import Post
+        return Post.objects.filter(community_id=self.pk, type=Post.FIXED).values("pk").count()
+
     def is_can_fixed_post(self):
-        from posts.models import PostsList
-        try:
-            list = PostsList.objects.get(community_id=self.pk, type=PostsList.FIXED)
-            return list.count_fix_items() < 10
-        except:
-            return None
+        return self.count_fixed_posts() < 10
 
     def add_administrator(self, user):
         user_membership = self.memberships.get(user=user)

@@ -81,13 +81,20 @@ class User(AbstractUser):
         from chat.models import MessageOptions
         return MessageOptions.objects.filter(user_id=self.pk, is_favourite=True).values("pk").count()
 
+    def get_fixed_posts(self):
+        from posts.models import Post
+        return Post.objects.filter(creator_id=self.pk, type=Post.FIXED)
+
+    def get_fixed_posts_ids(self):
+        from posts.models import Post
+        list = Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk")
+        return [i['pk'] for i in list]
+    def count_fixed_posts(self):
+        from posts.models import Post
+        return Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk").count()
+
     def is_can_fixed_post(self):
-        from posts.models import PostsList
-        try:
-            list = PostsList.objects.get(creator_id=self.pk, type=PostsList.FIXED)
-            return list.count_fix_items() < 10
-        except:
-            return None
+        return self.count_fixed_posts() < 10
 
     def get_verb_gender(self, verb):
         if self.is_women():
@@ -1215,9 +1222,6 @@ class User(AbstractUser):
     def get_doc_list(self):
         from docs.models import DocsList
         return DocsList.objects.get(creator_id=self.pk, community__isnull=True, type=DocsList.MAIN)
-    def get_fix_list(self):
-        from posts.models import PostsList
-        return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.FIXED)
     def get_survey_list(self):
         from survey.models import SurveyList
         return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
