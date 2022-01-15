@@ -529,8 +529,10 @@ on('#ajax', 'click', '#code_send', function() {
           div.innerHTML = request.responseText;
             if (request.responseText.indexOf("ok") != -1) {
               form_data = new FormData(_form);
+              form_data.append("first_name", document.body.querySelector("first_name").value);
+
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-              request_2.open( 'POST', "/rest-auth/registration/?first_name=" + document.body.querySelector(".first_name").value, true );
+              request_2.open( 'POST', "/rest-auth/registration/", true );
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
