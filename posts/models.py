@@ -1225,7 +1225,18 @@ class Post(models.Model):
     def fixed_user_post(self, user_id):
         list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
         if not list.is_full_list():
-            self.list.add(list)
+            Post.create_post(
+                            creator_id=user_id,
+                            text=self.text,
+                            category=self.category,
+                            list=list,
+                            attach=self.attach,
+                            parent=self.parent,
+                            comments_enabled=self.comments_enabled,
+                            is_signature=self.is_signature,
+                            votes_on=self.votes_on,
+                            community=self.community
+                            )
             self.type = Post.FIXED
             return self.save(update_fields=["type"])
         else:
@@ -1234,9 +1245,18 @@ class Post(models.Model):
     def unfixed_user_post(self, user_id):
         list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
         if list.is_item_in_list(self.pk):
-            self.list.remove(list)
-            self.type = Post.PUBLISHED
-            return self.save(update_fields=["type"])
+            if self.is_fixed:
+                """ нажато у поста в ленте """
+                post = Post.objects.filter(list=list, text=self.text, attach=self.attach).first()
+                post.remove()
+                self.type = Post.PUBLISHED
+                return self.save(update_fields=["type"])
+            else:
+                """ нажато у закрепденного поста """
+                post = Post.objects.filter(creator_id=user_id, text=self.text, attach=self.attach, type=Post.FIXED).first()
+                post.type = Post.PUBLISHED
+                post.save(update_fields=["type"])
+                self.remove()
         else:
             return ValidationError("Запись и так не в списке.")
 
