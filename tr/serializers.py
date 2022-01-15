@@ -157,9 +157,7 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
-    date_day = serializers.CharField(required=True, write_only=True)
-    date_month = serializers.CharField(required=True, write_only=True)
-    date_year = serializers.CharField(required=True, write_only=True)
+    birthday = serializers.CharField(required=True, write_only=True)
     gender = serializers.CharField(required=True, write_only=True)
     phone = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
@@ -196,17 +194,13 @@ class RegisterSerializer(serializers.Serializer):
         is_have_bad_words(user.last_name)
 
         user.phone = self.validated_data.get('phone', '')
-        self.date_day = self.validated_data.get('date_day', '')
-        self.date_month = self.validated_data.get('date_month', '')
-        self.date_year = self.validated_data.get('date_year', '')
         user.gender = self.validated_data.get('gender', '')
+        _birthday = self.validated_data.get('birthday', '')
 
-        birthday = str(self.date_day) + "/" + str(self.date_month) + "/" + str(self.date_year)
-
-        birthday = datetime.strptime(birthday, '%d/%m/%Y')
-        if timezone.now() < birthday:
+        _birthday = datetime.strptime(_birthday, '%d/%m/%Y')
+        if timezone.now() < _birthday:
             raise serializers.ValidationError("tttrrrrtttrrr")
-        user.birthday = birthday
+        user.birthday = _birthday
 
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)

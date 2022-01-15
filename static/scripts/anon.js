@@ -535,6 +535,7 @@ on('#ajax', 'click', '#code_send', function() {
               form_data.append("password1", document.body.querySelector(".password1").value);
               form_data.append("password2", document.body.querySelector(".password2").value);
               form_data.append("birthday", document.body.querySelector(".birthday").value);
+              form_data.append("phone", _user_phone);
 
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
