@@ -507,6 +507,7 @@ var ready = (callback) => {
 };
 
 on('#ajax', 'click', '#code_send', function() {
+  _this = this;
   _user_phone = document.getElementById('phone').value;
   _user_phone = _user_phone.replace(/[^0-9]/g, '');
 
@@ -527,8 +528,7 @@ on('#ajax', 'click', '#code_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
             if (request.responseText.indexOf("ok") != -1) {
-              form = document.body.querySelector('.final_process_form');
-              form_data = new FormData(form);
+              form_data = new FormData(_this.parentElement.parentElement.parentElement.parentElement);
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
               request_2.onreadystatechange = function () {
