@@ -628,10 +628,11 @@ on('body', 'click', '#register_ajax', function() {
     console.log(form.querySelector("#customradio1").value);
 
     elem = reg_link.responseText;
+    console.log(elem);
     _span = document.createElement("span");
     _span.innerHTML = elem.innerHTML;
     console.log(_span);
-    
+
     _span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
     container.innerHTML = _span.innerHTML;
