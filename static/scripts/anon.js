@@ -530,7 +530,7 @@ on('#ajax', 'click', '#code_send', function() {
             if (request.responseText.indexOf("ok") != -1) {
               form_data = new FormData(_form);
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-              request_2.open( 'POST', "/rest-auth/registration/", true );
+              request_2.open( 'POST', "/rest-auth/registration/?first_name=" + document.body.querySelector(".first_name").value, true );
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
@@ -589,12 +589,12 @@ on('#ajax', 'click', '#phone_send', function() {
   request.send(null);
 });
 
-function create_hide_input (name, value) {
+function create_hide_input (name, value, _class) {
   $input = document.createElement("input");
   $input.setAttribute("name", name);
   $input.setAttribute("type", "hidden");
   $input.setAttribute("disabled", "true");
-  $input.classList.add("type_hidden");
+  $input.classList.add(_class);
   $input.value = value;
   return $input
 }
@@ -650,14 +650,14 @@ on('body', 'click', '#register_ajax', function() {
     container.innerHTML = _span.innerHTML;
 
     final_form = container.querySelector(".final_process_form");
-    final_form.append(create_hide_input ("first_name", first_name.value));
-    final_form.append(create_hide_input ("last_name", last_name.value));
-    final_form.append(create_hide_input ("password1", form.querySelector("#password1").value));
-    final_form.append(create_hide_input ("password2", form.querySelector("#password2").value));
-    final_form.append(create_hide_input ("date_day", form.querySelector("#date_day").value));
-    final_form.append(create_hide_input ("date_month", form.querySelector("#date_month").value));
-    final_form.append(create_hide_input ("date_year", form.querySelector("#date_year").value));
-    final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value));
+    final_form.append(create_hide_input ("first_name", first_name.value, "first_name"));
+    final_form.append(create_hide_input ("last_name", last_name.value, "last_name"));
+    final_form.append(create_hide_input ("password1", form.querySelector("#password1").value, "password1"));
+    final_form.append(create_hide_input ("password2", form.querySelector("#password2").value, "password2"));
+    final_form.append(create_hide_input ("date_day", form.querySelector("#date_day").value, "date_day"));
+    final_form.append(create_hide_input ("date_month", form.querySelector("#date_month").value, "date_month"));
+    final_form.append(create_hide_input ("date_year", form.querySelector("#date_year").value, "date_year"));
+    final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
   }};
   reg_link.send( );
 });
