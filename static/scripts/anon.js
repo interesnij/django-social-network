@@ -530,6 +530,11 @@ on('#ajax', 'click', '#code_send', function() {
             if (request.responseText.indexOf("ok") != -1) {
               form_data = new FormData(_form);
               form_data.append("first_name", document.body.querySelector(".first_name").value);
+              form_data.append("last_name", document.body.querySelector(".last_name").value);
+              form_data.append("gender", document.body.querySelector(".gender").value);
+              form_data.append("password1", document.body.querySelector(".password1").value);
+              form_data.append("password2", document.body.querySelector(".password2").value);
+              form_data.append("birthday", document.body.querySelector(".birthday").value);
 
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
@@ -656,9 +661,7 @@ on('body', 'click', '#register_ajax', function() {
     final_form.append(create_hide_input ("last_name", last_name.value, "last_name"));
     final_form.append(create_hide_input ("password1", form.querySelector("#password1").value, "password1"));
     final_form.append(create_hide_input ("password2", form.querySelector("#password2").value, "password2"));
-    final_form.append(create_hide_input ("date_day", form.querySelector("#date_day").value, "date_day"));
-    final_form.append(create_hide_input ("date_month", form.querySelector("#date_month").value, "date_month"));
-    final_form.append(create_hide_input ("date_year", form.querySelector("#date_year").value, "date_year"));
+    final_form.append(create_hide_input ("birthday", form.querySelector("#date_day").value + "/" + form.querySelector("#date_month").value + "/" + form.querySelector("#date_year").value, "birthday"));
     final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value,"gender"));
   }};
   reg_link.send( );
