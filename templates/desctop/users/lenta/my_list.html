@@ -3,7 +3,7 @@
 
 {% if user.count_fix_items > 1 %}
 <div class="csslider infinity uc_slider mt-5">
-  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
+  <p>Особые записи</p>
   {% for object in user.get_fixed_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
