@@ -574,13 +574,11 @@ class PostsList(models.Model):
         communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
-    def is_full_list(self):
-        return self.is_fix_list() and self.count_items() > 10
+    def is_full_list(self, creator):
+        return creator.
 
     def is_main(self):
         return self.type == self.MAIN
-    def is_fix_list(self):
-        return self.type == self.FIXED
     def is_list(self):
         return self.type == self.LIST
     def is_deleted(self):
@@ -1218,14 +1216,14 @@ class Post(models.Model):
     def get_comments(self):
         return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
-    def fixed_post(self, user_id):
-        if not list.is_full_list():
+    def fixed_post(self, obj):
+        if obj.is_can_fixed_post():
             self.type = Post.FIXED
             return self.save(update_fields=["type"])
         else:
             return ValidationError("Список уже заполнен.")
 
-    def unfixed_post(self, user_id):
+    def unfixed_post(self):
         if list.is_item_in_list(self.pk):
             if self.is_fixed:
                 self.type = Post.PUBLISHED
