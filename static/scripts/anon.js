@@ -582,7 +582,7 @@ on('#ajax', 'click', '#phone_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
           if (div.querySelector("#code_send")) {
-            document.querySelector('#phone_send'),setAttribute("disabled", "true")
+            document.querySelector('#phone_send').setAttribute("disabled", "true")
           }
       }
   };
