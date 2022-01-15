@@ -786,12 +786,12 @@ class Community(models.Model):
         list = Post.objects.filter(community_id=self.pk, type=Post.FIXED).values("pk")
         return [i['pk'] for i in list]
 
-    def count_fixed_posts(self):
+    def count_fix_items(self):
         from posts.models import Post
         return Post.objects.filter(community_id=self.pk, type=Post.FIXED).values("pk").count()
 
     def is_can_fixed_post(self):
-        return self.count_fixed_posts() < 10
+        return self.count_fix_items() < 10
 
     def add_administrator(self, user):
         user_membership = self.memberships.get(user=user)

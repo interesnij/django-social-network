@@ -89,12 +89,12 @@ class User(AbstractUser):
         from posts.models import Post
         list = Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk")
         return [i['pk'] for i in list]
-    def count_fixed_posts(self):
+    def count_fix_items(self):
         from posts.models import Post
         return Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk").count()
 
     def is_can_fixed_post(self):
-        return self.count_fixed_posts() < 10
+        return self.count_fix_items() < 10
 
     def get_verb_gender(self, verb):
         if self.is_women():
