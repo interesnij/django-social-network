@@ -1222,20 +1222,6 @@ class Post(models.Model):
     def get_comments(self):
         return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
-    def is_fixed_in_community(self):
-        list = PostsList.objects.get(community_id=self.community.pk, type=PostsList.FIXED)
-        return list.is_item_in_list(self.pk)
-    def is_fixed_in_user(self):
-        list = PostsList.objects.get(creator_id=self.creator.pk, community__isnull=True, type=PostsList.FIXED)
-        return list.is_item_in_list(self.pk)
-
-    def is_can_fixed_in_community(self):
-        """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_community. Потому осталось проверить, не полон ли список"""
-        return self.is_full_list()
-    def is_can_fixed_in_user(self):
-        """ мы уже проверили, есть ли пост в списке закрепов is_fixed_in_user. Потому осталось проверить, не полон ли список"""
-        return self.is_full_list()
-
     def fixed_user_post(self, user_id):
         list = PostsList.objects.get(creator_id=user_id, community__isnull=True, type=PostsList.FIXED)
         if not list.is_full_list():
