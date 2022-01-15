@@ -574,9 +574,6 @@ class PostsList(models.Model):
         communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
 
-    def is_full_list(self, creator):
-        return creator.
-
     def is_main(self):
         return self.type == self.MAIN
     def is_list(self):
