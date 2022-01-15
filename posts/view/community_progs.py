@@ -281,7 +281,7 @@ class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.fixed_community_post(post.community.pk)
+            post.fixed_post(post.community.pk)
             return HttpResponse()
         else:
             raise Http404
@@ -290,7 +290,7 @@ class PostCommunityUnFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
-            post.unfixed_community_post(post.community.pk)
+            post.unfixed_post(post.community.pk)
             return HttpResponse()
         else:
             raise Http404
