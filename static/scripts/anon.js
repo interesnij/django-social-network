@@ -505,14 +505,94 @@ var ready = (callback) => {
   if (document.readyState != "loading") callback();
   else document.addEventListener("DOMContentLoaded", callback);
 };
+
+on('#ajax', 'click', '#code_send', function() {
+  _user_phone = document.getElementById('phone').value;
+  _user_phone = _user_phone.replace(/[^0-9]/g, '');
+
+  if (_user_phone[0] == "+7") {
+    _user_phone = _user_phone.slice(2)
+  }
+  else if (_user_phone[0] == "8") {
+    _user_phone = _user_phone.slice(1)
+  };
+  _user_phone = 7 + _user_phone;
+
+    var code = document.getElementById('code').value;
+    var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
+    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            var div = document.getElementById('jsondata2');
+            div.innerHTML = request.responseText;
+            console.log(request.responseText);
+            if (request.responseText.indexOf("ok") != -1) {
+                window.location.href = "{% url 'user' pk=request.user.pk %}";
+            }
+        }
+    };
+    request.send(null)
+});
+
+function phone_check() {
+    if (document.getElementById('phone').value.length > 9)
+        document.getElementById("phone_send").removeAttribute('disabled');
+    else
+        document.getElementById("phone_send").setAttribute("disabled", "true");
+};
+
+function code_check() {
+    if (document.getElementById('code').value.length === 4)
+        document.getElementById("code_send").removeAttribute('disabled');
+    else
+        document.getElementById("code_send").setAttribute("disabled", "true");
+};
+
+on('#ajax', 'click', '#phone_send', function() {
+  _user_phone = document.getElementById('phone').value;
+  _user_phone = _user_phone.replace(/[^0-9]/g, '');
+
+  if (_user_phone[0] == "+") {
+    _user_phone = _user_phone.slice(2)
+  }
+  else if (_user_phone[0] == "8" || _user_phone[0] == "7") {
+    _user_phone = _user_phone.slice(1)
+  };
+  _user_phone = 7 + _user_phone;
+
+  var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  request.open('GET', "/users/progs/phone_send/" + _user_phone + "/", true);
+  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 200) {
+          var div = document.getElementById('jsondata');
+          div.innerHTML = request.responseText;
+      }
+  };
+  request.send(null);
+});
+
+function create_hide_input (name, value) {
+  $input = document.createElement("input");
+  $input.setAttribute("name", name);
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("type_hidden");
+  $input.value = value;
+  return $input
+}
+
 on('body', 'click', '#register_ajax', function() {
   form = document.querySelector("#signup");
-  if (!form.querySelector("#id_first_name").value){
-    form.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
+  first_name = form.querySelector("#id_first_name");
+  last_name = form.querySelector("#id_last_name");
+  
+  if (!first_name.value){
+    first_name.style.border = "1px #FF0000 solid";
     toast_error("Имя - обязательное поле!");
     return
-  } else if (!form.querySelector("#id_last_name").value){
-    form.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
+  } else if (!last_name.value){
+    last_name.style.border = "1px #FF0000 solid";
     toast_error("Фамилия - обязательное поле!");
     return
   } else if (!form.querySelector("#password1").value){
@@ -537,16 +617,32 @@ on('body', 'click', '#register_ajax', function() {
       form.querySelector("#date_year").style.border = "1px #FF0000 solid";
       toast_error("Год рождения - обязательное поле!");
       return
-  } else {this.disabled = true}
-  form_data = new FormData(form);
+  } else { this.disabled = true }
+
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  reg_link.open( 'POST', "/rest-auth/registration/", true );
+  reg_link.open( 'GET', "/phone_verify/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 201 ) {
-    window.location.href = "/phone_verify/"
-    }};
-  reg_link.send(form_data);
+    elem = reg_link.responseText;
+    _span = document.createElement("span");
+    container = document.body.querySelector(".main-container");
+    container.innerHTML = _span.innerHTML;
+    container.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
+    final_form = container.querySelector("form");
+
+    final_form.append(create_hide_input ("first_name", first_name.value));
+    final_form.append(create_hide_input ("last_name", last_name.value));
+    final_form.append(create_hide_input ("password1", form.querySelector("#password1").value));
+    final_form.append(create_hide_input ("password2", form.querySelector("#password2").value));
+
+    final_form.append(create_hide_input ("date_day", form.querySelector("#date_day").value));
+    final_form.append(create_hide_input ("date_month", form.querySelector("#date_month").value));
+    final_form.append(create_hide_input ("date_year", form.querySelector("#date_year").value));
+    final_form.append(create_hide_input ("gender", form.querySelector("#customradio1").value));
+  }};
+  reg_link.send( );
 });
+
 on('body', 'click', '#logg', function() {
   _this = this;
   form = document.querySelector("#login_form");

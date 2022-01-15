@@ -160,6 +160,7 @@ class RegisterSerializer(serializers.Serializer):
     date_month = serializers.CharField(required=True, write_only=True)
     date_year = serializers.CharField(required=True, write_only=True)
     gender = serializers.CharField(required=True, write_only=True)
+    phone = serializers.CharField(required=True, write_only=True)
     password1 = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -193,8 +194,7 @@ class RegisterSerializer(serializers.Serializer):
         is_have_bad_words(user.first_name)
         is_have_bad_words(user.last_name)
 
-        users_count = User.objects.only("pk").count()
-        user.phone = users_count + 156
+        user.phone = self.validated_data.get('phone', '')
         self.date_day = self.validated_data.get('date_day', '')
         self.date_month = self.validated_data.get('date_month', '')
         self.date_year = self.validated_data.get('date_year', '')
