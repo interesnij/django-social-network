@@ -48,7 +48,7 @@ class PhoneVerify(View):
             raise Http404
         code = self.kwargs["code"]
         phone = self.kwargs["phone"]
-        if PhoneCodes.objects.get(phone=phone, code=code).exists():
+        if PhoneCodes.objects.filter(phone=phone, code=code).exists():
             obj = PhoneCodes.objects.get(phone=phone, code=code)
         else:
             obj = None
