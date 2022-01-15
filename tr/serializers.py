@@ -12,6 +12,7 @@ from django.utils import timezone
 import string
 from rest_framework.exceptions import PermissionDenied
 import re
+from common.utils import create_user_models
 
 absolute_words = [
                 "пизда",
@@ -211,6 +212,7 @@ class RegisterSerializer(serializers.Serializer):
         adapter.save_user(request, user, self)
         setup_user_email(request, user, [])
         user.save()
+        create_user_models(user)
         try:
             get_first_location(request, user)
         except:
