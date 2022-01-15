@@ -538,14 +538,10 @@ class PostsList(models.Model):
 
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="PUB")
-    def get_fix_items(self):
-        return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="_FIX")
     def get_manager_items(self):
         return self.post_list.filter(type="MAN")
     def count_items(self):
         return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
-    def count_fix_items(self):
-        return self.count_fix_items()
 
     def is_not_empty(self):
         return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
