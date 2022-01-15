@@ -623,13 +623,15 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.open( 'GET', "/phone_verify/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
-    console.log(first_name);
-    console.log(last_name);
-    console.log(gender);
+    console.log(first_name.value);
+    console.log(last_name.value);
+    console.log(form.querySelector("#customradio1").value);
 
     elem = reg_link.responseText;
     _span = document.createElement("span");
     _span.innerHTML = elem.innerHTML;
+    console.log(_span);
+    
     _span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
     container.innerHTML = _span.innerHTML;
