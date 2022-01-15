@@ -524,11 +524,25 @@ on('#ajax', 'click', '#code_send', function() {
     request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            var div = document.getElementById('jsondata2');
-            div.innerHTML = request.responseText;
-            console.log(request.responseText);
+          var div = document.getElementById('jsondata');
+          div.innerHTML = request.responseText;
             if (request.responseText.indexOf("ok") != -1) {
-                window.location.href = "{% url 'user' pk=request.user.pk %}";
+              form = document.querySelector('.final_process_form');
+              form_data = new FormData(form);
+              request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+              request_2.open( 'POST', "/rest-auth/registration/", true );
+              request_2.onreadystatechange = function () {
+              if ( request_2.readyState == 4 && request_2.status == 201 ) {
+                window.location.href = "/";
+              }
+              else if (request_2.responseText.indexOf( "Введённый пароль" ) != -1 && document.body.classList.contains("password")) {
+            		alert("Пороль должен состоять минимум из 8 символов - из букв, цифр.");
+            		document.body.classList.add("password");
+            	} else {
+            		document.body.classList.remove("password");
+            	}
+            	}};
+              request_2.send(form_data);
             }
         }
     };
@@ -568,6 +582,9 @@ on('#ajax', 'click', '#phone_send', function() {
       if (request.readyState == 4 && request.status == 200) {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
+          if (div.querySelector("#code_send")) {
+            document.querySelector('#phone_send'),setAttribute("disabled", "true")
+          }
       }
   };
   request.send(null);
@@ -624,14 +641,10 @@ on('body', 'click', '#register_ajax', function() {
   reg_link.open( 'GET', "/phone_verify/", true );
   reg_link.onreadystatechange = function () {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
-    console.log(first_name.value);
-    console.log(last_name.value);
-    console.log(form.querySelector("#customradio1").value);
 
     elem = reg_link.responseText;
     _span = document.createElement("span");
     _span.innerHTML = elem;
-    console.log(_span);
 
     _span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
