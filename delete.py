@@ -17,10 +17,6 @@ import re
 from communities.model.settings import *
 from users.models import User
 from communities.models import Community
+from common.model.other import PhoneCodes
 
-
-for community in Community.objects.all():
-    try:
-        CommunityPrivate2.objects.create(community=community)
-    except:
-        pass
+PhoneCodes.objects.all().delete()
