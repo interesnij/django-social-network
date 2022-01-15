@@ -586,7 +586,7 @@ on('body', 'click', '#register_ajax', function() {
   form = document.querySelector("#signup");
   first_name = form.querySelector("#id_first_name");
   last_name = form.querySelector("#id_last_name");
-  
+
   if (!first_name.value){
     first_name.style.border = "1px #FF0000 solid";
     toast_error("Имя - обязательное поле!");
@@ -622,7 +622,7 @@ on('body', 'click', '#register_ajax', function() {
   reg_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   reg_link.open( 'GET', "/phone_verify/", true );
   reg_link.onreadystatechange = function () {
-  if ( reg_link.readyState == 4 && reg_link.status == 201 ) {
+  if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
     elem = reg_link.responseText;
     _span = document.createElement("span");
     container = document.body.querySelector(".main-container");
