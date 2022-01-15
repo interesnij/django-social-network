@@ -230,7 +230,7 @@ class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator:
-            post.fixed_post(post.creator.pk)
+            post.fixed_post(post.creator)
             return HttpResponse()
         else:
             raise Http404
@@ -239,7 +239,7 @@ class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user == post.creator:
-            post.unfixed_post(post.creator.pk)
+            post.unfixed_post()
             return HttpResponse()
         else:
             raise Http404
