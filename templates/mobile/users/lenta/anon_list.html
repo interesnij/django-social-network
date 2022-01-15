@@ -2,8 +2,8 @@
 {% if is_user_can_see_post_section %}
 
 {% if user.count_fix_items > 1 %}
-<div class="csslider infinity mt-5" id="slider1">
-  <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
+<div class="csslider infinity slider_100 mt-2">
+  <p>Особые записи</p>
   {% for object in user.get_fixed_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
@@ -23,8 +23,8 @@
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
-    <label class="goto-first" for="s_1"></label>
-    <label class="goto-last" for="s_{{ fix_list.count_fix_items }}"></label>
+    <label class="goto_first" for="s_1"></label>
+    <label class="goto_last" for="s_{{ user.count_fix_items }}"></label>
   </div>
 </div>
 {% elif user.count_fix_items == 1 %}
