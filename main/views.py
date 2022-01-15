@@ -46,7 +46,7 @@ class MainPhoneSend(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = "main/phone_verification.html"
+		self.template_name = "desctop/main/phone_verification.html"
 		return super(MainPhoneSend,self).get(request,*args,**kwargs)
 
 class LoadCustomLink(TemplateView):
