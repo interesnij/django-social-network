@@ -625,16 +625,15 @@ on('body', 'click', '#register_ajax', function() {
   if ( reg_link.readyState == 4 && reg_link.status == 200 ) {
     elem = reg_link.responseText;
     _span = document.createElement("span");
+    _span.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
     container = document.body.querySelector(".main-container");
     container.innerHTML = _span.innerHTML;
-    container.querySelector(".user_name").innerHTML = first_name.value + " " + last_name.value;
+    
     final_form = container.querySelector("form");
-
     final_form.append(create_hide_input ("first_name", first_name.value));
     final_form.append(create_hide_input ("last_name", last_name.value));
     final_form.append(create_hide_input ("password1", form.querySelector("#password1").value));
     final_form.append(create_hide_input ("password2", form.querySelector("#password2").value));
-
     final_form.append(create_hide_input ("date_day", form.querySelector("#date_day").value));
     final_form.append(create_hide_input ("date_month", form.querySelector("#date_month").value));
     final_form.append(create_hide_input ("date_year", form.querySelector("#date_year").value));
