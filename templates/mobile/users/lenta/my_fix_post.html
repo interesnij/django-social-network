@@ -21,11 +21,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <span>
-                {% if object.is_fixed_in_user %}
                   <span class="dropdown-item u_post_unfixed">Открепить</span>
-                {% elif request.user.is_can_fixed_post %}
-                  <span class="dropdown-item u_post_fixed">Закрепить</span>
-                {% endif %}
               </span>
               {% if request.user.pk == object.creator.pk %}
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
