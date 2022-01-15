@@ -42,19 +42,6 @@ class PostUserStaff(models.Model):
         verbose_name = 'Полномочия в постах пользователей'
         verbose_name_plural = 'Полномочия в постах пользователей'
 
-class PlannerUserStaff(models.Model):
-    ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
-    LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='planner_user_staff', verbose_name="Особый пользователь")
-    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень доступа")
-
-    def __str__(self):
-        return self.user.get_full_name()
-
-    class Meta:
-        verbose_name = 'Полномочия в планировщике'
-        verbose_name_plural = 'Полномочия в планировщиках'
-
 class ForumUserStaff(models.Model):
     ADMINISTRATOR, EDITOR, ADVERTISER, MODERATOR = 1, 2, 3, 4
     LEVEL = ((ADMINISTRATOR, 'Администратор'),(MODERATOR, 'Модератор'),(EDITOR, 'Редактор'),(ADVERTISER, 'Рекламодатель'),)
@@ -324,20 +311,6 @@ class CanWorkStaffAudioUser(models.Model):
     class Meta:
         verbose_name = 'Создатель персонала аудиозаписей'
         verbose_name_plural = 'Создатели персонала аудиозаписей'
-
-class CanWorkStaffPlannerUser(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_planner_user', verbose_name="Создатель персонала в планировщике")
-    can_work_administrator = models.BooleanField(default=False, verbose_name="Может добавлять администраторов в планировщике")
-    can_work_moderator = models.BooleanField(default=False, verbose_name="Может добавлять модераторов в планировщике")
-    can_work_editor = models.BooleanField(default=False, verbose_name="Может добавлять редакторов в планировщике")
-    can_work_advertiser = models.BooleanField(default=False, verbose_name="Может добавлять рекламодателей в планировщике")
-
-    def __str__(self):
-        return self.user.get_full_name()
-
-    class Meta:
-        verbose_name = 'Создатель персонала в планировщике'
-        verbose_name_plural = 'Создатели персонала в планировщике'
 
 class CanWorkStaffForumUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='can_work_staff_forum_user', verbose_name="Создатель персонала в форуме")
