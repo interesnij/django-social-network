@@ -577,6 +577,7 @@ function create_hide_input (name, value) {
   $input = document.createElement("input");
   $input.setAttribute("name", name);
   $input.setAttribute("type", "hidden");
+  $input.setAttribute("disabled", "true");
   $input.classList.add("type_hidden");
   $input.value = value;
   return $input
