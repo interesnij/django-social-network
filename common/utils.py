@@ -201,7 +201,6 @@ def create_user_models(user):
     UserGoodListPosition.objects.create(user=user.pk, list=good_list.pk, position=1)
 
     post_list = PostsList.objects.create(creator=user, type=PostsList.MAIN, name="Записи")
-    post_fix_list = PostsList.objects.create(creator=user, type=PostsList.FIXED, name="Закреплённый список")
     UserPostsListPosition.objects.create(user=user.pk, list=post_list.pk, position=1)
 
     music_list = MusicList.objects.create(creator=user, type=MusicList.MAIN, name="Основной список")

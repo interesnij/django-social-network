@@ -1,25 +1,25 @@
-
 <span class="post_container">
+{% if is_user_can_see_post_section %}
 
-{% if fix_list.count_fix_items > 1 %}
+{% if community.count_fix_items > 1 %}
 <div class="csslider infinity mt-5" id="slider1">
   <p style="left: 50%;position: absolute;top: -25px;transform: translate(-50%, -50%);">Особые записи</p>
-  {% for object in fix_list.get_posts_ids %}
+  {% for object in community.get_fixed_posts_ids %}
     <input type="radio" name="slides" {% if forloop.first %}checked="checked"{% endif %} id="s_{{ forloop.counter }}"/>
   {% endfor %}
   <ul>
-    {% for object in fix_list.get_fix_items %}
+    {% for object in get_fixed_posts %}
     <li class="scrollable">
-      {% if object.community %}
-        {% include 'desctop/communities/lenta/admin_fix_post.html' %}
-      {% else %}
-        {% include 'desctop/users/lenta/my_fix_post.html' %}
-      {% endif %}
+        {% if object.community %}
+          {% include 'desctop/communities/lenta/admin_fix_post.html' %}
+        {% else %}
+          {% include 'desctop/users/lenta/my_fix_post.html' %}
+        {% endif %}
     </li>
     {% endfor %}
   </ul>
   <div class="arrows">
-    {% for object in fix_list.get_posts_ids %}
+    {% for object in community.get_fixed_posts_ids %}
       <label for="s_{{ forloop.counter }}"></label>
     {% endfor %}
 
@@ -27,38 +27,25 @@
     <label class="goto-last" for="s_{{ fix_list.count_fix_items }}"></label>
   </div>
 </div>
-{% elif fix_list.count_fix_items == 1 %}
+{% elif community.count_fix_items == 1 %}
 
-{% for object in fix_list.get_fix_items %}
-{% if object.community %}
-  {% include 'desctop/communities/lenta/admin_fix_post.html' %}
-{% else %}
-  {% include 'desctop/users/lenta/my_fix_post.html' %}
-{% endif %}
+{% for object in get_fixed_posts %}
+    {% if object.community %}
+      {% include 'desctop/communities/lenta/admin_fix_post.html' %}
+    {% else %}
+      {% include 'desctop/users/lenta/my_fix_post.html' %}
+    {% endif %}
 {% endfor %}
 
 {% endif %}
 
-  {% include 'desctop/communities/lenta/admin_lists.html' %}
+{% include 'desctop/communities/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
-      <span>
-        <a class="c_edit_post_list pointer">изменить список</a>
-          {% if list.is_have_edit and community.pk == object.community.pk %}
-            &nbsp;
-            <a class="c_delete_post_list pointer">удалить список</a>
-          {% endif %}
-        </span>
-        {% if is_user_can_create_posts %}
-          {% include 'desctop/communities/detail_sections/create_post.html' %}
-        {% elif is_user_can_create_offer_post %}
-          {% include 'desctop/communities/detail_sections/create_offer_post.html' %}
-        {% endif %}
-        <span></span>
-        <span class="post_stream is_paginate is_stat_list" data-type="community_post_list" data-pk="{{ list.pk }}" owner-pk="{{ community.pk }}">
+        <span class="post_stream is_paginate">
           {% for object in object_list %}
-            {% include 'desctop/posts/post_community/admin_post.html' %}
+            {% include 'desctop/posts/post_community/post.html' %}
           {% endfor %}
           {% if page_obj.has_next %}
           <div class="load centered m-1 next_page_list" data-link="{% url 'community_post_list' pk=community.pk list_pk=list.pk %}?page={{ page_obj.next_page_number }}">
@@ -70,10 +57,13 @@
             {% include 'desctop/communities/lenta/no_posts.html' %}
           {% endif %}
         </span>
-
         {% else %}
           {% include 'desctop/generic/centered/private_list.html' %}
         {% endif %}
     </span>
   </span>
+
+{% else %}
+    {% include 'desctop/generic/centered/private_post.html' %}
+{% endif %}
 </span>
