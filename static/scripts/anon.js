@@ -527,7 +527,7 @@ on('#ajax', 'click', '#code_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
             if (request.responseText.indexOf("ok") != -1) {
-              form = document.querySelector('.final_process_form');
+              form = document.body.querySelector('.final_process_form');
               form_data = new FormData(form);
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
@@ -649,7 +649,7 @@ on('body', 'click', '#register_ajax', function() {
     container = document.body.querySelector(".main-container");
     container.innerHTML = _span.innerHTML;
 
-    final_form = container.querySelector(".final_process_form"); 
+    final_form = container.querySelector(".final_process_form");
     final_form.append(create_hide_input ("first_name", first_name.value));
     final_form.append(create_hide_input ("last_name", last_name.value));
     final_form.append(create_hide_input ("password1", form.querySelector("#password1").value));
