@@ -543,7 +543,6 @@ on('#ajax', 'click', '#code_send', function() {
             	}
             	}};
               request_2.send(form_data);
-            }
         }
     };
     request.send(null)
