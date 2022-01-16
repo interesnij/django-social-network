@@ -1,10 +1,6 @@
-{% extends "base_mobile.html" %}
-{% block title %}Подтверждение профиля{% endblock %}
-{% block content %}
 
-<div class="container mt-3">
-  <div class="card text-center">
-    <h1 class="font-weight-light mb-3 mt-4 content-color-secondary">{{ request.user.get_full_name }}!</h1>
+<form class="h-sm-auto final_process_form">
+    <h1 class="font-weight-light mb-3 mt-4 user_name"></h1>
     <p>
       Вам нужно подтвердить с помощью телефона свой профиль, и в будущем использовать номер телефона
       в качестве логина к профилю соцсети трезвый.рус. <br>
@@ -14,102 +10,8 @@
       <input type="number" id="phone" onkeyup="phone_check();" class="form-control border-0" placeholder="Телефон">
     </div>
     <button type="button" disabled="disabled" id="phone_send" class="btn btn-primary pink-gradient" style="margin: 5px;">Получить код</button>
-    <a href="/logout/" class="btn" style="margin: 5px;">Выйти</a>
+
     <div id='jsondata' style="margin-top:50px"></div>
 
     <div id='jsondata2' style="margin-top:50px"></div>
-</div>
-</div>
-
-     <script type="text/javascript">
-       nav = document.body.querySelector(".mobile_naw");
-       console.log(nav);
-       nav.style.display = "none";
-       nav.remove();
-       function on(elSelector, eventName, selector, fn) {
-           var element = document.querySelector(elSelector);
-           element.addEventListener(eventName, function(event) {
-               var possibleTargets = element.querySelectorAll(selector);
-               var target = event.target;
-               for (var i = 0, l = possibleTargets.length; i < l; i++) {
-                   var el = target;
-                   var p = possibleTargets[i];
-                   while (el && el !== element) {
-                       if (el === p) {
-                           return fn.call(p, event);
-                       }
-                       el = el.parentNode;
-                   }
-               }
-           });
-       };
-     function phone_check() {
-      if (document.getElementById('phone').value.length > 9)
-        document.getElementById("phone_send").removeAttribute('disabled');
-      else
-        document.getElementById("phone_send").setAttribute("disabled", "true");
-      }
-      function code_check() {
-       if (document.getElementById('code').value.length === 4)
-         document.getElementById("code_send").removeAttribute('disabled');
-       else
-         document.getElementById("code_send").setAttribute("disabled", "true");
-       }
-
-       document.getElementById("phone_send").addEventListener("click", (e) => {
-         _this.disabled = true;
-         form.querySelector("#id_username").style.display = "none";
-         if (_user_phone[0] == "+7") {
-           _user_phone = _user_phone.slice(2)
-         }
-     		else if (_user_phone[0] == "8") {
-     			_user_phone = _user_phone.slice(1)
-     		};
-        form.querySelector("#id_username").value = 7 + _user_phone;
-
-       var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-       request.open( 'GET', "/users/progs/phone_send/" + _user_phone + "/", true );
-       request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-       request.onreadystatechange = function () {
-         if ( request.readyState == 4 && request.status == 200) {
-           var div = document.getElementById('jsondata');
-           div.innerHTML = request.responseText;
-           document.getElementById("phone").setAttribute("disabled", "true");
-           document.getElementById("phone_send").setAttribute("disabled", "true");
-         }
-         else {
-           document.getElementById("phone").setAttribute("disabled", "false");
-           document.getElementById("phone_send").setAttribute("disabled", "false");
-         }
-       };
-       request.send( null );
-     });
-
-     on('#ajax', 'click', '#code_send', function() {
-       _this.disabled = true;
-
-       if (_user_phone[0] == "+") {
-         _user_phone = _user_phone.slice(2)
-       }
-       else if (_user_phone[0] == "8" || _user_phone[0] == "7") {
-         _user_phone = _user_phone.slice(1)
-       };
-       _user_phone = 7 + _user_phone;
-         var code = document.getElementById('code').value;
-         var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-         request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
-         request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-         request.onreadystatechange = function() {
-             if (request.readyState == 4 && request.status == 200) {
-                 var div = document.getElementById('jsondata2');
-                 div.innerHTML = request.responseText;
-                 console.log(request.responseText);
-                 if (request.responseText.indexOf("ok") != -1) {
-                     window.location.href = "{% url 'user' pk=request.user.pk %}";
-                 }
-             }
-         };
-         request.send(null)
-     });
-     </script>
-{% endblock %}
+</form>
