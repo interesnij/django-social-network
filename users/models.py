@@ -83,15 +83,15 @@ class User(AbstractUser):
 
     def get_fixed_posts(self):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.pk, type=Post.FIXED)
+        return Post.objects.filter(creator_id=self.pk, type="FIX")
 
     def get_fixed_posts_ids(self):
         from posts.models import Post
-        list = Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk")
+        list = Post.objects.filter(creator_id=self.pk, type="FIX").values("pk")
         return [i['pk'] for i in list]
     def count_fix_items(self):
         from posts.models import Post
-        return Post.objects.filter(creator_id=self.pk, type=Post.FIXED).values("pk").count()
+        return Post.objects.filter(creator_id=self.pk, type="FIX").values("pk").count()
 
     def is_can_fixed_post(self):
         return self.count_fix_items() < 10
