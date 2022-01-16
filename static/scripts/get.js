@@ -521,3 +521,20 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
   form.classList.remove("cool_private_form");
   close_work_fullscreen();
 });
+
+on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
+  form = this.parentElement.parentElement;
+  form.querySelector(".form_btn").disabled = true;
+  collector = document.body.querySelector(".collector_active");
+  users_block = form.querySelector(".card-header");
+  users_list = users_block.querySelectorAll(".custom_color");
+  final_list = ": ";
+  for (var i = 0; i < users_list.length; i++){
+    a = users_list[i].querySelector("a");
+    final_list += '<a class="pointer">' + a.innerHTML + '</a>'
+    final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
+  };
+  collector.innerHTML = final_list;
+  form.classList.remove("cool_private_form");
+  close_work_fullscreen();
+});
