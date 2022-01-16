@@ -261,6 +261,17 @@ class UserLoadGoodList(ListView):
 		return self.list.get_items()
 
 
+class PostListsLoad(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/load/post_lists.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = request.user.get_post_lists()
+		return super(PostListsLoad,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		return self.list
+
 class ChatItemsLoad(ListView):
 	template_name, paginate_by = None, 15
 
@@ -272,14 +283,13 @@ class ChatItemsLoad(ListView):
 	def get_queryset(self):
 		return self.total_list
 
-
-class CommunitiesLoad(ListView):
+class CommunitiesPostListsLoad(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.list = request.user.get_staffed_communities()
-		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
+		self.template_name = get_settings_template("users/load/communities_post_lists.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = request.user.get_post_lists_from_staffed_comunities()
+		return super(CommunitiesPostListsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
 		return self.list
