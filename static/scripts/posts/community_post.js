@@ -344,9 +344,9 @@ on('#ajax', 'click', '.c_post_on_votes', function() {
 
 on('#ajax', 'click', '.c_post_remove', function() {
   item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  pk = item.getAttribute("data-pk");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community_progs/delete/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/delete/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -354,11 +354,11 @@ on('#ajax', 'click', '.c_post_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
-    p.innerHTML = "<span class='c_post_restore pointer' data-uuid='" + uuid + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
+    p.innerHTML = "<span class='c_post_restore pointer' data-pk='" + pk + "'>Запись удалена. <span class='underline'>Восстановить</span></span>";
     !document.querySelector(".post_detail") ? (item.parentElement.insertBefore(p, item), item.style.display = "none")
     : (document.querySelector(".item_fullscreen").style.display = "none",
     block = document.body.querySelector(".post_stream"),
-    item = block.querySelector( '[data-uuid=' + '"' + uuid + '"' + ']' ),
+    item = block.querySelector( '[data-pk=' + '"' + pk + '"' + ']' ),
     item.parentElement.insertBefore(p, item),
     item.style.display = "none",
     p.style.display =  "block")
@@ -369,10 +369,10 @@ on('#ajax', 'click', '.c_post_remove', function() {
 
 on('#ajax', 'click', '.c_post_restore', function() {
   item = this.parentElement.nextElementSibling;
-  uuid = this.getAttribute("data-uuid");
+  pk = this.getAttribute("data-pk");
   block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/community_progs/restore/" + uuid + "/", true );
+  link.open( 'GET', "/posts/community_progs/restore/" + pk + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
