@@ -132,7 +132,7 @@ on('body', 'click', '.body_overlay', function() {
 
 function check_message_form_btn() {
   input = document.body.querySelector(".message_text");
-  btn_block = document.body.querySelector(".input_group_message"); 
+  btn_block = document.body.querySelector(".input_group_message");
   if (input.innerHTML.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && document.body.querySelector(".files_0")){
      btn_block.querySelector("#voice_start_btn").style.display = "block";
      btn_block.querySelector("#message_post_btn").style.display = "none";
@@ -467,41 +467,34 @@ function get_preview(response, type) {
 };
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
-    form_post = _this.parentElement.parentElement.parentElement;
+    form_post = _this.parentElement.parentElement;
+    if (!form_post.querySelector(".collector").innerHTML) {
+      toast_error("Ничего не выбрано")
+    }
     form_data = new FormData(form_post);
-    item_pk = _this.getAttribute("item-pk");
     pk = _this.getAttribute("data-pk");
     preview_target_block = form_post.querySelector('#selected_message_target_items');
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     if (form_post.querySelector('#repost_radio_wall').checked) {
-        link_.open('POST', wall_url + pk + "/" + item_pk + "/", true);
+        link_.open('POST', wall_url + pk + "/", true);
         link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         link_.send(form_data);
         toast_info(wall_toast)
     } else if (form_post.querySelector('#repost_radio_community').checked) {
         staff_communities = form_post.querySelector("#id_staff_communities");
-        if (preview_target_block.querySelector(".community").value) {
-            link_.open('POST', community_url + pk + "/" + item_pk + "/", true);
-            link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            link_.send(form_data);
-            toast_info(community_toast)
-        } else {
-            toast_error("Выберите сообщества для репоста")
-        }
+          link_.open('POST', community_url + pk + "/", true);
+          link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          link_.send(form_data);
+          toast_info(community_toast)
     } else if (form_post.querySelector('#repost_radio_message').checked) {
-        if (preview_target_block.querySelector(".chat").value) {
-            link_.open('POST', message_url + pk + "/" + item_pk + "/", true);
+            link_.open('POST', message_url + pk + "/", true);
             link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             link_.send(form_data);
             toast_info(message_toast)
-        } else {
-            toast_error("Выберите пользователя для репоста")
-        }
     };
     link_.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.querySelector(".votes_fullscreen").style.display = "none";
-            document.getElementById("votes_loader").innerHTML = ""
+            close_work_fullscreen()
         }
     }
 };
