@@ -133,31 +133,20 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   clear_attach_block();
 });
 
-on('#ajax', 'click', '.repost_for_wall', function() {
-  this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
+on('#ajax', 'click', '#repost_for_wall', function() {
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#chat_items_append").style.display = "none";
-  current_block.querySelector("#community_append").style.display = "none";
+  current_block.querySelector("#items_container").innerHTML = "";
+  create_fullscreen("/users/load/post_lists/", "worker_fullscreen");
 });
 on('#ajax', 'click', '#u_repost_for_community', function() {
-  this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#community_append").style.display = "block";
-  block = current_block.querySelector("#user_communities_window");
-  current_block.querySelector("#chat_items_append").style.display = "none";
-  if (!block.querySelector(".load_pag")){
-  list_load(block, "/users/load/communities/")
-  }
+  current_block.querySelector("#items_container").innerHTML = "";
+  create_fullscreen("/users/load/communities/", "worker_fullscreen");
 });
 on('#ajax', 'click', '#repost_for_message', function() {
-  this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#community_append").style.display = "none";
-  block = current_block.querySelector("#user_chat_items_window");
-  current_block.querySelector("#user_chat_items_window").style.display = "block";
-  if (!block.querySelector(".load_pag")){
-  list_load(block, "/users/load/chat_items/")
-  }
+  current_block.querySelector("#items_container").innerHTML = "";
+  create_fullscreen("/users/load/chat_items/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.u_post_edit', function() {
