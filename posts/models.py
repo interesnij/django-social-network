@@ -541,13 +541,13 @@ class PostsList(models.Model):
     def get_manager_items(self):
         return self.post_list.filter(type="MAN")
     def count_items(self):
-        return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
+        return self.post_list.filter(type="PUB").values("pk").count()
 
     def is_not_empty(self):
-        return self.post_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
+        return self.post_list.filter(type="PUB").values("pk").exists()
 
     def get_posts_ids(self):
-        ids = self.post_list.filter(type="_FIX").values("pk")
+        ids = self.post_list.filter(type="FIX").values("pk")
         return [id['pk'] for id in ids]
 
     def is_user_can_add_list(self, user_id):
@@ -781,7 +781,7 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, REPOST = "_COF","_UOF","_CDR","_COF","_FIX",'PUB','MAN','_DEL','_CLO','_REP'
+    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, REPOST = "_COF","_UOF","_CDR","_COF","FIX",'PUB','MAN','_DEL','_CLO','_REP'
     DELETED_C_OFFER, DELETED_U_OFFER, DELETED_MANAGER, CLOSED_MANAGER = '_DCOF','_DUOF','_DELM','_CLOM'
     TYPE = (
         (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
