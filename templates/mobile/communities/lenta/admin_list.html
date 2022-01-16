@@ -43,6 +43,20 @@
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
+
+      <span>
+        <a class="c_edit_post_list pointer">изменить список</a>
+          {% if list.is_have_edit and community.pk == object.community.pk %}
+            &nbsp;
+            <a class="c_delete_post_list pointer">удалить список</a>
+          {% endif %}
+        </span>
+        {% if is_user_can_create_posts %}
+          {% include 'mobile/communities/detail_sections/create_post.html' %}
+        {% elif is_user_can_create_offer_post %}
+          {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
+        {% endif %}
+        <span></span>
         <span class="post_stream is_paginate">
           {% for object in object_list %}
             {% include 'mobile/posts/post_community/admin_post.html' %}
