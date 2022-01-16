@@ -523,15 +523,15 @@ on('#ajax', 'click', '#add_list_selected_users_btn', function() {
 });
 
 on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
-  form = this.parentElement.parentElement;
+  form = this.parentElement;
   form.querySelector(".form_btn").disabled = true;
   collector = document.body.querySelector(".collector_active");
   users_block = form.querySelector(".card-header");
   users_list = users_block.querySelectorAll(".custom_color");
-  final_list = ": ";
+  final_list = "";
   for (var i = 0; i < users_list.length; i++){
     a = users_list[i].querySelector("a");
-    final_list += '<a class="pointer">' + a.innerHTML + '</a>'
+    final_list += '<a postlist-pk="' + this.getAttribute("data-pk") + '" class="pointer ' + this.getAttribute("data-link") + '">' + a.innerHTML + '</a>'
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
   collector.innerHTML = final_list;
