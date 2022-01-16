@@ -1160,7 +1160,7 @@ class User(AbstractUser):
 
     def get_post_lists_from_staffed_comunities(self):
         from posts.models import PostsList
-        query = Q(community__in=self.get_staffed_communities)
+        query = Q(community__in=self.get_staffed_communities())
         query.add(~Q(type__contains="_"), Q.AND)
         return PostsList.objects.filter(query)
 
