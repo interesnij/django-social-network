@@ -627,7 +627,7 @@ function create_list_input_card(name, pk, link) {
   $span = document.createElement("span");
   $span.setAttribute("data-pk", pk);
   $span.classList.add("btn","btn-sm","custom_color");
-  $span.innerHTML = "<a class='pointer + " + link + "' postlist-pk=" + pk + ">" + name + "</a><span class='remove_list_input pointer'>x<span>";
+  $span.innerHTML = "<a class='pointer " + link + "' postlist-pk=" + pk + ">" + name + "</a><span class='remove_list_input pointer'>x<span>";
   $span.style.margin = "2px";
   $input = document.createElement("input");
   $input.classList.add("list_pk");
