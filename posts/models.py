@@ -1219,15 +1219,12 @@ class Post(models.Model):
             return ValidationError("Список уже заполнен.")
 
     def unfixed_post(self):
-        if list.is_item_in_list(self.pk):
-            if self.is_fixed:
-                self.type = Post.PUBLISHED
-                return self.save(update_fields=["type"])
-            else:
-                self.type = Post.FIXED
-                self.save(update_fields=["type"])
+        if self.is_fixed:
+            self.type = Post.PUBLISHED
+            return self.save(update_fields=["type"])
         else:
-            return ValidationError("Запись и так не в списке.")
+            self.type = Post.FIXED
+            self.save(update_fields=["type"])
 
     def likes(self):
         from common.model.votes import PostVotes
