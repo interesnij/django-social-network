@@ -288,11 +288,10 @@ class CommunitiesPostListsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/communities_post_lists.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.list = request.user.get_post_lists_from_staffed_comunities()
 		return super(CommunitiesPostListsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.list
+		return self.request.user.get_post_lists_from_staffed_comunities()
 
 
 class FriendsLoad(ListView):
