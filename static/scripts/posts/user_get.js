@@ -107,11 +107,25 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   }
 });
 
-on('#ajax', 'click', '.fix_fullscreen', function() {
-  uuid = this.parentElement.getAttribute('data-uuid');
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  create_fullscreen("/posts/fix_post/" + uuid + "/", "item_fullscreen");
+on('#ajax', 'click', '.fullscreen', function(e) {
+  card = this.parentElement;
+
+  if (this.parentElement.querySelector(".show_post_text")) {
+    shower = this.parentElement.querySelector(".show_post_text");
+    shower.nextElementSibling.nextElementSibling.style.display = "unset";
+    shower.nextElementSibling.remove();
+    shower.previousElementSibling.remove();
+    shower.remove();
+  }
+
+  else if (e.target.classList.contains("action")) {null}
+  else {
+    pk = card.getAttribute('data-pk');
+    create_fullscreen("/posts/fix_post/" + pk + "/", "worker_fullscreen");
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
+  }
 });
+
 on('#ajax', 'click', '.u_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
   uuid = parent.getAttribute("data-uuid");
