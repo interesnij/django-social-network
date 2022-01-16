@@ -7,9 +7,39 @@
 {% if object.parent %}
 <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
   {% if object.parent.community %}
-    {{ object|c_post_parent:request.user|safe }}
+  <div class="card-header">
+      <div class="media">
+        {% include 'desctop/generic/community/parent_figure.html' %}
+          <div class="media-body">
+              <h6 class="mb-0">
+                {% include 'desctop/generic/community/parent_object.html' %}
+              </h6>
+              <p class="mb-0 wall_fullscreen pointer">{{ object.parent.get_created }}</p>
+          </div>
+      </div>
+  </div>
   {% else %}
-    {{ object|u_post_parent:request.user|safe }}
+  <div class="card-header">
+      <div class="media">
+        {% include 'desctop/generic/user/parent_figure.html' %}
+          <div class="media-body">
+              <h6 class="mb-0">
+                {% include 'desctop/generic/user/parent_creator.html' %}
+             </h6>
+              <a class="mb-0 wall_fullscreen pointer">{{ object.parent.get_created }}</a>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+
+  {% if object.parent.text %}
+    <div class="fullscreen text_support pointer">
+      {{ object.parent.get_format_text|safe }}
+    </div>
+  {% endif %}
+
+  {% if object.parent.attach %}
+    {{ object.parent|get_attach:request.user|safe }}
   {% endif %}
 </span>
 {% endif %}
