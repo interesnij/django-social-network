@@ -107,7 +107,7 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   }
 });
 
-on('#ajax', 'click', '.fullscreen', function(e) {
+on('#ajax', 'click', '.fix_fullscreen', function(e) {
   card = this.parentElement;
 
   if (this.parentElement.querySelector(".show_post_text")) {
