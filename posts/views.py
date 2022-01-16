@@ -87,16 +87,16 @@ class LoadFixPost(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.post = Post.objects.get(pk=self.kwargs["pk"])
-		self.list = self.post.list
-		self.posts = self.list.get_items()
 
 		if self.post.community:
 			self.community = self.post.community
+			self.posts = self.community.get_fixed_posts()
 			if request.user.is_authenticated:
 				self.template_name = get_template_community_item(self.post, "communities/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.post, "communities/lenta/anon_fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
+			self.posts = self.post.creator.get_fixed_posts()
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_item(self.post, "users/lenta/", "fix_post_detail.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
