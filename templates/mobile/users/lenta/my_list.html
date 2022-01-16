@@ -43,6 +43,35 @@
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
+
+      {% if request.user.pk == list.creator.pk %}
+         <span>
+           <a class="u_edit_post_list pointer">изменить список</a>
+           {% if list.is_have_edit %}
+             &nbsp;
+           <a class="u_delete_post_list pointer">удалить список</a>
+           {% endif %}
+         </span>
+
+       {% elif not request.user.is_post_manager %}
+         <span>
+           <a class="u_uncopy_post_list pointer">Удалить список</a>
+           &nbsp;
+           <a class="claim_post_list pointer">Пожаловаться</a>
+         </span>
+       {% elif request.user.is_post_manager %}
+         <span>
+           <a class="close_post_list pointer">Закрыть</a>
+         </span>
+       {% endif %}
+
+       {% if is_user_can_create_posts %}
+         {% include 'mobile/users/profile/new_post.html' %}
+       {% elif is_user_can_create_offer_post %}
+         {% include 'mobile/users/profile/new_offer_post.html' %}
+       {% endif %}
+
+       <span></span>
         <span class="post_stream is_paginate">
           {% for object in object_list %}
             {% include 'mobile/posts/post_user/my_post.html' %}
