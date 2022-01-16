@@ -3,10 +3,11 @@
       <div class="card-header" style="min-height: 100px;">
         <span class="header_title">Выберите списки записей</span>
       </div>
+      <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_selected_users_btn" style="float: right;">
+        Выберите списки
+      </button>
       <div class="card-body">
-        <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_selected_users_btn" style="float: right;">
-          Выберите списки
-        </button>
+
         <div class="is_block_paginate">
           {% for object in object_list %}
           <div class="media pointer items_lists_toggle border-bottom pag" data-link="load_post_list" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
