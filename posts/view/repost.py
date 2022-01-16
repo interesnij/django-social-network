@@ -100,7 +100,8 @@ class UUPostRepost(View):
             else:
                 parent = parent
             for list_pk in lists:
-                new_post = post.create_post(creator=request.user, list_id=list_pk, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post_list = PostsList.objects.get(pk=list_pk)
+                new_post = post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -119,7 +120,8 @@ class CUPostRepost(View):
             else:
                 parent = parent
             for list_pk in lists:
-                post.create_post(creator=request.user, list_id=list_pk, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
