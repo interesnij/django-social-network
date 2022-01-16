@@ -1,5 +1,5 @@
 on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
-  repost_constructor(this,
+  repost_constructor(this, 
                      "/posts/repost/u_u_post_repost/",
                      "Репост записи на стену сделан",
                      "/posts/repost/u_c_post_repost/",
