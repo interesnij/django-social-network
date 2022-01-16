@@ -44,7 +44,7 @@ CommunityDocsListPosition.objects.all().delete()
 
 query = Q(Q(type="PUB")|Q(type="PRI"))
 
-post_lists = PostsList.objects.exclude(type="_FIX").exclude(type="_DRA")
+post_lists = PostsList.objects.exclude(type="_DRA")
 for list in post_lists:
     list.communities.clear()
     list.users.clear()
