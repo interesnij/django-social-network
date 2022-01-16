@@ -1,7 +1,7 @@
 <form id="u_uсm_post_repost_form">
   {% csrf_token %}
   <div class="card-header border-bottom">
-    <h5 class="content-color-primary mb-0">Поделиться записью {{ object.creator.get_full_name_genitive }}</h5>
+    <h5 class="content-color-primary mb-0">Сделать репост...</h5>
   </div>
   <div class="card-body">
     {% include 'desctop/generic/repost/user_choice.html' %}
