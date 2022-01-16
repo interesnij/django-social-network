@@ -135,17 +135,17 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 
 on('#ajax', 'click', '#repost_for_wall', function() {
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#items_container").innerHTML = "";
+  current_block.querySelector(".collector").innerHTML = "";
   create_fullscreen("/users/load/post_lists/", "worker_fullscreen");
 });
 on('#ajax', 'click', '#u_repost_for_community', function() {
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#items_container").innerHTML = "";
-  create_fullscreen("/users/load/communities/", "worker_fullscreen");
+  current_block.querySelector(".collector").innerHTML = "";
+  create_fullscreen("/users/load/communities_post_lists/", "worker_fullscreen");
 });
 on('#ajax', 'click', '#repost_for_message', function() {
   current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#items_container").innerHTML = "";
+  current_block.querySelector(".collector").innerHTML = "";
   create_fullscreen("/users/load/chat_items/", "worker_fullscreen");
 });
 

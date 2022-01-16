@@ -24,8 +24,10 @@ urlpatterns = [
     url(r'^u_good_load/$', UserLoadGood.as_view(), name="u_good_load"),
     url(r'^u_good_list_load/(?P<uuid>[0-9a-f-]+)/$', UserLoadGoodList.as_view(), name="u_good_list_load"),
 
+    url(r'^post_lists/$', PostListsLoad.as_view()),
+    url(r'^communities_post_lists/$', CommunitiesPostListsLoad.as_view()),
     url(r'^chat_items/$', ChatItemsLoad.as_view()),
-    url(r'^communities/$', CommunitiesLoad.as_view()),
+
     url(r'^friends/$', FriendsLoad.as_view()),
     url(r'^smiles/$', SmilesLoad.as_view()),
     url(r'^smiles_stickers/$', SmilesStickersLoad.as_view()),

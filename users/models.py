@@ -1158,6 +1158,12 @@ class User(AbstractUser):
         query.add(~Q(type__contains="_"), Q.AND)
         return PostsList.objects.filter(query)
 
+    def get_post_lists_from_staffed_comunities(self):
+        from posts.models import PostsList
+        query = Q(community__in=self.get_staffed_communities)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PostsList.objects.filter(query)
+
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
         list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
