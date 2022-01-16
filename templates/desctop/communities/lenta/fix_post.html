@@ -31,8 +31,8 @@
       </div>
   </div>
 
-  <div class="fix_fullscreen pointer">
-    {{ object.text|safe }}
+  <div class="fix_fullscreen pointer text_support">
+    {{ object.get_format_text|safe }}
   </div>
 
   {% include 'base_block/post.html' %}
