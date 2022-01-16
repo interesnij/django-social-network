@@ -865,6 +865,8 @@ class Post(models.Model):
         return self.type[:4] == "_CLO"
     def is_fixed(self):
         return self.type == "FIXED"
+    def is_suspended(self):
+        return False
 
     def send_like(self, user, community):
         import json
