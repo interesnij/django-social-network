@@ -936,7 +936,7 @@ class Post(models.Model):
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
-    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community=None, verb):
+    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community=None):
         from common.processing_2 import get_text_processing
         from rest_framework.exceptions import PermissionDenied
 
