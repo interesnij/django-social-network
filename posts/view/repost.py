@@ -90,7 +90,7 @@ class UUPostRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists')
+        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
         if parent.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, parent.creator)
         if request.is_ajax() and form_post.is_valid():
@@ -102,6 +102,9 @@ class UUPostRepost(View):
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
                 new_post = post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+            parent.repost += count
+            parent.save(update_fields=["repost"])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -111,7 +114,7 @@ class CUPostRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists')
+        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
         check_can_get_lists(request.user, parent.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -132,7 +135,7 @@ class UCPostRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists')
+        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -153,7 +156,7 @@ class CCPostRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists')
+        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
         check_can_get_lists(request.user, parent.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -175,7 +178,7 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, user, connections, form_post = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
+        parent, user, connections, form_post, count = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), 0
         if user != request.user:
             check_user_can_get_list(request.user, user)
         if not connections:
@@ -211,7 +214,7 @@ class CMPostRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, community, connections, form_post = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST)
+        parent, community, connections, form_post, count = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), 0
         check_can_get_lists(request.user, community)
 
         if not connections:
