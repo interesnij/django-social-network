@@ -34,10 +34,11 @@ class PostUserCreate(View):
 
         if request.is_ajax() and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
             post = form_post.save(commit=False)
+            creator = request.user
             if post.text or attach:
                 from common.templates import render_for_platform
                 new_post = post.create_post(
-                                            creator=request.user,
+                                            creator=creator,
                                             text=post.text,
                                             category=post.category,
                                             list=list,
@@ -48,6 +49,16 @@ class PostUserCreate(View):
                                             votes_on=post.votes_on,
                                             community=None
                                             )
+
+                from common.notify.progs import user_send_notify, user_send_wall
+                from notify.models import Notify, Wall
+                Wall.objects.create(creator_id=creator.pk, type="POS", object_id=new_post.pk, verb="ITE")
+                user_send_wall(new_post.pk, None, "create_u_post_wall")
+                for user_id in creator.get_user_main_news_ids():
+                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=new_post.pk, verb="ITE")
+                    user_send_notify(new_post.pk, creator.pk, user_id, None, "create_u_post_notify")
+                creator.plus_posts(1)
+
                 return render_for_platform(request, 'posts/post_user/my_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()
