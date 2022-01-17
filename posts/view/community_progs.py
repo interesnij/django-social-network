@@ -32,15 +32,16 @@ class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = PostForm(request.POST)
         list = PostsList.objects.get(pk=self.kwargs["pk"])
-
-        if (list.community and request.user.is_administrator_of_community(list.community.pk)) \
-            or (not list.community and request.user.pk == list.creator.pk):
+        community = list.community
+        if (community and request.user.is_administrator_of_community(community.pk)) \
+            or (not community and request.user.pk == list.creator.pk):
             can_create = True
         else:
             can_create = list.is_user_can_create_el(request.user.pk)
 
         if request.is_ajax() and form_post.is_valid() and can_create:
             post = form_post.save(commit=False)
+
             if request.POST.get('text') or request.POST.get('attach_items'):
                 from common.templates import render_for_platform
 
@@ -55,8 +56,18 @@ class PostCommunityCreate(View):
                                             comments_enabled=post.comments_enabled,
                                             is_signature=post.is_signature,
                                             votes_on=post.votes_on,
-                                            community=list.community
-                                            )
+                                            community=community,
+                                        )
+
+                from common.notify.progs import community_send_notify, community_send_wall
+                from notify.models import Notify, Wall
+
+                Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=new_post.pk, verb="ITE")
+                community_send_wall(new_post.pk, creator.pk, community.pk, None, "create_c_post_wall")
+                for user_id in community.get_member_for_notify_ids():
+                    Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=new_post.pk, verb="ITE")
+                    community_send_notify(new_post.pk, creator.pk, user_id, community.pk, None, "create_c_post_notify")
+                community.plus_posts(1)
                 return render_for_platform(request, 'posts/post_community/admin_post.html', {'object': new_post})
             else:
                 return HttpResponseBadRequest()

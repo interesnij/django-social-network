@@ -936,7 +936,7 @@ class Post(models.Model):
         return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
 
     @classmethod
-    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community=None):
+    def create_post(cls, creator, text, category, list, attach, parent, comments_enabled, is_signature, votes_on, community=None, verb):
         from common.processing_2 import get_text_processing
         from rest_framework.exceptions import PermissionDenied
 
@@ -947,27 +947,7 @@ class Post(models.Model):
 
         list.count += 1
         list.save(update_fields=["count"])
-        post = cls.objects.create(creator=creator,list=list,order=list.count,text=_text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,type=Post.PUBLISHED)
-
-        if community:
-            from common.notify.progs import community_send_notify, community_send_wall
-            from notify.models import Notify, Wall
-
-            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="ITE")
-            community_send_wall(post.pk, creator.pk, community.pk, None, "create_c_post_wall")
-            for user_id in community.get_member_for_notify_ids():
-                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
-                community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "create_c_post_notify")
-            community.plus_posts(1)
-        else:
-            from common.notify.progs import user_send_notify, user_send_wall
-            from notify.models import Notify, Wall
-            Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="ITE")
-            user_send_wall(post.pk, None, "create_u_post_wall")
-            for user_id in creator.get_user_main_news_ids():
-                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="ITE")
-                user_send_notify(post.pk, creator.pk, user_id, None, "create_u_post_notify")
-            creator.plus_posts(1)
+        post = cls.objects.create(creator=creator,list=list,order=list.count,text=_text,category=category,parent=parent,community=community,comments_enabled=comments_enabled,is_signature=is_signature,votes_on=votes_on,attach=_attach,type="PUB")
         return post
 
     @classmethod
@@ -978,24 +958,6 @@ class Post(models.Model):
 
         _text = get_text_processing(text)
         post = cls.objects.create(creator=creator,list=list,text=_text,community=community,attach=_attach,type=Post.C_OFFER)
-
-        if community:
-            from common.notify.progs import community_send_notify, community_send_wall
-            from notify.models import Notify, Wall
-
-            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="POS", object_id=post.pk, verb="SIT")
-            community_send_wall(post.pk, creator.pk, community.pk, None, "suggest_c_post_wall")
-            for user_id in community.get_staff_members_ids():
-                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="SIT")
-                community_send_notify(post.pk, creator.pk, user_id, community.pk, None, "suggest_c_post_notify")
-            else:
-                from common.notify.progs import user_send_notify, user_send_wall
-                from notify.models import Notify, Wall
-                Wall.objects.create(creator_id=creator.pk, type="POS", object_id=post.pk, verb="SIT")
-                user_send_wall(post.pk, None, "suggest_u_post_wall")
-                for user_id in creator.get_user_main_news_ids():
-                    Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=post.pk, verb="SIT")
-                    user_send_notify(post.pk, creator.pk, user_id, None, "suggest_u_post_notify")
         return post
 
     @classmethod
