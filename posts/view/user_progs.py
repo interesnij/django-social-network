@@ -52,9 +52,10 @@ class PostUserCreate(View):
 
                 from common.notify.progs import user_send_notify, user_send_wall
                 from notify.models import Notify, Wall
+
                 Wall.objects.create(creator_id=creator.pk, type="POS", object_id=new_post.pk, verb="ITE")
                 user_send_wall(new_post.pk, None, "create_u_post_wall")
-                for user_id in creator.get_user_main_news_ids():
+                for user_id in creator.get_user_main_notify_ids():
                     Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="POS", object_id=new_post.pk, verb="ITE")
                     user_send_notify(new_post.pk, creator.pk, user_id, None, "create_u_post_notify")
                 creator.plus_posts(1)

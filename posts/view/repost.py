@@ -90,9 +90,9 @@ class UUPostRepost(View):
     создание репоста записи пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
-        if parent.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, parent.creator)
+        parent, form_post, attach, lists, count, creator = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if parent.creator.pk != creator.pk:
+            check_user_can_get_list(creator, parent.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
@@ -101,10 +101,15 @@ class UUPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                new_post = post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                new_post = post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
                 count += 1
             parent.repost += count
             parent.save(update_fields=["repost"])
+
+            from common.notify.notify import user_notify, user_wall
+            user_notify(user, None, self.pk, "POS", "create_u_post_wall", "RE")
+            user_wall(user, None, self.pk, "POS", "create_u_post_notify", "RE")
+            creator.plus_posts(1)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
