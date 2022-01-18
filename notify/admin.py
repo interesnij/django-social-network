@@ -17,5 +17,5 @@ class WallAdmin(admin.ModelAdmin):
             model = Wall
 
 
-admin.site.register(Notify)
-admin.site.register(Wall)
+admin.site.register(Notify, NotifyAdmin)
+admin.site.register(Wall, WallAdmin)
