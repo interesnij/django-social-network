@@ -259,6 +259,7 @@ button {
 }
 .main-container {
   animation: show  0.15s ease-in-out;
+  min-height: 400px;
 }
 
 .post_detail {
