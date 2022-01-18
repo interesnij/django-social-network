@@ -24,7 +24,7 @@ class ListUC(models.Model):
     TYPE = (
         (MAIN, 'Основной список'),(LIST, 'Пользовательский'),(NO, 'Нет значения'),
     )
-    type = models.PositiveSmallIntegerField(choices=TYPE, default=NO, verbose_name="Рекомендуемое сообщество")
+    type = models.PositiveSmallIntegerField(choices=TYPE, default=NO, verbose_name="Тип списка")
     name = models.CharField(max_length=100)
     owner = models.PositiveIntegerField(default=0, verbose_name="Владелец")
 
