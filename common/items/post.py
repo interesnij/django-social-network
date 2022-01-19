@@ -47,7 +47,7 @@ def post(user, value):
             community = post.community
             if user.is_administrator_of_community(community.pk):
                 card_drop = '<span class="dropdown-item c_post_remove">Удалить</span>'
-            elif user.is_post_manager():
+            elif user.is_moderator():
                 card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'
@@ -95,7 +95,7 @@ def post(user, value):
             creator = post.creator
             if post.creator.pk == user.pk:
                 card_drop = '<span class="dropdown-item u_post_remove">Удалить</span>'
-            elif user.is_post_manager():
+            elif user.is_moderator():
                 card_drop = '<span class="dropdown-item post_close_window">Закрыть</span>'
             else:
                 card_drop = '<span class="dropdown-item post_claim">Пожаловаться</span>'

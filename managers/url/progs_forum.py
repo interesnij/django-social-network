@@ -3,20 +3,6 @@ from managers.view.forum import *
 
 
 urlpatterns = [
-    url(r'^add_admin/(?P<pk>\d+)/$', ForumAdminCreate.as_view()),
-    url(r'^delete_admin/(?P<pk>\d+)/$', ForumAdminDelete.as_view()),
-    url(r'^add_moderator/(?P<pk>\d+)/$', ForumModerCreate.as_view()),
-    url(r'^delete_moderator/(?P<pk>\d+)/$', ForumModerDelete.as_view()),
-    url(r'^add_editor/(?P<pk>\d+)/$', ForumEditorCreate.as_view()),
-    url(r'^delete_editor/(?P<pk>\d+)/$', ForumEditorDelete.as_view()),
-
-    url(r'^add_worker_admin/(?P<pk>\d+)/$', ForumWorkerAdminCreate.as_view()),
-    url(r'^delete_worker_admin/(?P<pk>\d+)/$', ForumWorkerAdminDelete.as_view()),
-    url(r'^add_worker_moderator/(?P<pk>\d+)/$', ForumWorkerModerCreate.as_view()),
-    url(r'^delete_worker_moderator/(?P<pk>\d+)/$', ForumWorkerModerDelete.as_view()),
-    url(r'^add_worker_editor/(?P<pk>\d+)/$', ForumWorkerEditorCreate.as_view()),
-    url(r'^delete_worker_editor/(?P<pk>\d+)/$', ForumWorkerEditorDelete.as_view()),
-
     url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', ForumCloseCreate.as_view()),
     url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', ForumCloseDelete.as_view()),
     url(r'^create_rejected/(?P<pk>\d+)/$', ForumRejectedCreate.as_view()),

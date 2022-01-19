@@ -1,130 +1,20 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
-from common.staff_progs.photo import *
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from gallery.models import PhotoList, Photo, PhotoComment
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
-from django.http import Http404
 from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_photo import PhotoManageLog
 
-
-class PhotoAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_administrator():
-            add_photo_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_administrator():
-            remove_photo_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_moderator():
-            add_photo_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_moderator():
-            remove_photo_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_editor():
-            add_photo_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_photo_editor():
-            remove_photo_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_photo_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_photo_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_photo_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_photo_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_photo_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_photo_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
 
 class PhotoCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.post = Photo.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_photo_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/photo/photo_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -137,7 +27,7 @@ class PhotoCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         post, form = Photo.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_photo_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type=13)
             moderate_obj.create_close(object=post, description=mod.description, manager_id=request.user.pk)
@@ -149,7 +39,7 @@ class PhotoCloseCreate(TemplateView):
 class PhotoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         post = Photo.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=post.pk, type=13)
             moderate_obj.delete_close(object=post, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=PhotoManageLog.ITEM_CLOSED_HIDE)
@@ -191,7 +81,7 @@ class PhotoClaimCreate(TemplateView):
 class PhotoRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         post = Photo.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=post.pk, type=13)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=PhotoManageLog.ITEM_REJECT)
@@ -204,7 +94,7 @@ class PhotoUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Photo.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type=13)
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(post, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=PhotoManageLog.ITEM_UNVERIFY)
             return HttpResponse()
@@ -244,7 +134,7 @@ class CommentPhotoClaimCreate(TemplateView):
 class CommentPhotoRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=14)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=PhotoManageLog.COMMENT_REJECT)
@@ -257,7 +147,7 @@ class CommentPhotoUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=14)
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(comment, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=PhotoManageLog.COMMENT_UNVERIFY)
             return HttpResponse()
@@ -269,7 +159,7 @@ class CommentPhotoCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_photo_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/photo/comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -283,7 +173,7 @@ class CommentPhotoCloseCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
         form = ModeratedForm(request.POST)
-        if form.is_valid() and request.user.is_photo_manager():
+        if form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=14)
             moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
@@ -295,7 +185,7 @@ class CommentPhotoCloseCreate(TemplateView):
 class CommentPhotoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=14)
             moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=PhotoManageLog.COMMENT_CLOSED_HIDE)
@@ -336,7 +226,7 @@ class ListPhotoClaimCreate(TemplateView):
 class ListPhotoRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=12)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=PhotoManageLog.LIST_REJECT)
@@ -349,7 +239,7 @@ class ListPhotoUnverify(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=12)
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(list, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=PhotoManageLog.LIST_UNVERIFY)
             return HttpResponse()
@@ -361,7 +251,7 @@ class ListPhotoCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_photo_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/photo/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -375,7 +265,7 @@ class ListPhotoCloseCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         form = ModeratedForm(request.POST)
-        if form.is_valid() and request.user.is_photo_manager():
+        if form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=12)
             moderate_obj.create_close(object=list, description=mod.description, manager_id=request.user.pk)
@@ -387,7 +277,7 @@ class ListPhotoCloseCreate(TemplateView):
 class ListPhotoCloseDelete(View):
     def get(self,request,*args,**kwargs):
         list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_photo_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=12)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
             PhotoManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=PhotoManageLog.LIST_CLOSED_HIDE)

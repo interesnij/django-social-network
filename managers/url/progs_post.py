@@ -3,20 +3,6 @@ from managers.view.post import *
 
 
 urlpatterns = [
-    url(r'^add_admin/(?P<pk>\d+)/$', PostAdminCreate.as_view()),
-    url(r'^delete_admin/(?P<pk>\d+)/$', PostAdminDelete.as_view()),
-    url(r'^add_moderator/(?P<pk>\d+)/$', PostModerCreate.as_view()),
-    url(r'^delete_moderator/(?P<pk>\d+)/$', PostModerDelete.as_view()),
-    url(r'^add_editor/(?P<pk>\d+)/$', PostEditorCreate.as_view()),
-    url(r'^delete_editor/(?P<pk>\d+)/$', PostEditorDelete.as_view()),
-
-    url(r'^add_worker_admin/(?P<pk>\d+)/$', PostWorkerAdminCreate.as_view()),
-    url(r'^delete_worker_admin/(?P<pk>\d+)/$', PostWorkerAdminDelete.as_view()),
-    url(r'^add_worker_moderator/(?P<pk>\d+)/$', PostWorkerModerCreate.as_view()),
-    url(r'^delete_worker_moderator/(?P<pk>\d+)/$', PostWorkerModerDelete.as_view()),
-    url(r'^add_worker_editor/(?P<pk>\d+)/$', PostWorkerEditorCreate.as_view()),
-    url(r'^delete_worker_editor/(?P<pk>\d+)/$', PostWorkerEditorDelete.as_view()),
-
     url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', PostCloseCreate.as_view()),
     url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', PostCloseDelete.as_view()),
     url(r'^create_rejected/(?P<pk>\d+)/$', PostRejectedCreate.as_view()),

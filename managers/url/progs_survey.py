@@ -3,20 +3,6 @@ from managers.view.survey import *
 
 
 urlpatterns = [
-    url(r'^add_admin/(?P<pk>\d+)/$', SurveyAdminCreate.as_view()),
-    url(r'^delete_admin/(?P<pk>\d+)/$', SurveyAdminDelete.as_view()),
-    url(r'^add_moderator/(?P<pk>\d+)/$', SurveyModerCreate.as_view()),
-    url(r'^delete_moderator/(?P<pk>\d+)/$', SurveyModerDelete.as_view()),
-    url(r'^add_editor/(?P<pk>\d+)/$', SurveyEditorCreate.as_view()),
-    url(r'^delete_editor/(?P<pk>\d+)/$', SurveyEditorDelete.as_view()),
-
-    url(r'^add_worker_admin/(?P<pk>\d+)/$', SurveyWorkerAdminCreate.as_view()),
-    url(r'^delete_worker_admin/(?P<pk>\d+)/$', SurveyWorkerAdminDelete.as_view()),
-    url(r'^add_worker_moderator/(?P<pk>\d+)/$', SurveyWorkerModerCreate.as_view()),
-    url(r'^delete_worker_moderator/(?P<pk>\d+)/$', SurveyWorkerModerDelete.as_view()),
-    url(r'^add_worker_editor/(?P<pk>\d+)/$', SurveyWorkerEditorCreate.as_view()),
-    url(r'^delete_worker_editor/(?P<pk>\d+)/$', SurveyWorkerEditorDelete.as_view()),
-
     url(r'^create_close/(?P<uuid>[0-9a-f-]+)/$', SurveyCloseCreate.as_view()),
     url(r'^delete_close/(?P<uuid>[0-9a-f-]+)/$', SurveyCloseDelete.as_view()),
     url(r'^create_rejected/(?P<pk>\d+)/$', SurveyRejectedCreate.as_view()),

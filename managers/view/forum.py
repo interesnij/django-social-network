@@ -1,130 +1,20 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
-from common.staff_progs.forum import *
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from forum.models import Forum, ForumComment
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
-from django.http import Http404
 from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_forum import ForumManageLog
 
-
-class ForumAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_administrator():
-            add_forum_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_administrator():
-            remove_forum_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_moderator():
-            add_forum_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_moderator():
-            remove_forum_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_editor():
-            add_forum_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_forum_editor():
-            remove_forum_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_forum_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_forum_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_forum_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_forum_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_forum_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ForumWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_forum_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
 
 class ForumCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
         self.post = Forum.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_forum_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/forum/forum_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -137,7 +27,7 @@ class ForumCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         post, form = Forum.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_forum_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type=45)
             moderate_obj.create_close(object=post, description=mod.description, manager_id=request.user.pk)
@@ -149,7 +39,7 @@ class ForumCloseCreate(TemplateView):
 class ForumCloseDelete(View):
     def get(self,request,*args,**kwargs):
         post = Forum.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=post.pk, type=45)
             moderate_obj.delete_close(object=post, manager_id=request.user.pk)
             ForumManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=ForumManageLog.ITEM_CLOSED_HIDE)
@@ -191,7 +81,7 @@ class ForumClaimCreate(TemplateView):
 class ForumRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         post = Forum.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=post.pk, type=45)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             ForumManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=ForumManageLog.ITEM_REJECT)
@@ -204,7 +94,7 @@ class ForumUnverify(View):
     def get(self,request,*args,**kwargs):
         post = Forum.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=post.pk, type=45)
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(post, manager_id=request.user.pk)
             ForumManageLog.objects.create(item=post.pk, manager=request.user.pk, action_type=ForumManageLog.ITEM_UNVERIFY)
             return HttpResponse()
@@ -243,7 +133,7 @@ class CommentForumClaimCreate(TemplateView):
 class CommentForumRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = ForumComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=46)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             ForumManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=ForumManageLog.COMMENT_REJECT)
@@ -256,7 +146,7 @@ class CommentForumUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = ForumComment.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=46)
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(comment, manager_id=request.user.pk)
             ForumManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=ForumManageLog.COMMENT_UNVERIFY)
             return HttpResponse()
@@ -268,7 +158,7 @@ class CommentForumCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = ForumComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_forum_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/forum/comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -282,7 +172,7 @@ class CommentForumCloseCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         comment = ForumComment.objects.get(pk=self.kwargs["pk"])
         form = ModeratedForm(request.POST)
-        if form.is_valid() and request.user.is_forum_manager():
+        if form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=46)
             moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
@@ -294,7 +184,7 @@ class CommentForumCloseCreate(TemplateView):
 class CommentForumCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = ForumComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_forum_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=46)
             moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             ForumManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=ForumManageLog.COMMENT_CLOSED_HIDE)

@@ -1,167 +1,18 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
-from common.staff_progs.user import *
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
-from django.http import Http404
 from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_user_community import UserManageLog
 
-
-class UserAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_administrator():
-            add_user_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_administrator():
-            remove_user_administrator(user, request.user)
-            UserWorkerLog.objects.create(manager=request.user, user=user, action_type='Удален админ пользователей')
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_moderator():
-            add_user_moderator(user, request.user)
-            UserWorkerLog.objects.create(manager=request.user, user=user, action_type='Добавлен модератор пользователей')
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_moderator():
-            remove_user_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_editor():
-            add_user_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_editor():
-            remove_user_editor(user, request.user)
-            UserWorkerLog.objects.create(manager=request.user, user=user, action_type='Удален редактор пользователей')
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserAdvertiserCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_advertiser():
-            add_user_advertiser(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserAdvertiserDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_advertiser():
-            remove_user_advertiser(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_user_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_user_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_user_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_user_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_user_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_user_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerAdvertiserCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_user_advertiser_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserWorkerAdvertiserDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_user_advertiser_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
 
 class UserSuspensionCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_user_manager():
+        if request.user.is_administrator():
             self.template_name = get_staff_template("managers/manage_create/user/user_suspend.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -175,7 +26,7 @@ class UserSuspensionCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         form, user = ModeratedForm(request.POST), User.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form.is_valid() and request.user.is_user_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_administrator():
             from django.utils import timezone
 
             mod = form.save(commit=False)
@@ -205,7 +56,7 @@ class UserSuspensionCreate(TemplateView):
 class UserSuspensionDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_user_manager():
+        if request.is_ajax() and request.user.is_administrator():
             moderate_obj = Moderated.objects.get(object_id=user.pk, type=1)
             moderate_obj.delete_suspend(manager_id=request.user.pk)
             UserManageLog.objects.create(user=user.pk, manager=request.user.pk, action_type=UserManageLog.SUSPENDED_HIDE)
@@ -218,7 +69,7 @@ class UserCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_user_manager():
+        if request.user.is_administrator():
             self.template_name = get_staff_template("managers/manage_create/user/user_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -231,7 +82,7 @@ class UserCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         user, form = User.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_user_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_administrator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type=1)
             moderate_obj.create_close(object=user, description=mod.description, manager_id=request.user.pk)
@@ -243,7 +94,7 @@ class UserCloseCreate(TemplateView):
 class UserCloseDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_user_manager():
+        if request.is_ajax() and request.user.is_administrator():
             moderate_obj = Moderated.objects.get(object_id=user.pk, type=1)
             moderate_obj.delete_close(object=user, manager_id=request.user.pk)
             UserManageLog.objects.create(user=user.pk, manager=request.user.pk, action_type=UserManageLog.CLOSED_HIDE)
@@ -255,7 +106,7 @@ class UserWarningBannerCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.user.is_user_manager():
+        if request.user.is_administrator():
             self.template_name = get_detect_platform_template("managers/manage_create/user/user_warning_banner.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -268,7 +119,7 @@ class UserWarningBannerCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         user, form = User.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_user_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_administrator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type=1)
             moderate_obj.status = Moderated.BANNER_GET
@@ -312,7 +163,7 @@ class UserClaimCreate(TemplateView):
 class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_user_manager():
+        if request.is_ajax() and request.user.is_administrator():
             moderate_obj = Moderated.objects.get(object_id=user.pk, type=1)
             moderate_obj.delete_warning_banner(manager_id=request.user.pk)
             UserManageLog.objects.create(user=user.pk, manager=request.user.pk, action_type=UserManageLog.WARNING_BANNER_HIDE)
@@ -323,7 +174,7 @@ class UserWarningBannerDelete(View):
 class UserRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_user_manager():
+        if request.is_ajax() and request.user.is_administrator():
             moderate_obj = Moderated.objects.get(object_id=user.pk, type=1)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             UserManageLog.objects.create(user=user.pk, manager=request.user.pk, action_type=UserManageLog.REJECT)
@@ -335,7 +186,7 @@ class UserUnverify(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["user_pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=user.pk, type=1)
-        if request.is_ajax() and request.user.is_user_manager():
+        if request.is_ajax() and request.user.is_administrator():
             obj.unverify_moderation(user, manager_id=request.user.pk)
             UserManageLog.objects.create(user=user.pk, manager=request.user.pk, action_type=UserManageLog.UNVERIFY)
             return HttpResponse()

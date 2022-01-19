@@ -70,6 +70,7 @@ class Community(models.Model):
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
     cover = ProcessedImageField(blank=True, format='JPEG',options={'quality': 100},upload_to=upload_to_community_cover_directory,processors=[ResizeToFit(width=1024, upscale=False)])
+    level = models.PositiveSmallIntegerField(default=100, verbose_name="Порядочность")
 
     class Meta:
         verbose_name = 'сообщество'

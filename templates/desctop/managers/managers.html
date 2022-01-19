@@ -31,7 +31,7 @@
   </div>
   <div class="container mt-4 main-container">
     <div class="row">
-      {% if request.user.is_user_manager %}
+      {% if request.user.is_manager %}
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">
@@ -43,8 +43,7 @@
           </div>
         </div>
       </div>
-      {% endif %}
-      {% if request.user.is_community_manager %}
+
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">
@@ -56,8 +55,7 @@
           </div>
         </div>
       </div>
-      {% endif %}
-      {% if request.user.is_post_manager %}
+
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">
@@ -69,8 +67,7 @@
           </div>
         </div>
       </div>
-      {% endif %}
-      {% if request.user.is_photo_manager %}
+
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">
@@ -82,8 +79,7 @@
           </div>
         </div>
       </div>
-      {% endif %}
-      {% if request.user.is_audio_manager %}
+
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">
@@ -95,8 +91,7 @@
           </div>
         </div>
       </div>
-      {% endif %}
-      {% if request.user.is_video_manager %}
+
       <div class="col-12 col-md-6">
         <div class="card mb-2 box-shadow-large">
           <div class="card-body text-center">

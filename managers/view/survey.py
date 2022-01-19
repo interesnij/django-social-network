@@ -1,7 +1,6 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from common.staff_progs.survey import *
 from survey.models import Survey, SurveyList
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
@@ -9,125 +8,11 @@ from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_survey import SurveyManageLog
 
 
-class SurveyAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_administrator():
-            add_survey_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_administrator():
-            remove_survey_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class SurveyModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_moderator():
-            add_survey_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_moderator():
-            remove_survey_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class SurveyEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_editor():
-            add_survey_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_survey_editor():
-            remove_survey_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class SurveyWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_survey_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_survey_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class SurveyWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_survey_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_survey_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class SurveyWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_survey_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class SurveyWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_survey_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class SurveyCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/survey/survey_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -142,7 +27,7 @@ class SurveyCloseCreate(TemplateView):
         from managers.forms import ModeratedForm
 
         survey, form = Survey.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_survey_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=survey.pk, type=22)
             moderate_obj.create_close(object=survey, description=mod.description, manager_id=request.user.pk)
@@ -154,7 +39,7 @@ class SurveyCloseCreate(TemplateView):
 class SurveyCloseDelete(View):
     def get(self,request,*args,**kwargs):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=survey.pk, type=22)
             moderate_obj.delete_close(object=survey, manager_id=request.user.pk)
             SurveyManageLog.objects.create(item=survey.pk, manager=request.user.pk, action_type=SurveyManageLog.ITEM_CLOSED_HIDE)
@@ -194,7 +79,7 @@ class SurveyClaimCreate(TemplateView):
 
 class SurveyRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             survey = Survey.objects.get(pk=self.kwargs["pk"])
             moderate_obj = Moderated.objects.get(object_id=survey.pk, type=22)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
@@ -208,7 +93,7 @@ class SurveyUnverify(View):
     def get(self,request,*args,**kwargs):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=survey.pk, type=22)
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(survey, manager_id=request.user.pk)
             SurveyManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=SurveyManageLog.ITEM_UNVERIFY)
             return HttpResponse()
@@ -248,7 +133,7 @@ class ListSurveyClaimCreate(TemplateView):
 class ListSurveyRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=21)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             SurveyManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=SurveyManageLog.LIST_REJECT)
@@ -261,7 +146,7 @@ class ListSurveyUnverify(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=21)
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(list, manager_id=request.user.pk)
             SurveyManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=SurveyManageLog.LIST_UNVERIFY)
             return HttpResponse()
@@ -273,7 +158,7 @@ class ListSurveyCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_survey_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/survey/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -287,7 +172,7 @@ class ListSurveyCloseCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
         form = ModeratedForm(request.POST)
-        if form.is_valid() and request.user.is_survey_manager():
+        if form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=21)
             moderate_obj.create_close(object=list, description=mod.description, manager_id=request.user.pk)
@@ -299,7 +184,7 @@ class ListSurveyCloseCreate(TemplateView):
 class ListSurveyCloseDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_survey_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=21)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
             SurveyManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=SurveyManageLog.LIST_CLOSED_HIDE)
