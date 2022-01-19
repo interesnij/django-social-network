@@ -3,20 +3,6 @@ from managers.view.planner import *
 
 
 urlpatterns = [
-    url(r'^add_admin/(?P<pk>\d+)/$', PlannerAdminCreate.as_view()),
-    url(r'^delete_admin/(?P<pk>\d+)/$', PlannerAdminDelete.as_view()),
-    url(r'^add_moderator/(?P<pk>\d+)/$', PlannerModerCreate.as_view()),
-    url(r'^delete_moderator/(?P<pk>\d+)/$', PlannerModerDelete.as_view()),
-    url(r'^add_editor/(?P<pk>\d+)/$', PlannerEditorCreate.as_view()),
-    url(r'^delete_editor/(?P<pk>\d+)/$', PlannerEditorDelete.as_view()),
-
-    url(r'^add_worker_admin/(?P<pk>\d+)/$', PlannerWorkerAdminCreate.as_view()),
-    url(r'^delete_worker_admin/(?P<pk>\d+)/$', PlannerWorkerAdminDelete.as_view()),
-    url(r'^add_worker_moderator/(?P<pk>\d+)/$', PlannerWorkerModerCreate.as_view()),
-    url(r'^delete_worker_moderator/(?P<pk>\d+)/$', PlannerWorkerModerDelete.as_view()),
-    url(r'^add_worker_editor/(?P<pk>\d+)/$', PlannerWorkerEditorCreate.as_view()),
-    url(r'^delete_worker_editor/(?P<pk>\d+)/$', PlannerWorkerEditorDelete.as_view()),
-
     url(r'^workspace_create_close/(?P<uuid>[0-9a-f-]+)/$', WorkspaceCloseCreate.as_view()),
     url(r'^workspace_delete_close/(?P<uuid>[0-9a-f-]+)/$', WorkspaceCloseDelete.as_view()),
     url(r'^workspace_create_rejected/(?P<pk>\d+)/$', WorkspaceRejectedCreate.as_view()),

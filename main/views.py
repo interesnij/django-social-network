@@ -109,7 +109,7 @@ class SwitchView(TemplateView):
 						self.template_name = "generic/u_template/user_suspended.html"
 					elif self.user.is_closed():
 						self.template_name = "generic/u_template/user_global_block.html"
-					elif request.user.is_user_manager() or request.user.is_superuser:
+					elif request.user.is_manager() or request.user.is_superuser:
 						self.template_name, self.get_buttons_block = "users/account/staff_user.html", request.user.get_staff_buttons_profile(user_pk)
 						if request.user.is_connected_with_user_with_id(user_id=user_pk):
 							request.user.plus_friend_visited(user_pk)

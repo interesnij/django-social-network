@@ -9,19 +9,34 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    CHILD,PRIVATE_CHILD,STANDART,PRIVATE_STANDART,VERIFIED_SEND,PRIVATE_VERIFIED_SEND,VERIFIED,PRIVATE_VERIFIED,IDENTIFIED_SEND,PRIVATE_IDENTIFIED_SEND,IDENTIFIED,PRIVATE_IDENTIFIED,MANAGER,PRIVATE_MANAGER,SUPERMANAGER,PRIVATE_SUPERMANAGER = 'CHI','CHIP','STA','STAP','VES','VESP','VER','VERP','IDS','IDSP','IDE','IDEP','MAN','MANP','SUPR','SUPRP'
-    CLOSED_CHILD,CLOSED_PRIVATE_CHILD,CLOSED_STANDART,CLOSED_PRIVATE_STANDART,CLOSED_VERIFIED_SEND,CLOSED_PRIVATE_VERIFIED_SEND,CLOSED_VERIFIED,CLOSED_PRIVATE_VERIFIED,CLOSED_IDENTIFIED_SEND,CLOSED_PRIVATE_IDENTIFIED_SEND,CLOSED_IDENTIFIED,CLOSED_PRIVATE_IDENTIFIED,CLOSED_MANAGER,CLOSED_PRIVATE_MANAGER = '_CLOC','_CLOCP','_CLOS','_CLOSP','_CLOVS','_CLOVSP','_CLOV','_CLOVP','_CLOIS','_CLOISP','_CLOI','_CLOIP','_CLOM','_CLOMP'
-    DELETED_CHILD,DELETED_PRIVATE_CHILD,DELETED_STANDART,DELETED_PRIVATE_STANDART,DELETED_VERIFIED_SEND,DELETED_PRIVATE_VERIFIED_SEND,DELETED_VERIFIED,DELETED_PRIVATE_VERIFIED,DELETED_IDENTIFIED_SEND,DELETED_PRIVATE_IDENTIFIED_SEND,DELETED_IDENTIFIED,DELETED_PRIVATE_IDENTIFIED,DELETED_MANAGER,DELETED_PRIVATE_MANAGER = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP', '_DELM','_DELMP'
-    SUSPENDED_CHILD,SUSPENDED_PRIVATE_CHILD,SUSPENDED_STANDART,SUSPENDED_PRIVATE_STANDART,SUSPENDED_VERIFIED_SEND,SUSPENDED_PRIVATE_VERIFIED_SEND, SUSPENDED_VERIFIED,SUSPENDED_PRIVATE_VERIFIED, SUSPENDED_IDENTIFIED_SEND,SUSPENDED_PRIVATE_IDENTIFIED_SEND,SUSPENDED_IDENTIFIED,SUSPENDED_PRIVATE_IDENTIFIED,SUSPENDED_MANAGER,SUSPENDED_PRIVATE_MANAGER = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP', '_SUSM','_SUSMP'
-    BANNER_CHILD,BANNER_PRIVATE_CHILD,BANNER_STANDART,BANNER_PRIVATE_STANDART,BANNER_VERIFIED_SEND,BANNER_PRIVATE_VERIFIED_SEND,BANNER_VERIFIED,BANNER_PRIVATE_VERIFIED,BANNER_IDENTIFIED_SEND,BANNER_PRIVATE_IDENTIFIED_SEND,BANNER_IDENTIFIED,BANNER_PRIVATE_IDENTIFIED,BANNER_MANAGER,BANNER_PRIVATE_MANAGER = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP', '_BANM','_BANMP'
-    TYPE = (
-        (CHILD, 'Ребенок'),(PRIVATE_CHILD, 'Ребенок приватный'),(STANDART, 'Обычные права'),(PRIVATE_STANDART, 'Обычный приватный'),(VERIFIED_SEND, 'Запрос на проверку'),(PRIVATE_VERIFIED_SEND, 'Запрос на проверку приватный'),(VERIFIED, 'Проверенный'),(PRIVATE_VERIFIED, 'Проверенный приватный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(PRIVATE_IDENTIFIED_SEND, 'Запрос на идентификацию приватный'),(IDENTIFIED, 'Идентифицированный'),(PRIVATE_IDENTIFIED, 'Идентифицированный приватный'),(MANAGER, 'Менеджер'),(PRIVATE_MANAGER, 'Менеджер приватный'),(SUPERMANAGER, 'Суперменеджер'),(PRIVATE_SUPERMANAGER, 'Суперменеджер приватный'),
-        (DELETED_CHILD, 'Удален ребенок'),(DELETED_PRIVATE_CHILD, 'Удален ребенок приватный'),(DELETED_STANDART, 'Удален'),(DELETED_PRIVATE_STANDART, 'Удален приватный'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_PRIVATE_VERIFIED, 'Удален верифицированный приватный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_PRIVATE_IDENTIFIED_SEND, 'Удален подавший на идентификацию приватный'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_PRIVATE_IDENTIFIED, 'Удален идентифиированный приватный'),(DELETED_MANAGER, 'Удален менеджер'),(DELETED_PRIVATE_MANAGER, 'Удален менеджер приватный'),
-        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_PRIVATE_CHILD, 'Закрыт ребенок приватный'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_PRIVATE_STANDART, 'Закрыт приватный'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_PRIVATE_VERIFIED, 'Закрыт верифицированный приватный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_PRIVATE_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию приватный'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_PRIVATE_IDENTIFIED, 'Закрыт идентифиированный приватный'),(CLOSED_MANAGER, 'Закрыт менеджер'),(CLOSED_PRIVATE_MANAGER, 'Закрыт менеджер приватный'),
-        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_PRIVATE_CHILD, 'Заморожен ребенок приватный'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_PRIVATE_STANDART, 'Заморожен приватный'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_PRIVATE_VERIFIED_SEND, 'Заморожен подавший на верификацию приватный'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_PRIVATE_VERIFIED, 'Заморожен верифицированный приватный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_PRIVATE_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию приватный'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_PRIVATE_IDENTIFIED, 'Заморожен идентифиированный приватный'),(SUSPENDED_MANAGER, 'Заморожен менеджер'),(SUSPENDED_PRIVATE_MANAGER, 'Заморожен менеджер приватный'),
-        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_PRIVATE_CHILD, 'Баннер ребенок приватный'),(BANNER_STANDART, 'Баннер'),(BANNER_PRIVATE_STANDART, 'Баннер приватный'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_PRIVATE_VERIFIED_SEND, 'Баннер подавший на верификацию приватный'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_PRIVATE_VERIFIED, 'Баннер верифицированный приватный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(BANNER_PRIVATE_IDENTIFIED_SEND, 'Баннер подавший на идентификацию приватный'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_PRIVATE_IDENTIFIED, 'Баннер идентифиированный приватный'),(BANNER_MANAGER, 'Баннер менеджер'),(BANNER_PRIVATE_MANAGER, 'Баннер менеджер приватный'),
-    )
+    CHILD,PRIVATE_CHILD,STANDART,PRIVATE_STANDART,VERIFIED_SEND,PRIVATE_VERIFIED_SEND,VERIFIED,PRIVATE_VERIFIED,IDENTIFIED_SEND,PRIVATE_IDENTIFIED_SEND,IDENTIFIED,PRIVATE_IDENTIFIED = 'CHI','CHIP','STA','STAP','VES','VESP','VER','VERP','IDS','IDSP','IDE','IDEP'
+    CLOSED_CHILD,CLOSED_PRIVATE_CHILD,CLOSED_STANDART,CLOSED_PRIVATE_STANDART,CLOSED_VERIFIED_SEND,CLOSED_PRIVATE_VERIFIED_SEND,CLOSED_VERIFIED,CLOSED_PRIVATE_VERIFIED,CLOSED_IDENTIFIED_SEND,CLOSED_PRIVATE_IDENTIFIED_SEND,CLOSED_IDENTIFIED,CLOSED_PRIVATE_IDENTIFIED = '_CLOC','_CLOCP','_CLOS','_CLOSP','_CLOVS','_CLOVSP','_CLOV','_CLOVP','_CLOIS','_CLOISP','_CLOI','_CLOIP'
+    DELETED_CHILD,DELETED_PRIVATE_CHILD,DELETED_STANDART,DELETED_PRIVATE_STANDART,DELETED_VERIFIED_SEND,DELETED_PRIVATE_VERIFIED_SEND,DELETED_VERIFIED,DELETED_PRIVATE_VERIFIED,DELETED_IDENTIFIED_SEND,DELETED_PRIVATE_IDENTIFIED_SEND,DELETED_IDENTIFIED,DELETED_PRIVATE_IDENTIFIED = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP'
+    SUSPENDED_CHILD,SUSPENDED_PRIVATE_CHILD,SUSPENDED_STANDART,SUSPENDED_PRIVATE_STANDART,SUSPENDED_VERIFIED_SEND,SUSPENDED_PRIVATE_VERIFIED_SEND, SUSPENDED_VERIFIED,SUSPENDED_PRIVATE_VERIFIED, SUSPENDED_IDENTIFIED_SEND,SUSPENDED_PRIVATE_IDENTIFIED_SEND,SUSPENDED_IDENTIFIED,SUSPENDED_PRIVATE_IDENTIFIED = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP'
+    BANNER_CHILD,BANNER_PRIVATE_CHILD,BANNER_STANDART,BANNER_PRIVATE_STANDART,BANNER_VERIFIED_SEND,BANNER_PRIVATE_VERIFIED_SEND,BANNER_VERIFIED,BANNER_PRIVATE_VERIFIED,BANNER_IDENTIFIED_SEND,BANNER_PRIVATE_IDENTIFIED_SEND,BANNER_IDENTIFIED,BANNER_PRIVATE_IDENTIFIED = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP'
+    STANDART,TRAINEE_MODERATOR,MODERATOR,TRAINEE_SUPPORT,SUPPORT,TRAINEE_MANAGER,MANAGER,HIGH_MANAGER,ADVERTISER,ADMINISTRATOR,SUPERMANAGER = 1,2,3,4,5,6,7,8,9,10,11
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
+
+    TYPE = (
+        (CHILD, 'Ребенок'),(PRIVATE_CHILD, 'Ребенок приватный'),(STANDART, 'Обычные права'),(PRIVATE_STANDART, 'Обычный приватный'),(VERIFIED_SEND, 'Запрос на проверку'),(PRIVATE_VERIFIED_SEND, 'Запрос на проверку приватный'),(VERIFIED, 'Проверенный'),(PRIVATE_VERIFIED, 'Проверенный приватный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(PRIVATE_IDENTIFIED_SEND, 'Запрос на идентификацию приватный'),(IDENTIFIED, 'Идентифицированный'),(PRIVATE_IDENTIFIED, 'Идентифицированный приватный'),
+        (DELETED_CHILD, 'Удален ребенок'),(DELETED_PRIVATE_CHILD, 'Удален ребенок приватный'),(DELETED_STANDART, 'Удален'),(DELETED_PRIVATE_STANDART, 'Удален приватный'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_PRIVATE_VERIFIED, 'Удален верифицированный приватный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_PRIVATE_IDENTIFIED_SEND, 'Удален подавший на идентификацию приватный'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_PRIVATE_IDENTIFIED, 'Удален идентифиированный приватный'),
+        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_PRIVATE_CHILD, 'Закрыт ребенок приватный'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_PRIVATE_STANDART, 'Закрыт приватный'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_PRIVATE_VERIFIED, 'Закрыт верифицированный приватный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_PRIVATE_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию приватный'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_PRIVATE_IDENTIFIED, 'Закрыт идентифиированный приватный'),
+        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_PRIVATE_CHILD, 'Заморожен ребенок приватный'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_PRIVATE_STANDART, 'Заморожен приватный'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_PRIVATE_VERIFIED_SEND, 'Заморожен подавший на верификацию приватный'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_PRIVATE_VERIFIED, 'Заморожен верифицированный приватный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_PRIVATE_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию приватный'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_PRIVATE_IDENTIFIED, 'Заморожен идентифиированный приватный'),
+        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_PRIVATE_CHILD, 'Баннер ребенок приватный'),(BANNER_STANDART, 'Баннер'),(BANNER_PRIVATE_STANDART, 'Баннер приватный'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_PRIVATE_VERIFIED_SEND, 'Баннер подавший на верификацию приватный'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_PRIVATE_VERIFIED, 'Баннер верифицированный приватный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(BANNER_PRIVATE_IDENTIFIED_SEND, 'Баннер подавший на идентификацию приватный'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_PRIVATE_IDENTIFIED, 'Баннер идентифиированный приватный'),
+    )
+    PERM = (
+        (STANDART, 'Обычные права'),
+        (TRAINEE_MODERATOR, 'Модератор-стажер'),
+        (MODERATOR, 'Модератор'),
+        (TRAINEE_SUPPORT, 'Техподдержка-стажер'),
+        (SUPPORT, 'Техподдержка'),
+        (TRAINEE_MANAGER, 'Менеджер-стажер'),
+        (MANAGER, 'Менеджер'),
+        (HIGH_MANAGER, 'Менеджер-тимлид'),
+        (ADVERTISER, 'Менеджер рекламы'),
+        (ADMINISTRATOR, 'Администратор'),
+        (SUPERMANAGER, 'Суперменеджер'),
+    )
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
     DEVICE = ((DESCTOP, 'Комп'),(PHONE, 'Телефон'),)
 
@@ -37,6 +52,8 @@ class User(AbstractUser):
     sity = models.CharField(max_length=settings.PROFILE_LOCATION_MAX_LENGTH, blank=True, verbose_name="Местоположение")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="ru")
+    perm = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Статус пользователя")
+    level = models.PositiveSmallIntegerField(default=100, verbose_name="Порядочность")
     USERNAME_FIELD = 'phone'
 
     class Meta:
@@ -166,6 +183,19 @@ class User(AbstractUser):
     def is_men(self):
         return self.gender == User.MALE
 
+    def is_supermanager(self):
+        return self.perm == 11
+    def is_administrator(self):
+        return self.perm > 9
+    def is_advertiser(self):
+        return self.perm == 9
+    def is_manager(self):
+        return self.perm > 5
+    def is_support(self):
+        return self.perm > 3
+    def is_moderator(self):
+        return self.perm > 1
+
     def is_suspended(self):
         return self.type[:4] == "_SUS"
     def is_have_warning_banner(self):
@@ -174,10 +204,6 @@ class User(AbstractUser):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
-    def is_manager(self):
-        return self.type == User.MANAGER
-    def is_supermanager(self):
-        return self.type == User.SUPERMANAGER
     def is_verified_send(self):
         return self.type == User.VERIFIED_SEND
     def is_verified(self):
@@ -189,7 +215,7 @@ class User(AbstractUser):
     def is_child(self):
         return self.type == User.CHILD
     def is_child_safety(self):
-        if self.type == User.MANAGER or self.type == User.SUPERMANAGER or self.type == User.VERIFIED:
+        if self.perm > 5  or self.type == User.VERIFIED:
             return True
         else:
             return False
@@ -655,320 +681,6 @@ class User(AbstractUser):
     def is_genre_playlist(self, genre):
         from music.models import UserTempMusicList
         return UserTempMusicList.objects.get(user=self, tag=None, list=None, genre=genre).exists()
-
-    def is_user_administrator(self):
-        return self.is_superuser or try_except(self.user_staff.level == "A")
-    def is_user_moderator(self):
-        return self.is_superuser or try_except(self.user_staff.level == "M")
-    def is_user_editor(self):
-        return self.is_superuser or try_except(self.user_staff.level == "E")
-    def is_user_advertiser(self):
-        return self.is_superuser or try_except(self.user_staff.level == "R")
-    def is_user_manager(self):
-        try:
-            return self.is_superuser or (self.user_staff.level and self.user_staff.level != "R")
-        except:
-            return False
-    def is_community_administrator(self):
-        return self.is_superuser or try_except(self.user_community_staff.level == "A")
-    def is_community_moderator(self):
-        return self.is_superuser or try_except(self.user_community_staff.level == "M")
-    def is_community_editor(self):
-        return self.is_superuser or try_except(self.user_community_staff.level == "E")
-    def is_community_advertiser(self):
-        return self.is_superuser or try_except(self.user_community_staff.level == "R")
-    def is_community_manager(self):
-        try:
-            return self.is_superuser or (self.user_community_staff.level and self.user_community_staff.level != "R")
-        except:
-            return False
-    def is_post_administrator(self):
-        return self.is_superuser or try_except(self.post_user_staff.level == "A")
-    def is_post_moderator(self):
-        return self.is_superuser or try_except(self.post_user_staff.level == "M")
-    def is_post_editor(self):
-        return self.is_superuser or try_except(self.post_user_staff.level == "E")
-    def is_post_manager(self):
-        try:
-            return self.is_superuser or self.post_user_staff.level
-        except:
-            return False
-    def is_good_administrator(self):
-        return self.is_superuser or try_except(self.good_user_staff.level == "A")
-    def is_good_moderator(self):
-        return self.is_superuser or try_except(self.good_user_staff.level == "M")
-    def is_good_editor(self):
-        return self.is_superuser or try_except(self.good_user_staff.level == "E")
-    def is_good_manager(self):
-        try:
-            return self.is_superuser or self.good_user_staff.level
-        except:
-            return False
-    def is_doc_administrator(self):
-        return self.is_superuser or try_except(self.doc_user_staff.level == "A")
-    def is_doc_moderator(self):
-        return self.is_superuser or try_except(self.doc_user_staff.level == "M")
-    def is_doc_editor(self):
-        return self.is_superuser or try_except(self.doc_user_staff.level == "E")
-    def is_doc_manager(self):
-        try:
-            return self.is_superuser or self.doc_user_staff.level
-        except:
-            return False
-    def is_photo_administrator(self):
-        return self.is_superuser or try_except(self.photo_user_staff.level == "A")
-    def is_photo_moderator(self):
-        return self.is_superuser or try_except(self.photo_user_staff.level == "M")
-    def is_photo_editor(self):
-        return self.is_superuser or try_except(self.photo_user_staff.level == "E")
-    def is_photo_manager(self):
-        try:
-            return self.is_superuser or self.photo_user_staff.level
-        except:
-            return False
-    def is_video_administrator(self):
-        return self.is_superuser or try_except(self.video_user_staff.level == "A")
-    def is_video_moderator(self):
-        return self.is_superuser or try_except(self.video_user_staff.level == "M")
-    def is_video_editor(self):
-        return self.is_superuser or try_except(self.video_user_staff.level == "E")
-    def is_video_manager(self):
-        try:
-            return self.is_superuser or self.video_user_staff.level
-        except:
-            return False
-    def is_audio_administrator(self):
-        return self.is_superuser or try_except(self.music_user_staff.level == "A")
-    def is_audio_moderator(self):
-        return self.is_superuser or try_except(self.music_user_staff.level == "M")
-    def is_audio_editor(self):
-        return self.is_superuser or try_except(self.music_user_staff.level == "E")
-    def is_audio_manager(self):
-        try:
-            return self.is_superuser or self.music_user_staff.level
-        except:
-            return False
-    def is_site_administrator(self):
-        return self.is_superuser or try_except(self.sites_user_staff.level == "A")
-    def is_site_moderator(self):
-        return self.is_superuser or try_except(self.sites_user_staff.level == "M")
-    def is_site_editor(self):
-        return self.is_superuser or try_except(self.sites_user_staff.level == "E")
-    def is_site_manager(self):
-        try:
-            return self.is_superuser or self.sites_user_staff.level
-        except:
-            return False
-    def is_article_administrator(self):
-        return self.is_superuser or try_except(self.article_user_staff.level == "A")
-    def is_article_moderator(self):
-        return self.is_superuser or try_except(self.article_user_staff.level == "M")
-    def is_article_editor(self):
-        return self.is_superuser or try_except(self.article_user_staff.level == "E")
-    def is_article_manager(self):
-        try:
-            return self.is_superuser or self.article_user_staff.level
-        except:
-            return False
-    def is_survey_administrator(self):
-        return self.is_superuser or try_except(self.survey_user_staff.level == "A")
-    def is_survey_moderator(self):
-        return self.is_superuser or try_except(self.survey_user_staff.level == "M")
-    def is_survey_editor(self):
-        return self.is_superuser or try_except(self.survey_user_staff.level == "E")
-    def is_survey_manager(self):
-        try:
-            return self.is_superuser or self.survey_user_staff.level
-        except:
-            return False
-    def is_planner_administrator(self):
-        return self.is_superuser or try_except(self.planner_user_staff.level == "A")
-    def is_planner_moderator(self):
-        return self.is_superuser or try_except(self.planner_user_staff.level == "M")
-    def is_planner_editor(self):
-        return self.is_superuser or try_except(self.planner_user_staff.level == "E")
-    def is_planner_manager(self):
-        try:
-            return self.is_superuser or self.planner_user_staff.level
-        except:
-            return False
-    def is_forum_administrator(self):
-        return self.is_superuser or try_except(self.forum_user_staff.level == "A")
-    def is_forum_moderator(self):
-        return self.is_superuser or try_except(self.forum_user_staff.level == "M")
-    def is_forum_editor(self):
-        return self.is_superuser or try_except(self.forum_user_staff.level == "E")
-    def is_forum_manager(self):
-        try:
-            return self.is_superuser or self.forum_user_staff.level
-        except:
-            return False
-    def is_wiki_administrator(self):
-        return self.is_superuser or try_except(self.wiki_user_staff.level == "A")
-    def is_wiki_moderator(self):
-        return self.is_superuser or try_except(self.wiki_user_staff.level == "M")
-    def is_wiki_editor(self):
-        return self.is_superuser or try_except(self.wiki_user_staff.level == "E")
-    def is_wiki_manager(self):
-        try:
-            return self.is_superuser or self.wiki_user_staff.level
-        except:
-            return False
-    def is_mail_administrator(self):
-        return self.is_superuser or try_except(self.mail_user_staff.level == "A")
-    def is_mail_moderator(self):
-        return self.is_superuser or try_except(self.mail_user_staff.level == "M")
-    def is_mail_editor(self):
-        return self.is_superuser or try_except(self.mail_user_staff.level == "E")
-    def is_mail_manager(self):
-        try:
-            return self.is_superuser or self.mail_user_staff.level
-        except:
-            return False
-    def is_message_administrator(self):
-        return self.is_superuser or try_except(self.message_user_staff.level == "A")
-    def is_message_moderator(self):
-        return self.is_superuser or try_except(self.message_user_staff.level == "M")
-    def is_message_editor(self):
-        return self.is_superuser or try_except(self.message_user_staff.level == "E")
-    def is_message_manager(self):
-        try:
-            return self.is_superuser or self.message_user_staff.level
-        except:
-            return False
-
-    def is_work_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_user.can_work_administrator)
-    def is_work_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_user.can_work_moderator)
-    def is_work_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_user.can_work_editor)
-    def is_work_advertiser(self):
-        return self.is_superuser or try_except(self.can_work_staff_user.can_work_advertiser)
-    def is_user_supermanager(self):
-        return self.is_superuser or self.is_work_administrator() or self.is_work_moderator() or is_work_editor() or is_work_advertiser()
-    def is_work_community_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_community.can_work_administrator)
-    def is_work_community_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_community.can_work_moderator)
-    def is_work_community_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_community.can_work_editor)
-    def is_work_community_advertiser(self):
-        return self.is_superuser or try_except(self.can_work_staff_community.can_work_advertiser)
-    def is_community_supermanager(self):
-        return self.is_superuser or self.is_work_community_administrator() or self.is_work_community_moderator() or is_work_community_editor() or is_work_community_advertiser()
-    def is_work_post_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_post_user.can_work_administrator)
-    def is_work_post_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_post_user.can_work_moderator)
-    def is_work_post_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_post_user.can_work_editor)
-    def is_work_supermanager(self):
-        return self.is_superuser or self.is_work_post_administrator() or self.is_work_post_moderator() or is_work_post_editor()
-    def is_work_good_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_good_user.can_work_administrator)
-    def is_work_good_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_good_user.can_work_moderator)
-    def is_work_good_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_good_user.can_work_editor)
-    def is_work_good_supermanager(self):
-        return self.is_work_good_administrator() or self.is_work_good_moderator() or is_work_good_editor()
-    def is_work_doc_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_doc_user.can_work_administrator)
-    def is_work_doc_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_doc_user.can_work_moderator)
-    def is_work_doc_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_doc_user.can_work_editor)
-    def is_work_doc_supermanager(self):
-        return self.is_superuser or self.is_work_doc_administrator() or self.is_doc_good_moderator() or is_work_doc_editor()
-    def is_work_photo_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_photo_user.can_work_administrator)
-    def is_work_photo_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_photo_user.can_work_moderator)
-    def is_work_photo_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_photo_user.can_work_editor)
-    def is_work_photo_supermanager(self):
-        return self.is_superuser or self.is_work_photo_administrator() or self.is_work_photo_moderator() or is_work_photo_editor()
-    def is_work_video_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_video_user.can_work_administrator)
-    def is_work_video_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_video_user.can_work_moderator)
-    def is_work_video_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_video_user.can_work_editor)
-    def is_work_video_supermanager(self):
-        return self.is_superuser or self.is_work_video_administrator() or self.is_work_video_moderator() or is_work_video_editor()
-    def is_work_music_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_music_user.can_work_administrator)
-    def is_work_music_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_music_user.can_work_moderator)
-    def is_work_music_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_music_user.can_work_editor)
-    def is_music_supermanager(self):
-        return self.is_superuser or self.is_work_music_administrator() or self.is_work_music_moderator() or is_work_music_editor()
-    def is_work_site_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_site_user.can_work_administrator)
-    def is_work_site_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_site_user.can_work_moderator)
-    def is_work_site_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_site_user.can_work_editor)
-    def is_site_supermanager(self):
-        return self.is_superuser or self.is_work_site_administrator() or self.is_work_site_moderator() or is_work_site_editor()
-    def is_work_article_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_article_user.can_work_administrator)
-    def is_work_article_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_article_user.can_work_moderator)
-    def is_work_article_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_article_user.can_work_editor)
-    def is_article_supermanager(self):
-        return self.is_superuser or self.is_work_article_administrator() or self.is_work_article_moderator() or is_work_article_editor()
-    def is_work_survey_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_survey_user.can_work_administrator)
-    def is_work_survey_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_survey_user.can_work_moderator)
-    def is_work_survey_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_survey_user.can_work_editor)
-    def is_survey_supermanager(self):
-        return self.is_superuser or self.is_work_survey_administrator() or self.is_work_survey_moderator() or is_work_survey_editor()
-    def is_work_planner_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_planner_user.can_work_administrator)
-    def is_work_planner_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_planner_user.can_work_moderator)
-    def is_work_planner_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_planner_user.can_work_editor)
-    def is_planner_supermanager(self):
-        return self.is_superuser or self.is_work_planner_administrator() or self.is_work_planner_moderator() or is_work_planner_editor()
-    def is_work_forum_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_forum_user.can_work_administrator)
-    def is_work_forum_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_forum_user.can_work_moderator)
-    def is_work_forum_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_forum_user.can_work_editor)
-    def is_forum_supermanager(self):
-        return self.is_superuser or self.is_work_forum_administrator() or self.is_work_forum_moderator() or is_work_forum_editor()
-    def is_work_wiki_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_wiki_user.can_work_administrator)
-    def is_work_wiki_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_wiki_user.can_work_moderator)
-    def is_work_wiki_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_wiki_user.can_work_editor)
-    def is_wiki_supermanager(self):
-        return self.is_superuser or self.is_work_wiki_administrator() or self.is_forum_wiki_moderator() or is_forum_wiki_editor()
-    def is_work_mail_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_mail_user.can_work_administrator)
-    def is_work_mail_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_mail_user.can_work_moderator)
-    def is_work_mail_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_mail_user.can_work_editor)
-    def is_mail_supermanager(self):
-        return self.is_superuser or self.is_work_mail_administrator() or self.is_forum_mail_moderator() or is_forum_mail_editor()
-    def is_work_message_administrator(self):
-        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_administrator)
-    def is_work_message_moderator(self):
-        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_moderator)
-    def is_work_message_editor(self):
-        return self.is_superuser or try_except(self.can_work_staff_message_user.can_work_editor)
-    def is_message_supermanager(self):
-        return self.is_superuser or self.is_work_message_administrator() or self.is_forum_message_moderator() or is_forum_message_editor()
 
     ''''' количества всякие  196-216 '''''
 

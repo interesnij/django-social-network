@@ -439,7 +439,7 @@ def get_staff_template(template, request_user, user_agent):
 
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
-    elif request_user.is_manager() or request_user.is_supermanager():
+    elif request_user.is_moderator():
         template_name = template
     else:
         raise PermissionDenied("Ошибка доступа")

@@ -1,7 +1,6 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from common.staff_progs.article import *
 from article.models import Article, ArticleList
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
@@ -9,125 +8,11 @@ from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_article import ArticleManageLog
 
 
-class ArticleAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_administrator():
-            add_article_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_administrator():
-            remove_article_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class ArticleModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_moderator():
-            add_article_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_moderator():
-            remove_article_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class ArticleEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_editor():
-            add_article_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_article_editor():
-            remove_article_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class ArticleWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_article_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_article_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class ArticleWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_article_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_article_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
-class ArticleWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_article_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class ArticleWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_article_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class ArticleCloseCreate(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/article/article_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -142,7 +27,7 @@ class ArticleCloseCreate(TemplateView):
         from managers.forms import ModeratedForm
 
         article, form = Article.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_article_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=article.pk, type=59)
             moderate_obj.create_close(object=article, description=mod.description, manager_id=request.user.pk)
@@ -154,7 +39,7 @@ class ArticleCloseCreate(TemplateView):
 class ArticleCloseDelete(View):
     def get(self,request,*args,**kwargs):
         article = Article.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=article.pk, type=59)
             moderate_obj.delete_close(object=article, manager_id=request.user.pk)
             ArticleManageLog.objects.create(item=article.pk, manager=request.user.pk, action_type=ArticleManageLog.ITEM_CLOSED_HIDE)
@@ -194,7 +79,7 @@ class ArticleClaimCreate(TemplateView):
 
 class ArticleRejectedCreate(View):
     def get(self,request,*args,**kwargs):
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             article = Article.objects.get(pk=self.kwargs["pk"])
             moderate_obj = Moderated.objects.get(object_id=article.pk, type=59)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
@@ -208,7 +93,7 @@ class ArticleUnverify(View):
     def get(self,request,*args,**kwargs):
         article = Article.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=article.pk, type=59)
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(article, manager_id=request.user.pk)
             ArticleManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=ArticleManageLog.ITEM_UNVERIFY)
             return HttpResponse()
@@ -248,7 +133,7 @@ class ListArticleClaimCreate(TemplateView):
 class ListArticleRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         list = ArticleList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=58)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             ArticleManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=ArticleManageLog.LIST_REJECT)
@@ -261,7 +146,7 @@ class ListArticleUnverify(View):
     def get(self,request,*args,**kwargs):
         list = ArticleList.objects.get(uuid=self.kwargs["uuid"])
         obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=58)
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(list, manager_id=request.user.pk)
             ArticleManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=ArticleManageLog.LIST_UNVERIFY)
             return HttpResponse()
@@ -273,7 +158,7 @@ class ListArticleCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = ArticleList.objects.get(uuid=self.kwargs["uuid"])
-        if request.user.is_article_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/article/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -287,7 +172,7 @@ class ListArticleCloseCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         list = ArticleList.objects.get(uuid=self.kwargs["uuid"])
         form = ModeratedForm(request.POST)
-        if form.is_valid() and request.user.is_article_manager():
+        if form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=list.pk, type=58)
             moderate_obj.create_close(object=list, description=mod.description, manager_id=request.user.pk)
@@ -299,7 +184,7 @@ class ListArticleCloseCreate(TemplateView):
 class ListArticleCloseDelete(View):
     def get(self,request,*args,**kwargs):
         list = ArticleList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and request.user.is_article_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=list.pk, type=58)
             moderate_obj.delete_close(object=list, manager_id=request.user.pk)
             ArticleManageLog.objects.create(item=list.pk, manager=request.user.pk, action_type=ArticleManageLog.LIST_CLOSED_HIDE)

@@ -1,123 +1,12 @@
 from django.views import View
 from users.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
-from common.staff_progs.post import *
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from planner.models import *
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
-from django.http import Http404
 from common.templates import get_detect_platform_template, get_staff_template
 from logs.model.manage_planner import PlannerManageLog
-
-
-class PlannerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_administrator():
-            add_planner_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_administrator():
-            remove_planner_administrator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_moderator():
-            add_planner_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_moderator():
-            remove_planner_moderator(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_editor():
-            add_planner_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_work_planner_editor():
-            remove_planner_editor(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerAdminCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_planner_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerAdminDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_planner_administrator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerModerCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_planner_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerModerDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_planner_moderator_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerEditorCreate(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            add_planner_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PlannerWorkerEditorDelete(View):
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_superuser:
-            remove_planner_editor_worker(user, request.user)
-            return HttpResponse()
-        else:
-            raise Http404
 
 
 class WorkspaceCloseCreate(TemplateView):
@@ -125,7 +14,7 @@ class WorkspaceCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.workspace = Workspace.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_planner_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/planner/workspace_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -138,7 +27,7 @@ class WorkspaceCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         workspace, form = Workspace.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_planner_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=workspace.pk, type=38)
             moderate_obj.create_close(object=workspace, description=mod.description, manager_id=request.user.pk)
@@ -150,7 +39,7 @@ class WorkspaceCloseCreate(TemplateView):
 class WorkspaceCloseDelete(View):
     def get(self,request,*args,**kwargs):
         workspace = Workspace.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=workspace.pk, type=38)
             moderate_obj.delete_close(object=workspace, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=workspace.pk, manager=request.user.pk, action_type=PlannerManageLog.WORKSPACE_CLOSED_HIDE)
@@ -192,7 +81,7 @@ class WorkspaceClaimCreate(TemplateView):
 class WorkspaceRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         workspace = Workspace.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=workspace.pk, type=38)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=workspace.pk, manager=request.user.pk, action_type=PlannerManageLog.WORKSPACE_REJECT)
@@ -204,7 +93,7 @@ class WorkspaceUnverify(View):
     def get(self,request,*args,**kwargs):
         workspace = Workspace.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=workspace.pk, type=38)
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(workspace, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=PlannerManageLog.WORKSPACE_UNVERIFY)
             return HttpResponse()
@@ -217,7 +106,7 @@ class BoardPlannerCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.board = Board.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_planner_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/planner/board_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -230,7 +119,7 @@ class BoardPlannerCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         board, form = Board.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_planner_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=board.pk, type=39)
             moderate_obj.create_close(object=board, description=mod.description, manager_id=request.user.pk)
@@ -242,7 +131,7 @@ class BoardPlannerCloseCreate(TemplateView):
 class BoardPlannerCloseDelete(View):
     def get(self,request,*args,**kwargs):
         board = Board.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=board.pk, type=39)
             moderate_obj.delete_close(object=board, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=board.pk, manager=request.user.pk, action_type=PlannerManageLog.BOARD_CLOSED_HIDE)
@@ -284,7 +173,7 @@ class BoardPlannerClaimCreate(TemplateView):
 class BoardPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         board = Board.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=board.pk, type=39)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=board.pk, manager=request.user.pk, action_type=PlannerManageLog.BOARD_REJECT)
@@ -296,7 +185,7 @@ class BoardPlannerUnverify(View):
     def get(self,request,*args,**kwargs):
         board = Board.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=board.pk, type=39)
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(board, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=PlannerManageLog.BOARD_UNVERIFY)
             return HttpResponse()
@@ -309,7 +198,7 @@ class ColumnPlannerCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.column = Column.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_planner_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/planner/column_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -322,7 +211,7 @@ class ColumnPlannerCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         column, form = Column.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_planner_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=column.pk, type=40)
             moderate_obj.create_close(object=column, description=mod.description, manager_id=request.user.pk)
@@ -334,7 +223,7 @@ class ColumnPlannerCloseCreate(TemplateView):
 class ColumnPlannerCloseDelete(View):
     def get(self,request,*args,**kwargs):
         column = Column.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=column.pk, type=40)
             moderate_obj.delete_close(object=column, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=column.pk, manager=request.user.pk, action_type=PlannerManageLog.COLUMN_CLOSED_HIDE)
@@ -376,7 +265,7 @@ class ColumnPlannerClaimCreate(TemplateView):
 class ColumnPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         column = Column.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=column.pk, type=40)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=column.pk, manager=request.user.pk, action_type=PlannerManageLog.COLUMN_REJECT)
@@ -388,7 +277,7 @@ class ColumnPlannerUnverify(View):
     def get(self,request,*args,**kwargs):
         column = Column.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=column.pk, type=40)
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(column, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=PlannerManageLog.COLUMN_UNVERIFY)
             return HttpResponse()
@@ -401,7 +290,7 @@ class CardPlannerCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.column = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_planner_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/planner/column_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -414,7 +303,7 @@ class CardPlannerCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         column, form = ColumnCard.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_planner_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=column.pk, type=41)
             moderate_obj.create_close(object=column, description=mod.description, manager_id=request.user.pk)
@@ -426,7 +315,7 @@ class CardPlannerCloseCreate(TemplateView):
 class CardPlannerCloseDelete(View):
     def get(self,request,*args,**kwargs):
         column = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=column.pk, type=41)
             moderate_obj.delete_close(object=column, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=column.pk, manager=request.user.pk, action_type=PlannerManageLog.CARD_CLOSED_HIDE)
@@ -468,7 +357,7 @@ class CardPlannerClaimCreate(TemplateView):
 class CardPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         column = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=column.pk, type=41)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=column.pk, manager=request.user.pk, action_type=PlannerManageLog.CARD_REJECT)
@@ -480,7 +369,7 @@ class CardPlannerUnverify(View):
     def get(self,request,*args,**kwargs):
         column = ColumnCard.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=column.pk, type=41)
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(column, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=PlannerManageLog.CARD_UNVERIFY)
             return HttpResponse()
@@ -493,7 +382,7 @@ class CommentPlannerCloseCreate(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.comment = ColumnCardComment.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_planner_manager():
+        if request.user.is_moderator():
             self.template_name = get_staff_template("managers/manage_create/planner/comment_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -506,7 +395,7 @@ class CommentPlannerCloseCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         comment, form = ColumnCardComment.objects.get(pk=self.kwargs["pk"]), ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid() and request.user.is_planner_manager():
+        if request.is_ajax() and form.is_valid() and request.user.is_moderator():
             mod = form.save(commit=False)
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=42)
             moderate_obj.create_close(object=comment, description=mod.description, manager_id=request.user.pk)
@@ -518,7 +407,7 @@ class CommentPlannerCloseCreate(TemplateView):
 class CommentPlannerCloseDelete(View):
     def get(self,request,*args,**kwargs):
         comment = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=42)
             moderate_obj.delete_close(object=comment, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=PlannerManageLog.COMMENT_CLOSED_HIDE)
@@ -560,7 +449,7 @@ class CommentPlannerClaimCreate(TemplateView):
 class CommentPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         comment = ColumnCardComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             moderate_obj = Moderated.objects.get(object_id=comment.pk, type=42)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=comment.pk, manager=request.user.pk, action_type=PlannerManageLog.COMMENT_REJECT)
@@ -572,7 +461,7 @@ class CommentPlannerUnverify(View):
     def get(self,request,*args,**kwargs):
         comment = ColumnCardComment.objects.get(pk=self.kwargs["pk"])
         obj = Moderated.get_or_create_moderated_object(object_id=comment.pk, type=42)
-        if request.is_ajax() and request.user.is_planner_manager():
+        if request.is_ajax() and request.user.is_moderator():
             obj.unverify_moderation(comment, manager_id=request.user.pk)
             PlannerManageLog.objects.create(item=obj.object_id, manager=request.user.pk, action_type=PlannerManageLog.COMMENT_UNVERIFY)
             return HttpResponse()

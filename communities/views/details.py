@@ -71,7 +71,7 @@ class CommunityDetail(TemplateView):
                 self.is_settings_open = self.c.is_user_can_see_settings(r_user_pk)
                 self.is_stat_open = self.c.is_user_can_see_stat(r_user_pk)
             self.is_staff =  request.user.is_staff_of_community(self.c.pk)
-            self.is_manager =  request.user.is_community_manager()
+            self.is_manager =  request.user.is_manager()
 
             update_activity(request.user, request.META['HTTP_USER_AGENT'])
         elif request.user.is_anonymous:

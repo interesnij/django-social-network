@@ -9,7 +9,7 @@ class ModerationUserList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_user_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/user_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -24,7 +24,7 @@ class ModerationCommunityList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_community_manager():
+        if self.user.is_manager():
             self.template_name = get_detect_platform_template("managers/moderation_list/community_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -39,7 +39,7 @@ class ModerationPostsList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_post_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/post_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -54,7 +54,7 @@ class ModerationPhotoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_photo_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -70,7 +70,7 @@ class ModerationGoodList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_good_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/good_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -86,7 +86,7 @@ class ModerationAudioList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_audio_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/audio_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -102,7 +102,7 @@ class ModerationVideoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_video_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/video_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -117,7 +117,7 @@ class ModerationDocList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_doc_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -131,7 +131,7 @@ class ModerationPlannerList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_planner_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/planner_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -145,7 +145,7 @@ class ModerationSiteList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_site_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/site_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -159,7 +159,7 @@ class ModerationWikiList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_wiki_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/wiki_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -173,7 +173,7 @@ class ModerationForumList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_forum_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/forum_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -187,7 +187,7 @@ class ModerationArticleList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_article_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/article_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -201,7 +201,7 @@ class ModerationSurveyList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_survey_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/survey_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -215,7 +215,7 @@ class ModerationMailList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_mail_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/mail_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -229,7 +229,7 @@ class ModerationMessageList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_message_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/moderation_list/message_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404

@@ -9,7 +9,7 @@ class PenaltyUserList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_user_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/user_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -24,7 +24,7 @@ class PenaltyCommunityList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_community_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/community_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -39,7 +39,7 @@ class PenaltyPostsList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_post_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/post_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -55,7 +55,7 @@ class PenaltyPhotoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_photo_administrator():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -71,7 +71,7 @@ class PenaltyGoodList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_good_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/good_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -87,7 +87,7 @@ class PenaltyAudioList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_audio_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/audio_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -103,7 +103,7 @@ class PenaltyVideoList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_video_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/video_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -119,7 +119,7 @@ class PenaltyDocList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_doc_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/doc_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -133,7 +133,7 @@ class PenaltyPlannerList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_planner_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/planner_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -147,7 +147,7 @@ class PenaltySiteList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_site_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/site_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -161,7 +161,7 @@ class PenaltyWikiList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_wiki_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/wiki_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -175,7 +175,7 @@ class PenaltyForumList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_forum_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/forum_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -189,7 +189,7 @@ class PenaltyArticleList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_article_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/article_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -203,7 +203,7 @@ class PenaltySurveyList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_survey_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/survey_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -217,7 +217,7 @@ class PenaltyMailList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_mail_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/mail_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
@@ -231,7 +231,7 @@ class PenaltyMessageList(ListView):
 
     def get(self,request,*args,**kwargs):
         self.user = request.user
-        if self.user.is_message_manager():
+        if self.user.is_manager():
             self.template_name = get_staff_template("managers/penalty_list/message_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
