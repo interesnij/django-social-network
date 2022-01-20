@@ -95,7 +95,8 @@ function close_work_fullscreen() {
   if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
   }} catch { null } ;
-  _window.remove();
+
+  try{_window.remove()} catch { null };
   if (toggle_active_select) {
     settings_window = container.querySelector(".card_fullscreen");
     collector_active = settings_window.querySelector(".collector_active");
