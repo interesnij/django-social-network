@@ -3,13 +3,13 @@ from gallery.models import PhotoList, Photo
 
 
 class PhotoListAdmin(admin.ModelAdmin):
-    list_display = ['name', 'creator', 'community', 'type', 'created']
+    list_display = ['name', 'creator', 'type', 'created']
     list_filter = ['creator', ]
     class Meta:
         model = PhotoList
 
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ['creator','community', 'created']
+    list_display = ['creator', 'created']
     list_filter = ['creator', ]
 
     class Meta:

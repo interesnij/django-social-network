@@ -12,7 +12,7 @@ class MusicAdmin(admin.ModelAdmin):
 
 class MusicListAdmin(admin.ModelAdmin):
     search_fields = ('creator',)
-    list_display = ['name','community','type','creator']
+    list_display = ['name','type','creator']
 
 admin.site.register(Music, MusicAdmin)
 admin.site.register(SoundGenres)

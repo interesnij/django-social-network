@@ -26,7 +26,7 @@ class CommunityFollow(models.Model):
     visited = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
 
     class Meta:
-        unique_together = ('user', 'community')
+        #unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'
         verbose_name_plural = 'Подписчики группы'
 
