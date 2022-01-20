@@ -482,7 +482,7 @@ class User(AbstractUser):
 
         check_not_can_follow_user(user=self, user_id=user_id)
         follow = Follow.objects.get(user=self,followed_user_id=user_id).delete()
-        self.delete_news_subscriber_from_list(user_id)
+        self.delete_news_subscriber_from_main_list(user_id)
 
     def unfrend_user(self, user):
         self.unfrend_user_with_id(user.pk)
@@ -499,7 +499,7 @@ class User(AbstractUser):
         follow.view = True
         follow.save(update_fields=["view"])
         if self.is_closed_profile():
-            self.delete_news_subscriber_from_list(user_id)
+            self.delete_news_subscriber_from_main_list(user_id)
         connection = self.connections.get(target_connection__user_id=user_id)
         return connection.delete()
 
@@ -553,8 +553,8 @@ class User(AbstractUser):
 
         UserBlock.create_user_block(blocker_id=self.pk, blocked_user_id=user_id)
         self.remove_featured_friend_from_all_list(user_id)
-        self.delete_news_subscriber_from_list(user_id)
-        self.delete_notify_subscriber_from_list(user_id)
+        self.delete_news_subscriber_from_main_list(user_id)
+        self.delete_notify_subscriber_from_main_list(user_id)
         return user_to_block
 
     def search_followers_with_query(self, query):
