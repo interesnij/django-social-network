@@ -49,3 +49,5 @@ admin.site.register(CommunityCategory, CommunityCategoryAdmin)
 admin.site.register(Community, CommunityAdmin)
 admin.site.register(CommunityMembership, CommunityMembershipAdmin)
 admin.site.register(CommunityInfo)
+
+admin.site.register(CommunityPostsListPosition)
