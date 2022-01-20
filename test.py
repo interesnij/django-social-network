@@ -44,5 +44,5 @@ from users.model.list import UserPlayListPosition
 from users.models import User
 
 community = Community.objects.get(pk=1)
-post_list = PostsList.objects.create(PostsList.objects.create(creator=community.creator, community=community, type=PostsList.MAIN, name="Записи"):
+post_list = PostsList.objects.create(PostsList.objects.create(creator=community.creator, community=community, type=PostsList.MAIN, name="Записи")
 CommunityPostsListPosition.objects.create(community=community.pk, list=post_list.pk, position=1)
