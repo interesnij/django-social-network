@@ -6,9 +6,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit
 from imagekit.models import ProcessedImageField
 from video.helpers import upload_to_video_directory, validate_file_extension
 from django.db.models import Q
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from common.model.other import Stickers
 
 
@@ -329,13 +326,6 @@ class VideoList(models.Model):
         from users.model.list import UserVideoListPosition
         UserVideoListPosition.objects.get(user=user.pk, list=self.pk).delete()
         self.users.remove(user)
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list = VideoList.objects.create(community=instance, type=VideoList.MAIN, name="Основной список", creator=instance.creator)
-            from communities.model.list import CommunityVideoListPosition
-            CommunityVideoListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
     def is_not_empty(self):
         return self.video_list.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()

@@ -4,9 +4,6 @@ from django.conf import settings
 from django.db.models import Q
 from django.contrib.postgres.indexes import BrinIndex
 from common.utils import try_except
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from common.model.other import Stickers
 
 

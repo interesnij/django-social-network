@@ -5,9 +5,6 @@ from django.contrib.postgres.indexes import BrinIndex
 from users.helpers import upload_to_user_directory
 from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from django.db.models import Q
 
 
@@ -85,13 +82,6 @@ class SurveyList(models.Model):
         from users.model.list import UserSurveyListPosition
         UserSurveyListPosition.objects.get(user=user.pk, list=self.pk).delete()
         self.users.remove(user)
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list = SurveyList.objects.create(community=instance, type=SurveyList.MAIN, name="Основной список", creator=instance.creator)
-            from communities.model.list import CommunitySurveyListPosition
-            CommunitySurveyListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.survey_list.filter(pk=item_id).values("pk").exists()

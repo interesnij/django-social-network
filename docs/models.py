@@ -3,9 +3,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from docs.helpers import upload_to_doc_directory, validate_file_extension
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from django.db.models import Q
 
 
@@ -212,13 +209,6 @@ class DocsList(models.Model):
         return False
     def is_anon_user_can_copy_el(self):
         return self.copy_el == self.ALL_CAN
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list = DocsList.objects.create(community=instance, type=DocsList.MAIN, name="Основной список", creator=instance.creator)
-            from communities.model.list import CommunityDocsListPosition
-            CommunityDocsListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.docs_list.filter(pk=item_id).values("pk").exists()

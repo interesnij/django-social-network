@@ -5,10 +5,7 @@ from django.contrib.postgres.indexes import BrinIndex
 from music.helpers import upload_to_music_directory, validate_file_extension
 from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.db.models import Q
-from communities.models import Community
 
 
 class SoundGenres(models.Model):
@@ -269,13 +266,6 @@ class MusicList(models.Model):
         from users.model.list import UserPlayListPosition
         UserPlayListPosition.objects.get(user=user.pk, list=self.pk).delete()
         self.users.remove(user)
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list = MusicList.objects.create(community=instance, type=MusicList.MAIN, name="Основной список", creator=instance.creator)
-            from communities.model.list import CommunityPlayListPosition
-            CommunityPlayListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
     def is_item_in_list(self, item_id):
         return self.playlist.filter(pk=item_id).values("pk").exists()

@@ -6,9 +6,6 @@ from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
 from goods.helpers import upload_to_good_directory
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from common.model.other import Stickers
 
 
@@ -330,13 +327,6 @@ class GoodList(models.Model):
 		from users.model.list import UserGoodListPosition
 		UserGoodListPosition.objects.get(user=user.pk, list=self.pk).delete()
 		self.users.remove(user)
-
-	@receiver(post_save, sender=Community)
-	def create_c_model(sender, instance, created, **kwargs):
-		if created:
-			list = GoodList.objects.create(community=instance, type=GoodList.MAIN, name="Основной список", creator=instance.creator)
-			from communities.model.list import CommunityGoodListPosition
-			CommunityGoodListPosition.objects.create(community=instance.pk, list=list.pk, position=1)
 
 	def is_main(self):
 		return self.type == self.MAIN

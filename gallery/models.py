@@ -6,9 +6,6 @@ from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models import Q
 from gallery.helpers import upload_to_photo_directory
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from communities.models import Community
 from common.model.other import Stickers
 
 
@@ -305,15 +302,6 @@ class PhotoList(models.Model):
         except:
             pass
         self.users.remove(user)
-
-    @receiver(post_save, sender=Community)
-    def create_c_model(sender, instance, created, **kwargs):
-        if created:
-            list_1 = PhotoList.objects.create(community=instance, type=PhotoList.MAIN, name="Основной альбом", creator=instance.creator)
-            list_2 = PhotoList.objects.create(community=instance, type=PhotoList.AVATAR, name="Фото со страницы", creator=instance.creator)
-            from communities.model.list import CommunityPhotoListPosition
-            CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_1.pk, position=1)
-            CommunityPhotoListPosition.objects.create(community=instance.pk, list=list_2.pk, position=2)
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
