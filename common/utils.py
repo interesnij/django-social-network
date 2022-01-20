@@ -200,3 +200,41 @@ def create_user_models(user):
     UserVideoListPosition.objects.create(user=user.pk, list=video_list.pk, position=1)
 
     ListUC.objects.create(type=1, owner=user.pk, name="Основной список")
+
+
+def create_community_models(community):
+    from docs.models import DocsList
+    from gallery.models import PhotoList
+    from goods.models import GoodList
+    from music.models import MusicList
+    from posts.models import PostsList
+    from video.models import VideoList
+    from communities.model.list import (
+                                    CommunityPhotoListPosition,
+                                    CommunityGoodListPosition,
+                                    CommunityPlayListPosition,
+                                    CommunityPostsListPosition,
+                                    CommunityDocsListPosition,
+                                    CommunityVideoListPosition,
+                                )
+    doc_list = DocsList.objects.create(creator=community.creator, community=community, type=DocsList.MAIN, name="Основной список")
+    CommunityDocsListPosition.objects.create(community=community.pk, list=doc_list.pk, position=1)
+
+    list_1 = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.MAIN, name="Основной альбом")
+    list_2 = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.AVATAR, name="Фото со страницы")
+    list_3 = PhotoList.objects.create(creator=community.creator, community=community, type=PhotoList.WALL, name="Фото со стены")
+    CommunityPhotoListPosition.objects.create(community=community.pk, list=list_1.pk, position=1)
+    CommunityPhotoListPosition.objects.create(community=community.pk, list=list_2.pk, position=2)
+    CommunityPhotoListPosition.objects.create(community=community.pk, list=list_3.pk, position=3)
+
+    good_list = GoodList.objects.create(creator=community.creator, community=community, type=GoodList.MAIN, name="Основной список")
+    CommunityGoodListPosition.objects.create(community=community.pk, list=good_list.pk, position=1)
+
+    post_list = PostsList.objects.create(creator=community.creator, community=community, type=PostsList.MAIN, name="Записи")
+    CommunityPostsListPosition.objects.create(community=community.pk, list=post_list.pk, position=1)
+
+    music_list = MusicList.objects.create(creator=community.creator, community=community, type=MusicList.MAIN, name="Основной список")
+    CommunityPlayListPosition.objects.create(community=community.pk, list=music_list.pk, position=1)
+
+    video_list = VideoList.objects.create(creator=community.creator, community=community, type=VideoList.MAIN, name="Основной список")
+    CommunityVideoListPosition.objects.create(community=community.pk, list=video_list.pk, position=1)

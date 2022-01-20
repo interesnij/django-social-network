@@ -198,12 +198,14 @@ class Community(models.Model):
 
     @classmethod
     def create_community(cls, name, category, creator, type):
+        from common.utils import create_community_models
         community = cls.objects.create(name=name, creator=creator, type=type, category=category)
         CommunityMembership.create_membership(user=creator, is_administrator=True, community=community)
         community.save()
         creator.plus_community_visited(community.pk)
         community.add_news_subscriber_in_main_list(creator.pk)
         community.add_notify_subscriber_in_main_list(creator.pk)
+        create_community_models(community)
         return community
 
     @classmethod
