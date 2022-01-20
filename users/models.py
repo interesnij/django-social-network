@@ -54,7 +54,7 @@ class User(AbstractUser):
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="ru")
     perm = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Статус пользователя")
     level = models.PositiveSmallIntegerField(default=100, verbose_name="Порядочность")
-    #USERNAME_FIELD = 'phone'
+    USERNAME_FIELD = 'phone'
 
     class Meta:
         verbose_name = 'пользователь'
