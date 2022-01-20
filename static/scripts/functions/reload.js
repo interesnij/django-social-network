@@ -91,9 +91,10 @@ function close_work_fullscreen() {
   container = document.body.querySelector("#fullscreens_container");
 
   _window = container.querySelector(".card_fullscreen");
+  try{
   if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
-  };
+  }} catch { null } ;
   _window.remove();
   if (toggle_active_select) {
     settings_window = container.querySelector(".card_fullscreen");
@@ -681,7 +682,7 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        get_dragula(".is_block_paginate");
-       get_dragula(".drag_list"); 
+       get_dragula(".drag_list");
        create_pagination(target_block);
     }};
     request.upload.onprogress = function(event) {
