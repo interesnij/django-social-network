@@ -39,12 +39,10 @@ from survey.models import SurveyList
 from docs.models import DocsList, Doc
 from posts.models import PostsList, Post
 from communities.models import Community
-from communities.model.list import CommunityDocsListPosition
+from communities.model.list import CommunityPostsListPosition
 from users.model.list import UserPlayListPosition
 from users.models import User
 
-
-UserPlayListPosition.objects.all().delete()
-for u in User.objects.all():
-    music_list = MusicList.objects.create(creator=u, type=MusicList.MAIN, name="Основной список")
-    UserPlayListPosition.objects.create(user=u.pk, list=music_list.pk, position=1)
+community = Community.objects.get(pk=1)
+post_list = PostsList.objects.create(PostsList.objects.create(creator=community.creator, community=community, type=PostsList.MAIN, name="Записи"):
+CommunityPostsListPosition.objects.create(community=community.pk, list=post_list.pk, position=1)
