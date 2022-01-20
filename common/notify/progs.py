@@ -11,7 +11,7 @@ def user_send_notify(id, creator_id, recipient_id, action_community_id, socket_n
             'key': 'notification',
             'id': str(id),
             'recipient_id': str(recipient_id),
-            'name': "u_post_create",
+            'name': socket_name,
         }
         async_to_sync(channel_layer.group_send)('notification', payload)
 

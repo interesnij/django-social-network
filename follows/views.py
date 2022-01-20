@@ -40,12 +40,12 @@ class FollowingsView(ListView):
 
 class FollowCreate(View):
 	def get(self,request,*args,**kwargs):
-		from common.notify.notify import user_notify
+		from common.notify.progs import user_notify
 
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
-			user_notify(request.user, followed_user.pk, None, "no", "u_follow", "CRE")
+			user_notify(request.user, None, followed_user.pk, "USE", "u_follow", "CRE")
 			return HttpResponse("!")
 		else:
 			raise Http404
