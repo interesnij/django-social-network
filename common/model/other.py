@@ -9,7 +9,7 @@ class PhoneCodes(models.Model):
 class CustomLink(models.Model):
     link = models.CharField(max_length=32, unique=True, verbose_name="Название ссылки, уникально для П. и С.")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE, related_name='user_link', verbose_name="Пользователь")
-    community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, related_name='community_link', verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', blank=True, null=True, on_delete=models.CASCADE, related_name='community_link', verbose_name="Сообщество")
 
     class Meta:
         verbose_name = 'Пользовательская ссылка'

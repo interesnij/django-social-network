@@ -31,7 +31,7 @@ class DocsList(models.Model):
             )
 
     name = models.CharField(max_length=255)
-    community = models.ForeignKey('communities.Community', related_name='docs_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='docs_lists_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='docs_lists_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип списка")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -42,8 +42,8 @@ class DocsList(models.Model):
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто копирует документы")
 
-    users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     is_doc_list = models.BooleanField(default=True)
 
     def __str__(self):
@@ -586,7 +586,7 @@ class Doc(models.Model):
     type = models.CharField(choices=TYPE, max_length=5)
     type_2 = models.CharField(choices=TYPE_2, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
-    community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     order = models.PositiveIntegerField(default=0)
     is_doc = models.BooleanField(default=True)
 

@@ -28,7 +28,7 @@ class Chat(models.Model):
     type = models.CharField(blank=False, null=False, choices=TYPE, max_length=6, verbose_name="Тип чата")
     image = models.ImageField(blank=True, upload_to=upload_to_chat_directory)
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
-    community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    #community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
     order = models.PositiveIntegerField(default=0)
