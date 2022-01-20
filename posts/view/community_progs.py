@@ -33,8 +33,9 @@ class PostCommunityCreate(View):
         form_post = PostForm(request.POST)
         list = PostsList.objects.get(pk=self.kwargs["pk"])
         community = list.community
+        creator = request.user
         if (community and request.user.is_administrator_of_community(community.pk)) \
-            or (not community and request.user.pk == list.creator.pk):
+            or (not community and creator.pk == list.creator.pk):
             can_create = True
         else:
             can_create = list.is_user_can_create_el(request.user.pk)
@@ -47,7 +48,7 @@ class PostCommunityCreate(View):
 
                 attach = request.POST.getlist('attach_items')
                 new_post = post.create_post(
-                                            creator=request.user,
+                                            creator=creator,
                                             attach=attach,
                                             text=post.text,
                                             category=post.category,
