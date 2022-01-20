@@ -28,7 +28,7 @@ class Chat(models.Model):
     type = models.CharField(blank=False, null=False, choices=TYPE, max_length=6, verbose_name="Тип чата")
     image = models.ImageField(blank=True, upload_to=upload_to_chat_directory)
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
-    #community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_chat', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='chat_creator', null=True, blank=False, verbose_name="Создатель")
     created = models.DateTimeField(auto_now_add=True)
     order = models.PositiveIntegerField(default=0)
@@ -906,7 +906,7 @@ class Message(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
-    #transfer = models.ManyToManyField("self", blank=True, related_name='+')
+    transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     created = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=10000, blank=True)

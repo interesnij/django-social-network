@@ -44,7 +44,7 @@ MY_APPS = [
     'frends',
     'chat',
     'gallery',
-    'article',
+    #'article',
     'common',
     'music',
     'video',

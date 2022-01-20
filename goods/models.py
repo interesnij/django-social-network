@@ -65,7 +65,7 @@ class GoodList(models.Model):
 		(SOME_MEMBERS, 'Некоторые подписчики'),
 	)
 
-	#community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
 	type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип альбома")
@@ -73,8 +73,8 @@ class GoodList(models.Model):
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-	#users = models.ManyToManyField("users.User", blank=True, related_name='+')
-	#communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+	users = models.ManyToManyField("users.User", blank=True, related_name='+')
+	communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
 	count = models.PositiveIntegerField(default=0)
 
 	can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
@@ -796,7 +796,7 @@ class Good(models.Model):
 	comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
 	votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
 	list = models.ForeignKey(GoodList, on_delete=models.SET_NULL, related_name='good_list', blank=True, null=True)
-	#community = models.ForeignKey('communities.Community', related_name='good_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+	community = models.ForeignKey('communities.Community', related_name='good_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
 	comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
 	view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")

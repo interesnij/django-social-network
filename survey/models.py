@@ -35,14 +35,14 @@ class SurveyList(models.Model):
             )
 
     name = models.CharField(max_length=255)
-    #community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='community_surveylist', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='creator_surveylist', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип списка")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='+')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
+    users = models.ManyToManyField("users.User", blank=True, related_name='+')
+    communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
@@ -344,7 +344,7 @@ class Survey(models.Model):
     type = models.CharField(choices=TYPE, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     list = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
-    #community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+    community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")

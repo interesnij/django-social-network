@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^friends/', include('frends.urls')),
     url(r'^chat/', include('chat.urls')),
     url(r'^gallery/', include('gallery.urls')),
-    url(r'^article/', include('article.urls')),
+    #url(r'^article/', include('article.urls')),
     url(r'^goods/', include('goods.urls')),
     url(r'^music/', include('music.urls')),
     url(r'^video/', include('video.urls')),

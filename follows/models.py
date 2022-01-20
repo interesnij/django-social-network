@@ -21,12 +21,12 @@ class Follow(models.Model):
 
 class CommunityFollow(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, on_delete=models.CASCADE, related_name='community_follows', verbose_name="Подписчик")
-    #community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
+    community = models.ForeignKey('communities.Community', db_index=False, on_delete=models.CASCADE, related_name='community', null=False, verbose_name="На какое сообщество подписывается")
     view = models.BooleanField(default=False, verbose_name="Просмотрено")
     visited = models.PositiveIntegerField(default=0, verbose_name="Количество визитов")
 
     class Meta:
-        #unique_together = ('user', 'community')
+        unique_together = ('user', 'community')
         verbose_name = 'Подписчик группы'
         verbose_name_plural = 'Подписчики группы'
 
