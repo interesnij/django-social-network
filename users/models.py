@@ -1151,20 +1151,20 @@ class User(AbstractUser):
     def get_user_main_news_ids(self):
         from users.model.list import ListUC, NewsUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['user'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('user')]
+        return [i['user'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, community=0, mute=False).values('user')]
     def get_community_main_news_ids(self):
         from users.model.list import ListUC, NewsUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['community'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('community')]
+        return [i['community'] for i in NewsUC.objects.filter(list_id=list.id, owner=self.pk, user=0, mute=False).values('community')]
 
     def get_user_main_notify_ids(self):
         from users.model.list import ListUC, NotifyUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['user'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('user')]
+        return [i['user'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, community=0, mute=False).values('user')]
     def get_community_main_notify_ids(self):
         from users.model.list import ListUC, NotifyUC
         list = ListUC.objects.get(owner=self.pk, type=1)
-        return [i['community'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, mute=False).values('community')]
+        return [i['community'] for i in NotifyUC.objects.filter(list_id=list.id, owner=self.pk, user=0, mute=False).values('community')]
 
     def leave_community(self, community):
         check_can_leave_community(user=self, community_id=community.pk)
