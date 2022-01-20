@@ -155,8 +155,8 @@ class PostPhotoDetail(TemplateView):
 		self.post = Post.objects.get(pk=self.kwargs["post_pk"])
 		self.photos = self.post.get_attach_photos()
 
-		if self.post.community:
-			self.community = self.post.community
+		if self.photo.community:
+			self.community = self.photo.community
 			if request.user.is_administrator_of_community(self.community.pk):
 				from gallery.forms import PhotoDescriptionForm
 				self.user_form = PhotoDescriptionForm(instance=self.photo)
