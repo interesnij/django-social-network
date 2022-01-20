@@ -30,7 +30,22 @@ class CommunityCreate(TemplateView):
 		if self.form.is_valid() and request.is_ajax():
 			new_community, membersheeps = self.form.save(commit=False), [request.user,]
 			community = Community.create_community(name=new_community.name, category=new_community.category, type=new_community.type, creator=request.user)
-			return render_for_platform(request, 'communities/detail/admin_community.html',{'community': community, 'post_list_pk': community.get_post_list().pk, 'membersheeps': membersheeps, 'user': request.user})
+			data = {
+				'is_stat_open' : True,
+				'is_settings_open' : True,
+				'is_message_open' : True,
+				'is_photo_open' : True,
+				'is_post_open' : True,
+				'is_member_open' : True,
+				'is_doc_open' : True,
+				'is_video_open' : True,
+				'is_music_open' : True,
+				'is_good_open' : True,
+				'community' : community,
+				'post_list_pk' : community.get_post_list().pk,
+				'membersheeps' : membersheeps,
+			}
+			return render_for_platform(request, 'communities/detail/community.html', data)
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
