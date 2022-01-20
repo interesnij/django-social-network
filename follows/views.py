@@ -46,7 +46,7 @@ class FollowCreate(View):
 		if request.is_ajax():
 			new_follow = request.user.follow_user(followed_user)
 			user_notify(request.user, None, followed_user.pk, "USE", "u_follow", "CRE")
-			return HttpResponse("!")
+			return HttpResponse()
 		else:
 			raise Http404
 

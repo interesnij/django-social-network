@@ -27,7 +27,6 @@ class RemovePostsListFromUserCollections(View):
             list.remove_in_user_collections(request.user)
         return HttpResponse()
 
-
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, list, attach = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')

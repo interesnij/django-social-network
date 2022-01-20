@@ -731,9 +731,9 @@ class Community(models.Model):
         return [i['pk'] for i in staff_members]
 
     def get_member_for_notify_ids(self):
-        from notify.models import CommunityProfileNotify
-        recipients = CommunityProfileNotify.objects.filter(community=self.pk).values("user")
-        return [i['user'] for i in recipients] + self.get_staff_members_ids()
+        from users.model.list import NotifyUC
+        recipients = NotifyUC.objects.filter(owner=self.pk, user=0).values("community")
+        return [i['community'] for i in recipients]
 
     def add_news_subscriber_in_main_list(self, user_id):
         from users.model.list import ListUC, NewsUC

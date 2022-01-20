@@ -1281,7 +1281,7 @@ class User(AbstractUser):
 
     def get_member_for_notify_ids(self):
         from users.model.list import NotifyUC
-        recipients = NotifyUC.objects.filter(owner=self.pk).values("user")
+        recipients = NotifyUC.objects.filter(owner=self.pk, community=0).values("user")
         return [i['user'] for i in recipients]
 
 
