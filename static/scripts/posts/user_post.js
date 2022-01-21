@@ -176,7 +176,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     figure = document.createElement("figure");
 
     img = document.createElement("img");
-    img.setAttribute("src", userpic.querySelector("src").getAttribute("src"));
+    img.setAttribute("src", userpic.querySelector("img").getAttribute("src"));
     img.style.borderRadius = "30px";
     img.style.width = "30px";
     figure.append(img);
