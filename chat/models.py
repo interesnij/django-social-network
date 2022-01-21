@@ -542,6 +542,22 @@ class Chat(models.Model):
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
+    def get_name(self):
+        if self.name:
+            return self.name
+        else:
+            if self.is_group():
+                return "Групповой чат"
+            elif self.is_public():
+                return "Публичнеый чат"
+            elif self.is_private():
+                chat_user = self.get_chat_user(user_id)
+                member = chat_user.user
+                return member.get_full_name()
+            else:
+                return "Без имени"
+
+
     def get_header_chat(self, user_id):
         chat_user = self.get_chat_user(user_id)
         request_chat_user = self.get_chat_request_user(user_id)
