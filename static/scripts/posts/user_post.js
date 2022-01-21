@@ -163,8 +163,8 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     new_pk = new_post.querySelector(".span_list_pk").getAttribute("list-pk");
     li.setAttribute("list-pk", new_pk);
 
-    div = document.createElement("div");
-    div.classList.add("media");
+    media = document.createElement("div");
+    media.classList.add("media");
 
     media_body = document.createElement("div");
     media_body.classList.add("media-body");
@@ -180,15 +180,16 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     img.style.borderRadius = "30px";
     img.style.width = "30px";
     figure.append(img);
+    a.append(figure);
 
     h6 = document.createElement("h6");
     h6.classList.add("my-0", "mt-1");
     h6.innerHTML = '<span class="list_name">' + name + '</span> (<span class="handle">0</span>)';
 
     media_body.append(h6);
-    div.append(a);
-    div.append(media_body);
-    li.append(div);
+    media.append(a);
+    media.append(media_body);
+    li.append(media);
     document.body.querySelector(".date-list").prepend(li);
 
     close_work_fullscreen();
