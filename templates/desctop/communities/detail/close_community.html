@@ -17,7 +17,7 @@
     </div>
 </div>
 {% endif %}
-
+{{ community.creator.pk }} == {{ request.user.pk }}
 <div class="container-fluid main-container mt-3 pk_saver" data-type="community_main" data-pk="{{ community.pk }}">
     <div class="row">
       <div class="col-12 col-md-12 col-lg-8">
