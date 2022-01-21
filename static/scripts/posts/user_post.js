@@ -166,8 +166,8 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     _div = document.createElement("div");
     _div.classList.add("media-body");
     h6 = document.createElement("h6");
-    h6.classList.add("mb-0");
-    h6.innerHTML = name;
+    h6.classList.add("my-0", "mt-1");
+    h6.innerHTML = '<span class="list_name">' + name + '</span> (<span class="handle">0</span>)';
     _div.append(h6);
     div.append(_div);
     li.append(div);
