@@ -20,12 +20,14 @@ def user_notify(creator, action_community_id, object_id, type, socket_name, verb
     from datetime import date
 
     current_verb, today = creator.get_verb_gender(verb), date.today()
-    if Notify.objects.filter(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=user_id, object_id=object_id, type=type, verb=verb).exists():
-        return
-    elif type == "USE" or type == "COM":
+    if type == "USE" or type == "COM":
+        if Notify.objects.filter(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=object_id, object_id=object_id, type=type, verb=verb).exists():
+            return
         Notify.objects.create(creator_id=creator.pk, recipient_id=object_id, action_community_id=action_community_id, object_id=object_id, type=type, verb=current_verb)
         user_send_notify(object_id, creator.pk, object_id, action_community_id, socket_name)
     else:
+        if Notify.objects.filter(creator_id=creator.pk, action_community_id=action_community_id, recipient_id=user_id, object_id=object_id, type=type, verb=verb).exists():
+            return
         for user_id in creator.get_member_for_notify_ids():
             if Notify.objects.filter(recipient_id=user_id, action_community_id=action_community_id, created__gt=today, type=type, verb=current_verb).exists():
                 notify = Notify.objects.get(recipient_id=user_id, action_community_id=action_community_id, type=type, created__gt=today, verb=current_verb)
