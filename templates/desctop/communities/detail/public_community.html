@@ -102,6 +102,9 @@
                   {% if is_stat_open %}
                     <a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Статистика</a>
                   {% endif %}
+                  {% if is_settings_open %}
+                    <a href="{% url 'community_general_form' community.pk %}" class="ajax">Управление</a>
+                  {% endif %}
                 </div>
           </div>
             {% if common_friends %}
