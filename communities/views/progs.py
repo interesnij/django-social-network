@@ -45,7 +45,7 @@ class CommunityCreate(TemplateView):
 				'post_list_pk' : community.get_post_list().pk,
 				'membersheeps' : membersheeps,
 			}
-			return render_for_platform(request, 'communities/detail/community.html', data)
+			return render_for_platform(request, 'communities/detail/public_community.html', data) 
 		else:
 			from django.http import HttpResponseBadRequest
 			return HttpResponseBadRequest()
