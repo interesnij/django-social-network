@@ -43,9 +43,7 @@ class SurveyList(models.Model):
     count = models.PositiveIntegerField(default=0)
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
-    can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
-    create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
     is_survey_list = models.BooleanField(default=True)
 
@@ -55,6 +53,138 @@ class SurveyList(models.Model):
     class Meta:
         verbose_name = "список опросов"
         verbose_name_plural = "списки опросов"
+
+    def get_can_see_el_exclude_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_el_include_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_can_see_el_exclude_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_can_see_el_exclude_users_ids())
+    def get_can_see_el_include_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_can_see_el_include_users_ids())
+
+    def get_create_el_exclude_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_create_el_include_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_create_el_exclude_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_create_el_exclude_users_ids())
+    def get_create_el_include_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_create_el_include_users_ids())
+
+    def get_copy_el_exclude_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_copy_el_include_users_ids(self):
+        list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=1).values("user_id")
+        return [i['user_id'] for i in list]
+    def get_copy_el_exclude_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_copy_el_exclude_users_ids())
+    def get_copy_el_include_users(self):
+        from users.models import User
+        return User.objects.filter(id__in=self.get_copy_el_include_users_ids())
+
+    def is_user_can_see_el(self, user_id):
+        if self.community:
+            if self.can_see_el == self.ALL_CAN:
+                return True
+            elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
+                return True
+            elif self.can_see_el == self.ADMINS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.can_see_el == self.MEMBERS and user_id in self.community.get_members_ids():
+                return True
+            elif self.can_see_el == self.MEMBERS_BUT:
+                return not user_id in self.get_can_see_el_exclude_users_ids()
+            elif self.can_see_el == self.SOME_MEMBERS:
+                return user_id in self.get_can_see_el_include_users_ids()
+        else:
+            if self.can_see_el == self.ALL_CAN:
+                return True
+            elif self.can_see_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.can_see_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.can_see_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.can_see_el == self.FRIENDS_BUT:
+                return not user_id in self.get_can_see_el_exclude_users_ids()
+            elif self.can_see_el == self.SOME_FRIENDS:
+                return user_id in self.get_can_see_el_include_users_ids()
+        return False
+    def is_anon_user_can_see_el(self):
+        return self.can_see_el == self.ALL_CAN
+
+    def is_user_can_create_el(self, user_id):
+        if self.community:
+            if self.create_el == self.ALL_CAN:
+                return True
+            elif self.create_el == self.CREATOR and user_id == self.community.creator.pk:
+                return True
+            elif self.create_el == self.ADMINS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.create_el == self.MEMBERS and user_id in self.community.get_members_ids():
+                return True
+            elif self.create_el == self.MEMBERS_BUT:
+                return not user_id in self.get_create_el_exclude_users_ids()
+            elif self.create_el == self.SOME_MEMBERS:
+                return user_id in self.get_create_el_include_users_ids()
+        else:
+            if self.create_el == self.ALL_CAN:
+                return True
+            elif self.create_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.create_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.create_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.create_el == self.FRIENDS_BUT:
+                return not user_id in self.get_create_el_exclude_users_ids()
+            elif self.create_el == self.SOME_FRIENDS:
+                return user_id in self.get_create_el_include_users_ids()
+        return False
+    def is_anon_user_can_create_item(self):
+        return self.create_el == self.ALL_CAN
+
+    def is_user_can_copy_el(self, user_id):
+        if self.community:
+            if self.copy_el == self.ALL_CAN:
+                return True
+            elif self.copy_el == self.CREATOR and user_id == self.community.creator.pk:
+                return True
+            elif self.copy_el == self.ADMINS and user_id in self.community.get_admins_ids():
+                return True
+            elif self.copy_el == self.MEMBERS and user_id in self.community.get_members_ids():
+                return True
+            elif self.copy_el == self.MEMBERS_BUT:
+                return not user_id in self.get_copy_el_exclude_users_ids()
+            elif self.copy_el == self.SOME_MEMBERS:
+                return user_id in self.get_copy_el_include_users_ids()
+        else:
+            if self.copy_el == self.ALL_CAN:
+                return True
+            elif self.copy_el == self.CREATOR and user_id == self.creator.pk:
+                return True
+            elif self.copy_el == self.FRIENDS and user_id in self.creator.get_all_friends_ids():
+                return True
+            elif self.copy_el == self.EACH_OTHER and user_id in self.creator.get_friend_and_friend_of_friend_ids():
+                return True
+            elif self.copy_el == self.FRIENDS_BUT:
+                return not user_id in self.get_copy_el_exclude_users_ids()
+            elif self.copy_el == self.SOME_FRIENDS:
+                return user_id in self.get_copy_el_include_users_ids()
+        return False
+    def is_anon_user_can_copy_el(self):
+        return self.copy_el == self.ALL_CAN
 
     def count_items_ru(self):
         count = self.count_items()
