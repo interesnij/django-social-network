@@ -1,5 +1,5 @@
 on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
-  repost_constructor(this, 
+  repost_constructor(this,
                      "/posts/repost/u_u_post_repost/",
                      "Репост записи на стену сделан",
                      "/posts/repost/u_c_post_repost/",
@@ -146,7 +146,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     date_list = document.body.querySelector(".date-list");
     list = date_list.querySelectorAll(".list");
-    for (var i = 0; i < list.length; i++) {list[i].classList.remove("tab_active");list[i].classList.add("pointer", "u_post_list_change");};
+    for (var i = 0; i < list.length; i++) {list[i].classList.remove("active");list[i].classList.add("pointer", "post_list_change");};
 
     elem = link_.responseText;
     new_post = document.createElement("span");
@@ -160,7 +160,16 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     new_pk = new_post.querySelector(".span_list_pk").getAttribute("list-pk");
     li.setAttribute("list-pk", new_pk);
 
-    div = document.createElement("div");div.classList.add("media");_div = document.createElement("div");_div.classList.add("media-body");h6 = document.createElement("h6");h6.classList.add("mb-0");h6.innerHTML = name;_div.append(h6); div.append(_div);document.body.querySelector(".date-list").prepend(div);
+    div = document.createElement("div");
+    div.classList.add("media");
+    _div = document.createElement("div");
+    _div.classList.add("media-body");
+    h6 = document.createElement("h6");
+    h6.classList.add("mb-0");
+    h6.innerHTML = name;
+    _div.append(h6);
+    div.append(_div);
+    document.body.querySelector(".date-list").prepend(div);
     close_work_fullscreen();
     main_container = document.body.querySelector(".main-container");
     add_list_in_all_stat("created_user_post_list",new_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
