@@ -418,13 +418,14 @@ class PostsList(models.Model):
 
     def is_user_can_create_el(self, user_id):
         if self.community:
+            community = self.community
             if self.create_el == 1:
                 return True
-            elif self.create_el == 4 and user_id == self.community.creator.pk:
+            elif self.create_el == 4 and user_id == community.creator.pk:
                 return True
-            elif self.create_el == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.create_el == self.ADMINS and user_id in community.get_admins_ids():
                 return True
-            elif self.create_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+            elif self.create_el == self.MEMBERS and user_id in community.get_members_ids():
                 return True
             elif self.create_el == self.MEMBERS_BUT:
                 return not user_id in self.get_create_el_exclude_users_ids()

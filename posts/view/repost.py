@@ -171,14 +171,14 @@ class UCPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                #if post_list.is_user_can_create_el(creator.pk):
-                community = post_list.community
-                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
-                count += 1
-                community.plus_posts(1)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
 
-                user_notify(creator, community, parent.pk, "POS", "create_u_post_notify", "CR")
-                user_wall(creator, None, parent.pk, "POS", "create_u_post_wall", "CR")
+                    user_notify(creator, community, parent.pk, "POS", "create_u_post_notify", "CR")
+                    user_wall(creator, None, parent.pk, "POS", "create_u_post_wall", "CR")
 
             parent.repost += count
             parent.save(update_fields=["repost"])
