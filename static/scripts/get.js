@@ -528,7 +528,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   collector = document.body.querySelector(".collector_active");
   users_block = form.querySelector(".card-header");
   users_list = users_block.querySelectorAll(".custom_color");
-  final_list = "";
+  final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
     a = users_list[i].querySelector("a");
     final_list += '<a postlist-pk="' + this.getAttribute("data-pk") + '" class="pointer ' + this.getAttribute("data-link") + '">' + a.innerHTML + '</a>'
@@ -545,7 +545,7 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
   collector = document.body.querySelector(".collector_active");
   users_block = form.querySelector(".card-header");
   users_list = users_block.querySelectorAll(".custom_color");
-  final_list = ": ";
+  final_list = "Выбраны получатели: ";
   for (var i = 0; i < users_list.length; i++){
     a = users_list[i].querySelector("a");
     final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'

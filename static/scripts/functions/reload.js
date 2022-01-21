@@ -102,8 +102,10 @@ function close_work_fullscreen() {
   if (toggle_active_select) {
     settings_window = container.querySelector(".card_fullscreen");
     collector_active = settings_window.querySelector(".collector_active");
-    select = collector_active.previousElementSibling;
-    select.value = select.getAttribute("data-value");
+    try{
+      select = collector_active.previousElementSibling;
+      select.value = select.getAttribute("data-value")
+    } catch { null }
   };
 
   if (!container.innerHTML) {
