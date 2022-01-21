@@ -169,18 +169,22 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     media_body = document.createElement("div");
     media_body.classList.add("media-body");
 
-    a = document.createElement("a");
-    a.classList.add("ajax");
-    a.setAttribute("href", userpic.getAttribute("data-pk"));
-
     figure = document.createElement("figure");
 
-    img = document.createElement("img");
-    img.setAttribute("src", userpic.querySelector("img").getAttribute("src"));
-    img.style.borderRadius = "30px";
-    img.style.width = "30px";
-    figure.append(img);
-    a.append(figure);
+    if (userpic.querySelector("img")) {
+      a = document.createElement("a");
+      a.classList.add("ajax");
+      a.setAttribute("href", userpic.getAttribute("data-pk"));
+      img = document.createElement("img");
+      img.setAttribute("src", userpic.querySelector("img").getAttribute("src"));
+      img.style.borderRadius = "30px";
+      img.style.width = "30px";
+      figure.append(img);
+      a.append(figure);
+    } else {
+      a = document.createElement("span");
+      a.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>'
+    };
 
     h6 = document.createElement("h6");
     h6.classList.add("my-0", "mt-1");
