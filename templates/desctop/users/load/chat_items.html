@@ -15,7 +15,7 @@
             <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_post_list" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.s_avatar %}
-                  <img style="width:30px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
                 {% else %}
                   <svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
                 {% endif %}
@@ -38,9 +38,9 @@
             <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_post_list" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.image %}
-                  <img style="width:30px;heigth:auto; border-radius:50%" src="{{ object.image.url }}" alt="img" />
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.image.url }}" alt="img" />
                 {% else %}
-                  <img style="width:30px;heigth:auto; border-radius:50%" src="/static/images/group_chat.jpg" alt="img" />
+                  <img style="width:50px;heigth:auto; border-radius:50%" src="/static/images/group_chat.jpg" alt="img" />
                 {% endif %}
               </figure>
               <div class="media-body">
