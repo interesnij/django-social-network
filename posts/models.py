@@ -360,9 +360,9 @@ class PostsList(models.Model):
                 return True
             elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
-            elif self.can_see_el == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.can_see_el == self.ADMINS and user_id in self.community.get_admins_ids():
                 return True
-            elif self.can_see_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+            elif self.can_see_el == self.MEMBERS and user_id in self.community.get_members_ids():
                 return True
             elif self.can_see_el == self.MEMBERS_BUT:
                 return not user_id in self.get_can_see_el_exclude_users_ids()
@@ -391,9 +391,9 @@ class PostsList(models.Model):
                 return True
             elif self.can_see_comment == self.CREATOR and user_id == self.community.creator.pk:
                 return True
-            elif self.can_see_comment == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.can_see_comment == self.ADMINS and user_id in self.community.get_admins_ids():
                 return True
-            elif self.can_see_comment == self.MEMBERS and user_id in self.community.get_admins_ids():
+            elif self.can_see_comment == self.MEMBERS and user_id in self.community.get_members_ids():
                 return True
             elif self.can_see_comment == self.MEMBERS_BUT:
                 return not user_id in self.get_can_see_comment_exclude_users_ids()
@@ -419,9 +419,9 @@ class PostsList(models.Model):
     def is_user_can_create_el(self, user_id):
         if self.community:
             community = self.community
-            if self.create_el == 1:
+            if self.create_el == self.ALL_CAN:
                 return True
-            elif self.create_el == 4 and user_id == community.creator.pk:
+            elif self.create_el == self.CREATOR and user_id == community.creator.pk:
                 return True
             elif self.create_el == self.ADMINS and user_id in community.get_admins_ids():
                 return True
@@ -432,7 +432,7 @@ class PostsList(models.Model):
             elif self.create_el == self.SOME_MEMBERS:
                 return user_id in self.get_create_el_include_users_ids()
         else:
-            if self.create_el == 1:
+            if self.create_el == self.ALL_CAN:
                 return True
             elif self.create_el == self.CREATOR and user_id == self.creator.pk:
                 return True
@@ -450,20 +450,20 @@ class PostsList(models.Model):
 
     def is_user_can_create_comment(self, user_id):
         if self.community:
-            if self.create_comment == 1:
+            if self.create_comment == self.ALL_CAN:
                 return True
-            elif self.create_comment == 4 and user_id == self.community.creator.pk:
+            elif self.create_comment == self.CREATOR and user_id == self.community.creator.pk:
                 return True
-            elif self.create_comment == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.create_comment == self.ADMINS and user_id in self.community.get_admins_ids():
                 return True
-            elif self.create_comment == self.MEMBERS and user_id in self.community.get_admins_ids():
+            elif self.create_comment == self.MEMBERS and user_id in self.community.get_members_ids():
                 return True
             elif self.create_comment == self.MEMBERS_BUT:
                 return not user_id in self.get_create_comment_exclude_users_ids()
             elif self.create_comment == self.SOME_MEMBERS:
                 return user_id in self.get_create_comment_include_users_ids()
         else:
-            if self.create_comment == 1:
+            if self.create_comment == self.ALL_CAN:
                 return True
             elif self.create_comment == self.CREATOR and user_id == self.creator.pk:
                 return True
@@ -481,20 +481,20 @@ class PostsList(models.Model):
 
     def is_user_can_copy_el(self, user_id):
         if self.community:
-            if self.copy_el == 1:
+            if self.copy_el == self.ALL_CAN:
                 return True
-            elif self.copy_el == 4 and user_id == self.community.creator.pk:
+            elif self.copy_el == self.CREATOR and user_id == self.community.creator.pk:
                 return True
-            elif self.copy_el == self.ADMINS and user_id in self.get_admins_ids():
+            elif self.copy_el == self.ADMINS and user_id in self.community.get_admins_ids():
                 return True
-            elif self.copy_el == self.MEMBERS and user_id in self.community.get_admins_ids():
+            elif self.copy_el == self.MEMBERS and user_id in self.community.get_members_ids():
                 return True
             elif self.copy_el == self.MEMBERS_BUT:
                 return not user_id in self.get_copy_el_exclude_users_ids()
             elif self.copy_el == self.SOME_MEMBERS:
                 return user_id in self.get_copy_el_include_users_ids()
         else:
-            if self.copy_el == 1:
+            if self.copy_el == self.ALL_CAN:
                 return True
             elif self.copy_el == self.CREATOR and user_id == self.creator.pk:
                 return True
