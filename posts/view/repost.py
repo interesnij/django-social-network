@@ -232,7 +232,6 @@ class UMPostRepost(View):
             return HttpResponseBadRequest()
 
         if request.is_ajax() and form_post.is_valid():
-            from common.attach.message_attach import message_attach
             from chat.models import Message, Chat
 
             post = form_post.save(commit=False)
