@@ -185,6 +185,10 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
     media_body = document.createElement("div");
     media_body.classList.add("media-body");
 
+    h6 = document.createElement("h6");
+    h6.classList.add("my-0", "mt-1");
+    h6.innerHTML = '<span class="list_name">' + name + '</span> (<span class="handle">0</span>)';
+
     figure = document.createElement("figure");
 
     if (userpic.querySelector("img")) {
@@ -200,11 +204,8 @@ on('#ajax', 'click', '#c_add_post_list_btn', function() {
     } else {
       a = document.createElement("span");
       a.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>'
-    }
-
-    h6 = document.createElement("h6");
-    h6.classList.add("my-0", "mt-1");
-    h6.innerHTML = '<span class="list_name">' + name + '</span> (<span class="handle">0</span>)';
+      h6.classList.add("ml-2");
+    };
 
     media_body.append(h6);
     media.append(a);

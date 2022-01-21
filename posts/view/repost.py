@@ -18,6 +18,7 @@ class UUCMPostWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.post.list.is_user_can_copy_el(request.user.pk)
         self.template_name = get_detect_platform_template("posts/repost/u_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.post.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, self.post.creator)
@@ -27,6 +28,7 @@ class UUCMPostWindow(TemplateView):
         context = super(UUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.post
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMPostWindow(TemplateView):
@@ -37,6 +39,7 @@ class CUCMPostWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.post = Post.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.post.list.is_user_can_copy_el(request.user.pk)
         self.template_name = get_detect_platform_template("posts/repost/c_ucm_post.html", request.user, request.META['HTTP_USER_AGENT'])
         check_can_get_lists(request.user, self.post.community)
         return super(CUCMPostWindow,self).get(request,*args,**kwargs)
@@ -45,6 +48,7 @@ class CUCMPostWindow(TemplateView):
         context = super(CUCMPostWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.post
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class UUCMPostsListWindow(TemplateView):
@@ -55,6 +59,7 @@ class UUCMPostsListWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
         if self.list.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, self.list.creator)
         self.template_name = get_detect_platform_template("posts/repost/u_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -64,6 +69,7 @@ class UUCMPostsListWindow(TemplateView):
         context = super(UUCMPostsListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMPostsListWindow(TemplateView):
@@ -74,6 +80,7 @@ class CUCMPostsListWindow(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.list = PostsList.objects.get(pk=self.kwargs["list_pk"])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
         check_can_get_lists(request.user, self.post.community)
         self.template_name = get_detect_platform_template("posts/repost/c_ucm_post_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMPostsListWindow,self).get(request,*args,**kwargs)
@@ -82,6 +89,7 @@ class CUCMPostsListWindow(TemplateView):
         context = super(CUCMPostsListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 
@@ -101,15 +109,15 @@ class UUPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                new_post = post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
                 count += 1
             parent.repost += count
             parent.save(update_fields=["repost"])
 
             from common.notify.notify import user_notify, user_wall
-            user_notify(user, None, self.pk, "POS", "create_u_post_wall", "RE")
-            user_wall(user, None, self.pk, "POS", "create_u_post_notify", "RE")
-            creator.plus_posts(1)
+            user_notify(creator, None, parent.pk, "POS", "create_u_post_notify", "RE")
+            user_wall(creator, None, parent.pk, "POS", "create_u_post_wall", "RE")
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -119,8 +127,10 @@ class CUPostRepost(View):
     создание репоста записи сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
-        check_can_get_lists(request.user, parent.community)
+        from common.notify.notify import community_notify, community_wall
+
+        parent, form_post, attach, lists, count, creator = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, parent.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
@@ -129,7 +139,15 @@ class CUPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+                community_notify(creator, parent.community, None, parent.pk, "POS", "create_c_post_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "POS", "create_c_post_wall", "RE")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -140,18 +158,32 @@ class UCPostRepost(View):
     создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
+        from common.notify.notify import user_notify, user_wall
+
+        parent, form_post, attach, lists, count, creator = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
+
             if parent.parent:
                 parent = parent.parent
             else:
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
-                    post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=post_list.community)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community, parent.pk, "POS", "create_u_post_notify", "CR")
+                    user_wall(creator, None, parent.pk, "POS", "create_u_post_wall", "CR")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -161,8 +193,10 @@ class CCPostRepost(View):
     создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        parent, form_post, attach, lists, count = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0
-        check_can_get_lists(request.user, parent.community)
+        from common.notify.notify import community_notify, community_wall
+
+        parent, form_post, attach, lists, count, creator = Post.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, parent.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if parent.parent:
@@ -171,8 +205,16 @@ class CCPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
-                    post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=post_list.community)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community_notify(creator, parent.community, community.pk, parent.pk, "POS", "create_c_post_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "POS", "create_c_post_wall", "CR")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -183,9 +225,9 @@ class UMPostRepost(View):
     создание репоста записи пользователя в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, user, connections, form_post, count = Post.objects.get(pk=self.kwargs["post_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), 0
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
+        parent, connections, form_post, attach, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), request.POST.getlist('attach_items'), 0
+        if parent.creator != request.user:
+            check_user_can_get_list(request.user, parent.creator)
         if not connections:
             return HttpResponseBadRequest()
 
@@ -199,17 +241,18 @@ class UMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, lists=[], attach=request.POST.getlist('attach_items'), parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
+                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
-                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи пользователя")
-                    message_attach(request.POST.get('attach_items'), message)
+                    message = Message.send_message(chat=chat, creator=request.user, repost=new_post, parent=None, attach=attach, text="Репост записи пользователя")
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи пользователя")
-                    message_attach(request.POST.getlist('attach_items'), message)
-                else:
-                    return HttpResponseBadRequest()
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, repost=new_post, text="Репост записи пользователя", attach=attach, voice=None, sticker=None)
+                count += 1
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
+
         else:
             return HttpResponseBadRequest()
         return HttpResponse()
@@ -219,13 +262,12 @@ class CMPostRepost(View):
     создание репоста записи сообщества в беседы, в которых состоит пользователь
     """
     def post(self, request, *args, **kwargs):
-        parent, community, connections, form_post, count = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), 0
-        check_can_get_lists(request.user, community)
+        parent, connections, form_post, attach, count = Post.objects.get(pk=self.kwargs["post_pk"]), request.POST.getlist("chat_items"), PostForm(request.POST), request.POST.getlist('attach_items'), 0
+        check_can_get_lists(request.user, parent.community)
 
         if not connections:
             return HttpResponseBadRequest()
         if request.is_ajax() and form_post.is_valid():
-            from common.attach.message_attach import message_attach
             from chat.models import Message, Chat
 
             post = form_post.save(commit=False)
@@ -234,17 +276,17 @@ class CMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, list=post.list, attach=request.POST.getlist('attach_items'), lists=[], is_signature=False, text=post.text, comments_enabled=False, votes_on=False, parent=parent, community=community)
+                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
-                    message = Message.send_message(chat=chat, creator=request.user, post=new_post, parent=None, text="Репост записи сообщества")
-                    message_attach(request.POST.getlist('attach_items'), message)
+                    message = Message.send_message(chat=chat, creator=request.user, repost=new_post, parent=None, attach=attach, text="Репост записи пользователя")
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, post=new_post, text="Репост записи сообщества")
-                    message_attach(request.POST.getlist('attach_items'), message)
-                else:
-                    return HttpResponseBadRequest()
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, repost=new_post, text="Репост записи пользователя", attach=attach, voice=None, sticker=None)
+                count += 1
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
         else:
             return HttpResponseBadRequest()
         return HttpResponse()

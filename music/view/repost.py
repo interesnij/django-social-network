@@ -19,9 +19,10 @@ class UUCMMusicWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track, self.user = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.track = Music.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.track.list.is_user_can_copy_el(request.user.pk)
+        if self.track.creator != request.user:
+            check_user_can_get_list(request.user, self.track.creator)
         self.template_name = get_detect_platform_template("music/repost/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMMusicWindow,self).get(request,*args,**kwargs)
 
@@ -29,7 +30,7 @@ class UUCMMusicWindow(TemplateView):
         context = super(UUCMMusicWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.track
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMMusicWindow(TemplateView):
@@ -39,8 +40,9 @@ class CUCMMusicWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track, self.community = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, self.community)
+        self.track = Music.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.track.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.track.community)
         self.template_name = get_detect_platform_template("music/repost/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicWindow,self).get(request,*args,**kwargs)
 
@@ -48,7 +50,8 @@ class CUCMMusicWindow(TemplateView):
         context = super(CUCMMusicWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.track
-        context["community"] = self.community
+        context["community"] = self.track.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class UUCMMusicListWindow(TemplateView):
@@ -58,9 +61,10 @@ class UUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist, self.user = MusicList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.playlist = MusicList.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.playlist.is_user_can_copy_el(request.user.pk)
+        if self.playlist.creator != request.user:
+            check_user_can_get_list(request.user, self.playlist.creator)
         self.template_name = get_detect_platform_template("music/repost/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMMusicListWindow,self).get(request,*args,**kwargs)
 
@@ -68,7 +72,7 @@ class UUCMMusicListWindow(TemplateView):
         context = super(UUCMMusicListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.playlist
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMMusicListWindow(TemplateView):
@@ -78,8 +82,9 @@ class CUCMMusicListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist, self.community = MusicList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, self.community)
+        self.playlist = MusicList.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.playlist.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.playlist.community)
         self.template_name = get_detect_platform_template("music/repost/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMMusicListWindow,self).get(request,*args,**kwargs)
 
@@ -87,7 +92,8 @@ class CUCMMusicListWindow(TemplateView):
         context = super(CUCMMusicListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.playlist
-        context["community"] = self.community
+        context["community"] = self.playlist.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 

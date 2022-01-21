@@ -20,8 +20,9 @@ class UUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.user, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
+        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.doc.list.is_user_can_copy_el(request.user.pk)
+        if self.doc.creator != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocWindow,self).get(request,*args,**kwargs)
 
@@ -29,7 +30,7 @@ class UUCMDocWindow(TemplateView):
         context = super(UUCMDocWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.doc
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMDocWindow(TemplateView):
@@ -39,15 +40,17 @@ class CUCMDocWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.doc, self.community, self.template_name = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.community)
+        self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.doc.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.doc.community)
         return super(CUCMDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMDocWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.doc
-        context["community"] = self.community
+        context["community"] = self.doc.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class UUCMDocListWindow(TemplateView):
@@ -57,8 +60,9 @@ class UUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.user, self.template_name = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
+        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        if self.list.creator != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocListWindow,self).get(request,*args,**kwargs)
 
@@ -66,7 +70,7 @@ class UUCMDocListWindow(TemplateView):
         context = super(UUCMDocListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMDocListWindow(TemplateView):
@@ -76,15 +80,17 @@ class CUCMDocListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.community, self.template_name = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.community)
+        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.list.community)
         return super(CUCMDocListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMDocListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["community"] = self.community
+        context["community"] = self.list.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 

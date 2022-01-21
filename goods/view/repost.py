@@ -20,16 +20,17 @@ class UUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.user, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.good, self.template_name = Good.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.good.list.is_user_can_copy_el(request.user.pk)
+        if self.good.creator != request.user:
+            check_user_can_get_list(request.user, self.good.creator)
         return super(UUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UUCMGoodWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.good
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMGoodWindow(TemplateView):
@@ -39,15 +40,17 @@ class CUCMGoodWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.good, self.c, self.template_name = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.c)
+        self.good, self.template_name = Good.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.good.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.good.community)
         return super(CUCMGoodWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMGoodWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.good
-        context["community"] = self.c
+        context["community"] = self.good.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 
@@ -58,16 +61,17 @@ class UUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.user, self.template_name = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.list, self.template_name = GoodList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/u_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        if self.list.creator != request.user:
+            check_user_can_get_list(request.user, self.list.creator)
         return super(UUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UUCMGoodListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMGoodListWindow(TemplateView):
@@ -77,15 +81,17 @@ class CUCMGoodListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.c, self.template_name = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.c)
+        self.list, self.template_name = GoodList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("goods/repost/c_ucm_list_good.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.list.community)
         return super(CUCMGoodListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMGoodListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["community"] = self.c
+        context["community"] = self.list.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 

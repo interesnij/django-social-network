@@ -15,10 +15,10 @@ urlpatterns = [
     url(r'^u_m_post_repost/(?P<pk>\d+)/$', UMPostRepost.as_view()),
     url(r'^c_m_post_repost/(?P<pk>\d+)/$', CMPostRepost.as_view()),
 
-    url(r'^u_u_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UUPostsListRepost.as_view()),
-    url(r'^c_u_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CUPostsListRepost.as_view()),
-    url(r'^u_c_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UCPostsListRepost.as_view()),
-    url(r'^c_c_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CCPostsListRepost.as_view()),
-    url(r'^u_m_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', UMPostsListRepost.as_view()),
-    url(r'^c_m_post_list_repost/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CMPostsListRepost.as_view()),
+    url(r'^u_u_post_list_repost/(?P<pk>\d+)/$', UUPostsListRepost.as_view()),
+    url(r'^c_u_post_list_repost/(?P<pk>\d+)/$', CUPostsListRepost.as_view()),
+    url(r'^u_c_post_list_repost/(?P<pk>\d+)/$', UCPostsListRepost.as_view()),
+    url(r'^c_c_post_list_repost/(?P<pk>\d+)/$', CCPostsListRepost.as_view()),
+    url(r'^u_m_post_list_repost/(?P<pk>\d+)/$', UMPostsListRepost.as_view()),
+    url(r'^c_m_post_list_repost/(?P<pk>\d+)/$', CMPostsListRepost.as_view()),
 ]

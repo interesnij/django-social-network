@@ -19,14 +19,15 @@ class UUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.user, self.template_name = Photo.objects.get(pk=self.kwargs["photo_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.photo, self.template_name = Photo.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.photo.list.is_user_can_copy_el(request.user.pk)
+        if self.photo.creator != request.user:
+            check_user_can_get_list(request.user, self.photo.creator)
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(UUCMPhotoWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["user"] = PostForm(), self.photo, self.user
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.photo, self.can_copy_item
         return context
 
 class CUCMPhotoWindow(TemplateView):
@@ -38,13 +39,14 @@ class CUCMPhotoWindow(TemplateView):
     def get(self,request,*args,**kwargs):
         from common.templates import get_detect_platform_template
 
-        self.photo, self.c, self.template_name = Photo.objects.get(pk=self.kwargs["photo_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.community)
+        self.photo, self.template_name = Photo.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_photo.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.photo.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.photo.community)
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         context = super(CUCMPhotoWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["community"] = PostForm(), self.photo, self.c
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.photo, self.photo.community, self.can_copy_item
         return context
 
 
@@ -58,14 +60,15 @@ class UUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.user, self.template_name = PhotoList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.user != request.user:
+        self.list, self.template_name = PhotoList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        if self.list.creator != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMPhotoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UUCMPhotoListWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["user"] = PostForm(), self.list, self.user
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.list, self.can_copy_item
         return c
 
 class CUCMPhotoListWindow(TemplateView):
@@ -78,13 +81,14 @@ class CUCMPhotoListWindow(TemplateView):
         from gallery.models import PhotoList
         from common.templates import get_detect_platform_template
 
-        self.list, self.c, self.template_name = PhotoList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        check_can_get_lists(request.user, self.c)
+        self.list, self.template_name = PhotoList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("gallery/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.list.community)
         return super(CUCMPhotoListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(CUCMPhotoListWindow,self).get_context_data(**kwargs)
-        c["form"], c["object"], c["community"] = PostForm(), self.list, self.c
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.list, self.list.community, self.can_copy_item
         return c
 
 

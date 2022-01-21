@@ -19,10 +19,10 @@ class UUCMVideoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.video.list.is_user_can_copy_el(request.user.pk)
+        if self.video.creator != request.user:
+            check_user_can_get_list(request.user, self.video.creator)
         self.template_name = get_detect_platform_template("video/repost/u_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMVideoWindow,self).get(request,*args,**kwargs)
 
@@ -30,7 +30,7 @@ class UUCMVideoWindow(TemplateView):
         context = super(UUCMVideoWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.video
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMVideoWindow(TemplateView):
@@ -40,9 +40,9 @@ class CUCMVideoWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.video = Video.objects.get(pk=self.kwargs["video_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, self.community)
+        self.video = Video.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.video.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.video.community)
         self.template_name = get_detect_platform_template("video/repost/c_ucm_video.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMVideoWindow,self).get(request,*args,**kwargs)
 
@@ -50,7 +50,8 @@ class CUCMVideoWindow(TemplateView):
         context = super(CUCMVideoWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.video
-        context["community"] = self.community
+        context["community"] = self.video.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 
@@ -61,10 +62,10 @@ class UUCMVideoListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if self.user != request.user:
-            check_user_can_get_list(request.user, self.user)
+        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        if self.video.creator != request.user:
+            check_user_can_get_list(request.user, self.video.creator)
         self.template_name = get_detect_platform_template("video/repost/u_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(UUCMVideoListWindow,self).get(request,*args,**kwargs)
 
@@ -72,7 +73,7 @@ class UUCMVideoListWindow(TemplateView):
         context = super(UUCMVideoListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["user"] = self.user
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 class CUCMVideoListWindow(TemplateView):
@@ -82,9 +83,9 @@ class CUCMVideoListWindow(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, self.community)
+        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.list.community)
         self.template_name = get_detect_platform_template("video/repost/c_ucm_video_list.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(CUCMVideoListWindow,self).get(request,*args,**kwargs)
 
@@ -92,7 +93,8 @@ class CUCMVideoListWindow(TemplateView):
         context = super(CUCMVideoListWindow,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.list
-        context["community"] = self.community
+        context["community"] = self.list.community
+        context["can_copy_item"] = self.can_copy_item
         return context
 
 
