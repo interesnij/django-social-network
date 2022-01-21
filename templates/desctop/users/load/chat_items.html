@@ -12,7 +12,7 @@
           {% for object in object_list %}
             {% if object.last_name %}
 
-            <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_post_list" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom pag" data-pk="u{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.s_avatar %}
                   <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
@@ -24,9 +24,9 @@
                 <h6 class="mb-0" style="padding-top: 10px;">
                   {{ object.get_full_name }}
                 </h6>
-                <p>Пользоатель</p>
+                <p>Пользователь</p>
               </div>
-              <span class="custom_color border item_attach_circle" tooltip="Выбрать список" flow="up">
+              <span class="custom_color border item_attach_circle" tooltip="Создать чат" flow="up">
                 <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
                   <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
                 </svg>
@@ -35,7 +35,7 @@
 
             {% else %}
 
-            <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_post_list" data-pk="{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_chat" data-pk="c{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.image %}
                   <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.image.url }}" alt="img" />
@@ -49,7 +49,7 @@
                 </h6>
                 <p>{{ object.get_members_count_ru }}</p>
               </div>
-              <span class="custom_color border item_attach_circle" tooltip="Выбрать список" flow="up">
+              <span class="custom_color border item_attach_circle" tooltip="Выбрать чат" flow="up">
                 <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
                   <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/>
                 </svg>
