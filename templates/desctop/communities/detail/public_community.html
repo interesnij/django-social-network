@@ -9,6 +9,7 @@
 {% load exists %}
 {% block content %}
 
+{{ community.creator.pk }} == {{ request.user.pk }}
 {% if community.cover %}
 <div class="container-fluid">
     <div class="row align-items-center has-background-img" style="min-height: 150px">
