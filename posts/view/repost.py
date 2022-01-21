@@ -240,7 +240,7 @@ class UMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
+                new_post = post.create_post(creator=request.user, list=parent.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, repost=new_post, parent=None, attach=attach, text="Репост записи пользователя")
@@ -275,7 +275,7 @@ class CMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, list=post.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
+                new_post = post.create_post(creator=request.user, list=parent.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=None)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
                     message = Message.send_message(chat=chat, creator=request.user, repost=new_post, parent=None, attach=attach, text="Репост записи пользователя")
