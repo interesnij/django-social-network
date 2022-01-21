@@ -40,7 +40,7 @@ class CommunityDetail(TemplateView):
                     else:
                         template_name = "generic/c_template/community_closed.html"
             elif request.user.is_member_of_community(self.c.pk):
-                self.template_name = "communities/detail/member_community.html"
+                self.template_name = "communities/detail/public_community.html"
                 request.user.plus_community_visited(self.c.pk)
             elif request.user.is_follow_from_community(self.c.pk):
                 self.template_name = "communities/detail/follow_community.html"
