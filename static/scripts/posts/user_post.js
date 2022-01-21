@@ -154,6 +154,7 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     post_stream = document.body.querySelector(".span_list_pk");
     post_stream.innerHTML = '';
     post_stream.innerHTML = '<div class="card mb-3 items_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;">Пока записей нет...</h6></div>';
+
     name = form.querySelector("#id_name").value;
     li = document.createElement("li");
     li.classList.add("date", "list", "active");
@@ -169,7 +170,9 @@ on('#ajax', 'click', '#u_add_post_list_btn', function() {
     h6.innerHTML = name;
     _div.append(h6);
     div.append(_div);
-    document.body.querySelector(".date-list").prepend(div);
+    li.append(div);
+    document.body.querySelector(".date-list").prepend(li);
+
     close_work_fullscreen();
     main_container = document.body.querySelector(".main-container");
     add_list_in_all_stat("created_user_post_list",new_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
