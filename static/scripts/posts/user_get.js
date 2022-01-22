@@ -147,7 +147,9 @@ on('#ajax', 'click', '#toggle_case_item_repost', function() {
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
   btn.innerHTML = this.innerHTML;
-  this.parentElement.parentElement.parentElement.querySelector("#repost_for_message").style.display = "unset"
+  parent = this.parentElement.parentElement.parentElement;
+  parent.querySelector("#repost_for_message").style.display = "unset";
+  parent.querySelector(".smile_supported").style.display = "unset";
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
   this.previousElementSibling.classList.replace("underline", "pointer");
@@ -156,7 +158,9 @@ on('#ajax', 'click', '#toggle_case_item_copy', function() {
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
   btn.innerHTML = this.innerHTML;
-  this.parentElement.parentElement.parentElement.querySelector("#repost_for_message").style.display = "none"
+  parent = this.parentElement.parentElement.parentElement;
+  parent.querySelector("#repost_for_message").style.display = "none";
+  parent.querySelector(".smile_supported").style.display = "none";
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
