@@ -141,17 +141,21 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 });
 
 on('#ajax', 'click', '#toggle_case_item_repost', function() {
-  this.classList.replace("pointer", "underline");
+  this.classList.remove("pointer");
+  this.classList.add("underline");
   btn = this.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector(".float-right");
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
+  btn.innerHTML = this.innerHTML;
   this.parentElement.parentElement.parentElement.querySelector("#repost_for_message").style.display = "unset"
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
-  this.classList.replace("pointer", "underline");
+  this.classList.remove("pointer");
+  this.classList.add("underline");
   btn = this.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector(".float-right");
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
+  btn.innerHTML = this.innerHTML;
   this.parentElement.parentElement.parentElement.querySelector("#repost_for_message").style.display = "none"
 });
 
