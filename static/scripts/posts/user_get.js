@@ -139,8 +139,9 @@ on('#ajax', 'click', '#repost_for_wall', function() {
   fullscreens = document.body.querySelector("#fullscreens_container");
   if (fullscreens.querySelector(".user_post_lists_container")) {
     return
-  };
-  create_fullscreen("/users/load/post_lists/", "worker_fullscreen");
+  } else {
+    create_fullscreen("/users/load/post_lists/", "worker_fullscreen")
+  }
 });
 on('#ajax', 'click', '#u_repost_for_community', function() {
   current_block = this.parentElement.nextElementSibling;
