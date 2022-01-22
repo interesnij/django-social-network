@@ -133,8 +133,8 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   clear_attach_block();
 });
 
-function repost_for_wall(this) {
-  current_block = this.parentElement.nextElementSibling;
+function repost_for_wall(_this) {
+  current_block = _this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
   create_fullscreen("/users/load/post_lists/", "worker_fullscreen");
 }
