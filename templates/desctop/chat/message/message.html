@@ -54,14 +54,45 @@
       {% endif %}
 
       {% if object.repost %}
-        <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-          {% if object.repost.community %}
-            {% include object.get_c_repost_items_desctop %}
-          {% else %}
-            {% include object.get_u_repost_items_desctop %}
-          {% endif %}
-        </span>
+      <span class="border-left" style="margin-left: 5%;margin-top: -10px;" data-pk="{{ object.repost.pk }}">
+        {% if object.repost.community %}
+        <div class="card-header">
+            <div class="media">
+              {% include 'desctop/generic/community/repost_figure.html' %}
+                <div class="media-body">
+                    <h6 class="mb-0">
+                      {% include 'desctop/generic/community/repost_object.html' %}
+                    </h6> 
+                    <p class="mb-0 wall_fullscreen pointer">{{ object.repost.get_created }}</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card-header">
+            <div class="media">
+              {% include 'desctop/generic/user/repost_figure.html' %}
+                <div class="media-body">
+                    <h6 class="mb-0">
+                      {% include 'desctop/generic/user/repost_creator.html' %}
+                   </h6>
+                    <a class="mb-0 wall_fullscreen pointer">{{ object.repost.get_created }}</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if object.repost.text %}
+          <div class="fullscreen text_support pointer">
+            {{ object.repost.get_format_text|safe }}
+          </div>
+        {% endif %}
+
+        {% if object.repost.attach %}
+          {{ object.repost|get_attach:request.user|safe }}
+        {% endif %}
+      </span>
       {% endif %}
+
       {% if object.is_have_transfer %}
         {% include 'desctop/chat/message/transfers.html' %}
       {% endif %}
