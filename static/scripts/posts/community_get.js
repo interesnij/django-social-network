@@ -21,6 +21,13 @@ on('#ajax', 'click', '.uncopy_community_post_list', function() {
   on_off_list_in_collections(this, "/posts/community_progs/remove_list_from_collections/", "copy_community_post_list", "uncopy_community_post_list", "Добавить")
 });
 
+on('#ajax', 'click', '.c_ucm_post_list_repost', function() {
+  parent = this.parentElement.parentElement;
+  pk = parent.getAttribute('data-pk');
+  create_fullscreen("/posts/repost/c_ucm_list_window/" + pk + "/", "worker_fullscreen");
+  clear_attach_block();
+});
+
 on('#ajax', 'click', '.c_add_post_list', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   create_fullscreen("/posts/community_progs/add_list/" + pk + "/", "worker_fullscreen");

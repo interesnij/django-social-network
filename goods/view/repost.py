@@ -177,7 +177,7 @@ class UMGoodRepost(View):
         good, user = Good.objects.get(pk=self.kwargs["good_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(photo, "goo"+str(good.pk), None, request, "Репост товара пользователя")
+        repost_message_send(photo, "goo"+str(good.pk), None, request)
         return HttpResponse()
 
 
@@ -188,7 +188,7 @@ class CMGoodRepost(View):
     def post(self, request, *args, **kwargs):
         good, c = Good.objects.get(pk=self.kwargs["good_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_message_send(photo, "goo"+str(good.pk), c, request, "Репост товара сообщества")
+        repost_message_send(photo, "goo"+str(good.pk), c, request)
         return HttpResponse()
 
 
@@ -274,7 +274,7 @@ class UMGoodListRepost(View):
         list, user = GoodList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, "lgo"+str(list.pk), None, request, "Репост списка товаров пользователя")
+        repost_message_send(list, "lgo"+str(list.pk), None, request)
         return HttpResponse()
 
 
@@ -285,5 +285,5 @@ class CMGoodListRepost(View):
     def post(self, request, *args, **kwargs):
         list, c = GoodList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, c)
-        repost_message_send(list, "lgo"+str(list.pk), c, request, "Репост списка товаров сообщества")
+        repost_message_send(list, "lgo"+str(list.pk), c, request)
         return HttpResponse()

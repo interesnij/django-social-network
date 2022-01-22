@@ -182,7 +182,7 @@ class UMMusicRepost(View):
         track, user = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(track, "mus"+str(track.pk), None, request, "Репост плейлиста пользователя")
+        repost_message_send(track, "mus"+str(track.pk), None, request)
         return HttpResponse()
 
 class CMMusicRepost(View):
@@ -192,7 +192,7 @@ class CMMusicRepost(View):
     def post(self, request, *args, **kwargs):
         track, community = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(track, "mus"+str(track.pk), community, request, "Репост плейлиста сообщества")
+        repost_message_send(track, "mus"+str(track.pk), community, request)
         return HttpResponse()
 
 
@@ -282,7 +282,7 @@ class UMMusicListRepost(View):
         playlist, user = MusicList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(playlist, "lmu"+str(playlist.pk), None, request, "Репост плейлиста пользователя")
+        repost_message_send(playlist, "lmu"+str(playlist.pk), None, request)
         return HttpResponse()
 
 
@@ -293,5 +293,5 @@ class CMMusicListRepost(View):
     def post(self, request, *args, **kwargs):
         playlist, community = MusicList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(playlist, "lmu"+str(playlist.pk), community, request, "Репост плейлиста сообщества")
+        repost_message_send(playlist, "lmu"+str(playlist.pk), community, request)
         return HttpResponse()

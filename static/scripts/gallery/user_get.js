@@ -55,9 +55,8 @@ on('#ajax', 'click', '.u_all_photo_dislikes', function() {
 
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
-  item_id = parent.getAttribute("owner-pk");
   pk = parent.getAttribute("data-pk");
-  create_fullscreen("/gallery/window/u_ucm_photo_window/" + pk + "/" + item_id + "/", "worker_fullscreen");
+  create_fullscreen("/gallery/window/u_ucm_photo_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });
 
@@ -70,10 +69,9 @@ on('#ajax', 'click', '.load_photo_list', function() {
 });
 
 on('#ajax', 'click', '.u_ucm_photo_list_repost', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  item_id = parent.getAttribute("owner-pk");
-  create_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/" + item_id + "/", "worker_fullscreen");
+  parent = this.parentElement.parentElement;
+  pk = parent.getAttribute('data-pk');
+  create_fullscreen("/gallery/repost/u_ucm_list_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });
 

@@ -865,6 +865,9 @@ class Post(models.Model):
         return self.type == "FIXED"
     def is_suspended(self):
         return False
+    def is_repost(self):
+        """ это все репосты, которые содержат все, кроме репостов постов """
+        return self.type == self.REPOST
 
     def send_like(self, user, community):
         import json
@@ -1139,7 +1142,7 @@ class Post(models.Model):
 
     @classmethod
     def create_parent_post(cls, creator, community, attach):
-        post = cls.objects.create(creator=creator, community=community, attach=attach, )
+        post = cls.objects.create(creator=creator, community=community, attach=attach, type=Post.REPOST)
         return post
 
     def get_u_new_parent(self, user):

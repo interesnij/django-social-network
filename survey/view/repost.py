@@ -177,7 +177,7 @@ class UMSurveyRepost(View):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(survey, "survey"+str(survey.pk), None, request, "Репост опроса пользователя")
+        repost_message_send(survey, "survey"+str(survey.pk), None, request)
         return HttpResponse()
 
 
@@ -188,7 +188,7 @@ class CMSurveyRepost(View):
     def post(self, request, *args, **kwargs):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, survey.community)
-        repost_message_send(survey, "survey"+str(survey.pk), None, survey.community, "Репост опроса сообщества")
+        repost_message_send(survey, "survey"+str(survey.pk), None, survey.community)
         return HttpResponse()
 
 
@@ -274,7 +274,7 @@ class UMSurveyListRepost(View):
         list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if list.creator != request.user:
             check_user_can_get_list(request.user, list.creator)
-        repost_message_send(list, "lsu"+str(list.pk), None, request, "Репост списка опросов пользователя")
+        repost_message_send(list, "lsu"+str(list.pk), None, request)
         return HttpResponse()
 
 
@@ -285,5 +285,5 @@ class CMSurveyListRepost(View):
     def post(self, request, *args, **kwargs):
         list = SurveyList.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, list.community)
-        repost_message_send(list, "lsu"+str(list.pk), list.community, request, "Репост списка опросов сообщества")
+        repost_message_send(list, "lsu"+str(list.pk), list.community, request)
         return HttpResponse()

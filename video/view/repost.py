@@ -190,7 +190,7 @@ class UMVideoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(video, "vid"+str(video.pk), None, request, "Репост видеозаписи пользователя")
+        repost_message_send(video, "vid"+str(video.pk), None, request)
         return HttpResponse()
 
 
@@ -202,7 +202,7 @@ class CMVideoRepost(View):
         video = Video.objects.get(pk=self.kwargs["video_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(video, "vid"+str(video.pk), community, request, "Репост видеозаписи сообщества")
+        repost_message_send(video, "vid"+str(video.pk), community, request)
         return HttpResponse()
 
 
@@ -298,7 +298,7 @@ class UMVideoListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, "lvi"+str(list.pk), None, request, "Репост видеоальбома пользователя")
+        repost_message_send(list, "lvi"+str(list.pk), None, request)
         return HttpResponse()
 
 
@@ -310,5 +310,5 @@ class CMVideoListRepost(View):
         list = VideoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(list, "lvi"+str(list.pk), community, request, "Репост видеоальбома сообщества")
+        repost_message_send(list, "lvi"+str(list.pk), community, request)
         return HttpResponse()

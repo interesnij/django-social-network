@@ -186,7 +186,7 @@ class UMPhotoRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(photo, "pho"+str(photo.pk), None, request, "Репост фотографии пользователя")
+        repost_message_send(photo, "pho"+str(photo.pk), None, request)
         return HttpResponse()
 
 
@@ -200,7 +200,7 @@ class CMPhotoRepost(View):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(photo, "pho"+str(photo.pk), community, request, "Репост фотографии сообщества")
+        repost_message_send(photo, "pho"+str(photo.pk), community, request)
         return HttpResponse()
 
 
@@ -307,7 +307,7 @@ class UMPhotoListRepost(View):
         user = User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, "lph"+str(list.pk), None, request, "Репост фотоальбома пользователя")
+        repost_message_send(list, "lph"+str(list.pk), None, request)
         return HttpResponse()
 
 
@@ -322,5 +322,5 @@ class CMPhotoListRepost(View):
         list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(list, "lph"+str(list.pk), community, request, "Репост фотоальбома сообщества")
+        repost_message_send(list, "lph"+str(list.pk), community, request)
         return HttpResponse()

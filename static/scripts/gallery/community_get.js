@@ -5,9 +5,8 @@ on('#ajax', 'click', '.c_photo_priview', function() {
 
 on('#ajax', 'click', '.c_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
-  item_id = parent.getAttribute("owner-pk");
   pk = parent.getAttribute("data-pk");
-  create_fullscreen("/gallery/repost/c_ucm_photo_window/" + pk + "/" + item_id + "/", "worker_fullscreen");
+  create_fullscreen("/gallery/repost/c_ucm_photo_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });
 on('#ajax', 'click', '.c_ucm_photo_list_repost', function() {

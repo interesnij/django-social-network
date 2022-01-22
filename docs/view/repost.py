@@ -177,7 +177,7 @@ class UMDocRepost(View):
         doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(doc, "doc"+str(doc.pk), None, request, "Репост документа пользователя")
+        repost_message_send(doc, "doc"+str(doc.pk), None, request)
         return HttpResponse()
 
 
@@ -188,7 +188,7 @@ class CMDocRepost(View):
     def post(self, request, *args, **kwargs):
         doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(doc, "doc"+str(doc.pk), None, community, "Репост документа сообщества")
+        repost_message_send(doc, "doc"+str(doc.pk), None, community)
         return HttpResponse()
 
 
@@ -274,7 +274,7 @@ class UMDocListRepost(View):
         list, user = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
         if user != request.user:
             check_user_can_get_list(request.user, user)
-        repost_message_send(list, "ldo"+str(list.pk), None, request, "Репост плейлиста пользователя")
+        repost_message_send(list, "ldo"+str(list.pk), None, request)
         return HttpResponse()
 
 
@@ -285,5 +285,5 @@ class CMDocListRepost(View):
     def post(self, request, *args, **kwargs):
         list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, community)
-        repost_message_send(list, "ldo"+str(list.pk), community, request, "Репост плейлиста сообщества")
+        repost_message_send(list, "ldo"+str(list.pk), community, request)
         return HttpResponse()
