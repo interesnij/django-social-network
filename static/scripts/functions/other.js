@@ -468,8 +468,9 @@ function get_preview(response, type) {
 
 function repost_constructor(_this, wall_url, wall_toast, community_url, community_toast, message_url, message_toast) {
     form_post = _this.parentElement.parentElement;
-    if (!form_post.querySelector(".collector").innerHTML) {
-      form_post.querySelector(".collector").innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>'
+    collector = form_post.querySelector(".collector");
+    if (!collector.innerHTML) {
+      collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>'
     }
     form_data = new FormData(form_post);
     pk = _this.getAttribute("data-pk");

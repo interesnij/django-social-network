@@ -133,11 +133,13 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
   clear_attach_block();
 });
 
-on('#ajax', 'click', '#repost_for_wall', function() {
+function repost_for_wall(this) {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
   create_fullscreen("/users/load/post_lists/", "worker_fullscreen");
-});
+}
+
+//on('#ajax', 'click', '#repost_for_wall', function() {});
 on('#ajax', 'click', '#u_repost_for_community', function() {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
