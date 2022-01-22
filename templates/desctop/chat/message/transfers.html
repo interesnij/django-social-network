@@ -33,13 +33,7 @@
       {% endif %}
 
       {% if message.repost %}
-        <span style="margin-left: 5%;" data-uuid="{{ message.parent.uuid }}">
-          {% if message.repost.community %}
-            {% include message.get_c_repost_items_desctop %}
-          {% else %}
-            {% include message.get_u_repost_items_desctop %}
-          {% endif %}
-        </span>
+        {% include 'desctop/chat/message/repost.html' %}
       {% endif %}
 
       {% endif %}
