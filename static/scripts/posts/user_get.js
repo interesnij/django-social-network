@@ -149,7 +149,7 @@ on('#ajax', 'click', '#toggle_case_item_repost', function() {
   btn.innerHTML = this.innerHTML;
   parent = this.parentElement.parentElement.parentElement;
   parent.querySelector("#repost_for_message").style.display = "unset";
-  parent.querySelector(".smile_supported").style.display = "unset";
+  parent.querySelector(".form_body").style.display = "block";
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
   this.previousElementSibling.classList.replace("underline", "pointer");
@@ -160,7 +160,7 @@ on('#ajax', 'click', '#toggle_case_item_copy', function() {
   btn.innerHTML = this.innerHTML;
   parent = this.parentElement.parentElement.parentElement;
   parent.querySelector("#repost_for_message").style.display = "none";
-  parent.querySelector(".smile_supported").style.display = "none";
+  parent.querySelector(".form_body").style.display = "none";
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
