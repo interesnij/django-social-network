@@ -150,6 +150,7 @@ on('#ajax', 'click', '#toggle_case_item_repost', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.querySelector("#repost_for_message").style.display = "unset";
   parent.querySelector(".form_body").style.display = "block";
+  parent.querySelector(".collector_active").innerHTML = "";
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
   this.previousElementSibling.classList.replace("underline", "pointer");
@@ -161,6 +162,7 @@ on('#ajax', 'click', '#toggle_case_item_copy', function() {
   parent = this.parentElement.parentElement.parentElement;
   parent.querySelector("#repost_for_message").style.display = "none";
   parent.querySelector(".form_body").style.display = "none";
+  parent.querySelector(".collector_active").innerHTML = "";
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
