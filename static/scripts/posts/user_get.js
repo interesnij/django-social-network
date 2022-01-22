@@ -134,7 +134,7 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
-  current_block = _this.parentElement.nextElementSibling;
+  current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
   fullscreens = document.body.querySelector("#fullscreens_container");
   if (fullscreens.querySelector(".user_post_lists_container")) {
