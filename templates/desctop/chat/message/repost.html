@@ -1,7 +1,8 @@
 {% load post %}
 
-<div class="border-left" style="margin-left: 5%" data-pk="{{ object.repost.pk }}">
-  {% if object.repost.community %}
+{% with repost=object.repost %}
+<div class="border-left" style="margin-left: 5%" data-pk="{{ repost.pk }}">
+  {% if repost.community %}
   <div class="card-header">
       <div class="media">
         {% include 'desctop/generic/community/repost_figure.html' %}
@@ -9,7 +10,7 @@
               <h6 class="mb-0">
                 {% include 'desctop/generic/community/repost_object.html' %}
               </h6>
-              <p class="mb-0 wall_fullscreen pointer">{{ object.repost.get_created }}</p>
+              <p class="mb-0 wall_fullscreen pointer">{{ repost.get_created }}</p>
           </div>
       </div>
   </div>
@@ -21,19 +22,21 @@
               <h6 class="mb-0">
                 {% include 'desctop/generic/user/repost_creator.html' %}
              </h6>
-              <a class="mb-0 wall_fullscreen pointer">{{ object.repost.get_created }}</a>
+              <a class="mb-0 wall_fullscreen pointer">{{ repost.get_created }}</a>
           </div>
       </div>
   </div>
   {% endif %}
 
-  {% if object.repost.text %}
+  {% if repost.text %}
     <div class="fullscreen text_support pointer">
-      {{ object.repost.get_format_text|safe }}
+      {{ repost.get_format_text|safe }}
     </div>
   {% endif %}
 
-  {% if object.repost.attach %}
-    {{ object.repost|get_attach:request.user|safe }}
+  {% if repost.attach %}
+    {{ repost|get_attach:request.user|safe }}
   {% endif %}
 </div>
+
+{% endwith %}

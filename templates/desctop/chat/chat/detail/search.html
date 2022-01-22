@@ -41,14 +41,9 @@
             {% endif %}
 
             {% if object.repost %}
-              <span style="margin-left: 5%;" data-uuid="{{ object.parent.uuid }}">
-                {% if object.repost.community %}
-                  {% include object.get_c_repost_items_desctop %}
-                {% else %}
-                  {% include object.get_u_repost_items_desctop %}
-                {% endif %}
-              </span>
+              {% include 'desctop/chat/message/repost.html' %}
             {% endif %}
+            
             {% if object.is_have_transfer %}
               {% include 'desctop/chat/message/transfers.html' %}
             {% endif %}
