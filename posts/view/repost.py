@@ -274,13 +274,12 @@ class CMPostRepost(View):
             else:
                 parent = parent
             for object_id in connections:
-                new_post = post.create_post(creator=request.user, list=parent.list, text=post.text, category=None, attach=attach, parent=parent, is_signature=False, comments_enabled=False, votes_on=False, community=parent.community, type=Post.REPOST)
                 if object_id[0] == "c":
                     chat = Chat.objects.get(pk=object_id[1:])
-                    message = Message.send_message(chat=chat, creator=request.user, repost=new_post, parent=None, attach=attach, text="Репост записи пользователя", transfer=None, sticker=None)
+                    message = Message.send_message(chat=chat, creator=request.user, repost=parent, parent=None, attach=attach, text="Репост записи пользователя", transfer=None, sticker=None)
                 elif object_id[0] == "u":
                     user = User.objects.get(pk=object_id[1:])
-                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, repost=new_post, text="Репост записи пользователя", attach=attach, sticker=None)
+                    message = Message.get_or_create_chat_and_send_message(creator=request.user, user=user, repost=parent, text="Репост записи пользователя", attach=attach, sticker=None)
                 count += 1
 
             parent.repost += count
