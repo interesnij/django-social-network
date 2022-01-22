@@ -1021,8 +1021,7 @@ on('body', 'click', '.prev_item', function(event) {
 });
 
 on('#ajax', 'click', '.item_fullscreen_hide', function() {
-  get_document_opacity_1();
-  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
+  close_work_fullscreen();
 });
 on('body', 'click', '.video_fullscreen_hide', function() {get_document_opacity_1(), document.querySelector(".video_fullscreen").style.display = "none";document.getElementById("video_loader").innerHTML=""});
 on('body', 'click', '.small_video_fullscreen_hide', function() {
