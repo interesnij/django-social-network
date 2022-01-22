@@ -2,9 +2,9 @@
   {% csrf_token %}
   <div class="card-header border-bottom">
     <h6 class="content-color-primary mb-0">
-      <span class="pointer toggle_case_repost">Репост</span>
+      <span class="toggle_case_repost underline" data-flag="u_ucm_post_repost_btn">Репост</span>
       {% if can_copy_item %}
-       | <span class="pointer toggle_case_copy">Копия</span>
+        &nbsp;<span class="pointer toggle_case_copy" data-flag="u_post_copy_btn">Копия</span>
       {% endif %}
     </h6>
   </div>
