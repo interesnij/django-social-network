@@ -340,7 +340,7 @@ class UCPostsListRepost(View):
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="lpo"+str(list.pk))
             for community_id in communities:
                 if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category,  parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community_id=community_id))
+                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category,  parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community_id=community_id)
         return HttpResponse()
 
 
