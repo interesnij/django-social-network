@@ -470,7 +470,8 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
     form_post = _this.parentElement.parentElement;
     collector = form_post.querySelector(".collector");
     if (!collector.innerHTML) {
-      collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>'
+      collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>';
+      return
     }
     form_data = new FormData(form_post);
     pk = _this.getAttribute("data-pk");

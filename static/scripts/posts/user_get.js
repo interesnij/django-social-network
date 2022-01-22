@@ -137,9 +137,7 @@ on('#ajax', 'click', '#repost_for_wall', function() {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
   fullscreens = document.body.querySelector("#fullscreens_container");
-  if (fullscreens.querySelector(".user_post_lists_container")) {
-    return
-  } else {
+  if (!fullscreens.querySelector(".user_post_lists_container")) {
     create_fullscreen("/users/load/post_lists/", "worker_fullscreen")
   }
 });
