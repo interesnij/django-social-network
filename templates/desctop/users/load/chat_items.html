@@ -1,3 +1,5 @@
+{% load message %}
+
 <div class="px-0 card" data-pk="none" data-type="none" style="min-height: 600px;">
     <form data-type="posts_list" class="cool_private_form">
       <div class="card-header" style="min-height: 100px;">
@@ -45,7 +47,7 @@
               </figure>
               <div class="media-body">
                 <h6 class="mb-0" style="padding-top: 10px;">
-                  {{ object.get_name }}
+                  {{ object|get_name: request.user.pk }}
                 </h6>
                 <p>{{ object.get_members_count_ru }}</p>
               </div>

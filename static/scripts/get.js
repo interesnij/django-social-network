@@ -534,6 +534,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
     final_list += '<a postlist-pk="' + this.getAttribute("data-pk") + '" class="pointer ' + this.getAttribute("data-link") + '">' + a.innerHTML + '</a>'
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
+  collector.innerHTML = "";
   collector.innerHTML = final_list;
   form.classList.remove("cool_private_form");
   close_work_fullscreen();
@@ -551,6 +552,7 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
     final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
     final_list += '<input type="hidden" name="chat_items" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
+  collector.innerHTML = "";
   collector.innerHTML = final_list;
   form.classList.remove("cool_private_form");
   close_work_fullscreen();
