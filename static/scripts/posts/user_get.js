@@ -136,10 +136,7 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 on('#ajax', 'click', '#repost_for_wall', function() {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
-  fullscreens = document.body.querySelector("#fullscreens_container");
-  if (!fullscreens.querySelector(".user_post_lists_container")) {
-    create_fullscreen("/users/load/post_lists/", "worker_fullscreen")
-  }
+  setTimeout(create_fullscreen("/users/load/post_lists/", "worker_fullscreen"), 2000)
 });
 on('#ajax', 'click', '#u_repost_for_community', function() {
   current_block = this.parentElement.nextElementSibling;
