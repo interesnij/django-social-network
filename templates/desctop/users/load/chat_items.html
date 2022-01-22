@@ -14,7 +14,7 @@
           {% for object in object_list %}
             {% if object.last_name %}
 
-            <div class="media pointer chat_items_toggle border-bottom pag" data-pk="u{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom" data-pk="u{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.s_avatar %}
                   <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.s_avatar.url }}" alt="img" />
@@ -37,7 +37,7 @@
 
             {% else %}
 
-            <div class="media pointer chat_items_toggle border-bottom pag" data-link="load_chat" data-pk="c{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
+            <div class="media pointer chat_items_toggle border-bottom" data-link="load_chat" data-pk="c{{ object.pk }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.image %}
                   <img style="width:50px;heigth:auto; border-radius:50%" src="{{ object.image.url }}" alt="img" />
