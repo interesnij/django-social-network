@@ -141,7 +141,7 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 });
 
 on('#ajax', 'click', '#toggle_case_item_repost', function() {
-  this.nextElementSibling.replace("underline", "pointer");
+  this.nextElementSibling.classList.replace("underline", "pointer");
   this.classList.replace("pointer", "underline");
   btn = this.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector(".float-right");
   btn.removeAttribute("id");
@@ -150,7 +150,7 @@ on('#ajax', 'click', '#toggle_case_item_repost', function() {
   this.parentElement.parentElement.parentElement.querySelector("#repost_for_message").style.display = "unset"
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
-  this.previousElementSibling.replace("underline", "pointer");
+  this.previousElementSibling.classList.replace("underline", "pointer");
   this.classList.replace("pointer", "underline");
   btn = this.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector(".float-right");
   btn.removeAttribute("id");
