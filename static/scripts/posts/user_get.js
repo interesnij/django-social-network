@@ -136,7 +136,7 @@ on('#ajax', 'click', '.u_ucm_post_repost', function() {
 on('#ajax', 'click', '#repost_for_wall', function() {
   current_block = this.parentElement.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
-  setTimeout(create_fullscreen("/users/load/post_lists/", "worker_fullscreen"), 2000)
+  create_fullscreen("/users/load/post_lists/", "worker_fullscreen")
 });
 on('#ajax', 'click', '#u_repost_for_community', function() {
   current_block = this.parentElement.nextElementSibling;
