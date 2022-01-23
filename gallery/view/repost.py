@@ -107,7 +107,7 @@ class UUPhotoRepost(View):
             parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
                 count += 1
 
                 user_notify(creator, None, parent.pk, "PHO", "create_u_photo_notify", "RE")
