@@ -164,7 +164,7 @@ class UCPhotoRepost(View):
 
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, attach="pho"+str(photo.pk))
+            parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
                 if post_list.is_user_can_create_el(creator.pk):
