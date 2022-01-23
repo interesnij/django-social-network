@@ -202,7 +202,7 @@ class ListPhotoClaimCreate(TemplateView):
 
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 12, self.list.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/photo/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.template_name = get_detect_platform_template("managers/manage_create/photos/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ListPhotoClaimCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -252,7 +252,7 @@ class ListPhotoCloseCreate(TemplateView):
     def get(self,request,*args,**kwargs):
         self.list = PhotoList.objects.get(uuid=self.kwargs["uuid"])
         if request.user.is_moderator():
-            self.template_name = get_staff_template("managers/manage_create/photo/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_staff_template("managers/manage_create/photos/list_close.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ListPhotoCloseCreate,self).get(request,*args,**kwargs)
