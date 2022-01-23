@@ -12,7 +12,7 @@ def get_post_list_processing(list, type):
     list.save(update_fields=['type'])
     return list
 
-def repost_message_send(obj, attach, community, request):
+def repost_message_send(obj, obj_attach, community, request):
     from chat.models import Message, Chat
     from users.models import User
     from posts.forms import PostForm
@@ -26,7 +26,7 @@ def repost_message_send(obj, attach, community, request):
     count = 0
     if request.is_ajax() and form_post.is_valid():
         post = form_post.save(commit=False)
-        repost = Post.create_parent_post(creator=obj.creator, community=community, attach=attach)
+        repost = Post.create_parent_post(creator=obj.creator, community=community, attach=obj_attach)
         for object_id in connections:
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
