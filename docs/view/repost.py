@@ -3,287 +3,332 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post
-from docs.models import DocsList, Doc
+from posts.models import Post, PostsList
+from gallery.models import Doc, DocsList
 from users.models import User
-from django.http import Http404
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import repost_message_send
-from common.templates import get_detect_platform_template
 
 
 class UUCMDocWindow(TemplateView):
-    """
-    форма репоста документа пользователя к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from common.templates import get_detect_platform_template
+
         self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         self.can_copy_item = self.doc.list.is_user_can_copy_el(request.user.pk)
         if self.doc.creator != request.user:
-            check_user_can_get_list(request.user, self.user)
+            check_user_can_get_list(request.user, self.doc.creator)
         return super(UUCMDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMDocWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.doc
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(UUCMDocWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.doc, self.can_copy_item
+        return c
 
 class CUCMDocWindow(TemplateView):
-    """
-    форма репоста документа сообщества к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
+        from common.templates import get_detect_platform_template
+
         self.doc, self.template_name = Doc.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_doc.html", request.user, request.META['HTTP_USER_AGENT'])
         self.can_copy_item = self.doc.list.is_user_can_copy_el(request.user.pk)
         check_can_get_lists(request.user, self.doc.community)
         return super(CUCMDocWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMDocWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.doc
-        context["community"] = self.doc.community
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(CUCMDocWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.doc, self.doc.community, self.can_copy_item
+        return c
+
 
 class UUCMDocListWindow(TemplateView):
-    """
-    форма репоста списка документов пользователя к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
         if self.list.creator != request.user:
             check_user_can_get_list(request.user, self.user)
         return super(UUCMDocListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMDocListWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.list
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(UUCMDocListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.list, self.can_copy_item
+        return c
 
 class CUCMDocListWindow(TemplateView):
-    """
-    форма репоста списка документов сообщества к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.list, self.template_name = DocsList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("docs/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
         check_can_get_lists(request.user, self.list.community)
         return super(CUCMDocListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMDocListWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.list
-        context["community"] = self.list.community
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(CUCMDocListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.list, self.list.community, self.can_copy_item
+        return c
 
 
 class UUDocRepost(View):
-    """
-    создание репоста документа пользователя на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        doc, user, form_post, attach = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
+        from common.notify.notify import user_notify, user_wall
+
+        doc, form_post, attach, lists, count, creator = Doc.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if doc.creator.pk != creator.pk:
+            check_user_can_get_list(creator, doc.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=user, community=None, attach="doc"+str(doc.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
+            parent = Post.create_parent_post(creator=doc.creator, community=None, attach="doc"+str(doc.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                user_notify(creator, None, parent.pk, "DOC", "create_u_doc_notify", "RE")
+                user_wall(creator, None, parent.pk, "DOC", "create_u_doc_wall", "RE")
+
+            doc.repost += count
+            doc.save(update_fields=["repost"])
+            creator.plus_posts(count)
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CUDocRepost(View):
-    """
-    создание репоста документа сообщества на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        doc, community, form_post, attach = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        check_can_get_lists(request.user, community)
+        from common.notify.notify import community_notify, community_wall
+
+        doc, form_post, attach, lists, count, creator = Doc.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, doc.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=request.user, community=community, attach="doc"+str(doc.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
-            return HttpResponse("")
+            parent = Post.create_parent_post(creator=doc.creator, community=doc.community, attach="doc"+str(doc.pk))
+
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                community_notify(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_wall", "RE")
+
+            doc.repost += count
+            doc.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 
 class UCDocRepost(View):
-    """
-    создание репоста документа пользователя на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        doc, form_post, attach, lists, count, creator = Doc.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if doc.creator.pk != creator.pk:
+            check_user_can_get_list(creator, doc.creator)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, attach="doc"+str(doc.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=doc.creator, community=None, attach="doc"+str(doc.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community.pk, parent.pk, "DOC", "create_u_doc_notify", "CR")
+                    user_wall(creator, community.pk, parent.pk, "DOC", "create_u_doc_wall", "CR")
+
+            doc.repost += count
+            doc.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class CCDocRepost(View):
-    """
-    создание репоста документа сообщества на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import community_notify, community_wall
+
+        doc, form_post, attach, lists, count, creator = Doc.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, doc.community)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="doc"+str(doc.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=doc.creator, community=doc.community, attach="doc"+str(doc.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    community_notify(creator, parent.community, community.pk, parent.pk, "DOC", "create_c_doc_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "DOC", "create_c_doc_wall", "CR")
+
+            doc.repost += count
+            doc.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class UMDocRepost(View):
-    """
-    создание репоста документа пользователя в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        doc, user = Doc.objects.get(pk=self.kwargs["doc_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
+        from common.processing.post import repost_message_send
+
+        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        if doc.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
         repost_message_send(doc, "doc"+str(doc.pk), None, request)
+
         return HttpResponse()
 
 
 class CMDocRepost(View):
-    """
-    создание репоста документа сообщества в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        doc, community = Doc.objects.get(pk=self.kwargs["doc_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        repost_message_send(doc, "doc"+str(doc.pk), None, community)
+        from common.processing.post import repost_message_send
+
+        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, doc.community)
+        repost_message_send(doc, "doc"+str(doc.pk), doc.community, request)
         return HttpResponse()
 
 
 class UUDocListRepost(View):
-    """
-    создание репоста списка документов пользователя на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        list, user, form_post, attach = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
+        from common.notify.notify import user_notify, user_wall
+
+        list, form_post, attach, lists, count, creator = DocsList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if list.creator.pk != creator.pk:
+            check_user_can_get_list(creator, list.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=list.creator, community=None, attach="ldo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, is_signature=False, attach=attach, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                user_notify(creator, None, parent.pk, "DOL", "create_u_doc_notify", "RE")
+                user_wall(creator, None, parent.pk, "DOL", "create_u_doc_wall", "RE")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
+            creator.plus_posts(count)
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CUDocListRepost(View):
-    """
-    создание репоста списка документов сообщества на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        list, community, form_post, attach = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        check_can_get_lists(request.user, community)
+        from common.notify.notify import community_notify, community_wall
+
+        list, form_post, attach, lists, count, creator = DocsList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, list.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, community=community, attach="ldo"+str(list.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
-            return HttpResponse("")
+            parent = Post.create_parent_post(creator=list.creator, community=list.community, attach="ldo"+str(list.pk))
+
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                community_notify(creator, parent.community, None, parent.pk, "DOL", "create_c_doc_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "DOL", "create_c_doc_wall", "RE")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
+            return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 
 class UCDocListRepost(View):
-    """
-    создание репоста списка документов пользователя на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        list, user = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        list, form_post, attach, lists, count, creator = DocsList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if list.creator.pk != creator.pk:
+            check_user_can_get_list(creator, list.creator)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="ldo"+str(list.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community.pk, parent.pk, "DOL", "create_u_doc_notify", "CR")
+                    user_wall(creator, community.pk, parent.pk, "DOL", "create_u_doc_wall", "CR")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
         return HttpResponse()
 
+
 class CCDocListRepost(View):
-    """
-    создание репоста списка документов сообщества на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import community_notify, community_wall
+
+        list, form_post, attach, lists, count, creator = DocsList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, list.community)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=list.creator, attach="ldo"+str(list.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=list.creator, community=list.community, attach="ldo"+str(list.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    community_notify(creator, parent.community, community.pk, parent.pk, "DOL", "create_c_doc_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "DOL", "create_c_doc_wall", "CR")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class UMDocListRepost(View):
-    """
-    создание репоста списка документов пользователя в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        list, user = DocsList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
+        from common.processing.post import repost_message_send
+
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
+        if list.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
         repost_message_send(list, "ldo"+str(list.pk), None, request)
+
         return HttpResponse()
 
 
 class CMDocListRepost(View):
-    """
-    создание репоста списка документов сообщества в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        list, community = DocsList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        repost_message_send(list, "ldo"+str(list.pk), community, request)
+        from common.processing.post import repost_message_send
+
+        list = DocsList.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, list.community)
+        repost_message_send(list, "ldo"+str(list.pk), list.community, request)
         return HttpResponse()
