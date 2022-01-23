@@ -217,7 +217,7 @@ class UMPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
 
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        photo = Photo.objects.get(pk=self.kwargs["pk"])
         if photo.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
         repost_message_send(photo, "pho"+str(photo.pk), None, request)
@@ -231,7 +231,7 @@ class CMPhotoRepost(View):
     def post(self, request, *args, **kwargs):
         from common.processing.post import repost_message_send
 
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
+        photo = Photo.objects.get(pk=self.kwargs["pk"])
         check_can_get_lists(request.user, photo.community)
         repost_message_send(photo, "pho"+str(photo.pk), photo.community, request)
         return HttpResponse()
