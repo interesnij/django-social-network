@@ -473,6 +473,17 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
       collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>';
       return
     }
+    text_val = form_post.querySelector(".smile_supported");
+    _val = format_text(text_val);
+    _text = _val.innerHTML;
+
+    $input = document.createElement("input");
+    $input.setAttribute("name", "text");
+    $input.setAttribute("type", "hidden");
+    $input.classList.add("input_text");
+    $input.value = _text;
+    form_post.append($input);
+
     form_data = new FormData(form_post);
     pk = _this.getAttribute("data-pk");
     preview_target_block = form_post.querySelector('#selected_message_target_items');
@@ -480,25 +491,25 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
     if (form_post.querySelector('#repost_radio_wall').checked) {
         link_.open('POST', wall_url + pk + "/", true);
         link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        link_.send(form_data);
         toast_info(wall_toast)
     } else if (form_post.querySelector('#repost_radio_community').checked) {
         staff_communities = form_post.querySelector("#id_staff_communities");
           link_.open('POST', community_url + pk + "/", true);
           link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-          link_.send(form_data);
           toast_info(community_toast)
     } else if (form_post.querySelector('#repost_radio_message').checked) {
             link_.open('POST', message_url + pk + "/", true);
             link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            link_.send(form_data);
             toast_info(message_toast)
     };
     link_.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             close_work_fullscreen()
+        } else {
+          form_post.querySelector(".input_text").remove();
         }
-    }
+    };
+    link_.send(form_data);
 };
 
 function attach_list_for_post(_this, url) {
