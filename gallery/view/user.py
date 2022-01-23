@@ -88,7 +88,7 @@ class UserPhotosAlbumList(ListView):
     def get_context_data(self,**kwargs):
         context = super(UserPhotosAlbumList,self).get_context_data(**kwargs)
         context['user'] = self.user
-        context['list'] = self.list
+        #context['list'] = self.list
         context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
         context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
         context['is_user_can_create_photos'] = self.is_user_can_create_photos
