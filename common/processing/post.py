@@ -20,6 +20,7 @@ def repost_message_send(obj, attach, community, request):
     from django.http import HttpResponse
 
     connections = request.POST.getlist("chat_items")
+    attach = request.POST.getlist("attach_items")
 
     form_post = PostForm(request.POST)
     count = 0
@@ -29,10 +30,10 @@ def repost_message_send(obj, attach, community, request):
         for object_id in connections:
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
-                message = Message.send_message(chat=chat, repost=repost, creator=request.user, parent=None, text=post.text)
+                message = Message.send_message(chat=chat, repost=repost, creator=request.user, parent=None, text=post.text, attach=attach, sticker=None, transfer=None)
             elif object_id[0] == "u":
                 user = User.objects.get(pk=object_id[1:])
-                message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=repost, user=user, text=post.text)
+                message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=repost, user=user, text=post.text, attach=attach, sticker=None, transfer=None)
 
             count += 1
             obj.repost += count
