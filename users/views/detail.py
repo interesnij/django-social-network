@@ -23,12 +23,11 @@ class UserGallery(TemplateView):
         else:
             self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
-        self.is_can_see = self.user.is_user_can_see_info(request.user.pk)
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['is_can_see'], c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.is_can_see, self.user, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
+        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.user, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
         return c
 
 class UserCommunities(ListView):
