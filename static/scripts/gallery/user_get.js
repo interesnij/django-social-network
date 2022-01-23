@@ -56,7 +56,7 @@ on('#ajax', 'click', '.u_all_photo_dislikes', function() {
 on('#ajax', 'click', '.u_ucm_photo_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
   pk = parent.getAttribute("data-pk");
-  create_fullscreen("/gallery/window/u_ucm_photo_window/" + pk + "/", "worker_fullscreen");
+  create_fullscreen("/gallery/repost/u_ucm_photo_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });
 
