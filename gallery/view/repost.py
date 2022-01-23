@@ -101,7 +101,7 @@ class UUPhotoRepost(View):
 
         photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
         if photo.creator.pk != creator:
-            check_user_can_get_list(creator, photo.creator.pk)
+            check_user_can_get_list(creator, photo.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
