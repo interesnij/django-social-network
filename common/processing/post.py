@@ -12,7 +12,7 @@ def get_post_list_processing(list, type):
     list.save(update_fields=['type'])
     return list
 
-def repost_message_send(obj, attach, community, request, text):
+def repost_message_send(obj, attach, community, request):
     from chat.models import Message, Chat
     from users.models import User
     from posts.forms import PostForm
