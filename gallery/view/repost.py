@@ -173,8 +173,8 @@ class UCPhotoRepost(View):
                     count += 1
                     community.plus_posts(1)
 
-                    user_notify(creator, community, parent.pk, "PHO", "create_u_photo_notify", "CR")
-                    user_wall(creator, community, parent.pk, "PHO", "create_u_photo_wall", "CR")
+                    user_notify(creator, community.pk, parent.pk, "PHO", "create_u_photo_notify", "CR")
+                    user_wall(creator, community.pk, parent.pk, "PHO", "create_u_photo_wall", "CR")
 
             parent.repost += count
             parent.save(update_fields=["repost"])
