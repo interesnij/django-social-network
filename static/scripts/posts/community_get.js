@@ -50,9 +50,8 @@ on('#ajax', 'click', '#c_repost_for_community', function() {
 
 on('#ajax', 'click', '.c_ucm_post_repost', function() {
   parent = this.parentElement.parentElement.parentElement.parentElement
-  uuid = parent.getAttribute("data-uuid");
-  parent.getAttribute('data-pk') ? pk = parent.getAttribute('data-pk') : pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
-  create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
+  pk = parent.getAttribute("data-pk");
+  create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });
 on('#ajax', 'click', '.c_article_detail', function() {
