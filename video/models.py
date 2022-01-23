@@ -780,6 +780,12 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def count_reposts(self):
+        if self.repost == 0:
+            return ''
+        else:
+            return self.repost
+
     def get_image(self):
         if self.image:
             return self.image.url
@@ -872,11 +878,6 @@ class Video(models.Model):
 
     def get_comments(self):
         return VideoComment.objects.filter(video_id=self.pk, parent__isnull=True)
-
-    def get_lists_for_video(self):
-        return self.list.all()
-    def get_list_uuid(self):
-        return self.list.all()[0].uuid
 
     @classmethod
     def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, community):
@@ -1085,9 +1086,6 @@ class VideoComment(models.Model):
             return self.like
         else:
             return ''
-
-    def get_lists(self):
-        return self.list.only("pk")
 
     def dislikes_count(self):
         if self.dislike > 0:

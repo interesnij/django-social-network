@@ -480,6 +480,12 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+    def count_reposts(self):
+        if self.repost == 0:
+            return ''
+        else:
+            return self.repost
+
     def plus_reposts(self, count):
         self.repost += count
         return self.save(update_fields=['repost'])
@@ -498,9 +504,6 @@ class Survey(models.Model):
     def minus_voters(self, count):
         self.voter -= count
         return self.save(update_fields=['voter'])
-
-    def get_lists(self):
-        return self.list.only("pk")
 
     @classmethod
     def create_survey(cls, title, image, list, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):

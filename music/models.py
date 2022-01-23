@@ -652,6 +652,12 @@ class Music(models.Model):
     def __str__(self):
         return self.title
 
+    def count_reposts(self):
+        if self.repost == 0:
+            return ''
+        else:
+            return self.repost
+
     def get_s_image(self):
         if self.image:
             return '<img style="width:30px;" alt="image" src="' + self.image.url + '" />'

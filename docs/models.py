@@ -586,8 +586,11 @@ class Doc(models.Model):
         verbose_name_plural = "Документы"
         indexes = (BrinIndex(fields=['created']),)
 
-    def get_lists(self):
-        return self.list.only("pk")
+    def count_reposts(self):
+        if self.repost == 0:
+            return ''
+        else:
+            return self.repost
 
     def is_open(self):
         return self.type[0] != "_"

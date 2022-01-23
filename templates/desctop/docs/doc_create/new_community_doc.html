@@ -1,6 +1,6 @@
 
 <li class="list-group-item pag" style="padding-bottom:10px">
- <span class="{% for list in object.get_lists_for_doc %}{{ list.uuid }} {% endfor %}"></span>
+ <span class="{{ list.pk }}"></span>
     <div class="media" style="align-items: unset;position: relative;">
         <div class="media-body doc_media_body">
             <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>

@@ -792,6 +792,12 @@ class Photo(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
+    def count_reposts(self):
+        if self.repost == 0:
+            return ''
+        else:
+            return self.repost
+
     def get_preview(self):
         if self.preview:
             return self.preview.url
