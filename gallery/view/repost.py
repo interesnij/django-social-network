@@ -3,7 +3,7 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post
+from posts.models import Post, PostsList
 from gallery.models import Photo
 from users.models import User
 from common.check.user import check_user_can_get_list
@@ -97,16 +97,28 @@ class UUPhotoRepost(View):
     создание репоста фотографии пользователя на свою стену
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        attach = request.POST.getlist('attach_items')
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if photo.creator.pk != creator:
+            check_user_can_get_list(creator, photo.creator.pk)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, community=None, attach="pho"+str(photo.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on,community=None)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                user_notify(creator, None, parent.pk, "PHO", "create_u_photo_notify", "RE")
+                user_wall(creator, None, parent.pk, "POS", "create_u_photo_wall", "RE")
+
+            photo.repost += count
+            photo.save(update_fields=["repost"])
+
+
+            creator.plus_posts(count)
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

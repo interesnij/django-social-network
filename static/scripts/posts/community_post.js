@@ -309,9 +309,9 @@ on('#ajax', 'click', '.c_post_owner_comment_restore', function() {
 
 on('#ajax', 'click', '.c_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
-  uuid = item.getAttribute("data-uuid");
+  item_pk = item.getAttribute("data-pk");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
-  send_like(item, "/posts/votes/community_like/" + uuid + "/" + pk + "/");
+  send_like(item, "/posts/votes/community_like/" + item_pk + "/" + pk + "/");
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_posts_likes");
 });
 on('#ajax', 'click', '.c_dislike', function() {
