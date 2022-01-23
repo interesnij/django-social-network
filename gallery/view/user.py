@@ -58,7 +58,7 @@ class UserPhotosList(ListView):
 class UserPhotosAlbumList(ListView):
     template_name = None
     paginate_by = 15
-    is_user_can_see_photo_section = None
+    is_user_can_see_photo_section = False
     is_user_can_see_photo_list = None
     is_user_can_create_photos = None
 
