@@ -221,6 +221,7 @@ class UMPhotoRepost(View):
         if photo.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
         repost_message_send(photo, "pho"+str(photo.pk), None, request)
+
         return HttpResponse()
 
 
