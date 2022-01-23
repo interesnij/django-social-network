@@ -3,8 +3,8 @@ from communities.models import Community
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post, PostsList
-from gallery.models import Photo
+from posts.models import Post, PostList
+from gallery.models import Photo, PhotoList
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
