@@ -26,9 +26,9 @@ class UUCMPhotoWindow(TemplateView):
         return super(UUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMPhotoWindow,self).get_context_data(**kwargs)
+        c = super(UUCMPhotoWindow,self).get_context_data(**kwargs)
         c["form"], c["object"], c["can_copy_item"] = PostForm(), self.photo, self.can_copy_item
-        return context
+        return c
 
 class CUCMPhotoWindow(TemplateView):
     """
@@ -45,9 +45,9 @@ class CUCMPhotoWindow(TemplateView):
         return super(CUCMPhotoWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMPhotoWindow,self).get_context_data(**kwargs)
+        c = super(CUCMPhotoWindow,self).get_context_data(**kwargs)
         c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.photo, self.photo.community, self.can_copy_item
-        return context
+        return c
 
 
 class UUCMPhotoListWindow(TemplateView):
