@@ -100,7 +100,7 @@ class UUPhotoRepost(View):
         from common.notify.notify import user_notify, user_wall
 
         photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
-        if photo.creator.pk != creator:
+        if photo.creator.pk != creator.pk:
             check_user_can_get_list(creator, photo.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
@@ -126,15 +126,26 @@ class CUPhotoRepost(View):
     создание репоста фотографии сообщества на свою стену
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        attach = request.POST.getlist('attach_items')
-        form_post = PostForm(request.POST)
-        check_can_get_lists(request.user, community)
+        from common.notify.notify import community_notify, community_wall
+
+        photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, photo.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=photo.creator, community=photo.community, attach="pho"+str(photo.pk))
+
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                community_notify(creator, parent.community, None, parent.pk, "PHO", "create_c_photo_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "PHO", "create_c_photo_wall", "RE")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -145,21 +156,28 @@ class UCPhotoRepost(View):
     создание репоста фотографии пользователя на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if photo.creator.pk != creator.pk:
+            check_user_can_get_list(creator, photo.creator)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             parent = Post.create_parent_post(creator=photo.creator, attach="pho"+str(photo.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community, parent.pk, "PHO", "create_u_photo_notify", "CR")
+                    user_wall(creator, community, parent.pk, "PHO", "create_u_photo_wall", "CR")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
         return HttpResponse()
 
 
@@ -168,20 +186,27 @@ class CCPhotoRepost(View):
     создание репоста фотографии сообщества на стены списка сообществ, в которых пользователь - управленец
     """
     def post(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import community_notify, community_wall
+
+        photo, form_post, attach, lists, count, creator = Photo.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, photo.community)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="pho"+str(photo.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=photo.creator, community=photo.community, attach="pho"+str(photo.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    community_notify(creator, parent.community, community.pk, parent.pk, "PHO", "create_c_photo_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "PHO", "create_c_photo_wall", "CR")
+
+            parent.repost += count
+            parent.save(update_fields=["repost"])
         return HttpResponse()
 
 

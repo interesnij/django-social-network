@@ -139,7 +139,7 @@ class CUPostRepost(View):
                 parent = parent
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=parent.community)
                 count += 1
                 community_notify(creator, parent.community, None, parent.pk, "POS", "create_c_post_notify", "RE")
                 community_wall(creator, parent.community, None, parent.pk, "POS", "create_c_post_wall", "RE")
@@ -183,7 +183,6 @@ class UCPostRepost(View):
             parent.repost += count
             parent.save(update_fields=["repost"])
 
-            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
