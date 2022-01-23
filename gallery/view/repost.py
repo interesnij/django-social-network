@@ -111,12 +111,10 @@ class UUPhotoRepost(View):
                 count += 1
 
                 user_notify(creator, None, parent.pk, "PHO", "create_u_photo_notify", "RE")
-                user_wall(creator, None, parent.pk, "POS", "create_u_photo_wall", "RE")
+                user_wall(creator, None, parent.pk, "PHO", "create_u_photo_wall", "RE")
 
             photo.repost += count
             photo.save(update_fields=["repost"])
-
-
             creator.plus_posts(count)
 
             return HttpResponse()
