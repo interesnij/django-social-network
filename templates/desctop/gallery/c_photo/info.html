@@ -1,5 +1,5 @@
 {% load liked_user %}
-{{ object.repost }}
+
 <div class="border-top py-2">
         <div class="col interaction" id="interaction">
           <span {% if not object.votes_on %}style="display:none"{% endif %} class="like c_photo_like {% if object.likes|user_in:request.user %}btn_success{% else %}btn_default{% endif %}" title="Нравится">

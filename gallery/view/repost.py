@@ -142,8 +142,8 @@ class CUPhotoRepost(View):
                 community_notify(creator, parent.community, None, parent.pk, "PHO", "create_c_photo_notify", "RE")
                 community_wall(creator, parent.community, None, parent.pk, "PHO", "create_c_photo_wall", "RE")
 
-            parent.repost += count
-            parent.save(update_fields=["repost"])
+            photo.repost += count
+            photo.save(update_fields=["repost"])
 
             creator.plus_posts(count)
             return HttpResponse()
@@ -176,8 +176,8 @@ class UCPhotoRepost(View):
                     user_notify(creator, community.pk, parent.pk, "PHO", "create_u_photo_notify", "CR")
                     user_wall(creator, community.pk, parent.pk, "PHO", "create_u_photo_wall", "CR")
 
-            parent.repost += count
-            parent.save(update_fields=["repost"])
+            photo.repost += count
+            photo.save(update_fields=["repost"])
         return HttpResponse()
 
 
@@ -205,8 +205,8 @@ class CCPhotoRepost(View):
                     community_notify(creator, parent.community, community.pk, parent.pk, "PHO", "create_c_photo_notify", "CR")
                     community_wall(creator, parent.community, community.pk, parent.pk, "PHO", "create_c_photo_wall", "CR")
 
-            parent.repost += count
-            parent.save(update_fields=["repost"])
+            photo.repost += count
+            photo.save(update_fields=["repost"])
         return HttpResponse()
 
 
@@ -218,8 +218,7 @@ class UMPhotoRepost(View):
         from common.processing.post import repost_message_send
 
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
+        if photo.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
         repost_message_send(photo, "pho"+str(photo.pk), None, request)
         return HttpResponse()
@@ -233,9 +232,8 @@ class CMPhotoRepost(View):
         from common.processing.post import repost_message_send
 
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        repost_message_send(photo, "pho"+str(photo.pk), community, request)
+        check_can_get_lists(request.user, photo.community)
+        repost_message_send(photo, "pho"+str(photo.pk), photo.community, request)
         return HttpResponse()
 
 
