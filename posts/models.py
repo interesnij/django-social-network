@@ -1141,7 +1141,7 @@ class Post(models.Model):
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
     @classmethod
-    def create_parent_post(cls, creator, community=None, attach):
+    def create_parent_post(cls, creator, community, attach):
         post = cls.objects.create(creator=creator, community=community, attach=attach, type=Post.REPOST)
         return post
 
