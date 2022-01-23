@@ -58,9 +58,6 @@ class UserPhotosList(ListView):
 class UserPhotosAlbumList(ListView):
     template_name = None
     paginate_by = 15
-    is_user_can_see_photo_section = 100
-    is_user_can_see_photo_list = 100
-    is_user_can_create_photos = 100
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_template_user_list, get_template_anon_user_list
