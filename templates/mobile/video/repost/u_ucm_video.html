@@ -1,10 +1,17 @@
 
-<div class="">
-    <form id="u_uсm_video_repost_form">
+    <form>
       {% csrf_token %}
         <div class="card mb-3">
             <div class="card-header border-bottom">
-                <h5 class="content-color-primary mb-0">Поделиться видеозаписью {{ object.creator.get_full_name_genitive }}</h5>
+              <h6 class="content-color-primary mb-0">
+                <span style="font-weight:bold">Добавить:</span>
+                &nbsp;
+                <span id="toggle_case_item_repost" class="underline" data-flag="u_ucm_video_repost_btn">Репост</span>
+                {% if can_copy_item %}
+                  &nbsp;
+                  <span id="toggle_case_item_copy" class="pointer" data-flag="u_video_copy_btn">Копия</span>
+                {% endif %}
+              </h6>
             </div>
             <div class="card-body">
               {% include 'mobile/generic/repost/user_choice.html' %}
@@ -16,4 +23,3 @@
             </div>
         </div>
     </form>
-</div>
