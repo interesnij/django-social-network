@@ -1,7 +1,6 @@
 
     <form>
       {% csrf_token %}
-        <div class="card mb-3">
             <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">
                 <span style="font-weight:bold">Добавить:</span>
@@ -21,5 +20,4 @@
                 <button class="btn border this_mob_fullscreen_hide">Отмена</button>
                 <button type="button" class="btn btn-success float-right" id="c_ucm_good_repost_btn" data-pk="{{ object.pk }}">Поделиться</button>
             </div>
-        </div>
     </form>
