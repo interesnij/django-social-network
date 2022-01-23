@@ -89,7 +89,7 @@ class UserPhotoList(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPhotoList,self).get_context_data(**kwargs)
-		c['user'], c['list'] = self.user, self.list
+		c['user'], c['list'], c['list'] = self.user, self.list, self.is_user_can_see_photo_section
 		return c
 
 
