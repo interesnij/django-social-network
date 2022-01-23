@@ -5,44 +5,48 @@
 {% endif %}
 
 {% if object.parent %}
-<span class="border-left" style="margin-left: 5%;margin-top: -10px;" data-pk="{{ object.parent.pk }}">
-  {% if not object.parent.is_repost %}
 
-  {% if object.parent.community %}
+{% with object=object.parent %}
+<span class="border-left" style="margin-left: 5%;margin-top: -10px;" data-pk="{{ object.pk }}">
+  {% if not object.is_repost %}
+
+  {% if object.community %}
   <div class="card-header">
       <div class="media">
-        {% include 'desctop/generic/community/parent_figure.html' %}
+        {% include 'desctop/generic/community/figure.html' %}
           <div class="media-body">
               <h6 class="mb-0">
-                {% include 'desctop/generic/community/parent_object.html' %}
+                {% include 'desctop/generic/community/object.html' %}
               </h6>
-              <p class="mb-0 wall_fullscreen pointer">{{ object.parent.get_created }}</p>
+              <p class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</p>
           </div>
       </div>
   </div>
   {% else %}
   <div class="card-header">
       <div class="media">
-        {% include 'desctop/generic/user/parent_figure.html' %}
+        {% include 'desctop/generic/user/figure.html' %}
           <div class="media-body">
               <h6 class="mb-0">
-                {% include 'desctop/generic/user/parent_creator.html' %}
+                {% include 'desctop/generic/user/creator.html' %}
              </h6>
-              <a class="mb-0 wall_fullscreen pointer">{{ object.parent.get_created }}</a>
+              <a class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</a>
           </div>
       </div>
   </div>
   {% endif %}
   {% endif %}
 
-  {% if object.parent.text %}
+  {% if object.text %}
     <div class="fullscreen text_support pointer">
-      {{ object.parent.get_format_text|safe }}
+      {{ object.get_format_text|safe }}
     </div>
   {% endif %}
 
-  {% if object.parent.attach %}
-    {{ object.parent|get_attach:request.user|safe }}
+  {% if object.attach %}
+    {{ object|get_attach:request.user|safe }}
   {% endif %}
 </span>
+
+{% endwith %}
 {% endif %}
