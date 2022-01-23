@@ -31,8 +31,8 @@ on('#ajax', 'click', '.c_doc_list_edit', function() {
 });
 
 on('#ajax', 'click', '.c_ucm_doc_repost', function() {
-  parent = this.parentElement;
-  doc_pk = parent.getAttribute("doc-pk");
+  parent = this.parentElement.parentElement.parentElement;
+  doc_pk = parent.getAttribute("data-pk");
   create_fullscreen("/docs/repost/c_ucm_doc_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
 });

@@ -43,7 +43,7 @@ on('#ajax', 'click', '.load_music_list', function() {
 });
 
 on('#ajax', 'click', '.u_ucm_music_repost', function() {
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   pk = parent.getAttribute("data-pk");
   create_fullscreen("/music/repost/u_ucm_music_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();

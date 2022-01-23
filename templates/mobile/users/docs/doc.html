@@ -13,6 +13,7 @@
                         </svg>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" style="top: 33px;">
+                      <span class="dropdown-item u_ucm_doc_repost">Добавить</span> 
                       {% if request.user.pk == object.creator.pk and not object.community %}
                         <span class="dropdown-item u_doc_edit">Изменить</span>
                         <span class="dropdown-item u_doc_remove">Удалить</span>

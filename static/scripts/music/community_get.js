@@ -6,7 +6,7 @@ on('#ajax', 'click', '.uncopy_community_music_list', function() {
 });
 
 on('#ajax', 'click', '.c_ucm_music_repost', function() {
-  parent = this.parentElement;
+  parent = this.parentElement.parentElement.parentElement;
   pk = parent.getAttribute("data-pk");
   create_fullscreen("/music/repost/c_ucm_music_window/" + pk + "/", "worker_fullscreen");
   clear_attach_block();
