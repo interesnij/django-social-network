@@ -34,6 +34,7 @@ class DocsList(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     count = models.PositiveIntegerField(default=0)
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
