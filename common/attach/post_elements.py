@@ -28,33 +28,34 @@ def get_post_attach(post, user):
             except:
                 pass
         elif item[:3] == "mus":
-            #try:
-            from music.models import Music
-            music = Music.objects.get(pk=item[3:], type="PUB")
-            music_counter += 1
-            span_btn = ''
+            try:
+                from music.models import Music
+                music = Music.objects.get(pk=item[3:], type="PUB")
+                music_counter += 1
+                span_btn = ''
 
-            if user.is_authenticated:
-                if music.community:
-                    case_add, case_edit, case_delete = "c_ucm_music_repost", "c_track_edit", "c_track_remove"
-                else:
-                    case_add, case_edit, case_delete = "u_ucm_music_repost", "u_track_edit", "u_track_remove"
-                drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
-                if music.list.is_user_can_create_el(user.pk):
-                    drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
-                if user.is_moderator():
-                    drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
-                else:
+                if user.is_authenticated:
+                    if music.community:
+                        case_add, case_edit, case_delete = "c_ucm_music_repost", "c_track_edit", "c_track_remove"
+                    else:
+                        case_add, case_edit, case_delete = "u_ucm_music_repost", "u_track_edit", "u_track_remove"
+                    drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                    if music.list.is_user_can_create_el(user.pk):
+                        drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
+                    if user.is_moderator():
+                        drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
+                    else:
                         drops += '<span class="dropdown-item case_claim_track">Пожаловаться</span>'
-                span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                    span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
 
-            block = ''.join([block, '<div class="music" data-path="', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
-            #except:
-            #    pass
+                block = ''.join([block, '<div class="music" data-path="', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
+            except:
+                pass
         elif item[:3] == "doc":
             try:
                 from docs.models import Doc
                 doc = Doc.objects.get(pk=item[3:], type="PUB")
+                span_btn = ''
                 if user.is_authenticated:
                     if doc.community:
                         case_add, case_edit, case_delete = "c_ucm_doc_repost", "c_doc_edit", "c_doc_remove"
@@ -68,7 +69,7 @@ def get_post_attach(post, user):
                     else:
                         drops += '<span class="dropdown-item case_claim_doc">Пожаловаться</span>'
 
-                span_btn = ''.join(['<span class="span_btn" data-pk="', str(doc.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                    span_btn = ''.join(['<span class="span_btn" data-pk="', str(doc.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
                 block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
             except:
                 pass
