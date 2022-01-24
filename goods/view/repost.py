@@ -190,7 +190,7 @@ class UMGoodRepost(View):
 
         good = Good.objects.get(pk=self.kwargs["pk"])
         if good.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, good.creator)
         repost_message_send(good, "goo"+str(good.pk), None, request)
 
         return HttpResponse()
@@ -318,7 +318,7 @@ class UMGoodListRepost(View):
 
         list = GoodList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lgo"+str(list.pk), None, request)
 
         return HttpResponse()

@@ -190,7 +190,7 @@ class UMVideoRepost(View):
 
         video = Video.objects.get(pk=self.kwargs["pk"])
         if video.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, video.creator)
         repost_message_send(video, "vid"+str(video.pk), None, request)
 
         return HttpResponse()
@@ -318,7 +318,7 @@ class UMVideoListRepost(View):
 
         list = VideoList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lvi"+str(list.pk), None, request)
 
         return HttpResponse()

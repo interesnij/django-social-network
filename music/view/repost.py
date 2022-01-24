@@ -190,7 +190,7 @@ class UMMusicRepost(View):
 
         music = Music.objects.get(pk=self.kwargs["pk"])
         if music.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, music.creator)
         repost_message_send(music, "mus"+str(music.pk), None, request)
 
         return HttpResponse()
@@ -318,7 +318,7 @@ class UMMusicListRepost(View):
 
         list = MusicList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lmu"+str(list.pk), None, request)
 
         return HttpResponse()

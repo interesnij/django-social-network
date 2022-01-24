@@ -219,7 +219,7 @@ class UMPhotoRepost(View):
 
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         if photo.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, photo.creator)
         repost_message_send(photo, "pho"+str(photo.pk), None, request)
 
         return HttpResponse()
@@ -350,7 +350,7 @@ class UMPhotoListRepost(View):
 
         list = PhotoList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lph"+str(list.pk), None, request)
 
         return HttpResponse()

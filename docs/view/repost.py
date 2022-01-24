@@ -190,7 +190,7 @@ class UMDocRepost(View):
 
         doc = Doc.objects.get(pk=self.kwargs["pk"])
         if doc.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, doc.creator)
         repost_message_send(doc, "doc"+str(doc.pk), None, request)
 
         return HttpResponse()
@@ -318,7 +318,7 @@ class UMDocListRepost(View):
 
         list = DocsList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "ldo"+str(list.pk), None, request)
 
         return HttpResponse()

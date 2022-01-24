@@ -190,7 +190,7 @@ class UMSurveyRepost(View):
 
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         if survey.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, survey.creator)
         repost_message_send(survey, "sur"+str(survey.pk), None, request)
 
         return HttpResponse()
@@ -318,7 +318,7 @@ class UMSurveyListRepost(View):
 
         list = SurveyList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lsu"+str(list.pk), None, request)
 
         return HttpResponse()
