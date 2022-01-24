@@ -191,7 +191,7 @@ class UMSurveyRepost(View):
         survey = Survey.objects.get(pk=self.kwargs["pk"])
         if survey.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
-        repost_message_send(survey, "sur"+survey.pk), None, request)
+        repost_message_send(survey, "sur"+str(survey.pk), None, request)
 
         return HttpResponse()
 

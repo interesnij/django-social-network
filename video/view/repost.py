@@ -191,7 +191,7 @@ class UMVideoRepost(View):
         video = Video.objects.get(pk=self.kwargs["pk"])
         if video.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
-        repost_message_send(video, "vid"+video.pk), None, request)
+        repost_message_send(video, "vid"+str(video.pk), None, request)
 
         return HttpResponse()
 
