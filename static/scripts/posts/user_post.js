@@ -7,6 +7,12 @@ on('#ajax', 'click', '#u_ucm_post_repost_btn', function() {
                      "/posts/repost/u_m_post_repost/",
                      "Репост записи в сообщения сделан")
 });
+on('#ajax', 'click', '#u_post_copy_btn', function() {
+  copy_constructor(this,
+                     "/posts/repost/u_u_post_copy/",
+                     "/posts/repost/u_c_post_copy/",
+                     "Запись скопирована")
+});
 
 on('body', 'click', '.photo_attach_list_remove', function() {
   block = this.parentElement.parentElement;

@@ -486,7 +486,6 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
 
     form_data = new FormData(form_post);
     pk = _this.getAttribute("data-pk");
-    preview_target_block = form_post.querySelector('#selected_message_target_items');
     link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     if (form_post.querySelector('#repost_radio_wall').checked) {
         link_.open('POST', wall_url + pk + "/", true);
@@ -507,6 +506,34 @@ function repost_constructor(_this, wall_url, wall_toast, community_url, communit
             close_work_fullscreen()
         } else {
           form_post.querySelector(".input_text").remove();
+        }
+    };
+    link_.send(form_data);
+};
+
+function copy_constructor(_this, wall_url, community_url, toast) {
+    form_post = _this.parentElement.parentElement;
+    collector = form_post.querySelector(".collector");
+    if (!collector.innerHTML) {
+      collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей</div>';
+      return
+    };
+
+    form_data = new FormData(form_post);
+    pk = _this.getAttribute("data-pk");
+    link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    if (form_post.querySelector('#repost_radio_wall').checked) {
+        link_.open('POST', wall_url + pk + "/", true);
+        link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+    } else if (form_post.querySelector('#repost_radio_community').checked) {
+        staff_communities = form_post.querySelector("#id_staff_communities");
+          link_.open('POST', community_url + pk + "/", true);
+          link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    };
+    link_.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            close_work_fullscreen();
+            toast_info(toast)
         }
     };
     link_.send(form_data);

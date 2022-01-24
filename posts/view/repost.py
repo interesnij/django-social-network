@@ -426,7 +426,7 @@ class UUPostCopy(View):
                 check_user_can_get_list(request.user, parent.creator)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
+                if parent.list.pk != post_list.pk and post_list.is_user_can_create_el(request.user.pk):
                     Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=None)
                     count += 1
             if count > 0:
@@ -445,7 +445,7 @@ class CUPostCopy(View):
             check_can_get_lists(request.user, list.community)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
+                if parent.list.pk != post_list.pk and post_list.is_user_can_create_el(request.user.pk):
                     Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=None)
                     count += 1
 
@@ -467,7 +467,7 @@ class UCPostCopy(View):
                 check_user_can_get_list(request.user, parent.creator)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
+                if parent.list.pk != post_list.pk and post_list.is_user_can_create_el(request.user.pk):
                     community = post_list.community
                     Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=community)
                     count += 1
@@ -488,7 +488,7 @@ class CCPostCopy(View):
             check_can_get_lists(request.user, list.community)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
-                if post_list.is_user_can_create_el(request.user.pk):
+                if parent.list.pk != post_list.pk and post_list.is_user_can_create_el(request.user.pk):
                     community = post_list.community
                     Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=community)
                     count += 1
