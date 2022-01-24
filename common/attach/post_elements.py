@@ -49,7 +49,13 @@ def get_post_attach(post, user):
                 from docs.models import Doc
                 doc = Doc.objects.get(pk=item[3:], type="PUB")
                 if user.is_authenticated:
-                    drops = ''
+                    drops = '<span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                    if doc.list.is_user_can_create_el(user.pk):
+                        drops += '<span class="dropdown-item case_doc_edit">Изменить</span><span class="dropdown-item case_doc_remove">Удалить</span>'
+                    if user.is_moderator():
+                        drops += '<span class="dropdown-item case_close_doc">Закрыть</span>'
+                    else:
+                        drops += '<span class="dropdown-item case_doc_claim">Пожаловаться</span>'
 
                 span_btn = ''.join(['<span class="span_btn" doc-pk="', str(doc.pk), '" data-pk="', str(post.creator.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
                 block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
