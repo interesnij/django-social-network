@@ -4,7 +4,6 @@
             <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
             <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
             <span class='span_btn' data-pk="{{ object.pk }}">
-                {% include 'desctop/users/docs/add_dropdown.html' %}
                 <div class="dropdown" style="position: inherit;">
                     <a class="btn_default drop pointer">
                         <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
