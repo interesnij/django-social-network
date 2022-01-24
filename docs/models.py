@@ -35,6 +35,7 @@ class DocsList(models.Model):
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
@@ -580,6 +581,8 @@ class Doc(models.Model):
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     order = models.PositiveIntegerField(default=0)
     is_doc = models.BooleanField(default=True)
+    repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
     class Meta:
         ordering = ["-order"]

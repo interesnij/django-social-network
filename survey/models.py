@@ -42,6 +42,7 @@ class SurveyList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
@@ -470,6 +471,7 @@ class Survey(models.Model):
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     is_survey = models.BooleanField(default=True)
 
     class Meta:

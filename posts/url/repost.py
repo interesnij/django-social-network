@@ -21,4 +21,9 @@ urlpatterns = [
     url(r'^c_c_post_list_repost/(?P<pk>\d+)/$', CCPostListRepost.as_view()),
     url(r'^u_m_post_list_repost/(?P<pk>\d+)/$', UMPostListRepost.as_view()),
     url(r'^c_m_post_list_repost/(?P<pk>\d+)/$', CMPostListRepost.as_view()),
+
+    url(r'^u_u_post_copy/(?P<pk>\d+)/$', UUPostCopy.as_view()),
+    url(r'^c_u_post_copy/(?P<pk>\d+)/$', CUPostCopy.as_view()),
+    url(r'^u_c_post_copy/(?P<pk>\d+)/$', UCPostCopy.as_view()),
+    url(r'^c_c_post_copy/(?P<pk>\d+)/$', CCPostCopy.as_view()),
 ]

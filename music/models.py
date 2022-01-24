@@ -96,6 +96,7 @@ class MusicList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
@@ -638,9 +639,8 @@ class Music(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_track', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Создатель")
 
     view = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
-    like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
-    dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
     is_track = models.BooleanField(default=True)
 

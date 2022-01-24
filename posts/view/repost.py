@@ -400,7 +400,7 @@ class UMPostListRepost(View):
 
         list = PostsList.objects.get(pk=self.kwargs["pk"])
         if list.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, user)
+            check_user_can_get_list(request.user, list.creator)
         repost_message_send(list, "lpo"+str(list.pk), None, request)
 
         return HttpResponse()
@@ -414,3 +414,89 @@ class CMPostListRepost(View):
         check_can_get_lists(request.user, list.community)
         repost_message_send(list, "lpo"+str(list.pk), list.community, request)
         return HttpResponse()
+
+
+
+class UUPostCopy(View):
+    def post(self, request, *args, **kwargs):
+        parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
+
+        if request.is_ajax():
+            if parent.creator.pk != request.user.pk:
+                check_user_can_get_list(request.user, parent.creator)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(request.user.pk):
+                    Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=None)
+                    count += 1
+            if count > 0:
+                parent.copy += count
+                parent.save(update_fields=["copy"])
+
+                creator.plus_posts(count)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CUPostCopy(View):
+    def post(self, request, *args, **kwargs):
+        parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
+        if request.is_ajax():
+            check_can_get_lists(request.user, list.community)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(request.user.pk):
+                    Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=None)
+                    count += 1
+
+            if count > 0:
+                parent.copy += count
+                parent.save(update_fields=["copy"])
+
+                creator.plus_posts(count)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class UCPostCopy(View):
+    def post(self, request, *args, **kwargs):
+        parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
+        if request.is_ajax():
+            if parent.creator.pk != request.user.pk:
+                check_user_can_get_list(request.user, parent.creator)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(request.user.pk):
+                    community = post_list.community
+                    Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+            if count > 0:
+                parent.copy += count
+                parent.save(update_fields=["copy"])
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+class CCPostCopy(View):
+    def post(self, request, *args, **kwargs):
+        parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
+        if request.is_ajax():
+            check_can_get_lists(request.user, list.community)
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(request.user.pk):
+                    community = post_list.community
+                    Post.create_post(creator=parent.creator, list=post_list, attach=parent.attach, text=parent.text, category=parent.category, comments_enabled=parent.comments_enabled, is_signature=False, votes_on=parent.votes_on, community=community)
+                    count += 1
+
+            if count > 0:
+                parent.copy += count
+                parent.save(update_fields=["copy"])
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()

@@ -45,6 +45,7 @@ class PhotoList(models.Model):
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     can_see_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит комментарии")
@@ -780,6 +781,7 @@ class Photo(models.Model):
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
     dislike = models.PositiveIntegerField(default=0, verbose_name="Кол-во дизлайков")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
+    copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
     is_photo = models.BooleanField(default=True)
 
