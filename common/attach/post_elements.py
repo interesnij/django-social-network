@@ -32,6 +32,7 @@ def get_post_attach(post, user):
             from music.models import Music
             music = Music.objects.get(pk=item[3:], type="PUB")
             music_counter += 1
+            span_btn = ''
 
             if user.is_authenticated:
                 if music.community:
@@ -45,7 +46,7 @@ def get_post_attach(post, user):
                     drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
                 else:
                         drops += '<span class="dropdown-item case_claim_track">Пожаловаться</span>'
-            span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
 
             block = ''.join([block, '<div class="music" data-path="', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
             #except:
