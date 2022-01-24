@@ -32,15 +32,22 @@ def get_post_attach(post, user):
             from music.models import Music
             music = Music.objects.get(pk=item[3:], type="PUB")
             music_counter += 1
-            span_btn = ''
+
             if user.is_authenticated:
-                lists = ''
-                for list in user.get_playlists():
-                    if list.is_item_in_list(music.pk):
-                        lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_remove_track_in_list"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>', list.name, '</span></span>'])
-                    else:
-                        lists = ''.join([lists, '<span data-uuid="', str(list.uuid), '"><span class="dropdown-item u_add_track_in_list" style="padding-left: 30px;">', list.name, '</span></span>'])
-                span_btn = ''.join([span_btn, '<span class="span_btn" style="margin-left:auto;display:flex" data-pk="', str(music.pk), '" user-pk="', str(music.creator.pk), '"><span class="dropdown" style="position: inherit;"><span class="btn_default pointer drop"><svg fill="currentColor" style="width:25px;height:25px;" class="svg_default" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', lists, '<span class="dropdown-item u_create_music_list_track_add" style="padding-left: 30px;">В новый плейлист</span></div></span><span class="u_ucm_music_repost btn_default pointer"><svg class="svg_default" style="width:20px;height:20px;" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></span></span>'])
+                if music.community:
+                    case_add, case_edit, case_delete = "c_ucm_music_repost", "c_track_edit", "c_track_remove"
+                else:
+                    case_add, case_edit, case_delete = "u_ucm_music_repost", "u_track_edit", "u_track_remove"
+                drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                if music.list.is_user_can_create_el(user.pk):
+                    drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
+                if user.is_moderator():
+                    drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
+                else:
+                    drops += '<span class="dropdown-item case_claim_track">Пожаловаться</span>'
+
+            span_btn = ''.join(['<span class="span_btn" track-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+
             block = ''.join([block, '<div class="music" data-path="/media/', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
             #except:
             #    pass
@@ -59,9 +66,9 @@ def get_post_attach(post, user):
                     if user.is_moderator():
                         drops += '<span class="dropdown-item case_close_doc">Закрыть</span>'
                     else:
-                        drops += '<span class="dropdown-item case_doc_claim">Пожаловаться</span>'
+                        drops += '<span class="dropdown-item case_claim_doc">Пожаловаться</span>'
 
-                span_btn = ''.join(['<span class="span_btn" doc-pk="', str(doc.pk), '" data-pk="', str(post.creator.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                span_btn = ''.join(['<span class="span_btn" doc-pk="', str(doc.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
                 block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
             except:
                 pass
