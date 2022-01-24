@@ -14,8 +14,6 @@ urlpatterns = [
     url(r'^edit_doc/(?P<doc_pk>\d+)/$', UserDocEdit.as_view()),
     url(r'^delete_doc/(?P<doc_pk>\d+)/$', UserDocRemove.as_view()),
     url(r'^restore_doc/(?P<doc_pk>\d+)/$', UserDocAbortRemove.as_view()),
-    url(r'^copy_doc_in_list/(?P<pk>\d+)/(?P<doc_pk>\d+)/$', AddDocInUserList.as_view()),
-    url(r'^uncopy_doc_from_list/(?P<pk>\d+)/(?P<doc_pk>\d+)/$', RemoveDocFromUserList.as_view()),
 
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeDocPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeDocListPosition.as_view()),

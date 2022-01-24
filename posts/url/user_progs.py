@@ -23,8 +23,6 @@ urlpatterns = [
 	url(r'^restore/(?P<pk>\d+)/$', PostUserRecover.as_view()),
 	url(r'^on_votes/(?P<pk>\d+)/$', UserOnVotesPost.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', UserOffVotesPost.as_view()),
-	url(r'^copy_post_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPostInUserList.as_view()),
-    url(r'^uncopy_post_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePostFromUserList.as_view()),
 
 	url(r'^add_list/$', UserPostsListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/$', UserPostsListEdit.as_view()),

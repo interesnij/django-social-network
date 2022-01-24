@@ -421,28 +421,6 @@ class UserPostsListRecover(View):
             raise Http404
 
 
-class AddPostInUserList(View):
-    def get(self, request, *args, **kwargs):
-        post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
-
-        if request.is_ajax() and not list.is_item_in_list(post.pk):
-            list.post_list.add(post)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemovePostFromUserList(View):
-    def get(self, request, *args, **kwargs):
-        post = Post.objects.get(pk=self.kwargs["pk"])
-        list = PostsList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(post.pk):
-            list.post_list.remove(post)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserChangePostPosition(View):
     def post(self,request,*args,**kwargs):
         import json

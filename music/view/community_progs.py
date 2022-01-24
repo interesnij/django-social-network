@@ -31,24 +31,6 @@ class RemovePlayListFromCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-class AddTrackInCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), MusicList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and not list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.playlist.add(track)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveTrackFromCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        track, list = Music.objects.get(pk=self.kwargs["pk"]), MusicList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(track.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.playlist.remove(track)
-            return HttpResponse()
-        else:
-            raise Http404
-
 class CommunityPlaylistCreate(TemplateView):
     template_name = None
 

@@ -27,13 +27,6 @@ on('#ajax', 'click', '#c_create_music_list_btn', function() {
   post_and_load_object_page(form, "/music/community_progs/add_list/", "/communities/", "/music_list/", "added_community_music_list")
 });
 
-on('#ajax', 'click', '.c_add_track_in_list', function() {
-  add_item_in_list(this, '/music/community_progs/copy_track_in_list/', "c_add_track_in_list", "c_remove_track_from_list")
-});
-on('#ajax', 'click', '.c_remove_video_from_list', function() {
-  remove_item_from_list(this, '/music/community_progs/uncopy_track_from_list/', "c_remove_track_from_list", "c_add_track_in_list")
-});
-
 on('#ajax', 'click', '#c_edit_playlist_btn', function() {
   media_list_edit(this, "/music/community_progs/edit_list/", "edited_community_music_list")
 });

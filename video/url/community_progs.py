@@ -13,8 +13,6 @@ urlpatterns = [
     url(r'^off_private/(?P<pk>\d+)/$', CommunityOffPrivateVideo.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesVideo.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesVideo.as_view()),
-    url(r'^copy_video_in_list/(?P<pk>\d+)/(?P<video_pk>\d+)/$', AddVideoInCommunityList.as_view()),
-    url(r'^uncopy_video_from_list/(?P<pk>\d+)/(?P<video_pk>\d+)/$', RemoveVideoFromCommunityList.as_view()),
 
     url(r'^add_comment/$', VideoCommentCommunityCreate.as_view()),
     url(r'^reply_comment/$', VideoReplyCommunityCreate.as_view()),

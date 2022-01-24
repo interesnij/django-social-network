@@ -177,10 +177,3 @@ on('body', 'click', '.u_video_list_remove', function() {
 on('body', 'click', '.u_video_list_abort_remove', function() {
   media_list_recover(this, "/video/user_progs/restore_list/", "u_video_list_abort_remove", "u_video_list_remove", "restored_community_video_list")
 });
-
-on('#ajax', 'click', '.u_add_video_in_list', function() {
-  add_item_in_list(this, '/video/user_progs/copy_video_in_list/', "u_add_video_in_list", "u_remove_video_from_list")
-});
-on('#ajax', 'click', '.u_remove_video_from_list', function() {
-  remove_item_from_list(this, '/video/user_progs/uncopy_video_from_list/', "u_remove_video_from_list", "u_add_video_in_list")
-});

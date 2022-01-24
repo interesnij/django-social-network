@@ -325,27 +325,6 @@ class PhotoListCommunityRecover(View):
         else:
             raise Http404
 
-class AddPhotoInCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
-
-        if request.is_ajax() and not list.is_item_in_list(photo.pk) and request.user.is_administrator_of_community(list.community.pk):
-            list.photo_list.add(photo)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemovePhotoFromCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(photo.pk) and request.user.is_administrator_of_community(list.community.pk):
-            list.photo_list.remove(photo)
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class CommunityChangePhotoPosition(View):
     def post(self,request,*args,**kwargs):

@@ -128,10 +128,3 @@ on('#ajax', 'click', '.c_video_create_window', function(e) {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/video/community_progs/create_video/" + pk + "/", "item_fullscreen");
 });
-
-on('#ajax', 'click', '.c_add_video_in_list', function() {
-  add_item_in_list(this, '/video/community_progs/copy_video_in_list/', "c_add_video_in_list", "c_remove_video_from_list")
-});
-on('#ajax', 'click', '.c_remove_video_from_list', function() {
-  remove_item_from_list(this, '/video/community_progs/uncopy_video_from_list/', "c_remove_video_from_list", "c_add_video_in_list")
-});

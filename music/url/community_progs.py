@@ -9,9 +9,7 @@ urlpatterns = [
     url(r'^restore_list/(?P<pk>\d+)/$', CommunityPlaylistRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddPlayListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovePlayListFromCommunityCollections.as_view()),
-
-    url(r'^copy_track_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddTrackInCommunityList.as_view()),
-    url(r'^uncopy_track_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemoveTrackFromCommunityList.as_view()),
+    
     url(r'^add_track/(?P<pk>\d+)/$', CommunityTrackCreate.as_view()),
     url(r'^edit_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackEdit.as_view()),
     url(r'^delete_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackRemove.as_view()),

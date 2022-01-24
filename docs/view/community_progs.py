@@ -30,25 +30,6 @@ class RemoveDocListFromCommunityCollections(View):
             return HttpResponseBadRequest()
 
 
-class AddDocInCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.doc_list.add(doc)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveDocFromCommunityList(View):
-    def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["doc_pk"]), DocsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and list.is_item_in_list(doc.pk) and request.user.is_staff_of_community(list.community.pk):
-            list.doc_list.remove(doc)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class CommunityDocCreate(TemplateView):
     template_name = None
 

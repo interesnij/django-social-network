@@ -343,28 +343,6 @@ class UserVideolistRecover(View):
         else:
             raise Http404
 
-
-class AddVideoInUserList(View):
-    def get(self, request, *args, **kwargs):
-        video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and not list.is_item_in_list(video.pk):
-            list.video_list.add(video)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveVideoFromUserList(View):
-    def get(self, request, *args, **kwargs):
-        video = Video.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(video.pk):
-            list.video_list.remove(video)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserChangeVideoPosition(View):
     def post(self,request,*args,**kwargs):
         import json

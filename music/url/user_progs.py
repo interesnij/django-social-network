@@ -12,7 +12,6 @@ urlpatterns = [
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeMusicPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeMusicListPosition.as_view()),
 
-    url(r'^copy_track_in_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddTrackInUserList.as_view()),
     url(r'^uncopy_track_from_list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemoveTrackFromUserList.as_view()),
     url(r'^create_track/(?P<pk>\d+)/$', UserTrackCreate.as_view()),
     url(r'^edit_track/(?P<pk>\d+)/$', UserTrackEdit.as_view()),

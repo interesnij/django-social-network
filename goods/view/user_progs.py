@@ -367,29 +367,6 @@ class GoodCommentUserRecover(View):
         else:
             raise Http404
 
-
-class AddGoodInUserList(View):
-    def get(self, request, *args, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
-
-        if request.is_ajax() and not list.is_item_in_list(good.pk):
-            list.good_list.add(good)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveGoodFromUserList(View):
-    def get(self, request, *args, **kwargs):
-        good = Good.objects.get(pk=self.kwargs["pk"])
-        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(good.pk):
-            list.good_list.remove(good)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserChangeGoodPosition(View):
     def post(self,request,*args,**kwargs):
         import json

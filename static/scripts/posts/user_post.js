@@ -126,13 +126,6 @@ on('#ajax', 'click', '#u_edit_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_add_post_in_list', function() {
-  add_item_in_list(this, '/posts/user_progs/copy_post_in_list/', "u_add_post_in_list", "u_remove_post_from_list")
-});
-on('#ajax', 'click', '.u_remove_post_from_list', function() {
-  remove_item_from_list(this, '/posts/user_progs/uncopy_post_from_list/', "u_remove_post_from_list", "u_add_post_in_list")
-});
-
 on('#ajax', 'click', '#u_add_post_list_btn', function() {
   form = this.parentElement.parentElement.parentElement
   form_data = new FormData(form);

@@ -333,27 +333,6 @@ class PhotoListUserRecover(View):
         else:
             raise Http404
 
-
-class AddPhotoInUserList(View):
-    def get(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and not list.is_item_in_list(photo.pk):
-            list.photo_list.add(photo)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemovePhotoFromUserList(View):
-    def get(self, request, *args, **kwargs):
-        photo = Photo.objects.get(pk=self.kwargs["pk"])
-        list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(photo.pk):
-            list.photo_list.remove(photo)
-            return HttpResponse()
-        else:
-            raise Http404
-
 class UserChangePhotoPosition(View):
     def post(self,request,*args,**kwargs):
         import json

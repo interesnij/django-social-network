@@ -31,31 +31,6 @@ class RemoveDocListFromUserCollections(View):
             return HttpResponse()
 
 
-class AddDocInUserList(View):
-    """
-    Добавляем документ в любой список, если его там нет
-    """
-    def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and not list.is_item_in_list(doc.pk):
-            list.doc_list.add(doc)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveDocFromUserList(View):
-    """
-    Удаляем документ из любого списка, если он там есть
-    """
-    def get(self, request, *args, **kwargs):
-        doc, list = Doc.objects.get(pk=self.kwargs["pk"]), DocsList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(doc.pk):
-            list.doc_list.remove(doc)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserDocListCreate(TemplateView):
     template_name = None
 

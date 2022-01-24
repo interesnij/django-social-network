@@ -31,28 +31,6 @@ class RemovePlayListFromUserCollections(View):
         else:
             return HttpResponse()
 
-class AddTrackInUserList(View):
-    def get(self, request, *args, **kwargs):
-        track = Music.objects.get(pk=self.kwargs["pk"])
-        list = MusicList.objects.get(pk=self.kwargs["list_pk"])
-
-        if request.is_ajax() and not list.is_item_in_list(track.pk):
-            list.playlist.add(track)
-            return HttpResponse()
-        else:
-            raise Http404
-
-class RemoveTrackFromUserList(View):
-    def get(self, request, *args, **kwargs):
-        track = Music.objects.get(pk=self.kwargs["pk"])
-        list = MusicList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and list.is_item_in_list(track.pk):
-            list.playlist.remove(track)
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserPlaylistCreate(TemplateView):
     template_name = None
 

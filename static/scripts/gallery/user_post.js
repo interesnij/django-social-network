@@ -220,13 +220,6 @@ on('#ajax', 'change', '#u_photo_comment_attach', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.u_add_photo_in_list', function() {
-  add_item_in_list(this, '/gallery/user_progs/copy_photo_in_list/', "u_add_photo_in_list", "u_remove_photo_from_list")
-});
-on('#ajax', 'click', '.u_remove_photo_from_list', function() {
-  remove_item_from_list(this, '/gallery/user_progs/uncopy_photo_from_list/', "u_remove_photo_from_list", "u_add_photo_in_list")
-});
-
 on('#ajax', 'click', '.mob_u_photo_off_comment', function() {
   mob_send_change(this, "/gallery/user_progs/off_comment/", "mob_u_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

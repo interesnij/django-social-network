@@ -153,13 +153,6 @@ on('#ajax', 'click', '.c_photo_dislike2', function() {
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_comment_dislikes")
 });
 
-on('#ajax', 'click', '.c_add_photo_in_list', function() {
-  add_item_in_list(this, '/gallery/community_progs/copy_photo_in_list/', "c_add_photo_in_list", "c_remove_photo_from_list")
-});
-on('#ajax', 'click', '.u_remove_photo_from_list', function() {
-  remove_item_from_list(this, '/gallery/community_progs/uncopy_photo_from_list/', "c_remove_photo_from_list", "c_add_photo_in_list")
-});
-
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {
   mob_send_change(this, "/gallery/community_progs/off_comment/", "mob_c_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

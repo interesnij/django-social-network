@@ -51,13 +51,6 @@ on('body', 'click', '.u_doc_restore', function() {
   link.send();
 });
 
-on('#ajax', 'click', '.u_add_doc_in_list', function() {
-  add_item_in_list(this, '/docs/user_progs/copy_doc_in_list/', "u_add_doc_in_list", "u_remove_doc_from_list")
-});
-on('#ajax', 'click', '.u_remove_doc_from_list', function() {
-  remove_item_from_list(this, '/docs/user_progs/uncopy_doc_from_list/', "u_remove_doc_from_list", "u_add_doc_in_list")
-});
-
 on('#ajax', 'click', '#u_create_doc_btn', function() {
   form = document.querySelector("#u_doc_create");
   form_data = new FormData(form);
