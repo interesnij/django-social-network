@@ -1,297 +1,334 @@
 from django.views.generic.base import TemplateView
 from communities.models import Community
+from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from posts.forms import PostForm
-from posts.models import Post
-from music.models import MusicList, Music
+from posts.models import Post, PostsList
+from music.models import Music, MusicList
 from users.models import User
 from common.check.user import check_user_can_get_list
 from common.check.community import check_can_get_lists
-from common.processing.post import repost_message_send
-from common.templates import get_detect_platform_template
-from django.views import View
 
 
 class UUCMMusicWindow(TemplateView):
-    """
-    форма репоста аудиозаписи пользователя к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.can_copy_item = self.track.list.is_user_can_copy_el(request.user.pk)
-        if self.track.creator != request.user:
-            check_user_can_get_list(request.user, self.track.creator)
-        self.template_name = get_detect_platform_template("music/repost/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.music, self.template_name = Music.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("music/repost/u_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.music.list.is_user_can_copy_el(request.user.pk)
+        if self.music.creator != request.user:
+            check_user_can_get_list(request.user, self.music.creator)
         return super(UUCMMusicWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMMusicWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.track
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(UUCMMusicWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.music, self.can_copy_item
+        return c
 
 class CUCMMusicWindow(TemplateView):
-    """
-    форма репоста аудиозаписи сообщества к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.can_copy_item = self.track.list.is_user_can_copy_el(request.user.pk)
-        check_can_get_lists(request.user, self.track.community)
-        self.template_name = get_detect_platform_template("music/repost/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.music, self.template_name = Music.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("music/repost/c_ucm_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.music.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.music.community)
         return super(CUCMMusicWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMMusicWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.track
-        context["community"] = self.track.community
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(CUCMMusicWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.music, self.music.community, self.can_copy_item
+        return c
+
 
 class UUCMMusicListWindow(TemplateView):
-    """
-    форма репоста плейлиста пользователя к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist = MusicList.objects.get(pk=self.kwargs["pk"])
-        self.can_copy_item = self.playlist.is_user_can_copy_el(request.user.pk)
-        if self.playlist.creator != request.user:
-            check_user_can_get_list(request.user, self.playlist.creator)
-        self.template_name = get_detect_platform_template("music/repost/u_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.list, self.template_name = MusicList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("music/repost/u_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        if self.list.creator != request.user:
+            check_user_can_get_list(request.user, self.user)
         return super(UUCMMusicListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UUCMMusicListWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.playlist
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(UUCMMusicListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["can_copy_item"] = PostForm(), self.list, self.can_copy_item
+        return c
 
 class CUCMMusicListWindow(TemplateView):
-    """
-    форма репоста плейлиста сообщества к себе на стену, в свои сообщества, в несколько сообщений
-    """
     template_name = None
 
     def get(self,request,*args,**kwargs):
-        self.playlist = MusicList.objects.get(pk=self.kwargs["pk"])
-        self.can_copy_item = self.playlist.is_user_can_copy_el(request.user.pk)
-        check_can_get_lists(request.user, self.playlist.community)
-        self.template_name = get_detect_platform_template("music/repost/c_ucm_list_music.html", request.user, request.META['HTTP_USER_AGENT'])
+        from common.templates import get_detect_platform_template
+
+        self.list, self.template_name = MusicList.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("music/repost/c_ucm_list.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.can_copy_item = self.list.is_user_can_copy_el(request.user.pk)
+        check_can_get_lists(request.user, self.list.community)
         return super(CUCMMusicListWindow,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CUCMMusicListWindow,self).get_context_data(**kwargs)
-        context["form"] = PostForm()
-        context["object"] = self.playlist
-        context["community"] = self.playlist.community
-        context["can_copy_item"] = self.can_copy_item
-        return context
+        c = super(CUCMMusicListWindow,self).get_context_data(**kwargs)
+        c["form"], c["object"], c["community"], c["can_copy_item"] = PostForm(), self.list, self.list.community, self.can_copy_item
+        return c
 
 
 class UUMusicRepost(View):
-    """
-    создание репоста записи пользователя на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        track, user, attach = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        music, form_post, attach, lists, count, creator = Music.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if music.creator.pk != creator.pk:
+            check_user_can_get_list(creator, music.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=user, community=None, attach="mus"+str(track.pk))
-            track.item.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
+            parent = Post.create_parent_post(creator=music.creator, community=None, attach="mus"+str(music.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                user_notify(creator, None, parent.pk, "MUS", "create_u_music_notify", "RE")
+                user_wall(creator, None, parent.pk, "MUS", "create_u_music_wall", "RE")
+
+            music.repost += count
+            music.save(update_fields=["repost"])
+            creator.plus_posts(count)
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CUMusicRepost(View):
-    """
-    создание репоста записи сообщества на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        track, community, form_post, attach = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        check_can_get_lists(request.user, community)
+        from common.notify.notify import community_notify, community_wall
+
+        music, form_post, attach, lists, count, creator = Music.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, music.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=request.user, community=community, attach="mus"+str(track.pk))
-            track.item.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent, community=None)
+            parent = Post.create_parent_post(creator=music.creator, community=music.community, attach="mus"+str(music.pk))
+
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                community_notify(creator, parent.community, None, parent.pk, "MUS", "create_c_music_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "MUS", "create_c_music_wall", "RE")
+
+            music.repost += count
+            music.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 
 class UCMusicRepost(View):
-    """
-    создание репоста записи пользователя на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        track, user = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        music, form_post, attach, lists, count, creator = Music.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if music.creator.pk != creator.pk:
+            check_user_can_get_list(creator, music.creator)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, attach="mus"+str(track.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=music.creator, community=None, attach="mus"+str(music.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community.pk, parent.pk, "MUS", "create_u_music_notify", "CR")
+                    user_wall(creator, community.pk, parent.pk, "MUS", "create_u_music_wall", "CR")
+
+            music.repost += count
+            music.save(update_fields=["repost"])
         return HttpResponse()
 
+
 class CCMusicRepost(View):
-    """
-    создание репоста записи сообщества на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        track, community = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        communities = request.POST.getlist("communities")
-        lists, attach = request.POST.getlist("lists"), request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import community_notify, community_wall
+
+        music, form_post, attach, lists, count, creator = Music.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, music.community)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=photo.creator, community=community, attach="mus"+str(track.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=music.creator, community=music.community, attach="mus"+str(music.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    community_notify(creator, parent.community, community.pk, parent.pk, "MUS", "create_c_music_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "MUS", "create_c_music_wall", "CR")
+
+            music.repost += count
+            music.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class UMMusicRepost(View):
-    """
-    создание репоста записи пользователя в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        track, user = Music.objects.get(pk=self.kwargs["track_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
+        from common.processing.post import repost_message_send
+
+        music = Music.objects.get(pk=self.kwargs["pk"])
+        if music.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
-        repost_message_send(track, "mus"+str(track.pk), None, request)
+        repost_message_send(music, "mus"+music.pk), None, request)
+
         return HttpResponse()
 
+
 class CMMusicRepost(View):
-    """
-    создание репоста записи сообщества в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        track, community = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        repost_message_send(track, "mus"+str(track.pk), community, request)
+        from common.processing.post import repost_message_send
+
+        music = Music.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, music.community)
+        repost_message_send(music, "mus"+str(music.pk), music.community, request)
         return HttpResponse()
 
 
 class UUMusicListRepost(View):
-    """
-    создание репоста плейлиста пользователя на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        playlist, user, attach = MusicList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        list, form_post, attach, lists, count, creator = MusicList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if list.creator.pk != creator.pk:
+            check_user_can_get_list(creator, list.creator)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, community=None, attach="lmu"+str(playlist.pk))
-            playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lmu"+str(list.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=request.user, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                user_notify(creator, None, parent.pk, "MUL", "create_u_music_notify", "RE")
+                user_wall(creator, None, parent.pk, "MUL", "create_u_music_wall", "RE")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
+            creator.plus_posts(count)
+
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 class CUMusicListRepost(View):
-    """
-    создание репоста плейлиста сообщества на свою стену
-    """
     def post(self, request, *args, **kwargs):
-        playlist, community, form_post, attach = MusicList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items')
-        check_can_get_lists(request.user, community)
+        from common.notify.notify import community_notify, community_wall
+
+        list, form_post, attach, lists, count, creator = MusicList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, list.community)
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, community=community, attach="lmu"+str(playlist.pk))
-            playlist.post.add(parent)
-            new_post = post.create_post(creator=request.user, list=post.list, attach=attach, is_signature=False, text=post.text, comments_enabled=post.comments_enabled, parent=parent,community=None)
+            parent = Post.create_parent_post(creator=list.creator, community=list.community, attach="lmu"+str(list.pk))
+
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                count += 1
+
+                community_notify(creator, parent.community, None, parent.pk, "MUL", "create_c_music_notify", "RE")
+                community_wall(creator, parent.community, None, parent.pk, "MUL", "create_c_music_wall", "RE")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
+
+            creator.plus_posts(count)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
 
 
 class UCMusicListRepost(View):
-    """
-    создание репоста плейлиста пользователя на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        playlist, user = MusicList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import user_notify, user_wall
+
+        list, form_post, attach, lists, count, creator = MusicList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        if list.creator.pk != creator.pk:
+            check_user_can_get_list(creator, list.creator)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=list.creator, community=None, attach="lmu"+str(list.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    user_notify(creator, community.pk, parent.pk, "MUL", "create_u_music_notify", "CR")
+                    user_wall(creator, community.pk, parent.pk, "MUL", "create_u_music_wall", "CR")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class CCMusicListRepost(View):
-    """
-    создание репоста плейлиста сообщества на стены списка сообществ, в которых пользователь - управленец
-    """
     def post(self, request, *args, **kwargs):
-        playlist, community = MusicList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        communities = request.POST.getlist("communities")
-        attach = request.POST.getlist('attach_items')
-        if not communities:
-            return HttpResponseBadRequest()
-        form_post = PostForm(request.POST)
+        from common.notify.notify import community_notify, community_wall
+
+        list, form_post, attach, lists, count, creator = MusicList.objects.get(pk=self.kwargs["pk"]), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), 0, request.user
+        check_can_get_lists(creator, list.community)
+
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            parent = Post.create_parent_post(creator=playlist.creator, attach="lmu"+str(playlist.pk))
-            for community_id in communities:
-                if request.user.is_staff_of_community(community_id):
-                    new_post = post.create_post(creator=request.user, list=post.list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on,community=Community.objects.get(pk=community_id))
+            parent = Post.create_parent_post(creator=list.creator, community=list.community, attach="lmu"+str(list.pk))
+            for list_pk in lists:
+                post_list = PostsList.objects.get(pk=list_pk)
+                if post_list.is_user_can_create_el(creator.pk):
+                    community = post_list.community
+                    post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=post.is_signature, votes_on=post.votes_on, community=community)
+                    count += 1
+                    community.plus_posts(1)
+
+                    community_notify(creator, parent.community, community.pk, parent.pk, "MUL", "create_c_music_notify", "CR")
+                    community_wall(creator, parent.community, community.pk, parent.pk, "MUL", "create_c_music_wall", "CR")
+
+            list.repost += count
+            list.save(update_fields=["repost"])
         return HttpResponse()
 
 
 class UMMusicListRepost(View):
-    """
-    создание репоста плейлиста пользователя в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        playlist, user = MusicList.objects.get(pk=self.kwargs["list_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if user != request.user:
+        from common.processing.post import repost_message_send
+
+        list = MusicList.objects.get(pk=self.kwargs["pk"])
+        if list.creator.pk != request.user.pk:
             check_user_can_get_list(request.user, user)
-        repost_message_send(playlist, "lmu"+str(playlist.pk), None, request)
+        repost_message_send(list, "lmu"+str(list.pk), None, request)
+
         return HttpResponse()
 
 
 class CMMusicListRepost(View):
-    """
-    создание репоста плейлиста сообщества в беседы, в которых состоит пользователь
-    """
     def post(self, request, *args, **kwargs):
-        playlist, community = MusicList.objects.get(pk=self.kwargs["list_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        repost_message_send(playlist, "lmu"+str(playlist.pk), community, request)
+        from common.processing.post import repost_message_send
+
+        list = MusicList.objects.get(pk=self.kwargs["pk"])
+        check_can_get_lists(request.user, list.community)
+        repost_message_send(list, "lmu"+str(list.pk), list.community, request)
         return HttpResponse()
