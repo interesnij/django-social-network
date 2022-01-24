@@ -9,20 +9,20 @@
       <div class="card-body">
 
         <div class="is_block_paginate">
-          {% for object in object_list %}
+          {% for list in object_list %}
           <div class="media pointer border-bottom
-            {% if not object.pk == object.pk %}
+            {% if not object.pk == list.pk %}
               items_lists_toggle
             {% endif %}"
             data-link="load_post_list"
-            data-pk="{{ object.pk }}"
+            data-pk="{{ list.pk }}"
             style="position:relative;margin-bottom: 5px;padding-bottom: 5px;"
             >
             <div class="media-body">
               <h6 class="mb-0" style="padding-top: 10px;">
-                {{ object.name }}
+                {{ list.name }}
               </h6>
-              <p>{{ object.count_items_ru }}</p>
+              <p>{{ list.count_items_ru }}</p>
             </div>
             <span class="custom_color border item_attach_circle" tooltip="Выбрать список" flow="up">
               <svg class="svg_default" fill="currentColor" viewBox="2 2 20 20">
