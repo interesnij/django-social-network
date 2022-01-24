@@ -49,9 +49,13 @@ def get_post_attach(post, user):
                 from docs.models import Doc
                 doc = Doc.objects.get(pk=item[3:], type="PUB")
                 if user.is_authenticated:
-                    drops = '<span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                    if doc.community:
+                        case_add, case_edit, case_delete = "c_ucm_doc_repost", "c_doc_edit", "c_doc_remove"
+                    else:
+                        case_add, case_edit, case_delete = "u_ucm_doc_repost", "u_doc_edit", "u_doc_remove"
+                    drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
                     if doc.list.is_user_can_create_el(user.pk):
-                        drops += '<span class="dropdown-item case_doc_edit">Изменить</span><span class="dropdown-item case_doc_remove">Удалить</span>'
+                        drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
                     if user.is_moderator():
                         drops += '<span class="dropdown-item case_close_doc">Закрыть</span>'
                     else:
