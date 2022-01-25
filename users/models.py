@@ -63,6 +63,20 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_post_for_id(self, item):
+        if item[:3] == "pos":
+            from posts.models import Post
+            return Post.objects.get(pk=item[3:])
+        elif item[:3] == "pho":
+            from gallery.models import Photo
+            return Photo.objects.get(pk=item[3:])
+        elif item[:3] == "goo":
+            from goods.models import Good
+            return Good.objects.get(pk=item[3:])
+        elif item[:3] == "vid":
+            from video.models import Video
+            return Video.objects.get(pk=item[3:])
+
     def get_or_create_manager_chat_pk(self):
         from chat.models import Chat, ChatUsers
         if Chat.objects.filter(creator_id=self.pk, type=Chat.MANAGER).exists():

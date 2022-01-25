@@ -148,9 +148,9 @@ class PostUserEdit(TemplateView):
 
 class PostCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, post = CommentForm(request.POST), Post.objects.get(pk=request.POST.get('item'))
+        form_post, item = CommentForm(request.POST), request.user.get_item_for_id(request.POST.get('item'))
 
-        if request.is_ajax() and post.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and post.comments_enabled:
+        if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
@@ -166,17 +166,17 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, parent = CommentForm(request.POST), PostComment.objects.get(pk=request.POST.get('comment'))
+        form_post, parent = CommentForm(request.POST), request.user.get_comment_for_id(request.POST.get('comment'))
+        item = parent.get_item()
 
-        if request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
+        if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment=form_post.save(commit=False)
-            list = parent.get_item().list
-            if request.POST.get('text') and list.is_user_can_create_comment(request.user.pk) or request.POST.get('attach_items') or request.POST.get('sticker'):
+            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
-                new_comment = comment.create_comment(commenter=request.user, post=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
+                new_comment = comment.create_comment(commenter=request.user, item=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'posts/u_post_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
+            return render_for_platform(request, 'base_block/desctop/items/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
         else:
             return HttpResponseBadRequest()
 

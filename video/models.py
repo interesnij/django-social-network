@@ -1044,7 +1044,7 @@ class VideoComment(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True)
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
+    item = models.ForeignKey(Video, on_delete=models.CASCADE, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
@@ -1063,9 +1063,9 @@ class VideoComment(models.Model):
 
     def get_item(self):
         if self.parent:
-            return self.parent.video
+            return self.parent.item
         else:
-            return self.video
+            return self.item
 
     def all_visits_count(self):
         from stst.models import VideoNumbers
@@ -1106,17 +1106,17 @@ class VideoComment(models.Model):
         return VideoCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
 
     @classmethod
-    def create_comment(cls, commenter, attach, video, parent, text, community, sticker):
+    def create_comment(cls, commenter, attach, item, parent, text, community, sticker):
         from common.processing_2 import get_text_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         if sticker:
-            comment = VideoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, video=video)
+            comment = VideoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=item)
         else:
-            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, video=video, text=get_text_processing(text))
-        video.comment += 1
-        video.save(update_fields=["comment"])
+            comment = VideoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=item, text=get_text_processing(text))
+        item.comment += 1
+        item.save(update_fields=["comment"])
         if parent:
             if community:
                 from common.notify.notify import community_notify, community_wall
@@ -1259,13 +1259,13 @@ class VideoComment(models.Model):
             list.count -= 1
             list.save(update_fields=["count"])
         if self.parent:
-            self.parent.video.comment -= 1
-            self.parent.video.save(update_fields=["comment"])
+            self.parent.item.comment -= 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
-            self.video.comment -= 1
-            self.video.save(update_fields=["comment"])
+            self.item.comment -= 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
@@ -1281,13 +1281,13 @@ class VideoComment(models.Model):
             list.count += 1
             list.save(update_fields=["count"])
         if self.parent:
-            self.parent.video.comment += 1
-            self.parent.video.save(update_fields=["comment"])
+            self.parent.item.comment += 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
-            self.video.comment += 1
-            self.video.save(update_fields=["comment"])
+            self.item.comment += 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
@@ -1304,13 +1304,13 @@ class VideoComment(models.Model):
             list.count -= 1
             list.save(update_fields=["count"])
         if self.parent:
-            self.parent.video.comment -= 1
-            self.parent.video.save(update_fields=["comment"])
+            self.parent.item.comment -= 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="POSC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
-            self.video.comment -= 1
-            self.video.save(update_fields=["comment"])
+            self.item.comment -= 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():
@@ -1326,13 +1326,13 @@ class VideoComment(models.Model):
             list.count += 1
             list.save(update_fields=["count"])
         if self.parent:
-            self.parent.video.comment += 1
-            self.parent.video.save(update_fields=["comment"])
+            self.parent.item.comment += 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
-            self.video.comment += 1
-            self.video.save(update_fields=["comment"])
+            self.item.comment += 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="VIDC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="VIDC", object_id=self.pk, verb="COM").exists():

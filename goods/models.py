@@ -1147,7 +1147,7 @@ class GoodComment(models.Model):
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
 	text = models.TextField(blank=True,null=True)
-	good = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
+	item = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
 	type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
 	sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
@@ -1205,18 +1205,18 @@ class GoodComment(models.Model):
 			return ''
 
 	@classmethod
-	def create_comment(cls, commenter, attach, good, parent, text, community, sticker):
+	def create_comment(cls, commenter, attach, item, parent, text, community, sticker):
 		from common.notify.notify import community_wall, community_notify, user_wall, user_notify
 		from common.processing_2 import get_text_processing
 
 		_attach = str(attach)
 		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 		if sticker:
-			comment = GoodComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, good=good)
+			comment = GoodComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=item)
 		else:
-			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, good=good, text=get_text_processing(text))
-		good.comment += 1
-		good.save(update_fields=["comment"])
+			comment = GoodComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=item, text=get_text_processing(text))
+		item.comment += 1
+		item.save(update_fields=["comment"])
 		if comment.parent:
 			if community:
 				community_notify(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
@@ -1225,7 +1225,7 @@ class GoodComment(models.Model):
 				user_notify(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
 				user_wall(comment.commenter, None, comment.pk, "GOOC", "u_good_comment_notify", "REP")
 		else:
-			if comment.good.community:
+			if comment.item.community:
 				community_notify(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 				community_wall(comment.commenter, community, None, comment.pk, "GOOC", "u_good_comment_notify", "COM")
 			else:
@@ -1355,13 +1355,13 @@ class GoodComment(models.Model):
 			self.type = GoodComment.EDITED_DELETED
 		self.save(update_fields=['type'])
 		if self.parent:
-			self.parent.good.comment -= 1
-			self.parent.good.save(update_fields=["comment"])
+			self.parent.item.comment -= 1
+			self.parent.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
 		else:
-			self.good.comment -= 1
-			self.good.save(update_fields=["comment"])
+			self.item.comment -= 1
+			self.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
@@ -1374,13 +1374,13 @@ class GoodComment(models.Model):
 			self.type = GoodComment.EDITED
 		self.save(update_fields=['type'])
 		if self.parent:
-			self.parent.good.comment += 1
-			self.parent.good.save(update_fields=["comment"])
+			self.parent.item.comment += 1
+			self.parent.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
 		else:
-			self.good.comment += 1
-			self.good.save(update_fields=["comment"])
+			self.item.comment += 1
+			self.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
@@ -1394,13 +1394,13 @@ class GoodComment(models.Model):
 			self.type = GoodComment.EDITED_CLOSED
 		self.save(update_fields=['type'])
 		if self.parent:
-			self.parent.good.comment -= 1
-			self.parent.good.save(update_fields=["comment"])
+			self.parent.item.comment -= 1
+			self.parent.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="C")
 		else:
-			self.good.comment -= 1
-			self.good.save(update_fields=["comment"])
+			self.item.comment -= 1
+			self.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="C")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
@@ -1413,13 +1413,13 @@ class GoodComment(models.Model):
 			self.type = GoodComment.EDITED
 		self.save(update_fields=['type'])
 		if self.parent:
-			self.parent.good.comment += 1
-			self.parent.good.save(update_fields=["comment"])
+			self.parent.item.comment += 1
+			self.parent.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="REP").update(status="R")
 		else:
-			self.good.comment += 1
-			self.good.save(update_fields=["comment"])
+			self.item.comment += 1
+			self.item.save(update_fields=["comment"])
 			if Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").exists():
 				Notify.objects.filter(type="GOOC", object_id=self.pk, verb__contains="COM").update(status="R")
 		if Wall.objects.filter(type="GOOC", object_id=self.pk, verb="COM").exists():
@@ -1431,9 +1431,9 @@ class GoodComment(models.Model):
 
 	def get_item(self):
 		if self.parent:
-			return self.parent.good
+			return self.parent.item
 		else:
-			return self.good
+			return self.item
 
 	def get_format_text(self):
 		from common.utils import hide_text

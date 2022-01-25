@@ -1085,7 +1085,7 @@ class PhotoComment(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Комментатор")
     text = models.TextField(blank=True,null=True)
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
+    item = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
     type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
@@ -1158,19 +1158,19 @@ class PhotoComment(models.Model):
             return ''
 
     @classmethod
-    def create_comment(cls, commenter, attach, photo, parent, text, community, sticker):
+    def create_comment(cls, commenter, attach, item, parent, text, community, sticker):
         from common.notify.notify import community_wall, community_notify, user_wall, user_notify
         from common.processing_2 import get_text_processing
 
         _attach = str(attach)
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
         _text = get_text_processing(text)
-        photo.comment += 1
-        photo.save(update_fields=["comment"])
+        item.comment += 1
+        item.save(update_fields=["comment"])
         if sticker:
-            comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, photo=photo)
+            comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=item)
         else:
-            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, photo=photo, text=_text)
+            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=item, text=_text)
         if comment.parent:
             if community:
                 community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
@@ -1179,7 +1179,7 @@ class PhotoComment(models.Model):
                 user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
                 user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
         else:
-            if comment.photo.community:
+            if comment.item.community:
                 community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
                 community_wall(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
             else:
@@ -1233,13 +1233,13 @@ class PhotoComment(models.Model):
             self.type = PhotoComment.EDITED
         self.save(update_fields=['type'])
         if self.parent:
-            self.parent.photo.comment += 1
-            self.parent.photo.save(update_fields=["comment"])
+            self.parent.item.comment += 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
-            self.photo.comment += 1
-            self.photo.save(update_fields=["comment"])
+            self.item.comment += 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
@@ -1253,13 +1253,13 @@ class PhotoComment(models.Model):
             self.type = PhotoComment.EDITED_CLOSED
         self.save(update_fields=['type'])
         if self.parent:
-            self.parent.photo.comment -= 1
-            self.parent.photo.save(update_fields=["comment"])
+            self.parent.item.comment -= 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
-            self.photo.comment -= 1
-            self.photo.save(update_fields=["comment"])
+            self.item.comment -= 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
@@ -1272,13 +1272,13 @@ class PhotoComment(models.Model):
             self.type = PhotoComment.EDITED
         self.save(update_fields=['type'])
         if self.parent:
-            self.parent.photo.comment += 1
-            self.parent.photo.save(update_fields=["comment"])
+            self.parent.item.comment += 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="R")
         else:
-            self.photo.comment += 1
-            self.photo.save(update_fields=["comment"])
+            self.item.comment += 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="R")
         if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
@@ -1375,9 +1375,9 @@ class PhotoComment(models.Model):
 
     def get_item(self):
         if self.parent:
-            return self.parent.photo
+            return self.parent.item
         else:
-            return self.photo
+            return self.item
 
 
 class PhotoListPerm(models.Model):
