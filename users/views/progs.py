@@ -94,7 +94,7 @@ class PhoneSend(View):
 class CommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
-        
+
         form_post, item = CommentForm(request.POST), request.user.get_item(request.POST.get('item'))
 
         if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
@@ -103,7 +103,7 @@ class CommentUserCreate(View):
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
 
-                new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), post=post, text=comment.text, sticker=request.POST.get('sticker'))
+                new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), item=item, text=comment.text, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'base_block/desctop/items/parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
