@@ -148,20 +148,16 @@ class PostUserEdit(TemplateView):
 
 class PostCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, post = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Post.objects.get(pk=request.POST.get('post_pk'))
+        form_post, post = CommentForm(request.POST), Post.objects.get(pk=request.POST.get('item'))
 
-        if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
+        if request.is_ajax() and post.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and post.comments_enabled:
             comment = form_post.save(commit=False)
 
-            if request.user.pk != user.pk:
-                from common.check.user import check_user_can_get_list
-
-                check_user_can_get_list(request.user, user)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
 
                 new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), post=post, text=comment.text, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'posts/u_post_comment/parent.html', {'comment': new_comment})
+                return render_for_platform(request, 'base_block/desctop/items/parent.html', {'comment': new_comment})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -170,17 +166,13 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, user, parent = CommentForm(request.POST, request.FILES), User.objects.get(pk=request.POST.get('pk')), PostComment.objects.get(pk=request.POST.get('post_comment'))
+        form_post, parent = CommentForm(request.POST), PostComment.objects.get(pk=request.POST.get('comment'))
 
         if request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
             comment=form_post.save(commit=False)
-            if request.user != user:
-                from common.check.user import check_user_can_get_list
-
-                check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
+            list = parent.get_item().list
+            if request.POST.get('text') and list.is_user_can_create_comment(request.user.pk) or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
-
                 new_comment = comment.create_comment(commenter=request.user, post=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
