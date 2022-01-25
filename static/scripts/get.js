@@ -86,71 +86,25 @@ on('#ajax', 'click', '.smile_dropdown', function() {
 
 on('#ajax', 'click', '.comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
-  if (form.classList.contains("u_pos_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/user_progs/add_comment/')
-} else if (form.classList.contains("c_pos_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/posts/community_progs/add_comment/')
-} else if (form.classList.contains("u_vid_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/video/user_progs/add_comment/')
-} else if (form.classList.contains("c_vid_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/video/community_progs/add_comment/')
-} else if (form.classList.contains("u_pho_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/user_progs/add_comment/')
-} else if (form.classList.contains("c_pho_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/gallery/community_progs/add_comment/')
-} else if (form.classList.contains("u_goo_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/user_progs/add_comment/')
-} else if (form.classList.contains("c_goo_comment")) {
-  send_comment(form, form.parentElement.previousElementSibling, '/goods/community_progs/add_comment/')
-}
+  send_comment(form, form.parentElement.previousElementSibling, '/users/progs/add_comment/')
 });
 
 on('#ajax', 'click', '.reply_comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-  if (form.classList.contains("u_pos_comment")) {
-  send_comment(form, block, '/posts/user_progs/reply_comment/')
-} else if (form.classList.contains("c_pos_comment")) {
-  send_comment(form, block, '/posts/community_progs/reply_comment/')
-} else if (form.classList.contains("u_vid_comment")) {
-  send_comment(form, block, '/video/user_progs/reply_comment/')
-} else if (form.classList.contains("c_vid_comment")) {
-  send_comment(form, block, '/video/community_progs/reply_comment/')
-} else if (form.classList.contains("u_pho_comment")) {
-  send_comment(form, block, '/gallery/user_progs/reply_comment/')
-} else if (form.classList.contains("c_pho_comment")) {
-  send_comment(form, block, '/gallery/community_progs/reply_comment/')
-} else if (form.classList.contains("u_goo_comment")) {
-  send_comment(form, block, '/goods/user_progs/reply_comment/')
-} else if (form.classList.contains("c_goo_comment")) {
-  send_comment(form, block, '/goods/community_progs/reply_comment/')
-};
-form.parentElement.style.display = "none";
-block.classList.add("replies_open")
+  send_comment(form, block, '/users/progs/reply_comment/')
+
+  form.parentElement.style.display = "none";
+  block.classList.add("replies_open")
 });
 
 on('#ajax', 'click', '.reply_parent_btn', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  if (form.classList.contains("u_pos_comment")) {
-  send_comment(form, block, '/posts/user_progs/reply_comment/')
-} else if (form.classList.contains("c_pos_comment")) {
-  send_comment(form, block, '/posts/community_progs/reply_comment/')
-} else if (form.classList.contains("u_vid_comment")) {
-  send_comment(form, block, '/video/user_progs/reply_comment/')
-} else if (form.classList.contains("c_vid_comment")) {
-  send_comment(form, block, '/video/community_progs/reply_comment/')
-} else if (form.classList.contains("u_pho_comment")) {
-  send_comment(form, block, '/gallery/user_progs/reply_comment/')
-} else if (form.classList.contains("c_pho_comment")) {
-  send_comment(form, block, '/gallery/community_progs/reply_comment/')
-} else if (form.classList.contains("u_goo_comment")) {
-  send_comment(form, block, '/goods/user_progs/reply_comment/')
-} else if (form.classList.contains("c_goo_comment")) {
-  send_comment(form, block, '/goods/community_progs/reply_comment/')
-};
-form.parentElement.style.display = "none";
-block.classList.add("replies_open");
+  send_comment(form, block, '/users/progs/reply_comment/')
+
+  form.parentElement.style.display = "none";
+  block.classList.add("replies_open");
 });
 
 on('#ajax', 'click', '.tab_smiles', function() {

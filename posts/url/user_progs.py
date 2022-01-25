@@ -9,8 +9,6 @@ urlpatterns = [
 	url(r'^save_offer_draft_post/(?P<pk>\d+)/$', UserSaveOfferDraftPost.as_view()),
 	url(r'^update_votes/(?P<pk>\d+)/$', PostGetVotes.as_view()),
 
-	url(r'^add_comment/$', PostCommentUserCreate.as_view()),
-    url(r'^reply_comment/$', PostReplyUserCreate.as_view()),
 	url(r'^edit_comment/(?P<pk>\d+)/$', PostUserCommentEdit.as_view()),
 	url(r'^delete_comment/(?P<pk>\d+)/$', PostCommentUserDelete.as_view()),
 	url(r'^restore_comment/(?P<pk>\d+)/$', PostCommentUserRecover.as_view()),

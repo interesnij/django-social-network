@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^color/(?P<color>[\w\-]+)/$', UserColorChange.as_view()),
     url(r'^phone_send/(?P<phone>\d+)/$', PhoneSend.as_view()),
     url(r'^phone_verify/(?P<phone>\d+)/(?P<code>\d+)/$', PhoneVerify.as_view()),
+
+    url(r'^add_comment/$', CommentUserCreate.as_view()),
+    url(r'^reply_comment/$', ReplyUserCreate.as_view()),
 ]
