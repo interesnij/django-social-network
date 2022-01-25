@@ -1338,25 +1338,25 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         if sticker:
-            comment = PostComment.objects.create(commenter=commenter, community=item.community, sticker_id=sticker, parent=parent, item=self)
+            comment = PostComment.objects.create(commenter=commenter, community=self.community, sticker_id=sticker, parent=parent, item=self)
         else:
-            comment = PostComment.objects.create(commenter=commenter, community=item.community, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
+            comment = PostComment.objects.create(commenter=commenter, community=self.community, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
         self.comment += 1
         self.save(update_fields=["comment"])
         if parent:
-            if item.community:
+            if self.community:
                 from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
-                community_wall(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                community_notify(comment.commenter, self.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                community_wall(comment.commenter, self.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
             else:
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
         else:
-            if item.community:
+            if self.community:
                 from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-                community_wall(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                community_notify(comment.commenter, self.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                community_wall(comment.commenter, self.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
             else:
                 from common.notify.notify import user_notify, user_wall
                 user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
