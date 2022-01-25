@@ -65,7 +65,7 @@ class GoodList(models.Model):
 	community = models.ForeignKey('communities.Community', related_name='good_lists_community', db_index=False, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 	uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 	name = models.CharField(max_length=250, verbose_name="Название")
-	type = models.CharField(max_length=6, choices=TYPE, verbose_name="Тип альбома")
+	type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип")
 	created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 	creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='good_list_creator', verbose_name="Создатель")
 	description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
@@ -1181,7 +1181,7 @@ class GoodComment(models.Model):
 	text = models.TextField(blank=True,null=True)
 	item = models.ForeignKey(Good, on_delete=models.CASCADE, null=True)
 	attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-	type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип альбома")
+	type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип коммента")
 	sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
 	like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")

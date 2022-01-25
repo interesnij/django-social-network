@@ -1,4 +1,4 @@
-{% load liked_user %}
+{% load liked_user comment %}
 
 <div class="media reply">
     {% include 'desctop/generic/user/reply_figure.html' %}
@@ -19,7 +19,7 @@
 <span class="comment_text text_support">{{ reply.get_format_text|safe }}</span>
 
 {% if reply.attach %}
-{% load comment %}
+
 {{ reply|get_attach:request.user|safe }}
 {% endif %}
 {% endif %}
