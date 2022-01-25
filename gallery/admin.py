@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gallery.models import PhotoList, Photo
+from gallery.models import PhotoList, Photo, PhotoComment
 
 
 class PhotoListAdmin(admin.ModelAdmin):
@@ -17,3 +17,4 @@ class PhotoAdmin(admin.ModelAdmin):
 
 admin.site.register(PhotoList, PhotoListAdmin)
 admin.site.register(Photo, PhotoAdmin)
+admin.site.register(PhotoComment)
