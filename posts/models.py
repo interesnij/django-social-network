@@ -1338,9 +1338,9 @@ class Post(models.Model):
         _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
 
         if sticker:
-            comment = PostComment.objects.create(commenter=commenter, community=self.community, sticker_id=sticker, parent=parent, item=self)
+            comment = PostComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=self)
         else:
-            comment = PostComment.objects.create(commenter=commenter, community=self.community, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
+            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
         self.comment += 1
         self.save(update_fields=["comment"])
         if parent:
