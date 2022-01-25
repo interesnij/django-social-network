@@ -11,4 +11,6 @@ urlpatterns = [
 
     url(r'^add_comment/$', CommentUserCreate.as_view()),
     url(r'^reply_comment/$', ReplyUserCreate.as_view()),
+    url(r'^like_comment/$', CommentLikeCreate.as_view()),
+    url(r'^dislike_comment/$', CommentDislikeCreate.as_view()),
 ]

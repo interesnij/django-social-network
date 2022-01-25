@@ -397,26 +397,24 @@ on('#ajax', 'click', '.u_dislike', function() {
   add_list_in_all_stat("dislike_user_post",item_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('#ajax', 'click', '.u_like2', function() {
+
+on('#ajax', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
-  comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_comment_likes")
-  main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("like_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
-on('#ajax', 'click', '.u_dislike2', function() {
-  _this = this;
-  item = _this.parentElement;
-  comment_pk = item.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(item, "/posts/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_comment_dislikes");
+  send_dislike(item, "/users/like_comment/?type=" + item.getAttribute("data-pk"));
+  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "comment_likes")
   main_container = document.body.querySelector(".main-container");
   add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
+on('#ajax', 'click', '.dislike2', function() {
+  _this = this;
+  item = _this.parentElement;
+  send_dislike(item, "/users/dislike_comment/?type=" + item.getAttribute("data-pk"));
+  dislike_reload(this.previousElementSibling, this.nextElementSibling, "comment_dislikes");
+  main_container = document.body.querySelector(".main-container");
+  add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
+});
+
 
 on('#ajax', 'click', '.u_post_comment_delete', function() {
   comment_delete(this, "/posts/user_progs/delete_comment/", "u_post_comment_restore")

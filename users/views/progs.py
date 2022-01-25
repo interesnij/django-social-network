@@ -145,3 +145,19 @@ class ReplyUserCreate(View):
             return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
         else:
             return HttpResponseBadRequest()
+
+class CommentLikeCreate(View):
+    def get(self, request, **kwargs):
+        type = request.GET.get('type')
+        comment = request.user.get_comment(type)
+        if not request.is_ajax():
+            raise Http404
+        return comment.send_like(request.user, None)
+
+class CommentDislikeCreate(View):
+    def get(self, request, **kwargs):
+        type = request.GET.get('type')
+        comment = request.user.get_comment(type)
+        if not request.is_ajax():
+            raise Http404
+        return comment.send_dislike(request.user, None)

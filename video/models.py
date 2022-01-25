@@ -1062,6 +1062,73 @@ class Video(models.Model):
                 user_wall(comment.commenter, None, comment.pk, "VIDC", "u_video_comment_notify", "COM")
         return comment
 
+    def send_like(self, user, community):
+        import json
+        from common.model.votes import VideoVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+        try:
+            item = VideoVotes.objects.get(parent=self, user=user)
+            if item.vote != VideoVotes.LIKE:
+                item.vote = VideoVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.like += 1
+                self.dislike -= 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.like -= 1
+                self.save(update_fields=['like'])
+        except VideoVotes.DoesNotExist:
+            VideoVotes.objects.create(parent=self, user=user, vote=VideoVotes.LIKE)
+            self.like += 1
+            self.save(update_fields=['like'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "VID", "u_video_notify", "LIK")
+                community_wall(user, community, None, self.pk, "VID", "u_video_notify", "LIK")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "VID", "u_video_notify", "LIK")
+                user_wall(user, None, self.pk, "VID", "u_video_notify", "LIK")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+    def send_dislike(self, user, community):
+        import json
+        from common.model.votes import VideoVotes
+        from django.http import HttpResponse
+        from common.notify.notify import user_notify, user_wall
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+        try:
+            item = VideoVotes.objects.get(parent=self, user=user)
+            if item.vote != VideoVotes.DISLIKE:
+                item.vote = VideoVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.like -= 1
+                self.dislike += 1
+                self.save(update_fields=['like', 'dislike'])
+            else:
+                item.delete()
+                self.dislike -= 1
+                self.save(update_fields=['dislike'])
+        except VideoVotes.DoesNotExist:
+            VideoVotes.objects.create(parent=self, user=user, vote=VideoVotes.DISLIKE)
+            self.dislike += 1
+            self.save(update_fields=['dislike'])
+            if community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(user, community, None, self.pk, "VID", "u_video_notify", "DIS")
+                community_wall(user, community, None, self.pk, "VID", "u_video_notify", "DIS")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(user, None, self.pk, "VID", "u_video_notify", "DIS")
+                user_wall(user, None, self.pk, "VID", "u_video_notify", "DIS")
+        return HttpResponse(json.dumps({"like_count": str(self.likes_count()),"dislike_count": str(self.dislikes_count())}),content_type="application/json")
+
 
 class VideoComment(models.Model):
     EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
@@ -1171,7 +1238,11 @@ class VideoComment(models.Model):
         import json
         from common.model.votes import VideoCommentVotes
         from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
+
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+
         try:
             item = VideoCommentVotes.objects.get(item=self, user=user)
             if item.vote != VideoCommentVotes.LIKE:
@@ -1211,7 +1282,11 @@ class VideoComment(models.Model):
         import json
         from common.model.votes import VideoCommentVotes
         from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
+
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+
         try:
             item = VideoCommentVotes.objects.get(item=self, user=user)
             if item.vote != VideoCommentVotes.DISLIKE:

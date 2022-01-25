@@ -877,7 +877,7 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         from django.http import HttpResponse
         from common.notify.notify import user_notify, user_wall
-        if not self.votes_on:
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
             from django.http import Http404
             raise Http404
         try:
@@ -910,7 +910,7 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         from django.http import HttpResponse
         from common.notify.notify import user_notify, user_wall
-        if not self.votes_on:
+        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
             from django.http import Http404
             raise Http404
         try:
@@ -1398,7 +1398,11 @@ class PostComment(models.Model):
         import json
         from common.model.votes import PostCommentVotes
         from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
+
+        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment() or not self.get_item().list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+
         try:
             item = PostCommentVotes.objects.get(item=self, user=user)
             if item.vote != PostCommentVotes.LIKE:
@@ -1438,7 +1442,11 @@ class PostComment(models.Model):
         import json
         from common.model.votes import PostCommentVotes
         from django.http import HttpResponse
-        from common.notify.notify import user_notify, user_wall
+
+        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment() or not self.get_item().list.is_user_can_see_el():
+            from django.http import Http404
+            raise Http404
+
         try:
             item = PostCommentVotes.objects.get(item=self, user=user)
             if item.vote != PostCommentVotes.DISLIKE:
