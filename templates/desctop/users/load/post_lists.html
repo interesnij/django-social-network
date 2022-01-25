@@ -6,18 +6,14 @@
       <button type="button" class="btn btn-sm border form_btn" disabled id="add_list_selected_lists_btn">
         Выберите списки
       </button>
-      <div class="card-body">{{ object }}
+      <div class="card-body">
 
         <div class="is_block_paginate">
           {% for list in object_list %}
-          <div class="media pointer border-bottom
-            {% if not object.pk == list.pk %}
-              items_lists_toggle
-            {% endif %}"
+          <div class="media pointer border-bottom items_lists_toggle"
             data-link="load_post_list"
             data-pk="{{ list.pk }}"
-            style="position:relative;margin-bottom: 5px;padding-bottom: 5px;"
-            >
+            style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
             <div class="media-body">
               <h6 class="mb-0" style="padding-top: 10px;">
                 {{ list.name }}
