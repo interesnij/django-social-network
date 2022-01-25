@@ -148,7 +148,7 @@ class PostUserEdit(TemplateView):
 
 class PostCommentUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, item = CommentForm(request.POST), request.user.get_item_for_id(request.POST.get('item'))
+        form_post, item = CommentForm(request.POST), request.user.get_item(request.POST.get('item'))
 
         if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment = form_post.save(commit=False)
@@ -166,7 +166,7 @@ class PostCommentUserCreate(View):
 
 class PostReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
-        form_post, parent = CommentForm(request.POST), request.user.get_comment_for_id(request.POST.get('comment'))
+        form_post, parent = CommentForm(request.POST), request.user.get_comment(request.POST.get('comment'))
         item = parent.get_item()
 
         if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:

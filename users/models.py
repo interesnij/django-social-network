@@ -63,7 +63,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
-    def get_post_for_id(self, item):
+    def get_item(self, item):
         if item[:3] == "pos":
             from posts.models import Post
             return Post.objects.get(pk=item[3:])
@@ -75,6 +75,19 @@ class User(AbstractUser):
             return Good.objects.get(pk=item[3:])
         elif item[:3] == "vid":
             from video.models import Video
+            return Video.objects.get(pk=item[3:])
+    def get_comment(self, item):
+        if item[:3] == "pos":
+            from posts.models import PostComment
+            return Post.objects.get(pk=item[3:])
+        elif item[:3] == "pho":
+            from gallery.models import PhotoComment
+            return Photo.objects.get(pk=item[3:])
+        elif item[:3] == "goo":
+            from goods.models import GoodComment
+            return Good.objects.get(pk=item[3:])
+        elif item[:3] == "vid":
+            from video.models import VideoComment
             return Video.objects.get(pk=item[3:])
 
     def get_or_create_manager_chat_pk(self):

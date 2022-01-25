@@ -147,7 +147,7 @@ class PostCommentList(ListView):
 		from common.templates import get_template_user_comments, get_template_community_comments
 
 		self.type = request.GET.get('type')
-		self.item = request.user.get_item_for_id(self.type) 
+		self.item = request.user.get_item(self.type) 
 		self.prefix = self.type[:3]
 		if not request.is_ajax() or not self.item.comments_enabled:
 			raise Http404
