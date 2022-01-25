@@ -243,7 +243,7 @@ class FeaturedListView(ListView):
 		return items
 
 
-class PostCommentList(ListView):
+class ItemCommentList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
@@ -257,10 +257,10 @@ class PostCommentList(ListView):
 			self.target = "c_" + self.prefix + "_"
 		else:
 			self.target = "u_" + self.prefix + "_"
-		return super(PostCommentList,self).get(request,*args,**kwargs)
+		return super(ItemCommentList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
-		context = super(PostCommentList, self).get_context_data(**kwargs)
+		context = super(ItemCommentList, self).get_context_data(**kwargs)
 		context['item'] = self.item
 		context['prefix'] = self.prefix
 		context['target'] = self.target
