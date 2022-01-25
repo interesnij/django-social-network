@@ -247,6 +247,7 @@ class ItemCommentList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.templates import get_template_comments
 		self.type = request.GET.get('type')
 		self.item = request.user.get_item(self.type)
 		self.prefix = self.type[:3]
