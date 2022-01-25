@@ -107,9 +107,9 @@ class CommentUserCreate(View):
 
                 prefix = type[:3]
                 if item.community:
-        			target = "c_" + prefix + "_"
-        		else:
-        			target = "u_" + prefix + "_"
+                    target = "c_" + prefix + "_"
+                else:
+                    target = "u_" + prefix + "_"
 
                 new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), item=item, text=comment.text, sticker=request.POST.get('sticker'))
                 return render_for_platform(request, 'base_block/desctop/items/parent.html', {'comment': new_comment, 'target': target, 'prefix': prefix})
@@ -134,9 +134,9 @@ class ReplyUserCreate(View):
                 from common.templates import render_for_platform
                 prefix = type[:3]
                 if item.community:
-        			target = "c_" + prefix + "_"
-        		else:
-        			target = "u_" + prefix + "_"
+                    target = "c_" + prefix + "_"
+                else:
+                    target = "u_" + prefix + "_"
 
                 new_comment = comment.create_comment(commenter=request.user, item=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
             else:
