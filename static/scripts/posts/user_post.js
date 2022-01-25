@@ -401,18 +401,20 @@ on('#ajax', 'click', '.u_dislike', function() {
 on('#ajax', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
-  send_dislike(item, "/users/like_comment/?type=" + item.getAttribute("data-pk"));
+  send_dislike(item, "/users/progs/like_comment/?type=" + item.getAttribute("data-pk"));
   like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "comment_likes")
+
   main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
+  //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 on('#ajax', 'click', '.dislike2', function() {
   _this = this;
   item = _this.parentElement;
-  send_dislike(item, "/users/dislike_comment/?type=" + item.getAttribute("data-pk"));
+  send_dislike(item, "/users/progs/dislike_comment/?type=" + item.getAttribute("data-pk"));
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "comment_dislikes");
+
   main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
+  //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
 
