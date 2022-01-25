@@ -1197,7 +1197,7 @@ class GoodComment(models.Model):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
 
 	def get_replies(self):
-		return self.good_comment_replies.filter(Q(type=GoodComment.EDITED)|Q(type=GoodComment.PUBLISHED)).all()
+		return self.good_comment_replies.filter(Q(type=GoodComment.EDITED)|Q(type=GoodComment.PUBLISHED))
 
 	def count_replies(self):
 		return self.get_replies().values("pk").count()

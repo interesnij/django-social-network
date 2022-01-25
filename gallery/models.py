@@ -1139,7 +1139,7 @@ class PhotoComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        return PhotoComment.objects.filter(parent=self).all()
+        return PhotoComment.objects.filter(Q(type=PhotoComment.EDITED)|Q(type=PhotoComment.PUBLISHED))
 
     def count_replies(self):
         return self.photo_comment_replies.filter(Q(type=PhotoComment.EDITED)|Q(type=PhotoComment.PUBLISHED)).values("pk").count()
