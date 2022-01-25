@@ -113,7 +113,7 @@ class CommentUserCreate(View):
                     target = "u_" + prefix + "_"
 
                 new_comment = item.create_comment(commenter=request.user, parent=None, attach=request.POST.getlist('attach_items'), text=comment.text, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'items/parent.html', {'comment': new_comment, 'target': target, 'prefix': prefix})
+                return render_for_platform(request, 'generic/items/comment/parent.html', {'comment': new_comment, 'target': target, 'prefix': prefix})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -142,6 +142,6 @@ class ReplyUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, item=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'items/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
+            return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
         else:
             return HttpResponseBadRequest()

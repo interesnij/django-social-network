@@ -16,18 +16,10 @@
         </span>
       </div>
     {% else %}
-      {% include 'base_block/desctop/items/parent.html' %}
+      {% include 'mobile/generic/items/comment/anon_parent.html' %}
     {% endif %}
   {% endfor %}
   {% if page_obj.has_next %}
     <a class="pointer load_next_list_comments mt-1" data-link="comment/{{ item.pk }}/?page={{ page_obj.next_page_number }}">Показать еще комментарии</a>
   {% endif %}
 </span>
-
-<div>
-  <form>
-      {% csrf_token %}
-      <input type="hidden" name="item" value="{{ prefix }}{{ item.pk }}">
-      {% include 'base_block/comment/comment_form.html' %}
-  </form>
-</div>

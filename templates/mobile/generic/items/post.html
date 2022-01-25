@@ -13,10 +13,10 @@
   {% if object.community %}
   <div class="card-header">
       <div class="media">
-        {% include 'mobile/generic/community/small_figure.html' %}
+        {% include 'desctop/generic/community/small_figure.html' %}
           <div class="media-body">
               <h6 class="mb-0">
-                {% include 'mobile/generic/community/object.html' %}
+                {% include 'desctop/generic/community/object.html' %}
               </h6>
               <p class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</p>
           </div>
@@ -25,10 +25,10 @@
   {% else %}
   <div class="card-header">
       <div class="media">
-        {% include 'mobile/generic/user/small_figure.html' %}
+        {% include 'desctop/generic/user/small_figure.html' %}
           <div class="media-body">
               <h6 class="mb-0">
-                {% include 'mobile/generic/user/creator.html' %}
+                {% include 'desctop/generic/user/creator.html' %}
              </h6>
               <a class="mb-0 wall_fullscreen pointer">{{ object.get_created }}</a>
           </div>

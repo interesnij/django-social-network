@@ -1,7 +1,7 @@
 
 {% if object_list %}
 {% for object in object_list %}
-  {% include 'base_block/desctop/items/photo.html' %}
+  {% include 'desctop/generic/items/photo.html' %}
 {% endfor %}
   {% if page_obj.has_next %}
   <div class="load centered m-1 next_page_list" data-link="{% url 'user_photos_load' pk=user.pk uuid=list.uuid %}?page={{ page_obj.next_page_number }}">

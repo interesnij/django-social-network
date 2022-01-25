@@ -1370,71 +1370,7 @@ class Message(models.Model):
 
     def is_repost(self):
         return self.repost
-
-    def is_photo_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.PHOTO_REPOST)
-    def get_photo_repost(self):
-        photo = self.repost.parent.item_photo.filter(is_deleted=False)[0]
-        return photo
-    def is_photo_list_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.PHOTO_LIST_REPOST)
-    def get_photo_list_repost(self):
-        return self.repost.parent.post_list.filter(is_deleted=False)[0]
-
-    def is_music_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.MUSIC_REPOST)
-    def is_music_list_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.MUSIC_LIST_REPOST)
-    def get_playlist_repost(self):
-        playlist = self.repost.parent.post_musiclist.exclude(type__contains="_")[0]
-        return playlist
-    def get_music_repost(self):
-        music = self.repost.parent.item_music.exclude(type__contains="_")[0]
-        return music
-
-    def is_good_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.GOOD_REPOST)
-    def is_good_list_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.GOOD_LIST_REPOST)
-    def get_good_repost(self):
-        return self.repost.item_good.exclude(type__contains="_")[0]
-    def get_good_list_repost(self):
-        return self.repost.parent.post_good_list.exclude(type__contains="_")[0]
-
-    def is_doc_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.DOC_REPOST)
-    def is_doc_list_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.DOC_LIST_REPOST)
-    def get_doc_list_repost(self):
-        return self.repost.parent.post_doclist.exclude(type__contains="_")[0]
-    def get_doc_repost(self):
-        return self.repost.parent.item_doc.exclude(type__contains="_")[0]
-
-    def is_video_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.VIDEO_REPOST)
-    def is_video_list_repost(self):
-        from posts.models import Post
-        return try_except(self.repost.type == Post.VIDEO_LIST_REPOST)
-    def get_video_list_repost(self):
-        return self.repost.parent.post_video_list.exclude(type__contains="_")[0]
-
-    def get_u_message_parent(self, user):
-        from common.attach.message_attach import get_u_message_parent
-        return get_u_message_parent(self.parent, user)
-
-    def get_c_message_parent(self, user):
-        from common.attach.message_attach import get_c_message_parent
-        return get_c_message_parent(self.parent, user)
-
+        
     def get_attach(self, user):
         from common.attach.message_attach import get_message_attach
         return get_message_attach(self, user)

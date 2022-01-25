@@ -244,7 +244,7 @@ def get_template_anon_user(user, template, user_agent):
         template_name = template
     return get_folder(user_agent) + template_name
 
-def get_template_comments(item, folder, template, request_user, user_agent):
+def get_template_comments(item, template, request_user, user_agent):
     user = item.creator
     if request_user.is_authenticated:
         if request_user.type[0] == "_":
@@ -260,7 +260,7 @@ def get_template_comments(item, folder, template, request_user, user_agent):
             template_name = get_anon_fine_user(user)
         elif item.list.is_anon_user_can_see_comment():
             template_name = "anon_" + template
-    return folder + get_folder(user_agent) + template_name
+    return get_folder(user_agent) + template_name
 
 def get_template_user_item(item, folder, template, request_user, user_agent):
     user, list = item.creator, item.list
