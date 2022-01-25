@@ -25,9 +25,9 @@
 </span>
 
 <div>
-  <form>{{ previx }} {{ target }}
+  <form>
       {% csrf_token %}
-      <input type="hidden" name="item" value="{{ previx }}{{ item.pk }}">
+      <input type="hidden" name="item" value="{{ prefix }}{{ item.pk }}">
       {% include 'base_block/comment/comment_form.html' %}
   </form>
 </div>

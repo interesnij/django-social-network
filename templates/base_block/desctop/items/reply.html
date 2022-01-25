@@ -77,7 +77,7 @@
                     <div style="display:none;margin-left:-50px;">
                       <form>
                           {% csrf_token %}
-                          <input type="hidden" name="comment" value="{{ comment.pk }}">
+                          <input type="hidden" name="comment" value="{{ prefix }}{{ comment.pk }}">
                           {% include 'base_block/comment/reply_parent_form.html' %}
                       </form>
                     </div>

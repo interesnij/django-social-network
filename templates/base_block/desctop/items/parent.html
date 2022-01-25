@@ -92,7 +92,7 @@
                     <div style="display:none">
                       <form class="{{ target }}comment">
                           {% csrf_token %}
-                          <input type="hidden" name="comment" value="{{ previx }}{{ comment.pk }}">
+                          <input type="hidden" name="comment" value="{{ prefix }}{{ comment.pk }}">
                           {% include 'base_block/comment/reply_comment_form.html' %}
                       </form>
                     </div>
