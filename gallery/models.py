@@ -1119,7 +1119,7 @@ class PhotoComment(models.Model):
     text = models.TextField(blank=True,null=True)
     item = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    type = models.CharField(max_length=5, choices=TYPE, verbose_name="Тип коммента")
+    type = models.CharField(max_length=5, choices=TYPE, default=PUBLISHED, verbose_name="Тип коммента")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
 
     like = models.PositiveIntegerField(default=0, verbose_name="Кол-во лайков")
