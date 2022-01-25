@@ -877,7 +877,7 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         from django.http import HttpResponse
         from common.notify.notify import user_notify, user_wall
-        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+        if not self.votes_on or not self.list.is_user_can_see_comment(user.pk) or not self.list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
         try:
@@ -910,7 +910,7 @@ class Post(models.Model):
         from common.model.votes import PostVotes
         from django.http import HttpResponse
         from common.notify.notify import user_notify, user_wall
-        if not self.votes_on or not self.list.is_user_can_see_comment() or not self.list.is_user_can_see_el():
+        if not self.votes_on or not self.list.is_user_can_see_comment(user.pk) or not self.list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
         try:
@@ -1399,7 +1399,7 @@ class PostComment(models.Model):
         from common.model.votes import PostCommentVotes
         from django.http import HttpResponse
 
-        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment() or not self.get_item().list.is_user_can_see_el():
+        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment(user.pk) or not self.get_item().list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
 
@@ -1443,7 +1443,7 @@ class PostComment(models.Model):
         from common.model.votes import PostCommentVotes
         from django.http import HttpResponse
 
-        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment() or not self.get_item().list.is_user_can_see_el():
+        if not self.item.votes_on or not self.get_item().list.is_user_can_see_comment(user.pk) or not self.get_item().list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
 
