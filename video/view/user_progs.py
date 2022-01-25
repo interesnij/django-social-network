@@ -30,44 +30,6 @@ class RemoveVideoListFromUserCollections(View):
             return HttpResponse()
 
 
-class VideoCommentUserCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        user = User.objects.get(pk=request.POST.get('pk'))
-        video = Video.objects.get(pk=request.POST.get('video_pk'))
-
-        if request.is_ajax() and form_post.is_valid() and video.comments_enabled:
-            comment = form_post.save(commit=False)
-            if request.user.pk != user.pk:
-                check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text, community=None, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'video/u_video_comment/parent.html',{'comment': new_comment})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
-
-
-class VideoReplyUserCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        user = User.objects.get(pk=request.POST.get('pk'))
-        parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
-
-        if request.is_ajax() and form_post.is_valid() and parent.video.comments_enabled:
-            comment = form_post.save(commit=False)
-
-            if request.user != user:
-                check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=parent.video, text=comment.text, community=None, sticker=request.POST.get('sticker'))
-            else:
-                return HttpResponseBadRequest()
-            return render_for_platform(request, 'video/u_video_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
-        else:
-            return HttpResponseBadRequest()
-
 class VideoUserCommentEdit(TemplateView):
     template_name = None
 

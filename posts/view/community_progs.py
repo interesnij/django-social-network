@@ -232,45 +232,6 @@ class PostOfferCommunityCreate(View):
             return HttpResponseBadRequest()
 
 
-class PostCommunityCommentCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST, request.FILES)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        post = Post.objects.get(post_pk=request.POST.get('pk'))
-        if request.is_ajax() and form_post.is_valid() and post.comments_enabled:
-            check_can_get_lists(request.user,community)
-            comment=form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.templates import render_for_platform
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, post=post, text=comment.text, community=community, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'posts/c_post_comment/parent.html',{'comment': new_comment, 'community': community})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
-
-class PostCommunityReplyCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST, request.FILES)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        parent = PostComment.objects.get(pk=request.POST.get('post_comment'))
-        if not community.is_comment_post_send_all() and not request.user.is_member_of_community(community.pk):
-            raise Http404
-        elif community.is_comment_post_send_admin() and not request.user.is_staff_of_community(community.pk):
-            raise Http404
-        elif request.is_ajax() and form_post.is_valid() and parent.post.comments_enabled:
-            check_can_get_lists(request.user,community)
-            comment=form_post.save(commit=False)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                from common.templates import render_for_platform
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, post=parent.post, community=community, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'posts/c_post_comment/reply.html',{'reply': new_comment, 'community': community, 'comment': parent})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
-
-
 class PostCommentCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])

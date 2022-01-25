@@ -31,41 +31,6 @@ class RemoveVideoListFromCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-
-class VideoCommentCommunityCreate(View):
-	def post(self,request,*args,**kwargs):
-		form_post = CommentForm(request.POST)
-		community = Community.objects.get(pk=request.POST.get('pk'))
-		video = Video.objects.get(pk=request.POST.get('video_pk'))
-		if request.is_ajax() and form_post.is_valid() and video.comments_enabled:
-			comment = form_post.save(commit=False)
-			check_can_get_lists(request.user, community)
-			if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, video=video, text=comment.text, community=community, sticker=request.POST.get('sticker'))
-				return render_for_platform(request, 'video/c_video_comment/parent.html',{'comment': new_comment, 'community': community})
-			else:
-				return HttpResponseBadRequest()
-		else:
-			return HttpResponseBadRequest()
-
-
-class VideoReplyCommunityCreate(View):
-	def post(self,request,*args,**kwargs):
-		form_post = CommentForm(request.POST)
-		community = Community.objects.get(pk=request.POST.get('pk'))
-		parent = VideoComment.objects.get(pk=request.POST.get('video_comment'))
-		if request.is_ajax() and form_post.is_valid() and parent.video.comments_enabled:
-			comment = form_post.save(commit=False)
-
-			check_can_get_lists(request.user, community)
-			if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-				new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, video=parent.video, text=comment.text, community=community, sticker=request.POST.get('sticker'))
-			else:
-				return HttpResponseBadRequest()
-			return render_for_platform(request, 'video/c_video_comment/reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
-		else:
-			return HttpResponseBadRequest()
-
 class VideoCommunityCommentEdit(TemplateView):
     template_name = None
 

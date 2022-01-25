@@ -281,43 +281,6 @@ class UserGoodListRecover(View):
         else:
             raise Http404
 
-
-class GoodCommentUserCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post, user, good = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), Good.objects.get(pk=request.POST.get("good_pk"))
-        if not request.is_ajax() and not self.good.comments_enabled:
-            raise Http404
-
-        if request.is_ajax() and form_post.is_valid() and good.comments_enabled:
-            comment = form_post.save(commit=False)
-            if request.user.pk != user.pk:
-                check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, good=good, text=comment.text, community=None, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'goods/u_good_comment/parent.html',{'comment': new_comment})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
-
-
-class GoodReplyUserCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post, user, parent = CommentForm(request.POST), User.objects.get(pk=request.POST.get('pk')), GoodComment.objects.get(pk=request.POST.get('good_comment'))
-
-        if request.is_ajax() and form_post.is_valid() and parent.good.comments_enabled:
-            comment = form_post.save(commit=False)
-
-            if request.user != user:
-                check_user_can_get_list(request.user, user)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=parent, good=parent.good, text=comment.text, community=None, sticker=request.POST.get('sticker'))
-            else:
-                return HttpResponseBadRequest()
-            return render_for_platform(request, 'goods/u_good_comment/reply.html',{'reply': new_comment, 'comment': parent, 'user': user})
-        else:
-            return HttpResponseBadRequest()
-
 class GoodUserCommentEdit(TemplateView):
     template_name = None
 

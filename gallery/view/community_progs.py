@@ -47,42 +47,6 @@ class CommunityAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
-
-class PhotoCommentCommunityCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        photo = Photo.objects.get(pk=request.POST.get('photo_pk'))
-        if request.is_ajax() and form_post.is_valid() and photo.comments_enabled:
-            comment=form_post.save(commit=False)
-
-            check_can_get_lists(request.user, community)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parent=None, photo=photo, text=comment.text, community=community, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'gallery/c_photo_comment/parent.html',{'comment': new_comment, 'community': community})
-            else:
-                return HttpResponseBadRequest()
-        else:
-            return HttpResponseBadRequest()
-
-
-class PhotoReplyCommunityCreate(View):
-    def post(self,request,*args,**kwargs):
-        form_post = CommentForm(request.POST)
-        community = Community.objects.get(pk=request.POST.get('pk'))
-        parent = PhotoComment.objects.get(pk=request.POST.get('photo_comment'))
-        if request.is_ajax() and form_post.is_valid() and parent.photo.comments_enabled:
-            comment = form_post.save(commit=False)
-
-            check_can_get_lists(request.user, community)
-            if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
-                new_comment = comment.create_comment(commenter=request.user, attach=request.POST.getlist('attach_items'), parentt=parent, photo=parent.photo, text=comment.text, community=community, sticker=request.POST.get('sticker'))
-            else:
-                return HttpResponseBadRequest()
-            return render_for_platform(request, 'gallery/c_photo_comment/reply.html',{'reply': new_comment, 'comment': parent, 'community': community})
-        else:
-            return HttpResponseBadRequest()
-
 class PhotoCommunityCommentEdit(TemplateView):
     template_name = None
 

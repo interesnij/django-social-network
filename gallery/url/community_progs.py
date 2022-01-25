@@ -11,9 +11,6 @@ urlpatterns=[
     url(r'^off_comment/(?P<pk>\d+)/$', CommunityCloseCommentPhoto.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesPhoto.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesPhoto.as_view()),
-
-    url(r'^add_comment/$', login_required(PhotoCommentCommunityCreate.as_view())),
-    url(r'^reply_comment/$', login_required(PhotoReplyCommunityCreate.as_view())),
     url(r'^edit_comment/(?P<pk>\d+)/$', PhotoCommunityCommentEdit.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(PhotoCommentCommunityRecover.as_view())),
