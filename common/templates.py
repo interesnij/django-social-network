@@ -254,13 +254,13 @@ def get_template_comments(item, folder, template, request_user, user_agent):
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
         elif item.list.is_user_can_see_comment(request_user.pk):
-            template_name = template
+            template_name = folder + template
     else:
         if user.type[0] == "_":
             template_name = get_anon_fine_user(user)
         elif item.list.is_anon_user_can_see_comment():
-            template_name = "anon_" + template
-    return get_folder(user_agent) + template_name
+            template_name = folder + "anon_" + template
+    return get_folder(user_agent) + folder + template_name
 
 def get_template_user_item(item, folder, template, request_user, user_agent):
     user, list = item.creator, item.list
