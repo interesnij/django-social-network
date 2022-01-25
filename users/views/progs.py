@@ -95,7 +95,7 @@ class CommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
 
-        type = request.GET.get('item')
+        type = request.POST.get('item')
 
         form_post, item = CommentForm(request.POST), request.user.get_item(type)
 
@@ -123,7 +123,7 @@ class ReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
 
-        type = request.GET.get('comment')
+        type = request.POST.get('comment')
 
         form_post, parent = CommentForm(request.POST), request.user.get_comment(type)
         item = parent.get_item()
