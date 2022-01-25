@@ -1480,7 +1480,7 @@ class PostComment(models.Model):
         return naturaltime(self.created)
 
     def get_replies(self):
-        return self.replies.filter(Q(type=PostComment.EDITED)|Q(type=PostComment.PUBLISHED)).only("pk")
+        return self.replies.filter(Q(type=PostComment.EDITED)|Q(type=PostComment.PUBLISHED))
 
     def count_replies(self):
         return self.replies.filter(Q(type=PostComment.EDITED)|Q(type=PostComment.PUBLISHED)).values("pk").count()
