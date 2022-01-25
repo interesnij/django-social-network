@@ -94,6 +94,7 @@ class PhoneSend(View):
 class CommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
+        from common.processing_2 import get_text_processing
 
         type = request.POST.get('item')
 
@@ -111,8 +112,8 @@ class CommentUserCreate(View):
                 else:
                     target = "u_" + prefix + "_"
 
-                new_comment = comment.create_comment(commenter=request.user, parent=None, community=None, attach=request.POST.getlist('attach_items'), item=item, text=comment.text, sticker=request.POST.get('sticker'))
-                return render_for_platform(request, 'base_block/desctop/items/parent.html', {'comment': new_comment, 'target': target, 'prefix': prefix})
+                new_comment = item.create_comment(commenter=request.user, parent=None, attach=request.POST.getlist('attach_items'), text=comment.text, sticker=request.POST.get('sticker'))
+                return render_for_platform(request, 'items/parent.html', {'comment': new_comment, 'target': target, 'prefix': prefix})
             else:
                 return HttpResponseBadRequest()
         else:
@@ -141,6 +142,6 @@ class ReplyUserCreate(View):
                 new_comment = comment.create_comment(commenter=request.user, item=comment.get_item(), community=None, attach=request.POST.getlist('attach_items'), parent=parent, text=comment.text, sticker=request.POST.get('sticker'))
             else:
                 return HttpResponseBadRequest()
-            return render_for_platform(request, 'base_block/desctop/items/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
+            return render_for_platform(request, 'items/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
         else:
             return HttpResponseBadRequest()

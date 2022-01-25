@@ -1331,6 +1331,38 @@ class Post(models.Model):
         else:
             return "files_0"
 
+    def create_comment(self, commenter, attach, parent, text, sticker):
+        from common.processing_2 import get_text_processing
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
+        if sticker:
+            comment = PostComment.objects.create(commenter=commenter, community=item.community, sticker_id=sticker, parent=parent, item=self)
+        else:
+            comment = PostComment.objects.create(commenter=commenter, community=item.community, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
+        self.comment += 1
+        self.save(update_fields=["comment"])
+        if parent:
+            if item.community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                community_wall(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
+        else:
+            if item.community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                community_wall(comment.commenter, item.community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
+        return comment
+
 
 class PostComment(models.Model):
     EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
@@ -1489,39 +1521,6 @@ class PostComment(models.Model):
 
     def __str__(self):
         return self.commenter.get_full_name()
-
-    @classmethod
-    def create_comment(cls, commenter, attach, item, parent, text, community, sticker):
-        from common.processing_2 import get_text_processing
-
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-
-        if sticker:
-            comment = PostComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=item)
-        else:
-            comment = PostComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=item, text=get_text_processing(text))
-        item.comment += 1
-        item.save(update_fields=["comment"])
-        if parent:
-            if community:
-                from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
-                community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
-            else:
-                from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
-                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "REP")
-        else:
-            if community:
-                from common.notify.notify import community_notify, community_wall
-                community_notify(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-                community_wall(comment.commenter, community, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-            else:
-                from common.notify.notify import user_notify, user_wall
-                user_notify(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-                user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
-        return comment
 
     def edit_comment(self, attach, text):
         from common.processing_2 import get_text_processing
