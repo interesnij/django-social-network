@@ -9,6 +9,7 @@ urlpatterns = [
 	url(r'^$', NewsListView.as_view(), name="news_list"),
 	url(r'^featured/$', FeaturedListView.as_view(), name="featured_list"),
 	url(r'^load_custom_link/$', LoadCustomLink.as_view()),
+	url(r'^comments/$', ItemCommentList.as_view()),
 
 
 	#url(r'^posts/', include('main.url.posts')),

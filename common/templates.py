@@ -244,7 +244,7 @@ def get_template_anon_user(user, template, user_agent):
         template_name = template
     return get_folder(user_agent) + template_name
 
-def get_template_user_comments(item, folder, template, request_user, user_agent):
+def get_template_comments(item, template, request_user, user_agent):
     user = item.creator
     if request_user.is_authenticated:
         if request_user.type[0] == "_":
@@ -253,33 +253,14 @@ def get_template_user_comments(item, folder, template, request_user, user_agent)
             template_name = get_fine_user(user)
         elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
             template_name = "generic/u_template/block_user.html"
-        else:
+        elif item.list.is_user_can_see_comment(request_user.pk):
             template_name = folder + template
     else:
         if user.type[0] == "_":
             template_name = get_anon_fine_user(user)
-        else:
+        elif item.list.is_anon_user_can_see_comment():
             template_name = folder + "anon_" + template
     return get_folder(user_agent) + template_name
-
-def get_template_community_comments(item, folder, template, request_user, user_agent):
-    community = item.community
-    if request_user.is_authenticated:
-        if request_user.type[0] == "_":
-            template_name = get_fine_request_user(request_user)
-        elif community.type[0] == "_":
-            template_name = get_fine_community(community)
-        elif request_user.is_banned_from_community(community.pk):
-            template_name = "generic/c_template/block_community.html"
-        else:
-            template_name = folder + template
-    else:
-        if user.type[0] == "_":
-            template_name = get_anon_fine_community(community)
-        else:
-            template_name = folder + "anon_" + template
-    return get_folder(user_agent) + template_name
-
 
 def get_template_user_item(item, folder, template, request_user, user_agent):
     user, list = item.creator, item.list

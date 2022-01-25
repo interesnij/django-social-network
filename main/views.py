@@ -241,3 +241,30 @@ class FeaturedListView(ListView):
 		else:
 			items = []
 		return items
+
+
+class PostCommentList(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.type = request.GET.get('type')
+		self.item = request.user.get_item(self.type)
+		self.prefix = self.type[:3]
+		self.template_name = get_template_comments(self.item, "base_block/comment/comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		if not request.is_ajax() or not self.item.comments_enabled:
+			raise Http404
+		if self.item.community:
+			self.target = "c_" + self.prefix + "_"
+		else:
+			self.target = "u_" + self.prefix + "_"
+		return super(PostCommentList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(PostCommentList, self).get_context_data(**kwargs)
+		context['item'] = self.item
+		context['prefix'] = self.prefix
+		context['target'] = self.target
+		return context
+
+	def get_queryset(self):
+		return self.item.get_comments()

@@ -1,11 +1,13 @@
-on('#ajax', 'click', '.load_post_comments', function() {
+on('#ajax', 'click', '.load_comments_list', function() {
   clear_comment_dropdown();
   block = this.parentElement.parentElement.parentElement.parentElement;
   block_comments = block.querySelector(".load_comments");
   if (block_comments.classList.contains("show")){
     block_comments.classList.remove("show")
   } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/posts/comments/" + block.getAttribute("data-pk") + "/");
+    block_comments.firstChild
+        ? null
+        : list_load(block_comments, "/comments/?type=" + this.getAttribute("data-type") + "/");
     block_comments.classList.add("show")
   }
 });

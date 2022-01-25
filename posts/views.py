@@ -140,36 +140,6 @@ class LoadPostsList(ListView):
 		return self.list.get_items()
 
 
-class PostCommentList(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		from common.templates import get_template_user_comments, get_template_community_comments
-
-		self.type = request.GET.get('type')
-		self.item = request.user.get_item(self.type) 
-		self.prefix = self.type[:3]
-		if not request.is_ajax() or not self.item.comments_enabled:
-			raise Http404
-		if self.item.community:
-			self.target = "c_" + self.prefix + "_"
-			self.template_name = get_template_user_comments(self.item, "posts/c_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.target = "u_" + self.prefix + "_"
-			self.template_name = get_template_user_comments(self.item, "posts/u_post_comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PostCommentList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self, **kwargs):
-		context = super(PostCommentList, self).get_context_data(**kwargs)
-		context['item'] = self.item
-		context['prefix'] = self.prefix
-		context['target'] = self.target
-		return context
-
-	def get_queryset(self):
-		return self.item.get_comments()
-
-
 class PostListLoadIncludeUsers(ListView):
 	template_name, users = None, []
 
