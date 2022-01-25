@@ -1071,6 +1071,38 @@ class Photo(models.Model):
     def is_suspended(self):
         return False
 
+    def create_comment(self, commenter, attach, parent, text, sticker):
+        from common.processing_2 import get_text_processing
+
+        _attach = str(attach)
+        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+
+        if sticker:
+            comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=self)
+        else:
+            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=self, text=get_text_processing(text))
+        self.comment += 1
+        self.save(update_fields=["comment"])
+        if parent:
+            if self.community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, self.community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+                community_wall(comment.commenter, self.community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
+        else:
+            if self.community:
+                from common.notify.notify import community_notify, community_wall
+                community_notify(comment.commenter, self.community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+                community_wall(comment.commenter, self.community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+            else:
+                from common.notify.notify import user_notify, user_wall
+                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
+        return comment
+
 
 class PhotoComment(models.Model):
     EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
@@ -1156,36 +1188,6 @@ class PhotoComment(models.Model):
             return self.repost
         else:
             return ''
-
-    @classmethod
-    def create_comment(cls, commenter, attach, item, parent, text, community, sticker):
-        from common.notify.notify import community_wall, community_notify, user_wall, user_notify
-        from common.processing_2 import get_text_processing
-
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _text = get_text_processing(text)
-        item.comment += 1
-        item.save(update_fields=["comment"])
-        if sticker:
-            comment = PhotoComment.objects.create(commenter=commenter, sticker_id=sticker, parent=parent, item=item)
-        else:
-            comment = PhotoComment.objects.create(commenter=commenter, attach=_attach, parent=parent, item=item, text=_text)
-        if comment.parent:
-            if community:
-                community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
-                community_wall(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
-            else:
-                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
-                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "REP")
-        else:
-            if comment.item.community:
-                community_notify(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
-                community_wall(comment.commenter, community, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
-            else:
-                user_notify(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
-                user_wall(comment.commenter, None, comment.pk, "PHOC", "u_photo_comment_notify", "COM")
-        return comment
 
     def edit_comment(self, attach, text):
         from common.processing_2 import get_text_processing
