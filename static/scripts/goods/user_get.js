@@ -71,19 +71,6 @@ on('#ajax', 'click', '.u_all_good_reposts', function() {
   create_fullscreen("/goods/window/all_user_reposts/" + pk + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.load_good_comments', function() {
-  clear_comment_dropdown();
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  good_pk = block.getAttribute("good-pk");
-  block_comments = block.querySelector(".load_comments");
-  if (block_comments.classList.contains("show")){
-    block_comments.classList.remove("show")
-  } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/goods/comments/" + good_pk + "/");
-    block_comments.classList.add("show")
-  }
-});
-
 on('#ajax', 'click', '.load_good_list', function() {
   parent = this.parentElement.parentElement.parentElement;
   create_fullscreen("/goods/load_list/" + parent.getAttribute("goodlist-pk") + "/", "item_fullscreen");

@@ -107,16 +107,3 @@ on('#ajax', 'click', '.u_all_photo_reposts', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-uuid');
   create_fullscreen("/gallery/window/all_user_reposts/" + pk + "/", "worker_fullscreen");
 });
-
-on('#ajax', 'click', '.load_photo_comments', function() {
-  clear_comment_dropdown();
-  data = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = data.getAttribute("data-pk");
-  block = data.querySelector(".load_comments");
-  if (block.classList.contains("show")){
-    block.classList.remove("show")
-  } else {
-    block.firstChild ? null : list_load(block, "/gallery/comments/" + pk + "/");
-    block.classList.add("show")
-  }
-});

@@ -3,6 +3,9 @@
   height: 35px;
   width: 100%;
 }
+.load_comments_list {
+  cursor: pointer;
+}
 .tab_badge_left_menu {
   font-size: 55% !important;
   margin-left: -2px;

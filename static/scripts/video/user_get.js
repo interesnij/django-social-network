@@ -77,19 +77,6 @@ on('#video_loader', 'click', '.u_all_video_reposts', function() {
   create_fullscreen("/video/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#video_loader', 'click', '.load_video_comments', function() {
-  clear_comment_dropdown();
-  video_display = this.parentElement.parentElement.parentElement;
-  pk = video_display.getAttribute("data-pk");
-  block_comments = video_display.nextElementSibling;
-  if (block_comments.classList.contains("show")){
-    block_comments.classList.remove("show")
-  } else {
-    block_comments.firstChild ? null : list_load(block_comments, "/video/comments/" + pk + "/");
-    block_comments.classList.add("show")
-  }
-});
-
 on('#ajax', 'click', '.video_list_detail', function() {
   video_pk = this.getAttribute("video-pk");
   counter = this.getAttribute('video-counter') - 1;
