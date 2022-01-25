@@ -118,22 +118,6 @@ on('#ajax', 'click', '.u_good_dislike', function() {
   send_dislike(block, "/goods/votes/user_dislike/" + good_pk + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_dislikes");
 });
-on('#ajax', 'click', '.u_good_like2', function() {
-  _this = this;
-  good = _this.parentElement;
-  comment_pk = good.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(good, "/goods/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_good_comment_likes")
-});
-on('#ajax', 'click', '.u_good_dislike2', function() {
-  _this = this;
-  good = _this.parentElement;
-  comment_pk = good.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(good, "/goods/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_comment_dislikes")
-});
 
 
 on('#ajax', 'click', '#good_image', function() {

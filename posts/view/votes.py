@@ -27,25 +27,6 @@ class PostUserDislikeCreate(View):
         return item.send_dislike(request.user, None)
 
 
-class PostCommentUserLikeCreate(View):
-    def get(self, request, **kwargs):
-        comment, user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax():
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        return comment.send_like(request.user, None)
-
-class PostCommentUserDislikeCreate(View):
-    def get(self, request, **kwargs):
-        comment, user = PostComment.objects.get(pk=self.kwargs["comment_pk"]), User.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax():
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        return comment.send_dislike(request.user, None)
-
-
 class PostCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         item, community = Post.objects.get(pk=self.kwargs["post_pk"]), Community.objects.get(pk=self.kwargs["pk"])
@@ -62,21 +43,3 @@ class PostCommunityDislikeCreate(View):
             raise Http404
         check_can_get_lists(request.user, community)
         return item.send_dislike(request.user, community)
-
-
-class PostCommentCommunityLikeCreate(View):
-    def get(self, request, **kwargs):
-        comment, community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax():
-            raise Http404
-        check_can_get_lists(request.user,community)
-        return comment.send_like(request.user, community)
-
-
-class PostCommentCommunityDislikeCreate(View):
-    def get(self, request, **kwargs):
-        comment, community = PostComment.objects.get(pk=self.kwargs["comment_pk"]), Community.objects.get(pk=self.kwargs["pk"])
-        if not request.is_ajax():
-            raise Http404
-        check_can_get_lists(request.user,community)
-        return comment.send_dislike(request.user, community)

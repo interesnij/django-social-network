@@ -88,21 +88,6 @@ on('#ajax', 'click', '.c_good_dislike', function() {
   send_dislike(block, "/goods/votes/community_dislike/" + pk + "/" + good_pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_dislikes");
 });
-on('#ajax', 'click', '.c_good_like2', function() {
-  _this = this;
-  good = _this.parentElement;
-  comment_pk = good.getAttribute("data-pk");
-  pk = good.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');  send_like(good, "/goods/votes/community_comment/" + pk + "/" + comment_pk + "/like/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_comment_likes")
-});
-on('#ajax', 'click', '.c_good_dislike2', function() {
-  _this = this;
-  good = _this.parentElement;
-  comment_pk = good.getAttribute("data-pk");
-  pk = good.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
-  send_dislike(good, "/goods/votes/community_comment/" + pk + "/" + comment_pk + "/dislike/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_comment_dislikes")
-});
 
 on('#ajax', 'click', '#c_add_good_btn', function() {
   form_post = document.body.querySelector("#c_add_good_form");

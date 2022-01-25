@@ -35,28 +35,6 @@ class GoodUserDislikeCreate(View):
         return good.send_dislike(request.user, None)
 
 
-class GoodCommentUserLikeCreate(View):
-    def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
-        if not request.is_ajax():
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        return comment.send_like(request.user, None)
-
-
-class GoodCommentUserDislikeCreate(View):
-    def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        user, likes, dislikes = User.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
-        if not request.is_ajax():
-            raise Http404
-        if user != request.user:
-            check_user_can_get_list(request.user, user)
-        return comment.send_dislike(request.user, None)
-
-
 class GoodCommunityLikeCreate(View):
     def get(self, request, **kwargs):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
@@ -75,23 +53,3 @@ class GoodCommunityDislikeCreate(View):
             raise Http404
         check_can_get_lists(request.user, community)
         return good.send_dislike(request.user, community)
-
-
-class GoodCommentCommunityLikeCreate(View):
-    def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
-        if not request.is_ajax():
-            raise Http404
-        check_can_get_lists(request.user,community)
-        return comment.send_like(request.user, community)
-
-
-class GoodCommentCommunityDislikeCreate(View):
-    def get(self, request, **kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["comment_pk"])
-        community, likes, dislikes = Community.objects.get(pk=self.kwargs["pk"]), comment.likes_count(), comment.dislikes_count()
-        if not request.is_ajax():
-            raise Http404
-        check_can_get_lists(request.user,community)
-        return comment.send_dislike(request.user, community)

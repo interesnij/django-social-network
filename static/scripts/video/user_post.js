@@ -97,22 +97,6 @@ on('#video_loader', 'click', '.u_video_dislike', function() {
   send_dislike(video, "/video/votes/user_dislike/" + uuid + "/" + pk + "/");
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_dislikes");
 });
-on('#video_loader', 'click', '.u_video_like2', function() {
-  _this = this;
-  video = _this.parentElement;
-  comment_pk = video.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(video, "/video/votes/user_comment/" + comment_pk + "/" + pk + "/like/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_video_comment_likes")
-});
-on('#video_loader', 'click', '.u_video_dislike2', function() {
-  _this = this;
-  video = _this.parentElement;
-  comment_pk = video.getAttribute("data-pk");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(video, "/video/votes/user_comment/" + comment_pk + "/" + pk + "/dislike/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_comment_dislikes")
-});
 
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
