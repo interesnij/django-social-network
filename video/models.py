@@ -880,7 +880,7 @@ class Video(models.Model):
             return ''
 
     def get_comments(self):
-        return VideoComment.objects.filter(video_id=self.pk, parent__isnull=True)
+        return VideoComment.objects.filter(item_id=self.pk, parent__isnull=True)
 
     @classmethod
     def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, community):

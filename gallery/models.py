@@ -858,7 +858,7 @@ class Photo(models.Model):
         return self.photo_list.filter(creator=self.creator).exists()
 
     def get_comments(self):
-        return PhotoComment.objects.filter(photo_id=self.pk, parent__isnull=True)
+        return PhotoComment.objects.filter(item_id=self.pk, parent__isnull=True)
 
     def count_comments(self):
         if self.comment > 0:

@@ -1179,7 +1179,7 @@ class Post(models.Model):
             return self.comment
 
     def get_comments(self):
-        return PostComment.objects.filter(post_id=self.pk, parent__isnull=True).exclude(type__contains="_")
+        return PostComment.objects.filter(item_id=self.pk, parent__isnull=True).exclude(type__contains="_")
 
     def fixed_post(self, obj):
         if obj.is_can_fixed_post():
