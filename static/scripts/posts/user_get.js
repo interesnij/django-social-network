@@ -7,7 +7,7 @@ on('#ajax', 'click', '.load_comments_list', function() {
   } else {
     block_comments.firstChild
         ? null
-        : list_load(block_comments, "/comments/?type=" + this.getAttribute("data-type") + "/");
+        : list_load(block_comments, "/comments/?type=" + this.getAttribute("data-type"));
     block_comments.classList.add("show")
   }
 });
