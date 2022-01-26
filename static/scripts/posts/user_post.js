@@ -593,7 +593,7 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
 });
 
 on('#ajax', 'click', '#create_repost_btn', function() {
-  form_post = _this.parentElement.parentElement;
+  form_post = this.parentElement.parentElement;
   collector = form_post.querySelector(".collector");
   if (!collector.innerHTML) {
     collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>';
@@ -617,7 +617,7 @@ on('#ajax', 'click', '#create_repost_btn', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
     close_work_fullscreen();
     toast_info("Репост сделан!")
   }};
