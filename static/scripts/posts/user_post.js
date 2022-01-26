@@ -274,7 +274,9 @@ on('#ajax', 'click', '.u_restore_post_list', function() {
 });
 
 on('#ajax', 'click', '.comment_edit', function() {
+  _this = this;
   clear_comment_dropdown();
+
   type = _this.parentElement.getAttribute("data-type");
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
