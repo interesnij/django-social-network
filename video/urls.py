@@ -12,8 +12,5 @@ urlpatterns = [
     url(r'^user_progs/', include('video.url.user_progs')),
     url(r'^community_progs/', include('video.url.community_progs')),
 
-    url(r'^votes/', include('video.url.votes')),
-	url(r'^window/', include('video.url.window')),
-
     url(r'^repost/', include('video.url.repost')),
 ]
