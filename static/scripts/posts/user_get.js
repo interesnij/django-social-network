@@ -12,6 +12,13 @@ on('#ajax', 'click', '.load_comments_list', function() {
   }
 });
 
+on('#ajax', 'click', '.create_repost', function() {
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  create_fullscreen("/users/progs/create_repost/?type=" + type, "worker_fullscreen");
+  clear_attach_block();
+});
+
 on('#ajax', 'click', '.comment_likes', function() {
   create_fullscreen("/comments/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });

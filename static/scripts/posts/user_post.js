@@ -466,6 +466,8 @@ on('#ajax', 'click', '.dislike_item', function() {
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
+
+
 on('#ajax', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
@@ -585,6 +587,21 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
     video_comment_attach(elem_.querySelector("img"), dropdown);
 
     close_work_fullscreen();
+  }};
+
+  link_.send(form_data);
+});
+
+on('#ajax', 'click', '.create_repost_btn', function() {
+  form_data = new FormData(this.parentElement.parentElement);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/users/progs/create_repost/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    close_work_fullscreen();
+    toast_info("Репост сделан!")
   }};
 
   link_.send(form_data);
