@@ -2,7 +2,7 @@
 
 {% if object_list %}
 <div class="like_pop" style="margin:15px">
-  <span style="cursor:pointer">{{ text }} {{ likes.count }} {{ likes.count|rupluralize:"человек,человека,людей" }}</span>
+  <span>{{ text }} {{ item.dislike }} {{ item.dislike|rupluralize:"человек,человека,людей" }}</span>
   <br><br>
   <span style="display: flex;">
     {% for voter in object_list %}
