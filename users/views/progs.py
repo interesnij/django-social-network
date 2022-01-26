@@ -171,7 +171,7 @@ class CommentEdit(TemplateView):
 
         self.template_name = get_my_template("generic/items/comment/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.type = request.GET.get('type')
-        self.comment = request.user.get_comment(type)
+        self.comment = request.user.get_comment(self.type)
         return super(CommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
