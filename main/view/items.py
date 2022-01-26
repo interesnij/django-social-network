@@ -34,7 +34,7 @@ class ItemLikes(ListView):
 				self.template_name = get_template_anon_community_item(self.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_user_item(self.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
-			return super(ItemLikes,self).get(request,*args,**kwargs)
+		return super(ItemLikes,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ItemLikes,self).get_context_data(**kwargs)
