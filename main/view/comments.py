@@ -8,7 +8,7 @@ class ItemCommentList(ListView):
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_comments
 		self.type = request.GET.get('type')
-		self.item = request.user.get_comment(self.type)
+		self.item = request.user.get_item(self.type)
 		self.prefix = self.type[:3]
 		self.template_name = get_template_comments(self.item, "generic/items/comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		if not request.is_ajax() or not self.item.comments_enabled:
