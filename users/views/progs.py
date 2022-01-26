@@ -211,8 +211,8 @@ class CommentEdit(TemplateView):
             comment.save()
 
             if comment.parent:
-                return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': comment})
+                return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': comment, 'prefix': type[:3]})
             else:
-                return render_for_platform(request, 'generic/items/comment/parent.html',{'comment': comment})
+                return render_for_platform(request, 'generic/items/comment/parent.html',{'comment': comment, 'prefix': type[:3]})
         else:
             return HttpResponseBadRequest()
