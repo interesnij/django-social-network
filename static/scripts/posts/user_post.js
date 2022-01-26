@@ -469,7 +469,7 @@ on('#ajax', 'click', '.dislike2', function() {
 
 
 on('#ajax', 'click', '.comment_delete', function() {
-  data = _this.parentElement;
+  data = this.parentElement;
   type = data.getAttribute("data-type");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', "/users/progs/delete_comment/?type=" + type, true);
@@ -489,9 +489,9 @@ on('#ajax', 'click', '.comment_delete', function() {
 });
 
 on('#ajax', 'click', '.comment_restore', function() {
-  comment = _this.parentElement.nextElementSibling;
-  type = _this.getAttribute("data-type");
-  block = _this.parentElement;
+  comment = this.parentElement.nextElementSibling;
+  type = this.getAttribute("data-type");
+  block = this.parentElement;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link.open('GET', "/users/progs/recover_comment/?type=" + type, true);
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
