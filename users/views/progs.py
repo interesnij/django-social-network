@@ -162,6 +162,23 @@ class CommentDislikeCreate(View):
         return comment.send_dislike(request.user, None)
 
 
+class ItemLikeCreate(View):
+    def get(self, request, **kwargs):
+        type = request.GET.get('type')
+        item = request.user.get_item(type)
+        if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
+            raise Http404
+        return item.send_like(request.user, None)
+
+class ItemDislikeCreate(View):
+    def get(self, request, **kwargs):
+        type = request.GET.get('type')
+        item = request.user.get_item(type)
+        if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
+            raise Http404
+        return item.send_dislike(request.user, None)
+
+
 from django.views.generic.base import TemplateView
 class CommentEdit(TemplateView):
     template_name = None
