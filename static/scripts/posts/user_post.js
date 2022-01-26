@@ -280,7 +280,7 @@ on('#ajax', 'click', '.comment_edit', function() {
   type = _this.parentElement.getAttribute("data-type");
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/users/progs/edit_comment/?type=" + type + "/", true );
+  link.open( 'GET', "/users/progs/edit_comment/?type=" + type, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
