@@ -26,9 +26,9 @@ class ItemCommentList(ListView):
 
 
 class CommentLikes(ListView):
-    template_name, paginate_by = None, 15
+	template_name, paginate_by = None, 15
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		self.type = request.GET.get('type')
 		self.comment = request.user.get_comment(self.type)
 		if not self.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
@@ -49,9 +49,9 @@ class CommentLikes(ListView):
 		return User.objects.filter(id__in=self.comment.likes().values("user_id"))
 
 class CommentDislikes(ListView):
-    template_name, paginate_by = None, 15
+	template_name, paginate_by = None, 12
 
-    def get(self,request,*args,**kwargs):
+	def get(self,request,*args,**kwargs):
 		self.type = request.GET.get('type')
 		self.comment = request.user.get_comment(self.type)
 		if not self.comment.get_item().votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
