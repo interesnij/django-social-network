@@ -1,5 +1,15 @@
 from django.views.generic import ListView
 from users.models import User
+from common.templates import (
+								get_template_community_item,
+								get_template_anon_community_item,
+								get_template_user_item,
+								get_template_anon_user_item,
+								get_template_community_list,
+								get_template_anon_community_list,
+								get_template_user_list,
+								get_template_anon_user_list,
+							)
 
 
 class ItemLikes(ListView):
