@@ -45,17 +45,6 @@ on('#ajax', 'click', '.c_all_photo_dislikes', function() {
   create_fullscreen("/gallery/window/all_community_dislike/" + pk + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.c_all_photo_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/gallery/window/all_community_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_all_photo_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/gallery/window/all_community_comment_dislike/" + pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.c_all_photo_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-pk');

@@ -19,6 +19,13 @@ on('#ajax', 'click', '.comment_dislikes', function() {
   create_fullscreen("/comments/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
+on('#ajax', 'click', '.item_likes', function() {
+  create_fullscreen("/item/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+});
+on('#ajax', 'click', '.item_dislikes', function() {
+  create_fullscreen("/item/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+});
+
 on('#ajax', 'click', '.input_new_post_in_list', function() {
   this.parentElement.nextElementSibling.style.display = "block";
 });
@@ -223,24 +230,6 @@ on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
   create_fullscreen("/article/detail/" + pk + "/" + uuid + "/", "item_fullscreen");
-});
-
-on('#ajax', 'click', '.u_all_posts_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_user_dislike/" + uuid + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.u_all_posts_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/posts/item_window/all_user_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_all_posts_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  loader = document.getElementById("votes_loader");
-  create_fullscreen("/posts/item_window/all_user_comment_dislike/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.u_all_item_reposts', function() {

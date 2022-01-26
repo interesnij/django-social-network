@@ -46,17 +46,6 @@ on('#video_loader', 'click', '.c_all_video_dislikes', function() {
   create_fullscreen("/video/window/all_community_dislike/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#video_loader', 'click', '.c_all_video_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/video/window/all_community_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#video_loader', 'click', '.c_all_video_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/video/window/all_community_comment_dislike/" + pk + "/", "worker_fullscreen");
-});
-
 on('#video_loader', 'click', '.c_all_video_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');

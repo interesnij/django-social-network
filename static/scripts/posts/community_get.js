@@ -77,17 +77,6 @@ on('#ajax', 'click', '.c_all_item_reposts', function() {
   create_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.c_all_posts_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/posts/item_window/all_community_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_all_posts_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/posts/item_window/all_community_comment_dislike/" + pk + "/", "worker_fullscreen");
-});
-
 
 on('#ajax', 'click', '.c_comment_photo', function() {
   this.classList.add("current_file_dropdown");

@@ -46,25 +46,6 @@ on('#ajax', 'click', '.u_goods_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/goods/user_progs/add_list/" + pk + "/", "worker_fullscreen");
 });
-on('#ajax', 'click', '.u_all_good_likes', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('good-pk');
-  create_fullscreen("/goods/window/all_user_like/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_all_good_dislikes', function() {
-  pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('good-pk');
-  create_fullscreen("/goods/window/all_user_dislike/" + pk + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.u_all_good_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/goods/window/all_user_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_all_good_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/goods/window/all_user_comment_dislike/" + pk + "/", "worker_fullscreen");
-});
 
 on('#ajax', 'click', '.u_all_good_reposts', function() {
   pk = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('good-pk');

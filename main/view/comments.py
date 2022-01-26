@@ -32,7 +32,7 @@ class CommentLikes(ListView):
 	def get(self,request,*args,**kwargs):
 		self.type = request.GET.get('type')
 		self.comment = request.user.get_comment(self.type)
-		if not self.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
+		if not self.comment.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
 			raise Http404
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -42,7 +42,7 @@ class CommentLikes(ListView):
 
 	def get_context_data(self,**kwargs):
 		context = super(CommentLikes,self).get_context_data(**kwargs)
-		context['item'] = self.item
+		context['item'] = self.comment
 		context['text'] = "Комментарий одобрили:"
 		return context
 

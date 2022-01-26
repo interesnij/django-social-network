@@ -49,28 +49,6 @@ on('#ajax', 'click', '.u_video_list_edit', function() {
   create_fullscreen("/video/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
-on('#video_loader', 'click', '.u_all_video_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_user_like/" + uuid + "/", "worker_fullscreen");
-});
-on('#video_loader', 'click', '.u_all_video_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_user_dislike/" + uuid + "/", "worker_fullscreen");
-});
-
-on('#video_loader', 'click', '.u_all_video_comment_likes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/video/window/all_user_comment_like/" + pk + "/", "worker_fullscreen");
-});
-on('#video_loader', 'click', '.u_all_video_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  pk = container.getAttribute('data-pk');
-  create_fullscreen("/video/window/all_user_comment_dislike/" + pk + "/", "worker_fullscreen");
-});
-
 on('#video_loader', 'click', '.u_all_video_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');

@@ -43,19 +43,6 @@ on('#ajax', 'click', '.c_ucm_good_list_repost', function() {
   clear_attach_block();
 });
 
-on('#ajax', 'click', '.c_all_good_comment_likes', function() {12
-  container = this.parentElement.parentElement.parentElement;
-  comment_pk = container.getAttribute('data-pk');
-  pk = container.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/goods/window/all_community_comment_like/" + pk + "/" + comment_pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_all_good_comment_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement;
-  comment_pk = container.getAttribute('data-pk');
-  pk = container.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/goods/window/all_community_comment_dislike/" + pk + "/" + comment_pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.c_all_good_reposts', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   good_pk = container.getAttribute('good-pk');
