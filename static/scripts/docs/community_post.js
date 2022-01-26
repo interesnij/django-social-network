@@ -1,21 +1,4 @@
-on('#ajax', 'click', '#c_ucm_doc_repost_btn', function() {
-  repost_constructor(this,
-                     "/docs/repost/c_u_doc_repost/",
-                     "Репост документа на стену сделан",
-                     "/docs/repost/c_c_doc_repost/",
-                     "Репост документа в сообщества сделан",
-                     "/docs/repost/c_m_doc_repost/",
-                     "Репост документа в сообщения сделан")
-});
-on('#ajax', 'click', '#c_ucm_doc_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/docs/repost/c_u_doc_list_repost/",
-                     "Репост списка документов на стену сделан",
-                     "/docs/repost/c_c_doc_list_repost/",
-                     "Репост списка документов в сообщества сделан",
-                     "/docs/repost/c_m_doc_list_repost/",
-                     "Репост списка документов в сообщения сделан")
-});
+
 
 on('#ajax', 'click', '.c_doc_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");

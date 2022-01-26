@@ -15,5 +15,4 @@ urlpatterns = [
 	url(r'^community/', include('posts.url.community')),
     url(r'^user_progs/', include('posts.url.user_progs')),
     url(r'^community_progs/', include('posts.url.community_progs')),
-    url(r'^repost/', include('posts.url.repost')),
 ]

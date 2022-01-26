@@ -1,12 +1,4 @@
-on('#ajax', 'click', '#c_ucm_post_repost_btn', function() {
-  repost_constructor(this,
-                     "/posts/repost/c_u_post_repost/",
-                     "Репост записи на стену сделан",
-                     "/posts/repost/c_c_post_repost/",
-                     "Репост записи в сообщества сделан",
-                     "/posts/repost/c_m_post_repost/",
-                     "Репост записи в сообщения сделан")
-});
+
 
 on('#ajax', 'click', '#community_article_add', function() {
   pk = this.getAttribute('data-pk');

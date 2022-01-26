@@ -8,5 +8,4 @@ urlpatterns = [
 
     url(r'^user_progs/', include('docs.url.user_progs')),
     url(r'^community_progs/', include('docs.url.community_progs')),
-    url(r'^repost/', include('docs.url.repost')),
 ]

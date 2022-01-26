@@ -239,12 +239,6 @@ on('#ajax', 'click', '.u_article_detail', function() {
   create_fullscreen("/article/detail/" + pk + "/" + uuid + "/", "item_fullscreen");
 });
 
-on('#ajax', 'click', '.u_all_item_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_user_reposts/" + pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.u_load_comment_photo', function() {
   this.classList.add("current_file_dropdown");
   document.body.querySelector(".attach_block") ? (attach_block = document.body.querySelector(".attach_block"), attach_block.innerHTML = "", attach_block.classList.remove("attach_block")) : null;

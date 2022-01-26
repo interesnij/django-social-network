@@ -29,16 +29,3 @@ on('#ajax', 'click', '.c_doc_list_edit', function() {
   pk = this.parentElement.parentElement.getAttribute('data-pk');
   create_fullscreen("/docs/community_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
-
-on('#ajax', 'click', '.c_ucm_doc_repost', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  create_fullscreen("/docs/repost/c_ucm_doc_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-on('#ajax', 'click', '.c_ucm_doc_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/docs/repost/c_ucm_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});

@@ -1,21 +1,3 @@
-on('#ajax', 'click', '#u_ucm_doc_repost_btn', function() {
-  repost_constructor(this,
-                     "/docs/repost/u_u_doc_repost/",
-                     "Репост документа на стену сделан",
-                     "/docs/repost/u_c_doc_repost/",
-                     "Репост документа в сообщества сделан",
-                     "/docs/repost/u_m_doc_repost/",
-                     "Репост документа в сообщения сделан")
-});
-on('#ajax', 'click', '#u_ucm_doc_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/docs/repost/u_u_doc_list_repost/",
-                     "Репост списка документов на стену сделан",
-                     "/docs/repost/u_c_doc_list_repost/",
-                     "Репост списка документов в сообщества сделан",
-                     "/docs/repost/u_m_doc_list_repost/",
-                     "Репост списка документов в сообщения сделан")
-});
 
 on('body', 'click', '.u_doc_remove', function() {
   saver = this.parentElement.parentElement.parentElement;

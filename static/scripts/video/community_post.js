@@ -1,21 +1,4 @@
-on('#ajax', 'click', '#c_ucm_video_repost_btn', function() {
-  repost_constructor(this,
-                     "/video/repost/c_u_video_repost/",
-                     "Репост видеозаписи на стену сделан",
-                     "/video/repost/c_c_video_repost/",
-                     "Репост видеозаписи в сообщества сделан",
-                     "/video/repost/c_m_video_repost/",
-                     "Репост видеозаписи в сообщения сделан")
-});
-on('#ajax', 'click', '#c_ucm_video_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/video/repost/c_u_video_list_repost/",
-                     "Репост видеоальбома на стену сделан",
-                     "/video/repost/c_c_video_list_repost/",
-                     "Репост видеоальбома в сообщества сделан",
-                     "/video/repost/c_m_video_list_repost/",
-                     "Репост видеоальбома в сообщения сделан")
-});
+
 
 on('#video_loader', 'click', '.c_video_off_comment', function() {
   send_photo_change(this, "/video/community_progs/off_comment/", "c_video_on_comment", "Вкл. комментарии");
@@ -56,21 +39,6 @@ on('body', 'click', '.community_video_restore', function() {
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-});
-
-on('#video_loader', 'click', '.c_video_like', function() {
-  video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
-  send_like(video, "/video/votes/community_like/" + uuid + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_video_likes");
-});
-on('#video_loader', 'click', '.c_video_dislike', function() {
-  video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = document.body.querySelector(".data_display").getAttribute("data-uuid");
-  pk = document.body.querySelector(".data_display").getAttribute("data-pk");
-  send_dislike(video, "/video/votes/community_dislike/" + uuid + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_dislikes");
 });
 
 on('#ajax', 'click', '#c_add_video_list_btn', function() {

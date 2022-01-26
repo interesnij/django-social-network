@@ -21,13 +21,6 @@ on('#ajax', 'click', '.uncopy_community_post_list', function() {
   on_off_list_in_collections(this, "/posts/community_progs/remove_list_from_collections/", "copy_community_post_list", "uncopy_community_post_list", "Добавить")
 });
 
-on('#ajax', 'click', '.c_ucm_post_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/posts/repost/c_ucm_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-
 on('#ajax', 'click', '.c_add_post_list', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
   create_fullscreen("/posts/community_progs/add_list/" + pk + "/", "worker_fullscreen");
@@ -37,44 +30,11 @@ on('#ajax', 'click', '.c_edit_post_list', function() {
   create_fullscreen("/posts/community_progs/edit_list/" + list_pk + "/", "worker_fullscreen");
 });
 
-on('#ajax', 'click', '#c_repost_for_community', function() {
-  this.parentElement.parentElement.parentElement.parentElement.querySelector("#selected_message_target_items").innerHTML = "";
-  current_block = this.parentElement.nextElementSibling;
-  current_block.querySelector("#community_append").style.display = "block";
-  block = current_block.querySelector("#user_communities_window");
-  current_block.querySelector("#chat_items_append").style.display = "none";
-  if (!block.querySelector(".load_pag")){
-  list_load(block, "/users/load/communities/")
-  }
-});
-
-on('#ajax', 'click', '.c_ucm_post_repost', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement
-  pk = parent.getAttribute("data-pk");
-  create_fullscreen("/posts/repost/c_ucm_post_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('data-uuid');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
   create_fullscreen("/article/read/" + pk + "/" + uuid + "/", "item_fullscreen");
-});
-
-on('#ajax', 'click', '.c_all_posts_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_like/" + uuid + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_all_posts_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_dislike/" + uuid + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_all_item_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_community_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
 

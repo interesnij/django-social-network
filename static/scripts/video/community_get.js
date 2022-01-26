@@ -12,19 +12,6 @@ on('#ajax', 'click', '.uncopy_community_video_list', function() {
   on_off_list_in_collections(this, "/video/community_progs/remove_list_from_collections/", "copy_community_video_list", "uncopy_community_video_list", "Добавить")
 });
 
-on('#ajax', 'click', '.c_ucm_video_repost', function() {
-  parent = this.parentElement;
-  pk = parent.getAttribute("data-pk");
-  create_fullscreen("/video/repost/c_ucm_video_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-on('#ajax', 'click', '.c_ucm_video_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/video/repost/c_ucm_video_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-
 on('#ajax', 'click', '.с_video_list_create', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/video/community_progs/add_list/" + pk + "/", "worker_fullscreen");
@@ -33,21 +20,4 @@ on('#ajax', 'click', '.с_video_list_create', function() {
 on('#ajax', 'click', '.c_video_list_edit', function() {
   pk = this.parentElement.parentElement.getAttribute('data-pk');
   create_fullscreen("/video/community_progs/edit_list/" + pk + "/", "worker_fullscreen");
-});
-
-on('#video_loader', 'click', '.c_all_video_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_community_like/" + uuid + "/", "worker_fullscreen");
-});
-on('#video_loader', 'click', '.c_all_video_dislikes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_community_dislike/" + uuid + "/", "worker_fullscreen");
-});
-
-on('#video_loader', 'click', '.c_all_video_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_community_reposts/" + uuid + "/", "worker_fullscreen");
 });

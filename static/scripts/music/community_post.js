@@ -1,21 +1,4 @@
-on('#ajax', 'click', '#c_ucm_music_repost_btn', function() {
-  repost_constructor(this,
-                     "/music/repost/c_u_music_repost/",
-                     "Репост аудиозаписи на стену сделан",
-                     "/music/repost/c_c_music_repost/",
-                     "Репост аудиозаписи в сообщества сделан",
-                     "/music/repost/c_m_music_repost/",
-                     "Репост аудиозаписи в сообщения сделан")
-});
-on('#ajax', 'click', '#c_ucm_music_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/music/repost/c_u_music_list_repost/",
-                     "Репост плейлиста на стену сделан",
-                     "/music/repost/c_c_music_list_repost/",
-                     "Репост плейлиста в сообщества сделан",
-                     "/music/repost/c_m_music_list_repost/",
-                     "Репост плейлиста в сообщения сделан")
-});
+
 
 on('#ajax', 'click', '#c_create_music_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;

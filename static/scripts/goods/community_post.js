@@ -151,26 +151,6 @@ on('#ajax', 'click', '#c_add_good_btn', function() {
   }};
   link_.send(form_data);
 });
-
-on('#ajax', 'click', '#с_ucm_good_repost_btn', function() {
-  repost_constructor(this,
-                     "/goods/repost/с_u_good_repost/",
-                     "Репост товара на стену сделан",
-                     "/goods/repost/с_c_good_repost/",
-                     "Репост товара в сообщества сделан",
-                     "/goods/repost/с_m_good_repost/",
-                     "Репост товара в сообщения сделан")
-});
-on('#ajax', 'click', '#c_ucm_good_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/goods/repost/с_u_good_list_repost/",
-                     "Репост списка товаров на стену сделан",
-                     "/goods/repost/с_c_good_list_repost/",
-                     "Репост списка товаров в сообщества сделан",
-                     "/goods/repost/с_m_good_list_repost/",
-                     "Репост списка товаров в сообщения сделан")
-});
-
 on('#ajax', 'click', '#c_create_good_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form);

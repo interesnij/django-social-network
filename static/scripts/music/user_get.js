@@ -42,19 +42,6 @@ on('#ajax', 'click', '.load_music_list', function() {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&playlist=" + playlist_pk);
 });
 
-on('#ajax', 'click', '.u_ucm_music_repost', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("data-pk");
-  create_fullscreen("/music/repost/u_ucm_music_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-on('#ajax', 'click', '.u_ucm_music_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/music/repost/u_ucm_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-
 on('#ajax', 'click', '.u_track_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/music/user_progs/create_track/" + pk + "/", "worker_fullscreen");

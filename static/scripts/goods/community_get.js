@@ -29,22 +29,3 @@ on('#ajax', 'click', '.c_good_list_edit', function() {
   uuid = this.parentElement.parentElement.getAttribute('data-uuid');
   create_fullscreen("/goods/community_progs/edit_list/" + uuid + "/", "worker_fullscreen");
 });
-
-on('#ajax', 'click', '.c_ucm_good_repost', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/goods/repost/c_ucm_good_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-on('#ajax', 'click', '.c_ucm_good_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/goods/repost/c_ucm_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-
-on('#ajax', 'click', '.c_all_good_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  good_pk = container.getAttribute('good-pk');
-  create_fullscreen("/goods/window/all_community_reposts/" + good_pk + "/", "worker_fullscreen");
-});

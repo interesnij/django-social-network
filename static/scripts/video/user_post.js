@@ -1,21 +1,3 @@
-on('#ajax', 'click', '#u_ucm_video_repost_btn', function() {
-  repost_constructor(this,
-                     "/video/repost/u_u_video_repost/",
-                     "Репост видеозаписи на стену сделан",
-                     "/video/repost/u_c_video_repost/",
-                     "Репост видеозаписи в сообщества сделан",
-                     "/video/repost/u_m_video_repost/",
-                     "Репост видеозаписи в сообщения сделан")
-});
-on('#ajax', 'click', '#u_ucm_video_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/video/repost/u_u_video_list_repost/",
-                     "Репост видеоальбома на стену сделан",
-                     "/video/repost/u_c_video_list_repost/",
-                     "Репост видеоальбома в сообщества сделан",
-                     "/video/repost/u_m_video_list_repost/",
-                     "Репост видеоальбома в сообщения сделан")
-});
 
 on('#ajax', 'click', '.u_video_create_window', function(e) {
   e.preventDefault();

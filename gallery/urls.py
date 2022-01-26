@@ -14,5 +14,4 @@ urlpatterns=[
 
 	url(r'^user_progs/', include('gallery.url.user_progs')),
 	url(r'^community_progs/', include('gallery.url.community_progs')),
-	url(r'^repost/', include('gallery.url.repost')),
 ]

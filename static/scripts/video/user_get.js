@@ -31,28 +31,9 @@ on('#ajax', 'click', '.load_video_list', function() {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
 });
 
-on('#ajax', 'click', '.u_ucm_video_repost', function() {
-  parent = this.parentElement;
-  pk = parent.getAttribute("data-pk");
-  create_fullscreen("/video/repost/u_ucm_video_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-on('#ajax', 'click', '.u_ucm_video_list_repost', function() {
-  parent = this.parentElement.parentElement;
-  pk = parent.getAttribute('data-pk');
-  create_fullscreen("/video/repost/u_ucm_video_list_window/" + pk + "/", "worker_fullscreen");
-  clear_attach_block();
-});
-
 on('#ajax', 'click', '.u_video_list_edit', function() {
   pk = this.parentElement.parentElement.getAttribute('data-pk');
   create_fullscreen("/video/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
-});
-
-on('#video_loader', 'click', '.u_all_video_reposts', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/video/window/all_user_reposts/" + uuid + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.video_list_detail', function() {

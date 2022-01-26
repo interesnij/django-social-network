@@ -1,21 +1,4 @@
-on('#ajax', 'click', '#u_ucm_good_repost_btn', function() {
-  repost_constructor(this,
-                     "/goods/repost/u_u_good_repost/",
-                     "Репост товара на стену сделан",
-                     "/goods/repost/u_c_good_repost/",
-                     "Репост товара в сообщества сделан",
-                     "/goods/repost/u_m_good_repost/",
-                     "Репост товара в сообщения сделан")
-});
-on('#ajax', 'click', '#u_ucm_good_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/goods/repost/u_u_good_list_repost/",
-                     "Репост списка товаров на стену сделан",
-                     "/goods/repost/u_c_good_list_repost/",
-                     "Репост списка товаров в сообщества сделан",
-                     "/goods/repost/u_m_good_list_repost/",
-                     "Репост списка товаров в сообщения сделан")
-});
+
 
 on('#ajax', 'change', '.goods_category', function() {
   var val = this.value;

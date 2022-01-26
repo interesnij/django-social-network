@@ -20,25 +20,6 @@ on('#ajax', 'click', '#c_create_photo_list_btn', function() {
   post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/", "added_community_photo_list");
 });
 
-on('#ajax', 'click', '#c_ucm_photo_repost_btn', function() {
-  repost_constructor(this,
-                     "/gallery/repost/c_u_photo_repost/",
-                     "Репост фотографии на стену сделан",
-                     "/gallery/repost/c_c_photo_repost/",
-                     "Репост фотографии в сообщества сделан",
-                     "/gallery/repost/c_m_photo_repost/",
-                     "Репост фотографии в сообщения сделан")
-});
-
-on('#ajax', 'click', '#c_ucm_photo_list_repost_btn', function() {
-  repost_constructor(this,
-                     "/gallery/repost/c_u_photo_list_repost/",
-                     "Репост фотоальбома на стену сделан",
-                     "/gallery/repost/c_c_photo_list_repost/",
-                     "Репост фотоальбома в сообщества сделан",
-                     "/gallery/repost/c_m_photo_list_repost/",
-                     "Репост фотоальбома в сообщения сделан")
-});
 
 on('#ajax', 'click', '.c_photo_off_comment', function() {
   send_photo_change(this, "/gallery/community_progs/off_comment/", "c_photo_on_comment", "Вкл. комментарии");
