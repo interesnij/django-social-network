@@ -297,7 +297,52 @@ class RepostCreate(TemplateView):
         from communities.models import Community
 
         type = request.POST.get('type')
-        item, form_post, attach, lists, chat_items, count, creator = get_item_of_type(type), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
+        if type[0] == "l":
+            if type[:3] == "lpo":
+                from posts.models import PostsList
+                item, t, i = PostsList.objects.get(pk=type[3:]), "POL", "post"
+            elif type[:3] == "lph":
+                from gallery.models import PhotoList
+                item, t, i =  PhotoList.objects.get(pk=type[3:]), "PHL", "photo"
+            elif type[:3] == "lgo":
+                from goods.models import GoodList
+                item, t, i =  GoodList.objects.get(pk=type[3:]), "GOL", "good"
+            elif type[:3] == "lvi":
+                from video.models import VideoList
+                item, t, i =  VideoList.objects.get(pk=type[3:]), "VIL", "video"
+            elif type[:3] == "ldo":
+                from docs.models import DocsList
+                item, t, i =  DocsList.objects.get(pk=type[3:]), "DOL", "doc"
+            elif type[:3] == "lmu":
+                from music.models import MusicList
+                item, t, i =  MusicList.objects.get(pk=type[3:]), "MUL", "music"
+            elif type[:3] == "lsu":
+                from survey.models import SurveyList
+                item, t, i =  SurveyList.objects.get(pk=type[3:]), "SUL", "survey"
+        else:
+            if type[:3] == "pos":
+                from posts.models import Post
+                item, t, i =  Post.objects.get(pk=type[3:]), "POS", "post"
+            elif type[:3] == "pho":
+                from gallery.models import Photo
+                item, t, i =  Photo.objects.get(pk=type[3:]), "PHO", "photo"
+            elif type[:3] == "goo":
+                from goods.models import Good
+                item, t, i =  Good.objects.get(pk=type[3:]), "GOO", "good"
+            elif type[:3] == "vid":
+                from video.models import Video
+                item, t, i =  Video.objects.get(pk=type[3:]), "VID", "video"
+            elif type[:3] == "doc":
+                from docs.models import Doc
+                item, t, i =  Doc.objects.get(pk=type[3:]), "DOC", "doc"
+            elif type[:3] == "mus":
+                from music.models import Music
+                item, t, i =  Music.objects.get(pk=type[3:]), "MUS", "music"
+            elif type[:3] == "sur":
+                from survey.models import Survey
+                item, t, i =  Survey.objects.get(pk=type[3:]), "SUR", "survey"
+
+        form_post, attach, lists, chat_items, count, creator = PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
             if not item.is_post:
@@ -313,28 +358,28 @@ class RepostCreate(TemplateView):
                         post_list = PostsList.objects.get(pk=list_pk)
                         if post_list.community:
                             post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=post_list.community)
-                            community_notify(creator, parent.community, post_list.community.pk, parent.pk, "DOC", "create_c_doc_notify", "CRE")
-                            community_wall(creator, parent.community, post_list.community.pk, parent.pk, "DOC", "create_c_doc_wall", "CRE")
+                            community_notify(creator, parent.community, post_list.community.pk, parent.pk, t, "create_" + i + "_notify", "CRE")
+                            community_wall(creator, parent.community, post_list.community.pk, parent.pk, t, "create_" + i + "_wall", "CRE")
                         else:
                             post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
-                            community_notify(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_notify", "RE")
-                            community_wall(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_wall", "RE")
+                            community_notify(creator, parent.community, None, parent.pk, t, "create_" + i + "_notify", "RE")
+                            community_wall(creator, parent.community, None, parent.pk, t, "create_" + i + "_wall", "RE")
                         count += 1
                 else:
                     from common.notify.notify import user_notify, user_wall
                     if item.creator.pk != request.user.pk:
                         check_user_can_get_list(request.user, item.creator)
-                        
+
                     for list_pk in lists:
                         post_list = PostsList.objects.get(pk=list_pk)
                         if post_list.community:
                             post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=post_list.community)
-                            user_notify(creator, post_list.community.pk, parent.pk, "DOC", "create_u_doc_notify", "CRE")
-                            user_wall(creator, post_list.community.pk, parent.pk, "DOC", "create_u_doc_wall", "CRE")
+                            user_notify(creator, post_list.community.pk, parent.pk, t, "create_" + i + "_notify", "CRE")
+                            user_wall(creator, post_list.community.pk, parent.pk, t, "create_" + i + "_wall", "CRE")
                         else:
                             post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
-                            user_notify(creator,None, parent.pk, "DOC", "create_u_doc_notify", "RE")
-                            user_wall(creator, None, parent.pk, "DOC", "create_u_doc_wall", "RE")
+                            user_notify(creator,None, parent.pk, t, "create_" + i + "_notify", "RE")
+                            user_wall(creator, None, parent.pk, t, "create_" + i + "_wall", "RE")
                             count += 1
                 creator.plus_posts(count)
 
