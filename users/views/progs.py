@@ -163,7 +163,7 @@ class CommentDislikeCreate(View):
 
 
 from django.views.generic.base import TemplateView
-class PostUserCommentEdit(TemplateView):
+class CommentEdit(TemplateView):
     template_name = None
 
     def get(self,request,*args,**kwargs):
@@ -172,12 +172,12 @@ class PostUserCommentEdit(TemplateView):
         self.template_name = get_my_template("generic/items/comment/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.type = request.GET.get('type')
         self.comment = request.user.get_comment(type)
-        return super(PostUserCommentEdit,self).get(request,*args,**kwargs)
+        return super(CommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from posts.forms import CommentForm
 
-        context = super(PostUserCommentEdit,self).get_context_data(**kwargs)
+        context = super(CommentEdit,self).get_context_data(**kwargs)
         context["comment"] = self.comment
         context["form_post"] = CommentForm(instance=self.comment)
         context["type"] = self.type

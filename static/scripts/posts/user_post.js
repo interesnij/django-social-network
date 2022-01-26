@@ -280,7 +280,7 @@ on('#ajax', 'click', '.comment_edit', function() {
   type = _this.parentElement.getAttribute("data-type");
   _this.parentElement.style.display = "none";
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/posts/user_progs/edit_comment/?type=" + type + "/", true );
+  link.open( 'GET', "/users/progs/edit_comment/?type=" + type + "/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -317,7 +317,7 @@ on('#ajax', 'click', '.edit_comment_btn', function() {
   form.append($input);
   form_comment = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('POST', "/posts/user_progs/edit_comment/", true);
+  link_.open('POST', "/users/progs/edit_comment/", true);
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function() {
