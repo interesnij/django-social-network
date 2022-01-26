@@ -26,7 +26,7 @@
     {% endif %}
   {% endfor %}
   {% if page_obj.has_next %}
-    <a class="pointer load_next_list_comments mt-1" data-link="comment/{{ item.pk }}/?type={{ type }}&page={{ page_obj.next_page_number }}">Показать еще комментарии</a>
+    <a class="pointer load_next_list_comments mt-1" data-link="comments/list/{{ item.pk }}/?type={{ type }}&page={{ page_obj.next_page_number }}">Показать еще комментарии</a>
   {% endif %}
 </span>
 

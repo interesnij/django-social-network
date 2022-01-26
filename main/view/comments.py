@@ -1,123 +1,72 @@
 from django.views.generic import ListView
-from common.user_progs.timelines_comments import *
-from common.templates import get_settings_template, get_detect_main_template
 
 
-class PostCommentsView(ListView):
+class ItemCommentList(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PostCommentsView,self).get(request,*args,**kwargs)
+		from common.templates import get_template_comments
+		self.type = request.GET.get('type')
+		self.item = request.user.get_comment(self.type)
+		self.prefix = self.type[:3]
+		self.template_name = get_template_comments(self.item, "generic/items/comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
+		if not request.is_ajax() or not self.item.comments_enabled:
+			raise Http404
+		return super(ItemCommentList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self, **kwargs):
+		context = super(ItemCommentList, self).get_context_data(**kwargs)
+		context['item'] = self.item
+		context['prefix'] = self.prefix
+		context['type'] = self.type
+		return context
 
 	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_post_comments(self.request.user.pk).order_by('-created')
-		else:
-			items = []
-		return items
+		return self.item.get_comments()
 
 
-class PhotoCommentsView(ListView):
-	template_name, paginate_by = None, 15
+class CommentLikes(ListView):
+    template_name, paginate_by = None, 15
 
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(PhotoCommentsView,self).get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        self.type = request.GET.get('type')
+		self.comment = request.user.get_comment(self.type)
+        if not self.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
+            raise Http404
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommentLikes,self).get(request,*args,**kwargs)
 
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_photo_comments(self.request.user.pk)
-		else:
-			items = []
-		return items
+    def get_context_data(self,**kwargs):
+        context = super(CommentLikes,self).get_context_data(**kwargs)
+        context['item'] = self.item
+        context['text'] = "Комментарий одобрили:"
+        return context
 
+    def get_queryset(self):
+        return User.objects.filter(id__in=self.comment.likes().values("user_id"))
 
-class GoodCommentsView(ListView):
-	template_name, paginate_by = None, 15
+class CommentDislikes(ListView):
+    template_name, paginate_by = None, 15
 
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(GoodCommentsView,self).get(request,*args,**kwargs)
+    def get(self,request,*args,**kwargs):
+        self.type = request.GET.get('type')
+		self.comment = request.user.get_comment(self.type)
+        if not self.comment.get_item().votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
+            raise Http404
+        if request.user.is_authenticated:
+            self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(CommentDislikes,self).get(request,*args,**kwargs)
 
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_good_comments(self.request.user.pk)
-		else:
-			items = []
-		return items
+    def get_context_data(self,**kwargs):
+        context = super(CommentDislikes,self).get_context_data(**kwargs)
+        context['item'] = self.comment
+        context['text'] = "Комментарий не одобрили:"
+        return context
 
-
-class VideoCommentsView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(VideoCommentsView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_video_comments(self.request.user.pk)
-		else:
-			items = []
-		return items
-
-
-class FeaturedPostCommentsView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/featured_posts.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(FeaturedPostCommentsView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_featured_post_comments(self.request.user).order_by('-created')
-		else:
-			items = []
-		return items
-
-
-class FeaturedPhotoCommentsView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/featured_photos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(FeaturedPhotoCommentsView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_featured_photo_comments(self.request.user)
-		else:
-			items = []
-		return items
-
-
-class FeaturedGoodCommentsView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/featured_goods.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(FeaturedGoodCommentsView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_featured_good_comments(self.request.user)
-		else:
-			items = []
-		return items
-
-
-class FeaturedVideoCommentsView(ListView):
-	template_name, paginate_by = None, 15
-
-	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_main_template("main/news_list/comments/featured_videos.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(FeaturedVideoCommentsView,self).get(request,*args,**kwargs)
-
-	def get_queryset(self):
-		if self.request.user.is_authenticated:
-			items = get_timeline_featured_video_comments(self.request.user)
-		else:
-			items = []
-		return items
+    def get_queryset(self):
+        return User.objects.filter(id__in=self.comment.dislikes().values("user_id"))

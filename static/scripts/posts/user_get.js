@@ -7,9 +7,16 @@ on('#ajax', 'click', '.load_comments_list', function() {
   } else {
     block_comments.firstChild
         ? null
-        : list_load(block_comments, "/comments/?type=" + this.getAttribute("data-type"));
+        : list_load(block_comments, "/comments/list/?type=" + this.parentElement.getAttribute("data-type"));
     block_comments.classList.add("show")
   }
+});
+
+on('#ajax', 'click', '.comment_likes', function() {
+  create_fullscreen("/comments/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+});
+on('#ajax', 'click', '.comment_dislikes', function() {
+  create_fullscreen("/comments/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
@@ -211,18 +218,13 @@ on('#ajax', 'click', '.u_post_edit', function() {
     list_load(div, "/posts/user_progs/edit_post/" + block.getAttribute("data-pk") + "/");
   }
 });
+
 on('#ajax', 'click', '.u_article_detail', function() {
   uuid = this.parentElement.getAttribute("data-uuid");
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = this.parentElement.getAttribute('data-pk');
   create_fullscreen("/article/detail/" + pk + "/" + uuid + "/", "item_fullscreen");
 });
 
-
-on('#ajax', 'click', '.u_all_posts_likes', function() {
-  container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = container.getAttribute('data-uuid');
-  create_fullscreen("/posts/item_window/all_user_like/" + uuid + "/", "worker_fullscreen");
-});
 on('#ajax', 'click', '.u_all_posts_dislikes', function() {
   container = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   uuid = container.getAttribute('data-uuid');
