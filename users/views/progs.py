@@ -207,8 +207,8 @@ class CommentEdit(TemplateView):
             _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
             comment.attach = _attach
             comment.text = get_text_processing(_comment.text)
-            self.type = "EDI"
-            self.save()
+            comment.type = "EDI"
+            comment.save()
 
             if comment.parent:
                 return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': comment})
