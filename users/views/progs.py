@@ -184,6 +184,8 @@ class CommentEdit(TemplateView):
         return context
 
     def post(self,request,*args,**kwargs):
+        from posts.forms import CommentForm
+        
         type = request.POST.get('type')
         comment = request.user.get_comment(type)
         form = CommentForm(request.POST,instance=comment)
