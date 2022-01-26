@@ -238,3 +238,49 @@ def create_community_models(community):
 
     video_list = VideoList.objects.create(creator=community.creator, community=community, type=VideoList.MAIN, name="Основной список")
     CommunityVideoListPosition.objects.create(community=community.pk, list=video_list.pk, position=1)
+
+def get_item_of_type(type):
+    if type[0] == "l":
+        if type[:3] == "lpo":
+            from posts.models import PostsList
+            return PostsList.objects.get(pk=type[3:])
+        elif type[:3] == "lph":
+            from gallery.models import PhotoList
+            return PhotoList.objects.get(pk=type[3:])
+        elif type[:3] == "lgo":
+            from goods.models import GoodList
+            return GoodList.objects.get(pk=type[3:])
+        elif type[:3] == "lvi":
+            from video.models import VideoList
+            return VideoList.objects.get(pk=type[3:])
+        elif type[:3] == "ldo":
+            from docs.models import DocsList
+            return DocsList.objects.get(pk=type[3:])
+        elif type[:3] == "lmu":
+            from music.models import MusicList
+            return MusicList.objects.get(pk=type[3:])
+        elif type[:3] == "lsu":
+            from survey.models import SurveyList
+            return SurveyList.objects.get(pk=type[3:])
+    else:
+        if type[:3] == "pos":
+            from posts.models import Post
+            return Post.objects.get(pk=type[3:])
+        elif type[:3] == "pho":
+            from gallery.models import Photo
+            return Photo.objects.get(pk=type[3:])
+        elif type[:3] == "goo":
+            from goods.models import Good
+            return Good.objects.get(pk=type[3:])
+        elif type[:3] == "vid":
+            from video.models import Video
+            return Video.objects.get(pk=type[3:])
+        elif type[:3] == "doc":
+            from docs.models import Doc
+            return Doc.objects.get(pk=type[3:])
+        elif type[:3] == "mus":
+            from music.models import Music
+            return Music.objects.get(pk=type[3:])
+        elif type[:3] == "sur":
+            from survey.models import Survey
+            return Survey.objects.get(pk=type[3:])

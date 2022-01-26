@@ -258,3 +258,98 @@ class CommentRecover(View):
             comment.restore_item()
             return HttpResponse()
         raise Http404
+
+
+class RepostCreate(TemplateView):
+    template_name, community = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_item_of_type
+        from common.check.user import check_user_can_get_list
+        from common.check.community import check_can_get_lists
+        from posts.forms import PostForm
+
+        self.type = request.GET.get('type')
+        self.item = get_item_of_type(self.type)
+
+        self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
+        self.template_name = get_detect_platform_template("generic/repost/repost.html", request.user, request.META['HTTP_USER_AGENT'])
+        if self.item.community:
+            check_can_get_lists(request.user, self.item.community)
+        elif self.item.creator.pk != request.user.pk:
+            check_user_can_get_list(request.user, self.item.creator)
+        return super(RepostCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(RepostCreate,self).get_context_data(**kwargs)
+        context["form"] = PostForm()
+        context["object"] = self.item
+        context["can_copy_item"] = self.can_copy_item
+        context["community"] = self.item.community
+        context["type"] = self.item.community
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from common.check.user import check_user_can_get_list
+        from common.check.community import check_can_get_lists
+        from posts.forms import PostForm
+        from django.http import HttpResponse, HttpResponseBadRequest
+        from communities.models import Community
+
+        type = request.POST.get('type')
+        item, form_post, attach, lists, chat_items, count, creator = get_item_of_type(type), PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
+        if request.is_ajax() and form_post.is_valid():
+            post = form_post.save(commit=False)
+            if not item.is_post:
+                parent = Post.create_parent_post(creator=doc.creator, community=item.community, attach=type)
+            else:
+                parent = item
+            if lists:
+                if item.community:
+                    from common.notify.notify import community_notify, community_wall
+                    check_can_get_lists(request.user, item.community)
+
+                    for list_pk in lists:
+                        post_list = PostsList.objects.get(pk=list_pk)
+                        if post_list.community:
+                            post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=post_list.community)
+                            community_notify(creator, parent.community, post_list.community.pk, parent.pk, "DOC", "create_c_doc_notify", "CRE")
+                            community_wall(creator, parent.community, post_list.community.pk, parent.pk, "DOC", "create_c_doc_wall", "CRE")
+                        else:
+                            post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                            community_notify(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_notify", "RE")
+                            community_wall(creator, parent.community, None, parent.pk, "DOC", "create_c_doc_wall", "RE")
+                        count += 1
+                else:
+                    from common.notify.notify import user_notify, user_wall
+                    if item.creator.pk != request.user.pk:
+                        check_user_can_get_list(request.user, item.creator)
+                        
+                    for list_pk in lists:
+                        post_list = PostsList.objects.get(pk=list_pk)
+                        if post_list.community:
+                            post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=post_list.community)
+                            user_notify(creator, post_list.community.pk, parent.pk, "DOC", "create_u_doc_notify", "CRE")
+                            user_wall(creator, post_list.community.pk, parent.pk, "DOC", "create_u_doc_wall", "CRE")
+                        else:
+                            post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
+                            user_notify(creator,None, parent.pk, "DOC", "create_u_doc_notify", "RE")
+                            user_wall(creator, None, parent.pk, "DOC", "create_u_doc_wall", "RE")
+                            count += 1
+                creator.plus_posts(count)
+
+            elif chat_items:
+                if item.community:
+                    check_can_get_lists(request.user, item.community)
+                elif item.creator.pk != request.user.pk:
+                    check_user_can_get_list(request.user, item.creator)
+
+                from common.processing.post import repost_message_send
+                repost_message_send(item, type, item.community, request)
+
+            item.repost += count
+            item.save(update_fields=["repost"])
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
