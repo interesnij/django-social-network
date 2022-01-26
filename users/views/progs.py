@@ -185,13 +185,13 @@ class CommentEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
-        
+
         type = request.POST.get('type')
         comment = request.user.get_comment(type)
         form = CommentForm(request.POST,instance=comment)
         list = comment.get_item().list
 
-        if request.is_ajax() and form.is_valid() and list.is_user_can_add_comment(request.user.pk) \
+        if request.is_ajax() and form.is_valid() and list.is_user_can_create_comment(request.user.pk) \
         and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
             from common.templates import render_for_platform
             from common.processing_2 import get_text_processing
