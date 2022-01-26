@@ -1206,8 +1206,8 @@ class PhotoComment(models.Model):
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
-            self.photo.comment -= 1
-            self.photo.save(update_fields=["comment"])
+            self.item.comment -= 1
+            self.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="COM").update(status="C")
         if Wall.objects.filter(type="PHOC", object_id=self.pk, verb="COM").exists():
