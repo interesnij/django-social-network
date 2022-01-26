@@ -4,7 +4,6 @@
             <h6 class="pointer" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
             <span class="small {% if community.pk == list.community.pk %}handle{% endif %}">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
             <span class='span_btn' data-pk="{{ object.pk }}">
-                {% include 'mobile/users/docs/add_dropdown.html' %}
                 <div class="dropdown" style="position: inherit;">
                     <a class="btn_default drop pointer">
                         <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
@@ -12,8 +11,8 @@
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                         </svg>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
-                      <span class="dropdown-item c_ucm_doc_repost">Добавить</span>
+                    <div class="dropdown-menu dropdown-menu-right" data-type="doc{{ object.pk }}" style="top: 25px;">
+                      <span class="dropdown-item create_repost">Добавить</span>
                       {% if object.community.pk == community.pk and is_admin %}
                         <span class="dropdown-item c_doc_edit">Изменить</span>
                         <span class="dropdown-item c_doc_remove">Удалить</span>

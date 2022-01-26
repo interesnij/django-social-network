@@ -11,8 +11,8 @@
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                         </svg>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" style="top: 25px;">
-                      <span class="dropdown-item c_ucm_doc_repost">Добавить</span>
+                    <div class="dropdown-menu dropdown-menu-right" data-type="doc{{ object.pk }}" style="top: 25px;">
+                      <span class="dropdown-item create_repost">Добавить</span>
                       {% if object.community.pk == community.pk and is_admin %}
                         <span class="dropdown-item c_doc_edit">Изменить</span>
                         <span class="dropdown-item c_doc_remove">Удалить</span>

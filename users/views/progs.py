@@ -286,7 +286,7 @@ class RepostCreate(TemplateView):
         context["object"] = self.item
         context["can_copy_item"] = self.can_copy_item
         context["community"] = self.item.community
-        context["type"] = self.item.community
+        context["type"] = self.type
         return context
 
     def post(self, request, *args, **kwargs):

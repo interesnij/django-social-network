@@ -18,7 +18,7 @@
           </div>
           <div class="card mb-2">
               <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
+                <div style="display:flex" data-type="ldo{{ list.pk }}">
                   <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                   <div class="media-body" style="margin-left: 10px;">
                     <h6 class="my-0 mt-1"><span class="list_name">{{ list.name }}</span>&nbsp;({{ list.count_items }})</h6>
@@ -29,7 +29,7 @@
                     </p>
                   </div>
                   {% if list.is_not_empty %}
-                    <span title="Поделиться" class="u_ucm_doc_list_repost btn_default pointer" style="margin-top: 14px;width:25px">
+                    <span title="Поделиться" class="create_repost btn_default pointer" style="margin-top: 14px;width:25px">
                       <svg class="svg_info repost_style_btn" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"/><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z" /></svg>
                     </span>
                   {% endif %}

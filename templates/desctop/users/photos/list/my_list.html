@@ -12,7 +12,7 @@
 csc
 <span class="load_block pk_saver" data-pk="{{ user.pk }}">
   {% if is_user_can_see_photo_section %}
-<div class="media mt-3" style="padding-left: 7px;">
+<div class="media mt-3" style="padding-left: 7px;" data-type="lph{{ list.pk }}">
   <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
     {% csrf_token %}
   <h5 class="mt-1">
@@ -25,7 +25,7 @@ csc
           <span class="pointer badge badge-light-danger u_photo_list_remove">Удалить список</span>
         {% endif %}
       {% endif %}
-      <span class="pointer badge badge-light-success u_ucm_photo_list_repost">Добавить</span>
+      <span class="pointer badge badge-light-success create_repost">Добавить</span>
   </h5>
   </form>
 </div>

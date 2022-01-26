@@ -55,7 +55,7 @@
                   <svg viewBox="0 0 24 24" class="svg_info" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
                     <span class="comment-count">{{ object.count_comments }}</span>
                 </span>
-                <span title="Поделиться" class="btn_default pointer">
+                <span class="btn_default pointer">
                   <svg class="svg_info repost_style_btn" viewBox="0 0 24 24" fill="currentColor"><path d="m0 0h24v24h-24z" fill="none"/><path fill="currentColor" d="m12.1 7.87v-3.47a1.32 1.32 0 0 1 2.17-1l8.94 7.6a1.32 1.32 0 0 1 .15 1.86l-.15.15-8.94 7.6a1.32 1.32 0 0 1 -2.17-1v-3.45c-4.68.11-8 1.09-9.89 2.87a1.15 1.15 0 0 1 -1.9-1.11c1.53-6.36 5.51-9.76 11.79-10.05zm1.8-2.42v4.2h-.9c-5.3 0-8.72 2.25-10.39 6.86 2.45-1.45 5.92-2.16 10.39-2.16h.9v4.2l7.71-6.55z" /></svg>
                     <span class="repost_count">
                       {% if object.count_reposts %}
@@ -66,7 +66,7 @@
                 <span class="repost_window">
                   {% if object.get_window_reposts %}
                 <div class="repost_pop">
-                  <span class="c_all_item_reposts pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
+                  <span class="item_reposts pointer">Поделились: {{ object.count_reposts }} {{ object.count_reposts|rupluralize:"человек,человека,людей" }}</span>
                   <span style="display: flex;margin-top: 10px;">
                     {% for voter in object.get_window_reposts %}
                       {% include 'desctop/generic/user/voter.html' %}
