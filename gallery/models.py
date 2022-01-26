@@ -1201,8 +1201,8 @@ class PhotoComment(models.Model):
             self.type = PhotoComment.EDITED_DELETED
         self.save(update_fields=['type'])
         if self.parent:
-            self.parent.photo.comment -= 1
-            self.parent.photo.save(update_fields=["comment"])
+            self.parent.item.comment -= 1
+            self.parent.item.save(update_fields=["comment"])
             if Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").exists():
                 Notify.objects.filter(type="PHOC", object_id=self.pk, verb__contains="REP").update(status="C")
         else:
