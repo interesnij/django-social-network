@@ -345,7 +345,7 @@ class RepostCreate(TemplateView):
         form_post, attach, lists, chat_items, count, creator = PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
         if request.is_ajax() and form_post.is_valid():
             post = form_post.save(commit=False)
-            if item.is_post:
+            if type[:3] == "pos":
                 parent = item
             else:
                 parent = Post.create_parent_post(creator=doc.creator, community=item.community, attach=type)
